@@ -1,0 +1,9 @@
+ 
+
+
+ .side-bar-out{
+    background: rgb(0, 225, 255);
+    max-width: 170px;
+    min-width: 170px;
+    border: 2px solid rgb(210, 199, 136);
+  }
