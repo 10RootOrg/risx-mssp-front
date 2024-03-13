@@ -1,5 +1,5 @@
 import React from 'react'
-import { PreviewBox_type1, PreviewBox_type2 } from './PreviewBoxes.js'
+import { PreviewBox_type1, PreviewBox_type2 } from '../PreviewBoxes.js'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import { ReactComponent as IconWebsites } from '../icons/ico-websites.svg';
 import { ReactComponent as IconPlus } from '../icons/ico-plus.svg';
@@ -7,16 +7,14 @@ import { ReactComponent as IconTrash } from '../icons/ico-trash.svg';
 import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as IconExpend } from '../icons/ico-expend.svg';
 import { ReactComponent as IconLine } from '../icons/ico-line.svg';
-
 import { ReactComponent as IconArrowRight } from '../icons/ico-arrowRight.svg';
 import { ReactComponent as IconArrowLeft } from '../icons/ico-arrowLeft.svg';
-
-
  
-import './ResourceGroup.css';
+ 
+import './../ResourceGroup/ResourceGroup.css';
 
-import jsonData from '../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
-import jsonDataWebsites from '../tmpjsons/ResourceGroup-websites.json'; // Adjust the path as needed based on your project structure
+import jsonData from '../../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
+import jsonDataWebsites from '../../tmpjsons/ResourceGroup-websites.json'; // Adjust the path as needed based on your project structure
 function ResourceGroup() {
 
 

@@ -1,0 +1,163 @@
+[
+    {
+        "BoxType": "Tools_a",
+        "headline": "Timeline",
+        "description": "collaborative forensic timeline analysis",
+        "iconAddress": "./icons/General-icons-e.svg",
+        "by": "Timesketch ",
+        "isActive": true,
+        "logoAddress": "./Logos/Timesketch.svg",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "11/06/2024",
+        "buttonTitle" : "Create",
+        "toolURL": "https://www.ynetnews.com/category/3083"
+    },
+    {
+        "BoxType": "Tools_a",
+        "headline": "View Artifacts",
+        "description": "Utilize Elasticsearch for scalable search, analytics, and storage",
+        "iconAddress": "./icons/General-icons-a.svg",
+        "by": "ELK",
+        "isActive": true,
+        "logoAddress": "./Logos/ELK.svg",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "11/06/2024",
+        "buttonTitle" : "View",
+        "toolURL": "https://www.ynetnews.com/category/3083"
+    },
+    {
+        "BoxType": "Tools_a",
+        "headline": "ASM",
+        "description": "Analyze, visualize, share cybersecurity intelligence.",
+        "iconAddress": "./icons/General-icons-b.svg",
+        "by": "Elastic",
+        "isActive": true,
+        "logoAddress": "./Logos/Nuclei.svg",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Explore",
+        "toolURL": "https://thehackernews.com/"
+
+    },
+    {
+        "BoxType": "Tools_a",
+        "headline": "Credential security",
+        "description": "breach search, safeguarding users' data and identity from online threats",
+        "iconAddress": "./icons/General-icons-c.svg",
+        "by": "Elastic",
+        "isActive": true,
+        "logoAddress": "./Logos/dehashed.svg",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Explore",
+        "toolURL": "https://10root.com/"
+
+    },
+    {
+        "BoxType": "Tools_a",
+        "headline": "Open Source Intelligence",
+        "description": "Collaborate on forensic timeline analysis investigations",
+        "iconAddress": "./icons/General-icons-d.svg",
+        "by": "Elastic",
+        "isActive": true,
+        "logoAddress": "./Logos/10RootOSINT.svg",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Active",
+        "toolURL": "https://10root.com/"
+
+    }
+    ,
+
+
+
+
+
+    {
+        "BoxType": "Tools_b",
+        "headline": "Hashing hunter",
+        "description": "fuzzy matching program and library. Given a file (min 50 bytes)",
+        "iconAddress": "./icons/General-icons-d.svg",
+        "by": "TLSH",
+        "isActive": true,
+        "logoAddress": "./Logos/TLSH.svg",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Active",
+        "toolURL": "https://10root.com/"
+
+    },   {
+        "BoxType": "Tools_b",
+        "headline": "Code Sandbox",
+        "description": "Use Sandbox to Analyze and compare data patterns with ease",
+        "iconAddress": "./icons/General-icons-d.svg",
+        "by": "TLSH",
+        "isActive": true,
+        "logoAddress": "./Logos/STRELKA.png",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Active",
+        "toolURL": "https://10root.com/"
+
+    },   {
+        "BoxType": "Tools_b",
+        "headline": "CTI DB & Dashboard",
+        "description": "manage their cyber threat intelligence knowledge and observables",
+        "iconAddress": "",
+        "by": "OPENCTI",
+        "isActive": true,
+        "logoAddress": "./Logos/OPENCTI.png",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Active",
+        "toolURL": "https://10root.com/"
+
+    }
+    ,   {
+        "BoxType": "Tools_b",
+        "headline": "Generate well known OS hashes",
+        "description": "Create custom hash sets from files for Blue Team operations, surpassing shared set limitations",
+        "iconAddress": "",
+        "by": "HashR",
+        "isActive": true,
+        "logoAddress": "./Logos/HashR.png",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Active",
+        "toolURL": "https://10root.com/"
+
+    },   {
+        "BoxType": "Tools_b",
+        "headline": "IOC DB threat intelligence platform",
+        "description": "A threat intelligence platform for sharing, storing and correlating Indicators of Compromise of targeted attacks, threat intelligence, financial fraud information, vulnerability information or even counter-terrorism informatio",
+        "iconAddress": "",
+        "by": "MISP",
+        "isActive": true,
+        "logoAddress": "./Logos/MISP.png",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "22/02/2024",
+        "buttonTitle" : "Run",
+        "toolURL": "https://10root.com/"
+
+    }
+]

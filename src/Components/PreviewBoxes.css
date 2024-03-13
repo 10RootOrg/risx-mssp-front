@@ -1,0 +1,63 @@
+ 
+  
+ 
+  .PreviewBox{
+    background:var(--color-Grey5);
+    border-radius: var(--boxes-round-corner);
+    padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
+     height: 200px; 
+     width: 8%; 
+     min-width: 120px;
+     /* max-width: 800px; */
+   flex-shrink: 1;/*   default 1 */
+    flex-grow: 5;
+    display: flex;
+    flex-direction: column;
+  justify-content:space-between;
+  transition: var(--transition-med)
+  }
+   
+.PreviewBox-type3{
+  height: 340px; 
+  min-width: 215px;
+  flex-shrink: 5;/*   default 1 */
+  flex-grow: 1;
+}
+
+
+
+.PreviewBox:hover{
+  background:var(--color-Grey4);
+
+}
+
+
+
+
+
+.PreviewBox-twice-size{
+    width: 21%; 
+}
+
+
+  .PreviewBox_HeadLine{
+   /* justify-self: flex-start; */
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+  }
+
+  .PreviewBox_ButtomLine{
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+  }
+
+  .PreviewBox_BigNumber,  .PreviewBox_SmallNumber{
+    text-align: center;
+  
+  }   
+  .PreviewBox_SmallNumber{
+    margin-top: -5px;
+  }
+  

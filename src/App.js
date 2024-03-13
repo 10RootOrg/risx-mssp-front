@@ -1,8 +1,8 @@
-import logo from './logo.svg';
+
 import './App.css';
 import SideBar from './SideBar/SideBar'
-import ResourceGroup from './monitoring/ResourceGroup'
-
+import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
+import DashBoard from './Components/monitoring/DashBoard'
 
 function App() {
   return (
@@ -13,7 +13,8 @@ function App() {
        <SideBar/> 
 
 <div className='app-main' >
-<ResourceGroup/>
+<DashBoard/>
+{/* <ResourceGroup/> */}
  
 </div>
 
