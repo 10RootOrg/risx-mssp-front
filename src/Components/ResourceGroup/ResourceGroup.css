@@ -5,13 +5,23 @@
     align-items: stretch;
     gap: 12px;
     justify-content: space-between; */
-    gap: var(--med-gap);
+    gap: var(--space-c);
     display: inline-flex;
     flex-wrap: wrap;
  
     
   }
    
+  .resource-group-all-the-Lists {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-e);
+  }
+  
+
+
+
+
   .resource-group-list-box{
  height: 200px;
 overflow-y: scroll;
@@ -33,11 +43,13 @@ align-items: center;
 
 
 
-.resource-group-list-headline-left{
-  display: flex;
+.resource-group-list-headline-left, .resource-group-Right-Action_btns  {
+ display: flex;
 justify-content: space-between;
 align-items: center;
 }
+
+
 .resource-group-list-keyNames{
   display: flex;
   justify-content:space-between;
@@ -48,10 +60,12 @@ align-items: center;
   display: flex;
   /* margin-top: 2px;
   margin-bottom: 2px; */
+
+
   padding-top: 1px;
   padding-bottom: 1px;
   height:calc((var(--space-d) - var(--space-a /2))  );
-
+ height:28px ;
   align-items: center;
   transition: var(--transition-fast)
 }
@@ -71,10 +85,9 @@ color: var(--color-DB-Blue-Glow);
 
   .resource-group-list-item{
  
- margin-right: var(  --marging-b);
+ margin-right: var( --space-b);
      width: 17%; 
-  
-     white-space: nowrap;
+      white-space: nowrap;
      overflow: hidden;
      text-overflow: ellipsis;
  

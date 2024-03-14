@@ -3,19 +3,28 @@ import './App.css';
 import SideBar from './SideBar/SideBar'
 import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
 import DashBoard from './Components/monitoring/DashBoard'
+import React, { useState } from 'react';
+
+
+
+
+
+
 
 function App() {
+  const [visblePage, set_visblePage] = useState("DashBoard")
+
   return (
 
 
     <div className='app-out' >
 
-       <SideBar/> 
+<SideBar set_visblePage={set_visblePage}/> 
+
 
 <div className='app-main' >
-<DashBoard/>
-{/* <ResourceGroup/> */}
- 
+{visblePage === "DashBoard" &&  <DashBoard/>}
+{visblePage === "ResourceGroup" &&  <ResourceGroup/>}
 </div>
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { PreviewBox_type1, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big} from '../PreviewBoxes.js'
+import { PreviewBox_type1, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b} from '../PreviewBoxes.js'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
  
  
@@ -30,24 +30,9 @@ function DashBoard() {
 
 </div>
 
- 
-<div className='resource-group-top-boxes mb-c' >
+{/* <PreviewBox_type2 HeadLine="קוביה גדולה"/>  */}
 
-<PreviewBox_type_tools_big
-indexNumber={"index"}
-iconAddress={"./icons/General-icons-g.svg"}
-HeadLine={"Endpoints Modules"}
-description={"Run artifacts on endpoints"}
-by={"11111111"}
-StatusColor={"grey"}
-date={"22/02/2024"}
-isActive={true}
-logoAddress_1={"./Logos/Velociraptor.svg"}
-readMoreAddress={"11111111"}
-readMoreText={"https://docs.velociraptor.app/"}
-buttonTitle={"Start Now"}
-toolURL={"https://docs.velociraptor.app/"}
-/>
+<div className='resource-group-top-boxes mb-c' >
 
 {jsonData?.map((Info, index) =>(
 
@@ -63,7 +48,6 @@ StatusColor={Info?.StatusColor}
 date={Info?.LastRun}
 isActive={Info?.isActive}
 logoAddress_1={Info?.logoAddress_1}
-logoAddress_2={Info?.logoAddress_2}
 readMoreAddress={Info?.readMoreAddress}
 readMoreText={Info?.readMoreText}
 buttonTitle={Info?.buttonTitle}
@@ -74,40 +58,9 @@ toolURL={Info?.toolURL}
 
            
            ))}
-
-
-{jsonData?.map((Info, index) =>(
-
-<>
-{Info?.BoxType === "Tools_b" ? (  
-<PreviewBox_type_tools_b
-indexNumber={index}
-iconAddress={Info?.iconAddress}
-HeadLine={Info?.headline}
-description={Info?.description}
-by={Info?.by}
-StatusColor={Info?.StatusColor}
-date={Info?.LastRun}
-isActive={Info?.isActive}
-logoAddress_1={Info?.logoAddress_1}
-logoAddress_2={Info?.logoAddress_2}
-readMoreAddress={Info?.readMoreAddress}
-readMoreText={Info?.readMoreText}
-buttonTitle={Info?.buttonTitle}
-toolURL={Info?.toolURL}
-            />  ) : null }
-
-     </>      
-
-           
-           ))}
-
-
-
-
 </div>
       
-{/* <div className='resource-group-top-boxes mb-c' >
+<div className='resource-group-top-boxes mb-c' >
 
 {jsonData?.map((Info, index) =>(
 
@@ -133,7 +86,7 @@ toolURL={Info?.toolURL}
 
            
            ))}
-</div> */}
+</div>
  
  
 </>

@@ -17,11 +17,11 @@
   transition: var(--transition-med)
   }
    
-.PreviewBox-type3{
+.PreviewBox-of-tools{
   height: 340px; 
   min-width: 215px;
-  flex-shrink: 5;/*   default 1 */
-  flex-grow: 1;
+  /* flex-shrink: 5; 
+  flex-grow: 1; */
 }
 
 
@@ -61,3 +61,10 @@
     margin-top: -5px;
   }
   
+
+  .responsive-logos-type1 {
+    max-width: 110px;
+    max-height: 30px; 
+    width: auto; 
+    height: auto; 
+  }
