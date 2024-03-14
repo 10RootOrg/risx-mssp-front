@@ -14,7 +14,7 @@
         "StatusColor": "blue",
         "LastRun": "11/06/2024",
         "buttonTitle" : "View",
-        "toolURL": "https://www.ynetnews.com/category/3083"
+        "toolURL": "http://23.101.51.55:5601/"
     },
     
     {
@@ -31,7 +31,7 @@
         "StatusColor": "blue",
         "LastRun": "11/06/2024",
         "buttonTitle" : "Create",
-        "toolURL": "https://www.ynetnews.com/category/3083"
+        "toolURL": "http://timesketch-10root.northeurope.cloudapp.azure.com/"
     },     {
         "BoxType": "Tools_a",
         "headline": "CTI DB & Dashboard",
@@ -46,7 +46,7 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "https://10root.com/"
+        "toolURL": "http://opencti.northeurope.cloudapp.azure.com:8080/"
 
     },
     
@@ -57,8 +57,8 @@
         "BoxType": "Tools_a",
         "headline": "Open Source Intelligence",
         "description": "Multi custom OSINT search engine",
-        "iconAddress": "./icons/General-icons-d.svg",
-        "by": "OSINT",
+        "iconAddress": "./icons/General-icons-h.svg",
+        "by": "10Root",
         "isActive": true,
         "logoAddress_1": "./Logos/10Root.svg",
         "logoAddress_2": "",
@@ -67,7 +67,7 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "https://10root.com/"
+        "toolURL": "https://inteltechniques.com/osintnet/tools/Search.html"
 
     },
    
@@ -86,7 +86,7 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Explore",
-        "toolURL": "https://thehackernews.com/"
+        "toolURL": "https://10root.com/"
 
     },
 
@@ -110,23 +110,7 @@
         "toolURL": "https://10root.com/"
 
     }
-    ,   {
-        "BoxType": "Tools_b",
-        "headline": "Fuzzy Hashing hunter",
-        "description": "Find Similar or Changed by Hash",
-        "iconAddress": "./icons/General-icons-d.svg",
-        "by": "TLSH",
-        "isActive": true,
-        "logoAddress_1": "./Logos/TLSH.svg",
-        "logoAddress_2": "",
-        "readMoreAddress": "www.www.www",
-        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
-        "StatusColor": "blue",
-        "LastRun": "22/02/2024",
-        "buttonTitle" : "Active",
-        "toolURL": "https://10root.com/"
-
-    },{
+    , {
         "BoxType": "Tools_b",
         "headline": "Privet Hashes DB",
         "description": "Create custom hash sets from files",
@@ -156,7 +140,7 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "https://10root.com/"
+        "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com:7000/"
 
     }   ,    {
         "BoxType": "Tools_b",
@@ -172,9 +156,9 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Explore",
-        "toolURL": "https://10root.com/"
+        "toolURL": "https://dehashed.com/"
 
-    }
+    }  
 ]
 
 
