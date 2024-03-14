@@ -19,7 +19,7 @@
    
 .PreviewBox-of-tools{
   height: 340px; 
-  min-width: 230px;
+  min-width: 220px;
   /* flex-shrink: 5; 
   flex-grow: 1; */
 }
@@ -74,3 +74,61 @@
     height: auto; 
   }
 
+
+  .velociraptor-all{
+    flex-direction: row;
+    min-width:47%;
+    flex-grow: 5;
+    }
+    
+    .velociraptor-left-side {
+    justify-content: space-between;
+    height: 100%;
+    width: 440px;
+    margin-right: var(--space-b);
+    }
+    
+    .velociraptor-right-side{
+    width: 100%;
+    justify-content: space-between;
+    }
+    
+    .velociraptor-EndpointModules-list-out{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: stretch;
+      flex-direction: column;
+      margin-top: var(--space-b);
+      margin-bottom: calc(var(--space-b) + var(--space-b));
+      
+    }
+    .velociraptor-EndpointModules-list-in{
+     
+      height: 248px;
+      overflow-y: scroll;
+    }
+    
+    .velociraptor-EndpointModules-item{
+    padding-top:   var(--space-b);
+    padding-bottom:var(--space-b);
+     display: flex;
+     justify-content:space-between;
+      height: 60px;
+      /* border:1px solid rebeccapurple; */
+    }
+
+    .velociraptor-EndpointModules-logo{
+      /* background-color: rgba(238, 255, 0, 0.103); */
+   
+   width: 80px
+     }
+
+     .velociraptor-EndpointModules-text{
+      /* background-color: rgba(60, 255, 0, 0.05); */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+   width: 100%
+     }

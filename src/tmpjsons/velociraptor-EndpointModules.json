@@ -1,0 +1,37 @@
+[
+   
+    {
+        "BoxType": "EndpointModules1",
+        "headline": "Endpoint Module no 1",
+        "description": "Search and analayze all collected artifacts",
+        "iconAddress": "./icons/General-icons-b.svg",
+        "by": "ELK",
+        "isActive": true,
+        "logoAddress_1": "./Logos/ELK.svg",
+        "logoAddress_2": "",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "11/06/2024",
+        "toolURL": "http://23.101.51.55:5601/"
+    },
+    {
+        "BoxType": "EndpointModules1",
+        "headline": "Haser",
+        "description": " handle large datasets across multiple nodes",
+        "iconAddress": "./icons/General-icons-b.svg",
+        "by": "ELK",
+        "isActive": true,
+        "logoAddress_1": "./Logos/ELK.svg",
+        "logoAddress_2": "",
+        "readMoreAddress": "www.www.www",
+        "readMoreText": "Elasticsearch is used for storing, searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster.",
+        "StatusColor": "blue",
+        "LastRun": "11/06/2024",
+        "toolURL": "http://23.101.51.55:5601/"
+    }
+     
+
+]
+
+

@@ -4,7 +4,7 @@ import React , {useState , useEffect} from 'react';
 
 
  import TmpChart2 from '../tmpjsons/tempChart.png'; 
-
+ import Zircolite from './Logos/Zircolite.svg'
 
 
 import './PreviewBoxes.css';
@@ -60,32 +60,32 @@ function PreviewBox_type2({HeadLine}) {
 
       <div className='display-flex' style={{marginRight:"auto"}}>
         <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}/>
-        <p className='   font-type-txt Color-White' >Domains: 127</p>
+        <p className='   font-type-txt Color-White  ' >Domains: 127</p>
         </div>
      
         <div className='display-flex' style={{marginRight:"auto"}}>
         <div className={`Bg-Blue-Glow Bg-Yellow light-bulb-type1 mr-a`} style={{opacity:'85%'}}/>
-        <p className='   font-type-txt Color-White' >I.P Addresses: 6</p>
+        <p className='   font-type-txt Color-White  ' >I.P Addresses: 6</p>
         </div>
 
         <div className='display-flex' style={{marginRight:"auto"}} >
         <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:'70%'}}/>
-        <p className='   font-type-txt Color-White' >Emails: 22</p>
+        <p className='   font-type-txt Color-White  ' >Emails: 22</p>
         </div>
 
-        <div className='display-flex' style={{marginRight:"auto"}}>
+        <div className='display-flex' style={{marginRight:"auto", width:"100%"}}>
         <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:'55%'}}/>
-        <p className='   font-type-txt Color-White' >Phone Nembers: 77</p>
+        <p className='   font-type-txt Color-White  '    >Phone Nembers: 77</p>
         </div>
         
-        <div className='display-flex' style={{marginRight:"auto"}}>
+        <div className='display-flex' style={{marginRight:"auto", width:"100%"}}>
         <div className={`Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:'30%'}}/>
-        <p className='   font-type-txt Color-White' >Names: 362</p>
+        <p className='   font-type-txt Color-White  ' >Names: 362</p>
         </div>
 
         <div className='display-flex' style={{marginRight:"auto"}}>
         <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:'15%'}}/>
-        <p className='   font-type-txt Color-White' >Has Privileges: 3</p>
+        <p className='   font-type-txt Color-White  ' >Has Privileges: 3</p>
         </div>
 
      </div>
@@ -105,60 +105,230 @@ function PreviewBox_type_tools_big({ indexNumber,HeadLine,description,by,StatusC
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
 
- 
- 
+  
  const logoAddress_1_ForSrc = require( `${logoAddress_1}`);
  const IconAddressForSrc = require( `${iconAddress}`);
 
   return (
-    <div className='PreviewBox PreviewBox-of-tools ' 
-    style={{
-      flexGrow:5,
-      minWidth:"500px"
+    <div className='PreviewBox PreviewBox-of-tools velociraptor-all  ' > 
+{/* ---------------------left-box----------------------------- */}
+<div className='velociraptor-left-side  display-flex     flex-direction-column  '  >
 
-    }}
-    //  style={{width:"400px"}}
-     > 
 
-    <div className='PreviewBox_HeadLine' >
-
-   <label className="switch"><input type="checkbox" /> <span className="slider round"></span></label>    {/* //  checked={Info?.Monitor} */}
-
-{/* <div className='display-flex' style={{marginRight:"24px"}}>
+{/* top left / */}
+<div className='display-flex  ' >
  <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
+ <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="180" height="28" position='relative'    /> 
+ </div>
 
- <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="140" height="20"    /> 
-
- </div> */}
-
-  <div className={`${StatusColorClass}  light-bulb-type1`}/></div>
-  
-    <div className='display-flex justify-content-center align-items-center flex-direction-column'  > 
+{/*  center  */}
+<div className='display-flex flex-direction-column  ' >
+{/*  icon  */}
      <img src={IconAddressForSrc} alt="Icon" width="100%" height="80" className='mb-a'   /> 
    
-
+{/*  text  */}
     <p className='text-center     font-type-h4 Color-White mb-a'  style={{maxWidth:"350px"}} >{HeadLine}</p>
     <p className='text-center   font-type-txt Color-White  mb-a'    style={{maxWidth:"250px"}}>{description}</p>
 
+{/*  read more  */}
+    <button className="btn-type3 "><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
 
-    <div className='display-flex mb-a' style={{marginRight:"24px"  }}>
- <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
- <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="140px" height="30"  />
- </div>
-
-
-    <button className="btn-type3 mb-c"><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
-
- <  a href={toolURL} target="_blank"> 
-    <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>
-   
     </div>
 
-     <div className='PreviewBox_ButtomLine' >
-       <IconLastRun />
-       <div className='font-type-very-sml-txt Color-Grey1' >{date}</div>
+{/* /////////////// button //////////// */}
+<div className='PreviewBox_ButtomLine' ><IconLastRun /><div className='font-type-very-sml-txt Color-Grey1' >{date}</div></div>
+ 
+    </div>
 
-     </div> {/*dont delete */}
+
+{/* -----------------------right-box------------------------ */}
+  <div className='velociraptor-right-side display-flex  flex-direction-column' > 
+
+  <div className=' display-flex  justify-content-space-between' style={{width:"100%", height:"24px"}} >
+  <div style={{width:"1px" }}/> 
+  <div className={`${StatusColorClass}  light-bulb-type1`} />
+</div>
+
+<div className='velociraptor-EndpointModules-list-out'  >
+ 
+<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+
+<div className='velociraptor-EndpointModules-list-in'  >
+
+ 
+<div className='velociraptor-EndpointModules-item' >
+
+ 
+  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
+  {/* <input type='checkbox' />  */}
+
+
+  <label class="container"> 
+  <input type="checkbox" defaultChecked />
+  <span class="checkmark"></span>
+</label>
+  </div>
+  
+  <div  className='velociraptor-EndpointModules-text'>
+    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
+    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
+    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
+  </div>
+
+  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
+    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
+
+    </div>
+
+</div>
+ 
+<div className='velociraptor-EndpointModules-item' >
+
+ 
+  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
+  {/* <input type='checkbox' />  */}
+
+
+  <label class="container"> 
+  <input type="checkbox" defaultChecked />
+  <span class="checkmark"></span>
+</label>
+  </div>
+  
+  <div  className='velociraptor-EndpointModules-text'>
+    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
+    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
+    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
+  </div>
+
+  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
+    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
+
+    </div>
+
+</div>
+ 
+<div className='velociraptor-EndpointModules-item' >
+
+ 
+  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
+  {/* <input type='checkbox' />  */}
+
+
+  <label class="container"> 
+  <input type="checkbox" defaultChecked />
+  <span class="checkmark"></span>
+</label>
+  </div>
+  
+  <div  className='velociraptor-EndpointModules-text'>
+    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
+    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
+    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
+  </div>
+
+  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
+    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
+
+    </div>
+
+</div>
+ 
+<div className='velociraptor-EndpointModules-item' >
+
+ 
+  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
+  {/* <input type='checkbox' />  */}
+
+
+  <label class="container"> 
+  <input type="checkbox" defaultChecked />
+  <span class="checkmark"></span>
+</label>
+  </div>
+  
+  <div  className='velociraptor-EndpointModules-text'>
+    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
+    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
+    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
+  </div>
+
+  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
+    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
+
+    </div>
+
+</div>
+ 
+<div className='velociraptor-EndpointModules-item' >
+
+ 
+  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
+  {/* <input type='checkbox' />  */}
+
+
+  <label class="container"> 
+  <input type="checkbox" defaultChecked />
+  <span class="checkmark"></span>
+</label>
+  </div>
+  
+  <div  className='velociraptor-EndpointModules-text'>
+    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
+    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
+    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
+  </div>
+
+  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
+    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
+
+    </div>
+
+</div>
+ 
+<div className='velociraptor-EndpointModules-item' >
+
+ 
+  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
+  {/* <input type='checkbox' />  */}
+
+
+  <label class="container"> 
+  <input type="checkbox" defaultChecked />
+  <span class="checkmark"></span>
+</label>
+  </div>
+  
+  <div  className='velociraptor-EndpointModules-text'>
+    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
+    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
+    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
+  </div>
+
+  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
+    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
+
+    </div>
+
+</div>
+ 
+
+</div>
+
+
+<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+</div>
+
+
+
+{/* buttom buttons */}
+<div className='mb-b'>
+ <  a href={toolURL} target="_blank" > <button className="btn-type2  "><p className='font-type-menu '>{buttonTitle} </p>  </button></a>
+</div>
+ 
+   </div>
+
+     
     </div>
   )
 }
@@ -280,7 +450,7 @@ function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusCol
     <div className='PreviewBox PreviewBox-of-tools' > 
 
     <div className='PreviewBox_HeadLine' style={{  height:20}}>
-
+ 
    <label className="switch"><input type="checkbox" /> <span className="slider round"></span></label>    {/* //  checked={Info?.Monitor} */}
 
  
@@ -302,7 +472,7 @@ function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusCol
      <img src={logoAddress_2_ForSrc} alt="logo"     className='responsive-logos-type_b'  />
      </div>
     ):(
-      <div className='display-flex mb-a' style={{marginRight:"24px"  }}>
+      <div className='display-flex mb-a' style={{marginRight:"5px"  }}>
       <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
       <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="140px" height="30"  />
       </div>

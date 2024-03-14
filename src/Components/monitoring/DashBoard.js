@@ -37,7 +37,7 @@ function DashBoard() {
 indexNumber={"index"}
 iconAddress={"./icons/General-icons-g.svg"}
 HeadLine={"Endpoints Modules"}
-description={"Run artifacts on endpoints"}
+description={"Select tools from the list and execute artifacts on endpoints"}
 by={"11111111"}
 StatusColor={"grey"}
 date={"22/02/2024"}
@@ -45,7 +45,7 @@ isActive={true}
 logoAddress_1={"./Logos/Velociraptor.svg"}
 readMoreAddress={"11111111"}
 readMoreText={"https://docs.velociraptor.app/"}
-buttonTitle={"Start Now"}
+buttonTitle={"Create TimeLine"}
 toolURL={"https://velociraptor-10root.northeurope.cloudapp.azure.com:8889"}
 />
 
