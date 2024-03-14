@@ -5,62 +5,23 @@
     align-items: stretch;
     gap: 12px;
     justify-content: space-between; */
-    gap: var(--med-gap);
+    gap: var(--space-c);
     display: inline-flex;
     flex-wrap: wrap;
  
     
   }
-  
- 
-  .PreviewBox{
-    background:var(--color-Grey5);
-    border-radius: var(--boxes-round-corner);
-    padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
-     height: 200px; 
-     width: 8%; 
-     min-width: 120px;
-     /* max-width: 800px; */
-   flex-shrink: 1;/*   default 1 */
-    flex-grow: 5;
+   
+  .resource-group-all-the-Lists {
     display: flex;
     flex-direction: column;
-  justify-content:space-between;
-  transition: var(--transition-med)
+    gap: var(--space-e);
   }
-   
-.PreviewBox:hover{
-  background:var(--color-Grey4);
-
-}
+  
 
 
-.PreviewBox-twice-size{
-    width: 21%; 
-}
 
 
-  .PreviewBox_HeadLine{
-   /* justify-self: flex-start; */
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-  }
-
-  .PreviewBox_ButtomLine{
-    display: flex;
-    align-items:center;
-    justify-content: flex-start;
-  }
-
-  .PreviewBox_BigNumber,  .PreviewBox_SmallNumber{
-    text-align: center;
-    color: var(--color-White);
-  }   
-  .PreviewBox_SmallNumber{
-    margin-top: -5px;
-  }
- 
   .resource-group-list-box{
  height: 200px;
 overflow-y: scroll;
@@ -82,11 +43,13 @@ align-items: center;
 
 
 
-.resource-group-list-headline-left{
-  display: flex;
+.resource-group-list-headline-left, .resource-group-Right-Action_btns  {
+ display: flex;
 justify-content: space-between;
 align-items: center;
 }
+
+
 .resource-group-list-keyNames{
   display: flex;
   justify-content:space-between;
@@ -95,16 +58,21 @@ align-items: center;
 
 .resource-group-list-line{
   display: flex;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  height:calc((var(--space-d) - var(--space-a /2))  );
+  /* margin-top: 2px;
+  margin-bottom: 2px; */
 
+
+  padding-top: 1px;
+  padding-bottom: 1px;
+  height:calc((var(--space-d) - var(--space-a /2))  );
+ height:28px ;
   align-items: center;
   transition: var(--transition-fast)
 }
 .resource-group-list-line:hover{
  background-color: var(--color-DB-Blue-Hover);
  border-radius: var(--elemtns-round-corner);
+ cursor: pointer;
 
 }
  
@@ -117,10 +85,9 @@ color: var(--color-DB-Blue-Glow);
 
   .resource-group-list-item{
  
- margin-right: var(  --marging-b);
+ margin-right: var( --space-b);
      width: 17%; 
-  
-     white-space: nowrap;
+      white-space: nowrap;
      overflow: hidden;
      text-overflow: ellipsis;
  
@@ -146,15 +113,11 @@ color: var(--color-DB-Blue-Glow);
  
 
 
-  
-  .light-bulb-type1{
-    height: 10px;
-    width: 10px;
-    border-radius: 100%;
-  }
+ 
   
 
   .resource-group-list-line:hover > .resource-group-list-item   .btn-type1   .icon-type1 path {
     stroke:var(--color-DB-Blue-Glow);
+    
      }
 

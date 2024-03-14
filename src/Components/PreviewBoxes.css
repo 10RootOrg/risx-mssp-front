@@ -1,0 +1,76 @@
+ 
+  
+ 
+  .PreviewBox{
+    background:var(--color-Grey5);
+    border-radius: var(--boxes-round-corner);
+    padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
+     height: 200px; 
+     width: 8%; 
+     min-width: 120px;
+     /* max-width: 800px; */
+   flex-shrink: 1;/*   default 1 */
+    flex-grow: 5;
+    display: flex;
+    flex-direction: column;
+  justify-content:space-between;
+  transition: var(--transition-med)
+  }
+   
+.PreviewBox-of-tools{
+  height: 340px; 
+  min-width: 230px;
+  /* flex-shrink: 5; 
+  flex-grow: 1; */
+}
+
+
+
+.PreviewBox:hover{
+  background:var(--color-Grey4);
+
+}
+
+
+
+
+
+.PreviewBox-twice-size{
+    width: 21%; 
+}
+
+
+  .PreviewBox_HeadLine{
+   /* justify-self: flex-start; */
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+  }
+
+  .PreviewBox_ButtomLine{
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+  }
+
+  .PreviewBox_BigNumber,  .PreviewBox_SmallNumber{
+    text-align: center;
+  
+  }   
+  .PreviewBox_SmallNumber{
+    margin-top: -5px;
+  }
+  
+  .responsive-logos-type_a {
+    max-width: 76px;
+    max-height: 30px; 
+    width: auto; 
+    height: auto; 
+  }
+  .responsive-logos-type_b {
+    max-width: 110px;
+    max-height: 30px; 
+    width: auto; 
+    height: auto; 
+  }
+

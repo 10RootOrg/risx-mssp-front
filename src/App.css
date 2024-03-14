@@ -1,18 +1,19 @@
  
 :root {
-  --big-gap: 60px;
-  --med-gap: 20px;
-  --sml-gap: 20px;
+ 
+
   --color-Black: #1B2231; 
   --color-White: #E5E5E5; 
   --color-Grey1: #AEB3BC; 
   --color-Grey2: #525C70; 
-  --color-Grey4: #2D3A50; 
+  --color-Grey4: #283349; 
   --color-Grey5: #242E42; 
   --color-DB-Blue-Glow: #00DBFF; 
   --color-DB-Blue-low: #00ddff15; 
   --color-DB-Blue-Active: #00ddff9d; 
-  --color-DB-Blue-Hover: #00DBFF45; 
+  /* --color-DB-Blue-Hover: #00DBFF45;  */
+  --color-DB-Blue-Hover: rgb(0, 221, 255,0.15);
+  --color-DB-Blue-Hover-Real: rgb(0, 221, 255,0.45);
   --color-Red: #FF0000; 
   --color-Yellow: #FFFF00; 
   --color-Green: #00FF00; 
@@ -20,17 +21,15 @@
   --elemtns-round-corner: 6px;
   --line-width-small: 2px;
 
-  --marging-a: 5px;
-  --marging-b: 10px;
-
-  --padding-a: 5px;
-  --padding-b: 10px;
-  --padding-c: 20px;
+ 
+ 
 
   --space-a: 5px;
   --space-b: 10px;
-  --space-c: 20px;
+  --space-c: 18px;
   --space-d: 30px;
+  --space-e: 60px;
+
 
   --transition-med: all 0.25s ease-in-out;
   --transition-fast: all 0.15s ease-in-out;
@@ -41,13 +40,13 @@
 .Color-Grey1{color: var(--color-Grey1);}
 .Color-Grey2{color: var(--color-Grey2);}
 .Color-Grey5{color: var(--color-Grey5);}
-
 .Color-Blue-Glow{color: var(--color-DB-Blue-Glow);}
 
+
+.Bg-Blue-Glow{background-color:var(--color-DB-Blue-Glow)}
 .Bg-Green{background-color:var(--color-Green)}
 .Bg-Yellow{background-color:var(--color-Yellow)}
 .Bg-Red{background-color:var(--color-Red)}
-
 
 .Bg-Grey2{background-color:var(--color-Grey2)}
 .Bg-Blue-Glow{background-color:var(--color-DB-Blue-Glow)}
@@ -71,11 +70,12 @@ p{color: var(--color-White);
 }
 
 .font-type-txt{
-  font-size: 14px;
+  font-size: 13.5px;
   margin: 0;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   font-style: normal;
+  line-height: 140%;
 }
 .font-type-menu{
   font-size: 14px;
@@ -92,6 +92,8 @@ p{color: var(--color-White);
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-style: normal;
+  letter-spacing: 0.03rem;
+  line-height: 100%;
 }
 .font-type-h3{
   font-size: 34px;
@@ -106,6 +108,7 @@ p{color: var(--color-White);
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-style: normal; 
+  
 }
 
 .make-underline{
@@ -120,9 +123,10 @@ p{color: var(--color-White);
 
 .make-underline:hover     { 
  
-   display: inline-block; /* Makes sure the border applies correctly for inline elements like <span> or <a> */
-  border-bottom: 2px solid currentColor; /* Creates a 2px thick underline. 'currentColor' uses the text's current color */
-  padding-bottom: 3px; /* Adjusts the distance of the underline from the text */
+   display: inline-block; 
+  border-bottom: 2px solid currentColor; 
+  padding-bottom: 3px; 
+  cursor: pointer;
 }
 
  
@@ -140,24 +144,28 @@ p{color: var(--color-White);
 .mb-a{ margin-bottom: 5px;}
 .mb-b{ margin-bottom: 10px;}
 .mb-c{ margin-bottom: 20px;}
+
 .mt-a{ margin-top: 5px;}
 .mt-b{ margin-top: 10px;}
 .mt-c{ margin-top: 20px;}
+.mt-d{ margin-top: 30px;}
+.mt-e{ margin-top: 60px;}
+
 
 .app-out {
   background-color:var(--color-Black);
   min-height: 100vh; 
   display: flex;
-  gap: var(--med-gap);
+  gap: var(--space-c);
 }
 
 
 .app-main{
   display: flex; flex-direction: column;
-  /* gap: var(--med-gap); */
-  margin-right: var(--med-gap);
-  margin-top: var(--med-gap);
-  margin-bottom: var(--med-gap); 
+ 
+  margin-right: var(--space-c);
+  margin-top: var(--space-c);
+  margin-bottom: var(--space-c); 
   /* background-color: rgb(255, 0, 255); */
   width: 100%;
    /* min-height: 100vh;  */
@@ -236,14 +244,15 @@ width: 28px;
 
 .btn-type1:hover{
   background-color: var(--color-DB-Blue-Hover);
-  transition: var(--transition-fast)
+  transition: var(--transition-fast);
+  cursor: pointer;
+  
 }
 .btn-type1:active{
   background-color: var(--color-DB-Blue-Active);
   transition: var(--transition-fast)
   
 }
-
 
 .btn-type1 .icon-type1  path{
   stroke: var(--color-Grey2);
@@ -257,6 +266,58 @@ width: 28px;
 
 
   /* /////////////////////// */
+.btn-type2{
+  height:36px;
+  margin: 0;
+  padding: 0 var(--space-d);
+  border:0;
+  border-radius: var(--elemtns-round-corner);
+  background-color: var(--color-DB-Blue-Hover);
+  transition: var(--transition-fast)
+}
+
+.btn-type2:hover{
+  background-color: var(--color-DB-Blue-Hover-Real); cursor: pointer;
+  
+}
+.btn-type2 p{color: var(--color-DB-Blue-Glow);
+}
+
+.btn-type3{
+  display: flex;
+  background-color:transparent;
+  border:0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+
+.btn-type3 p{color: var(--color-DB-Blue-Hover-Real);  transition: var(--transition-fast);}
+.btn-type3:hover p{color: var(--color-DB-Blue-Glow);}
+.btn-type3 .icon-type1 path{
+  transition: var(--transition-fast);
+  stroke: var(--color-DB-Blue-Hover-Real)}
+.btn-type3:hover .icon-type1  path{
+
+  stroke: var(--color-DB-Blue-Glow)}
+
+.cutLongParagraph{
+
+ 
+  line-height: 1.5em; /* Adjust based on your design */
+  max-height: 3em; /* 2 times the line-height to display two lines */
+  overflow: hidden; /* Hide overflow */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines you want to display */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis; /* This will not work in multi-line truncation without the above properties */
+  white-space: normal; /* Allow wrapping */
+}
+  /* /////////////////////// */
+
+  /* /////////////////////// */
 .tagit{
   display: flex;
    align-items: center;
@@ -267,7 +328,12 @@ border-radius:  15px;
 height: var(--space-c);
 padding: 0 var(--space-b);
 }
-
+  /* /////////////////////// */
+.light-bulb-type1{
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+}
 
   /* /////////////////////// */
 
@@ -315,8 +381,18 @@ padding: 0 var(--space-b);
   background-color: #00FF00;
 }
   */
+/* //////////// general ///////////////// */
+
   .display-flex{ display: flex;  align-items: center;}
- 
+
+.text-center{ text-align: center;}
+.justify-content-center{justify-content:center}
+.justify-content-space-between{justify-content:space-between}
+.align-self-center{align-self: center;}
+.align-items-center{align-items: center;}
+.align-items-left{align-items: left;}
+.flex-direction-column{flex-direction :column}
+
 
 input:checked + .slider {
   background-color:var(--color-DB-Blue-Active);
