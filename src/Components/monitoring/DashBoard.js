@@ -46,7 +46,7 @@ logoAddress_1={"./Logos/Velociraptor.svg"}
 readMoreAddress={"11111111"}
 readMoreText={"https://docs.velociraptor.app/"}
 buttonTitle={"Start Now"}
-toolURL={"https://docs.velociraptor.app/"}
+toolURL={"https://velociraptor-10root.northeurope.cloudapp.azure.com:8889"}
 />
 
 {jsonData?.map((Info, index) =>(

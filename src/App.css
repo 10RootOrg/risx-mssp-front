@@ -243,7 +243,7 @@ width: 28px;
 }
 
 .btn-type1:hover{
-  background-color: var(--color-DB-Blue-Hover);
+  background-color: var(--color-DB-Blue-Hover-Real);
   transition: var(--transition-fast);
   cursor: pointer;
   
