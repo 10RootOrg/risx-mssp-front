@@ -388,6 +388,7 @@ padding: 0 var(--space-b);
 .text-center{ text-align: center;}
 .justify-content-center{justify-content:center}
 .justify-content-space-between{justify-content:space-between}
+.align-self-center{align-self: center;}
 .align-items-center{align-items: center;}
 .align-items-left{align-items: left;}
 .flex-direction-column{flex-direction :column}

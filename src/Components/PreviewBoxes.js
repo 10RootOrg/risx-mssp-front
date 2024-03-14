@@ -170,8 +170,28 @@ function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusCol
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
  
- const logoAddress_1_ForSrc = require( `${logoAddress_1}`);
- const IconAddressForSrc = require( `${iconAddress}`);
+  const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
+  const [logoAddress_2_ForSrc, set_logoAddress_2_ForSrc] = useState("")
+
+
+  const IconAddressForSrc = require( `${iconAddress}`);
+
+
+  useEffect(() => {
+    if (logoAddress_1 !== "" &&  logoAddress_1 !== null &&  logoAddress_1 !== undefined ) {
+      console.log("OK", logoAddress_1 );
+     const  Src = require( `${logoAddress_1}`)
+      set_logoAddress_1_ForSrc(Src)
+    }
+    if (logoAddress_2 !== "" &&  logoAddress_2 !== null &&  logoAddress_2 !== undefined ) {
+      console.log("OK", logoAddress_2 );
+     const  Src = require( `${logoAddress_2}`)
+      set_logoAddress_2_ForSrc(Src)
+    }
+
+
+    }, []);
+
 
   return (
     <div className='PreviewBox PreviewBox-of-tools'
@@ -184,10 +204,23 @@ function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusCol
 
    <label className="switch"><input type="checkbox" /> <span className="slider round"></span></label>    {/* //  checked={Info?.Monitor} */}
 
-<div className='display-flex' style={{marginRight:"24px"}}>
- <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
- <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="140" height="20"  />
- </div>
+
+
+
+ {/* ///////////// 1 or 2 logos /////////////// */}
+ {logoAddress_2_ForSrc !== "" ? (
+     <div className='display-flex     mr-a ml-a' style={{  }}>
+     {/* <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p> */}
+     <img src={logoAddress_1_ForSrc} alt="logo"   className='responsive-logos-type_a'  />
+     <p  className="font-type-very-sml-txt   Color-Grey1 mr-a ml-a" >&</p>
+     <img src={logoAddress_2_ForSrc} alt="logo"     className='responsive-logos-type_a'  />
+     </div>
+    ):(
+      <div className='display-flex ' style={{marginRight:"24px"}}>
+      <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
+      <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="140" height="20"  />
+      </div>
+    )  }
 
   <div className={`${StatusColorClass}  light-bulb-type1`}/></div>
   
@@ -264,9 +297,9 @@ function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusCol
     {logoAddress_2_ForSrc !== "" ? (
      <div className='display-flex mb-a' style={{  }}>
      {/* <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p> */}
-     <img src={logoAddress_1_ForSrc} alt="logo"   className='responsive-logos-type1'  />
+     <img src={logoAddress_1_ForSrc} alt="logo"   className='responsive-logos-type_b'  />
      <p  className="font-type-very-sml-txt   Color-Grey1 mr-a ml-a" >&</p>
-     <img src={logoAddress_2_ForSrc} alt="logo"     className='responsive-logos-type1'  />
+     <img src={logoAddress_2_ForSrc} alt="logo"     className='responsive-logos-type_b'  />
      </div>
     ):(
       <div className='display-flex mb-a' style={{marginRight:"24px"  }}>
