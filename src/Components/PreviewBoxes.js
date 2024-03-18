@@ -1,11 +1,13 @@
 import React , {useState , useEffect} from 'react';
  import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
-
+ import { PopUpSmart } from "./Features/PopUpSmart.js";
 
  import TmpChart2 from '../tmpjsons/tempChart.png'; 
- import Zircolite from './Logos/Zircolite.svg'
+ 
+//  onClick={()=>handleReadMore("the_tool_info")} 
 
+     
 
 import './PreviewBoxes.css';
  
@@ -98,240 +100,6 @@ function PreviewBox_type2({HeadLine}) {
   )
 }
 
-function PreviewBox_type_tools_big({ indexNumber,HeadLine,description,by,StatusColor,date,isActive,logoAddress_1,readMoreAddress,readMoreText,buttonTitle,iconAddress,toolURL}) {
- 
-  const StatusColorClass =
-  StatusColor === 'red' ? 'Bg-Red' :
-  StatusColor === 'blue' ?'Bg-Blue-Glow' : 
-  'Bg-Grey2';
-
-  
- const logoAddress_1_ForSrc = require( `${logoAddress_1}`);
- const IconAddressForSrc = require( `${iconAddress}`);
-
-  return (
-    <div className='PreviewBox PreviewBox-of-tools velociraptor-all  ' > 
-{/* ---------------------left-box----------------------------- */}
-<div className='velociraptor-left-side  display-flex     flex-direction-column  '  >
-
-
-{/* top left / */}
-<div className='display-flex  ' >
- <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
- <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="180" height="28" position='relative'    /> 
- </div>
-
-{/*  center  */}
-<div className='display-flex flex-direction-column  ' >
-{/*  icon  */}
-     <img src={IconAddressForSrc} alt="Icon" width="100%" height="80" className='mb-a'   /> 
-   
-{/*  text  */}
-    <p className='text-center     font-type-h4 Color-White mb-a'  style={{maxWidth:"350px"}} >{HeadLine}</p>
-    <p className='text-center   font-type-txt Color-White  mb-a'    style={{maxWidth:"250px"}}>{description}</p>
-
-{/*  read more  */}
-    <button className="btn-type3 "><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
-
-    </div>
-
-{/* /////////////// button //////////// */}
-<div className='PreviewBox_ButtomLine' ><IconLastRun /><div className='font-type-very-sml-txt Color-Grey1' >{date}</div></div>
- 
-    </div>
-
-
-{/* -----------------------right-box------------------------ */}
-  <div className='velociraptor-right-side display-flex  flex-direction-column' > 
-
-  <div className=' display-flex  justify-content-space-between' style={{width:"100%", height:"24px"}} >
-  <div style={{width:"1px" }}/> 
-  <div className={`${StatusColorClass}  light-bulb-type1`} />
-</div>
-
-<div className='velociraptor-EndpointModules-list-out'  >
- 
-<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
-
-<div className='velociraptor-EndpointModules-list-in'  >
-
- 
-<div className='velociraptor-EndpointModules-item' >
-
- 
-  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
-  {/* <input type='checkbox' />  */}
-
-
-  <label class="container"> 
-  <input type="checkbox" defaultChecked />
-  <span class="checkmark"></span>
-</label>
-  </div>
-  
-  <div  className='velociraptor-EndpointModules-text'>
-    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
-    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
-    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
-  </div>
-
-  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
-    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
-
-    </div>
-
-</div>
- 
-<div className='velociraptor-EndpointModules-item' >
-
- 
-  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
-  {/* <input type='checkbox' />  */}
-
-
-  <label class="container"> 
-  <input type="checkbox" defaultChecked />
-  <span class="checkmark"></span>
-</label>
-  </div>
-  
-  <div  className='velociraptor-EndpointModules-text'>
-    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
-    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
-    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
-  </div>
-
-  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
-    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
-
-    </div>
-
-</div>
- 
-<div className='velociraptor-EndpointModules-item' >
-
- 
-  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
-  {/* <input type='checkbox' />  */}
-
-
-  <label class="container"> 
-  <input type="checkbox" defaultChecked />
-  <span class="checkmark"></span>
-</label>
-  </div>
-  
-  <div  className='velociraptor-EndpointModules-text'>
-    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
-    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
-    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
-  </div>
-
-  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
-    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
-
-    </div>
-
-</div>
- 
-<div className='velociraptor-EndpointModules-item' >
-
- 
-  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
-  {/* <input type='checkbox' />  */}
-
-
-  <label class="container"> 
-  <input type="checkbox" defaultChecked />
-  <span class="checkmark"></span>
-</label>
-  </div>
-  
-  <div  className='velociraptor-EndpointModules-text'>
-    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
-    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
-    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
-  </div>
-
-  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
-    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
-
-    </div>
-
-</div>
- 
-<div className='velociraptor-EndpointModules-item' >
-
- 
-  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
-  {/* <input type='checkbox' />  */}
-
-
-  <label class="container"> 
-  <input type="checkbox" defaultChecked />
-  <span class="checkmark"></span>
-</label>
-  </div>
-  
-  <div  className='velociraptor-EndpointModules-text'>
-    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
-    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
-    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
-  </div>
-
-  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
-    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
-
-    </div>
-
-</div>
- 
-<div className='velociraptor-EndpointModules-item' >
-
- 
-  <div  className='velociraptor-EndpointModules-checkbox mr-b'>
-  {/* <input type='checkbox' />  */}
-
-
-  <label class="container"> 
-  <input type="checkbox" defaultChecked />
-  <span class="checkmark"></span>
-</label>
-  </div>
-  
-  <div  className='velociraptor-EndpointModules-text'>
-    <p className='font-type-menu  Color-White   cutLongLine'>Logs Search & Index </p>
-    <p className='font-type-txt   Color-Grey1   cutLongLine'>searching, and analyzing structured and unstructured data in near real-time. One of the key features of Elasticsearch is its scalability, which allows it to handle large datasets across multiple nodes in a cluster</p>
-    <button className="btn-type3 " style={{padding:0 }}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
-  </div>
-
-  <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
-    <img className='velociraptor-EndpointModules-logo  '  src={Zircolite} ></img>
-
-    </div>
-
-</div>
- 
-
-</div>
-
-
-<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
-</div>
-
-
-
-{/* buttom buttons */}
-<div className='mb-b'>
- <  a href={toolURL} target="_blank" > <button className="btn-type2  "><p className='font-type-menu '>{buttonTitle} </p>  </button></a>
-</div>
- 
-   </div>
-
-     
-    </div>
-  )
-}
 
 function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusColor,date,isActive,logoAddress_1,logoAddress_2, readMoreAddress,readMoreText,buttonTitle,iconAddress,toolURL}) {
  
@@ -342,9 +110,12 @@ function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusCol
  
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
   const [logoAddress_2_ForSrc, set_logoAddress_2_ForSrc] = useState("")
-
-
   const IconAddressForSrc = require( `${iconAddress}`);
+  const [popUp_show, set_popUp_show] = useState(false);
+
+  const handleReadMore = () =>{
+    set_popUp_show(true);
+  }
 
 
   useEffect(() => {
@@ -362,8 +133,22 @@ function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusCol
 
     }, []);
 
-
+ 
   return (
+
+<>
+
+<PopUpSmart
+        HeadLine={HeadLine}
+        readMoreText={readMoreText}
+        logoAddress_1_ForSrc={logoAddress_1_ForSrc}
+        toolURL={toolURL}
+        buttonTitle={buttonTitle}
+        set_popUp_show={set_popUp_show}
+        popUp_show={popUp_show}
+        IconAddressForSrc={IconAddressForSrc}
+      />
+
     <div className='PreviewBox PreviewBox-of-tools'
     style={{
       flexGrow:1
@@ -388,7 +173,7 @@ function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusCol
     ):(
       <div className='display-flex ' style={{marginRight:"24px"}}>
       <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
-      <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="140" height="20"  />
+      <img src={logoAddress_1_ForSrc} alt="logo" maxwidth="140" height="20"  />
       </div>
     )  }
 
@@ -396,9 +181,9 @@ function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusCol
   
     <div className='display-flex justify-content-center align-items-center flex-direction-column'  > 
     <img src={IconAddressForSrc} alt="Icon" width="70" height="70" className='mb-a' />
-    <p className='text-center     font-type-h4 Color-White mb-a'  style={{maxWidth:"350px"}} >{HeadLine}</p>
-    <p className='text-center   font-type-txt Color-White  mb-a'    style={{maxWidth:"250px"}}>{description}</p>
-    <button className="btn-type3 mb-c"><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
+    <p className='text-center     font-type-h4 Color-White mb-a'  style={{maxwidth:"350px"}} >{HeadLine}</p>
+    <p className='text-center   font-type-txt Color-White  mb-a'    style={{maxwidth:"250px"}}>{description}</p>
+    <button className="btn-type3 mb-c" onClick={()=>handleReadMore()}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 "  />  </button>
 
  <  a href={toolURL} target="_blank"> 
     <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>
@@ -411,15 +196,30 @@ function PreviewBox_type_tools_a({ indexNumber,HeadLine,description,by,StatusCol
 
      </div> {/*dont delete */}
     </div>
+</>
+
+
   )
 }
 
-function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusColor,date,isActive,logoAddress_1,logoAddress_2,readMoreAddress,readMoreText,buttonTitle,iconAddress,toolURL}) {
+function PreviewBox_type_tools_b({   indexNumber,HeadLine,description,by,StatusColor,date,isActive,logoAddress_1,logoAddress_2,readMoreAddress,readMoreText,buttonTitle,iconAddress,toolURL}) {
  
+
+  const StatusColorClass =
+  StatusColor === 'red' ? 'Bg-Red' :
+  StatusColor === 'blue' ?'Bg-Blue-Glow' : 
+  'Bg-Grey2';
+
+
+
+  const [popUp_show, set_popUp_show] = useState(false);
+
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
   const [logoAddress_2_ForSrc, set_logoAddress_2_ForSrc] = useState("")
 
-
+  const handleReadMore = () =>{
+    set_popUp_show(true);
+  }
   useEffect(() => {
     if (logoAddress_1 !== "" &&  logoAddress_1 !== null &&  logoAddress_1 !== undefined ) {
       console.log("OK", logoAddress_1 );
@@ -438,28 +238,35 @@ function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusCol
 
  
 
- const StatusColorClass =
- StatusColor === 'red' ? 'Bg-Red' :
- StatusColor === 'blue' ?'Bg-Blue-Glow' : 
- 'Bg-Grey2';
 
 
 
- // console.log(logoAddress_1_ForSrc);
   return (
-    <div className='PreviewBox PreviewBox-of-tools' > 
+<>
+
+<PopUpSmart
+        HeadLine={HeadLine}
+        readMoreText={readMoreText}
+        logoAddress_1_ForSrc={logoAddress_1_ForSrc}
+        toolURL={toolURL}
+        buttonTitle={buttonTitle}
+        set_popUp_show={set_popUp_show}
+        popUp_show={popUp_show}
+      />
+
+
+  <div className='PreviewBox PreviewBox-of-tools' > 
 
     <div className='PreviewBox_HeadLine' style={{  height:20}}>
  
    <label className="switch"><input type="checkbox" /> <span className="slider round"></span></label>    {/* //  checked={Info?.Monitor} */}
 
- 
   <div className={`${StatusColorClass}  light-bulb-type1`}/></div>
   
     <div className='display-flex justify-content-center align-items-center flex-direction-column'  > 
     {/* <img src={IconAddressForSrc} alt="Icon" width="70" height="70" className='mb-a' /> */}
-    <p className='text-center     font-type-h4 Color-White mb-a'  style={{maxWidth:"350px"}} >{HeadLine}</p>
-    <p className='text-center   font-type-txt Color-White  mb-b cutLongParagraph'    style={{maxWidth:"250px"}}>{description}</p>
+    <p className='text-center     font-type-h4 Color-White mb-a'  style={{maxwidth:"350px"}} >{HeadLine}</p>
+    <p className='text-center   font-type-txt Color-White  mb-b cutLongParagraph'    style={{maxwidth:"250px"}}>{description}</p>
  
 
  
@@ -474,7 +281,7 @@ function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusCol
     ):(
       <div className='display-flex mb-a' style={{marginRight:"5px"  }}>
       <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
-      <img src={logoAddress_1_ForSrc} alt="logo" maxWidth="140px" height="30"  />
+      <img src={logoAddress_1_ForSrc} alt="logo" maxwidth="140px" height="30"  />
       </div>
     )  }
 
@@ -484,10 +291,9 @@ function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusCol
 
   
 
-    <button className="btn-type3 mb-c"><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
+    <button className="btn-type3 mb-c" onClick={()=>handleReadMore()}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
 
- <  a href={toolURL} target="_blank"> 
-    <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>
+ <  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>
    
     </div>
 
@@ -497,8 +303,11 @@ function PreviewBox_type_tools_b({ indexNumber,HeadLine,description,by,StatusCol
 
      </div> {/*dont delete */}
     </div>
+</>
+
+  
   )
 }
 
 
-export { PreviewBox_type1, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big};
+export { PreviewBox_type1, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b };

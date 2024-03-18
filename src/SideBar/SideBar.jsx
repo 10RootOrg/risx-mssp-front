@@ -1,11 +1,24 @@
-
 import React, { useState } from 'react';
 import './SideBar.css';
+import { ReactComponent as RisxMsspLogo } from '../Components/Logos/RisxMssp_logo_Standart.svg';
+import { ReactComponent as MenuArrowDown } from '../Components/icons/ico-menu-arrow-down.svg';
+import { ReactComponent as IcoMonitor } from '../Components/icons/ico-menu-monitor.svg';
+import { ReactComponent as IcoResourceGroup } from '../Components/icons/ico-menu-Resource-Group.svg';
+import { ReactComponent as IcoAccount } from '../Components/icons/ico-menu-account.svg';
+import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
 
-function SideBar({set_visblePage}) {
 
+ 
 
+function SideBar({ visblePage, set_visblePage}) {
 
+const [openSubMenu, set_openSubMenu] = useState("none")
+
+const handleSubMenu = (name) => {
+if (openSubMenu === name ){set_openSubMenu("none")}
+else{set_openSubMenu(name);}
+  
+};
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
@@ -15,11 +28,76 @@ const handleClick = (page_name) => {
     return (
  
 
-      <div className='side-bar-out'>
-     <p > SideBar </p>
+      <div className='side-bar-desktop-out'>
 
-<input type='button' value='DashBoard' onClick={()=>handleClick("DashBoard")} ></input>
-<input type='button' value='ResourceGroup' onClick={()=>handleClick("ResourceGroup")} ></input>
+
+
+
+<RisxMsspLogo className="mt-c mb-b"/>
+ 
+
+<button className="btn-menu  " >
+        <div className='display-flex'>
+          <IcoAccount className="btn-menu-icon-placeholder  mr-a " />
+          <p className='font-type-menu '>Dor Amit</p>
+            <span className='notification'><p className='font-type-very-sml-txt'>2</p></span>
+            </div>
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button> 
+
+
+ <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+
+
+
+
+ <div className="btn-menu-list  ">
+<button className="btn-menu  " onClick={()=>handleSubMenu("Monitoring")} >
+        <div className='display-flex'><IcoMonitor className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Monitoring</p></div>
+        <div className="btn-menu-icon-placeholder MenuArrowDown "> <MenuArrowDown  /></div>
+</button> 
+
+ 
+<button className={
+  `
+  ${openSubMenu === "Monitoring" && "btn-menu animate-menu-on" }
+  ${openSubMenu !== "Monitoring" && "animate-menu-off btn-menu"}
+   `
+  } 
+
+  disabled={visblePage === "DashBoard"}
+    // ${visblePage === "DashBoard" ? "btn-menu-is-active" : ""}
+   onClick={()=>handleClick("DashBoard")}>
+        <div className='display-flex'><div className="btn-menu-icon-placeholder  mr-a "  ></div>  <p className='font-type-menu '>DashBoard</p></div>
+        <div className="btn-menu-icon-placeholder  ">  </div>
+</button>
+
+ 
+ 
+{/* <div className={openSubMenu === "Monitoring" ? "btn-menu " + menuClass : "btn-menu"}> */}
+
+<button className="btn-menu  " onClick={()=>handleClick("ResourceGroup")}   disabled={visblePage === "ResourceGroup"}>
+        <div className='display-flex'><IcoResourceGroup className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Resource Group</p></div>
+      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
+</button> 
+ </div>
+
+
+ <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+
+
+
+ <button className="btn-menu  " >
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
+          <p className='font-type-menu '>Download Agent</p>
+        
+            </div>
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button> 
+
+
+
       </div>
      
  

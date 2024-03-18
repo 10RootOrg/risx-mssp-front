@@ -3,6 +3,7 @@
  
 
   --color-Black: #1B2231; 
+ --color-Black70: #1b2231de;  /* use for popups */
   --color-White: #E5E5E5; 
   --color-Grey1: #AEB3BC; 
   --color-Grey2: #525C70; 
@@ -18,9 +19,11 @@
   --color-Red: #FF0000; 
   --color-Yellow: #FFFF00; 
   --color-Green: #00FF00; 
+  --popups-round-corner: 30px;
   --boxes-round-corner: 15px;
   --elemtns-round-corner-medium: 6px;
   --elemtns-round-corner-small: 3px;
+
   --line-width-small: 2px;
 
  
@@ -32,7 +35,7 @@
   --space-d: 30px;
   --space-e: 60px;
 
-
+  --transition-slow: all 0.9s ease-in-out;
   --transition-med: all 0.25s ease-in-out;
   --transition-fast: all 0.15s ease-in-out;
  
@@ -83,6 +86,11 @@ p{color: var(--color-White);
   font-style: normal;
   line-height: 140%;
 }
+
+.reading-height{
+  line-height: 160%
+}
+
 .font-type-menu{
   font-size: 14px;
  
@@ -166,18 +174,23 @@ p{color: var(--color-White);
 }
 
 
+
 .app-main{
   display: flex; flex-direction: column;
  
   margin-right: var(--space-c);
-  margin-top: var(--space-c);
+  margin-top: calc(var(--space-d) + var(--space-a));
   margin-bottom: var(--space-c); 
   /* background-color: rgb(255, 0, 255); */
   width: 100%;
    /* min-height: 100vh;  */
 }
 
-
+@media only screen and (max-width: 1100px) {
+  .app-main{
+  margin-left: var(--space-c);
+  
+}}
 
 
 
@@ -406,11 +419,16 @@ padding: 0 var(--space-b);
 .text-center{ text-align: center;}
 .justify-content-center{justify-content:center}
 .justify-content-space-between{justify-content:space-between}
+.justify-content-start{justify-content:flex-start}
+.justify-content-end{justify-content:flex-end}
 .align-self-center{align-self: center;}
 .align-items-center{align-items: center;}
 .align-items-left{align-items: left;}
 .flex-direction-column{flex-direction :column}
 .flex-direction-row{flex-direction :row}
+
+.float-right{  float: right;}
+
 
 input:checked + .slider {
   background-color:var(--color-DB-Blue-Active);
