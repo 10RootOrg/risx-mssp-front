@@ -23,7 +23,7 @@ function ResourceGroup() {
 <p  className="font-type-menu" >Resource Group:</p>
 <p  className="font-type-h3" >TelAviv Office </p>
 </div>
-<div className='top-of-page-center'>center</div>
+<div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 
 
 <div className='top-of-page-right'>

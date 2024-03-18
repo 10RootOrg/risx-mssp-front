@@ -19,7 +19,7 @@ function App() {
 
     <div className='app-out' >
 
-<SideBar set_visblePage={set_visblePage}/> 
+<SideBar visblePage={visblePage} set_visblePage={set_visblePage}/> 
 
 
 <div className='app-main' >

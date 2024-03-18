@@ -1,0 +1,105 @@
+/* ////////////pop u p note modal ///////////////// */
+
+
+ 
+
+.PopUp-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:var( --color-Black70);
+ 
+
+    z-index: 9999;
+    opacity: 1;
+    transition: var(--transition-fast)
+  }
+ 
+  /* .PopUp-background.active {
+opacity: 1;
+  } */
+
+  .PopUp-content {
+    width: 480px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--color-Grey5);
+    padding: var(--space-e);
+    padding-top: var(--space-c);;
+  border-radius: var(--popups-round-corner);
+  border: 10px solid var(--color-DB-Blue-Glow);
+ 
+  }
+ 
+.PopUp-Close-btn{
+ background-color: transparent;
+margin: 0;
+padding: 0;
+border:0;
+height: 30px;
+width: 30px;
+transform:    rotate(0deg); 
+transition: var(--transition-fast)
+}
+
+.PopUp-Close-btn:hover{
+ transform:    rotate(90deg); 
+ transition: var(--transition-fast)
+ }
+
+.PopUp-Close-btn:hover .PopUp-Close-btn-img  path   {
+  stroke: var(--color-DB-Blue-Glow);
+  transition: var(--transition-fast)
+  }
+
+  .PopUp-content.animateIt  {
+
+      animation: moveUp 1.6s ease-out 1;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes moveUp {
+    0% {
+      top: 100%;
+    }
+    100% {
+      top:  50%;
+    }
+  }
+ 
+  
+  .PopUp-background.animateIt {
+     animation: fadeIn 0.25s ease-in-out 1;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+ 
+ 
+
+  
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+ 
