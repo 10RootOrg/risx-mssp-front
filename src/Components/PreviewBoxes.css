@@ -39,6 +39,7 @@
 
 .PreviewBox-twice-size{
     width: 21%; 
+    min-width: 260px;
 }
 
 

@@ -1,0 +1,30 @@
+ .login-page-all{
+height: 100vh;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+ }
+
+
+.login-card{
+ 
+  width: 300px;
+  padding: var(--space-d);
+}
+
+.login-form{
+  display: flex;
+  flex-direction: column;
+ 
+  gap: var(--space-b);
+}
+
+
+
+
+.login-form .input-type1{
+  width: calc(100% - var(  --line-width-small) -  var( --space-a)*2  )
+  
+ 
+}

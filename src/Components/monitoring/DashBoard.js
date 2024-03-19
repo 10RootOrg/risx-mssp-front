@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState , useEffect} from 'react';
 import { PreviewBox_type1, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
 
@@ -7,14 +7,20 @@ import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
  
 import jsonData from '../../tmpjsons/previewBoxesToos.json';  
  
-function DashBoard() {
+function DashBoard({show_SideBar,set_show_SideBar}) {
+
+
+    useEffect(() => {
+        if (show_SideBar === false) {set_show_SideBar(true)}
+        }, []);
+
 
 
       
     return (
  
 <>
-
+<div className='app-main' >
 <div className='top-of-page'> 
 
 <div className='top-of-page-left mb-b'>
@@ -95,33 +101,7 @@ toolURL={Info?.toolURL}
 
 </div>
       
-{/* <div className='resource-group-top-boxes mb-c' >
-
-{jsonData?.map((Info, index) =>(
-
-<>
-{Info?.BoxType === "Tools_b" ? (  
-<PreviewBox_type_tools_b
-indexNumber={index}
-iconAddress={Info?.iconAddress}
-HeadLine={Info?.headline}
-description={Info?.description}
-by={Info?.by}
-StatusColor={Info?.StatusColor}
-date={Info?.LastRun}
-isActive={Info?.isActive}
-logoAddress_1={Info?.logoAddress_1}
-readMoreAddress={Info?.readMoreAddress}
-readMoreText={Info?.readMoreText}
-buttonTitle={Info?.buttonTitle}
-toolURL={Info?.toolURL}
-            />  ) : null }
-
-     </>      
-
-           
-           ))}
-</div> */}
+</div>
  
  
 </>
