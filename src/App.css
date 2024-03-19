@@ -1,7 +1,6 @@
  
 :root {
  
-
   --color-Black: #1B2231; 
  --color-Black70: #1b2231de;  /* use for popups */
   --color-White: #E5E5E5; 
@@ -615,3 +614,4 @@ input:checked + .slider:before {
 
 
 /* ..................... checkbox    ..................... */
+  /* shalom    */
