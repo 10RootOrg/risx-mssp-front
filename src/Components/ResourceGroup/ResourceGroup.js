@@ -1,4 +1,4 @@
-import React from 'react'
+import React , {useState , useEffect} from 'react';
 import { PreviewBox_type1, PreviewBox_type2 } from '../PreviewBoxes.js'
 import ResourceGroup_List___WebSites     from './ResourceGroup_List___WebSites.jsx'
 import ResourceGroup_List___PhoneNumbers from './ResourceGroup_List___PhoneNumbers.jsx'
@@ -10,13 +10,18 @@ import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import './../ResourceGroup/ResourceGroup.css';
 
 import jsonData from '../../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
-function ResourceGroup() {
+function ResourceGroup({show_SideBar,set_show_SideBar}) {
+
+    useEffect(() => {
+        if (show_SideBar === false) {set_show_SideBar(true)}
+        }, []);
+
 
 
     return (
  
 <>
-
+<div className='app-main' >
 <div className='top-of-page'> 
 
 <div className='top-of-page-left mb-b'>
@@ -51,7 +56,7 @@ function ResourceGroup() {
 
 </div>
 
-
+</div>
  
 </>
 

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import './SideBar.css';
 import { ReactComponent as RisxMsspLogo } from '../Components/Logos/RisxMssp_logo_Standart.svg';
 import { ReactComponent as MenuArrowDown } from '../Components/icons/ico-menu-arrow-down.svg';
@@ -11,7 +13,7 @@ import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-down
  
 
 function SideBar({ visblePage, set_visblePage}) {
-
+  const navigate = useNavigate();
 const [openSubMenu, set_openSubMenu] = useState("none")
 
 const handleSubMenu = (name) => {
@@ -22,6 +24,8 @@ else{set_openSubMenu(name);}
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
+  navigate(`/${page_name}`); // This navigates to the path specified by page_name
+
 };
 
  

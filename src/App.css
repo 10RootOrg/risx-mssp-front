@@ -26,9 +26,6 @@
 
   --line-width-small: 2px;
 
- 
- 
-
   --space-a: 5px;
   --space-b: 10px;
   --space-c: 18px;
@@ -39,12 +36,18 @@
   --transition-med: all 0.25s ease-in-out;
   --transition-fast: all 0.15s ease-in-out;
  
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  
 }
 .Color-Red{color: var(--color-Red);}
 .Color-White{color: var(--color-White);}
 .Color-Grey1{color: var(--color-Grey1);}
 .Color-Grey2{color: var(--color-Grey2);}
 .Color-Grey5{color: var(--color-Grey5);}
+.Color-Black{color: var(--color-Black);}
 .Color-Blue-Glow{color: var(--color-DB-Blue-Glow);}
 
 
@@ -87,9 +90,7 @@ p{color: var(--color-White);
   line-height: 140%;
 }
 
-.reading-height{
-  line-height: 160%
-}
+
 
 .font-type-menu{
   font-size: 14px;
@@ -99,6 +100,17 @@ p{color: var(--color-White);
   font-style: normal;
   letter-spacing: 0.01rem;
 }
+
+.font-type-h5{
+  font-size: 16px;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.01rem;
+  line-height: 120%;
+}
+
 
 .font-type-h4{
   font-size: 24px;
@@ -122,21 +134,24 @@ p{color: var(--color-White);
   font-family: "Roboto", sans-serif;
   font-weight: 500;
   font-style: normal; 
-  
+}
+
+.reading-height{
+  line-height: 155%
+}
+.reading-height-less{
+  line-height: 130%
 }
 
 .make-underline{
   display: inline-block; /* Makes sure the border applies correctly for inline elements like <span> or <a> */
   border-bottom: 2px solid transparent; /* Creates a 2px thick underline. 'currentColor' uses the text's current color */
   padding-bottom: 3px; /* Adjusts the distance of the underline from the text */
-  
-  transition: var(--transition-fast)
-  
+  transition: var(--transition-fast) 
 }
 
 
 .make-underline:hover     { 
- 
    display: inline-block; 
   border-bottom: 2px solid currentColor; 
   padding-bottom: 3px; 
@@ -144,7 +159,20 @@ p{color: var(--color-White);
 }
 
  
+.make-underline-regular-txt{
+  display: inline-block; /* Makes sure the border applies correctly for inline elements like <span> or <a> */
+  border-bottom: 1px solid transparent; /* Creates a 2px thick underline. 'currentColor' uses the text's current color */
+  padding-bottom: 1px; /* Adjusts the distance of the underline from the text */
+  transition: var(--transition-fast) 
+}
 
+
+.make-underline-regular-txt:hover     { 
+   /* display: inline-block;  */
+  border-bottom: 1px solid currentColor; 
+  /* padding-bottom: 2px;  */
+  cursor: pointer;
+}
 
 
 .ml-a{ margin-left: 5px;}
@@ -158,6 +186,8 @@ p{color: var(--color-White);
 .mb-a{ margin-bottom: 5px;}
 .mb-b{ margin-bottom: 10px;}
 .mb-c{ margin-bottom: 20px;}
+.mb-d{ margin-bottom: 30px;}
+.mb-e{ margin-bottom: 60px;}
 
 .mt-a{ margin-top: 5px;}
 .mt-b{ margin-top: 10px;}
@@ -170,7 +200,8 @@ p{color: var(--color-White);
   background-color:var(--color-Black);
   min-height: 100vh; 
   display: flex;
-  gap: var(--space-c);
+ 
+  /* gap: var(--space-c); */
 }
 
 
@@ -179,10 +210,12 @@ p{color: var(--color-White);
   display: flex; flex-direction: column;
  
   margin-right: var(--space-c);
+  margin-left: var(--space-c);
   margin-top: calc(var(--space-d) + var(--space-a));
   margin-bottom: var(--space-c); 
   /* background-color: rgb(255, 0, 255); */
   width: 100%;
+ 
    /* min-height: 100vh;  */
 }
 
@@ -218,7 +251,9 @@ p{color: var(--color-White);
   height: 22px;
   width: 188px;
   outline:none;
- padding-left: 8px;
+ padding-left: var( --space-a);
+
+ padding-right: var( --space-a);
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
@@ -226,7 +261,6 @@ p{color: var(--color-White);
   color: var(--color-Grey2);
   transition: var(--transition-fast)
 }
-
 
 .input-type1:hover{
   border: var(  --line-width-small) solid var(--color-DB-Blue-Active);
@@ -236,6 +270,39 @@ p{color: var(--color-White);
   border-color:var(--color-DB-Blue-Glow);
   color: var(--color-DB-Blue-Glow);
 }
+
+
+
+
+.input-type2::placeholder{    color: var(--color-Grey1);}
+
+.input-type2{
+  background-color:transparent;
+  border: var(  --line-width-small) solid var(--color-Grey1);
+  border-radius: var(--elemtns-round-corner-medium);
+  height: 34px;
+  /* width: 188px; */
+  outline:none;
+ padding-left: var( --space-b);
+
+ padding-right: var( --space-b);
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-Grey1);
+  transition: var(--transition-fast)
+}
+
+.input-type2:hover{
+  border: var(  --line-width-small) solid var(--color-DB-Blue-Active);
+  color: var(--color-DB-Blue-Active);
+}
+.input-type2:focus {
+  border-color:var(--color-DB-Blue-Glow);
+  color: var(--color-DB-Blue-Glow);
+}
+
 
 
 .icon-type1{
@@ -465,6 +532,8 @@ input:checked + .slider:before {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; 
+  transition: var(--transition-fast);
+
 }
 /* Hide the browser's default checkbox */
 .container input {
@@ -473,6 +542,8 @@ input:checked + .slider:before {
   cursor: pointer;
   height: 0;
   width: 0;
+  transition: var(--transition-fast);
+
 
 }
 
@@ -487,11 +558,15 @@ input:checked + .slider:before {
   background-color: #ffffff00;  /* לא צקד */
   border: 2px solid var(--color-Grey1);
   border-radius: var(--elemtns-round-corner-small);
+  transition: var(--transition-fast);
+
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
   border: 2px solid var(--color-DB-Blue-Glow);
+  transition: var(--transition-fast);
+
 }
 
 /* When the checkbox is checked, add a blue background */
@@ -504,11 +579,15 @@ input:checked + .slider:before {
   content: "";
   position: absolute;
   display: none;
+  transition: var(--transition-fast);
+
 }
 
 /* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
+  transition: var(--transition-fast);
+
 }
 
 /* Style the checkmark/indicator */
