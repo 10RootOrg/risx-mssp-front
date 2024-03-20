@@ -408,6 +408,7 @@ width: 28px;
   -webkit-line-clamp: 1; /* Number of lines you want to display */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis; /* This will not work in multi-line truncation without the above properties */
+  
   white-space: normal; /* Allow wrapping */
 }
 
@@ -424,6 +425,7 @@ border-radius: var(--elemtns-round-corner-medium);
 border-radius:  15px;
 height: var(--space-c);
 padding: 0 var(--space-b);
+ 
 }
   /* /////////////////////// */
 .light-bulb-type1{
@@ -433,6 +435,8 @@ padding: 0 var(--space-b);
 }
 
   /* /////////////////////// */
+
+
 
 .switch {
   position: relative;
@@ -473,7 +477,12 @@ padding: 0 var(--space-b);
   background-color: var(--color-DB-Blue-Hover);
 
 }
-
+.switch p{
+  width:max-content;
+ position: absolute;
+bottom:   0px;
+ left: calc(var(--space-d) + var(--space-b));
+}
 /* .slider:after{
   background-color: #00FF00;
 }

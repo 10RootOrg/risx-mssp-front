@@ -1,17 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
  
 import { ReactComponent as IconBIG } from '../icons/ico-websites.svg';
 import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
  import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
  import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
- import jsonData from '../../tmpjsons/ResourceGroup-websites.json'; // Adjust the path as needed based on your project structure
+ import jsonData from '../../tmpjsons/ResourceGroup-websites.json';
+ 
+  // Adjust the path as needed based on your project structure
+ 
+ import { Edit_Resource_Item } from "../Edit_Resource_Item";
 function ResourceGroup_List___WebSites() {
+  const [popUp_show, set_popUp_show] = useState(false);
+  const [resourceItem , set_resourceItem] = useState({})
 
-      
+const EditTools = (Info) =>{
+
+  console.log("EditTools",typeof Info);
+  set_resourceItem(Info)
+  set_popUp_show(true);
+}
+
     return (
  
  
 <div>
+ 
+<Edit_Resource_Item
+
+        IconBIG={IconBIG}
+        resourceItem={resourceItem}
+
+        HeadLine={"Edit Tools"}
+        readMoreText={"readMoreText"}
+        logoAddress_1_ForSrc={"logoAddress_1_ForSrc"}
+        toolURL={"toolURL"}
+        buttonTitle={"Save"}
+        set_popUp_show={set_popUp_show}
+        popUp_show={popUp_show}
+        IconAddressForSrc={"IconAddressForSrc"}
+        
+
+
+      />
+ 
+
 
 <div className='resource-group-list-headline mb-c '>
 
@@ -62,7 +94,7 @@ function ResourceGroup_List___WebSites() {
                               'Bg-Grey2';
   
     return (
-      <div className='resource-group-list-line' key={index}>
+      <div className='resource-group-list-line' key={index} onClick={()=>EditTools(Info)}>
  
   <p className='resource-group-list-item    font-type-txt   Color-Grey1   ml-a'>{Info?.Type}</p> 
   <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'>{Info?.Name}</p> 
@@ -88,12 +120,12 @@ function ResourceGroup_List___WebSites() {
  
 
   <div className='resource-group-list-item list-item-small display-flex' >
-  <label class="switch">
+  <label className="switch">
   <input type="checkbox" 
   //  checked={Info?.Monitor}
   defaultChecked={Math.random() < 0.7}
    />
-  <span class="slider round"></span>
+  <span className="slider round"></span>
 </label>
 </div>
 

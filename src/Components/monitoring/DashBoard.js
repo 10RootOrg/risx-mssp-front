@@ -5,7 +5,7 @@ import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
  
  
-import jsonData from '../../tmpjsons/previewBoxesToos.json';  
+import jsonData from '../../tmpjsons/previewBoxesTools.json';  
  
 function DashBoard({show_SideBar,set_show_SideBar}) {
 

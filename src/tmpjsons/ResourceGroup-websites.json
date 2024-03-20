@@ -10,7 +10,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei"] ,
         "Monitor": true,
         "Checked": "19/02/2024",
-        "StatusColor": "red"
+        "StatusColor": "red",
+        "Description": "Our e-commerce platform sustains an average of 100,000 daily visitors, peaking at 250,000 during holiday sales. Built on a robust architecture utilizing React for the frontend and Node.js for the backend, it ensures a seamless and responsive user experience. The site is hosted on AWS, leveraging Elastic Load Balancing to distribute traffic and Amazon RDS for scalable database management. Performance monitoring is conducted using New Relic, allowing real-time visibility into application performance and user satisfaction levels. Security is fortified with Cloudflare, providing DDoS protection and SSL encryption."
     },
     {
         "Type": "LandingPage",
@@ -20,7 +21,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei"] ,
         "Monitor": true,
         "Checked": "18/02/2024",
-        "StatusColor": "yellow"
+        "StatusColor": "yellow",
+        "Description": "This educational portal caters to over 50,000 active users monthly, offering a range of interactive courses and multimedia content. Developed with Vue.js and Django, the site emphasizes an engaging learning experience with low latency. Hosting is managed through Google Cloud Platform, utilizing its Compute Engine and Cloud Storage for efficient content delivery. The portal integrates Google Analytics for detailed traffic analysis and user engagement metrics, ensuring content and features align with user needs. Data security and privacy are ensured through strict compliance with GDPR and other regulatory standards. "
     },
     {
         "Type": "Website",
@@ -30,7 +32,8 @@
         "ActiveTools": [] ,
         "Monitor": true,
         "Checked": "10/02/2024",
-        "StatusColor": "yellow"
+        "StatusColor": "yellow",
+        "Description": "500,000 visits on major announcement days. It's developed using Angular for the frontend and Ruby on Rails for the backend, with Elasticsearch powering the search functionality. Hosted on DigitalOcean with a Kubernetes container orchestration system"
     },
     {
         "Type": "Website",
@@ -40,7 +43,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei","SandBox"] ,
         "Monitor": false,
         "Checked": "19/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "averaging 15,000 visits per month. Built with Gatsby for fast loading times and optimized SEO, it uses Contentful as a headless CMS for easy content management. Hosting on Netlify enables automatic deployments from Git and global CDN distribution,"
     },    {
         "Type": "Website",
         "Name": "https://www.10root-live.com",
@@ -49,7 +53,8 @@
         "ActiveTools": ["SandBox" ] ,
         "Monitor": false,
         "Checked": "15/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "Data is sourced from various APIs and stored in a MongoDB database, facilitating efficient data retrieval and manipulation. The platform is deployed on Heroku"
     } ,
     {
         "Type": "Website",
@@ -59,7 +64,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei"] ,
         "Monitor": true,
         "Checked": "19/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "This platform provides real-time environmental data visualization, attracting around 30,000 specialized users interested in climate change analytics. Constructed with D3.js"
     },
     {
         "Type": "LandingPage",
@@ -69,7 +75,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei"] ,
         "Monitor": true,
         "Checked": "18/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "The site's responsive design ensures accessibility across devices, with AMP pages enhancing mobile user experience."
     },
     {
         "Type": "Website",
@@ -79,7 +86,8 @@
         "ActiveTools": [] ,
         "Monitor": true,
         "Checked": "10/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "Data security and privacy are ensured through strict compliance with GDPR and other regulatory standards."
     },
     {
         "Type": "Website",
@@ -89,7 +97,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei","SandBox"] ,
         "Monitor": false,
         "Checked": "19/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "Security is fortified with Cloudflare, providing DDoS protection and SSL encryption."
     },    {
         "Type": "Website",
         "Name": "https://www.10root-live.com/CVB/12300-11123/sa",
@@ -98,7 +107,8 @@
         "ActiveTools": ["SandBox" ] ,
         "Monitor": false,
         "Checked": "15/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "Built with Vue.js and Express.js, it integrates Plaid for banking data"
     } ,
     {
         "Type": "LandingPage",
@@ -108,7 +118,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei"] ,
         "Monitor": true,
         "Checked": "18/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "it uses MongoDB Atlas for secure, scalable data storage."
     },
     {
         "Type": "Website",
@@ -118,7 +129,8 @@
         "ActiveTools": ["Nuclei"] ,
         "Monitor": true,
         "Checked": "10/02/2024",
-        "StatusColor": "green"
+        "StatusColor": "green",
+        "Description": "The site utilizes Unity Web GL for game demos, with a backend in Node.js. AWS"
     },
     {
         "Type": "LandingPage",
@@ -128,7 +140,8 @@
         "ActiveTools": ["10Root OSINT","Nuclei","SandBox"] ,
         "Monitor": false,
         "Checked": "19/02/2024",
-        "StatusColor": "grey"
+        "StatusColor": "grey",
+        "Description": "Leveraging React and Firebase,"
     },    {
         "Type": "LandingPage",
         "Name": "https://www.10root-live.com",
@@ -137,7 +150,8 @@
         "ActiveTools": ["SandBox" ] ,
         "Monitor": false,
         "Checked": "15/02/2024",
-        "StatusColor": "grey"
+        "StatusColor": "grey",
+        "Description": "supports 10,000+ users tracking expenses and investments. Built with Vue.js and Express.js, it integrates Plaid for banking data synchronization"
     } 
     
 ]

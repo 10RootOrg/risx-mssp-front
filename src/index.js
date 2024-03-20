@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import './App.css';
 // import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Routes, Route , useLocation , Navigate  } from "react-router-dom";
+import { BrowserRouter, Routes, Route  , Navigate  } from "react-router-dom";
 
+
+import SideBar from './SideBar/SideBar'
 import DashBoard from './Components/monitoring/DashBoard'
 import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
 import Login from './Pages/Login'
 import NoPage404 from './Pages/NoPage404'
-import SideBar from './SideBar/SideBar'
 
+import TestPage from './Pages/TestPage'
 
 
  
@@ -37,11 +39,15 @@ export default function App() {
           <Route path="ResourceGroup" element={<ResourceGroup show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
           <Route path="DashBoard"     element={<DashBoard show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
 
+          <Route path="TestPage"     element={<TestPage />} />
+
+
+          
           <Route path='*' element={<NoPage404/> }/>
       </Routes>
     
 
-    </BrowserRouter>|  
+    </BrowserRouter>
      </div>
      </>
   );

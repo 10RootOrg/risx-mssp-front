@@ -14,7 +14,8 @@
         "StatusColor": "blue",
         "LastRun": "11/06/2024",
         "buttonTitle" : "View",
-        "toolURL": "http://23.101.51.55:5601/"
+        "toolURL": "http://23.101.51.55:5601/",
+        "ServicePackage" : "Standard"
     },
     
     {
@@ -31,7 +32,8 @@
         "StatusColor": "blue",
         "LastRun": "11/06/2024",
         "buttonTitle" : "Create",
-        "toolURL": "http://timesketch-10root.northeurope.cloudapp.azure.com/"
+        "toolURL": "http://timesketch-10root.northeurope.cloudapp.azure.com/",
+        "ServicePackage" : "Standard"
     },     {
         "BoxType": "Tools_a",
         "headline": "CTI DB & Dashboard",
@@ -46,7 +48,8 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "http://opencti.northeurope.cloudapp.azure.com:8080/"
+        "toolURL": "http://opencti.northeurope.cloudapp.azure.com:8080/",
+        "ServicePackage" : "Standard"
 
     },
     
@@ -67,7 +70,8 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "https://inteltechniques.com/osintnet/tools/Search.html"
+        "toolURL": "https://inteltechniques.com/osintnet/tools/Search.html",
+        "ServicePackage" : "Standard"
 
     },
    
@@ -86,7 +90,8 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Explore",
-        "toolURL": "https://10root.com/"
+        "toolURL": "https://10root.com/",
+        "ServicePackage" : "Standard"
 
     },
 
@@ -107,7 +112,8 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "https://10root.com/"
+        "toolURL": "https://10root.com/",
+        "ServicePackage" : "Standard"
 
     }
     , {
@@ -124,7 +130,8 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "https://10root.com/"
+        "toolURL": "https://10root.com/",
+        "ServicePackage" : "Standard"
 
     }   ,{
         "BoxType": "Tools_b",
@@ -140,7 +147,8 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Active",
-        "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com:7000/"
+        "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com:7000/",
+        "ServicePackage" : "Premium"
 
     }   ,    {
         "BoxType": "Tools_b",
@@ -156,7 +164,8 @@
         "StatusColor": "blue",
         "LastRun": "22/02/2024",
         "buttonTitle" : "Explore",
-        "toolURL": "https://dehashed.com/"
+        "toolURL": "https://dehashed.com/",
+        "ServicePackage" : "Premium"
 
     }  
 ]
