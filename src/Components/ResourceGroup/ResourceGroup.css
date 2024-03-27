@@ -23,10 +23,15 @@
 
 
   .resource-group-list-box{
- height: 200px;
+ height: calc(100% - var(--space-d ) - var(--space-d ) - var(--space-d )  - var(--space-d )  - var(--space-d ) - var(--space-d ) - var(--space-d ) - var(--space-d )   );
+ height: 360px;
+
 overflow-y: scroll;
   }
-
+.ResourceGroup-All{
+  width:100%;
+ 
+}
 
 .resource-group-list-headline{
   display: flex;
@@ -58,9 +63,12 @@ align-items: center;
 
 .resource-group-list-line{
   display: flex;
+  justify-content: space-between;
+  gap: var(--space-b);
+ width: 100%;
   /* margin-top: 2px;
   margin-bottom: 2px; */
-
+ 
 
   padding-top: 1px;
   padding-bottom: 1px;
@@ -81,27 +89,43 @@ color: var(--color-DB-Blue-Glow);
  }
 
 
+   .resource-group-list-line:hover > .resource-group-list-item .tagit_type1{
+    /* background-color:var(  --color-DB-Blue-Hover-Real); */
+      }
+      .resource-group-list-line:hover > .resource-group-list-item .tagit_type2{
+        background-color:var(--color-Grey2);
+          }
 
 
   .resource-group-list-item{
  
  margin-right: var( --space-b);
-     width: 17%; 
-      white-space: nowrap;
-     overflow: hidden;
+     width: 15%; 
+     max-width :100px;
+ 
      text-overflow: ellipsis;
+
+     /* Required for text-overflow to do anything */
+     white-space: nowrap;
+     overflow: hidden;
+
+    /* white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis; */
  
     align-items: center;
     transition: var(--transition-fast)
   }
   
   .list-item-small{
-  width: 110px;
+  width: 56px;
+ 
 }
 
 
 .list-item-big{
-  width: 30%; 
+  width: 40%; 
+  max-width: 20%;
 }
   .list-item-last{
     margin-right: 0;

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import './App.css';
 // import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route  , Navigate  } from "react-router-dom";
-
+import { ContextProvider}from './Context'
 
 import SideBar from './SideBar/SideBar'
 import DashBoard from './Components/monitoring/DashBoard'
@@ -26,7 +26,10 @@ export default function App() {
   return (
 <> 
       <div className='app-out' > 
-    <BrowserRouter>
+ 
+    
+      <ContextProvider> 
+         <BrowserRouter>
 
     {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage} />  }
     
@@ -35,19 +38,15 @@ export default function App() {
       <Routes>
            <Route path="/" element={<Navigate replace to="/Login" />} />
           <Route path="Login" element={<Login   set_show_SideBar={set_show_SideBar}/>} />
-
           <Route path="ResourceGroup" element={<ResourceGroup show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
           <Route path="DashBoard"     element={<DashBoard show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
-
-          <Route path="TestPage"     element={<TestPage />} />
-
-
-          
+          <Route path="TestPage"     element={<TestPage />} />   
           <Route path='*' element={<NoPage404/> }/>
       </Routes>
     
 
     </BrowserRouter>
+    </ContextProvider>  
      </div>
      </>
   );

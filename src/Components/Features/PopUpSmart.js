@@ -14,7 +14,7 @@ import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
       set_popUp_show(popUp_show)
     }, [popUp_show]);
   
-console.log(IconAddressForSrc);
+ 
 
     // function to close modal when user clicks outside of it
     function handleClickOutside(e) {

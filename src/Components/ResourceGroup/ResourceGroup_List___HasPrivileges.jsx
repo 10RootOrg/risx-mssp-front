@@ -15,7 +15,7 @@ function ResourceGroup_List___WebSites() {
 
 <div className='resource-group-list-headline mb-c '>
 
-<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Has Privileges</p></div>
+<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Privileges</p></div>
 
  <ResourceGroup_Action_btns/>
  
@@ -72,24 +72,24 @@ function ResourceGroup_List___WebSites() {
  
 
   <div className='resource-group-list-item list-item-small display-flex' >
-  <label class="switch">
+  <label className="switch">
   <input type="checkbox" 
     //  checked={Info?.CanWatch}
 
     defaultChecked={Math.random() < 0.7}
    />
-  <span class="slider round"></span>
+  <span className="slider round"></span>
 </label>
 </div>
 
 <div className='resource-group-list-item list-item-small display-flex' >
 
-  <label class="switch">
+  <label className="switch">
   <input type="checkbox" 
    defaultChecked={Math.random() < 0.6}
   //  checked={Info?.CanEdit}
    />
-  <span class="slider round"></span>
+  <span className="slider round"></span>
 </label>
 </div>
 

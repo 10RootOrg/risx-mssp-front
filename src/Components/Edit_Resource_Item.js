@@ -4,44 +4,86 @@ import '../Components/Features/PopUp.css'; // import CSS file for modal styling
 // import CloseButton from "./CloseButton";
 import { ReactComponent as CloseButton } from './icons/ico-Close_type1.svg';
 import { ReactComponent as IconCart } from './icons/ico-cart.svg';
-
+import axios from 'axios';
 import Tools from './../tmpjsons/previewBoxesTools.json';
-import capeLogo from './Logos/CAPE.png'; // Adjust the path as necessary
-
+import GeneralContext from '../Context.js';
+import { useContext } from "react";
   export const Edit_Resource_Item = (props) => {
-    const {
-       HeadLine, readMoreText   ,popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc, popUp_iconSize,
-      
-       IconBIG ,
-       resourceItem
-      
-      } = props;
-     // const [modalVisible, setModalVisible] = useState(false);
-    //  const [InputUser, set_InputUser] = useState("");
-     const [name, setName] = useState(resourceItem?.Name || '');
-     const [type, setType] = useState(resourceItem?.Type || '');
-     const [ipAddress, setIpAddress] = useState(resourceItem?.IPAdress || '');
-     const [port, setPort] = useState(resourceItem?.Port || '');
-     const [description, setDescription] = useState(resourceItem?.Description || '');
-   
+    const {popUp_show, set_popUp_show   ,buttonTitle ,IconBIG ,resourceItem, item_types_list, set_item_types_list ,item_tool_list, set_item_tool_list} = props;
+
+const {all_Resource_Types ,all_Tools} = useContext(GeneralContext)
+
+
+ 
+ 
+ 
+
+     const [resource_string, set_resource_string] = useState(resourceItem?.resource_string || '');
+  
+    //  const [type, setType] = useState(resourceItem?.type || '');
+    //  const [ipAddress, setIpAddress] = useState(resourceItem?.ip_address || '');
+    //  const [port, setPort] = useState(resourceItem?.port || '');
+     const [monitoring, set_monitoring] = useState(resourceItem?.monitoring || '');
+     const [description, setDescription] = useState(resourceItem?.description || '');
+     const [resource_id, set_resource_id] = useState(resourceItem?.resource_id || '');
+     
+
+
+ 
+console.log("all_Tools", all_Tools);
+console.log("item_types_list", item_types_list);
+console.log("item_tool_list", item_tool_list);
+
 
      useEffect(() => {
-      setName(resourceItem?.Name || '');
-      setType(resourceItem?.Type || '');
-      setIpAddress(resourceItem?.IPAdress || '');
-      setPort(resourceItem?.Port || '');
-      setDescription(resourceItem?.Description || '');
+      // set_site_id(resourceItem?.site_id || '');
+      set_resource_id(resourceItem?.resource_id  || '');
+      set_resource_string(resourceItem?.resource_string  || '');
+      // setType(resourceItem?.type || '');
+      // setIpAddress(resourceItem?.ip_address        || '');
+      // setPort(resourceItem?.port || '');
+      set_monitoring(resourceItem?.monitoring || '');
+      setDescription(resourceItem?.description || '');
     }, [resourceItem]); // Re-initialize state if `resourceItem` changes
   
-  
-    const handleInputChange = (setter) => (event) => setter(event.target.value);
 
+    const handle_Types_Checkbox_Change = (e, resourceTypeId) => {
+      const isChecked = e.target.checked;
+      if (isChecked) {
+        set_item_types_list([...item_types_list, resourceTypeId]); // Add the resourceTypeId to the array
+      } else {
+        set_item_types_list(item_types_list.filter(id => id !== resourceTypeId)); // Remove the resourceTypeId from the array
+      }
+
+   
+    };
+
+
+    const handle_Tools_Checkbox_Change = (e, ToolId) => {
+
+      console.log(e);
+console.log(e.target);
+console.log(e.target.checked);
+      const isChecked = e.target.checked;
+      if (isChecked) {
+        set_item_tool_list([...item_tool_list, ToolId]); // Add the resourceTypeId to the array
+      } else {
+        set_item_tool_list(item_tool_list.filter(id => id !== ToolId)); // Remove the resourceTypeId from the array
+      }
+
+   console.log("item_tool_list" , item_tool_list);
+    };
+
+
+
+
+    const handleInputChange = (setter) => (event) => setter(event.target.value);
 
     useEffect(() => {
       set_popUp_show(popUp_show)
     }, [popUp_show]);
   
-console.log(Tools);
+ 
 
     // function to close modal when user clicks outside of it
     function handleClickOutside(e) {
@@ -62,8 +104,6 @@ console.log(Tools);
  
     }
  
-    const handleNameChange = (event) => setName(event.target.value);
-
 
 
 
@@ -84,7 +124,7 @@ console.log(Tools);
 
 
  
-<div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>{HeadLine}</p></div>
+<div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Edit Item</p></div>
 
 {/* <p className='font-type-menu    Color-White '>{resourceItem?.Name}</p> */}
 
@@ -95,39 +135,109 @@ console.log(Tools);
 <div className="items_top">
 
 <div className="items_left">
-<div className="item_info_left">
-<p className='font-type-menu   Color-Grey1 '>Name</p>
-<input className="input-type2 mb-a " type="text" style={{width:"100%"}} value={name}      placeholder={resourceItem?.Name || 'Name'}
-     onChange={handleInputChange(setName)}
+  
+<div 
+className="item_info_left"
+>
+<p className='font-type-menu   Color-Grey1 pb-b'>String</p>
+<input className="input-type2 mb-a " type="text"
+//  style={{width:"100%"}}
+  value={resource_string}      placeholder={resourceItem?.Name || 'Name'}
+     onChange={handleInputChange(set_resource_string)}
  />
-</div>
-<div className="item_info_left"> 
-<p className='font-type-menu   Color-Grey1  '>Type</p>
-<input className="input-type2 mb-a " type="text" style={{width:"100%"}} value={type}      placeholder={resourceItem?.Type || 'Type'}
-     onChange={handleInputChange(setType)}
- /></div>
-<div className="item_info_left">
-<p className='font-type-menu   Color-Grey1  '>IP Adress</p>
-<input className="input-type2 mb-a " type="text" style={{width:"100%"}} value={ipAddress}      placeholder={resourceItem?.ipAddress || 'Ip Address'}
-     onChange={handleInputChange(setIpAddress)}
- />
-</div>
-<div className="item_info_left"> 
-<p className='font-type-menu   Color-Grey1 '>Port</p>
-<input className="input-type2 mb-a " type="text" style={{width:"100%"}} value={port}      placeholder={resourceItem?.Port || 'Port'}
-     onChange={handleInputChange(setPort)}
- /></div>
 </div>
 
-<div className="item_info_right"> 
- <textarea  className="input-type2 reading-height  "   style={{width:"" }}  value={description}      placeholder={resourceItem?.Description || 'Description'}
+
+ 
+
+ <div  className="item_info_left"  style={{width:"" ,height:"100%"}}> 
+<p className='font-type-menu   Color-Grey1 '>Description</p>
+<textarea  className="input-type2 reading-height  "   style={{width:"" ,height:"100%"}}  value={description}      placeholder={resourceItem?.Description || 'Description'}
      onChange={handleInputChange(setDescription)}
  />
+ 
+ </div>
+
+
+
+
+
+
+ 
 </div>
+
+<div className="item_info_left "> 
+<p className='font-type-menu   Color-Grey1 '>Resource Type</p>
+<div className="item_info_tools_all">
+<div className="">
+{all_Resource_Types?.map((Info, index) => {
+ 
+ 
+
+    return (
+
+<div key={index} className="toolsData  " style={{width:"180px"}}>
+  
+  <div className="toolsData-checkbox " >
+  <label className="container" > 
+  <input type="checkbox"
+  value={item_types_list}
+//  checked={resourceItem.types.find(type => type.resource_type_id == Info?.resource_type_id)}
+
+ checked={item_types_list.find((type) => type  == Info?.resource_type_id)}
+ onChange={(e) => handle_Types_Checkbox_Change(e, Info?.resource_type_id)}
+ />
+  <span className="checkmark"></span>
+  </label>
+  </div>
+
+ <div className='  'style={{marginTop:"auto"}}>
+ <p className='    font-type-txt   Color-Grey1 tagit_type1 tagit_type2_on_popup' >{Info?.resource_type_name}</p>  
+ </div>
+
+</div>
+   
+ 
+    );
+  })}
+</div>
+</div>
+
+ {/* <textarea  className="input-type2 reading-height  "   style={{width:"" }}  value={description}      placeholder={resourceItem?.Description || 'Description'}
+     onChange={handleInputChange(setDescription)}
+ /> */}
+</div>
+
+
 </div>
 
  
-{/* <p className='font-type-menu   Color-Grey1   '>Tools</p> */}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* //////////////////// */}
+
 <div className="item_info_tools_all">
 
 <div className="titles mb-c">
@@ -140,6 +250,7 @@ console.log(Tools);
 <p className='column font-type-menu   Color-Grey1 column-small justify-content-center  mr-b'>Developer</p>
  
 </div>
+
 <div className="item_info_tools_box"
  
  > 
@@ -149,13 +260,13 @@ console.log(Tools);
 <div className="item_info_tools"
  >
  
-{Tools?.map((Info, index) => {
+{all_Tools?.map((Info, index) => {
  
  
 
     return (
 
-<div className="toolsData"
+<div className="toolsData  "
 >
   
 
@@ -163,8 +274,18 @@ console.log(Tools);
   <div className="toolsData-checkbox "
 
   >
+
+
+ 
+
+
+
   <label className="container" > 
-  <input type="checkbox" defaultChecked />
+  <input type="checkbox"
+  value={item_tool_list}
+  checked={item_tool_list.find((type) => type == Info?.tool_id    )}
+  onChange={(e) => handle_Tools_Checkbox_Change(e,Info?.tool_id)}
+  />
   <span className="checkmark"></span>
   </label>
   </div>
@@ -194,13 +315,13 @@ console.log(Tools);
   )}
 
 
- <div className='column column-small'>
+ <div className='column column-small  '>
   
- <p className='   font-type-txt   Color-Blue-Glow tagit' >{Info?.Toolname}</p>  
+ <p className='   font-type-txt   Color-Blue-Glow tagit_type1' >{Info?.Tool_name}</p>  
 
  </div>
  
-<p className='column-for-txt font-type-txt     Color-Grey1'>{Info?.description}</p>
+<p className='column-for-txt font-type-txt     Color-Grey1'>{Info?.description_short}</p>
  
   <div className='column column-small justify-content-center'> 
   <img className='velociraptor-EndpointModules-logo   '          src={Info?.logoAddress_1 ? require(`${Info.logoAddress_1}`) : undefined}></img>
@@ -223,18 +344,26 @@ console.log(Tools);
 
 </div>
 
- 
+<div className="display-flex  ">
+ <div className="display-flex  ">
 <label className="switch"> <p className='column font-type-menu   Color-Grey1 '>Start Monitoring</p>
 
   <input type="checkbox" 
-  //  checked={Info?.Monitor}
-  defaultChecked={Math.random() < 0.7}
+ checked={monitoring}
+ onChange={()=>set_monitoring(!monitoring)}
+  // defaultChecked={Math.random() < 0.7}
    />
   <span className="slider round"></span> 
 </label>
- 
+</div>
 
- 
+
+
+<div style={{marginLeft:"auto" ,display:"flex" ,alignItems:"center", justifyContent:"center", height:"22px"}}>
+<p className='column font-type-menu   Color-Grey1 mr-a '  >ID</p>
+<p className=' font-type-txt     Color-Grey1'>  {resource_id}</p></div>
+</div>
+
 </div>
 
         <div className='display-flex mt-c' style={{  }}>
@@ -244,10 +373,7 @@ console.log(Tools);
 
       </div>
 
-
- 
-              
-            
+     
             </div>
           </div>)}
     

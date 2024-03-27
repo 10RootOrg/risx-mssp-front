@@ -74,13 +74,13 @@ function ResourceGroup_List___PhoneNumbers() {
 
 {Info.ActiveTools?.length === 0 ?  (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  }
 
-{Info.ActiveTools?.length === 1 ?  (<p className='ml-a  font-type-txt   Color-Blue-Glow tagit'>{Info?.ActiveTools}</p> ) : null  }
+{Info.ActiveTools?.length === 1 ?  (<p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.ActiveTools}</p> ) : null  }
 
 {Info.ActiveTools?.length === 2 ?  (<>
-  <p className='ml-a  font-type-txt   Color-Blue-Glow tagit'>{Info?.ActiveTools[0]}</p><p className='ml-a  font-type-txt   Color-Blue-Glow tagit'>{Info?.ActiveTools[1]}</p> </>                       ) : null  }
+  <p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.ActiveTools[0]}</p><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.ActiveTools[1]}</p> </>                       ) : null  }
 
 
-  {Info.ActiveTools?.length > 2 ?  (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit'>{Info?.ActiveTools[0]}</p>  <p className=' ml-a font-type-txt   Color-Grey1  '>+{Info.ActiveTools?.length} More</p></>) : null  }
+  {Info.ActiveTools?.length > 2 ?  (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.ActiveTools[0]}</p>  <p className=' ml-a font-type-txt   Color-Grey1  '>+{Info.ActiveTools?.length} More</p></>) : null  }
 
 
  

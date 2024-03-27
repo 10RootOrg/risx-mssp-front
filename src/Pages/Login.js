@@ -43,7 +43,8 @@ function Login({ set_show_SideBar}) {
 const [InputUser, set_InputUser] = useState("");
 const [InputPassword, set_InputPassword] = useState("");
 
-const [necessaryUser, set_necessaryUser] = useState("DorAmit");
+const necessaryUser1  = "DorAmit"
+const necessaryUser2  = "YanivR"
 const [necessaryPassword , set_necessaryPassword] = useState("123");
 const [errorMessage , set_errorMessage] = useState("");
 
@@ -71,9 +72,15 @@ const handleClick = (event) => {
 
   event.preventDefault(); // Prevent form submission and page reload
   set_errorMessage("")
-if ( necessaryUser === InputUser && necessaryPassword === InputPassword) {
+if ( necessaryUser1 === InputUser  && necessaryPassword === InputPassword) {
   navigate(`/${"DashBoard"}`);  
 }
+
+else if ( necessaryUser2 === InputUser  && necessaryPassword === InputPassword) {
+  navigate(`/${"DashBoard"}`);  
+}
+
+
 else{
   set_errorMessage("Username or Password Incorrect")
 }

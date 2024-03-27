@@ -7,7 +7,7 @@
         "LastRun": "22/02/2024"
     },
     {
-        "headline": "I.P Addresses",
+        "headline": "I.P Address",
         "active": 28,
         "UnActive": 4,
         "StatusColor": "blue",
@@ -35,7 +35,7 @@
         "LastRun": "11/06/2024"
     },
     {
-        "headline": "Has Privileges",
+        "headline": "Privileges",
         "active": 4,
         "UnActive": 1,
         "StatusColor": "red",

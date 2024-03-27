@@ -118,7 +118,7 @@
     }
     , {
         "BoxType": "Tools_b",
-        "headline": "Privet Hashes DB",
+        "headline": "Private Hashes DB",
         "description": "Create custom hash sets from files",
         "iconAddress": "",
         "Toolname": "HashR",

@@ -1,4 +1,8 @@
- 
+/* input:-webkit-autofill {
+  background-color: transparent !important;
+  -webkit-box-shadow: 0 0 0 50px white inset;
+} */ 
+  /* mybe help to google autofill */
 :root {
  
   --color-Black: #1B2231; 
@@ -416,17 +420,25 @@ width: 28px;
   /* /////////////////////// */
 
   /* /////////////////////// */
-.tagit{
+.tagit_type1{
   display: flex;
    align-items: center;
   background-color: var(--color-DB-Blue-Hover);
   transition: var(--transition-fast);
 border-radius: var(--elemtns-round-corner-medium);
 border-radius:  15px;
-height: var(--space-c);
+height:calc( var(--space-b)*2   );
 padding: 0 var(--space-b);
- 
 }
+
+.tagit_type2{
+  background-color: var(--color-Grey4);
+}
+
+.tagit_type2_on_popup{
+  background-color: var(--color-Grey3);
+}
+
   /* /////////////////////// */
 .light-bulb-type1{
   height: 12px;
