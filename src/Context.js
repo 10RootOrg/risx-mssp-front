@@ -41,9 +41,9 @@ const addToCart = (name,price)=>{
 
 
   useEffect(() => {
-    console.log("get_all_resource_types  111");
+ 
      const get_all_resource_types = async()=>{
-      console.log("get_all_resource_types  2222");
+ 
       try{
           const res = await axios.get(`${backEndURL}/Resources/all-resource-type`);
           if (res){set_all_Resource_Types( res.data)

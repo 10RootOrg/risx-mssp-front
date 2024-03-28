@@ -20,9 +20,7 @@ const {all_Resource_Types ,all_Tools} = useContext(GeneralContext)
 
      const [resource_string, set_resource_string] = useState(resourceItem?.resource_string || '');
   
-    //  const [type, setType] = useState(resourceItem?.type || '');
-    //  const [ipAddress, setIpAddress] = useState(resourceItem?.ip_address || '');
-    //  const [port, setPort] = useState(resourceItem?.port || '');
+
      const [monitoring, set_monitoring] = useState(resourceItem?.monitoring || '');
      const [description, setDescription] = useState(resourceItem?.description || '');
      const [resource_id, set_resource_id] = useState(resourceItem?.resource_id || '');
@@ -30,18 +28,11 @@ const {all_Resource_Types ,all_Tools} = useContext(GeneralContext)
 
 
  
-console.log("all_Tools", all_Tools);
-console.log("item_types_list", item_types_list);
-console.log("item_tool_list", item_tool_list);
-
+ 
 
      useEffect(() => {
-      // set_site_id(resourceItem?.site_id || '');
       set_resource_id(resourceItem?.resource_id  || '');
       set_resource_string(resourceItem?.resource_string  || '');
-      // setType(resourceItem?.type || '');
-      // setIpAddress(resourceItem?.ip_address        || '');
-      // setPort(resourceItem?.port || '');
       set_monitoring(resourceItem?.monitoring || '');
       setDescription(resourceItem?.description || '');
     }, [resourceItem]); // Re-initialize state if `resourceItem` changes
@@ -75,7 +66,7 @@ console.log(e.target.checked);
     };
 
 
-
+// console.log("all_Tools", all_Tools);
 
     const handleInputChange = (setter) => (event) => setter(event.target.value);
 
@@ -126,11 +117,8 @@ console.log(e.target.checked);
  
 <div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Edit Item</p></div>
 
-{/* <p className='font-type-menu    Color-White '>{resourceItem?.Name}</p> */}
-
 
 <div className="items_top_center_buttom">
-
 
 <div className="items_top">
 
@@ -192,7 +180,7 @@ className="item_info_left"
   </div>
 
  <div className='  'style={{marginTop:"auto"}}>
- <p className='    font-type-txt   Color-Grey1 tagit_type1 tagit_type2_on_popup' >{Info?.resource_type_name}</p>  
+ <p className='    font-type-txt   Color-Grey1 tagit_type1 tagit_type2_on_popup' >{Info?.resource_type_name}  </p>  
  </div>
 
 </div>

@@ -9,20 +9,14 @@ import axios from 'axios';
 
 function DashBoard({show_SideBar,set_show_SideBar}) {
 
-    const { all_Tools ,set_all_Tools , backEndURL } = useContext(GeneralContext);
+    const { all_Tools ,set_all_Tools , backEndURL ,all_Resource_Types} = useContext(GeneralContext);
     const [show_tool_PreviewBoxs_type_a_b, set_show_tool_PreviewBoxs_type_a_b] = useState(true)
 
 
-//  
-    const [all_tool_ids_array, set_all_tool_ids_array] = useState([]) 
     const [show_only_this_tools, set_show_only_this_tools] = useState([]) 
-    const [dont_show_this_tools, set_dont_show_this_tools] = useState([]) 
     const [dont_show_this_tools2, set_dont_show_this_tools2] = useState([]) 
+ 
 
-
-    console.log(dont_show_this_tools2, "dont_show_this_tools2");
-
-// console.log("show_only_this_tools" , show_only_this_tools);
 
     // const [show_only_this_tools, set_show_only_this_tools] = useState({  all_tool_ids_array }) 
     // console.log("show_only_this_tools", show_only_this_tools);
@@ -32,24 +26,10 @@ function DashBoard({show_SideBar,set_show_SideBar}) {
 useEffect(() => {
    if(all_Tools.length  === undefined || all_Tools.length === 0 )
 {
-
     const get_all_tools = async()=>{
         try{
             const res = await axios.get(`${backEndURL}/Tools`);
-            if (res){ 
-         
-                set_all_Tools(res.data)
-         
-            
-            }}
-                 catch(err){console.log(err);}
-        
-        
-                    }
-
-
-
-
+            if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  }
   get_all_tools();      
                 
 }  }, []);
@@ -57,67 +37,29 @@ useEffect(() => {
 
 
 
-  useEffect(() => {
-        if (show_SideBar === false) {set_show_SideBar(true)}
-  }, []);
+  useEffect(() => { if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 
 
 
 
      useEffect(() => {
-       ////////////// make arry of tool ids////
-const item_arrary =[]
- 
 
+
+////////////// make arry of tool ids////
+const item_arrary =[]
 if (all_Tools.length !== undefined){
 
     for (let x of all_Tools) {
         item_arrary.push(x.tool_id)
       }
-   set_all_tool_ids_array(item_arrary)
+//    set_all_tool_ids_array(item_arrary)
    set_show_only_this_tools(item_arrary)
 
 }
-
- 
-
-
             }, [all_Tools ]);
     
 
 
-   useEffect(() => { // make arry 
-
-                const info_of_Filtered=[]
-              console.log("333333333333");
-                // console.log(dont_show_this_tools, "dont_show_this_tools ");
-              
-              // if (set_dont_show_this_tools[i] === )
-                   // if ( all_Tools[i]?.tool_id === "1002") {
-               
-                for (let i = 0; i < all_Tools.length; i++) {
-              
-                //  console.log( dont_show_this_tools.length , "111");
-              
-                  for (let j = 0; j < dont_show_this_tools.length; j++) {
-              
-              
-                    const toolInfo = all_Tools.filter((tool) => tool.tool_id == dont_show_this_tools[j] );
-              
-                    // console.log(toolInfo);
-              //       info_of_Filtered.push(toolInfo)
-              // console.log(info_of_Filtered, "info_of_Filtered");
-               
-                }
-              
-              }
-              
-              }, [
-              all_Tools,
-              show_only_this_tools,
-              dont_show_this_tools]);
-              
-                
 
 
       

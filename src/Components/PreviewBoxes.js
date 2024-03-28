@@ -1,7 +1,9 @@
 import React , {useState , useEffect} from 'react';
  import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
- import { PopUpSmart } from "./Features/PopUpSmart.js";
+ import { PopUpSmart , PopUp_For_Nuclei_data} from "./Features/PopUpSmart.js";
+
+
 import  Counter  from './Features/AnimationCounter.js'
  import TmpChart2 from '../tmpjsons/tempChart.png'; 
  
@@ -11,8 +13,90 @@ import  Counter  from './Features/AnimationCounter.js'
 
 import './PreviewBoxes.css';
  
-function PreviewBox_type1({HeadLine,BigNumber,SmallNumber,StatusColor,date}) {
+function PreviewBox_type1({
+HeadLine,BigNumber,
+SmallNumber,StatusColor,
+date, resource_type_id ,
+description_short,
+filter_Resource,
+set_filter_Resource,
+}) {
  
+  const [isHovered, setIsHovered] = useState(false);
+  const [is_Filtering, set_is_Filtering] = useState(false);
+
+ 
+const  handle_filter_by_Type = (id) => {
+  console.log('filter_Resource', filter_Resource);
+  
+if (id === null || id === undefined){
+  console.log("its for everything");
+
+  // const stayAsYouR = filter_Resource.tool_ids
+  // set_filter_Resource({type_ids:[],tool_ids:stayAsYouR})
+  return
+}
+
+
+
+
+else{
+
+const found = filter_Resource.type_ids.find((ids) => ids ===  id);
+console.log("found" ,found);
+
+
+if (found  === undefined){
+  console.log(id, "not there, im insert it to list");
+// filter_Resource.type_ids.push(id)
+
+// const array = filter_Resource.type_ids
+
+// console.log("array" , array);
+// console.log("id" , id);
+
+
+// const Newarray = array.push(id)
+
+// console.log("Newarray" , Newarray);
+
+
+const stayAsYouR = filter_Resource.tool_ids
+set_filter_Resource({type_ids:[...filter_Resource.type_ids,id],    tool_ids:stayAsYouR})
+set_is_Filtering(true)
+
+return
+}
+
+else if (found  === id){
+   
+  const index = filter_Resource.type_ids.indexOf(id);
+  console.log("its alredy ther!!  --  index of " , id, "is" , index);
+ const filterd = filter_Resource.type_ids.filter(element => element  !== id);
+ console.log(" it will look like this "  , filterd);
+
+ const stayAsYouR = filter_Resource.tool_ids
+ set_filter_Resource({type_ids:filterd,tool_ids:stayAsYouR})
+ set_is_Filtering(false)
+return
+}
+
+ 
+
+}
+ 
+ 
+
+}
+
+const handleHover = () => {
+  setIsHovered(true);
+};
+
+const handleLeave = () => {
+  setIsHovered(false);
+};
+
 
   const StatusColorClass =
   StatusColor === 'red' ? 'Bg-Red' :
@@ -20,7 +104,15 @@ function PreviewBox_type1({HeadLine,BigNumber,SmallNumber,StatusColor,date}) {
   'Bg-Grey2';
 
   return (
-    <div className='PreviewBox' > 
+    <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering ? 'PreviewBox_Filtering' : ''}`}
+    // className={`box ${isFocused ? 'focused' : ''}`}
+    // is_Filtering
+      onClick={()=>{handle_filter_by_Type(resource_type_id) }}
+      onMouseEnter={handleHover}
+      onMouseLeave={handleLeave}
+      
+      
+      > 
     <div className='PreviewBox_HeadLine' >
       <p  className="font-type-menu" >{HeadLine}</p>
 
@@ -31,14 +123,14 @@ function PreviewBox_type1({HeadLine,BigNumber,SmallNumber,StatusColor,date}) {
 
     <div> 
      
-    <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber}/> </div>
+    <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered} /> </div>
     <div className='PreviewBox_SmallNumber   font-type-txt Color-White' >UnActive:{SmallNumber}</div>
     </div>
 
      <div className='PreviewBox_ButtomLine' >
 
        <IconLastRun />
-       <div className='font-type-very-sml-txt Color-Grey1' >{date}</div>
+       <div className='font-type-very-sml-txt ' >{date}</div>
 
      </div> {/*dont delete */}
     </div>
@@ -279,13 +371,14 @@ function PreviewBox_type_tools_b({  HeadLine,description,  StatusColor,date, log
 
 
 
-  const [popUp_show, set_popUp_show] = useState(false);
+  const [popUp_Read_More, set_popUp_Read_More] = useState(false);
+  const [popUp_Nuclei_data, set_popUp_Nuclei_data] = useState(false);
 
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
   const [logoAddress_2_ForSrc, set_logoAddress_2_ForSrc] = useState("")
   const [disabled, set_disabled] = useState(false)
   const handleReadMore = () =>{
-    set_popUp_show(true);
+    set_popUp_Read_More(true);
   }
   useEffect(() => {
     if (logoAddress_1 !== "" &&  logoAddress_1 !== null &&  logoAddress_1 !== undefined ) {
@@ -353,10 +446,18 @@ function PreviewBox_type_tools_b({  HeadLine,description,  StatusColor,date, log
         logoAddress_1_ForSrc={logoAddress_1_ForSrc}
         toolURL={toolURL}
         buttonTitle={buttonTitle}
-        set_popUp_show={set_popUp_show}
-        popUp_show={popUp_show}
+        set_popUp_show={set_popUp_Read_More}
+        popUp_show={popUp_Read_More}
       />
-
+<PopUp_For_Nuclei_data
+        HeadLine={HeadLine}
+        readMoreText={readMoreText}
+        logoAddress_1_ForSrc={logoAddress_1_ForSrc}
+        toolURL={toolURL}
+        buttonTitle={buttonTitle}
+        set_popUp_show={set_popUp_Nuclei_data}
+        popUp_show={popUp_Nuclei_data}
+      />
 
   <div className='PreviewBox PreviewBox-of-tools' > 
 
@@ -401,11 +502,12 @@ function PreviewBox_type_tools_b({  HeadLine,description,  StatusColor,date, log
 
 
 
-
-
   <button className="btn-type3 mb-c" onClick={()=>handleReadMore()}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
 
-<  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>
+{tool_id === '1005' ? (
+<button className="btn-type2" onClick={()=>set_popUp_Nuclei_data(true)}><p className='font-type-menu ' >{buttonTitle} </p>  </button>)
+
+:(<  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>)}
  
   </div>
 
@@ -489,7 +591,7 @@ if (indexNumber > -1) {
 
   //  flexShrink:5,
      flexGrow:1, 
-     width:"180px",
+     width:"248px",
     //  maxWidth:"210px",
     //  minWidth:"210px",
      }} > 
@@ -505,7 +607,8 @@ if (indexNumber > -1) {
  flexDirection:'column',
   justifyContent:"space-between",
   
-  height:"100%"
+  height:"100%",
+
 }}>
 
 
@@ -513,8 +616,13 @@ if (indexNumber > -1) {
  
  <p className='  text-center    font-type-h4 Color-White mb-d'  style={{maxwidth:"350px"}} >UnActive</p>
  {/* <p className='text-center   font-type-txt Color-White  mb-a'    style={{maxwidth:"250px"}}>Return to Tools Dashboard</p> */}
+ <div style={{
  
- {dont_show_this_tools2?.map((Info, index) => {
+    height:"170px",
+    overflowY: "auto"
+ }}>
+
+{dont_show_this_tools2?.map((Info, index) => {
 return(
 <>
 <div className=' '  
@@ -523,7 +631,8 @@ return(
   display:"flex",
   justifyContent:"left",
   alignItems: "center",
-  marginTop:"var(--space-b)"
+  marginTop:"var(--space-b)",
+
  }}
  >
            <ToggleSwitch Info={Info} onToggle={handleToggle} />
@@ -546,6 +655,9 @@ return(
 
  }
  )}
+
+
+ </div>
 
 
 

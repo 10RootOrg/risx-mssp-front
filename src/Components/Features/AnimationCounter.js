@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-const Counter = ({ target }) => {
+const Counter = ({ target , isHovered}) => {
   const [count, setCount] = useState(0);
-  // Initial color is #E5E5E5 (RGB: 229, 229, 229)
   const [color, setColor] = useState('rgb(229, 229, 229)');
+  // const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     let startTimestamp = null;
-    // Dynamic duration: every number counts for 0.1 second
-    const duration = target * 40; // Convert target to milliseconds for the counting duration
-    const colorTransitionStartTimestamp = duration; // Start color transition back to #E5E5E5 after counting
-    const endColorTransitionDuration = 500; // 0.5 seconds for the color transition back
+    const duration = target * 40;
+    const colorTransitionStartTimestamp = duration;
+    const endColorTransitionDuration = 500;
 
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
@@ -18,10 +17,8 @@ const Counter = ({ target }) => {
       const progress = Math.min(elapsedTime / duration, 1);
       const easeInOutProgress = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
 
-      // Update count based on progress
       setCount(Math.floor(easeInOutProgress * target));
 
-      // Transition from #E5E5E5 to #00DBFF during counting
       if (elapsedTime <= duration) {
         const colorIntensity = easeInOutProgress;
         const r = Math.floor(229 + (0 - 229) * colorIntensity);
@@ -33,7 +30,6 @@ const Counter = ({ target }) => {
       if (progress < 1) {
         window.requestAnimationFrame(step);
       } else if (elapsedTime <= colorTransitionStartTimestamp + endColorTransitionDuration) {
-        // After counting, start transitioning color back to #E5E5E5 smoothly
         const colorElapsedTime = elapsedTime - duration;
         const colorProgress = Math.min(colorElapsedTime / endColorTransitionDuration, 1);
         const r = Math.floor(0 + (229 - 0) * colorProgress);
@@ -42,14 +38,30 @@ const Counter = ({ target }) => {
         setColor(`rgb(${r}, ${g}, ${b})`);
         window.requestAnimationFrame(step);
       } else {
-        setColor('rgb(229, 229, 229)'); // Ensure it ends exactly at #E5E5E5
+        setColor('rgb(229, 229, 229)');
       }
     };
 
     window.requestAnimationFrame(step);
-  }, [target]); // Re-run animation if target changes
+  }, [target]);
 
-  return <p style={{ color }}>{count}</p>;
+  // const handleHover = () => {
+  //   setIsHovered(true);
+  // };
+
+  // const handleLeave = () => {
+  //   setIsHovered(false);
+  // };
+
+  return (
+    <div
+      // onMouseEnter={handleHover}
+      // onMouseLeave={handleLeave}
+      style={{ transition: 'color 0.15s ease-in-out' }}
+    >
+      <p style={{ color: isHovered ? '#00DBFF' : color, transition: 'color 0.15s ease-in-out' }}>{count}</p>
+    </div>
+  );
 };
 
 export default Counter;

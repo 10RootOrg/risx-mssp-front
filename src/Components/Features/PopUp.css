@@ -210,9 +210,54 @@ transition: var(--transition-fast)
 
 
 
+ 
+.pop_up_table th{
+ 
+  color: var(--color-White);
+  font-size: 14px;
+ text-align: left;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  letter-spacing: 0.01rem;
+overflow: hidden;
+ min-width: 120px;
+ 
+}
 
 
 
 
  
+.pop_up_table tr{
+ overflow: hidden;
+ }
+
+ .pop_up_table td{
+  color: var(--color-Grey1);
+
+
+  font-size: 13.5px;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  line-height: 120%;
+  overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;  
  
+ padding-top:var(--space-a);
+ padding-bottom:var(--space-a);
+ padding-right:var(--space-a);
+ 
+ }
+
+ .pop_up_table td p {
+  color: var(--color-White);
+  background-color:var(--color-Grey3);
+  padding-right: var(--space-a);
+  padding-left: var(--space-a);
+  padding-top: var(--space-b);
+  padding-bottom: var(--space-b);
+ }

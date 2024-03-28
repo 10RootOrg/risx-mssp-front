@@ -14,7 +14,7 @@
     display: flex;
     flex-direction: column;
   justify-content:space-between;
-  transition: var(--transition-med)
+  transition: var(--transition-fast)
   }
    
 .PreviewBox-of-tools{
@@ -28,10 +28,52 @@
 
 
 
-.PreviewBox:hover{
-  background:var(--color-Grey4);
-
+ 
+.PreviewBox_for_type_count:hover{
+  background:var( --color-DB-Blue-Hover);
+    transition: var(--transition-fast);
+  cursor: pointer;
 }
+
+.PreviewBox_for_type_count:active{
+  background:var(   --color-DB-Blue-Hover-Real);
+}
+
+ 
+.PreviewBox_Filtering{
+  background:var( --color-DB-Blue-Hover);
+}
+
+
+.PreviewBox_for_type_count    .PreviewBox_HeadLine p ,
+.PreviewBox_for_type_count  div .PreviewBox_SmallNumber {
+  color: var(--color-White);
+  transition: var(--transition-fast);
+}
+
+.PreviewBox_for_type_count  .PreviewBox_ButtomLine div,
+.PreviewBox_for_type_count  .PreviewBox_ButtomLine svg path
+{
+  color: var(--color-Grey1);
+  stroke: var(--color-Grey1);
+  transition: var(--transition-fast);
+}
+ 
+
+.PreviewBox_for_type_count:hover   .PreviewBox_HeadLine p ,
+.PreviewBox_for_type_count:hover    div .PreviewBox_SmallNumber ,
+.PreviewBox_for_type_count:hover   .PreviewBox_ButtomLine div ,
+.PreviewBox_for_type_count:hover   .PreviewBox_ButtomLine svg path
+
+{
+  color: var(  --color-DB-Blue-Glow);
+  stroke:var(  --color-DB-Blue-Glow);
+}
+
+ 
+/* PreviewBox_ButtomLine
+Color-Grey1 */
+
 
 
 

@@ -10,7 +10,7 @@ import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
  
  import { Edit_Resource_Item } from "../Edit_Resource_Item";
 
-function ResourceGroup_All({allData}) {
+function ResourceGroup_All({Preview_this_Resource}) {
   const [popUp_show, set_popUp_show] = useState(false);
   const [resourceItem , set_resourceItem] = useState({})
   const { backEndURL } = useContext(GeneralContext);
@@ -119,7 +119,7 @@ set_item_types_list={set_item_types_list}
 </div>
 
 <div className='resource-group-list-box mb-c' >
-  {allData?.map((Info, index) => {
+  {Preview_this_Resource?.map((Info, index) => {
 
 
 //custom sort order
@@ -129,7 +129,7 @@ const sortOrder = {
   'green': 3
 };
 
-allData.sort((a, b) => {
+Preview_this_Resource.sort((a, b) => {
   // Default sort order for items not found in sortOrder
   const defaultOrder = 999;
 
