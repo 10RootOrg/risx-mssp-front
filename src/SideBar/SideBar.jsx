@@ -24,7 +24,8 @@ else{set_openSubMenu(name);}
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
-  navigate(`/${page_name}`); // This navigates to the path specified by page_name
+
+  navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name
 
 };
 

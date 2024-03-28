@@ -178,3 +178,12 @@ export default GeneralContext;
 //   const [RuleTypePingOrRecon, setRuleTypePingOrRecon] = useState(
 //     JSON.parse(localStorage.getItem("userpreferences"))?.withPINGCastle || true,
 //   );
+
+
+
+// const s = "1001, 2001, 2002,2003";
+
+// // Split the string into an array by commas, trim each element, and check if "2002" is included
+// const contains2002 = s.split(',').map(num => num.trim()).includes('2002');
+
+// console.log(contains2002); // Outputs: true if 2002 is found, false otherwise

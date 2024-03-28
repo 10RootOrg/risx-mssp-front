@@ -65,7 +65,7 @@ useEffect(() => {
 
 <div className='top-of-page-left mb-b'>
 <p  className="font-type-menu" >Resource Group:</p>
-<p  className="font-type-h3" >TelAviv Office </p>
+<p  className="font-type-h3" >General</p>
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 

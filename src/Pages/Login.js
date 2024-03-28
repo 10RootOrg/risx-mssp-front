@@ -73,11 +73,11 @@ const handleClick = (event) => {
   event.preventDefault(); // Prevent form submission and page reload
   set_errorMessage("")
 if ( necessaryUser1 === InputUser  && necessaryPassword === InputPassword) {
-  navigate(`/${"DashBoard"}`);  
+  navigate(`/${"dashboard"}`);  
 }
 
 else if ( necessaryUser2 === InputUser  && necessaryPassword === InputPassword) {
-  navigate(`/${"DashBoard"}`);  
+  navigate(`/${"dashboard"}`);  
 }
 
 

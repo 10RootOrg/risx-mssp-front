@@ -36,10 +36,10 @@ export default function App() {
   
      
       <Routes>
-           <Route path="/" element={<Navigate replace to="/Login" />} />
-          <Route path="Login" element={<Login   set_show_SideBar={set_show_SideBar}/>} />
-          <Route path="ResourceGroup" element={<ResourceGroup show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
-          <Route path="DashBoard"     element={<DashBoard show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
+           <Route path="/" element={<Navigate replace to="/login" />} />
+          <Route path="login" element={<Login   set_show_SideBar={set_show_SideBar}/>} />
+          <Route path="resourcegroup" element={<ResourceGroup show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
+          <Route path="dashboard"     element={<DashBoard show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
           <Route path="TestPage"     element={<TestPage />} />   
           <Route path='*' element={<NoPage404/> }/>
       </Routes>

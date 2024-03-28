@@ -215,7 +215,10 @@ import jsonData from '../../tmpjsons/Nuclei.json'
       {buttonTitle === "Close" ? (
       <button className="btn-type2" onClick={handleClose} ><p className='font-type-menu '>{buttonTitle}</p>  </button> 
       ):(
+        <div> 
+        <a href={`http://51.145.229.232:3003/Nuc_001.json`} download="data.json" target="_blank" className="mr-b">  <button className="btn-type2 "><p className='font-type-menu '>Download JSON File</p>  </button></a>
         <  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle}</p>  </button></a>
+        </div>
       )
       }
      
