@@ -8,6 +8,16 @@ import { ReactComponent as CloseButton } from '../icons/ico-Close_type1.svg';
 import jsonData from '../../tmpjsons/Nuclei.json'
 import axios from 'axios';
 
+const downloadJsonFile = (file) => {
+  console.log(file);
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(file));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute("href", dataStr);
+  downloadAnchorNode.setAttribute("download", "data.json");
+  document.body.appendChild(downloadAnchorNode);
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+};
 
   export const PopUp_For_Read_More = (props) => {
     const { HeadLine, readMoreText   ,popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc, popUp_iconSize} = props;
@@ -102,6 +112,13 @@ import axios from 'axios';
     const { HeadLine, readMoreText   ,popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc, popUp_iconSize} = props;
      // const [modalVisible, setModalVisible] = useState(false);
    
+     const [Nuclei_data, set_Nuclei_data] = useState(jsonData)
+
+
+ 
+
+
+
     useEffect(() => {
       set_popUp_show(popUp_show)
     }, [popUp_show]);
@@ -184,7 +201,7 @@ import axios from 'axios';
         </tr>
       </thead>
       <tbody >
-        {jsonData.map((item, index) => (
+        {Nuclei_data.map((item, index) => (
           <tr key={index} style={{height:"20px"}}>
             <td  ><p>{item.template}</p></td>
             <td><p>{item['template-url']} </p></td>
@@ -217,10 +234,18 @@ import axios from 'axios';
       {buttonTitle === "Close" ? (
       <button className="btn-type2" onClick={handleClose} ><p className='font-type-menu '>{buttonTitle}</p>  </button> 
       ):(
+
+
         <div> 
-        <a href={`http://51.145.229.232:3003/Nuc_001.json`} download="data.json" target="_blank" className="mr-b">  <button className="btn-type2 "><p className='font-type-menu '>Download JSON File</p>  </button></a>
-        <  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle}</p>  </button></a>
-        </div>
+        <button className="btn-type2   " onClick={()=>downloadJsonFile(Nuclei_data)}><p className='font-type-menu '>Download JSON File</p>  </button> 
+      <  a href={toolURL} target="_blank" className="  ml-b"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle}</p>  </button></a>
+      </div>
+
+
+        // <div>   
+        // <a href={`http://51.145.229.232:3003/Nuc_001.json`} download="data.json" target="_blank" className="mr-b">  <button className="btn-type2 "><p className='font-type-menu '>Download JSON File</p>  </button></a>
+        // <  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle}</p>  </button></a>
+        // </div>
       )
       }
      
@@ -244,15 +269,7 @@ import axios from 'axios';
      const [Dehashed_data, set_Dehashed_data] = useState({})
 
 
-     const downloadJsonFile = () => {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(Dehashed_data));
-      const downloadAnchorNode = document.createElement('a');
-      downloadAnchorNode.setAttribute("href", dataStr);
-      downloadAnchorNode.setAttribute("download", "data.json");
-      document.body.appendChild(downloadAnchorNode);
-      downloadAnchorNode.click();
-      downloadAnchorNode.remove();
-  };
+
 
     useEffect(() => {
       set_popUp_show(popUp_show)
@@ -260,73 +277,73 @@ import axios from 'axios';
   
     // get json HashR data
     useEffect(() => {
-      const get_json_Dehashed_data= async()=>{
-            try{
-         const res = await axios.get(`${backEndURL}/Tools/dehashed-json`,);
-        console.log("res.data", res.data);
-        console.log("res.data", typeof res.data);
-        set_Dehashed_data(res.data)
-            }catch(err)
-            {console.log(err);}
-        }
+      // const get_json_Dehashed_data= async()=>{
+      //       try{
+      //    const res = await axios.get(`${backEndURL}/Tools/dehashed-json`,);
+      //   console.log("res.data", res.data);
+      //   console.log("res.data", typeof res.data);
+      //   set_Dehashed_data(res.data)
+      //       }catch(err)
+      //       {console.log(err);}
+      //   }
 
-        get_json_Dehashed_data();
+      //   get_json_Dehashed_data();
 
 
-// const tmpdata =  {
+const tmpdata =  {
 
-//   balance: "123",
-//   entries:[
-//     {
-//       address :  "",
-//       database_name : "Dox",
-//       email:  "aaa.co.l",
-//       hashed_password: "038768767678766654561",
-//       id  :  "5965675744",  ip_address : "",
-//       name
-//       : 
-//       "23423",
-//       password
-//       : 
-//       "23424",
-//       phone
-//       : 
-//       "",
-//       username
-//       : 
-//       "",
-//       vin
-//       : 
-//       "",
-//     },    {
-//       address :  "",
-//       database_name : "12313",
-//       email:  "2eb3.co.l",
-//       hashed_password: "03234324254561",
-//       id  :  "596567234235744",  ip_address : "",
-//       name
-//       : 
-//       "2344243",
-//       password
-//       : 
-//       "2342343242342424",
-//       phone
-//       : 
-//       "",
-//       username
-//       : 
-//       "bobo",
-//       vin
-//       : 
-//       "",
-//     },
-//   ],
-//   success:true,
-//   took:"bbl",
-// total:4
-//  }
+  balance: "123",
+  entries:[
+    {
+      address :  "",
+      database_name : "Dox",
+      email:  "aaa.co.l",
+      hashed_password: "038768767678766654561",
+      id  :  "5965675744",  ip_address : "",
+      name
+      : 
+      "23423",
+      password
+      : 
+      "23424",
+      phone
+      : 
+      "",
+      username
+      : 
+      "",
+      vin
+      : 
+      "",
+    },    {
+      address :  "",
+      database_name : "12313",
+      email:  "2eb3.co.l",
+      hashed_password: "03234324254561",
+      id  :  "596567234235744",  ip_address : "",
+      name
+      : 
+      "2344243",
+      password
+      : 
+      "2342343242342424",
+      phone
+      : 
+      "",
+      username
+      : 
+      "bobo",
+      vin
+      : 
+      "",
+    },
+  ],
+  success:true,
+  took:"bbl",
+total:4
+ }
 
-// set_Dehashed_data(tmpdata);
+set_Dehashed_data(tmpdata);
 
 
 
@@ -479,7 +496,7 @@ import axios from 'axios';
       <button className="btn-type2" onClick={handleClose} ><p className='font-type-menu '>{buttonTitle}</p>  </button> 
       ):(
         <div> 
-          <button className="btn-type2   " onClick={downloadJsonFile}><p className='font-type-menu '>Download JSON File</p>  </button> 
+          <button className="btn-type2   " onClick={()=>downloadJsonFile(Dehashed_data)}><p className='font-type-menu '>Download JSON File</p>  </button> 
         <  a href={toolURL} target="_blank" className="  ml-b"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle}</p>  </button></a>
         </div>
       )

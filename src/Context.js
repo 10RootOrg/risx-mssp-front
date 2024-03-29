@@ -4,8 +4,12 @@ import axios from "axios";
  const GeneralContext = createContext();
 export function ContextProvider  ({ children }) {
 
-
+//for local
 const backEndURL = "http://localhost:5000"
+
+//for riskDev
+// const backEndURL = "http://risxserverdev.westeurope.cloudapp.azure.com:5000"
+
 const [all_Resource_Types, set_all_Resource_Types] = useState([]);
 const [all_Tools, set_all_Tools] = useState([]);
 
