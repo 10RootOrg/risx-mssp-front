@@ -1,7 +1,7 @@
 import React , {useState , useEffect} from 'react';
  import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
- import { PopUpSmart , PopUp_For_Nuclei_data} from "./Features/PopUpSmart.js";
+ import { PopUp_For_Read_More , PopUp_For_Nuclei_data , PopUp_For_Dehashed_data} from "./Features/PopUpSmart.js";
 
 
 import  Counter  from './Features/AnimationCounter.js'
@@ -13,6 +13,19 @@ import  Counter  from './Features/AnimationCounter.js'
 
 import './PreviewBoxes.css';
  
+
+const openInNewTab = (toolURL) => {
+  const newWindow = window.open(toolURL, '_blank', 'noopener,noreferrer')
+  if (newWindow) newWindow.opener = null
+}
+
+
+
+
+
+
+
+
 function PreviewBox_type1({
 HeadLine,BigNumber,
 SmallNumber,StatusColor,
@@ -288,7 +301,7 @@ function turn_on_off_tool(){
 
 <>
 
-<PopUpSmart
+<PopUp_For_Read_More
         HeadLine={HeadLine}
         readMoreText={readMoreText}
         logoAddress_1_ForSrc={logoAddress_1_ForSrc}
@@ -371,15 +384,28 @@ function PreviewBox_type_tools_b({  HeadLine,description,  StatusColor,date, log
 
 
 
-  const [popUp_Read_More, set_popUp_Read_More] = useState(false);
-  const [popUp_Nuclei_data, set_popUp_Nuclei_data] = useState(false);
+  const [Show_popUp___Read_More,     set_Show_popUp___Read_More] = useState(false);
+  const [Show_PopUp_tool___Nuclei,  set_Show_PopUp_tool___Nuclei] = useState(false);
+  const [Show_PopUp_tool___Dehashed,   set_Show_PopUp_tool___Dehashed] = useState(false);
 
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
   const [logoAddress_2_ForSrc, set_logoAddress_2_ForSrc] = useState("")
   const [disabled, set_disabled] = useState(false)
+
+
   const handleReadMore = () =>{
-    set_popUp_Read_More(true);
+    set_Show_popUp___Read_More(true);
   }
+
+
+const handle_Main_Btn =(tool_id,toolURL)=>{
+
+  if      (tool_id ===  '1005') { set_Show_PopUp_tool___Nuclei(true)  }
+  else if (tool_id ===  '1009') { set_Show_PopUp_tool___Dehashed(true)  }
+  else {openInNewTab(toolURL) }
+  
+}
+ 
   useEffect(() => {
     if (logoAddress_1 !== "" &&  logoAddress_1 !== null &&  logoAddress_1 !== undefined ) {
  
@@ -440,24 +466,39 @@ function PreviewBox_type_tools_b({  HeadLine,description,  StatusColor,date, log
   return (
 <>
 
-<PopUpSmart
+
+{Show_popUp___Read_More &&
+<PopUp_For_Read_More
         HeadLine={HeadLine}
         readMoreText={readMoreText}
         logoAddress_1_ForSrc={logoAddress_1_ForSrc}
         toolURL={toolURL}
         buttonTitle={buttonTitle}
-        set_popUp_show={set_popUp_Read_More}
-        popUp_show={popUp_Read_More}
-      />
+        set_popUp_show={set_Show_popUp___Read_More}
+        popUp_show={Show_popUp___Read_More}
+      />}
+
+{Show_PopUp_tool___Nuclei &&
 <PopUp_For_Nuclei_data
         HeadLine={HeadLine}
         readMoreText={readMoreText}
         logoAddress_1_ForSrc={logoAddress_1_ForSrc}
         toolURL={toolURL}
         buttonTitle={buttonTitle}
-        set_popUp_show={set_popUp_Nuclei_data}
-        popUp_show={popUp_Nuclei_data}
-      />
+        set_popUp_show={set_Show_PopUp_tool___Nuclei}
+        popUp_show={Show_PopUp_tool___Nuclei}
+      />}
+
+{Show_PopUp_tool___Dehashed && 
+<PopUp_For_Dehashed_data
+        HeadLine={HeadLine}
+        readMoreText={readMoreText}
+        logoAddress_1_ForSrc={logoAddress_1_ForSrc}
+        toolURL={toolURL}
+        buttonTitle={buttonTitle}
+        set_popUp_show={set_Show_PopUp_tool___Dehashed}
+        popUp_show={Show_PopUp_tool___Dehashed}
+      />}
 
   <div className='PreviewBox PreviewBox-of-tools' > 
 
@@ -504,11 +545,22 @@ function PreviewBox_type_tools_b({  HeadLine,description,  StatusColor,date, log
 
   <button className="btn-type3 mb-c" onClick={()=>handleReadMore()}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " />  </button>
 
-{tool_id === '1005' ? (
-<button className="btn-type2" onClick={()=>set_popUp_Nuclei_data(true)}><p className='font-type-menu ' >{buttonTitle} </p>  </button>)
+ 
+
+{/* {tool_id === '1005' ? ( */}
+<button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL)}><p className='font-type-menu ' >{buttonTitle} </p>  </button> 
+
+{/* :(<  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>)} */}
+ 
+ {/* {tool_id === '1005' ? (
+<button className="btn-type2" onClick={()=>set_Show_PopUp_tool___Nuclei(true)}><p className='font-type-menu ' >{buttonTitle} </p>  </button>)
 
 :(<  a href={toolURL} target="_blank"> <button className="btn-type2"><p className='font-type-menu '>{buttonTitle} </p>  </button></a>)}
- 
+  */}
+
+
+
+
   </div>
 
    <div className='PreviewBox_ButtomLine' >

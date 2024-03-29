@@ -2,7 +2,7 @@ import React , {useState , useEffect} from 'react';
  import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as RisxMssp_logo_wide_small} from './Logos/RisxMssp_logo_wide_small.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
- import { PopUpSmart } from "./Features/PopUpSmart.js";
+ import { PopUp_For_Read_More } from "./Features/PopUpSmart.js";
  import jsonData from '../tmpjsons/previewBox-main-velociraptor.json'
  
  
@@ -60,7 +60,7 @@ function PreviewBox_velociraptor({  }) {
 
 
     <>
-<PopUpSmart
+<PopUp_For_Read_More
         HeadLine={popUp_headline}
         readMoreText={popUp_ReadMoreText}
         logoAddress_1_ForSrc={popUp_logoAddress_1}

@@ -209,7 +209,6 @@ transition: var(--transition-fast)
 /* //////////////// edit item end////////////////// */
 
 
-
  
 .pop_up_table th{
  
@@ -222,7 +221,8 @@ transition: var(--transition-fast)
   letter-spacing: 0.01rem;
 overflow: hidden;
  min-width: 120px;
- 
+ padding: 0;
+ margin: 0;
 }
 
 
@@ -236,7 +236,7 @@ overflow: hidden;
  .pop_up_table td{
   color: var(--color-Grey1);
 
-
+ 
   font-size: 13.5px;
   margin: 0;
   font-family: "Roboto", sans-serif;
@@ -254,10 +254,11 @@ text-overflow: ellipsis;
  }
 
  .pop_up_table td p {
+  height: 20px;
   color: var(--color-White);
   background-color:var(--color-Grey3);
   padding-right: var(--space-a);
-  padding-left: var(--space-a);
+  padding-left: var(--space-b);
   padding-top: var(--space-b);
   padding-bottom: var(--space-b);
  }
