@@ -28,7 +28,7 @@ const addToCart = (name,price)=>{
 //     console.log("1234 start get_all_tools");
      
 //     try{
-//         const res = await axios.get(`${backEndURL}/Tools`);
+//         const res = await axios.get(`${backEndURL}/tools`);
   
 //         console.log("2222 start get_all_tools");
     
@@ -49,7 +49,7 @@ const addToCart = (name,price)=>{
      const get_all_resource_types = async()=>{
  
       try{
-          const res = await axios.get(`${backEndURL}/Resources/all-resource-type`);
+          const res = await axios.get(`${backEndURL}/Resources/count-same-type`);
           if (res){set_all_Resource_Types( res.data)
  
              }}

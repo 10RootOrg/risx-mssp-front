@@ -27,7 +27,7 @@ justify-content:stretch;
   width: 320px;
   padding: var(--space-e)   ;
   background-color: var(--color-Grey5);
-  margin-right: -4px;
+  /* margin-right: -4px; */
 }
 
 .login-form{

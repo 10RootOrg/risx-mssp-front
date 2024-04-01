@@ -1,11 +1,11 @@
-import React , {useState , useEffect} from 'react';
+import React , {useState , useEffect, useContext} from 'react';
  import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as RisxMssp_logo_wide_small} from './Logos/RisxMssp_logo_wide_small.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
  import { PopUp_For_Read_More } from "./Features/PopUpSmart.js";
  import jsonData from '../tmpjsons/previewBox-main-velociraptor.json'
- 
- 
+ import axios from 'axios';
+ import GeneralContext from '../Context.js';
 
 import './PreviewBoxes.css';
  
@@ -18,15 +18,17 @@ function PreviewBox_velociraptor({  }) {
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
-
+  const {  backEndURL } = useContext(GeneralContext);
   const [popUp_show, set_popUp_show] = useState(false);
-
   const [popUp_headline, set_popUp_headline] = useState("");
   const [popUp_ReadMoreText, set_popUp_ReadMoreText] = useState("");
   const [popUp_btnTitle, set_popUp_btnTitle] = useState("");
   const [popUp_logoAddress_1, set_popUp_logoAddress_1] = useState("");
   const [popUp_iconAddress, set_popUp_iconAddress] = useState("");
   const [popUp_iconSize, set_popUp_iconSize] = useState("Small");
+  
+  const [ checked_artifacts, set_checked_artifacts] = useState([]);
+
   
   const handleReadMore = (headline,readMoreText,logoAddress_1,btnTitle,iconAddress,iconSize) =>{
     console.log(iconAddress);
@@ -42,8 +44,95 @@ function PreviewBox_velociraptor({  }) {
     set_popUp_show(true);
   }
 
-  // const logoAddress_1_ForSrc = require( `${logoAddress_1}`);
-  // const IconAddressForSrc = require( `${iconAddress}`);
+ 
+ 
+
+
+
+const handle_click_velociraptor= async()=>{
+
+  
+  console.log(" click_velociraptor");
+  console.log("this is checke _artifacts",checked_artifacts);
+
+//   const toolData = {
+//     action: "runartifact",
+//     artifactname: "Exchange.Windows.HardeningKitty",
+//     arguments: "TakeBackUp= 'N', Baseline= 'finding_list_0x6d69636b_machine'",
+//     expiretime: "30",
+//     organizationid: "OCHL0",
+//     label: "iris"
+// }
+ 
+      window.open( toolURL , '_blank');
+
+
+  try{
+      const res = await
+      axios.get(`${backEndURL}/tools/active-tool`, {
+        params: {
+          checked_artifacts: JSON.stringify(checked_artifacts),
+          resource_list: JSON.stringify(['test_0000001', 'test_0000002' ])
+        }
+      });
+      
+      
+      // axios.get(`${backEndURL}/tools/active-tool`,{params:checked_artifacts} );
+     console.log("res.data", res.data);
+
+         }catch(err)
+         {console.log(err);}
+  }
+
+
+   
+
+/// fill the checkout 
+  useEffect(() => { 
+   console.log("jsonData", jsonData);
+const artifact_list = []
+for (let index = 0; index < jsonData.length; index++) {
+  const artifact_id = jsonData[index]?.artifact_id;
+  console.log(artifact_id);
+  artifact_list.push(artifact_id)
+}
+set_checked_artifacts(artifact_list ) 
+  }, [ ]);
+
+
+
+
+const edit_checked_artifacts =(artifact_id)=>{
+
+
+  const alredyHave = checked_artifacts.filter((item) => item  ===  artifact_id);
+  console.log("alredyHave" ,alredyHave.length > 0);
+
+  
+  if (alredyHave.length > 0 ){
+    const removed = checked_artifacts.filter((item) => item  !==  artifact_id);
+    set_checked_artifacts(removed)
+   return
+  }
+else{
+  set_checked_artifacts([ ...checked_artifacts,artifact_id])
+
+}
+
+  //  onChange={()=>set_checked_artifacts([ ...checked_artifacts,Info?.artifact_id])}
+
+
+
+}
+
+  
+
+
+
+
+
+
+
   useEffect(() => {
     set_popUp_show(popUp_show)
   }, [popUp_show]);
@@ -122,10 +211,7 @@ function PreviewBox_velociraptor({  }) {
 
  
 {jsonData?.map((Info, index) =>(
-  //  set_popUp_headline(headline);
-  //   set_popUp_ReadMoreText(readMoreText);
-  //    set_popUp_logoAddress_1(logoAddress_1);
-  //   set_popUp_btnTitle(btnTitle);
+ 
   
 <>
 
@@ -137,7 +223,12 @@ function PreviewBox_velociraptor({  }) {
 
 
 <label className="container"> 
-<input type="checkbox" defaultChecked />
+<input type="checkbox" defaultChecked value={Info?.artifact_id }
+     onChange={()=> edit_checked_artifacts(Info?.artifact_id ) }
+
+
+    //  onChange={()=>set_checked_artifacts([ ...checked_artifacts,Info?.artifact_id])}
+     />
 <span className="checkmark"></span>
 </label>
 </div>
@@ -181,7 +272,7 @@ function PreviewBox_velociraptor({  }) {
 <RisxMssp_logo_wide_small style={{ width:"72px"}}/>
   <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent is required</p>
 
- <  a href={toolURL} target="_blank" > <button className="btn-type2  "><p className='font-type-menu '>Create TimeLine</p>  </button></a>
+  <button className="btn-type2  "onClick={()=>handle_click_velociraptor()}><p className='font-type-menu ' >Create TimeLine</p>  </button> 
 </div>
  
    </div>

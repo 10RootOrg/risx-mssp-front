@@ -52,7 +52,10 @@
 .Color-Grey5{color: var(--color-Grey5);}
 .Color-Black{color: var(--color-Black);}
 .Color-Blue-Glow{color: var(--color-DB-Blue-Glow);}
+.Color-Blue-Active{color: var(--color-DB-Blue-Active);}
+.Color-Blue-Hover-Real{color: var(--color-DB-Blue-Hover-Real);}
 
+ 
 
 .Bg-Blue-Glow{background-color:var(--color-DB-Blue-Glow)}
 .Bg-Green{background-color:var(--color-Green)}
@@ -219,7 +222,7 @@ p{color: var(--color-White);
   /* background-color: rgb(255, 0, 255); */
   width: 100%;
  
-   /* min-height: 100vh;  */
+   min-height: calc( 100vh  - var(--space-d)*2) 
 }
 
 @media only screen and (max-width: 1100px) {
@@ -233,16 +236,48 @@ p{color: var(--color-White);
 /* //////////////top-of-page/////////////// */
 .top-of-page{
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin: 0;
   padding: 0;
 }
 
+@media only screen and (max-width: 550px) {
+  .top-of-page{
+ flex-direction: column;
+ align-self: start;
+ 
+ align-items: flex-start;
+  margin-bottom: var(--space-c );
+
+ 
+  width: 100%;
+}}
+
 .top-of-page-right{
   display: flex;
   align-items: center;
+ 
+ 
+ 
 }
+@media only screen and (max-width: 550px) {
+  .top-of-page-right {
+    width: 100%;
+}}
+
+@media only screen and (max-width: 550px) {
+  .top-of-page-right > .input-type1{
+  width: 100%;
+}}
+
+/* .top-of-page-right > .input-type1 {
+ 
+ background-color: #00FF00;
+} */
+
+
 /* ///////////////////////////// */
 
 .input-type1::placeholder{    color: var(--color-Grey2);}
@@ -636,3 +671,17 @@ input:checked + .slider:before {
 
 /* ..................... checkbox    ..................... */
   /* shalom    */
+  /* display: "flex", flexDirection: "column" ,height:"100%" */
+
+  .loader-type-a{
+
+display: flex;
+flex-direction: column;
+justify-content: center;  
+ align-items: center;
+height: 100%;
+  }
+
+
+ .loader-type-a img{width: 150px }
+

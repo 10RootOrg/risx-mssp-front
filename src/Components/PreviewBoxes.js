@@ -33,23 +33,39 @@ date, resource_type_id ,
 description_short,
 filter_Resource,
 set_filter_Resource,
+ 
+ 
 }) {
  
   const [isHovered, setIsHovered] = useState(false);
   const [is_Filtering, set_is_Filtering] = useState(false);
 
+  useEffect(() => { 
+
+    console.log("change--999" , filter_Resource?.type_ids?.length === 0 );
+        if (filter_Resource?.type_ids?.length === 0 ) {
+    
+          console.log("zero filter--999" );
+    
+          set_is_Filtering(false)
+        }
+     
+    
+    },[filter_Resource])
+    
  
 const  handle_filter_by_Type = (id) => {
   console.log('filter_Resource', filter_Resource);
   
 if (id === null || id === undefined){
   console.log("its for everything");
-
+  
+  set_filter_Resource({type_ids:[],tool_ids:[]})
+  // set_clear_all_btns_filter_preview(true)
   // const stayAsYouR = filter_Resource.tool_ids
   // set_filter_Resource({type_ids:[],tool_ids:stayAsYouR})
   return
 }
-
 
 
 
@@ -61,22 +77,11 @@ console.log("found" ,found);
 
 if (found  === undefined){
   console.log(id, "not there, im insert it to list");
-// filter_Resource.type_ids.push(id)
-
-// const array = filter_Resource.type_ids
-
-// console.log("array" , array);
-// console.log("id" , id);
-
-
-// const Newarray = array.push(id)
-
-// console.log("Newarray" , Newarray);
-
 
 const stayAsYouR = filter_Resource.tool_ids
 set_filter_Resource({type_ids:[...filter_Resource.type_ids,id],    tool_ids:stayAsYouR})
 set_is_Filtering(true)
+// set_clear_all_btns_filter_preview(false)
 
 return
 }
@@ -91,6 +96,7 @@ else if (found  === id){
  const stayAsYouR = filter_Resource.tool_ids
  set_filter_Resource({type_ids:filterd,tool_ids:stayAsYouR})
  set_is_Filtering(false)
+ 
 return
 }
 
@@ -111,13 +117,20 @@ const handleLeave = () => {
 };
 
 
+
+
+ 
+
+
+
+
   const StatusColorClass =
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
 
   return (
-    <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering ? 'PreviewBox_Filtering' : ''}`}
+    <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}`}
     // className={`box ${isFocused ? 'focused' : ''}`}
     // is_Filtering
       onClick={()=>{handle_filter_by_Type(resource_type_id) }}
@@ -150,8 +163,11 @@ const handleLeave = () => {
   )
 }
 
-function PreviewBox_type2({HeadLine}) {
+function PreviewBox_type2({HeadLine ,all_Resource_Types}) {
  
+
+ 
+
   return (
     <div className='PreviewBox PreviewBox-twice-size' >
 
@@ -166,11 +182,29 @@ function PreviewBox_type2({HeadLine}) {
 
      <div className='display-flex flex-direction-column justify-content-center  ' style={{   width:"100%" ,gap:"2px" }}>
 
+   
+
+
+     {all_Resource_Types?.map((Info, index) => {
+return(
+ 
+  <div className='display-flex' style={{marginRight:"auto"}} key={index}>
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / all_Resource_Types.length   }} />
+  <p className='   font-type-txt Color-White  ' >{Info?.resource_type_name}: {Info?.count}</p>
+  </div>
+)
+ })}
+
+
+{/* 
       <div className='display-flex' style={{marginRight:"auto"}}>
         <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}/>
-        <p className='   font-type-txt Color-White  ' >Domains: 127</p>
+        <p className='   font-type-txt Color-White  ' >
+          {all_Resource_Types[0]?.resource_type_name}:
+          {all_Resource_Types[0]?.count}</p>
         </div>
      
+
         <div className='display-flex' style={{marginRight:"auto"}}>
         <div className={`Bg-Blue-Glow Bg-Yellow light-bulb-type1 mr-a`} style={{opacity:'85%'}}/>
         <p className='   font-type-txt Color-White  ' >IP Address: 6</p>
@@ -194,7 +228,7 @@ function PreviewBox_type2({HeadLine}) {
         <div className='display-flex' style={{marginRight:"auto"}}>
         <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:'15%'}}/>
         <p className='   font-type-txt Color-White  ' >Privileges: 3</p>
-        </div>
+        </div> */}
 
      </div>
 

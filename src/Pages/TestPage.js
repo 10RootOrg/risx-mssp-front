@@ -2,11 +2,32 @@
 
 import React ,{useEffect, useState} from 'react'
 import axios from 'axios';
-
+import lottie from 'lottie-web';
+// import animationData from '../tmp.json';
+import animationData from '../Components/Logos/Risx-mssp-logo-anim.json';
 
 function TestPage() {
 const backEndURL = "http://localhost:5000"
       
+
+
+useEffect(() => {
+    const anim = lottie.loadAnimation({
+        container: document.getElementById('your-animation-container'), // Specify the DOM element where the animation should be rendered
+        renderer: 'svg', // Choose the renderer (svg or canvas)
+        loop: true, // Set loop option
+        autoplay: true, // Set autoplay option
+        animationData: animationData, // Pass the imported animation data
+    });
+    return () => anim.destroy(); // Cleanup animation on unmount
+}, []);
+
+
+
+
+
+
+
     const [backendData, set_backendData]= useState([{}])   
     
     const [Resources, set_Resources]= useState([])   
@@ -21,6 +42,31 @@ const backEndURL = "http://localhost:5000"
     //         }catch(err)
     //         {console.log(err);}
     //     }
+
+
+
+
+    
+
+    const make_json_to_v_raptor= async()=>{
+        const time = new Date()
+        const toolData = {
+            tool_id: "1100",
+             tool_name: "velociraptor",
+             artifacts: ["Hardening Kitty"],
+             time: time
+            };
+        // const Jason_to_nof = JSON.stringify(obj);
+
+        
+        try{
+            const res = await axios.get(`${backEndURL}/tools/active-tool`,{params:toolData} );
+           console.log("res.data", res.data);
+       
+           
+               }catch(err)
+               {console.log(err);}
+        }
 
 
 const app_get_all= async()=>{
@@ -99,13 +145,13 @@ const app_delete= async()=>{
             {console.log(err);}
         }
 
-        const get_json= async()=>{
+     const get_json= async()=>{
             console.log("getAlldata");
 
 
 
                 try{
-             const res = await axios.get(`${backEndURL}/Tools/dehashed-json`,);
+             const res = await axios.get(`${backEndURL}/tools/dehashed-json`,);
             console.log("res.data", res.data);
             console.log("res.data", typeof res.data);
             
@@ -170,11 +216,16 @@ const app_delete= async()=>{
 
         <div style={{display:"flex", gap:"12px", flexDirection:"column"}}>
 
+
+
+<button onClick={make_json_to_v_raptor}> make json to v raptor</button>
 <button onClick={get_json}> get json from david</button>
 <button onClick={app_get_all}> app.get - all</button>
  <button onClick={app_post}> app.post</button>
  <button onClick={app_delete}> app.delete</button>
  <button onClick={get_All_Resources_filtered}> Resources_filtered</button>
+
+ <div id="your-animation-container" style={{ width: '50%', height: '100%' }}></div>
 
  
         </div>

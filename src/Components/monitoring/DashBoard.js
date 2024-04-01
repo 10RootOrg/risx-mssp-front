@@ -17,7 +17,7 @@ function DashBoard({show_SideBar,set_show_SideBar}) {
     const [dont_show_this_tools2, set_dont_show_this_tools2] = useState([]) 
  
 
-
+console.log("all_Tools 2222222222222" , all_Tools);
     // const [show_only_this_tools, set_show_only_this_tools] = useState({  all_tool_ids_array }) 
     // console.log("show_only_this_tools", show_only_this_tools);
 
@@ -28,7 +28,7 @@ useEffect(() => {
 {
     const get_all_tools = async()=>{
         try{
-            const res = await axios.get(`${backEndURL}/Tools`);
+            const res = await axios.get(`${backEndURL}/tools`);
             if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  }
   get_all_tools();      
                 

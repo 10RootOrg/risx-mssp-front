@@ -13,9 +13,11 @@ function ResourceGroup({show_SideBar,set_show_SideBar}) {
     const { all_Tools ,set_all_Tools , backEndURL  ,all_Resource_Types} = useContext(GeneralContext);
     const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
- 
-    console.log("filter_Resource" , filter_Resource);
+    const [loader , set_loader] = useState(true)
+    const [All_Resource_count , set_All_Resource_count] = useState(0)
+    // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
 
+ 
 
     // get all tool if this list is empty
     useEffect(() => {
@@ -23,7 +25,7 @@ function ResourceGroup({show_SideBar,set_show_SideBar}) {
      {
          const get_all_tools = async()=>{
              try{
-                 const res = await axios.get(`${backEndURL}/Tools`);
+                 const res = await axios.get(`${backEndURL}/tools`);
                  if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  }
        get_all_tools();      
                      
@@ -33,29 +35,85 @@ function ResourceGroup({show_SideBar,set_show_SideBar}) {
         if (show_SideBar === false) {set_show_SideBar(true)}
         }, []);
 
+  // count times same resource type in sql
+
+// useEffect(() => {
+
+
+//     const Count_From_Same_Type = async()=>{
+//          console.log("Count_From_Same_Type  1"  );
+//         try{
+//             const res = await axios.get(`${backEndURL}/Resources/count-same-type`);
+//             if (res){ 
+
+//                 console.log("Count_From_Same_Type  2" , res.data);
+//                 //  set_all_Tools(res.data)  
+//                  }} catch(err){console.log(err);}  }
+//             Count_From_Same_Type();      
+
+
+// },[]);
 
   // get all_resource
-
 useEffect(() => { 
     
+
     const get_all_resources = async()=>{ 
-        try{
-            const res = await axios.get(`${backEndURL}/Resources`);
-            if (res){
-                console.log("ssss", res.data);
-                set_Preview_this_Resource(res.data)
-        
-        }}
-        catch(err){console.log(err);}
-                    }
-        
-        
+        console.log("get_ resources");
 
-    
-    get_all_resources();  }, []);
+    // if no filter take all resources
+if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
+    console.log("bring all resources");
+    try{
 
-  
+        set_loader(true)
+        const res = await axios.get(`${backEndURL}/Resources`);
+        if (res){
+            console.log("ssss", res.data);
+            set_Preview_this_Resource(res.data)
+            set_All_Resource_count(res.data.length)
+            set_loader(false)
+    }}
+    catch(err){
+        set_loader(false)
+        console.log(err);}
+                }
+
+
+else{
+
+    console.log("lets filtered");
+
+    try{
+
+        set_loader(true)
+        const res = await axios.get(`${backEndURL}/Resources/all-resource-filtered`,{ params: filter_Resource});
+        if (res){
+            console.log("fffff", res.data);
+            set_Preview_this_Resource(res.data)
+            // set_All_Resource_count(res.data.length)
+            set_loader(false)
+    }}
+    catch(err){
+        set_loader(false)
+        console.log(err);}
+             
+
+}
+
+
+
+}
  
+    get_all_resources();  }, [filter_Resource]);
+
+ 
+
+
+// function  clear_all_btns_filter_preview()=>{()}
+
+
+
 
     return (
  
@@ -79,75 +137,81 @@ useEffect(() => {
 
 <div className='resource-group-top-boxes mb-c' >
 
-<PreviewBox_type2 HeadLine="Group Distribution"/> 
+<PreviewBox_type2 HeadLine="Group Distribution" all_Resource_Types={all_Resource_Types }/> 
 
 <PreviewBox_type1
 HeadLine={all_Resource_Types[0]?.resource_type_name}
 resource_type_id={all_Resource_Types[0]?.resource_type_id}
 description_short={all_Resource_Types[0]?.description_short}
-BigNumber={22} SmallNumber={3}
+BigNumber={all_Resource_Types[0]?.count} SmallNumber={3}
 StatusColor={"blue"}
 date={"16/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
-/>
+ 
+ />
 
 <PreviewBox_type1
 HeadLine={all_Resource_Types[1]?.resource_type_name}
 resource_type_id={all_Resource_Types[1]?.resource_type_id}
 description_short={all_Resource_Types[1]?.description_short}
-BigNumber={35} SmallNumber={3}
+BigNumber={all_Resource_Types[1]?.count} SmallNumber={3}
 StatusColor={"blue"}
 date={"17/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+ 
 />
 
 <PreviewBox_type1
 HeadLine={all_Resource_Types[2]?.resource_type_name}
 resource_type_id={all_Resource_Types[2]?.resource_type_id}
 description_short={all_Resource_Types[2]?.description_short}
-BigNumber={7} SmallNumber={0}
+BigNumber={all_Resource_Types[2]?.count} SmallNumber={0}
 StatusColor={"blue"}
 date={"16/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+ 
 />
 
 <PreviewBox_type1
 HeadLine={all_Resource_Types[3]?.resource_type_name}
 resource_type_id={all_Resource_Types[3]?.resource_type_id}
 description_short={all_Resource_Types[3]?.description_short}
-BigNumber={72} SmallNumber={1}
+BigNumber={all_Resource_Types[3]?.count} SmallNumber={1}
 StatusColor={"blue"}
 date={"16/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+ 
 />
 
 <PreviewBox_type1
 HeadLine="All Resource"
 resource_type_id={null}
 description_short="All Resource"
-BigNumber={132} SmallNumber={6}
+BigNumber={All_Resource_count} SmallNumber={6}
 StatusColor={"blue"}
 date={"14/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+ 
 />
 
 {/* {jsonData?.map((Info, index) =>(
     <PreviewBox_type1 key={index}  HeadLine={Info?.headline} BigNumber={Info?.active} SmallNumber={Info?.UnActive} StatusColor={Info?.StatusColor} date={Info?.LastRun}/>))} */}
 </div>
-     
+     <div>
  <p className='font-type-menu   Color-Grey1 mb-c'>Resource Edit:</p>
 
+
+</div>
 <div className='resource-group-all-the-Lists'>
 
-<ResourceGroup_All Preview_this_Resource={Preview_this_Resource}/>
- {/* <ResourceGroup_List___WebSites allData={all_Resource_WebSites}/> */}
-{/*<ResourceGroup_List___PhoneNumbers allData={all_Resource_PhoneNumbers}/>
-<ResourceGroup_List___HasPrivileges/> */}
+<ResourceGroup_All Preview_this_Resource={Preview_this_Resource} filter_Resource={filter_Resource}/>
+
+ 
 
 </div>
 

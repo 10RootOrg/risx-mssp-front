@@ -9,14 +9,16 @@ import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
   // Adjust the path as needed based on your project structure
  
  import { Edit_Resource_Item } from "../Edit_Resource_Item";
-
-function ResourceGroup_All({Preview_this_Resource}) {
+ import LMloader from "../Features/LMloader.svg";
+function ResourceGroup_All({Preview_this_Resource ,loader , set_loader ,filter_Resource}) {
   const [popUp_show, set_popUp_show] = useState(false);
   const [resourceItem , set_resourceItem] = useState({})
   const { backEndURL } = useContext(GeneralContext);
-
   const [item_types_list, set_item_types_list] = useState([]);
   const [item_tool_list, set_item_tool_list] = useState([]);
+
+
+
   // const [formattedDate , set_formattedDate] = useState('')
   
 
@@ -62,7 +64,7 @@ const resource_arrary =[]
     return (
  
  
-<div  className='ResourceGroup-All' >
+      <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
  
 <Edit_Resource_Item
 item_types_list={item_types_list} 
@@ -83,13 +85,24 @@ set_item_types_list={set_item_types_list}
 
 <div className='resource-group-list-headline mb-c ' >
 
-<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Resource List</p></div>
+<div className='resource-group-list-headline-left ' >
+  <IconBIG/> <p className='font-type-h4   Color-White ml-b'>Resource List</p>
+ 
+                  </div>
 
  <ResourceGroup_Action_btns/>
  
 </div>
 
+ 
 
+{loader ? (<>
+{/* /// its the loader when axios working */}
+<div className='  loader-type-a' >  <img  src={LMloader} className="" alt="Loading Resources"/></div>
+</>):(
+
+
+  <>
 <div className='resource-group-list-keyNames mb-a  ' style={{marginRight:"14px"}}>
 
 <div className='resource-group-list-item list-item-big  ml-a'>
@@ -123,33 +136,23 @@ set_item_types_list={set_item_types_list}
 
 
 //custom sort order
-const sortOrder = {
-  'red': 1,
-  'yellow': 2,
-  'green': 3
-};
+// const sortOrder = {
+//   'red': 1,
+//   'yellow': 2,
+//   'green': 3
+// };
 
-Preview_this_Resource.sort((a, b) => {
-  // Default sort order for items not found in sortOrder
-  const defaultOrder = 999;
-
-  // Get the order for each status, or use defaultOrder if not found
-  const orderA = sortOrder[a.resource_status
-  ] || defaultOrder;
-  const orderB = sortOrder[b.resource_status
-  ] || defaultOrder;
-
-  // Compare the two orders
-  return orderA - orderB;
-});
+// Preview_this_Resource.sort((a, b) => {
+//   const defaultOrder = 999;
 
 
-// const dateString =Info?.checked;
- 
-// const date = new Date(dateString);
- 
-// const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+//   const orderA = sortOrder[a.resource_status
+//   ] || defaultOrder;
+//   const orderB = sortOrder[b.resource_status
+//   ] || defaultOrder;
 
+//   return orderA - orderB;
+// });
 
 
 const dateString = Info?.checked;
@@ -161,32 +164,6 @@ if (dateString) {
 }
 
  
-// if(dateString !== null  &&  dateString !== undefined && dateString !== ""){
-
-//   const date = new Date(dateString);
-//    const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}` 
-
-// }
-// else{
-//   const formattedDate = 'Never Teseted' ;
-// }
-
-// console.log( formattedDate);
-
-
-
-// const date = new Date(dateString);
-// const formattedDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-// console.log(formattedDate);
-
-
-// console.log("ssss", Info?.tools?.length);
-// console.log(Info?.tools[0]?.Toolid === null);
-// const aaaa = Info?.tools
-// const tools_array = aaaa.split(', ');
- 
- 
-
     // Determine the class based on StatusColor
     const StatusColorClass = Info?.resource_status
     === 'red' ? 'Bg-Red' :
@@ -246,11 +223,7 @@ if (dateString) {
 
 <div className='resource-group-list-item display-flex list-item-big' >
 <button className="btn-type1"><IconSettings className="icon-type1 " />  </button>
-
-{/* {tools_array?.length === 0  ?  (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  } */}
-{/* {tools_array?.length === 1  &&  tools_array[0] === "" ? (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  } */}
-
-
+ 
 {/* no tools */}
 {Info?.tools?.length === 1
   &&  Info?.tools[0]?.Toolid === null ||  Info?.tools[0]?.Toolid === "" ||  Info?.tools[0]?.Toolid === undefined
@@ -310,8 +283,9 @@ if (dateString) {
 
 </div>
 
-
 <ResourceGroup_buttomLine/>
+</>
+)}
 
  
 
