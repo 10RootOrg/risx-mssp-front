@@ -45,7 +45,7 @@ set_filter_Resource,
     console.log("change--999" , filter_Resource?.type_ids?.length === 0 );
         if (filter_Resource?.type_ids?.length === 0 ) {
     
-          console.log("zero filter--999" );
+          // console.log("zero filter--999" );
     
           set_is_Filtering(false)
         }

@@ -46,14 +46,14 @@ function PreviewBox_velociraptor({  }) {
 
  
  
-
+  console.log(" checke _artifacts",checked_artifacts.length === 0 ,checked_artifacts);
 
 
 const handle_click_velociraptor= async()=>{
 
   
   console.log(" click_velociraptor");
-  console.log("this is checke _artifacts",checked_artifacts);
+
 
 //   const toolData = {
 //     action: "runartifact",
@@ -93,7 +93,7 @@ const handle_click_velociraptor= async()=>{
 const artifact_list = []
 for (let index = 0; index < jsonData.length; index++) {
   const artifact_id = jsonData[index]?.artifact_id;
-  console.log(artifact_id);
+  // console.log(artifact_id);
   artifact_list.push(artifact_id)
 }
 set_checked_artifacts(artifact_list ) 
@@ -106,7 +106,7 @@ const edit_checked_artifacts =(artifact_id)=>{
 
 
   const alredyHave = checked_artifacts.filter((item) => item  ===  artifact_id);
-  console.log("alredyHave" ,alredyHave.length > 0);
+  // console.log("alredyHave" ,alredyHave.length > 0);
 
   
   if (alredyHave.length > 0 ){
@@ -268,11 +268,21 @@ else{
 {/* buttom buttons */}
 <div className='display-flex justify-content-end mb-b' style={{ width:"100%"}}>
 
+{checked_artifacts?.length === 0 ? (
+  <p className='ml-a font-type-txt  Color-Red mr-b'>Choose at least 1 Artifact</p>):
+(<><RisxMssp_logo_wide_small style={{ width:"72px"}}/> <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent is required</p></>
+)}
 
-<RisxMssp_logo_wide_small style={{ width:"72px"}}/>
-  <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent is required</p>
 
-  <button className="btn-type2  "onClick={()=>handle_click_velociraptor()}><p className='font-type-menu ' >Create TimeLine</p>  </button> 
+  <button className="btn-type2 "
+  // disabled={checked_artifacts.length === 0}
+  
+
+  onClick={()=>handle_click_velociraptor()}
+  disabled ={checked_artifacts.length === 0}
+  >
+  <p className='font-type-menu ' >Create TimeLine</p>
+    </button> 
 </div>
  
    </div>
