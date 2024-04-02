@@ -5,18 +5,16 @@ import '../Components/Features/PopUp.css'; // import CSS file for modal styling
 import { ReactComponent as CloseButton } from './icons/ico-Close_type1.svg';
 import { ReactComponent as IconCart } from './icons/ico-cart.svg';
 import axios from 'axios';
-import Tools from './../tmpjsons/previewBoxesTools.json';
+import Tools from '../tmpjsons/previewBoxesTools.json';
 import GeneralContext from '../Context.js';
 import { useContext } from "react";
-  export const Edit_Resource_Item = (props) => {
-    const {popUp_show, set_popUp_show   ,buttonTitle ,IconBIG ,resourceItem, item_types_list, set_item_types_list ,item_tool_list, set_item_tool_list} = props;
+  export const Add_Edit_Resource_Item = (props) => {
+    const {popUp_show, set_popUp_show   ,buttonTitle ,IconBIG ,resourceItem,set_resourceItem, item_types_list, set_item_types_list ,item_tool_list, set_item_tool_list, popUp_Add_or_Edit__status} = props;
 
 const {all_Resource_Types ,all_Tools} = useContext(GeneralContext)
+console.log("popUp_Add_or_Edit__status",popUp_Add_or_Edit__status);
 
 
- 
- 
- 
 
      const [resource_string, set_resource_string] = useState(resourceItem?.resource_string || '');
   
@@ -27,16 +25,11 @@ const {all_Resource_Types ,all_Tools} = useContext(GeneralContext)
      
 
 
- 
+ console.log("item_types_list",item_types_list);
+ console.log("item_tool_list",item_tool_list);
  
 
-     useEffect(() => {
-      set_resource_id(resourceItem?.resource_id  || '');
-      set_resource_string(resourceItem?.resource_string  || '');
-      set_monitoring(resourceItem?.monitoring || '');
-      setDescription(resourceItem?.description || '');
-    }, [resourceItem]); // Re-initialize state if `resourceItem` changes
-  
+   
 
     const handle_Types_Checkbox_Change = (e, resourceTypeId) => {
       const isChecked = e.target.checked;
@@ -69,26 +62,14 @@ console.log(e.target.checked);
 // console.log("all_Tools", all_Tools);
 
     const handleInputChange = (setter) => (event) => setter(event.target.value);
-
-    useEffect(() => {
-      set_popUp_show(popUp_show)
-    }, [popUp_show]);
+    useEffect(() => {  set_popUp_show(popUp_show) }, [popUp_show]);
   
  
 
     // function to close modal when user clicks outside of it
     function handleClickOutside(e) {
-      console.log("clickoutside");
-      console.log("e.target" , e.target);
-      console.log("e.target.className" , e.target.className);
-
-      if (e.target.className === 'modal-background') {
-   
-
-        set_popUp_show(false);
-   
-      }
-    }
+      // console.log("e.target.className" , e.target.className);
+       if (e.target.className === 'PopUp-background') { set_popUp_show(false); } }
   
     function handleClose() {
       set_popUp_show(false);
@@ -97,6 +78,61 @@ console.log(e.target.checked);
  
 
 
+    function handle_add_or_edit_item(){
+      // popUp_Add_or_Edit__status
+
+      console.log("resource_id",resource_id);
+      console.log("resource_string",resource_string);
+      console.log("monitoring",monitoring);
+      console.log("description",description);
+      console.log("item_tool_list",item_tool_list);
+      console.log("item_types_list",item_types_list);
+   
+   
+    
+    
+    
+    //  else if(popUp_Add_or_Edit__status == "edit"){
+    
+  
+  
+    //   }
+      
+    }
+
+
+ 
+    useEffect(() => {
+
+
+      if(popUp_Add_or_Edit__status == "add"){
+        console.log("come clean");
+        set_resource_id("");
+        set_resource_string("");
+        set_monitoring(true);
+        setDescription("");
+        set_item_tool_list([]);
+        set_item_types_list([]);
+      }
+
+    
+     else if(popUp_Add_or_Edit__status == "edit"){
+      set_resource_id(resourceItem?.resource_id  || '');
+      set_resource_string(resourceItem?.resource_string  || '');
+      set_monitoring(resourceItem?.monitoring || '');
+      setDescription(resourceItem?.description || '');
+  
+      }
+   
+
+
+
+    }, [ popUp_Add_or_Edit__status]); // Re-initialize state if `resourceItem` changes
+  
+ 
+       
+ 
+     
 
     return (
       <>
@@ -104,9 +140,9 @@ console.log(e.target.checked);
 
 
  {popUp_show && (
-          <div className={`PopUp-background  `} onClick={handleClickOutside}>
+          <div className={`PopUp-background`} onClick={handleClickOutside}>
             
-            <div className={`PopUp-content  `} style={{width:"800px"}}>
+            <div className={`PopUp-content`} style={{width:"800px"}}>
 
 <div className="display-flex justify-content-end  " style={{marginRight:"-40px"}}>
             <button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
@@ -115,7 +151,10 @@ console.log(e.target.checked);
 
 
  
-<div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Edit Item</p></div>
+<div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>
+  {popUp_Add_or_Edit__status === "add" ? (<>Add Item</>):(<>Edit Item</> )}
+ 
+  </p></div>
 
 
 <div className="items_top_center_buttom">
@@ -203,22 +242,7 @@ className="item_info_left"
  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
@@ -230,7 +254,9 @@ className="item_info_left"
 
 <div className="titles mb-c">
 <label className="container"> 
-<input type="checkbox" defaultChecked />
+<input type="checkbox" 
+// defaultChecked 
+/>
 <span className="checkmark"></span>
 </label>
 <p className='column font-type-menu   Color-Grey1 column-small'>Name</p>
@@ -259,13 +285,7 @@ className="item_info_left"
   
 
 {Info?.ServicePackage  === "Standard" ?(
-  <div className="toolsData-checkbox "
-
-  >
-
-
- 
-
+  <div className="toolsData-checkbox">
 
 
   <label className="container" > 
@@ -348,15 +368,24 @@ className="item_info_left"
 
 
 <div style={{marginLeft:"auto" ,display:"flex" ,alignItems:"center", justifyContent:"center", height:"22px"}}>
-<p className='column font-type-menu   Color-Grey1 mr-a '  >ID</p>
-<p className=' font-type-txt     Color-Grey1'>  {resource_id}</p></div>
+{popUp_Add_or_Edit__status === "edit" ? (<>
+  <p className='column font-type-menu   Color-Grey1 mr-a '  >ID</p>
+<p className=' font-type-txt     Color-Grey1'>  {resource_id}</p>
+
+</>):null}
+
+
+</div>
 </div>
 
 </div>
 
         <div className='display-flex mt-c' style={{  }}>
  
-       <button className="btn-type2" onClick={handleClose} style={{marginLeft:"auto"}}><p className='font-type-menu '>{buttonTitle}</p>  </button>
+       <button className="btn-type2" onClick={handleClose} style={{marginLeft:"auto"}}><p className='font-type-menu '>
+       {popUp_Add_or_Edit__status === "add" ? (<>Save</>):(<>Update</> )}
+
+        </p>  </button>
 
 
       </div>

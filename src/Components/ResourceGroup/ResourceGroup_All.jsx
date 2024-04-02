@@ -8,10 +8,13 @@ import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
  import GeneralContext from '../../Context.js';
   // Adjust the path as needed based on your project structure
  
- import { Edit_Resource_Item } from "../Edit_Resource_Item";
+ import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
  import LMloader from "../Features/LMloader.svg";
 function ResourceGroup_All({Preview_this_Resource ,loader , set_loader ,filter_Resource}) {
-  const [popUp_show, set_popUp_show] = useState(false);
+
+  const [popUp_Add_or_Edit__show, set_popUp_Add_or_Edit__show] = useState(false);
+  const [popUp_Add_or_Edit__status, set_popUp_Add_or_Edit__status] = useState("edit");
+
   const [resourceItem , set_resourceItem] = useState({})
   const { backEndURL } = useContext(GeneralContext);
   const [item_types_list, set_item_types_list] = useState([]);
@@ -51,8 +54,8 @@ const resource_arrary =[]
     set_item_tool_list(item_arrary)
    
   }
-
-  set_popUp_show(true);
+  set_popUp_Add_or_Edit__status("edit")
+  set_popUp_Add_or_Edit__show(true);
 
 
 
@@ -66,7 +69,7 @@ const resource_arrary =[]
  
       <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
  
-<Edit_Resource_Item
+<Add_Edit_Resource_Item
 item_types_list={item_types_list} 
 set_item_types_list={set_item_types_list} 
 
@@ -75,10 +78,14 @@ set_item_types_list={set_item_types_list}
 
         IconBIG={IconBIG}
         resourceItem={resourceItem}
-        buttonTitle={"Save"}
-        set_popUp_show={set_popUp_show}
-        popUp_show={popUp_show}
 
+        set_resourceItem={set_resourceItem}
+        buttonTitle={"Save"}
+
+      
+        set_popUp_show={set_popUp_Add_or_Edit__show}
+        popUp_show={popUp_Add_or_Edit__show}
+        popUp_Add_or_Edit__status={popUp_Add_or_Edit__status}
       />
  
 
@@ -90,7 +97,13 @@ set_item_types_list={set_item_types_list}
  
                   </div>
 
- <ResourceGroup_Action_btns/>
+ <ResourceGroup_Action_btns
+ 
+ set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
+ popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
+ set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
+ 
+ />
  
 </div>
 

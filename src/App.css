@@ -407,6 +407,16 @@ width: 28px;
 .btn-type2 p{color: var(--color-DB-Blue-Glow);
 }
 
+.btn-type2:disabled{
+  background-color:var(--color-Grey3);
+  cursor:auto;
+}
+.btn-type2:disabled p{
+  color:var(--color-Grey1);
+  
+}
+
+
 .btn-type3{
   display: flex;
   background-color:transparent;
