@@ -127,12 +127,14 @@
   cursor: auto  !important;
 }
 
+
+
 .notification {
   background-color: var(--color-Red);
   border-radius: 11px;
   /* width: 16px; */
   /* height: 16px; */
-  min-width: 12px;
+  min-width: 11px;
   height: 12px;
   padding-right: 4px;
   padding-left: 4px;
@@ -141,11 +143,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   margin-left: 2px;
+  transition: var(--transition-fast)
+}
+ 
+.btn-menu:hover > div .notification  , .btn-menu:disabled > div .notification {
+  /* color: var(--color-DB-Blue-Glow); */
+  background-color:var(--color-DB-Blue-Hover-Real);
+  transition: var(--transition-fast)
 
 }
 
+ 
   /* background-color: var(--color-DB-Blue-Hover-Real); */
   /* .btn-type-menu{
     height:28px;

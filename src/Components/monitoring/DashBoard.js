@@ -2,37 +2,71 @@ import React , {useState , useEffect ,useContext} from 'react';
 import {  PreviewBox_type_tools_a,PreviewBox_type_tools_b, PreviewBox_Not_active_tools} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
-import jsonData from '../../tmpjsons/previewBoxesTools.json';  
+// import jsonData from '../../tmpjsons/previewBoxesTools.json';  
 import GeneralContext from '../../Context.js';
 import axios from 'axios';
 
 
-function DashBoard({show_SideBar,set_show_SideBar}) {
+function DashBoard({show_SideBar,set_show_SideBar,notification_number}) {
 
-    const { all_Tools ,set_all_Tools , backEndURL ,all_Resource_Types} = useContext(GeneralContext);
+    const { all_Tools ,set_all_Tools , backEndURL ,all_Resource_Types ,       all_artifacts, set_all_artifacts,moduleLinks} = useContext(GeneralContext);
     const [show_tool_PreviewBoxs_type_a_b, set_show_tool_PreviewBoxs_type_a_b] = useState(true)
 
 
     const [show_only_this_tools, set_show_only_this_tools] = useState([]) 
     const [dont_show_this_tools2, set_dont_show_this_tools2] = useState([]) 
+
+
+
+
+    useEffect(() => { 
+        if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
+        const get_all_artifacts = async()=>{ 
+        try{
+    console.log( "backEndURL:::" , backEndURL);
+            // set_loader(true)
+            const res = await axios.get(`${backEndURL}/tools/all-velociraptor_artifacts`);
+            if (res){
+               
+                console.log("get_all_artifacts res.data:" , res.data);
+                console.log("get_all_artifacts res :" , res );
+         set_all_artifacts(res.data)
+        }}
+        catch(err){
+            // set_loader(false)
+            console.log(err);}
  
-
-console.log("all_Tools 2222222222222" , all_Tools);
-    // const [show_only_this_tools, set_show_only_this_tools] = useState({  all_tool_ids_array }) 
-    // console.log("show_only_this_tools", show_only_this_tools);
-
-// console.log("dont_show_this_tools__#$%$#%$#", dont_show_this_tools);
+    }
+     
+    get_all_artifacts();  }, [backEndURL]);
+    
 
 useEffect(() => {
-   if(all_Tools.length  === undefined || all_Tools.length === 0 )
+   if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
+   if(all_Tools.length  === undefined || all_Tools.length === 0  )
 {
     const get_all_tools = async()=>{
+
+        console.log("3333333333333333", `${backEndURL}/tools`);
         try{
             const res = await axios.get(`${backEndURL}/tools`);
-            if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  }
+            if (res){ 
+                const all_tools_no_links =  res.data
+
+                console.log("all_tools_no_links",all_tools_no_links);
+all_tools_no_links.forEach(tool => {
+for (let index = 0; index < moduleLinks.length; index++) {
+    if ( moduleLinks[index]?.toolID === tool?.tool_id){
+        tool.toolURL =  moduleLinks[index]?.toolURL
+    }
+}
+});
+
+                set_all_Tools(all_tools_no_links)   }}
+            catch(err){console.log(err);}  }
   get_all_tools();      
                 
-}  }, []);
+}  }, [backEndURL]);
 
 
 
@@ -59,7 +93,7 @@ if (all_Tools.length !== undefined){
             }, [all_Tools ]);
     
 
-
+            console.log(typeof all_Tools , "all_Tools  " , all_Tools) 
 
 
       
@@ -90,16 +124,16 @@ if (all_Tools.length !== undefined){
 <PreviewBox_velociraptor/>
  
  
-{all_Tools.length !== undefined   &&  ( <>
+{all_Tools.length !== undefined   &&  typeof all_Tools !== "string" && ( <>
 
-    {all_Tools?.map((Info, index) =>(
+    {Array.isArray(all_Tools) && all_Tools?.map((Info, index) =>(
 
 <>
 {Info?.BoxType === "Tools_a"   &&
    show_only_this_tools.includes(Info?.tool_id)  ? 
    (  
 <PreviewBox_type_tools_a
- 
+ Info={Info}
 iconAddress={Info?.iconAddress}
 tool_id={Info?.tool_id}
 HeadLine={Info?.headline}
@@ -125,7 +159,8 @@ show_only_this_tools={show_only_this_tools}
 
  dont_show_this_tools2={dont_show_this_tools2}
  set_dont_show_this_tools2={set_dont_show_this_tools2}
-
+ backEndURL={backEndURL}
+ notification_number={notification_number}
             />  ) : null }
  
      </>   ))}
@@ -133,9 +168,9 @@ show_only_this_tools={show_only_this_tools}
 
 
 
-{all_Tools.length !== undefined   &&  ( <>
+{all_Tools.length !== undefined   &&  typeof all_Tools !== "string" &&( <>
 
- {all_Tools?.map((Info, index) =>(
+ {Array.isArray(all_Tools) &&  all_Tools?.map((Info, index) =>(
 
 <>
 {Info?.BoxType === "Tools_b"   &&
@@ -144,7 +179,7 @@ show_only_this_tools={show_only_this_tools}
 <PreviewBox_type_tools_b
 show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
 tool_id={Info?.tool_id}
- 
+Info={Info}
  
 HeadLine={Info?.headline}
 description={Info?.description_short}
@@ -169,6 +204,8 @@ show_only_this_tools={show_only_this_tools}
 
  dont_show_this_tools2={dont_show_this_tools2}
  set_dont_show_this_tools2={set_dont_show_this_tools2}
+ backEndURL={backEndURL}
+ notification_number={notification_number}
             />  ) : null }
 
      </>      
@@ -196,67 +233,7 @@ show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
 />}
 
 
-
  
-  {/* {jsonData?.map((Info, index) =>(
-
-<>
-{Info?.BoxType === "Tools_a" ? (  
-<PreviewBox_type_tools_a
-key={index}
-iconAddress={Info?.iconAddress}
-HeadLine={Info?.headline}
-description={Info?.description}
-Toolname={Info?.Toolname}
-StatusColor={Info?.StatusColor}
-date={Info?.LastRun}
-isActive={Info?.isActive}
-logoAddress_1={Info?.logoAddress_1}
-logoAddress_2={Info?.logoAddress_2}
-readMoreAddress={Info?.readMoreAddress}
-readMoreText={Info?.readMoreText}
-buttonTitle={Info?.buttonTitle}
-toolURL={Info?.toolURL}
-            />  ) : null }
- 
-
-     </>      
-
-           
-           ))}   */}
-
-
-
-{/* {jsonData?.map((Info, index) =>(
-
-<>
-{Info?.BoxType === "Tools_b" ? (  
-<PreviewBox_type_tools_b
-indexNumber={index}
-iconAddress={Info?.iconAddress}
-HeadLine={Info?.headline}
-description={Info?.description}
-Toolname={Info?.Toolname}
-StatusColor={Info?.StatusColor}
-date={Info?.LastRun}
-isActive={Info?.isActive}
-logoAddress_1={Info?.logoAddress_1}
-logoAddress_2={Info?.logoAddress_2}
-readMoreAddress={Info?.readMoreAddress}
-readMoreText={Info?.readMoreText}
-buttonTitle={Info?.buttonTitle}
-toolURL={Info?.toolURL}
-            />  ) : null }
-
-     </>      
-
-           
-           ))} */}
-
-
-
-
-{/* {all_Tools.length === undefined   ?  ( <p>loading</p> ):(<p>not loading</p>)} */}
  
 </div>
       

@@ -2,13 +2,14 @@ import React , {useState , useEffect, useContext} from 'react';
  import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as RisxMssp_logo_wide_small} from './Logos/RisxMssp_logo_wide_small.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
- import { PopUp_For_Read_More } from "./Features/PopUpSmart.js";
- import jsonData from '../tmpjsons/previewBox-main-velociraptor.json'
+ import { PopUp_For_Read_More ,PopUp_All_Good} from "./PopUp_Smart.js";
+//  import jsonData from '../tmpjsons/previewBox-main-velociraptor.json'
  import axios from 'axios';
  import GeneralContext from '../Context.js';
 
 import './PreviewBoxes.css';
  
+
 
 function PreviewBox_velociraptor({  }) {
  
@@ -18,7 +19,7 @@ function PreviewBox_velociraptor({  }) {
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
-  const {  backEndURL } = useContext(GeneralContext);
+  const {  backEndURL ,all_artifacts} = useContext(GeneralContext);
   const [popUp_show, set_popUp_show] = useState(false);
   const [popUp_headline, set_popUp_headline] = useState("");
   const [popUp_ReadMoreText, set_popUp_ReadMoreText] = useState("");
@@ -27,8 +28,13 @@ function PreviewBox_velociraptor({  }) {
   const [popUp_iconAddress, set_popUp_iconAddress] = useState("");
   const [popUp_iconSize, set_popUp_iconSize] = useState("Small");
   
-  const [ checked_artifacts, set_checked_artifacts] = useState([]);
 
+  const [popUp_all_good____show, set_popUp_all_good____show] = useState(false);
+  const [popUp_all_good____txt, set_popUp_all_good____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
+
+
+ 
+  const [ checked_artifacts2, set_checked_artifacts2] = useState([]);
   
   const handleReadMore = (headline,readMoreText,logoAddress_1,btnTitle,iconAddress,iconSize) =>{
     console.log(iconAddress);
@@ -46,84 +52,90 @@ function PreviewBox_velociraptor({  }) {
 
  
  
-  console.log(" checke _artifacts",checked_artifacts.length === 0 ,checked_artifacts);
 
 
+console.log();
 const handle_click_velociraptor= async()=>{
-
-  
-  console.log(" click_velociraptor");
-
-
-//   const toolData = {
-//     action: "runartifact",
-//     artifactname: "Exchange.Windows.HardeningKitty",
-//     arguments: "TakeBackUp= 'N', Baseline= 'finding_list_0x6d69636b_machine'",
-//     expiretime: "30",
-//     organizationid: "OCHL0",
-//     label: "iris"
-// }
- 
-      window.open( toolURL , '_blank');
-
-
+ window.open( toolURL , '_blank');
   try{
       const res = await
-      axios.get(`${backEndURL}/tools/active-tool`, {
+      axios.get(`${backEndURL}/tools/active-velociraptor-artifact`, {
         params: {
-          checked_artifacts: JSON.stringify(checked_artifacts),
+          checked_artifacts:  checked_artifacts2 ,
           resource_list: JSON.stringify(['test_0000001', 'test_0000002' ])
         }
       });
-      
-      
-      // axios.get(`${backEndURL}/tools/active-tool`,{params:checked_artifacts} );
-     console.log("res.data", res.data);
+  
+      set_popUp_all_good____txt({  HeadLine:"Beginning of data processing",paragraph:"This process may take several minutes. The information will be displayed on the 'Results' section." ,buttonTitle:"Ok"})
+      set_popUp_all_good____show(true)
+      if(res.data){
+        console.log("res.data 44444444444444", res.data);
 
+      }
+  
          }catch(err)
          {console.log(err);}
   }
 
+ 
 
-   
-
-/// fill the checkout 
+  /// fill the checkout 222
   useEffect(() => { 
-   console.log("jsonData", jsonData);
-const artifact_list = []
-for (let index = 0; index < jsonData.length; index++) {
-  const artifact_id = jsonData[index]?.artifact_id;
-  // console.log(artifact_id);
-  artifact_list.push(artifact_id)
-}
-set_checked_artifacts(artifact_list ) 
-  }, [ ]);
+    const all = all_artifacts.map(({ artifact_id, Toolname ,logoAddress_1 }) => ({ artifact_id, Toolname, logoAddress_1 }));
+    set_checked_artifacts2(all)
+   }, [all_artifacts ]);
+ 
+
+ 
 
 
+   const edit_checked_artifacts =(artifact_id)=>{
 
+   const alredyHave = checked_artifacts2.filter((item) => item.artifact_id  ===  artifact_id);
+  console.log(alredyHave);
+    if (alredyHave.length > 0 ){
+      console.log("have");
+      const removed = checked_artifacts2.filter((item) => item.artifact_id  !==  artifact_id);
 
-const edit_checked_artifacts =(artifact_id)=>{
-
-
-  const alredyHave = checked_artifacts.filter((item) => item  ===  artifact_id);
-  // console.log("alredyHave" ,alredyHave.length > 0);
-
+      console.log(removed);
+      set_checked_artifacts2(removed)
+     return
+    }
   
-  if (alredyHave.length > 0 ){
-    const removed = checked_artifacts.filter((item) => item  !==  artifact_id);
-    set_checked_artifacts(removed)
-   return
+
+
+  else{
+    const add_this = all_artifacts.filter((item) => item.artifact_id  ==  artifact_id);
+    const just_this = add_this.map(({ artifact_id, Toolname ,logoAddress_1 }) => ({ artifact_id, Toolname, logoAddress_1 }));
+
+    set_checked_artifacts2([ ...checked_artifacts2,just_this[0]])
+  
   }
-else{
-  set_checked_artifacts([ ...checked_artifacts,artifact_id])
+  
+  
+  
+  
+  }
+  
 
-}
+// const edit_checked_artifacts =(artifact_id)=>{
 
-  //  onChange={()=>set_checked_artifacts([ ...checked_artifacts,Info?.artifact_id])}
+//   const alredyHave = checked_artifacts.filter((item) => item  ===  artifact_id);
+
+//   if (alredyHave.length > 0 ){
+//     const removed = checked_artifacts.filter((item) => item  !==  artifact_id);
+//     set_checked_artifacts(removed)
+//    return
+//   }
+// else{
+//   set_checked_artifacts([ ...checked_artifacts,artifact_id])
+
+// }
 
 
 
-}
+
+// }
 
   
 
@@ -149,6 +161,17 @@ else{
 
 
     <>
+<PopUp_All_Good
+
+   set_popUp_show={set_popUp_all_good____show}
+   popUp_show={popUp_all_good____show}
+   HeadLine={popUp_all_good____txt.HeadLine}
+   buttonTitle={popUp_all_good____txt.buttonTitle}
+   paragraph={popUp_all_good____txt.paragraph}
+/>
+
+
+
 <PopUp_For_Read_More
         HeadLine={popUp_headline}
         readMoreText={popUp_ReadMoreText}
@@ -210,7 +233,7 @@ else{
 <div className='velociraptor-EndpointModules-list-in'  >
 
  
-{jsonData?.map((Info, index) =>(
+{Array.isArray(all_artifacts) &&  all_artifacts?.map((Info, index) =>(
  
   
 <>
@@ -268,7 +291,7 @@ else{
 {/* buttom buttons */}
 <div className='display-flex justify-content-end mb-b' style={{ width:"100%"}}>
 
-{checked_artifacts?.length === 0 ? (
+{checked_artifacts2?.length === 0 ? (
   <p className='ml-a font-type-txt  Color-Red mr-b'>Choose at least 1 Artifact</p>):
 (<><RisxMssp_logo_wide_small style={{ width:"72px"}}/> <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent is required</p></>
 )}
@@ -279,9 +302,9 @@ else{
   
 
   onClick={()=>handle_click_velociraptor()}
-  disabled ={checked_artifacts.length === 0}
+  disabled ={checked_artifacts2.length === 0}
   >
-  <p className='font-type-menu ' >Create TimeLine</p>
+  <p className='font-type-menu ' >Run Artifacts</p>
     </button> 
 </div>
  

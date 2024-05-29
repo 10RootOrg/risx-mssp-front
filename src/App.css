@@ -3,6 +3,61 @@
   -webkit-box-shadow: 0 0 0 50px white inset;
 } */ 
   /* mybe help to google autofill */
+
+ @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 100;
+    src: url('./fonts/roboto/Roboto-Thin.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    src: url('./fonts/roboto/Roboto-Light.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/roboto/Roboto-Regular.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: url('./fonts/roboto/Roboto-Medium.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: url('./fonts/roboto/Roboto-Bold.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 900;
+    src: url('./fonts/roboto/Roboto-Black.ttf') format('truetype');
+  }
+  
+  @font-face {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 100;
+    src: url('./fonts/roboto/Roboto-ThinItalic.ttf') format('truetype');
+  } 
+  
+  /* Add other styles as needed */
+  
+  
+
+  
 :root {
  
   --color-Black: #1B2231; 
@@ -20,6 +75,7 @@
   --color-DB-Blue-Hover: rgb(0, 221, 255,0.15);
   --color-DB-Blue-Hover-Real: rgb(0, 221, 255,0.45);
   --color-Red: #FF0000; 
+  --color-Orange: #ffbb00; 
   --color-Yellow: #FFFF00; 
   --color-Green: #00FF00; 
   --popups-round-corner: 30px;
@@ -38,7 +94,7 @@
   --transition-slow: all 0.9s ease-in-out;
   --transition-med: all 0.25s ease-in-out;
   --transition-fast: all 0.15s ease-in-out;
- 
+  --transition-super-fast: all 0.10s ease-out;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -57,9 +113,10 @@
 
  
 
-.Bg-Blue-Glow{background-color:var(--color-DB-Blue-Glow)}
+/* .Bg-Blue-Glow{background-color:var(--color-DB-Blue-Glow)} */
 .Bg-Green{background-color:var(--color-Green)}
 .Bg-Yellow{background-color:var(--color-Yellow)}
+.Bg-Orange{background-color:var(--color-Orange)}
 .Bg-Red{background-color:var(--color-Red)}
 
 .Bg-Grey1{background-color:var(--color-Grey1)}
@@ -68,8 +125,8 @@
 .Bg-Grey4{background-color:var(--color-Grey4)}
 .Bg-Grey5{background-color:var(--color-Grey5)}
 .Bg-Blue-Glow{background-color:var(--color-DB-Blue-Glow)}
-
-
+.Bg-Blue-Hover-Real{background-color:var(--color-DB-Blue-Hover-Real)}
+.Bg-Blue-Hover{background-color:var(--color-DB-Blue-Hover)}
  
 
 
@@ -125,7 +182,7 @@ p{color: var(--color-White);
   font-weight: 500;
   font-style: normal;
   letter-spacing: 0.03rem;
-  line-height: 100%;
+  line-height: 125%;
 }
 .font-type-h3{
   font-size: 34px;
@@ -312,34 +369,51 @@ p{color: var(--color-White);
 
 
 
-.input-type2::placeholder{    color: var(--color-Grey1);}
+.input-type2::placeholder {
+  color: var(--color-Grey1);
+}
 
-.input-type2{
-  background-color:transparent;
-  border: var(  --line-width-small) solid var(--color-Grey1);
+.input-type2 {
+  background-color: transparent;
+  border: var(--line-width-small) solid var(--color-Grey1);
   border-radius: var(--elemtns-round-corner-medium);
   height: 34px;
   /* width: 188px; */
-  outline:none;
- padding-left: var( --space-b);
-
- padding-right: var( --space-b);
+  outline: none;
+  padding-left: var(--space-b);
+  padding-right: var(--space-b);
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-style: normal;
   color: var(--color-Grey1);
-  transition: var(--transition-fast)
+  transition: var(--transition-fast);
 }
 
-.input-type2:hover{
-  border: var(  --line-width-small) solid var(--color-DB-Blue-Active);
+/* Hover and focus styles */
+.input-type2:hover {
+  border: var(--line-width-small) solid var(--color-DB-Blue-Active);
   color: var(--color-DB-Blue-Active);
 }
+
 .input-type2:focus {
-  border-color:var(--color-DB-Blue-Glow);
+  border-color: var(--color-DB-Blue-Glow);
   color: var(--color-DB-Blue-Glow);
 }
+
+/* Cancel all autofill styles */
+.input-type2:-webkit-autofill,
+.input-type2:-webkit-autofill:hover,
+.input-type2:-webkit-autofill:focus,
+.input-type2:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: var(--color-Grey1) !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+
+ 
 
 
 

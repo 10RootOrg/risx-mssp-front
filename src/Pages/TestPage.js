@@ -25,26 +25,11 @@ useEffect(() => {
 
 
 
-
-
-
     const [backendData, set_backendData]= useState([{}])   
     
     const [Resources, set_Resources]= useState([])   
 
-    // const getAlldata= async()=>{
-    //     console.log("getAlldata");
-    //         try{
-    //      const res = await axios.get(`${backEndURL}/entities/default-columns`);
-    //     console.log("res.data", res.data);
-    //     console.log("res.data", typeof res.data);
-        
-    //         }catch(err)
-    //         {console.log(err);}
-    //     }
-
-
-
+ 
 
     
 
@@ -158,58 +143,41 @@ const app_delete= async()=>{
                 }catch(err)
                 {console.log(err);}
             }
-//   const get_json= async()=>{
-//             console.log("get_json");
-//                 try{
 
-//              const res = await axios.get('https://api.dehashed.com/search?query=domain:sheba.co.il', {
-//                 headers: {
-//                   'Accept':'application/json'
-//                 },
-//                 auth: {
-//                   username: 'shoresh100@proton.me',
-//                   password: 'wjaf4rcr5y1dutcrhefkkpffacs79m5h'
-//                 }
-//               });
+  const get_XML= async()=>{
+                console.log("getAlldata",backEndURL);
+    
+    
+    
+                    try{
+                 const res = await axios.get(`${backEndURL}/tools/get-xml`,);
+                console.log("res.data", res.data);
+                console.log("res.data", typeof res.data);
+                
+                    }catch(err)
+                    {console.log(err);}
+                }
+    
 
 
-//             console.log("res.data", res.data);
-      
+const write_to_csv= async()=>{
+
+                    try{
+             
+                        const postData = {
+                            Name: "john11",
+                            address: "NY"  
+                        };
             
-//                 }catch(err)
-//                 {console.log(err);}
-//             }
+                 const res = await axios.post(`${backEndURL}/results/write_to_csv` ,postData );
+                console.log("res.data", res.data);
+                // console.log("res.data", typeof res.data);
+                    }catch(err)
+                    {console.log(err.response.data)}  }
 
 
-
-// const getUserInfoByID = async()=>{
-//     console.log("getUserInfoByID");
-// const userId = 123456
-//     try{
-// const res = await axios.get(`${backEndURL}/Resources/users/${userId}`)
-// console.log("res.data", res.data);
-//     }catch(err)
-//     {console.log(err);}
-// }
-
-
-
-
-
-
-    // useEffect(()=>{
-    //     fetch("/api1").then(
-    //         response => response.json()
-    //     ).then(
-    //         data => {set_backendData(data)}
-    //     )
-        
-    //     },[])
-
-    // console.log(backendData );
   return (
     <div >
-
 
 
         <p className=' '>   TestPage</p>
@@ -224,6 +192,11 @@ const app_delete= async()=>{
  <button onClick={app_post}> app.post</button>
  <button onClick={app_delete}> app.delete</button>
  <button onClick={get_All_Resources_filtered}> Resources_filtered</button>
+
+ <button onClick={get_XML}> get_XML</button>
+
+ <button onClick={write_to_csv }> write to csv </button>
+
 
  <div id="your-animation-container" style={{ width: '50%', height: '100%' }}></div>
 

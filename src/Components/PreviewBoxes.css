@@ -6,8 +6,8 @@
     border-radius: var(--boxes-round-corner);
     padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
      height: 200px; 
-     width: 8%; 
-     min-width: 120px;
+     /* width: 8%;  */
+     min-width: 200px;
      /* max-width: 800px; */
    flex-shrink: 1;/*   default 1 */
     flex-grow: 5;
@@ -22,6 +22,7 @@
   min-height: 340px; 
   /* max-height: 50%; */
    min-width: 220px;
+   width: 18%;
   /* flex-shrink: 5; 
   flex-grow: 1; */
 }
@@ -75,7 +76,13 @@
 Color-Grey1 */
 
 
-
+.PreviewBox_static{
+  background:var(--color-DB-Blue-Hover);
+    transition: var(--transition-fast);
+  /* cursor: pointer; */
+  height: auto;
+ 
+}
 
 
 
@@ -123,6 +130,7 @@ Color-Grey1 */
   .velociraptor-all{
     flex-direction: row;
     min-width:47%;
+    max-width: 47%;
     flex-grow: 5;
     }
     
@@ -196,3 +204,36 @@ Color-Grey1 */
       align-items: flex-start;
    width: 100%
      }
+.velociraptor_response_top_number{
+ 
+  margin-left: auto;
+  width: 100%;
+}
+
+
+.table_smart{
+  display: flex;
+/* max-width: 100%;
+width: 100%; */
+
+}
+
+.parent-container {
+ 
+ 
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  /* width: 100%;  
+  max-width: 100%;   */
+}
+.table_smart_col {
+  flex: 1;
+  margin-right: 15px;
+  display: block; /* block is generally suitable for <p> */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  height: var(--space-d); /* Ensure this is set to a specific value */
+  width: 100px;
+}

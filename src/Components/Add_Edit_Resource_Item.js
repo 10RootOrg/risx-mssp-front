@@ -1,35 +1,69 @@
  
 import React, { useEffect, useState } from "react";
-import '../Components/Features/PopUp.css'; // import CSS file for modal styling
+import '../Components/PopUp.css'; // import CSS file for modal styling
 // import CloseButton from "./CloseButton";
 import { ReactComponent as CloseButton } from './icons/ico-Close_type1.svg';
 import { ReactComponent as IconCart } from './icons/ico-cart.svg';
 import axios from 'axios';
-import Tools from '../tmpjsons/previewBoxesTools.json';
+// import Tools from '../tmpjsons/previewBoxesTools.json';
+import { ReactComponent as IconTrash } from '../Components/icons/ico-trash.svg';
 import GeneralContext from '../Context.js';
 import { useContext } from "react";
   export const Add_Edit_Resource_Item = (props) => {
-    const {popUp_show, set_popUp_show   ,buttonTitle ,IconBIG ,resourceItem,set_resourceItem, item_types_list, set_item_types_list ,item_tool_list, set_item_tool_list, popUp_Add_or_Edit__status} = props;
+    const {popUp_show,
+       set_popUp_show
+          ,IconBIG
+           ,resourceItem,
+             set_resourceItem,
+                 item_types_list, 
+                  set_item_types_list,
+                  item_tool_list,
+                   set_item_tool_list,
+                    popUp_Add_or_Edit__status,
+                    set_filter_Resource, 
+                    set_PopUp_All_Good__txt,
+                    set_PopUp_All_Good__show,
+                    Preview_this_Resource,
+                    set_Preview_this_Resource,
+                  
 
-const {all_Resource_Types ,all_Tools} = useContext(GeneralContext)
-console.log("popUp_Add_or_Edit__status",popUp_Add_or_Edit__status);
+                    set_PopUp_Are_You_Sure__txt,
+                    set_PopUp_Are_You_Sure__show
+                  } = props;
+
+const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useContext(GeneralContext)
+// console.log("popUp_Add_or_Edit__status",popUp_Add_or_Edit__status);
 
 
 
      const [resource_string, set_resource_string] = useState(resourceItem?.resource_string || '');
   
 
-     const [monitoring, set_monitoring] = useState(resourceItem?.monitoring || '');
+     const [monitoring, set_monitoring] = useState(resourceItem?.monitoring === 1 ? true : false);
+
+ 
      const [description, setDescription] = useState(resourceItem?.description || '');
      const [resource_id, set_resource_id] = useState(resourceItem?.resource_id || '');
      
+     const [error_message, set_error_message] = useState("");
 
+     const Handele_are_you_sure =( ) =>{
+console.log("resource_id" ,resource_id);
+    set_popUp_show(false) /// the add adit popup
+      
+      set_PopUp_Are_You_Sure__txt({
+          HeadLine:"Are you sure you want to delete?",
+          paragraph:"This record will be permanently deleted from the database",
+          buttonTrue:"Yes",
+          buttonFalse:"No"
+        });
+        
+        set_PopUp_Are_You_Sure__show(true)
+      }
+      
 
- console.log("item_types_list",item_types_list);
- console.log("item_tool_list",item_tool_list);
- 
+  
 
-   
 
     const handle_Types_Checkbox_Change = (e, resourceTypeId) => {
       const isChecked = e.target.checked;
@@ -78,33 +112,81 @@ console.log(e.target.checked);
  
 
 
+
+
+    
     function handle_add_or_edit_item(){
       // popUp_Add_or_Edit__status
 
-      console.log("resource_id",resource_id);
-      console.log("resource_string",resource_string);
-      console.log("monitoring",monitoring);
-      console.log("description",description);
-      console.log("item_tool_list",item_tool_list);
-      console.log("item_types_list",item_types_list);
-   
-   
-    
-    
-    
-    //  else if(popUp_Add_or_Edit__status == "edit"){
-    
-  
-  
-    //   }
+      const data = {
+"resource_id": resource_id,
+"resource_string": resource_string,
+"monitoring": monitoring ,
+"description":description,
+"item_tool_list": item_tool_list,
+"item_types_list": item_types_list 
+      }
+ 
+ 
+      if(popUp_Add_or_Edit__status == "add"){ 
       
+        const add_resource = async()=>{
+          try{
+            set_error_message("")
+              const res = await axios.post(`${backEndURL}/resources`,data );
+              if (res?.status === 200){ 
+                console.log("res.data" , res.data[0]);
+               set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
+               get_all_resource_types(); // for count again
+
+               set_popUp_show(false) // close this popup
+               set_PopUp_All_Good__txt({ HeadLine:"Successfully Saved", paragraph:"The resource has been successfully saved in the database.", buttonTitle:"Close"})
+               set_PopUp_All_Good__show(true)
+
+
+
+                 }} catch(err){ 
+                    console.log(  err?.response?.data);  set_error_message(err?.response?.data)        }  }
+              add_resource();     
+
+      }
+    
+    
+    
+     else if(popUp_Add_or_Edit__status == "edit"){
+  
+
+   const edit_Resouce = async()=>{
+    try{
+      set_error_message("")
+        const res = await axios.put(`${backEndURL}/resources`,data );
+        if (res?.status === 200){ 
+
+// update the object 
+set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
+set_popUp_show(false) // close this popup
+set_PopUp_All_Good__txt({ HeadLine:"Successfully Updated", paragraph:"The resource has been successfully update in the database.", buttonTitle:"Close"})
+set_PopUp_All_Good__show(true)
+
+
+
+
+
+           }} catch(err){ 
+              console.log(  err?.response?.data);  set_error_message(err?.response?.data)        }  }
+              edit_Resouce();     
+ 
+
+
+      }
+    
+
+
     }
 
 
  
     useEffect(() => {
-
-
       if(popUp_Add_or_Edit__status == "add"){
         console.log("come clean");
         set_resource_id("");
@@ -115,11 +197,12 @@ console.log(e.target.checked);
         set_item_types_list([]);
       }
 
-    
      else if(popUp_Add_or_Edit__status == "edit"){
       set_resource_id(resourceItem?.resource_id  || '');
       set_resource_string(resourceItem?.resource_string  || '');
-      set_monitoring(resourceItem?.monitoring || '');
+      set_monitoring(resourceItem?.monitoring === 1 ? true : false);
+
+   
       setDescription(resourceItem?.description || '');
   
       }
@@ -197,7 +280,7 @@ className="item_info_left"
 <p className='font-type-menu   Color-Grey1 '>Resource Type</p>
 <div className="item_info_tools_all">
 <div className="">
-{all_Resource_Types?.map((Info, index) => {
+{Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => {
  
  
 
@@ -206,7 +289,7 @@ className="item_info_left"
 <div key={index} className="toolsData  " style={{width:"180px"}}>
   
   <div className="toolsData-checkbox " >
-  <label className="container" > 
+  <label className="container" >  
   <input type="checkbox"
   value={item_types_list}
 //  checked={resourceItem.types.find(type => type.resource_type_id == Info?.resource_type_id)}
@@ -253,7 +336,7 @@ className="item_info_left"
 <div className="item_info_tools_all">
 
 <div className="titles mb-c">
-<label className="container"> 
+<label className="container" style={{visibility:"hidden"}}> 
 <input type="checkbox" 
 // defaultChecked 
 />
@@ -274,7 +357,7 @@ className="item_info_left"
 <div className="item_info_tools"
  >
  
-{all_Tools?.map((Info, index) => {
+{Array.isArray(all_Tools) && all_Tools?.map((Info, index) => {
  
  
 
@@ -284,7 +367,7 @@ className="item_info_left"
 >
   
 
-{Info?.ServicePackage  === "Standard" ?(
+{/* {Info?.ServicePackage  === "Standard" ?( */}
   <div className="toolsData-checkbox">
 
 
@@ -298,30 +381,21 @@ className="item_info_left"
   </label>
   </div>
   
-  
-  ):(
-    <div style={{  
-  // backgroundColor: "red", 
-  width: "20px", 
-  height: "20px",  
-  display: "flex",  
-  justifyContent: "center",  
-  alignItems: "center",  
-  position: "relative",
+ {/* 
+//   ):(
+//     <div style={{  
+//   width: "20px", 
+//   height: "20px",  
+//   display: "flex",  
+//   justifyContent: "center",  
+//   alignItems: "center",  
+//   position: "relative",
 
- }}>
-  <IconCart style={{
-      // width: "111px",
-      // height: "111px", 
-      // position: "absolute",
-      // top:"-32px",
-      // backgroundColor: "yellow",
-      zIndex: 22  
-  
-    }}/>
-  </div>
-  )}
-
+//  }}>
+//   <IconCart style={{ zIndex: 22    }}/>
+//   </div>
+//   )}
+*/}
 
  <div className='column column-small  '>
   
@@ -380,13 +454,13 @@ className="item_info_left"
 
 </div>
 
-        <div className='display-flex mt-c' style={{  }}>
- 
-       <button className="btn-type2" onClick={handleClose} style={{marginLeft:"auto"}}><p className='font-type-menu '>
-       {popUp_Add_or_Edit__status === "add" ? (<>Save</>):(<>Update</> )}
-
-        </p>  </button>
-
+        <div className='display-flex  mt-c' style={{     }}>
+          <div style={{   marginLeft:"auto"  }}/> 
+          {error_message === "" ? null :(  <p className='  font-type-menu   Color-Red  mr-b' >{error_message}</p>)}
+      
+        {popUp_Add_or_Edit__status === "edit" &&     <button className="btn-type1"style={{marginRight:"5px"}} onClick={Handele_are_you_sure}><IconTrash className="icon-type1" />  </button>   }     
+       <button className="btn-type2" onClick={handle_add_or_edit_item}  ><p className='font-type-menu '>{popUp_Add_or_Edit__status === "add" ? (<>Save</>):(<>Update</> )}</p></button>
+     
 
       </div>
 

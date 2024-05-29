@@ -31,7 +31,7 @@ import { ReactComponent as Logo14 } from '../Pages/Login/Images/Timesketch.svg';
 
 
 import  './Login.css'
-// import { PreviewBox_type1, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big} from '../PreviewBoxes.js'
+// import { PreviewBox_type1_number, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big} from '../PreviewBoxes.js'
  
 // import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
  
@@ -183,11 +183,11 @@ else{
 
 <div className="input-wrapper">
     <IcoUser />
-    <input className="input-type2 mb-a " type="text"  value={InputUser}  onChange={handleUserChange}  placeholder="UserName" />
+    <input className="input-type2 mb-a " type="text"  value={InputUser}  onChange={handleUserChange}  placeholder="UserName" autoComplete="off" />
   </div>
   <div className="input-wrapper">
     <IcoKey />
-    <input className="input-type2 mb-a " type="password"  value={InputPassword}  onChange={handlePasswordChange}   placeholder="PassWord"  />
+    <input className="input-type2 mb-a " type="password"  value={InputPassword}  onChange={handlePasswordChange}   placeholder="PassWord" autoComplete="off" />
   </div>
 
 

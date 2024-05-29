@@ -1,16 +1,16 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type1, PreviewBox_type2 } from '../PreviewBoxes.js'
+import { PreviewBox_type1_number, PreviewBox_type2_pie ,PreviewBox_type3_bar} from '../PreviewBoxes.js'
 import ResourceGroup_All from './ResourceGroup_All.jsx'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import axios from 'axios';
 import './../ResourceGroup/ResourceGroup.css';
-import jsonData from '../../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
+// import jsonData from '../../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
 import GeneralContext from '../../Context.js';
 
 function ResourceGroup({show_SideBar,set_show_SideBar}) {
 
 
-    const { all_Tools ,set_all_Tools , backEndURL  ,all_Resource_Types} = useContext(GeneralContext);
+    const { all_Tools ,set_all_Tools , backEndURL  ,all_Resource_Types,moduleLinks} = useContext(GeneralContext);
     const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
     const [loader , set_loader] = useState(true)
@@ -21,55 +21,55 @@ function ResourceGroup({show_SideBar,set_show_SideBar}) {
 
     // get all tool if this list is empty
     useEffect(() => {
-        if(all_Tools.length  === undefined || all_Tools.length === 0 )
+        if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
+        if(all_Tools.length  === undefined || all_Tools.length === 0  )
      {
          const get_all_tools = async()=>{
              try{
                  const res = await axios.get(`${backEndURL}/tools`);
-                 if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  }
+                 if (res){ 
+                     const all_tools_no_links =  res.data
+     
+     all_tools_no_links.forEach(tool => {
+     for (let index = 0; index < moduleLinks.length; index++) {
+         if ( moduleLinks[index]?.toolID === tool?.tool_id){
+             tool.toolURL =  moduleLinks[index]?.toolURL
+         }
+     }
+     });
+     
+                     set_all_Tools(all_tools_no_links)   }}
+                 catch(err){console.log(err);}  }
        get_all_tools();      
                      
-     }  }, []);
+     }  }, [backEndURL]);
+
+
+
+
   // dont show sidebar in this page
     useEffect(() => {
         if (show_SideBar === false) {set_show_SideBar(true)}
         }, []);
 
-  // count times same resource type in sql
 
-// useEffect(() => {
-
-
-//     const Count_From_Same_Type = async()=>{
-//          console.log("Count_From_Same_Type  1"  );
-//         try{
-//             const res = await axios.get(`${backEndURL}/Resources/count-same-type`);
-//             if (res){ 
-
-//                 console.log("Count_From_Same_Type  2" , res.data);
-//                 //  set_all_Tools(res.data)  
-//                  }} catch(err){console.log(err);}  }
-//             Count_From_Same_Type();      
-
-
-// },[]);
-
-  // get all_resource
 useEffect(() => { 
     
 
     const get_all_resources = async()=>{ 
-        console.log("get_ resources");
-
+      
+        console.log("get_all_resources               backEndURL" , backEndURL);
     // if no filter take all resources
 if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
-    console.log("bring all resources");
+ 
     try{
 
         set_loader(true)
         const res = await axios.get(`${backEndURL}/Resources`);
+
+     
         if (res){
-            console.log("ssss", res.data);
+            console.log("res.data" , res.data);
             set_Preview_this_Resource(res.data)
             set_All_Resource_count(res.data.length)
             set_loader(false)
@@ -82,9 +82,9 @@ if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length 
 
 else{
 
-    console.log("lets filtered");
-
+   
     try{
+        console.log("lets filtered", filter_Resource);
 
         set_loader(true)
         const res = await axios.get(`${backEndURL}/Resources/all-resource-filtered`,{ params: filter_Resource});
@@ -111,8 +111,7 @@ else{
 
 
 // function  clear_all_btns_filter_preview()=>{()}
-
-
+ 
 
 
     return (
@@ -137,9 +136,29 @@ else{
 
 <div className='resource-group-top-boxes mb-c' >
 
-<PreviewBox_type2 HeadLine="Group Distribution" all_Resource_Types={all_Resource_Types }/> 
+{/* <PreviewBox_type2
+ HeadLine="Group Distribution"
+  all_Resource_Types={all_Resource_Types }
+  />  */}
+{/* <PreviewBox_type2_pie
+HeadLine="Group Distribution"
+bar_numbers = {[ "11","22","41","5"]}
+bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
+bar_title_legend = {["bar_title_legend"]}
+/> */}
+<PreviewBox_type2_pie
+HeadLine="Result Distribution"
+bar_numbers = {all_Resource_Types.map(item => item.count)}
+bar_headlines = {all_Resource_Types.map(item => item.resource_type_name)}
+bar_title_legend = {["total"]}
+/>
 
-<PreviewBox_type1
+ 
+
+
+
+
+<PreviewBox_type1_number
 HeadLine={all_Resource_Types[0]?.resource_type_name}
 resource_type_id={all_Resource_Types[0]?.resource_type_id}
 description_short={all_Resource_Types[0]?.description_short}
@@ -151,7 +170,7 @@ set_filter_Resource={set_filter_Resource}
  
  />
 
-<PreviewBox_type1
+<PreviewBox_type1_number
 HeadLine={all_Resource_Types[1]?.resource_type_name}
 resource_type_id={all_Resource_Types[1]?.resource_type_id}
 description_short={all_Resource_Types[1]?.description_short}
@@ -163,7 +182,7 @@ set_filter_Resource={set_filter_Resource}
  
 />
 
-<PreviewBox_type1
+<PreviewBox_type1_number
 HeadLine={all_Resource_Types[2]?.resource_type_name}
 resource_type_id={all_Resource_Types[2]?.resource_type_id}
 description_short={all_Resource_Types[2]?.description_short}
@@ -175,7 +194,7 @@ set_filter_Resource={set_filter_Resource}
  
 />
 
-<PreviewBox_type1
+<PreviewBox_type1_number
 HeadLine={all_Resource_Types[3]?.resource_type_name}
 resource_type_id={all_Resource_Types[3]?.resource_type_id}
 description_short={all_Resource_Types[3]?.description_short}
@@ -187,7 +206,7 @@ set_filter_Resource={set_filter_Resource}
  
 />
 
-<PreviewBox_type1
+<PreviewBox_type1_number
 HeadLine="All Resource"
 resource_type_id={null}
 description_short="All Resource"
@@ -199,9 +218,7 @@ set_filter_Resource={set_filter_Resource}
  
 />
 
-{/* {jsonData?.map((Info, index) =>(
-    <PreviewBox_type1 key={index}  HeadLine={Info?.headline} BigNumber={Info?.active} SmallNumber={Info?.UnActive} StatusColor={Info?.StatusColor} date={Info?.LastRun}/>))} */}
-</div>
+ </div>
      <div>
  <p className='font-type-menu   Color-Grey1 mb-c'>Resource Edit:</p>
 
@@ -209,9 +226,9 @@ set_filter_Resource={set_filter_Resource}
 </div>
 <div className='resource-group-all-the-Lists'>
 
-<ResourceGroup_All Preview_this_Resource={Preview_this_Resource} filter_Resource={filter_Resource}/>
+<ResourceGroup_All Preview_this_Resource={Preview_this_Resource} set_Preview_this_Resource={set_Preview_this_Resource} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource}/>
 
- 
+
 
 </div>
 
