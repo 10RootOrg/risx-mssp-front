@@ -1,0 +1,97 @@
+{
+  "General": {
+    "Default Inter": ""
+  },
+  "ClientInfrastructure": {
+    "Assets": [
+      {
+        "AssetEnable": "True",
+        "AssetType": ["Domain"],
+        "AssetString": "String",
+        "AssetDescription": "",
+        "AssetsModules": ["Shodan", "OSINT"],
+        "AssetLastCheck": "",
+        "AssetCreated": "",
+        "AssetTags": []
+      }
+    ],
+
+    "Population": {
+      "ComputerName": "SRV1",
+      "Label": ""
+    }
+  },
+
+  "ClientData": {
+    "API": {
+      "Shodan": "APIKey",
+      "Dehashed": "APIKey",
+      "OpenAI": "APIKey"
+    }
+  },
+
+  "Modules": {
+    "Velociraptor": {
+      "Enable": "True",
+      "ShowInUi": false,
+      "SubModules": {
+        "PersistenceSniper": {
+          "id": "",
+          "Enable": "True",
+          "ShowInUi": false,
+          "Module_Name": "Velociraptor",
+          "Expire_Date": "1D",
+          "Time_Interval": "15",
+          "Arguments": {
+            "artifact_name": "Exchange.Windows.PersistenceSniper",
+            "arguments": "",
+            "organization_id": "OCHL0",
+            "label": "iris"
+          }
+        },
+        "HardeningKitty": {
+          "Enable": "True",
+          "ShowInUi": false,
+          "data": {
+            "Start_Date": "26-05-2024-13-22-00",
+            "Expire_Date": "29-05-2024-13-22-00",
+            "Time_Interval": "15",
+            "Arguments": {
+              "artifact_name": "Exchange.Windows.HardeningKitty",
+              "arguments": "TakeBackUp= 'N', Baseline= 'finding_list_0x6d69636b_machine'",
+              "organization_id": "OCHL0",
+              "label": "iris"
+            }
+          }
+        },
+        "Zircolite": {
+          "Enable": "True",
+          "ShowInUi": true,
+          "data": {
+            "Start_Date": "26-05-2024-13-22-00",
+            "Expire_Date": "29-05-2024-13-22-00",
+
+            "Arguments": {
+              "artifact_name": "Exchange.Windows.EventLogs.Zircolite",
+              "arguments": "EVTXPath= 'C:\\Windows\\System32\\winevt\\Logs', Rules= 'https://raw.githubusercontent.com/wagga40/Zircolite/master/rules/rules_windows_generic.json', Mappings= 'https://raw.githubusercontent.com/wagga40/Zircolite/master/config/fieldMappings.json'",
+              "organization_id": "OCHL0",
+              "label": "iris"
+            }
+          }
+        },
+        "Hayabusa": {
+          "Enable": "True",
+          "ShowInUi": false,
+          "data": {
+            "Start_Date": "26-05-2024-13-22-00",
+            "Expire_Date": "29-05-2024-13-22-00",
+            "Arguments": {
+              "UTC": "UTC= 'Y', UpdateRules= 'Y', NoisyRules= 'N', OutputProfile= 'standard', EIDFilter= 'N', MinimalLevel='informational', Threads= '2'"
+            }
+          }
+        }
+      }
+    },
+    "Nuclei": { "Enable": "True", "ShowInUi": false }
+  }
+}

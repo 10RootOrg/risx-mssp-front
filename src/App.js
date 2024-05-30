@@ -1,4 +1,4 @@
-
+import './fonts.css';
 import './App.css';
 import SideBar from './SideBar/SideBar'
 import ResourceGroup from './Components/ResourceGroup/ResourceGroup'

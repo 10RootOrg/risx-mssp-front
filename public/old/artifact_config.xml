@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts>
+
+ <!--  Kitty -->
+
+    <artifact id="1000103">
+        <action>runartifact</action>
+        <artifactname>Exchange.Windows.HardeningKitty</artifactname>
+        <arguments>TakeBackUp= 'N', Baseline= 'finding_list_0x6d69636b_machine'</arguments>
+        <expiretime>70</expiretime>
+        <organizationid>OCHL0</organizationid>
+        <label>iris</label>
+    </artifact>
+
+   
+ <!-- Zircolite -->
+
+    <artifact id="1000102">
+        <action>runartifact</action>
+        <artifactname>Exchange.Windows.EventLogs.Zircolite</artifactname>
+        <arguments>EVTXPath= 'C:\\Windows\\System32\\winevt\\Logs', Rules= 'https://raw.githubusercontent.com/wagga40/Zircolite/master/rules/rules_windows_generic.json', Mappings=   'https://raw.githubusercontent.com/wagga40/Zircolite/master/config/fieldMappings.json'</arguments>
+        <expiretime>120</expiretime>
+        <organizationid>OCHL0</organizationid>
+        <label>iris</label>
+    </artifact>
+
+
+
+
+
+
+
+
+</artifacts>

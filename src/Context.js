@@ -1,84 +1,93 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
-// export const GeneralContext = createContext();
+ // export const GeneralContext = createContext();
  const GeneralContext = createContext();
 export function ContextProvider  ({ children }) {
+  const [backEndURL, set_backEndURL] = useState("");
+  const [moduleLinks, set_moduleLinks] = useState();
+  const [examInnterval_minutes, set_examInnterval_minutes] = useState(2);
 
 //for local
 // const backEndURL = "http://localhost:5000"
-
 //for riskDev
-const backEndURL = "http://risxserverdev.westeurope.cloudapp.azure.com:5000"
+// const [backEndURL, set_backEndURL] = useState("http://risxserverdev.westeurope.cloudapp.azure.com:5000");
+//for hyperview 85.64.194.88
+
+useEffect(() => {
+  const fetchConfig = async () => {
+    try {
+      const response = await fetch('/mssp_config.json');
+      const config = await response.json();
+ 
+   
+   if (  config.backendUrl !== undefined ) {
+
+ 
+console.log("config", config);
+   set_examInnterval_minutes(config.examInnterval_minutes);
+   set_moduleLinks(config.moduleLinks);
+    // set_moduleLinks(config.moduleLinks);
+    set_backEndURL(config.backendUrl);
+    get_all_resource_types();
+  } else {
+    console.error('Configuration is null.');
+  }
+
+
+    } catch (error) {
+      console.error('Error fetching mssp_config.json:', error);
+    }
+  };
+
+  fetchConfig();
+}, []);
+
+ 
+
 
 const [all_Resource_Types, set_all_Resource_Types] = useState([]);
 const [all_Tools, set_all_Tools] = useState([]);
+const [all_artifacts, set_all_artifacts] = useState([]);
 
 const[items, set_items] = useState([]);
+const user_id = "mssp-00003d31f6w";
 const addToCart = (name,price)=>{
   set_items((prevState)=>[...prevState,{name, price}])
 }
  
 
 
-
-
-// useEffect(() => {
-//   const get_all_tools = async()=>{
-
-//     console.log("1234 start get_all_tools");
-     
-//     try{
-//         const res = await axios.get(`${backEndURL}/tools`);
-  
-//         console.log("2222 start get_all_tools");
-    
-//         if (res){ set_all_Tools(res.data)}} catch(err){console.log(err);}
-    
-    
-//                 }
-  
-//   console.log(" tttttttt      2222" );
-  
-  
-//   get_all_tools();  }, []);
-
-
-
-  useEffect(() => {
  
-     const get_all_resource_types = async()=>{
- 
-      try{
-          const res = await axios.get(`${backEndURL}/Resources/count-same-type`);
-          if (res){set_all_Resource_Types( res.data)
- 
-             }}
-      catch(err){console.log(err);}
-                  }
- 
-    get_all_resource_types(); 
-  
-  }, []);
 
+const get_all_resource_types = async()=>{
+ if(backEndURL === null ||backEndURL === undefined ||backEndURL == ""){return}
+  try{
 
-// console.log("all_Tools",all_Tools);
-// console.log("all_Resource_Types",all_Resource_Types);
+    console.log("backEndURL    55555" , backEndURL);
+      const res = await axios.get(`${backEndURL}/Resources/count-same-type`);
+      if (res){set_all_Resource_Types( res.data)
 
+         }}
+  catch(err){console.log(err);}
+              }
 
+useEffect(() => {get_all_resource_types() }, [backEndURL]);
+
+console.log( "999",backEndURL , "999");
 
   return (
     <GeneralContext.Provider  value={{
       backEndURL,
       all_Resource_Types,
-      all_Tools,
-      set_all_Tools,
-
+      all_Tools, set_all_Tools,
+      all_artifacts, set_all_artifacts,
       addToCart,
-      items,
-      set_items,
+      items,  set_items,
 
-
-     
+      user_id,
+      get_all_resource_types,
+      moduleLinks,
+      examInnterval_minutes
       }} >
       {children}
     </GeneralContext.Provider>
@@ -87,107 +96,4 @@ const addToCart = (name,price)=>{
 
 export default GeneralContext;
 
-
-
-
-//   useEffect(() => {
-//     if (localStorage.getItem("userpreferences")) {
-//     } else {
-//       localStorage.setItem(
-//         "userpreferences",
-//         JSON.stringify({ withPINGCastle: true }),
-//       );
-//     }
-//   }, []);
-
  
-//   const [withPINGCastle, set_withPINGCastle] = useState(
-//     JSON.parse(localStorage.getItem("userpreferences"))?.withPINGCastle || true,
-//   );
-
-//   const [visibleComponent, setVisibleComponent] = useState(
-//     JSON.parse(sessionStorage.getItem("pageRefreshLocation"))?.page ||
-//       "AD ASSESS",
-//   );
-
-
-  // useEffect(() => {
-  //   if (endOfTime === null) {
-  //     const FindEndOfTime = async () => {
-  //       try {
-  //         const res = await axios.get(
-  //           `${backEndURL}/entities/beginningOfTime/`,
-  //           { withCredentials: true },
-  //         );
-
-  //         const gotThis = res.data;
-  //         const date = new Date(gotThis);
-  //         set_endOfTime(date);
-  //         setSelectedEndDate(date);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     };
-
-  //     FindEndOfTime();
-  //   }
-  // }, [endOfTime]);
-//   const newDateTemp = new Date().setHours(23, 59, 59);
-//   const CurrentDate = new Date(newDateTemp);
- 
- 
- 
-
-  // async function getCsvData() {
-  //   try {
-  //     // const res = await axios.get("http://localhost:8080/csv");
-  //     const res = await axios.get(`${backEndURL}/csv`);
-  //     console.log("TableData - from backend", res.data);
-  //     setTableData(res.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
-//   async function getCsvData() {
-//     try {
-//       const res = await axios.get(
-//         `${backEndURL}/rules_manager/read-all-table-data`,
-//       );
-//       console.log("RULES MANAGER: ", res.data);
-//       setTableData(res.data);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-
-//   async function getAD_ASSESS_KerbshieldData() {
-//     try {
-//       const res = await axios.get(
-//         `${backEndURL}/rules_manager/read_AD_ASSESS_table`,
-//         {
-//           params: { withPINGCastle: withPINGCastle },
-//         },
-//       );
-//       const x = res.data?.map((item) => {
-//         item.documantation = item?.documantation?.split(";!@") ?? [];
-//         return item;
-//       });
-//       console.log("RULES MANAGER AD_ASSESS: ", x);
-//       setAD_ASSESS_tableData(x);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   }
-//   const [RuleTypePingOrRecon, setRuleTypePingOrRecon] = useState(
-//     JSON.parse(localStorage.getItem("userpreferences"))?.withPINGCastle || true,
-//   );
-
-
-
-// const s = "1001, 2001, 2002,2003";
-
-// // Split the string into an array by commas, trim each element, and check if "2002" is included
-// const contains2002 = s.split(',').map(num => num.trim()).includes('2002');
-
-// console.log(contains2002); // Outputs: true if 2002 is found, false otherwise

@@ -14,12 +14,13 @@ code {
 
 
 /* Customizes the entire scrollbar */
-::-webkit-scrollbar {
-
-  width: 12px; /* Adjust the width of the vertical scrollbar */
- 
+::-webkit-scrollbar   {
+   width: 16px;
 }
+.its-only-space-for-the-scroller {
+  /* width: calc(12px ); */
 
+}
 /* Customizes the scrollbar track (background) */
 ::-webkit-scrollbar-track {
   margin-top: 8px;
@@ -32,14 +33,19 @@ code {
 ::-webkit-scrollbar-thumb {
   background: #525C70; /* Yellow thumb when hovered */
   border-radius: 10px; /* Round corners for the thumb */
+  min-height: 50px;
+ 
 }
 
 /* Changes the scrollbar thumb color on hover */
 ::-webkit-scrollbar-thumb:hover {
 
   background: #AEB3BC; /* Red thumb */
-
+ 
   /* No need to re-define border-radius here unless you want a different radius on hover */
 }
 
+::-webkit-scrollbar-corner{
  
+  visibility: hidden;
+}

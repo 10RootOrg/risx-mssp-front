@@ -1,0 +1,35 @@
+[
+  {
+     "Module_Artifact":"Zircolite",
+     "status":"process",
+     "expiretime":"120",
+     "response_file_Name":"response_velociraptor_17-05-24-12-57-37_artifact_id_1000102",
+     "arguments":{
+       "action": "runartifact",
+       "artifactname": "Exchange.Windows.EventLogs.Zircolite",
+       "arguments": "EVTXPath= 'C:\\Windows\\System32\\winevt\\Logs', Rules= 'https://raw.githubusercontent.com/wagga40/Zircolite/master/rules/rules_windows_generic.json', Mappings= 'https://raw.githubusercontent.com/wagga40/Zircolite/master/config/fieldMappings.json'",
+       "expiretime": "120",
+      "organizationid": "OCHL0",
+         "label": "iris"
+    }
+} ,
+{
+"Module_Name":"Nuclei",
+"status":"finish",
+"expiretime":"222",
+"response_file_Name":"response_nuclei_01-01-2001",
+"arguments":{
+"nuclei_tags": "",
+"nuclei_workflow": "",
+"nuclei_exclude_severity": "",
+"nuclei_targets": "www.ynet.com"
+} 
+}
+
+
+
+
+]
+
+
+ 
