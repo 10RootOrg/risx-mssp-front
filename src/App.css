@@ -206,6 +206,10 @@ p{color: var(--color-White);
   line-height: 130%
 }
 
+
+ 
+
+
 .make-underline{
   display: inline-block; /* Makes sure the border applies correctly for inline elements like <span> or <a> */
   border-bottom: 2px solid transparent; /* Creates a 2px thick underline. 'currentColor' uses the text's current color */
@@ -501,15 +505,34 @@ width: 28px;
   transition: var(--transition-fast);
 }
 
-
 .btn-type3 p{color: var(--color-DB-Blue-Hover-Real);  transition: var(--transition-fast);}
 .btn-type3:hover p{color: var(--color-DB-Blue-Glow);}
 .btn-type3 .icon-type1 path{
   transition: var(--transition-fast);
   stroke: var(--color-DB-Blue-Hover-Real)}
 .btn-type3:hover .icon-type1  path{
-
   stroke: var(--color-DB-Blue-Glow)}
+
+
+  .btn-type4{
+    display: flex;
+    background-color:transparent;
+    border:0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+  
+  .btn-type4 p{color: var(--color-Grey2);  transition: var(--transition-fast);}
+  .btn-type4:hover p{color: var(--color-Grey1);}
+  .btn-type4 .icon-type1 path{
+    transition: var(--transition-fast);
+    stroke: var(--color-Grey2)}
+  .btn-type4:hover .icon-type1  path{
+    stroke: var(--color-Grey1)}
+
+
 
 .cutLongParagraph{
 
@@ -535,7 +558,7 @@ width: 28px;
   white-space: normal; /* Allow wrapping */
 }
 
-
+ 
   /* /////////////////////// */
 
   /* /////////////////////// */

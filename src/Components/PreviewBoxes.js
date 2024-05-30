@@ -1,6 +1,7 @@
 import React , {useState , useEffect , useContext} from 'react';
 import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
+ import { ReactComponent as IcoKey } from './icons/ico-eye.svg';
  import { PopUp_For_Read_More ,
   //  PopUp_For_Nuclei_data ,
     PopUp_For_Dehashed_data} from "./PopUp_Smart.js";
@@ -678,73 +679,14 @@ const Legend_of_processing_not_in_time2 = ({ number })=>(
 <Legend_of_processing_not_in_time3 number={"+2 Days"}/>  
 </div>
 
-
-{/* <div className='display-flex ' style={{width:"100%" }}>
-<div className='display-flex ' style={{width:"100%" }}>
-<p className='   font-type-txt Color-White'    style={{...text_style2, minWidth:"60px"}} >Complete</p>
-<p className='   font-type-txt Color-Grey1'   style={{...text_style2, marginRight:"auto"}} >Editonal text Editonal text Editonal text Editonal text</p>
- <Legend_of_processing_not_in_time2 number={"+2 Days"}/>  
-</div>
-</div> */}
-  
  
-
 
 
   
   </div>
    
 
-{/* <div className='display-flex     ' style={{    gap:"14px",
-width:"100%",
-backgroundColor:"pink",
-justifyContent:"center",
  
-marginLeft:"12px",
-marginRight:"12px",
- alignItems:""}}> */}
-
-
-
-  {/* <div  className='display-flex flex-direction-column'   style={{...column_style, alignItems:"center",backgroundColor:"green"    }}> */}
-{/* <p className='   font-type-txt  Color-Grey1 ' style={column_text_style}>212</p> */}
-{/* <p className='   font-type-txt  Color-Grey1 ' style={column_text_style}>6</p> */}
-{/* <p className='   font-type-txt  Color-Grey1 ' style={column_text_style}>5</p>
-<p className='   font-type-txt  Color-Grey1  ' style={column_text_style}>21</p>
-<p className='   font-type-txt  Color-Grey1  ' style={column_text_style}>5</p> */}
-{/* </div> */}
-
-{/* <div  className='display-flex flex-direction-column'     style={column_style}>
-<p className='   font-type-txt Color-White' style={column_text_style}>Complete</p>
-<p className='   font-type-txt Color-White' style={column_text_style}>Complete *</p>
-<p className='   font-type-txt Color-White' style={column_text_style}>Processing</p>
-<p className='   font-type-txt Color-White' style={column_text_style}>Processing *</p>
-<p className='   font-type-txt Color-White' style={column_text_style}>Failed</p>
-</div> */}
-
-{/* <div  className='display-flex flex-direction-column'     style={column_style}>
-<p className='   font-type-txt   Color-Grey1' style={column_text_style}></p>
-<p className='   font-type-txt   Color-Grey1' style={column_text_style}>Not in time Not in time Not in time Not in time</p>
-<p className='   font-type-txt   Color-Grey1' style={column_text_style}></p>
-<p className='   font-type-txt   Color-Grey1 ' style={column_text_style}>Time passed</p>
-<p className='   font-type-txt   Color-Grey1' style={column_text_style}></p>
-</div> */}
-
-{/* <div  className='display-flex flex-direction-column'     style={{ ...column_style,   marginLeft:"auto",backgroundColor:"purple",}}>
- 
-<div style={column_text_style}> <Legend_of_complete /> </div>
-<div style={column_text_style}> <Legend_of_complete_not_in_time number={"+12 Min"}/> </div>
-<div style={column_text_style}> <Legend_of_processing  /> </div>
-<div style={column_text_style}> <Legend_of_processing_not_in_time number={"+2 Days"}/> </div>
-<div style={column_text_style}> <Legend_of_Faild /> </div>
-</div> */}
-
-
- 
-
-    {/* </div> */}
-  
-  
      
            
             </div>
@@ -912,9 +854,10 @@ function turn_on_off_tool(){
    <label className="switch"><input type="checkbox" 
   //  checked={true}
   defaultChecked
-    onChange={turn_on_off_tool}
+   
     disabled={disabled}
-    onClick={() => set_disabled(true)} 
+    // onChange={turn_on_off_tool}
+    // onClick={() => set_disabled(true)} 
     // tool_id={Info?.tool_id}
     /> <span className="slider round"></span></label>    {/* //  checked={Info?.Monitor} */}
 
@@ -951,7 +894,20 @@ function turn_on_off_tool(){
 
     <div className='PreviewBox_ButtomLine' >
      <IconLastRun />
-     <div className='font-type-very-sml-txt Color-Grey1' >{last_response == 0 ? ("UnRealized"):(format_date_type_a(last_response))}   </div>
+     <div className='font-type-very-sml-txt Color-Grey1' style={{marginRight:"auto"}}>{last_response == 0 ? ("UnRealized"):(format_date_type_a(last_response))}   </div>
+
+     <button className="btn-type4"   tool_id={Info?.tool_id} onClick={turn_on_off_tool} ><p className=' font-type-txt'></p><IcoKey className="icon-type1"/></button>
+
+     {/* <label className="switch"><input type="checkbox" 
+  //  checked={true}
+  defaultChecked
+    onChange={turn_on_off_tool}
+    disabled={disabled}
+    onClick={() => set_disabled(true)} 
+    tool_id={Info?.tool_id}
+    /> <span className="slider round"></span></label>   */}
+
+
 
    </div> {/*dont delete */}
      
@@ -1109,8 +1065,9 @@ else if (Show_PopUp_before_active_module_id === '2001005'){set_Show_PopUp_before
  
  <label className="switch"><input type="checkbox"  defaultChecked 
  disabled={disabled}
- onClick={() => set_disabled(true)} 
- onChange={turn_on_off_tool}/> <span className="slider round"></span></label>    {/* //  checked={Info?.Monitor} */}
+//  onClick={() => set_disabled(true)} 
+//  onChange={turn_on_off_tool}
+ /> <span className="slider round"></span></label>    {/* //  checked={Info?.Monitor} */}
 
 <div className={`${StatusColorClass}  light-bulb-type1`}/></div>
 
@@ -1149,13 +1106,24 @@ else if (Show_PopUp_before_active_module_id === '2001005'){set_Show_PopUp_before
 
 
   </div>
-
-   <div className='PreviewBox_ButtomLine' >
+  <div className='PreviewBox_ButtomLine' >
      <IconLastRun />
-     <div className='font-type-very-sml-txt Color-Grey1' >{last_response == 0 ? ("UnRealized"):(format_date_type_a(last_response))}   </div>
+     <div className='font-type-very-sml-txt Color-Grey1' style={{marginRight:"auto"}}>{last_response == 0 ? ("UnRealized"):(format_date_type_a(last_response))}   </div>
+
+     <button className="btn-type4"   tool_id={Info?.tool_id} onClick={turn_on_off_tool} ><p className=' font-type-txt'></p><IcoKey className="icon-type1"/></button>
+
+     {/* <label className="switch"><input type="checkbox" 
+  //  checked={true}
+  defaultChecked
+    onChange={turn_on_off_tool}
+    disabled={disabled}
+    onClick={() => set_disabled(true)} 
+    // tool_id={Info?.tool_id}
+    /> <span className="slider round"></span></label>   */}
+
+
 
    </div> {/*dont delete */}
-
 
 </>):(<p>loading</p> )}
 
