@@ -9,5 +9,5 @@ do not forget to do:
 then start it:
 ### `npm start`
 
- בהצלחה
+ בהצלחה!
  
