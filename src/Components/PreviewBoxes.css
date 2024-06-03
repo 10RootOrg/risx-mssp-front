@@ -131,6 +131,8 @@ Color-Grey1 */
     flex-direction: row;
     min-width:47%;
     max-width: 47%;
+    /* min-width:60%;
+    max-width: 60%; */
     flex-grow: 5;
     }
     

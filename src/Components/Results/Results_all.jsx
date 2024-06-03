@@ -59,7 +59,7 @@ function Results_All({
 
 
 const handle_click_json = (Info) =>{
-console.log(Info);
+// console.log(Info);
 
 if (Info.Status  == "Failed"   ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:"The process stopped for an unknown reason", buttonTitle:"Close" })
@@ -81,8 +81,8 @@ const params = {file_name : Info?.Response_Path }
  const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
  
 if (res){
-   console.log(res.data);
- if (Info?.Module_ID === "2000000") {
+   console.log("velociraptor-single-result    ",res.data);
+ if (Info?.ModuleID === "2000000") {
   set_json_file_data(Info)
   set_json_file_info(res.data)
   set_PopUp_velociraptor_response__show(true)
@@ -246,24 +246,24 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 
 
-{  Info?.Module_Name  === ""   &&    Info?.Sub_Module  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
+{  Info?.ModuleName  === ""   &&    Info?.SubModule  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
 
 
 
-{Info?.Module_Name && Info?.Sub_Module && 
+{Info?.ModuleName && Info?.SubModule && 
 (<>
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p>
 <p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p>
- <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.Sub_Module}</p>
+ <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModule}</p>
 
  </>)
 
 }
 
 
-{Info?.Module_Name && !Info?.Sub_Module && 
+{Info?.ModuleName && !Info?.SubModule && 
   (<>
-  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.Module_Name}</p>
+  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p>
  
   </>)
 }
@@ -273,11 +273,10 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 </div>
  <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big   '
 //  style={{width:"60%" , maxWidth:"60%" , marginRight:"15px"}}
- >         {Info?.Arguments }      </p> 
-<p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{ Info?.Start_Date &&            format_date_type_c(Info?.Start_Date)}</p> 
+ >{ JSON.stringify(Info?.Arguments) }</p> 
+<p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{ Info?.StartDate &&            format_date_type_c(Info?.StartDate)}</p> 
 <p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{Info?.Status}</p> 
-{/* <p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big    ' style={{ }}>         {Info?.response_time ? format_date_type_a(Info?.response_time) : "Non Available" }      </p>  */}
-{/* set_last_update(format_date_type_a(Info?.response)) */}
+ 
  </div>
 
 

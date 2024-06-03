@@ -57,24 +57,26 @@ useEffect(() => {
 
         // const res = await axios.get(`${backEndURL}/results/all-velociraptor-results`);
         if (res){
-console.log("new_res",res.data);
+          console.log("new_res",res.data);
+          console.log("typeof",typeof res.data);
+
             if (res.data.length == 0) { console.log("no files ..............,"  ); }
       
           localStorage.setItem(user_id + '_seeResults', res.data.length);
           set_notification_number(0)
 
-            const Results = res.data
-          const sortedResults = [...Results].sort((a, b) => {
-            const dateA = new Date(a.response);
-            const dateB = new Date(b.response);
-            return dateB - dateA;  
-          });
+       
+          // const sortedResults = [...Results].sort((a, b) => {
+          //   const dateA = new Date(a.response);
+          //   const dateB = new Date(b.response);
+          //   return dateB - dateA;  
+          // });
 
-            
+            console.log("Results ------------------ Results" , res.data.data);
 
-// console.log(sortedResults);
-            set_Preview_this_Results(sortedResults)
-            set_last_update(format_date_type_a(sortedResults[0]?.response))
+ 
+            set_Preview_this_Results(res.data)
+            // set_last_update(format_date_type_a(sortedResults[0]?.response))
             // format_date_type_a
             // set_last_update
 
@@ -114,8 +116,9 @@ console.log("new_res",res.data);
       // console.log("Preview_this_Results", Preview_this_Results);
 
       const countOccurrences = () => {
-        const countsMap = Preview_this_Results?.reduce((acc, { Sub_Module, Module_Name }) => {
-          const key = Sub_Module || Module_Name;
+        console.log("Preview_this_Results" , Preview_this_Results);
+        const countsMap = Preview_this_Results?.reduce((acc, { SubModule, ModuleName }) => {
+          const key = SubModule || ModuleName;
           acc[key] = acc[key] ? acc[key] + 1 : 1;
           return acc;
         }, {});
@@ -129,6 +132,7 @@ console.log("new_res",res.data);
  
   // const count__Velo = Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length;
  const completed  = Preview_this_Results?.filter(item => item?.Status == "Complete");
+
   console.log("completed" ,completed);
   // set_count_complete(count_complete)
 //  set_count_veloci(count__Velo)
@@ -191,23 +195,21 @@ bar_headlines = {  counts?.map(item => Object.keys(item) )  }
 bar_title_legend = {"Count"}
 />
 
-{/* Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length; */}
-<PreviewBox_type1_number
+ 
+
+ <PreviewBox_type1_number
 HeadLine="Velociraptor Request Count"
 resource_type_id={null}
 description_short="Velociraptor Count"
 // BigNumber={count_veloci ? (count_veloci):(0) }
-BigNumber={Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length ? (Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length):(0) }
+BigNumber={Preview_this_Results?.filter(item => item?.ModuleID == "2000000").length ? (Preview_this_Results?.filter(item => item?.ModuleID == "2000000").length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
 date={last_update}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 />
-
-
-{/* HeadLine="Total Response Count" */}
-
+{/**/}
 <PreviewBox_type1_number
 HeadLine="Total Request Count"
 resource_type_id={null}
@@ -220,8 +222,6 @@ filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 />
 
-
- 
 <PreviewBox_type1_number
 HeadLine="Complete"
 resource_type_id={null}
@@ -232,12 +232,14 @@ StatusColor={"blue"}
 date={last_update}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
-/>
+/> 
 
 <PreviewBox_type4_legend2
 HeadLine="Status Legend "
 bar_numbers = { counts?.map(item => Object.values(item) ) }
 bar_headlines = {  counts?.map(item => Object.keys(item) )  }
+Count_Failed={Preview_this_Results?.filter(item => item?.Status == "Failed").length? (Preview_this_Results?.filter(item => item?.Status == "Failed").length):(0) }
+
 // bar_numbers = {[ "11","22","41","5"]}
 // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
 bar_title_legend = {"Count"}
@@ -253,7 +255,8 @@ bar_title_legend = {"Count"}
 </div>
 <div className='resource-group-all-the-Lists'>
 
-<Results_all Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource}/>
+{/*  */}
+ <Results_all Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource}/>
 
  
 

@@ -1,5 +1,5 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import {  PreviewBox_type_tools_a,PreviewBox_type_tools_b, PreviewBox_Not_active_tools} from '../PreviewBoxes.js'
+import { PreviewBox_Not_active_tools ,PreviewBox_type_module} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 // import jsonData from '../../tmpjsons/previewBoxesTools.json';  
@@ -9,7 +9,7 @@ import axios from 'axios';
 
 function DashBoard({show_SideBar,set_show_SideBar,notification_number}) {
 
-    const { all_Tools ,set_all_Tools , backEndURL ,all_Resource_Types ,       all_artifacts, set_all_artifacts,moduleLinks} = useContext(GeneralContext);
+    const { all_Tools ,set_all_Tools , backEndURL , set_all_artifacts,moduleLinks} = useContext(GeneralContext);
     const [show_tool_PreviewBoxs_type_a_b, set_show_tool_PreviewBoxs_type_a_b] = useState(true)
 
 
@@ -47,13 +47,17 @@ useEffect(() => {
 {
     const get_all_tools = async()=>{
 
-        console.log("3333333333333333", `${backEndURL}/tools`);
+  
         try{
             const res = await axios.get(`${backEndURL}/tools`);
             if (res){ 
                 const all_tools_no_links =  res.data
 
+
                 console.log("all_tools_no_links",all_tools_no_links);
+
+
+
 all_tools_no_links.forEach(tool => {
 for (let index = 0; index < moduleLinks.length; index++) {
     if ( moduleLinks[index]?.toolID === tool?.tool_id){
@@ -124,15 +128,14 @@ if (all_Tools.length !== undefined){
 <PreviewBox_velociraptor/>
  
  
+ {/* Tools_a */}
 {all_Tools.length !== undefined   &&  typeof all_Tools !== "string" && ( <>
-
     {Array.isArray(all_Tools) && all_Tools?.map((Info, index) =>(
-
 <>
-{Info?.BoxType === "Tools_a"   &&
+{Info?.BoxType === "Tools_a"   &&  Info?.tool_id !== "2000000" &&  Info?.ShowInUi &&     
    show_only_this_tools.includes(Info?.tool_id)  ? 
    (  
-<PreviewBox_type_tools_a
+<PreviewBox_type_module
  Info={Info}
 iconAddress={Info?.iconAddress}
 tool_id={Info?.tool_id}
@@ -167,16 +170,14 @@ show_only_this_tools={show_only_this_tools}
 </>)}
 
 
-
+{/* Tools_b */}
 {all_Tools.length !== undefined   &&  typeof all_Tools !== "string" &&( <>
-
  {Array.isArray(all_Tools) &&  all_Tools?.map((Info, index) =>(
-
 <>
-{Info?.BoxType === "Tools_b"   &&
+{Info?.BoxType === "Tools_b"   &&  Info?.tool_id !== "2000000" &&   Info?.ShowInUi &&         
    show_only_this_tools.includes(Info?.tool_id)  ? 
    (  
-<PreviewBox_type_tools_b
+<PreviewBox_type_module
 show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
 tool_id={Info?.tool_id}
 Info={Info}
@@ -215,6 +216,12 @@ show_only_this_tools={show_only_this_tools}
 </>)}
 
 
+
+
+
+
+
+
 { show_only_this_tools.length  !=  all_Tools.length &&
 <PreviewBox_Not_active_tools
 all_Tools={all_Tools}
@@ -234,6 +241,12 @@ show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
 
 
  
+
+
+
+
+
+
  
 </div>
       

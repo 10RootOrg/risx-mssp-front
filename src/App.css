@@ -102,6 +102,7 @@
   
 }
 .Color-Red{color: var(--color-Red);}
+.Color-Orange{color: var(--color-Orange);}
 .Color-White{color: var(--color-White);}
 .Color-Grey1{color: var(--color-Grey1);}
 .Color-Grey2{color: var(--color-Grey2);}
@@ -179,7 +180,7 @@ p{color: var(--color-White);
   font-size: 24px;
   margin: 0;
   font-family: "Roboto", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal;
   letter-spacing: 0.03rem;
   line-height: 125%;
@@ -417,6 +418,49 @@ p{color: var(--color-White);
 }
 
 
+
+
+
+ 
+.input-type3_settings::placeholder {
+  color: var(--color-Grey1);
+}
+
+.input-type3_settings {
+  resize: none;
+  max-height: 100%; /* Set maximum height as a percentage of the parent's height */
+  min-height: 100%; /* Set minimum height as a percentage of the parent's height */
+  height: 100%; /* Set the height to occupy the full height of the parent */
+
+ 
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--elemtns-round-corner-medium);
+ 
+  /* width: 188px; */
+  outline: none;
+  /* padding-left: var(--space-b); */
+  /* padding-right: var(--space-b); */
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-Grey1);
+  transition: var(--transition-fast);
+}
+
+/* Hover and focus styles */
+.input-type3_settings:hover {
+  /* border: var(--line-width-small) solid var(--color-DB-Blue-Active); */
+  color: var(--color-DB-Blue-Active);
+}
+
+.input-type3_settings:focus {
+  /* border-color: var(--color-DB-Blue-Glow); */
+  color: var(--color-DB-Blue-Glow);
+}
+
  
 
 
@@ -571,14 +615,25 @@ border-radius: var(--elemtns-round-corner-medium);
 border-radius:  15px;
 height:calc( var(--space-b)*2   );
 padding: 0 var(--space-b);
+/* overflow: hidden;   */
+/* display: -webkit-box; */
+/* -webkit-line-clamp: 1;   */
+/* -webkit-box-orient: vertical;
+text-overflow: ellipsis;  */
 }
 
 .tagit_type2{
   background-color: var(--color-Grey4);
+
 }
 
 .tagit_type2_on_popup{
   background-color: var(--color-Grey3);
+ 
+  /* width: 222px;
+  width: 100%; */
+ 
+ 
 }
 
   /* /////////////////////// */

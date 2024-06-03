@@ -1,0 +1,47 @@
+
+:root {
+  --setting-hight-a: 600px; 
+  --setting-hight-a-space: calc(var(--setting-hight-a) + 60px);
+}
+
+
+.setting_table {
+    /* border-spacing: var(  --space-d); */
+    /* height: 600px; */
+  }
+
+
+.setting_descriptions{
+ vertical-align: top;
+/* background-color: black; */
+width: 15%;
+min-width: 100px;
+/* max-width: 220px; */
+padding-right: var(  --space-d);
+
+}
+
+.setting_element{
+ 
+    width: auto;
+    min-height:  var(--setting-hight-a); 
+    max-height: var(--setting-hight-a); 
+}
+
+th, td {
+
+}
+tr{
+
+  
+    /* height: var(--setting-hight-a-space); */
+ /* margin-bottom: 55px; */
+    /* background-color: chartreuse; */
+}
+
+
+ 
+
+  .ShowInUi-table th {
+ 
+  }

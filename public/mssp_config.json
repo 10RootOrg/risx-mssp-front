@@ -1,12 +1,8 @@
 {
     
     "backendUrl": "http://localhost:5000", 
-
-
-    "backendUrl_old0": "http://172.25.202.73:5000",
+    "backendUrl_old0": "http://172.17.3.204:5000",
     "backendUrl_old1": "http://risxserverdev.westeurope.cloudapp.azure.com:5000",
-    "backendUrl_old2": "localhost:5000",
-    "backendUrl_old3": "http://10.100.102.13:5000",
 
     "clientApi": "https://api.example.com/user",
     "examInnterval_minutes" :15,
@@ -60,6 +56,10 @@
             "toolName": "Shodan",
             "toolID": "2001011",
             "toolURL": "https://leakcheck.net/api?key=4fe5da6d3a2bbf2ca7a6d3492c32099126d5e727&type=domain_email&check=sheba.co.il"
+        },{
+            "toolName": "MISP",
+            "toolID": "2001012",
+            "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com/"
         }
     ]
                            

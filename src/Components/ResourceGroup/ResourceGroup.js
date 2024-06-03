@@ -69,7 +69,7 @@ if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length 
 
      
         if (res){
-            console.log("res.data" , res.data);
+            console.log("res.data66666666666666666666666666666666666666666" , res.data);
             set_Preview_this_Resource(res.data)
             set_All_Resource_count(res.data.length)
             set_loader(false)

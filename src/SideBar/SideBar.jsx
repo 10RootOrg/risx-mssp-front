@@ -8,7 +8,11 @@ import { ReactComponent as IcoMonitor } from '../Components/icons/ico-menu-monit
 import { ReactComponent as IcoResults } from '../Components/icons/ico-menu-Results.svg';
 import { ReactComponent as IcoResourceGroup } from '../Components/icons/ico-menu-Resource-Group.svg';
 import { ReactComponent as IcoAccount } from '../Components/icons/ico-menu-account.svg';
+import { ReactComponent as IcoSettings } from '../Components/icons/ico-settings.svg';
 import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
+
+
+
 import GeneralContext from '../Context';
 import axios from 'axios';
 
@@ -149,6 +153,16 @@ const handleDownload = async () => {
         </div>
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
+
+<button className="btn-menu  " onClick={()=>handleClick("Settings")}   disabled={visblePage === "Settings"}>
+        <div className='display-flex'><IcoSettings className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Settings</p></div>
+      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
+</button> 
+
+
+
+
+
  </div>
 
 

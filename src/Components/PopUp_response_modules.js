@@ -26,29 +26,32 @@ const downloadJsonFile = (file) => {
 
 
 export const PopUp_For_velociraptor_response = (props) => {
+  console.log("PopUp_For_velociraptor_response");
     const { HeadLine,  popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc,  json_file_info , json_file_data} = props;
     const {  all_artifacts} = useContext(GeneralContext);
     const [artifact_logo, set_artifact_logo]= useState("")
-   console.log("json_file_data", json_file_data);
+
     // Artifact_ID
 
     useEffect(() => {
  
 if(json_file_data === undefined || json_file_data === "" || json_file_data === null ){return}
- 
  if(all_artifacts === undefined || all_artifacts === "" || all_artifacts === null ){return}
- 
  if(json_file_data.length == 0 || all_artifacts.length == 0 ){return}
 
-      const pathTOPic = all_artifacts?.filter((word) => word?.artifact_id === json_file_data?.Artifact_ID);
 
+const pathTOPic = all_artifacts?.filter((word) => word?.artifact_id === json_file_data?.ArtifactID);
+
+if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){console.log("artifact id problem");return}
+
+ 
     const logoAddress_1 = pathTOPic[0]?.logoAddress_1
     const bbb = require(`${logoAddress_1}`)
      set_artifact_logo(bbb);
     }, [json_file_data]);
  
 
-    useEffect(() => { set_popUp_show(popUp_show)}, [popUp_show]);
+        useEffect(() => { set_popUp_show(popUp_show)}, [popUp_show]);
 
         function handleClickOutside(e) {  if (e.target.className === 'PopUp-background') {  set_popUp_show(false);}}
       
@@ -186,12 +189,22 @@ if(json_file_data === undefined || json_file_data === "" || json_file_data === n
     </div>
 
        <div className='display-flex mt-c' style={{  }}>
-          <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
-          <img src={artifact_logo} alt="logo" maxwidth="140px" height="30"  style={{marginRight:"auto"}} />
+
+{artifact_logo === ""  ? null :(<>
+<p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
+          <img src={artifact_logo} alt="logo" maxwidth="140px" height="30" 
+          //  style={{marginRight:"auto"}} 
+           />
+</>)
+
+
+}
+        
     
+
           <div/>
           
-          <div style={{ display:"flex", justifyContent:"end" , gap:"10px"}}>
+          <div style={{ display:"flex", justifyContent:"end" , gap:"10px", marginLeft:"auto"}}>
       <button className="btn-type2    " onClick={()=>downloadJsonFile(json_file_info)} ><p className='font-type-menu'>Download JSON</p>  </button> 
         <button className="btn-type2   " onClick={handleClose} ><p className='font-type-menu ' >{buttonTitle}</p>  </button> 
 

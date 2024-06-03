@@ -281,7 +281,7 @@ onChange={(e) => set_nuclei_single_target(e.target.value)} // Corrected onChange
 {/* if there is only one type */}
 {Info?.types?.length === 1
   &&  Info?.types[0]?.resource_type_id !== null &&  Info?.types[0]?.resource_type_id !== "" &&  Info?.types[0]?.resource_type_id !== undefined
-  ? (<p className='ml-a  font-type-txt   Color-Grey1 tagit_type1 tagit_type2_on_popup'>{Info?.types[0]?.resource_type_name}</p> ) : null  }
+  ? (<p className='ml-a  font-type-txt   Color-Grey1 tagit_type1 '>{Info?.types[0]?.resource_type_name}</p> ) : null  }
 
 
 {/* 2 types */}

@@ -156,37 +156,3 @@
 }
 
  
-  /* background-color: var(--color-DB-Blue-Hover-Real); */
-  /* .btn-type-menu{
-    height:28px;
-  width: 28px;
-  
-    margin: 0;
-    padding: 0;
-    border:0;
-    border-radius: var(--elemtns-round-corner-medium);
-    background-color: transparent;
-    transition: var(--transition-fast)
-  }
-  
-  .btn-menu:hover{
-    background-color: var(--color-DB-Blue-Hover-Real);
-    transition: var(--transition-fast);
-    cursor: pointer;
-    
-  }
-  .btn-menu:active{
-    background-color: var(--color-DB-Blue-Active);
-    transition: var(--transition-fast)
-    
-  }
-  
-  .btn-menu .icon-type1  path{
-    stroke: var(--color-Grey2);
-    transition: var(--transition-fast)
-  }
-  
-  .btn-menu:hover .icon-type1  path{
-    stroke: var(--color-DB-Blue-Glow);
-    transition: var(--transition-fast)
-  } */

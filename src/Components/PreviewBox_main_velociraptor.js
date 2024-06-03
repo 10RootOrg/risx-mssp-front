@@ -260,8 +260,9 @@ const handle_click_velociraptor= async()=>{
   <p className='font-type-menu  Color-White   cutLongLine'>{Info?.headline}</p>
   <p className='font-type-txt   Color-Grey1   cutLongLine'>{Info?.description}</p>
   <button className="btn-type3 " style={{padding:0 }}  onClick={()=>handleReadMore(Info?.headline, Info?.readMoreText  , Info?.logoAddress_1 ,"Close"  ,null,"Small"  )}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 " style={{width:20 ,height:20}}/>  </button>
+ 
 </div>
-
+{/* toolURL */}
 <div  className='velociraptor-EndpointModules-logo  mr-b ml-b'  >
   <img className='velociraptor-EndpointModules-logo  '          src={Info?.logoAddress_1 ? require(`${Info.logoAddress_1}`) : undefined}></img>
 
@@ -293,9 +294,16 @@ const handle_click_velociraptor= async()=>{
 
 {checked_artifacts2?.length === 0 ? (
   <p className='ml-a font-type-txt  Color-Red mr-b'>Choose at least 1 Artifact</p>):
-(<><RisxMssp_logo_wide_small style={{ width:"72px"}}/> <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent is required</p></>
+(<>
+{/* <RisxMssp_logo_wide_small style={{ width:"72px"}}/> */}
+ <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent required</p></>
 )}
 
+<div className='mr-b'>
+<button className="btn-type2" onClick={() => window.open(toolURL, '_blank')}>
+      <p className='font-type-menu'>Site</p>
+    </button>
+    </div>
 
   <button className="btn-type2 "
   // disabled={checked_artifacts.length === 0}
