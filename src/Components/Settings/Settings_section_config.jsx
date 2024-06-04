@@ -24,6 +24,11 @@ function Settings_section_config({show_SideBar,set_show_SideBar,set_notification
    buttonFalse:"False"
  });
 
+
+
+ const initialObject = {loading: '...',}
+ const [object, setObject] = useState(initialObject);
+ console.log("object",object);
 const Handele_are_you_sure =( ) =>{
  
 set_PopUp_Are_You_Sure__txt({
@@ -37,7 +42,20 @@ set_PopUp_Are_You_Sure__txt({
         }
         
 const handle_Save_config = () => {
-  handleClose();};
+  handleClose();
+  handleTextAreaChange();
+  const save_config = async() =>{
+    console.log('save_config..');
+    try{
+      const res = await axios.put(`${backEndURL}/config`,{config:object});
+
+      if (res){console.log("save_config",res.data);}
+      setObject(res.data)
+    }
+    catch(err){console.log(err);}
+        } 
+        save_config();
+};
          
 const handle_Cancel_Save_config = () => {
   handleClose();
@@ -56,8 +74,6 @@ const handle_view_or_edit = ()=>{
   set_preview_or_edit(!preview_or_edit)
 }
 
-  const initialObject = {loading: '...',}
-  const [object, setObject] = useState(initialObject);
   const handleTextAreaChange = (event) => {
     set_config_save_btn(true)
     try {
@@ -112,8 +128,6 @@ const handle_view_or_edit = ()=>{
      
   };
 
-
- 
 
 
   const get_config = async() =>{

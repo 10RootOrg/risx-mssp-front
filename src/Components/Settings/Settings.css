@@ -43,5 +43,15 @@ tr{
  
 
   .ShowInUi-table th {
- 
+
+ text-align: left;
+ padding-bottom: var(--space-c) /* Adjust as needed */
   }
+  .ShowInUi-table   {
+ padding: var(--space-c);
+ border-spacing: 0 calc(var(--space-b, 0) + var(--space-a, 0));
+}
+
+
+
+ 

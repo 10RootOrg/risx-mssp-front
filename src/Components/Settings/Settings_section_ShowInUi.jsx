@@ -127,15 +127,16 @@ False_action={handle_Cancel_Save_config}
                 {/* <p className='font-type-txt Color-Orange'> Caution: Incorrect....</p> */}
                 </td>
 
-                 <td className="setting_element PreviewBox" style={{height:"auto"}}>
+                 <td className=" PreviewBox" style={{height:"auto"}}>
 
 
 
 
                  <table  className="ShowInUi-table" >
         <thead>
-          <tr>
-            <th className='font-type-menu Color-White'>ShowInUi</th>
+          <tr className=''>
+            <th className='font-type-menu Color-White'>Display</th>
+            {/* <th className='font-type-menu Color-White'>Developer</th> */}
             <th className='font-type-menu Color-White'>Module</th>
             <th className='font-type-menu Color-White'>Description</th>
             <th className='font-type-menu Color-White'>Is Active</th>
@@ -143,27 +144,40 @@ False_action={handle_Cancel_Save_config}
           </tr>
         </thead>
         <tbody>
+
+
           {all_Tools.map((tool ) => (
+
             <tr ey={tool?.tool_id}>
 
-              <td>
-              <div  className='velociraptor-EndpointModules-checkbox mr-b'>
- 
-
-
-<label className="container"> 
-<input type="checkbox" checked={tool?.ShowInUi} value={tool?.ShowInUi} onChange={()=> edit_checked(tool?.tool_id ,tool?.ShowInUi) } />
-<span className="checkmark"></span>
+              <td  >
+              {/* <div  className='velociraptor-EndpointModules-checkbox mr-b'> */}
+<label className="container"  > 
+<input  type="checkbox" checked={tool?.ShowInUi} value={tool?.ShowInUi} onChange={()=> edit_checked(tool?.tool_id ,tool?.ShowInUi) } />
+<span className="checkmark" style={{verticalAlign:"center" ,top:"-10px"  ,bottom:"auto" }}></span>
 </label>
-</div>
+{/* </div> */}
               
               
               </td>
+
+              {/* <img className='velociraptor-EndpointModules-logo' src={tool?.logoAddress_1 ? require(`./../Logos/Shodan.png`) : undefined}></img> */}
+
+              {/* <img className='velociraptor-EndpointModules-logo' src={tool?.logoAddress_1 ? require(`./.${tool.logoAddress_1}`) : undefined}></img> */}
+
+
+
               <td className='font-type-menu Color-White'>{tool?.Tool_name}</td>
+              {/* <td className=''> <img className='velociraptor-EndpointModules-logo' src={tool?.logoAddress_1 ? require(`./.${tool.logoAddress_1}`) : undefined}></img></td> */}
+              
+              
               <td className='font-type-txt Color-Grey1'>{tool?.description_short}</td>
               <td className='font-type-txt Color-Grey1'>{tool?.isActive ? ("Active"):("Disabled")}</td>
           
-
+              <td className=''> 
+              {/* {tool.logoAddress_1 && <img className='velociraptor-EndpointModules-logo' src={`./.${tool.logoAddress_1}`} alt="Logo" />} */}
+              {/* {tool.logoAddress_1 && <img className='velociraptor-EndpointModules-logo' src={require(`./.${tool.logoAddress_1}`).default} alt="Logo" />} */}
+</td>
               
             </tr>
           ))}
@@ -245,12 +259,11 @@ tool_id
 
 
                </td>
-<div  style={{ 
-  // marginTop:"18px", 
+{/* <div  style={{ 
   marginBottom:"var(--space-d)" ,marginTop:"var(--space-b)" , display:'flex' ,justifyContent:"end", gap:"var(--space-b)"}}>
      <button className="btn-type2" style={{ }} onClick={Handele_are_you_sure}  ><p className='font-type-menu '>Save</p></button>  
 
-</div>
+</div> */}
 
             </tr>
 
