@@ -6,9 +6,8 @@ import { PreviewBox_type0_static   } from './PreviewBoxes.js'
 import { ReactComponent as CloseButton } from '../Components/icons/ico-Close_type1.svg';
 import {ReactComponent as SuccessIcon} from '../Components/icons/General-icons-success.svg';
 //  import Nuclei_json  from '../../tmpjsons/Nuclei.json'
-import { format_date_type_a  ,format_date_type_c } from './Features/DateFormat';
+import {   format_date_type_c } from './Features/DateFormat';
 import axios from 'axios';
-
 
 
 
@@ -38,7 +37,6 @@ export const PopUp_For_velociraptor_response = (props) => {
 if(json_file_data === undefined || json_file_data === "" || json_file_data === null ){return}
  if(all_artifacts === undefined || all_artifacts === "" || all_artifacts === null ){return}
  if(json_file_data.length == 0 || all_artifacts.length == 0 ){return}
-
 
 const pathTOPic = all_artifacts?.filter((word) => word?.artifact_id === json_file_data?.ArtifactID);
 console.log("pathTOPic 1",pathTOPic);
