@@ -76,10 +76,25 @@ if (Info.Status  == "Failed"   ){
 const  get_Json_single_response = async()=>{
 try{
  console.log(Info);
-const params = {file_name : Info?.Response_Path }
 
+ if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
+const params = {file_name : Info?.ResponsePath }
+
+
+console.log(params);
  const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
  
+
+ if (typeof res.data === "string") {
+  set_PopUp_Request_info__txt({ HeadLine:"No results", paragraph: "Looks like no results file been created yet"   , buttonTitle:"Close" })
+  set_PopUp_Request_info__show(true)
+
+  console.log(res.data )  ;
+return
+ }
+
+
+
 if (res){
    console.log("velociraptor-single-result    ",res.data);
  if (Info?.ModuleID === "2000000") {
@@ -91,11 +106,12 @@ if (res){
 
 else{
 
-  if (Info?.Module_ID === "2001005") { //nuclie
+  if (Info?.ModuleID === "2001005") { //nuclie
 
-const tool = all_Tools?.filter((tool) =>  tool?.tool_id === Info?.Module_ID)
+const tool = all_Tools?.filter((tool) =>  tool?.tool_id === Info?.ModuleID)
 console.log("tool" ,tool);
     let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
+    console.log("updatedInfo" ,updatedInfo);
     set_json_file_data(updatedInfo)
     
     console.log(Info);
@@ -118,6 +134,7 @@ console.log("tool" ,tool);
    
   ;}
 }
+
 catch(err){console.log(err);}
 
 }

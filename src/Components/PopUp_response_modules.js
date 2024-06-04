@@ -26,7 +26,7 @@ const downloadJsonFile = (file) => {
 
 
 export const PopUp_For_velociraptor_response = (props) => {
-  console.log("PopUp_For_velociraptor_response");
+  console.log("PopUp_For_velociraptor_response",props);
     const { HeadLine,  popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc,  json_file_info , json_file_data} = props;
     const {  all_artifacts} = useContext(GeneralContext);
     const [artifact_logo, set_artifact_logo]= useState("")
@@ -41,9 +41,9 @@ if(json_file_data === undefined || json_file_data === "" || json_file_data === n
 
 
 const pathTOPic = all_artifacts?.filter((word) => word?.artifact_id === json_file_data?.ArtifactID);
-
+console.log("pathTOPic 1",pathTOPic);
 if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){console.log("artifact id problem");return}
-
+console.log("pathTOPic 2",pathTOPic);
  
     const logoAddress_1 = pathTOPic[0]?.logoAddress_1
     const bbb = require(`${logoAddress_1}`)
@@ -231,19 +231,24 @@ if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){conso
  
 
     useEffect(() => {
- 
+      console.log("PopUp_For__Nuclei__response_tmp  0000"  );
       if(json_file_data === undefined || json_file_data === "" || json_file_data === null ){return}
        if(all_Tools === undefined || all_Tools === "" || all_Tools === null ){return}
        if(json_file_data.length == 0 || all_Tools.length == 0 ){return}
- 
-            const pathTOPic = all_Tools?.filter((word) => word?.tool_id === json_file_data?.Module_ID);
-      
+       console.log("PopUp_For__Nuclei__response_tmp  11111"  );
+
+
+            const pathTOPic = all_Tools?.filter((word) => word?.tool_id === json_file_data?.ModuleID);
+
+            console.log("PopUp_For__Nuclei__response_tmp  11112"  );
+
+            
           const logoAddress_1 = pathTOPic[0]?.logoAddress_1
           const bbb = require(`${logoAddress_1}`)
           set_module_logo(bbb);
           }, [json_file_data]);
 
- 
+          console.log("PopUp_For__Nuclei__response_tmp  222"  );
     
         useEffect(() => { set_popUp_show(popUp_show)}, [popUp_show]);
             function handleClickOutside(e) {
@@ -252,7 +257,7 @@ if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){conso
             function handleClose() {  set_popUp_show(false);}
     
    
-    
+            console.log("PopUp_For__Nuclei__response_tmp  333"  );
           
             return (
               <>
@@ -285,8 +290,8 @@ if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){conso
          </div>
         
         <div className='velociraptor_response_top_row'>
-        <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.Module_Name}</p>
-        <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{ format_date_type_c(json_file_data?.Start_Date) }</p> 
+        <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.ModuleName}</p>
+        <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) :"NA" }</p> 
         <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  > {json_file_data?.Status}</p> 
          </div>
         </div>
@@ -342,29 +347,6 @@ if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){conso
     )})}
 </div>
 
-
-
-{/*     
-    {json_file_info?.length !== 0 ? (<>
-    
-    
-    <div className="table_smart"   >
-      {Object.keys(json_file_info?.table[0]).map((key) => ( 
-    <div className="parent-container"  onClick={()=>set_cell_width("500px")} key={key}> 
-    <p  className="table_smart_col font-type-menu Color-White" style={{width:cell_width}}>{key}</p></div>))}
-    </div>
-    
-    {json_file_info?.table.map((item, index) => (<div key={index}  className="table_smart" >
-    {Object.values(item).map((value, idx) => (
-    <div className="parent-container"  key={idx}>
-    <p className="table_smart_col font-type-txt  Color-Grey1" style={{width:cell_width}}>{value}</p>
-    </div>
-        ))}
-      </div>
-    ))}
-    
-
-    </>):null}</> */}
 
 
 <div className='display-flex mt-c' style={{  }}>

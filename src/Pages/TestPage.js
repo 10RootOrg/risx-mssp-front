@@ -10,6 +10,79 @@ function TestPage() {
 const backEndURL = "http://localhost:5000"
       
 
+ 
+// const event = new Date('06 04, 2024 18:29:30');
+// console.log(event);
+// console.log(event.toTimeString());
+
+// const event2 = new Date('06 04, 2024 18:29:30');
+// console.log(event2);
+// console.log(event2.toTimeString());
+
+
+function string_to_date(dateString){
+
+    const dateStringArray = dateString.split("-");
+    const day = dateStringArray[0]
+    const month = dateStringArray[1]
+    const year = dateStringArray[2] 
+    const hour = dateStringArray[3] 
+    const minute = dateStringArray[4] 
+    const second = dateStringArray[5] 
+    const event = new Date(`${month} ${day}, ${year} ${hour}:${minute}:${second}`);
+
+return event
+}
+
+
+const LastIntervalDate = string_to_date("22-05-24-13-21-18");
+const expire_date =      string_to_date("22-05-24-12-20-18");
+
+ const compare = (expire_date - LastIntervalDate)/60000
+ 
+
+
+if(compare>0){console.log("in time");}
+
+else if(compare<0){ console.log("not in time"); 
+
+ 
+
+    if(-compare <= 59){console.log("pass by", -compare, "Min"); }
+
+    if(  59 < -compare < 1439){
+
+     
+
+        console.log("pass by", -compare, "Hr");
+    
+    }
+    if(   1440 <= -compare ){console.log("pass by", -compare, "Days"); }
+}
+
+ 
+// console.log(string_to_date("22-05-24-11-20-18"));
+
+// const dateString = "22-05-24-11-20-18"
+// const dateStringArray = dateString.split("-");
+// const day = dateStringArray[0]
+// const month = dateStringArray[1]
+// const year = dateStringArray[2] 
+// const hour = dateStringArray[3] 
+// const minute = dateStringArray[4] 
+// const second = dateStringArray[5] 
+
+
+// const event2 = new Date(`${month} ${day}, ${year} ${hour}:${minute}:${second}`);
+
+
+
+// console.log(event2);
+
+
+
+
+
 
 useEffect(() => {
     const anim = lottie.loadAnimation({

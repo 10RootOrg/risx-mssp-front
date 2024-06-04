@@ -44,13 +44,16 @@ set_PopUp_Are_You_Sure__txt({
 const handle_Save_config = () => {
   handleClose();
   handleTextAreaChange();
+  set_config_save_btn(false)
+
+
   const save_config = async() =>{
     console.log('save_config..');
     try{
       const res = await axios.put(`${backEndURL}/config`,{config:object});
 
-      if (res){console.log("save_config",res.data);}
-      setObject(res.data)
+      if (res){console.log("back from backend after save",res.data);}
+      // setObject(res.data)
     }
     catch(err){console.log(err);}
         } 
@@ -75,6 +78,7 @@ const handle_view_or_edit = ()=>{
 }
 
   const handleTextAreaChange = (event) => {
+ console.log("handleTextAreaChange",event?.target?.value);
     set_config_save_btn(true)
     try {
       const value = JSON.parse(event.target.value);

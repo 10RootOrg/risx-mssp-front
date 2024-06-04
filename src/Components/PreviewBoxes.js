@@ -513,8 +513,8 @@ function PreviewBox_type4_legend2({HeadLine , bar_numbers, bar_headlines, bar_ti
       const statuses = [
         { count: 222, label: 'Complete',        description:"", bar: 'finish', time_text:"" ,error_note:false},
         { count: 1,   label: 'Complete*',       description:"(not in time)", bar: 'finish', time_text:"+15 Days" ,error_note:true},
-        { count: 27,  label: 'In Process',      description:"", bar: 'half', time_text:""   ,error_note:false},
-        { count: 1,   label: 'In Process*',     description:"time passed too long text should cut", bar: 'half',  time_text:"+20 Hrs" ,error_note:true},
+        { count: 27,  label: 'Hunt',      description:"", bar: 'half', time_text:""   ,error_note:false},
+        { count: 1,   label: 'Hunt*',     description:"(time passed)", bar: 'half',  time_text:"+20 Hrs" ,error_note:true},
         { count: Count_Failed,   label: 'Failed',          description:"",  bar: 'failed' ,time_text:"",  error_note:false},
       ];
       
