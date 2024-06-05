@@ -7,7 +7,8 @@ import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
  import axios from 'axios';
  import GeneralContext from '../../Context.js';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat';
- 
+ import '../StatusDisplay.css'; 
+
   // Adjust the path as needed based on your project structure
  
  
@@ -47,7 +48,7 @@ function Results_All({
     buttonTitle:"Close"
   });
 
-
+const status_bar_width = "140px"
 
   const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show] = useState(false);
 
@@ -242,7 +243,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 //  style={{width:"60%" , maxWidth:"60%"}}
  ><p className='font-type-menu  make-underline Color-Grey1 '>Arguments</p></div>
 <div className='resource-group-list-item list-item-big   '><p className='font-type-menu  make-underline Color-Grey1 '>Start_Date</p></div>
-<div className='resource-group-list-item list-item-big  ' style={{marginRight:"26px"}}><p className='font-type-menu  make-underline Color-Grey1  '>Status</p></div>
+<div className='resource-group-list-item list-item-big  ' style={{marginRight:"18px" ,width:status_bar_width}}><p className='font-type-menu  make-underline Color-Grey1  '>Status</p></div>
  
 </div>
 
@@ -292,15 +293,26 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 //  style={{width:"60%" , maxWidth:"60%" , marginRight:"15px"}}
  >{ JSON.stringify(Info?.Arguments) }</p> 
 <p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{ Info?.StartDate &&            format_date_type_c(Info?.StartDate)}</p> 
-<p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{Info?.Status}</p> 
+
+{/* <div className="resource-group-list-item">   */}
+
+<div className="status-bar-and-time" style={{width:status_bar_width}}>  
+<div className="status-bar">
+            {/* <div className={`status-bar-fill `}/> */}
+            <div className={`status-bar-fill ${Info?.Status}`}/>
+          </div>
+          <div className={`font-type-txt   time-general  ${Info?.TimeNote != "In Time" ?  'not-in-time' : 'in-time'}  `}>{Info?.TimeNote === "In Time" ? null : Info?.TimeNote}</div>
+</div>
+</div>
  
- </div>
+//  </div>
 
 
     );
   })}
 
 </div>
+{/* <p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{Info?.Status}    {Info?.TimeNote}   </p>  */}
 
 <ResourceGroup_buttomLine/>
 </>
