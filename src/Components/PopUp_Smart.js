@@ -91,7 +91,6 @@ alt="Icon" width="100px" height="70px"    style={{ marginLeft:"-15px" }}
   );
 }
 
-
 export const PopUp_All_Good = (props) => {
   const { HeadLine, paragraph   ,popUp_show, set_popUp_show  ,buttonTitle     } = props;
   const [active, setActive] = useState(false);
@@ -351,7 +350,6 @@ alt="Icon" width="100px" height="70px"    style={{ marginLeft:"-15px" }}
     );
   }
  
-  
   export const PopUp_For_Dehashed_data = (props) => {
     const { HeadLine,  popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc, popUp_iconSize} = props;
      const { backEndURL } = useContext(GeneralContext);
@@ -543,6 +541,74 @@ set_Dehashed_data(tmpdata2);
 
 
  
+              
+            
+            </div>
+          </div>)}
+    
+      </>
+    );
+  }
+
+  export const PopUp_Error = (props) => {
+    const { HeadLine, paragraph   ,popUp_show, set_popUp_show  ,buttonTitle     } = props;
+    const [active, setActive] = useState(false);
+   
+    useEffect(() => {
+      set_popUp_show(popUp_show)
+    }, [popUp_show]);
+  
+    useEffect(() => {
+      if (popUp_show) {
+          setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+      }
+    }, [popUp_show]);
+  
+  
+    function handleClickOutside(e) {
+      if (e.target.className === 'PopUp-background') {
+        setActive(false); // Trigger exit animation
+        setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+      }
+    }
+  
+    function handleClose() {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+    }
+  
+  
+  
+  
+    return (
+      <>
+   
+  
+  
+  {popUp_show && (
+          <div className={`PopUp-background`} onClick={handleClickOutside}>
+            
+            <div className={`PopUp-content  ${active ? 'popup-enter-active' : 'popup-enter'}`} style={{   width:"250px" ,paddingBottom:" "}}>
+  
+  <div className="display-flex justify-content-end  " style={{marginRight:"-40px"  }}>
+  <button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
+  </div>
+  
+  <SuccessIcon className="mb-a "
+  alt="Icon" width="100px" height="70px"    style={{ marginLeft:"-15px" }}
+  />
+                
+  <p className="font-type-h4 Color-White mb-a">{HeadLine}</p>
+  <p  className="font-type-txt  reading-height Color-White"  >{paragraph}</p>
+      
+  
+   <div className='display-flex mt-c' style={{  }}>
+      <button className="btn-type2   '" style={{ marginLeft:"auto" }} onClick={handleClose} ><p className='font-type-menu '>{buttonTitle}</p>  </button> 
+   
+    </div>
+  
+  
+  
               
             
             </div>

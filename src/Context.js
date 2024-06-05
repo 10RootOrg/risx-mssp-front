@@ -23,7 +23,7 @@ useEffect(() => {
    if (  config.backendUrl !== undefined ) {
 
  
-console.log("config", config);
+// console.log("config", config);
    set_examInnterval_minutes(config.examInnterval_minutes);
    set_moduleLinks(config.moduleLinks);
     // set_moduleLinks(config.moduleLinks);
@@ -63,7 +63,7 @@ const get_all_resource_types = async()=>{
  if(backEndURL === null ||backEndURL === undefined ||backEndURL == ""){return}
   try{
 
-    console.log("backEndURL    55555" , backEndURL);
+    console.log("config_mssp.json -backEndURL-" , backEndURL);
       const res = await axios.get(`${backEndURL}/Resources/count-same-type`);
       if (res){set_all_Resource_Types( res.data)
 
@@ -73,7 +73,6 @@ const get_all_resource_types = async()=>{
 
 useEffect(() => {get_all_resource_types() }, [backEndURL]);
 
-console.log( "999",backEndURL , "999");
 
   return (
     <GeneralContext.Provider  value={{

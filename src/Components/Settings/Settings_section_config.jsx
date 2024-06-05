@@ -52,7 +52,20 @@ const handle_Save_config = () => {
     try{
       const res = await axios.put(`${backEndURL}/config`,{config:object});
 
-      if (res){console.log("back from backend after save",res.data);}
+      if (res)
+        
+        if(res.data?.error === "failed saving config"){
+          console.log("error save",res.data?.error);
+          return
+        }
+      else {console.log("back from backend after save",res.data);}
+
+
+
+       
+
+
+
       // setObject(res.data)
     }
     catch(err){console.log(err);}
@@ -135,8 +148,7 @@ const handle_view_or_edit = ()=>{
 
 
   const get_config = async() =>{
-    console.log('get_config..');
-    try{
+     try{
       const res = await axios.get(`${backEndURL}/config`);
 
       if (res){console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa",res.data);}

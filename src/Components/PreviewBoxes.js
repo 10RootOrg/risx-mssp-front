@@ -503,19 +503,19 @@ return(
     )
   }
   
-function PreviewBox_type4_legend2({HeadLine , bar_numbers, bar_headlines, bar_title_legend,Count_Failed}) {
-//   const[items_count, set_items_count]=useState({Failed:44})
-//  console.log("Count_Failed",Count_Failed);
-      const process_height = 16;
-      const process_width = 66;
-{/* <p className='   font-type-txt Color-Grey1'   style={{...text_style2   }} ></p> */}
+function PreviewBox_type4_legend2({HeadLine ,Status_Legend}) {
+
+
+
+      // const process_height = 16;
+      // const process_width = 66;
 
       const statuses = [
-        { count: 222, label: 'Complete',        description:"", bar: 'finish', time_text:"" ,error_note:false},
-        { count: 1,   label: 'Complete*',       description:"(not in time)", bar: 'finish', time_text:"+15 Days" ,error_note:true},
-        { count: 27,  label: 'Hunt',      description:"", bar: 'half', time_text:""   ,error_note:false},
-        { count: 1,   label: 'Hunt*',     description:"(time passed)", bar: 'half',  time_text:"+20 Hrs" ,error_note:true},
-        { count: Count_Failed,   label: 'Failed',          description:"",  bar: 'failed' ,time_text:"",  error_note:false},
+        { count: Status_Legend?.completed_InTime_Count,     label: 'Complete',        description:"", bar: 'finish', time_text:"" ,error_note:false},
+        { count: Status_Legend?.completed_not_InTime_Count, label: 'Complete*',       description:"(not in time)", bar: 'finish', time_text:"+15 Days" ,error_note:true},
+        { count: Status_Legend?.hunt_InTime_Count,          label: 'Hunt',      description:"", bar: 'half', time_text:""   ,error_note:false},
+        { count: Status_Legend?.hunt_not_InTime_Count,      label: 'Hunt*',     description:"(time passed)", bar: 'half',  time_text:"+20 Hrs" ,error_note:true},
+        { count: Status_Legend?.Failed_Count,               label: 'Failed',          description:"",  bar: 'failed' ,time_text:"",  error_note:false},
       ];
       
       
@@ -523,10 +523,8 @@ function PreviewBox_type4_legend2({HeadLine , bar_numbers, bar_headlines, bar_ti
       
             return (
       <div className='PreviewBox PreviewBox-twice-size' style={{ }}>
-       
       <div className='PreviewBox_HeadLine' >
          <p  className="font-type-menu" >{HeadLine}</p> 
-         
          </div>
 
          <div className="status-table">

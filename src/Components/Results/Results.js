@@ -20,6 +20,11 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
     const [loader , set_loader] = useState(true)
     const [All_Resource_count , set_All_Resource_count] = useState(0)
     const [last_update , set_last_update] = useState(0)
+    const [Status_Legend , set_Status_Legend] = useState({})
+    const [counts, setCounts] = useState([]);
+
+ 
+
     // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
 
  
@@ -100,23 +105,16 @@ useEffect(() => {
 
 
 }
- 
     get_all_Results();  }, [filter_Resource]);
 
 
 
-    const [counts, setCounts] = useState([]);
-    const [count_veloci, set_count_veloci] = useState(0);
-    const [count_complete, set_count_complete] = useState(0);
+ 
 
 
     useEffect(() => {
-      // Module_Name && Info?.Sub_Module && 
-      // const M
-      // console.log("Preview_this_Results", Preview_this_Results);
-
       const countOccurrences = () => {
-        console.log("Preview_this_Results" , Preview_this_Results);
+        // console.log("Preview_this_Results" , Preview_this_Results);
         const countsMap = Preview_this_Results?.reduce((acc, { SubModule, ModuleName }) => {
           const key = SubModule || ModuleName;
           acc[key] = acc[key] ? acc[key] + 1 : 1;
@@ -131,9 +129,21 @@ useEffect(() => {
   setCounts(countsArray);
  
   // const count__Velo = Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length;
- const completed  = Preview_this_Results?.filter(item => item?.Status == "Complete");
+//  const completed  = Preview_this_Results?.filter(item => item?.Status == "Complete");
 
-  console.log("completed" ,completed);
+const completed_InTime_Count =     (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
+const completed_not_InTime_Count = (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
+const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunt"     && item?.TimeNote === "In Time").length : "NA";
+const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunt"     && item?.TimeNote  != "In Time").length : "NA";
+const Failed_Count =               (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Failed" ).length : "NA";
+
+
+ console.log("completed_not_InTime_Count",completed_not_InTime_Count);
+set_Status_Legend({completed_InTime_Count: completed_InTime_Count,completed_not_InTime_Count:completed_not_InTime_Count,hunt_InTime_Count:hunt_InTime_Count,hunt_not_InTime_Count:hunt_not_InTime_Count,Failed_Count:Failed_Count })
+  // console.log("completed" ,completed);
+  console.log(Status_Legend);
+  // set_Status_Legend
+
   // set_count_complete(count_complete)
 //  set_count_veloci(count__Velo)
 
@@ -144,7 +154,7 @@ useEffect(() => {
       countOccurrences();
     }, [Preview_this_Results]);
 
- console.log("counts", counts);
+ 
 // function  clear_all_btns_filter_preview()=>{()}
 
 
@@ -185,6 +195,9 @@ bar_title_legend = {"Count"}
 /> */}
 
  
+
+
+
 
 <PreviewBox_type3_bar
 HeadLine="Result Distribution"
@@ -234,11 +247,21 @@ filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 /> 
 
+{/* const completed_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length;
+//  const completed_not_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote != "In Time").length;
+//  const hunt_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Hunt" && item?.TimeNote === "In Time").length;
+//  const hunt_not_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Hunt" && item?.TimeNote != "In Time").length;
+//  const Failed_Count = (Preview_this_Results || []).filter(item => item?.Status === "Failed").length; */}
+
+
+
 <PreviewBox_type4_legend2
 HeadLine="Status Legend "
-bar_numbers = { counts?.map(item => Object.values(item) ) }
-bar_headlines = {  counts?.map(item => Object.keys(item) )  }
-Count_Failed={Preview_this_Results?.filter(item => item?.Status == "Failed").length? (Preview_this_Results?.filter(item => item?.Status == "Failed").length):(0) }
+ 
+// Count_Failed={Preview_this_Results?.filter(item => item?.Status == "Failed").length? (Preview_this_Results?.filter(item => item?.Status == "Failed").length):(0) }
+Status_Legend={Status_Legend}
+// Count_Failed={Status_Legend?.Failed_Count === undefined ? "NA" : (Status_Legend?.Failed_Count) }
+
 
 // bar_numbers = {[ "11","22","41","5"]}
 // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}

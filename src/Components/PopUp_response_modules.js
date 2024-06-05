@@ -5,7 +5,6 @@ import './PopUp.css'; // import CSS file for modal styling
 import { PreviewBox_type0_static   } from './PreviewBoxes.js'
 import { ReactComponent as CloseButton } from '../Components/icons/ico-Close_type1.svg';
 import {ReactComponent as SuccessIcon} from '../Components/icons/General-icons-success.svg';
-//  import Nuclei_json  from '../../tmpjsons/Nuclei.json'
 import {   format_date_type_c } from './Features/DateFormat';
 import axios from 'axios';
 

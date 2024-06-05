@@ -33,32 +33,51 @@ function string_to_date(dateString){
 
 return event
 }
+function compare_dates(end_date, start_date){
+    const compare = (end_date - start_date)/60000
 
+    if(compare>0){
+        // console.log("in time");
+        return "In Time"
+    }
+    if(compare<0){
+        //  console.log("not in time" ); 
+    
+     
+    
+        if(-compare <= 59){
+            // console.log("pass by", -compare, "Min"); 
+            const return_this = "pass by "+ -compare + " Min"
+         return return_this
+        }
+    
+        if(  59 < -compare &&   1439 > -compare){
+            const hours  = Math.floor(-compare / 60);
+            const minutes = -compare % 60;
+            const return_this = "pass by " + hours + " Hr " + minutes + " minutes";
+            return return_this;
 
-const LastIntervalDate = string_to_date("22-05-24-13-21-18");
+        }
+        if(   1440 <= -compare ){
+            const days  = Math.floor(-compare / 1440);
+            const remainingHours = Math.floor((-compare % 1440) / 60); // Calculate remaining hours
+            const return_this = "pass by " + days + " days and " + remainingHours + " hours";
+            return return_this
+        
+    
+        }
+    }
+ 
+return  
+}
+
+const LastIntervalDate = string_to_date("22-05-24-12-26-18");
 const expire_date =      string_to_date("22-05-24-12-20-18");
 
- const compare = (expire_date - LastIntervalDate)/60000
- 
+const note = compare_dates(expire_date,LastIntervalDate)
+console.log(note);
 
 
-if(compare>0){console.log("in time");}
-
-else if(compare<0){ console.log("not in time"); 
-
- 
-
-    if(-compare <= 59){console.log("pass by", -compare, "Min"); }
-
-    if(  59 < -compare < 1439){
-
-     
-
-        console.log("pass by", -compare, "Hr");
-    
-    }
-    if(   1440 <= -compare ){console.log("pass by", -compare, "Days"); }
-}
 
  
 // console.log(string_to_date("22-05-24-11-20-18"));

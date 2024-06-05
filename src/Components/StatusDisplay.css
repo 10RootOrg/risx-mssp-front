@@ -58,18 +58,18 @@
     height: 100%;
   }
   
-  .finish {
+  .finish ,.Complete{
     background-color: var(--color-DB-Blue-Glow);
     width: 100%;
   }
  
   
-  .half {
+  .half ,.Hunt ,.Request{
     background-color: var(--color-DB-Blue-Glow);
     width: 50%;
   }
   
-  .failed{
+  .failed, .Failed{
     background-color: var(--color-Red);
     background-color: var(   --color-Orange);
  
