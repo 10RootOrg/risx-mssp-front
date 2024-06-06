@@ -115,8 +115,8 @@ useEffect(() => {
     useEffect(() => {
       const countOccurrences = () => {
         // console.log("Preview_this_Results" , Preview_this_Results);
-        const countsMap = Preview_this_Results?.reduce((acc, { SubModule, ModuleName }) => {
-          const key = SubModule || ModuleName;
+        const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
+          const key = SubModuleName || ModuleName;
           acc[key] = acc[key] ? acc[key] + 1 : 1;
           return acc;
         }, {});
@@ -133,8 +133,8 @@ useEffect(() => {
 
 const completed_InTime_Count =     (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
 const completed_not_InTime_Count = (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
-const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunt"     && item?.TimeNote === "In Time").length : "NA";
-const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunt"     && item?.TimeNote  != "In Time").length : "NA";
+const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
+const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
 const Failed_Count =               (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Failed" ).length : "NA";
 
 
@@ -215,7 +215,7 @@ HeadLine="Velociraptor Request Count"
 resource_type_id={null}
 description_short="Velociraptor Count"
 // BigNumber={count_veloci ? (count_veloci):(0) }
-BigNumber={Preview_this_Results?.filter(item => item?.ModuleID == "2000000").length ? (Preview_this_Results?.filter(item => item?.ModuleID == "2000000").length):(0) }
+BigNumber={Preview_this_Results?.filter(item => item?.ModuleName == "Velociraptor").length ? (Preview_this_Results?.filter(item => item?.ModuleName == "Velociraptor").length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
 date={last_update}
@@ -247,13 +247,7 @@ filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 /> 
 
-{/* const completed_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length;
-//  const completed_not_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote != "In Time").length;
-//  const hunt_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Hunt" && item?.TimeNote === "In Time").length;
-//  const hunt_not_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Hunt" && item?.TimeNote != "In Time").length;
-//  const Failed_Count = (Preview_this_Results || []).filter(item => item?.Status === "Failed").length; */}
-
-
+ 
 
 <PreviewBox_type4_legend2
 HeadLine="Status Legend "

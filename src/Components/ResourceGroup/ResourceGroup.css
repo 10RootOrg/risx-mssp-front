@@ -123,7 +123,8 @@ color: var(--color-DB-Blue-Glow);
   }
   
   .list-item-small{
-  width: 90px;
+    max-width :120px;
+    width: 20%;   
  
 }
 

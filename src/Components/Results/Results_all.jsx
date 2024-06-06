@@ -242,8 +242,13 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 <div className='resource-group-list-item   list-item-big '
 //  style={{width:"60%" , maxWidth:"60%"}}
  ><p className='font-type-menu  make-underline Color-Grey1 '>Arguments</p></div>
-<div className='resource-group-list-item list-item-big   '><p className='font-type-menu  make-underline Color-Grey1 '>Start_Date</p></div>
-<div className='resource-group-list-item list-item-big  ' style={{marginRight:"18px" ,width:status_bar_width}}><p className='font-type-menu  make-underline Color-Grey1  '>Status</p></div>
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Start Date</p></div>
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Last Interval</p></div>
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
+
+
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Status</p></div>
+<div className='resource-group-list-item list-item-big  ' style={{marginRight:"18px" ,width:status_bar_width}}><p className='font-type-menu  make-underline Color-Grey1  '>Status Display</p></div>
  
 </div>
 
@@ -264,37 +269,40 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 
 
-{  Info?.ModuleName  === ""   &&    Info?.SubModule  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
+{  Info?.ModuleName  === ""   &&    Info?.SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
 
 
 
-{Info?.ModuleName && Info?.SubModule && 
+{Info?.ModuleName && Info?.SubModuleName && 
 (<>
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p>
 <p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p>
- <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModule}</p>
+ <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModuleName}</p>
 
  </>)
 
 }
 
 
-{Info?.ModuleName && !Info?.SubModule && 
-  (<>
-  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p>
- 
-  </>)
-}
+{Info?.ModuleName && !Info?.SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
 
 
 
 </div>
+
+
  <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big   '
 //  style={{width:"60%" , maxWidth:"60%" , marginRight:"15px"}}
  >{ JSON.stringify(Info?.Arguments) }</p> 
-<p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{ Info?.StartDate &&            format_date_type_c(Info?.StartDate)}</p> 
 
-{/* <div className="resource-group-list-item">   */}
+
+
+
+
+<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.StartDate)}</p> 
+<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.LastIntervalDate)}</p> 
+<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.ExpireDate &&  format_date_type_c(Info?.StartDate)}</p> 
+<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.Status}</p> 
 
 <div className="status-bar-and-time" style={{width:status_bar_width}}>  
 <div className="status-bar">
