@@ -27,6 +27,7 @@
   }
   
   .status-bar {
+    min-width: 16px;
     width: 66px;
     height: 16px;
     background-color: var(--color-DB-Blue-Hover);
@@ -64,7 +65,7 @@
   }
  
   
-  .half ,.Hunt ,.Request{
+  .half ,.Hunting ,.Request{
     background-color: var(--color-DB-Blue-Glow);
     width: 50%;
   }

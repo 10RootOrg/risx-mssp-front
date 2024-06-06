@@ -133,8 +133,8 @@ useEffect(() => {
 
 const completed_InTime_Count =     (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
 const completed_not_InTime_Count = (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
-const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunt"     && item?.TimeNote === "In Time").length : "NA";
-const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunt"     && item?.TimeNote  != "In Time").length : "NA";
+const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
+const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
 const Failed_Count =               (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Failed" ).length : "NA";
 
 
@@ -247,13 +247,7 @@ filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 /> 
 
-{/* const completed_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length;
-//  const completed_not_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote != "In Time").length;
-//  const hunt_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Hunt" && item?.TimeNote === "In Time").length;
-//  const hunt_not_InTime_Count = (Preview_this_Results || []).filter(item => item?.Status === "Hunt" && item?.TimeNote != "In Time").length;
-//  const Failed_Count = (Preview_this_Results || []).filter(item => item?.Status === "Failed").length; */}
-
-
+ 
 
 <PreviewBox_type4_legend2
 HeadLine="Status Legend "
