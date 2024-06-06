@@ -269,22 +269,22 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 
 
-{  Info?.ModuleName  === ""   &&    Info?.SubModule  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
+{  Info?.ModuleName  === ""   &&    Info?.SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
 
 
 
-{Info?.ModuleName && Info?.SubModule && 
+{Info?.ModuleName && Info?.SubModuleName && 
 (<>
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p>
 <p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p>
- <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModule}</p>
+ <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModuleName}</p>
 
  </>)
 
 }
 
 
-{Info?.ModuleName && !Info?.SubModule && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
+{Info?.ModuleName && !Info?.SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
 
 
 

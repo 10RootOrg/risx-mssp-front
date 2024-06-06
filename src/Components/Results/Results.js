@@ -115,8 +115,8 @@ useEffect(() => {
     useEffect(() => {
       const countOccurrences = () => {
         // console.log("Preview_this_Results" , Preview_this_Results);
-        const countsMap = Preview_this_Results?.reduce((acc, { SubModule, ModuleName }) => {
-          const key = SubModule || ModuleName;
+        const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
+          const key = SubModuleName || ModuleName;
           acc[key] = acc[key] ? acc[key] + 1 : 1;
           return acc;
         }, {});
@@ -215,7 +215,7 @@ HeadLine="Velociraptor Request Count"
 resource_type_id={null}
 description_short="Velociraptor Count"
 // BigNumber={count_veloci ? (count_veloci):(0) }
-BigNumber={Preview_this_Results?.filter(item => item?.ModuleID == "2000000").length ? (Preview_this_Results?.filter(item => item?.ModuleID == "2000000").length):(0) }
+BigNumber={Preview_this_Results?.filter(item => item?.ModuleName == "Velociraptor").length ? (Preview_this_Results?.filter(item => item?.ModuleName == "Velociraptor").length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
 date={last_update}
