@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 
 
 function App() {
-  const [visblePage, set_visblePage] = useState("DashBoard")
+  const [visblePage, set_visblePage] = useState("Dashboard")
 
   return (
 
@@ -23,7 +23,7 @@ function App() {
 
 
 <div className='app-main' >
-{visblePage === "DashBoard" &&  <DashBoard/>}
+{visblePage === "Dashboard" &&  <DashBoard/>}
 {visblePage === "ResourceGroup" &&  <ResourceGroup/>}
 </div>
 

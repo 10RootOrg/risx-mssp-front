@@ -24,24 +24,30 @@ function ResourceGroup({show_SideBar,set_show_SideBar}) {
         if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
         if(all_Tools.length  === undefined || all_Tools.length === 0  )
      {
-         const get_all_tools = async()=>{
-             try{
-                 const res = await axios.get(`${backEndURL}/tools`);
-                 if (res){ 
-                     const all_tools_no_links =  res.data
-     
-     all_tools_no_links.forEach(tool => {
-     for (let index = 0; index < moduleLinks.length; index++) {
-         if ( moduleLinks[index]?.toolID === tool?.tool_id){
-             tool.toolURL =  moduleLinks[index]?.toolURL
-         }
-     }
-     });
-     
-                     set_all_Tools(all_tools_no_links)   }}
-                 catch(err){console.log(err);}  }
-       get_all_tools();      
-                     
+        const get_all_tools = async()=>{
+
+  
+            try{
+                const res = await axios.get(`${backEndURL}/tools`);
+                if (res){ 
+                    const all_tools_no_links =  res.data
+    
+    
+                    console.log("all_tools_no_links",all_tools_no_links);
+    
+    
+    
+    all_tools_no_links.forEach(tool => {
+    for (let index = 0; index < moduleLinks.length; index++) {
+        if ( moduleLinks[index]?.toolID === tool?.tool_id){
+            tool.toolURL =  moduleLinks[index]?.toolURL
+        }
+    }
+    });
+    
+                    set_all_Tools(all_tools_no_links)   }}
+                catch(err){console.log(err);}  }
+      get_all_tools();   
      }  }, [backEndURL]);
 
 

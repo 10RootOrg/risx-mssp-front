@@ -729,9 +729,9 @@ function PreviewBox_type_module({ Info,  HeadLine,description,  StatusColor,date
   const [StatusColorClass, set_StatusColorClass] = useState("Bg-Grey2")
  
 
-  useEffect(() => {
-    check_last_response2(Info,backEndURL,set_last_response,set_StatusColorClass);
-        }, [notification_number]);
+  // useEffect(() => {
+  //   check_last_response2(Info,backEndURL,set_last_response,set_StatusColorClass);
+  //       }, [notification_number]);
    
 
 

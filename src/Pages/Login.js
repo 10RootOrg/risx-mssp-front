@@ -45,6 +45,9 @@ const [InputPassword, set_InputPassword] = useState("");
 
 const necessaryUser1  = "DorAmit"
 const necessaryUser2  = "YanivR"
+const necessaryUser3  = "7Ci"
+const user3password   = "oBf5@$fj!cYT"
+
 const [necessaryPassword , set_necessaryPassword] = useState("123");
 const [errorMessage , set_errorMessage] = useState("");
 
@@ -73,13 +76,20 @@ const handleClick = (event) => {
   event.preventDefault(); // Prevent form submission and page reload
   set_errorMessage("")
 if ( necessaryUser1 === InputUser  && necessaryPassword === InputPassword) {
+  localStorage.setItem('username', "Dor Amit");  
   navigate(`/${"dashboard"}`);  
 }
 
 else if ( necessaryUser2 === InputUser  && necessaryPassword === InputPassword) {
+  localStorage.setItem('username', "Yaniv Radunsky");  
   navigate(`/${"dashboard"}`);  
 }
 
+else if ( necessaryUser3 === InputUser  && user3password === InputPassword) {
+  localStorage.setItem('username', necessaryUser3);  
+
+  navigate(`/${"dashboard"}`);  
+}
 
 else{
   set_errorMessage("Username or Password Incorrect")
