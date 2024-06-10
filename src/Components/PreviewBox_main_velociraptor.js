@@ -11,7 +11,7 @@ import './PreviewBoxes.css';
  
 
 
-function PreviewBox_velociraptor({  }) {
+function PreviewBox_velociraptor({ velociraptor_from_all_tools }) {
  
   const StatusColor = "grey"
 
@@ -50,11 +50,10 @@ function PreviewBox_velociraptor({  }) {
     set_popUp_show(true);
   }
 
- 
- 
+
+  // all_Tools
 
 
-console.log();
 const handle_click_velociraptor= async()=>{
  window.open( toolURL , '_blank');
   try{
@@ -152,9 +151,23 @@ const handle_click_velociraptor= async()=>{
   const logoAddress="./Logos/Velociraptor.svg";
   const iconAddress="./icons/General-icons-g.svg"
   const lastrun="17/03/2024"
-  const toolURL="https://velociraptor-10root.northeurope.cloudapp.azure.com:8889"
+  // const toolURL="https://velociraptor-10root.northeurope.cloudapp.azure.com:8889"
   const HeadLine= "Endpoints Modules"
   const ReadMore= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
+
+
+ const [ toolURL, set_toolURL] = useState("");
+
+  useEffect(() => {
+    console.log("velociraptor_from_all_tools...." , velociraptor_from_all_tools);
+ const url = velociraptor_from_all_tools[0]?.toolURL
+
+if (url === undefined){return}
+set_toolURL(url)
+
+  }, [ ]);
+
+ console.log("toolURL" ,toolURL);
 
   // onClick={()=>handleReadMore(Info?.headline, Info?.readMoreText  , Info?.logoAddress_1 ,"Close"    )}
   return (

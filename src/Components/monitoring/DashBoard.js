@@ -55,14 +55,18 @@ useEffect(() => {
 
 
                 console.log("all_tools_no_links",all_tools_no_links);
-
+                console.log("moduleLinks",moduleLinks);
 
 
 all_tools_no_links.forEach(tool => {
 for (let index = 0; index < moduleLinks.length; index++) {
+
     if ( moduleLinks[index]?.toolID === tool?.tool_id){
+
         tool.toolURL =  moduleLinks[index]?.toolURL
     }
+
+    console.log("all_tools_no_links after add lionks" , all_tools_no_links);
 }
 });
 
@@ -125,7 +129,12 @@ if (all_Tools.length !== undefined){
  
 <div className='resource-group-top-boxes mb-c' >
 
-<PreviewBox_velociraptor/>
+<PreviewBox_velociraptor 
+ 
+velociraptor_from_all_tools={all_Tools.filter(item => (item.tool_id === "2000000" ))}
+
+
+/>
  
  
  {/* Tools_a */}

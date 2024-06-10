@@ -21,7 +21,7 @@ import TestPage from './Pages/TestPage'
 
 export default function App() {
 
-  const [visblePage, set_visblePage] = useState("DashBoard")
+  const [visblePage, set_visblePage] = useState("Dashboard")
   const [show_SideBar, set_show_SideBar] = useState(false)
   const [notification_number, set_notification_number] = useState(0)
 

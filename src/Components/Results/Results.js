@@ -36,7 +36,12 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
          const get_all_tools = async()=>{
              try{
                  const res = await axios.get(`${backEndURL}/tools`);
-                 if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  }
+                 if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  
+                
+                
+                
+                
+                }
        get_all_tools();      
                      
      }  }, []);
@@ -65,6 +70,9 @@ useEffect(() => {
           console.log("new_res",res.data);
           console.log("typeof",typeof res.data);
 
+
+
+            if (res.data === undefined) { console.log("no files ..............,"  ); return}
             if (res.data.length == 0) { console.log("no files ..............,"  ); }
       
           localStorage.setItem(user_id + '_seeResults', res.data.length);
@@ -78,9 +86,10 @@ useEffect(() => {
           // });
 
             console.log("Results ------------------ Results" , res.data.data);
-
+            
  
             set_Preview_this_Results(res.data)
+
             // set_last_update(format_date_type_a(sortedResults[0]?.response))
             // format_date_type_a
             // set_last_update

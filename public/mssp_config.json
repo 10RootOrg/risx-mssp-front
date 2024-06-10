@@ -8,9 +8,14 @@
     "examInnterval_minutes" :15,
     "moduleLinks": [
         {
+            "toolName": "Velociraptor",
+            "toolID": "2000000",
+            "toolURL": "http://risxserverdev.westeurope.cloudapp.azure.com:3001/login/1/"
+        },
+        {
          "toolName": "Risx",
          "toolID": "2001000",
-         "toolURL": "http://risxserverdev.westeurope.cloudapp.azure.com:3001/login/"
+         "toolURL": "http://risxserverdev.westeurope.cloudapp.azure.com:3001/login/2/"
      },{
          "toolName": "ELK",
          "toolID": "2001001",
