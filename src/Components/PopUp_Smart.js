@@ -594,7 +594,7 @@ set_Dehashed_data(tmpdata2);
   <button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
   </div>
   
-  <SuccessIcon className="mb-a "
+  <CarefulIcon className="mb-a "
   alt="Icon" width="100px" height="70px"    style={{ marginLeft:"-15px" }}
   />
                 

@@ -785,7 +785,7 @@ async function  ShowInUi (Info){
     try{
       set_disabled(true);
       const res = await
-      axios.put(`${backEndURL}/tools/enable-disable`, {
+      axios.put(`${backEndURL}/tools/enable-disable-module`, {
         params: {
          module_id: tool_id ,
          set_enable_disable_to: !Info?.isActive,
@@ -810,10 +810,7 @@ async function  ShowInUi (Info){
       }
     
          }catch(err){set_disabled(false);console.log(err);}
-    
-    
-    //  console.log(Info?.isActive);
-    // console.log(Info.Tool_name);
+ 
     
      }
 

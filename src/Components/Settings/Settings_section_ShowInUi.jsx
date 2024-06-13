@@ -152,11 +152,30 @@ False_action={handle_Cancel_Save_config}
 
               <td  >
               {/* <div  className='velociraptor-EndpointModules-checkbox mr-b'> */}
+              {tool?.tool_id === "2000000" ? 
+              
+<label className="container containeroff"  > 
+ 
+ 
+ <input  type="checkbox" checked={true}  />
+  
+  <span className="checkmark" style={{verticalAlign:"center" ,top:"-10px"  ,bottom:"auto" }}></span>
+ </label>
+ :
 <label className="container"  > 
-<input  type="checkbox" checked={tool?.ShowInUi} value={tool?.ShowInUi} onChange={()=> edit_checked(tool?.tool_id ,tool?.ShowInUi) } />
-<span className="checkmark" style={{verticalAlign:"center" ,top:"-10px"  ,bottom:"auto" }}></span>
-</label>
-{/* </div> */}
+ 
+ 
+ <input  type="checkbox" checked={tool?.ShowInUi} value={tool?.ShowInUi} onChange={()=> edit_checked(tool?.tool_id ,tool?.ShowInUi) } />
+  
+  <span className="checkmark" style={{verticalAlign:"center" ,top:"-10px"  ,bottom:"auto" }}></span>
+ </label>
+
+
+            }
+
+
+
+ 
               
               
               </td>

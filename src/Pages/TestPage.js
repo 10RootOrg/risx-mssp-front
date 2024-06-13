@@ -33,6 +33,8 @@ function string_to_date(dateString){
 
 return event
 }
+
+
 function compare_dates(end_date, start_date){
     const compare = (end_date - start_date)/60000
 
@@ -79,25 +81,6 @@ console.log(note);
 
 
 
- 
-// console.log(string_to_date("22-05-24-11-20-18"));
-
-// const dateString = "22-05-24-11-20-18"
-// const dateStringArray = dateString.split("-");
-// const day = dateStringArray[0]
-// const month = dateStringArray[1]
-// const year = dateStringArray[2] 
-// const hour = dateStringArray[3] 
-// const minute = dateStringArray[4] 
-// const second = dateStringArray[5] 
-
-
-// const event2 = new Date(`${month} ${day}, ${year} ${hour}:${minute}:${second}`);
-
-
-
-// console.log(event2);
-
 
 
 
@@ -122,8 +105,26 @@ useEffect(() => {
     const [Resources, set_Resources]= useState([])   
 
  
+    const change_table_risx= async()=>{
 
+        const toolData = {
+            tool_id: "1100",
+             tool_name: "velociraptor",
+             artifacts: ["Hardening Kitty"],
+     
+            };
+   
+        try{
+            const res = await axios.put(`${backEndURL}/tools/tmp1`,{params:toolData} );
+           console.log("res.data", res.data);
+       
+           
+               }catch(err)
+               {console.log(err);}
+        }
     
+
+
 
     const make_json_to_v_raptor= async()=>{
         const time = new Date()
@@ -278,6 +279,9 @@ const write_to_csv= async()=>{
 
 
 
+
+        
+        <button onClick={change_table_risx}>change_table_risx</button>
 <button onClick={make_json_to_v_raptor}> make json to v raptor</button>
 <button onClick={get_json}> get json from david</button>
 <button onClick={app_get_all}> app.get - all</button>

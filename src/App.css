@@ -824,12 +824,24 @@ input:checked + .slider:before {
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark:after{
 
- 
   border: solid var(--color-DB-Blue-Glow);
   border-width: 0 3px 3px 0;
  
 }
 
+.containeroff  input ~ .checkmark ,.containeroff:hover  input ~ .checkmark , .containeroff:hover input ~ .checkmark {
+    border: 2px solid var(--color-Grey2);
+    cursor:default;
+}
+
+ 
+
+.containeroff .checkmark:after, .containeroff:hover input ~ .checkmark:after{
+  border: solid var(--color-Grey2);
+    cursor:default;
+  border-width: 0 3px 3px 0;
+}
+ 
 
 /* ..................... checkbox    ..................... */
   /* shalom    */
