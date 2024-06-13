@@ -124,8 +124,8 @@ useEffect(() => {
     useEffect(() => {
       const countOccurrences = () => {
         // console.log("Preview_this_Results" , Preview_this_Results);
-        const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
-          const key = SubModuleName || ModuleName;
+        const countsMap = Preview_this_Results?.reduce((acc, { SubModule, ModuleName }) => {
+          const key = SubModule || ModuleName;
           acc[key] = acc[key] ? acc[key] + 1 : 1;
           return acc;
         }, {});

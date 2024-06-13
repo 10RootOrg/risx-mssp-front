@@ -9,7 +9,7 @@ import axios from 'axios';
 
 function DashBoard({show_SideBar,set_show_SideBar,notification_number}) {
 
-    const { all_Tools ,set_all_Tools , backEndURL , set_all_artifacts,moduleLinks} = useContext(GeneralContext);
+    const { all_Tools ,set_all_Tools , backEndURL , set_all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
     const [show_tool_PreviewBoxs_type_a_b, set_show_tool_PreviewBoxs_type_a_b] = useState(true)
 
 
@@ -55,18 +55,18 @@ useEffect(() => {
 
 
                 console.log("all_tools_no_links",all_tools_no_links);
-                console.log("moduleLinks",moduleLinks);
+         
 
 
 all_tools_no_links.forEach(tool => {
 for (let index = 0; index < moduleLinks.length; index++) {
 
     if ( moduleLinks[index]?.toolID === tool?.tool_id){
-
+console.log( moduleLinks[index]?.toolID ,moduleLinks[index]?.toolURL );
         tool.toolURL =  moduleLinks[index]?.toolURL
     }
 
-    console.log("all_tools_no_links after add lionks" , all_tools_no_links);
+
 }
 });
 
@@ -131,7 +131,7 @@ if (all_Tools.length !== undefined){
 
 <PreviewBox_velociraptor 
  
-velociraptor_from_all_tools={all_Tools.filter(item => (item.tool_id === "2000000" ))}
+// velociraptor_from_all_tools={all_Tools.filter(item => (item.tool_id === "2000000" ))}
 
 
 />

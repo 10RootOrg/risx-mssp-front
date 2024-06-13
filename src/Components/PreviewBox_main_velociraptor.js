@@ -11,7 +11,7 @@ import './PreviewBoxes.css';
  
 
 
-function PreviewBox_velociraptor({ velociraptor_from_all_tools }) {
+function PreviewBox_velociraptor({  }) {
  
   const StatusColor = "grey"
 
@@ -19,7 +19,7 @@ function PreviewBox_velociraptor({ velociraptor_from_all_tools }) {
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
-  const {  backEndURL ,all_artifacts} = useContext(GeneralContext);
+  const {  backEndURL ,all_artifacts,set_all_artifacts,all_Tools} = useContext(GeneralContext);
   const [popUp_show, set_popUp_show] = useState(false);
   const [popUp_headline, set_popUp_headline] = useState("");
   const [popUp_ReadMoreText, set_popUp_ReadMoreText] = useState("");
@@ -31,9 +31,10 @@ function PreviewBox_velociraptor({ velociraptor_from_all_tools }) {
 
   const [popUp_all_good____show, set_popUp_all_good____show] = useState(false);
   const [popUp_all_good____txt, set_popUp_all_good____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
-
-
+  const [ toolURL, set_toolURL] = useState("https://docs.velociraptor.app");
  
+  const [disabled, set_disabled] = useState(false)
+
   const [ checked_artifacts2, set_checked_artifacts2] = useState([]);
   
   const handleReadMore = (headline,readMoreText,logoAddress_1,btnTitle,iconAddress,iconSize) =>{
@@ -50,8 +51,6 @@ function PreviewBox_velociraptor({ velociraptor_from_all_tools }) {
     set_popUp_show(true);
   }
 
-
-  // all_Tools
 
 
 const handle_click_velociraptor= async()=>{
@@ -78,7 +77,7 @@ const handle_click_velociraptor= async()=>{
 
  
 
-  /// fill the checkout 222
+ 
   useEffect(() => { 
     const all = all_artifacts.map(({ artifact_id, Toolname ,logoAddress_1 }) => ({ artifact_id, Toolname, logoAddress_1 }));
     set_checked_artifacts2(all)
@@ -86,62 +85,54 @@ const handle_click_velociraptor= async()=>{
  
 
  
+ 
+
+   async function  edit_checked_artifacts  (artifact_id ,isActive) {
+if (artifact_id === undefined ||isActive === undefined ){console.log("undefined cant change artifact");return} 
 
 
-   const edit_checked_artifacts =(artifact_id)=>{
+try{
+  set_disabled(true);
+  const res = await  axios.put(`${backEndURL}/tools/enable-disable-artifact`, {
+    params: {
+     artifact_id: artifact_id ,
+     set_enable_disable_to: !isActive,
+    }
+  });
 
-   const alredyHave = checked_artifacts2.filter((item) => item.artifact_id  ===  artifact_id);
-  console.log(alredyHave);
-    if (alredyHave.length > 0 ){
-      console.log("have");
-      const removed = checked_artifacts2.filter((item) => item.artifact_id  !==  artifact_id);
 
-      console.log(removed);
-      set_checked_artifacts2(removed)
-     return
+
+  
+  if(res.data){
+
+    console.log(res.data);
+    const index = all_artifacts.findIndex(art => art.artifact_id === artifact_id);
+    console.log(index);
+    if (index !== -1) {
+ 
+      const updatedARTS = [...all_artifacts];
+ console.log(updatedARTS);
+      updatedARTS[index] = { ...updatedARTS[index], artifact_id: artifact_id, isActive: !isActive };
+
+
+      // Set the state with the updated array
+      set_all_artifacts(updatedARTS);
+      set_disabled(false);
     }
   
-
-
-  else{
-    const add_this = all_artifacts.filter((item) => item.artifact_id  ==  artifact_id);
-    const just_this = add_this.map(({ artifact_id, Toolname ,logoAddress_1 }) => ({ artifact_id, Toolname, logoAddress_1 }));
-
-    set_checked_artifacts2([ ...checked_artifacts2,just_this[0]])
+   
   
-  }
+    }
+
+ 
+     }catch(err){set_disabled(false);console.log(err);}
+
   
   
   
   
   }
   
-
-// const edit_checked_artifacts =(artifact_id)=>{
-
-//   const alredyHave = checked_artifacts.filter((item) => item  ===  artifact_id);
-
-//   if (alredyHave.length > 0 ){
-//     const removed = checked_artifacts.filter((item) => item  !==  artifact_id);
-//     set_checked_artifacts(removed)
-//    return
-//   }
-// else{
-//   set_checked_artifacts([ ...checked_artifacts,artifact_id])
-
-// }
-
-
-
-
-// }
-
-  
-
-
-
-
-
 
 
   useEffect(() => {
@@ -156,18 +147,21 @@ const handle_click_velociraptor= async()=>{
   const ReadMore= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 
 
- const [ toolURL, set_toolURL] = useState("");
+
 
   useEffect(() => {
-    console.log("velociraptor_from_all_tools...." , velociraptor_from_all_tools);
- const url = velociraptor_from_all_tools[0]?.toolURL
+    const url =   all_Tools.filter(item => (item.tool_id === "2000000" ))[0]?.toolURL
+//  const url = velociraptor_from_all_tools[0]?.toolURL
 
 if (url === undefined){return}
 set_toolURL(url)
 
-  }, [ ]);
+  }, [ all_Tools]);
+ 
 
- console.log("toolURL" ,toolURL);
+
+
+// console.log("velociraptor_from_all_tools[0]?.toolURL", velociraptor_from_all_tools[0]?.toolURL);
 
   // onClick={()=>handleReadMore(Info?.headline, Info?.readMoreText  , Info?.logoAddress_1 ,"Close"    )}
   return (
@@ -259,8 +253,12 @@ set_toolURL(url)
 
 
 <label className="container"> 
-<input type="checkbox" defaultChecked value={Info?.artifact_id }
-     onChange={()=> edit_checked_artifacts(Info?.artifact_id ) }
+<input type="checkbox" 
+checked={Info?.isActive}
+disabled={disabled}
+// defaultChecked
+ value={Info?.artifact_id}
+     onChange={()=> edit_checked_artifacts(Info?.artifact_id ,Info?.isActive) }
 
 
     //  onChange={()=>set_checked_artifacts([ ...checked_artifacts,Info?.artifact_id])}

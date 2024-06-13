@@ -12,8 +12,8 @@ import { ReactComponent as IcoSettings } from '../Components/icons/ico-settings.
 import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
 import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
 import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
-
-
+import { ReactComponent as IconLastRun } from '../Components/icons/ico-lastrun.svg';
+import {PopUp_Error ,PopUp_Are_You_Sure} from '../Components/PopUp_Smart'
 
 import GeneralContext from '../Context';
 import axios from 'axios';
@@ -31,6 +31,11 @@ const {backEndURL,user_id} =useContext(GeneralContext)
 
 const [isMainProcessWork, set_isMainProcessWork] = useState(true);
 const [isHovered, setIsHovered] = useState(false);
+
+
+const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
+const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
+
 
 const handleMouseEnter = () => {
   setIsHovered(true);
@@ -60,6 +65,25 @@ const handleClick = (page_name) => {
   navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name
 
 };
+
+
+const check_main_process_status = async () =>{
+ console.log("check_main_process_status front");
+  try{
+    const res = await axios.get(`${backEndURL}/results/check-main-process-status`);
+if(res){console.log(res.data);}
+    console.log("check_main_process_status");
+  }catch(err){
+    console.log(err);
+  }
+}
+
+useEffect(() => { const interval = setInterval(() => {check_main_process_status(); }, 60000); // Change the interval duration to 15000 milliseconds (15 seconds)
+  return () => clearInterval(interval);
+}, []); 
+
+
+
 
 
 const countVelociraptorResponses = async () => {
@@ -106,11 +130,32 @@ const handleDownload = async () => {
    
 };
 
-const handle_active_main_process = async () => {
+const handle_active_interval_process = async () => {
+  set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
+  set_PopUp_Error____show(true)
+
+
+};
+
+
+const handle_click_user = async () => {
+  set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
+  set_PopUp_Error____show(true)
+
+
+};
+
+
+
+
+
+
+
+const handle_active_manual_process = async () => {
  
   try{
     const res = await
-    axios.get(`${backEndURL}/tools/active-main-process`, {
+    axios.get(`${backEndURL}/tools/active-manual-process`, {
       params: {
         param1:  "param1value" ,
         // resource_list: JSON.stringify(['test_0000001', 'test_0000002' ])
@@ -125,7 +170,6 @@ const handle_active_main_process = async () => {
        }catch(err)
        {console.log(err);}
 };
-
 
 useEffect(() => {
   const name = localStorage.getItem('username');
@@ -143,15 +187,27 @@ useEffect(() => {
     return (
  
 
+
+
+
+      
       <div className='side-bar-desktop-out'>
 
-
+{PopUp_Error____show &&
+ <PopUp_Error
+ popUp_show={PopUp_Error____show}
+ set_popUp_show={set_PopUp_Error____show}
+ HeadLine={PopUp_Error____txt.HeadLine}
+ paragraph={PopUp_Error____txt.paragraph} 
+buttonTitle={PopUp_Error____txt.buttonTitle}
+ /> 
+ }
 
 
 <RisxMsspLogo className="mt-c mb-b"/>
  
 
-<button className="btn-menu  " >
+<button className="btn-menu  "   onClick={handle_click_user}>
         <div className='display-flex'>
           <IcoAccount className="btn-menu-icon-placeholder  mr-a " />
           <p className='font-type-menu '>{user_name}</p>
@@ -203,13 +259,15 @@ useEffect(() => {
 
  <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
 
-<button className="btn-menu  " 
+<div style={{width:"100%"  }} >
+<button className="btn-menu "  style={{marginBottom:"var(--space-a)"}}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-onClick={handle_active_main_process}>  
+  onClick={handle_active_interval_process}
+>  
         <div className='display-flex'>
-          <IcoACtive className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu '>Process:<span className='font-type-menu Color-Blue-Glow ml-a'>  
+          <IconLastRun className="btn-menu-icon-placeholder  mr-a " />
+          <p className='font-type-menu '>Inteval:<span className='font-type-menu Color-Blue-Glow ml-a'>  
             {/* {   isHovered ? 'turn off' : 'on'} */}
             {isMainProcessWork && !isHovered &&  'on'}
             {isMainProcessWork && isHovered &&  'turn off'}
@@ -221,6 +279,18 @@ onClick={handle_active_main_process}>
             </div> 
        <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
 </button>  
+
+<button className="btn-menu  " 
+ 
+onClick={handle_active_manual_process}
+>  
+        <div className='display-flex'>
+          <IcoACtive className="btn-menu-icon-placeholder  mr-a " />
+          <p className='font-type-menu '>Manual Activation</p>
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+</div>
 
 <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
 
