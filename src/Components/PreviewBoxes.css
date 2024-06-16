@@ -1,31 +1,33 @@
  
   
  
-  .PreviewBox{
-    background:var(--color-Grey5);
-    border-radius: var(--boxes-round-corner);
-    padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
-     height: 200px; 
-     /* width: 8%;  */
-     min-width: 200px;
-     /* max-width: 800px; */
-   flex-shrink: 1;/*   default 1 */
-    flex-grow: 5;
-    display: flex;
-    flex-direction: column;
-  justify-content:space-between;
-  transition: var(--transition-fast)
-  }
+.PreviewBox{
+background:var(--color-Grey5);
+border-radius: var(--boxes-round-corner);
+padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
+height: 200px; 
+min-width: 200px;
+/* max-width: 500px;  */
+flex-shrink: 1;/*   default 1 */
+flex-grow: 1;
+display: flex;
+flex-direction: column;
+justify-content:space-between;
+transition: var(--transition-fast);
+/* width: 8%;  */
+}
    
+
+
+
 .PreviewBox-of-tools{
- 
   min-height: 340px; 
-  /* max-height: 50%; */
    min-width: 220px;
    width: 18%;
-  /* flex-shrink: 5; 
-  flex-grow: 1; */
 }
+/* .PreviewBox-of-tools:nth-last-child(-n+4) {
+  max-width: 22.5%;
+ } */
 
 
 

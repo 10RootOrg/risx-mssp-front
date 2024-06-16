@@ -69,10 +69,9 @@ const handle_Main_Btn =(tool_id,toolURL,backEndURL ,set_Show_PopUp_before_active
 
 
 
-    if      (tool_id ===  '2001005') {
-      set_Show_PopUp_before_active_module_id(tool_id)
+    if (tool_id === '2001005') {
+        // set_Show_PopUp_before_active_module_id(tool_id)
       // Handle_active_module(tool_id,backEndURL)
-    
     }
   //  else if (tool_id ===  '2001009') { set_Show_PopUp_tool___Dehashed(true)  }
     else {openInNewTab(toolURL) }
@@ -711,7 +710,6 @@ function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_
           }
           
  
-
 function PreviewBox_type_module({ Info,  HeadLine,description,  StatusColor,date, logoAddress_1,logoAddress_2,  readMoreText,buttonTitle,iconAddress,toolURL , tool_id, show_only_this_tools, set_show_only_this_tools,     dont_show_this_tools2, set_dont_show_this_tools2 ,all_Tools , backEndURL ,notification_number}) {    
   const {  set_all_Tools   } = useContext(GeneralContext);
  
@@ -850,7 +848,7 @@ async function  ShowInUi (Info){
         IconAddressForSrc={IconAddressForSrc}
       />
 {/* ////////////////////////////////////////////////////////////////////////////////////////// */}
-    <div className='PreviewBox PreviewBox-of-tools'
+    <div className='PreviewBox PreviewBox-of-tools  '
     style={{
       flexGrow:1
      }}
