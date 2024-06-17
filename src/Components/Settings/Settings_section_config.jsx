@@ -193,7 +193,7 @@ False_action={handle_Cancel_Save_config}
                 <p className='font-type-txt Color-Orange'> Caution: Incorrect input may damage the functionality of the software.</p>
                 </td>
 
-                 <td className="setting_element PreviewBox" style={{height:"auto"}}>
+                 <td className="setting_element PreviewBox" style={{height:"auto" }}>
                   <div className=' '>
                     {preview_or_edit ? ( 
                       <div className="setting_element" style={{overflowY:"scroll"}}>

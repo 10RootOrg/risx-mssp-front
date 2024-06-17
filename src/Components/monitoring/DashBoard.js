@@ -62,7 +62,7 @@ all_tools_no_links.forEach(tool => {
 for (let index = 0; index < moduleLinks.length; index++) {
 
     if ( moduleLinks[index]?.toolID === tool?.tool_id){
-console.log( moduleLinks[index]?.toolID ,moduleLinks[index]?.toolURL );
+// console.log( moduleLinks[index]?.toolID ,moduleLinks[index]?.toolURL );
         tool.toolURL =  moduleLinks[index]?.toolURL
     }
 

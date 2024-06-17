@@ -3,18 +3,19 @@ import { useNavigate } from 'react-router-dom';
 
 import './SideBar.css';
 import { ReactComponent as RisxMsspLogo } from '../Components/Logos/RisxMssp_logo_Standart.svg';
-import { ReactComponent as MenuArrowDown } from '../Components/icons/ico-menu-arrow-down.svg';
 import { ReactComponent as IcoMonitor } from '../Components/icons/ico-menu-monitor.svg';
 import { ReactComponent as IcoResults } from '../Components/icons/ico-menu-Results.svg';
 import { ReactComponent as IcoResourceGroup } from '../Components/icons/ico-menu-Resource-Group.svg';
 import { ReactComponent as IcoAccount } from '../Components/icons/ico-menu-account.svg';
 import { ReactComponent as IcoSettings } from '../Components/icons/ico-settings.svg';
 import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
-import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
+// import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
 import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
 import { ReactComponent as IconLastRun } from '../Components/icons/ico-lastrun.svg';
-import {PopUp_Error ,PopUp_Are_You_Sure} from '../Components/PopUp_Smart'
-
+import {PopUp_Error ,PopUp_All_Good,
+  // PopUp_Are_You_Sure
+} from '../Components/PopUp_Smart'
+ 
 import GeneralContext from '../Context';
 import axios from 'axios';
 
@@ -36,6 +37,9 @@ const [isHovered, setIsHovered] = useState(false);
 const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
 const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
 
+const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
+
 
 const handleMouseEnter = () => {
   setIsHovered(true);
@@ -49,15 +53,11 @@ const handleMouseLeave = () => {
 
 
 
-
-
-
-
-const handleSubMenu = (name) => {
-if (openSubMenu === name ){set_openSubMenu("none")}
-else{set_openSubMenu(name);}
+// const handleSubMenu = (name) => {
+// if (openSubMenu === name ){set_openSubMenu("none")}
+// else{set_openSubMenu(name);}
   
-};
+// };
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
@@ -68,22 +68,31 @@ const handleClick = (page_name) => {
 
 
 const check_main_process_status = async () =>{
- console.log("check_main_process_status front");
+ 
   try{
-    const res = await axios.get(`${backEndURL}/results/check-main-process-status`);
-if(res){console.log(res.data);}
-    console.log("check_main_process_status");
-  }catch(err){
-    console.log(err);
-  }
+    console.log("check_main_process_status2");
+
+           const res = await axios.get(`${backEndURL}/config/process-status`);
+            // const res = await axios.get(`${backEndURL}/results/intervalstatus`);
+
+            if (res){  console.log("interval" , res.data);}}
+        catch(err){ 
+            // set_loader(false)
+            console.log(err);}
+
+
+
 }
 
-useEffect(() => { const interval = setInterval(() => {check_main_process_status(); }, 60000); // Change the interval duration to 15000 milliseconds (15 seconds)
+
+useEffect(() => {
+  
+  const interval = setInterval(() => {check_main_process_status(); },60000); 
   return () => clearInterval(interval);
-}, []); 
+ }, []); 
 
 
-
+ 
 
 
 const countVelociraptorResponses = async () => {
@@ -119,11 +128,7 @@ else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
 };
 
 
-// useEffect(() => { const interval = setInterval(() => {countVelociraptorResponses(); }, 60000); // Change the interval duration to 15000 milliseconds (15 seconds)
 
-//   // Clean up interval on component unmount or when dependencies change
-//   return () => clearInterval(interval);
-// }, []); // Empty dependency array to run once on component mount
 
 const handleDownload = async () => {
   window.open( "https://docs.velociraptor.app/downloads/"  , '_blank');
@@ -133,37 +138,36 @@ const handleDownload = async () => {
 const handle_active_interval_process = async () => {
   set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
   set_PopUp_Error____show(true)
-
-
 };
-
 
 const handle_click_user = async () => {
   set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
   set_PopUp_Error____show(true)
 
-
 };
 
 
-
-
-
-
-
 const handle_active_manual_process = async () => {
- 
+ console.log("handle_active_manual_process");
   try{
     const res = await
-    axios.get(`${backEndURL}/tools/active-manual-process`, {
-      params: {
-        param1:  "param1value" ,
-        // resource_list: JSON.stringify(['test_0000001', 'test_0000002' ])
-      }
-    });
+    axios.get(`${backEndURL}/tools/active-manual-process`, {  params: { param1:  "param1value" } });
 
      if(res.data){
-      console.log("res.data 44444444444444", res.data);
+      console.log("handle_active_manual_process", res.data);
+
+
+      if(res.data === true){
+      set_PopUp_All_Good__txt({ HeadLine:"Activated",paragraph:"A Manual Process has Started to run", buttonTitle:"Close" })
+      set_PopUp_All_Good__show(true);
+      }
+
+      if(res.data === false){
+        set_PopUp_Error____txt({ HeadLine:"Error", paragraph: "the Manual process could not be started", buttonTitle:"Close"})
+        set_PopUp_Error____show(true)
+        }
+
+
 
     }
 
@@ -192,6 +196,23 @@ useEffect(() => {
 
       
       <div className='side-bar-desktop-out'>
+
+
+
+{PopUp_All_Good__show &&
+ <PopUp_All_Good
+ popUp_show={PopUp_All_Good__show}
+ set_popUp_show={set_PopUp_All_Good__show}
+ HeadLine={PopUp_All_Good__txt.HeadLine}
+ paragraph={PopUp_All_Good__txt.paragraph} 
+buttonTitle={PopUp_All_Good__txt.buttonTitle}
+ /> 
+ }
+
+
+
+
+
 
 {PopUp_Error____show &&
  <PopUp_Error
@@ -280,14 +301,8 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
        <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
 </button>  
 
-<button className="btn-menu  " 
- 
-onClick={handle_active_manual_process}
->  
-        <div className='display-flex'>
-          <IcoACtive className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu '>Manual Activation</p>
-            </div> 
+<button className="btn-menu"  onClick={handle_active_manual_process}>  
+        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Manual Activation</p> </div> 
        <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
 </button>  
 </div>
