@@ -2,6 +2,10 @@ import React , {useState , useEffect , useContext} from 'react';
 import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
  import { ReactComponent as IcoKey } from './icons/ico-eye.svg';
+ import { ReactComponent as IcoModule } from './icons/ico-module.svg';
+ import { ReactComponent as IcoLink } from './icons/ico-link.svg';
+
+
  import { PopUp_For_Read_More ,
   //  PopUp_For_Nuclei_data ,
     PopUp_For_Dehashed_data} from "./PopUp_Smart.js";
@@ -69,14 +73,14 @@ const handle_Main_Btn =(tool_id,toolURL,backEndURL ,set_Show_PopUp_before_active
 
 
 
-    if (tool_id === '2001005') {
+    // if (tool_id === '2001005') {
         // set_Show_PopUp_before_active_module_id(tool_id)
       // Handle_active_module(tool_id,backEndURL)
-    }
+    // }
   //  else if (tool_id ===  '2001009') { set_Show_PopUp_tool___Dehashed(true)  }
-    else {openInNewTab(toolURL) }
+    // else { }
     
-
+openInNewTab(toolURL)
 
     
      
@@ -710,7 +714,7 @@ function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_
           }
           
  
-function PreviewBox_type_module({ Info,  HeadLine,description,  StatusColor,date, logoAddress_1,logoAddress_2,  readMoreText,buttonTitle,iconAddress,toolURL , tool_id, show_only_this_tools, set_show_only_this_tools,     dont_show_this_tools2, set_dont_show_this_tools2 ,all_Tools , backEndURL ,notification_number}) {    
+function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,logoAddress_2,  readMoreText,buttonTitle,iconAddress,toolURL , tool_id ,all_Tools , backEndURL }) {    
   const {  set_all_Tools   } = useContext(GeneralContext);
  
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
@@ -726,7 +730,7 @@ function PreviewBox_type_module({ Info,  HeadLine,description,  StatusColor,date
   const [disabled, set_disabled] = useState(false)
   const [StatusColorClass, set_StatusColorClass] = useState("Bg-Grey2")
  
-
+  // [2].toolType
   // useEffect(() => {
   //   check_last_response2(Info,backEndURL,set_last_response,set_StatusColorClass);
   //       }, [notification_number]);

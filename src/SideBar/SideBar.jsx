@@ -68,28 +68,17 @@ const handleClick = (page_name) => {
 
 
 const check_main_process_status = async () =>{
- 
+  if(backEndURL === undefined){return}
   try{
-    console.log("check_main_process_status2");
-
-           const res = await axios.get(`${backEndURL}/config/process-status`);
-            // const res = await axios.get(`${backEndURL}/results/intervalstatus`);
-
-            if (res){  console.log("interval" , res.data);}}
-        catch(err){ 
-            // set_loader(false)
-            console.log(err);}
+           const res = await axios.get(`${backEndURL}/process/process-status`);
+            if (res){ set_isMainProcessWork(res.data);}}
+          catch(err){  console.log("process-status" ,err);}}
 
 
 
-}
+ useEffect(() => { check_main_process_status();}, [backEndURL]); // for first load
 
-
-useEffect(() => {
-  
-  const interval = setInterval(() => {check_main_process_status(); },60000); 
-  return () => clearInterval(interval);
- }, []); 
+useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },60000);  return () => clearInterval(interval);}, []); 
 
 
  
@@ -151,7 +140,7 @@ const handle_active_manual_process = async () => {
  console.log("handle_active_manual_process");
   try{
     const res = await
-    axios.get(`${backEndURL}/tools/active-manual-process`, {  params: { param1:  "param1value" } });
+    axios.get(`${backEndURL}/process/active-manual-process`, {  params: { param1:  "param1value" } });
 
      if(res.data){
       console.log("handle_active_manual_process", res.data);
@@ -288,14 +277,12 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
 >  
         <div className='display-flex'>
           <IconLastRun className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu '>Inteval:<span className='font-type-menu Color-Blue-Glow ml-a'>  
-            {/* {   isHovered ? 'turn off' : 'on'} */}
-            {isMainProcessWork && !isHovered &&  'on'}
-            {isMainProcessWork && isHovered &&  'turn off'}
-
-            {!isMainProcessWork && isHovered &&  'turn on'}
-            {!isMainProcessWork && !isHovered &&  'off'}
-            </span></p>
+          <p className='font-type-menu'>Inteval:
+            {isMainProcessWork && !isHovered &&   <span className='font-type-menu Color-Blue-Glow ml-a'>on</span>}
+            {isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Orange ml-a'>turn off</span>}
+            {!isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Blue-Glow ml-a'>turn on</span> }
+            {!isMainProcessWork && !isHovered &&  <span className='font-type-menu Color-Orange ml-a'>off</span>}
+         </p>
         
             </div> 
        <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 

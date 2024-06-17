@@ -124,8 +124,8 @@ useEffect(() => {
     useEffect(() => {
       const countOccurrences = () => {
         // console.log("Preview_this_Results" , Preview_this_Results);
-        const countsMap = Preview_this_Results?.reduce((acc, { SubModule, ModuleName }) => {
-          const key = SubModule || ModuleName;
+        const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
+          const key = SubModuleName || ModuleName;
           acc[key] = acc[key] ? acc[key] + 1 : 1;
           return acc;
         }, {});
@@ -145,6 +145,14 @@ const completed_not_InTime_Count = (Preview_this_Results || []).length > 0 ? (Pr
 const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
 const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
 const Failed_Count =               (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Failed" ).length : "NA";
+
+
+for (let index = 0; index < Preview_this_Results.length; index++) {
+ 
+  console.log(Preview_this_Results[index]?.LastIntervalDate);
+ 
+  
+}
 
 
  console.log("completed_not_InTime_Count",completed_not_InTime_Count);
@@ -220,18 +228,21 @@ bar_title_legend = {"Count"}
  
 
  <PreviewBox_type1_number
-HeadLine="Velociraptor Request Count"
+HeadLine="Hunting"
 resource_type_id={null}
 description_short="Velociraptor Count"
 // BigNumber={count_veloci ? (count_veloci):(0) }
-BigNumber={Preview_this_Results?.filter(item => item?.ModuleName == "Velociraptor").length ? (Preview_this_Results?.filter(item => item?.ModuleName == "Velociraptor").length):(0) }
+BigNumber={Preview_this_Results?.filter(item => item?.Status == "Hunting").length ? (Preview_this_Results?.filter(item => item?.Status == "Hunting").length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
+
 date={last_update}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 />
-{/**/}
+
+
+
 <PreviewBox_type1_number
 HeadLine="Total Request Count"
 resource_type_id={null}

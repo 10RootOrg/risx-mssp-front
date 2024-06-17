@@ -54,90 +54,176 @@ const status_bar_width = "140px"
   const [json_file_info, set_json_file_info] = useState({})
   const [json_file_data, set_json_file_data] = useState({})
 
+  const  get_Json_single_response = async(Info)=>{
+    try{
+     console.log(Info);
+    
+     if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
+    const params = {file_name : Info?.ResponsePath }
+    
+    
+    console.log(params);
+     const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
+     
 
 
-const handle_click_json = (Info) =>{
-// console.log(Info);
+    
+     if (typeof res.data === "string") {
 
-if (Info.Status  == "Failed"   ){
+// let status =
+//  const Hunt = 
+ 
+     if(res.data === 'No data collected.'){ console.log(res.data ,Info);
+      set_PopUp_Request_info__txt({
+         HeadLine: Info?.Status === "Hunting" ? "No Data Collected yet" :
+                   Info?.Status === "Complete" ? "No Data Collected"   : "No Data Collected"   , 
+         
+         paragraph:  Info?.Status === "Hunting" ? "The process is not completeת keep Hunting.." :    
+                    Info?.Status === "Complete" ? "the hunt is over, No data collected." :    "No data collected."
+         
+         , buttonTitle:"Close"
+        
+        })
+      set_PopUp_Request_info__show(true)
+     }
+
+    else{
+      set_PopUp_Request_info__txt({ HeadLine:"No results", paragraph: "Looks like no results file been created yet"   , buttonTitle:"Close" })
+      set_PopUp_Request_info__show(true)
+    }
+
+   
+    
+ 
+        // "status": "Complete",
+ 
+// if (  Info.Status  == "Hunting"   && Info.Error  == "No data collected."){
+// set_PopUp_Request_info__txt({ HeadLine:"No Data Collected", paragraph:"the hunt is over,No data collected.", buttonTitle:"Close" })
+// set_PopUp_Request_info__show(true)
+// return}
+
+
+
+
+
+    return
+     }
+    
+    
+    
+    if (res){
+      //  console.log("vres.data  ",res.data);
+       console.log("   Info    ",Info);
+     if (Info?.ModuleName === "Velociraptor") {
+      set_json_file_data(Info)
+      set_json_file_info(res.data)
+      set_PopUp_velociraptor_response__show(true)
+      
+     }
+    
+
+
+     
+    else{
+    
+      if (Info?.ModuleID === "2001005") { //nuclie
+    
+    const tool = all_Tools?.filter((tool) =>  tool?.tool_id === Info?.ModuleID)
+    console.log("tool" ,tool);
+        let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
+        console.log("updatedInfo" ,updatedInfo);
+        set_json_file_data(updatedInfo)
+        
+        console.log(Info);
+     
+        set_json_file_info(res.data)
+        set_PopUp_For__Nuclei__response__show(true)
+       
+       }
+      
+    
+    
+    
+      // set_json_file_info(res.data)
+    
+    }
+      // console.log("222" , res.data.length)
+      // console.log("000" ,typeof res.data?.table)
+      // console.log("222" , res.data?.table)
+      // console.log("444" , res.data?.table.length)
+       
+      ;}
+    }
+    
+    catch(err){console.log(err);}
+    
+    }
+
+const handle_click_result = (Info) =>{
+
+console.log("-----------------------------------",Info);
+if (Info.status  == "Failed"   ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:"The process stopped for an unknown reason", buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
   return}
 
- else if (Info.Status  != "Complete" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
+
+
+ 
+switch (Info?.ModuleName) {
+
+case 'Nuclei':
+console.log("result Nuclei");
+break;
+
+
+
+
+
+case "Velociraptor":
+ 
+if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
+  set_PopUp_Request_info__txt({ HeadLine:"In process", paragraph:"The request has been sent", buttonTitle:"Close" })
+  set_PopUp_Request_info__show(true)
+  return}
+else{
+  get_Json_single_response(Info);  
+  return;
+}
+
+
+break;
+
+
+
+
+
+
+case "TimeSketch":
+console.log("result TimeSketch");
+const TimeSketch = all_Tools.filter(item => item?.tool_id === "2001002" );
+console.log( "TimeSketch", TimeSketch);
+break;
+
+
+default:
+console.log("default");
+}
+
+
+
+
+
+  if (Info.Status  != "Complete" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
     set_PopUp_Request_info__txt({ HeadLine:"In process", paragraph:"The request has been sent", buttonTitle:"Close" })
     set_PopUp_Request_info__show(true)
     return}
 
 
 
-const  get_Json_single_response = async()=>{
-try{
- console.log(Info);
-
- if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
-const params = {file_name : Info?.ResponsePath }
 
 
-console.log(params);
- const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
  
-
- if (typeof res.data === "string") {
-  set_PopUp_Request_info__txt({ HeadLine:"No results", paragraph: "Looks like no results file been created yet"   , buttonTitle:"Close" })
-  set_PopUp_Request_info__show(true)
-
-  console.log(res.data )  ;
-return
- }
-
-
-
-if (res){
-   console.log("velociraptor-single-result    ",res.data);
- if (Info?.ModuleID === "2000000") {
-  set_json_file_data(Info)
-  set_json_file_info(res.data)
-  set_PopUp_velociraptor_response__show(true)
- 
- }
-
-else{
-
-  if (Info?.ModuleID === "2001005") { //nuclie
-
-const tool = all_Tools?.filter((tool) =>  tool?.tool_id === Info?.ModuleID)
-console.log("tool" ,tool);
-    let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
-    console.log("updatedInfo" ,updatedInfo);
-    set_json_file_data(updatedInfo)
-    
-    console.log(Info);
- 
-    set_json_file_info(res.data)
-    set_PopUp_For__Nuclei__response__show(true)
-   
-   }
-  
-
-
-
-  // set_json_file_info(res.data)
-
-}
-  // console.log("222" , res.data.length)
-  // console.log("000" ,typeof res.data?.table)
-  // console.log("222" , res.data?.table)
-  // console.log("444" , res.data?.table.length)
-   
-  ;}
-}
-
-catch(err){console.log(err);}
-
-}
-
-get_Json_single_response();  
 
 }
 
@@ -259,29 +345,29 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
  
 
     return (
-<div className='resource-group-list-line' key={index} onClick={()=>handle_click_json(Info)}>
+<div className='resource-group-list-line' key={index} onClick={()=>handle_click_result(Info)}>
  
 
 <div className='ml-a  resource-group-list-item display-flex  list-item-big' >
 
 
 
-{  Info?.ModuleName  === ""   &&    Info?.SubModule  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
+{  Info?.ModuleName  === ""   &&    Info?.SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
 
 
 
-{Info?.ModuleName && Info?.SubModule && 
+{Info?.ModuleName && Info?.SubModuleName && 
 (<>
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p>
 <p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p>
- <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModule}</p>
+ <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModuleName}</p>
 
  </>)
 
 }
 
 
-{Info?.ModuleName && !Info?.SubModule && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
+{Info?.ModuleName && !Info?.SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
 
 
 
