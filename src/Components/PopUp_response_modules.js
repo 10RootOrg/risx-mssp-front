@@ -24,24 +24,22 @@ const downloadJsonFile = (file) => {
 
 
 export const PopUp_For_velociraptor_response = (props) => {
-  console.log("PopUp_For_velociraptor_response",props);
-    const { HeadLine,  popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc,  json_file_info , json_file_data} = props;
+     const { HeadLine,  popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc,  json_file_info , json_file_data} = props;
     const {  all_artifacts} = useContext(GeneralContext);
     const [artifact_logo, set_artifact_logo]= useState("")
 
     // Artifact_ID
 
+
     useEffect(() => {
- 
 if(json_file_data === undefined || json_file_data === "" || json_file_data === null ){return}
  if(all_artifacts === undefined || all_artifacts === "" || all_artifacts === null ){return}
  if(json_file_data.length == 0 || all_artifacts.length == 0 ){return}
+console.log(all_artifacts);
 
-const pathTOPic = all_artifacts?.filter((word) => word?.artifact_id === json_file_data?.ArtifactID);
-console.log("pathTOPic 1",pathTOPic);
-if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){console.log("artifact id problem");return}
-console.log("pathTOPic 2",pathTOPic);
- 
+const pathTOPic = all_artifacts?.filter((word) => word?.Toolname === json_file_data?.SubModuleName);
+ if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){console.log("artifact id problem");return}
+  
     const logoAddress_1 = pathTOPic[0]?.logoAddress_1
     const bbb = require(`${logoAddress_1}`)
      set_artifact_logo(bbb);
@@ -56,12 +54,45 @@ console.log("pathTOPic 2",pathTOPic);
 
         console.log(json_file_info?.status);
 
-      const [cell_width, set_cell_width] = useState("100px")
+        const [cell_width, set_cell_width] = useState(() => {
+          if (json_file_info?.table[0]) {
+            const totalKeys = Object.keys(json_file_info.table[0]).length;
+       const width1 = 190/totalKeys
      
+
+       if (width1 > 30){return `30vh`}
+       else { return `${width1}vh`;}
+           
+          } 
+          
+          else {
+            return "100px"; // Default width if json_file_info?.table[0] is undefined or has no keys
+          }
+        });
+
+
+
+
+      console.log(json_file_info?.table[0]);
+      console.log(json_file_info?.table );
+      
+
+      const numberOfKeys = Object.keys(json_file_info?.table[0]).length;
+console.log();
+
+      console.log("json_file_data 1111111111111" , json_file_data);
+      console.log("json_file_info 22222222222222222" ,json_file_info );
+
+    
+
+      console.log("json_file_info props" ,props );
+
+
+
         return (
           <>
        
-    
+ 
     
      {popUp_show && (
               <div className={`PopUp-background`} onClick={handleClickOutside} >
@@ -92,10 +123,10 @@ console.log("pathTOPic 2",pathTOPic);
     </div>
     
     <div className='velociraptor_response_top_row'>
-    <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.artifact_name}</p> 
+    <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.SubModuleName}</p> 
     <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_info?.huntid}</p> 
     <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_info?.status}</p> 
-    <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_info?.error === "" ? (<>None</>):(<>{json_file_info?.error}</>)}</p> 
+    <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)}</p> 
     </div>
     
     </div>
@@ -163,16 +194,33 @@ console.log("pathTOPic 2",pathTOPic);
     </div>
     
     {json_file_info?.table.map((item, index) => (<div key={index}  className="table_smart" >
-    {Object.values(item).map((value, idx) => (
+ 
+
+    {/* {Object.values(item).map((value, idx) => (
     <div className="parent-container"  key={idx}>
     <p className="table_smart_col font-type-txt  Color-Grey1" style={{width:cell_width}}>{value}</p>
     </div>
-        ))}
+        ))} */}
+
+
+
+   
+
+        {Object.values(item).map((value, idx) => (
+  <div className="parent-container" key={idx}>
+    <p className="table_smart_col font-type-txt Color-Grey1" style={{ width: cell_width }}>
+      {typeof value === 'object' ? JSON.stringify(value) : value}
+    </p>
+  </div>
+))}
+        
       </div>
     ))}
     
 
-    </>):null}</>
+    </>):null}
+    
+    </>
     
     
     )}

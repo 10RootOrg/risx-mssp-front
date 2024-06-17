@@ -239,5 +239,8 @@ width: 100%; */
   white-space: nowrap;
   text-overflow: ellipsis;
   height: var(--space-d); /* Ensure this is set to a specific value */
-  width: 100px;
+  /* width: auto;
+  min-width: auto;
+  max-width: auto; */
+ 
 }
