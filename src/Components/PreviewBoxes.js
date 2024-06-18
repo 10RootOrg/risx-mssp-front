@@ -2,8 +2,10 @@ import React , {useState , useEffect , useContext} from 'react';
 import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
  import { ReactComponent as IcoKey } from './icons/ico-eye.svg';
- import { ReactComponent as IcoModule } from './icons/ico-module.svg';
- import { ReactComponent as IcoLink } from './icons/ico-link.svg';
+ import { ReactComponent as IcoModule } from './icons/ico-module-nonedge.svg';
+ import { ReactComponent as IcoLink } from './icons/ico-link-nonedge.svg';
+
+ 
 
 
  import { PopUp_For_Read_More ,
@@ -86,42 +88,42 @@ openInNewTab(toolURL)
      
   }
 
-  const check_last_response2 =async(Info,backEndURL,set_last_response,set_StatusColorClass)=>{
-     const params = {module_id : Info.tool_id }
-    try{
-        const res = await axios.get(`${backEndURL}/results/check_last_req_and_res_for_module`,{params:params})
-        if(res){
+//   const check_last_response2 =async(Info,backEndURL,set_last_response,set_StatusColorClass)=>{
+//      const params = {module_id : Info.tool_id }
+//     try{
+//         const res = await axios.get(`${backEndURL}/results/check_last_req_and_res_for_module`,{params:params})
+//         if(res){
 
-         set_last_response(res.data?.last_request);
-console.log(res.data?.last_request);
-if ( res.data?.last_response ){
-// console.log("got some data for", Info?.Tool_name  );
-// console.log("minute",Info?.threshold_time );
-// console.log(res.data?.last_request - res.data?.last_response);
-const nowTime = new Date ;
-const lastResponseTime = new Date(res.data?.last_response );
-console.log(nowTime);
-console.log(lastResponseTime);
-const timeDiffMs =  nowTime.getTime() -lastResponseTime.getTime() ;
-const timeDiffMinutes = Math.floor(timeDiffMs / (1000 * 60));
-
-
-console.log("last check in minutes" , timeDiffMinutes);
-if ( timeDiffMinutes  > Info.threshold_time){console.log(timeDiffMinutes ,"too much time"); set_StatusColorClass('Bg-Red')}
-else if ( timeDiffMinutes  <=  Info.threshold_time  ){console.log("it fine");  set_StatusColorClass('Bg-Blue-Glow')}
-else{set_StatusColorClass('Bg-Grey2')}
+//          set_last_response(res.data?.last_request);
+// console.log(res.data?.last_request);
+// if ( res.data?.last_response ){
+// // console.log("got some data for", Info?.Tool_name  );
+// // console.log("minute",Info?.threshold_time );
+// // console.log(res.data?.last_request - res.data?.last_response);
+// const nowTime = new Date ;
+// const lastResponseTime = new Date(res.data?.last_response );
+// console.log(nowTime);
+// console.log(lastResponseTime);
+// const timeDiffMs =  nowTime.getTime() -lastResponseTime.getTime() ;
+// const timeDiffMinutes = Math.floor(timeDiffMs / (1000 * 60));
 
 
+// console.log("last check in minutes" , timeDiffMinutes);
+// if ( timeDiffMinutes  > Info.threshold_time){console.log(timeDiffMinutes ,"too much time"); set_StatusColorClass('Bg-Red')}
+// else if ( timeDiffMinutes  <=  Info.threshold_time  ){console.log("it fine");  set_StatusColorClass('Bg-Blue-Glow')}
+// else{set_StatusColorClass('Bg-Grey2')}
 
 
 
-}
 
 
-          }
-    }
-    catch(err){console.log(err);}
-}
+// }
+
+
+//           }
+//     }
+//     catch(err){console.log(err);}
+// }
 
 function PreviewBox_type0_static({
   HeadLine,BigNumber,
@@ -163,7 +165,7 @@ function PreviewBox_type1_number({
 HeadLine,BigNumber,
 SmallNumber,StatusColor,
 date, resource_type_id ,
-description_short,
+ 
 filter_Resource,
 set_filter_Resource,
  
@@ -245,14 +247,6 @@ const handleLeave = () => {
   setIsHovered(false);
 };
 
-
-
-
- 
-
-
-
-
   const StatusColorClass =
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
@@ -265,8 +259,6 @@ const handleLeave = () => {
       onClick={()=>{handle_filter_by_Type(resource_type_id) }}
       onMouseEnter={handleHover}
       onMouseLeave={handleLeave}
-      
-      
       > 
     <div className='PreviewBox_HeadLine' >
       <p  className="font-type-menu" >{HeadLine}</p>
@@ -282,10 +274,18 @@ const handleLeave = () => {
     <div className='PreviewBox_SmallNumber   font-type-txt Color-White' >UnActive:{SmallNumber}</div>
     </div>
 
-     <div className='PreviewBox_ButtomLine' >
+     <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
 
-       <IconLastRun />
-       <div className='font-type-very-sml-txt ' >{date}</div>
+     <IconLastRun />
+     <div className='font-type-very-sml-txt '>{date}</div>
+
+{/* {date != "NA"&&
+<>
+<IconLastRun />
+<div className='font-type-very-sml-txt ' >{date}</div>
+</>
+} */}
+   
 
      </div> {/*dont delete */}
     </div>
@@ -745,8 +745,7 @@ function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,lo
 
 
 async function  ShowInUi (Info){
-  console.log("now is ------------- ", Info?.ShowInUi);
-  console.log("change to  --- ---------- ", !Info?.ShowInUi);
+
  
   try{
     // set_disable_ShowInUi_btn(true);
@@ -835,6 +834,7 @@ async function  ShowInUi (Info){
     }
 
     }, []);
+
 
  
   return (
@@ -935,11 +935,36 @@ disabled={disabled}
 
 
 
-
+{/* IcoLink IcoModule */}
 
     <button className="btn-type3 mb-c" onClick={()=>handleReadMore()}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 "  />  </button>
 
-    <button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL,backEndURL )}><p className='font-type-menu ' >{buttonTitle} </p>  </button> 
+    <button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL,backEndURL )}
+     style={{
+      paddingRight: Info?.toolType !== undefined && 
+      Info?.toolType !== "" && 
+      Info?.toolType !== null 
+        ? "calc(var(--space-d) - 5px)"
+      : undefined 
+     }}
+     
+     
+     >
+    <div style={{display:"flex", alignItems:"center"  }}>
+
+   
+    <p className='font-type-menu'>{buttonTitle}</p>
+
+
+    {/* { Info?.toolType === "link" && <IcoLink     style={{height:"var(--space-c)" ,width:"var(--space-c)" ,marginLeft:"3px"}}/>} */}
+
+ 
+{ Info?.toolType === "link" && <IcoLink     style={{height:"var(--space-c)" ,width:"var(--space-c)" ,marginLeft:"4px"  }}/>}
+{ Info?.toolType === "module" && <IcoModule style={{height:"var(--space-c)" ,width:"var(--space-c)"  ,marginLeft:"3px"}} />}
+  
+ 
+    </div>  
+    </button> 
 
    
     </div>

@@ -113,7 +113,7 @@ if (all_Tools.length !== undefined){
 
 <div className='top-of-page-left mb-b'>
 <p  className="font-type-menu" >Monitoring:</p>
-<p  className="font-type-h3" >DashBoard</p>
+<p  className="font-type-h3" >Dashboard</p>
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 

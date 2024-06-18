@@ -10,7 +10,17 @@ function TestPage() {
 const backEndURL = "http://localhost:5000"
       
 
- 
+const get_all_tabels= async()=>{
+    console.log("getAlldata");
+        try{
+     const res = await axios.get(`${backEndURL}/Resources`);
+    console.log("res.data", res.data);
+    console.log("res.data", typeof res.data);
+    
+        }catch(err)
+        {console.log(err);}
+    }
+
 // const event = new Date('06 04, 2024 18:29:30');
 // console.log(event);
 // console.log(event.toTimeString());

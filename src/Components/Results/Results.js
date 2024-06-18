@@ -8,7 +8,7 @@ import axios from 'axios';
 import './../ResourceGroup/ResourceGroup.css';
 import GeneralContext from '../../Context.js';
 
-import { format_date_type_a } from '../Features/DateFormat';
+import { format_date_type_a,format_date_type_c } from '../Features/DateFormat';
 
 
 function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
@@ -18,18 +18,12 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
     const [Preview_this_Results, set_Preview_this_Results] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
     const [loader , set_loader] = useState(true)
-    const [All_Resource_count , set_All_Resource_count] = useState(0)
-    const [last_update , set_last_update] = useState(0)
+    const [last_updated , set_last_updated] = useState({default:0})
     const [Status_Legend , set_Status_Legend] = useState({})
     const [counts, setCounts] = useState([]);
 
- 
-
     // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
 
- 
- 
- 
     useEffect(() => {
         if(all_Tools.length  === undefined || all_Tools.length === 0 )
      {
@@ -53,24 +47,14 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
 
 
 useEffect(() => { 
-    
 
     const get_all_Results = async()=>{ 
- 
     try{
-    
         set_loader(true)
         const res = await axios.get(`${backEndURL}/results/get_all_requests_table`);
-        // const old_res = await axios.get(`${backEndURL}/results/all-request-and-response`);
-
-//  console.log("old_res",old_res.data);
-
-        // const res = await axios.get(`${backEndURL}/results/all-velociraptor-results`);
         if (res){
           console.log("new_res",res.data);
           console.log("typeof",typeof res.data);
-
-
 
             if (res.data === undefined) { console.log("no files ..............,"  ); return}
             if (res.data.length == 0) { console.log("no files ..............,"  ); }
@@ -90,17 +74,9 @@ useEffect(() => {
  
             set_Preview_this_Results(res.data)
 
-            // set_last_update(format_date_type_a(sortedResults[0]?.response))
+    
             // format_date_type_a
-            // set_last_update
-
-
-
-
-
-
-
-
+     
             // set_All_Resource_count(res.data.length)
             set_loader(false)
     }}
@@ -120,7 +96,7 @@ useEffect(() => {
 
  
 
-
+// make statistics to ---  Status Legend
     useEffect(() => {
       const countOccurrences = () => {
         // console.log("Preview_this_Results" , Preview_this_Results);
@@ -172,7 +148,22 @@ set_Status_Legend({completed_InTime_Count: completed_InTime_Count,completed_not_
     }, [Preview_this_Results]);
 
  
-// function  clear_all_btns_filter_preview()=>{()}
+// make dates to ---  big numbers
+    useEffect(() => {
+ 
+      const get_all_latest_results_dates = async()=>{ 
+        try{
+            const res = await axios.get(`${backEndURL}/results/get_all_latest_results_dates`,{params:{results:Preview_this_Results}});
+            if (res){
+              set_last_updated(res.data);
+              console.log("get_all_Results_dates",res.data);
+        }}
+        catch(err){
+            console.log(err);}
+    }
+    get_all_latest_results_dates();
+
+    }, [Preview_this_Results]);
 
 
 
@@ -230,13 +221,10 @@ bar_title_legend = {"Count"}
  <PreviewBox_type1_number
 HeadLine="Hunting"
 resource_type_id={null}
-description_short="Velociraptor Count"
-// BigNumber={count_veloci ? (count_veloci):(0) }
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Hunting").length ? (Preview_this_Results?.filter(item => item?.Status == "Hunting").length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
-
-date={last_update}
+date={format_date_type_a(last_updated?.Hunting) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 />
@@ -244,13 +232,12 @@ set_filter_Resource={set_filter_Resource}
 
 
 <PreviewBox_type1_number
-HeadLine="Total Request Count"
+HeadLine="ALL Requests"
 resource_type_id={null}
-description_short="All Resource"
 BigNumber={Preview_this_Results.length ? (Preview_this_Results.length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
-date={last_update}
+date={format_date_type_a(last_updated?.Total) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 />
@@ -258,11 +245,10 @@ set_filter_Resource={set_filter_Resource}
 <PreviewBox_type1_number
 HeadLine="Complete"
 resource_type_id={null}
-description_short="Complete Count"
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Complete").length? (Preview_this_Results?.filter(item => item?.Status == "Complete").length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
-date={last_update}
+date={format_date_type_a(last_updated?.Complete) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 /> 

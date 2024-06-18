@@ -54,7 +54,7 @@ function PreviewBox_velociraptor({  }) {
 
 
 const handle_click_velociraptor= async()=>{
- window.open( toolURL , '_blank');
+//  window.open( toolURL , '_blank');
   try{
       const res = await
       axios.get(`${backEndURL}/tools/active-velociraptor-artifact`, {
@@ -159,11 +159,7 @@ set_toolURL(url)
   }, [ all_Tools]);
  
 
-
-
-// console.log("velociraptor_from_all_tools[0]?.toolURL", velociraptor_from_all_tools[0]?.toolURL);
-
-  // onClick={()=>handleReadMore(Info?.headline, Info?.readMoreText  , Info?.logoAddress_1 ,"Close"    )}
+ 
   return (
 
 

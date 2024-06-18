@@ -2,6 +2,9 @@ import React, { useState , useContext ,useEffect} from 'react'
  
 import { ReactComponent as IconBIG } from '../icons/ico-Results.svg';
 import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
+import { ReactComponent as Loader } from '../icons/loader_typea.svg';
+
+
  import ResourceGroup_Action_btns from '../ResourceGroup/ResourceGroup_Action_btns';
  import ResourceGroup_buttomLine from '../ResourceGroup/ResourceGroup_buttomLine';
  import axios from 'axios';
@@ -55,12 +58,11 @@ const status_bar_width = "140px"
   const [json_file_data, set_json_file_data] = useState({})
 
   const  get_Json_single_response = async(Info)=>{
+
     try{
      console.log(Info);
-    
      if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
     const params = {file_name : Info?.ResponsePath }
-    
     
     console.log(params);
      const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
@@ -70,15 +72,12 @@ const status_bar_width = "140px"
     
      if (typeof res.data === "string") {
 
-// let status =
-//  const Hunt = 
- 
      if(res.data === 'No data collected.'){ console.log(res.data ,Info);
       set_PopUp_Request_info__txt({
          HeadLine: Info?.Status === "Hunting" ? "No Data Collected yet" :
                    Info?.Status === "Complete" ? "No Data Collected"   : "No Data Collected"   , 
          
-         paragraph:  Info?.Status === "Hunting" ? "The process is not completeת keep Hunting.." :    
+         paragraph:  Info?.Status === "Hunting" ? "The process is not complete keep Hunting.." :    
                     Info?.Status === "Complete" ? "the hunt is over, No data collected." :    "No data collected."
          
          , buttonTitle:"Close"
@@ -112,46 +111,23 @@ const status_bar_width = "140px"
     
     
     if (res){
-      //  console.log("vres.data  ",res.data);
+     
        console.log("   Info    ",Info);
      if (Info?.ModuleName === "Velociraptor") {
       set_json_file_data(Info)
       set_json_file_info(res.data)
       set_PopUp_velociraptor_response__show(true)
-      
      }
-    
-
-
-     
-    else{
-    
-      if (Info?.ModuleID === "2001005") { //nuclie
-    
-    const tool = all_Tools?.filter((tool) =>  tool?.tool_id === Info?.ModuleID)
-    console.log("tool" ,tool);
+    else if (Info?.ModuleName === "Nuclei") {
+         const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
+         console.log("tool" ,tool);
         let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
         console.log("updatedInfo" ,updatedInfo);
         set_json_file_data(updatedInfo)
-        
-        console.log(Info);
-     
         set_json_file_info(res.data)
         set_PopUp_For__Nuclei__response__show(true)
-       
-       }
-      
-    
-    
-    
-      // set_json_file_info(res.data)
-    
     }
-      // console.log("222" , res.data.length)
-      // console.log("000" ,typeof res.data?.table)
-      // console.log("222" , res.data?.table)
-      // console.log("444" , res.data?.table.length)
-       
+
       ;}
     }
     
@@ -159,47 +135,48 @@ const status_bar_width = "140px"
     
     }
 
-const handle_click_result = (Info) =>{
 
-console.log("-----------------------------------",Info);
+
+
+const handle_click_result = (Info) =>{
+console.log("-------handle_click_result-------------",Info);
 if (Info.status  == "Failed"   ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:"The process stopped for an unknown reason", buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
   return}
 
-
-
  
+
 switch (Info?.ModuleName) {
 
-case 'Nuclei':
-console.log("result Nuclei");
-break;
+
+
+case 'Nuclei': ////////////////////////// Nuclei //////////////////////////
+if(Info.Status  === "Failed"   ){
+  set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:"process failed", buttonTitle:"Close" })
+  set_PopUp_Request_info__show(true)
+  return}
+
+else if( Info.Status   == null || Info.Status  == "" ||    Info.Status   == undefined ){
+set_PopUp_Request_info__txt({ HeadLine:"Status undefined", paragraph:"When the mission status will be clear, we can refer to the results", buttonTitle:"Close" })
+set_PopUp_Request_info__show(true)
+return}
+
+if (Info.Status  === "Complete"){  get_Json_single_response(Info);  return}
+else{ return;  }
 
 
 
-
-
-case "Velociraptor":
- 
+case "Velociraptor": ////////////////////////// Velociraptor //////////////////////////
 if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
   set_PopUp_Request_info__txt({ HeadLine:"In process", paragraph:"The request has been sent", buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
   return}
-else{
-  get_Json_single_response(Info);  
-  return;
-}
-
-
-break;
+else{ get_Json_single_response(Info);   return;}
 
 
 
-
-
-
-case "TimeSketch":
+case "TimeSketch": ////////////////////////// TimeSketch //////////////////////////
 console.log("result TimeSketch");
 const TimeSketch = all_Tools.filter(item => item?.tool_id === "2001002" );
 console.log( "TimeSketch", TimeSketch);
@@ -214,10 +191,10 @@ console.log("default");
 
 
 
-  if (Info.Status  != "Complete" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
-    set_PopUp_Request_info__txt({ HeadLine:"In process", paragraph:"The request has been sent", buttonTitle:"Close" })
-    set_PopUp_Request_info__show(true)
-    return}
+  // if (Info.Status  != "Complete" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
+  //   set_PopUp_Request_info__txt({ HeadLine:"In process", paragraph:"The request has been sent", buttonTitle:"Close" })
+  //   set_PopUp_Request_info__show(true)
+  //   return}
 
 
 
@@ -314,7 +291,12 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 {loader ? (<>
 {/* /// its the loader when axios working */}
-<div className='  loader-type-a' >  <img  src={LMloader} className="" alt="Loading Resources"/></div>
+<div className='  loader-type-a' >
+  <Loader/> 
+ {/* <img  src={LMloader} className="" alt="Loading Resources"/> */}
+
+
+</div>
 </>):(
 
 

@@ -268,7 +268,7 @@ console.log();
 
   export const PopUp_For__Nuclei__response = (props) => {
         const { HeadLine,  popUp_show, set_popUp_show    ,buttonTitle  ,  json_file_info , json_file_data} = props;
-        const {   all_Tools} = useContext(GeneralContext);
+        const {all_Tools} = useContext(GeneralContext);
         const [module_logo, set_module_logo]= useState("")
  
         console.log("json_file_info",json_file_info  );
@@ -276,26 +276,24 @@ console.log();
  
 
     useEffect(() => {
-      console.log("PopUp_For__Nuclei__response_tmp  0000"  );
+
+
       if(json_file_data === undefined || json_file_data === "" || json_file_data === null ){return}
        if(all_Tools === undefined || all_Tools === "" || all_Tools === null ){return}
        if(json_file_data.length == 0 || all_Tools.length == 0 ){return}
-       console.log("PopUp_For__Nuclei__response_tmp  11111"  );
 
 
-            const pathTOPic = all_Tools?.filter((word) => word?.tool_id === json_file_data?.ModuleID);
-
-            console.log("PopUp_For__Nuclei__response_tmp  11112"  );
-
-            
-          const logoAddress_1 = pathTOPic[0]?.logoAddress_1
+          const Nuclei_tool_info = all_Tools?.filter((word) => word?.tool_id === "2001005");
+          const logoAddress_1 = Nuclei_tool_info[0]?.logoAddress_1;
+          if (logoAddress_1 === undefined ){return}
           const bbb = require(`${logoAddress_1}`)
           set_module_logo(bbb);
           }, [json_file_data]);
 
-          console.log("PopUp_For__Nuclei__response_tmp  222"  );
     
         useEffect(() => { set_popUp_show(popUp_show)}, [popUp_show]);
+
+        
             function handleClickOutside(e) {
               if (e.target.className === 'PopUp-background') {  set_popUp_show(false);}}
           
@@ -382,7 +380,7 @@ console.log();
   </tr>
   <tr>
     <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>name</p></th>
-    <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info?.info.name }</p></th>
+    <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info?.info?.name }</p></th>
   </tr>
  
 </table>
