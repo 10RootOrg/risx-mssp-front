@@ -3,14 +3,14 @@ import React from 'react'
 import { ReactComponent as IconArrowRight } from '../icons/ico-arrowRight.svg';
 import { ReactComponent as IconArrowLeft } from '../icons/ico-arrowLeft.svg';
 
-function ResourceGroup_buttomLine() {
+function ResourceGroup_buttomLine({records_number}) {
 
       
     return (
  
 <div  className='resource-group-list-buttomLine   mt-b'>
 
-<p className='font-type-menu  Color-Grey1  '>Records per page: 5</p>
+<p className='font-type-menu  Color-Grey1  '>Records: {records_number || 0}</p>
 
 <div className='display-flex'>
   <button className="btn-type1"><IconArrowLeft className="icon-type1 " />  </button>

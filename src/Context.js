@@ -26,7 +26,7 @@ useEffect(() => {
 // console.log("config", config);
    set_examInnterval_minutes(config.examInnterval_minutes);
    set_moduleLinks(config.moduleLinks);
-    // set_moduleLinks(config.moduleLinks);
+ 
     set_backEndURL(config.backendUrl);
     get_all_resource_types();
   } else {
@@ -56,7 +56,36 @@ const addToCart = (name,price)=>{
 }
  
 
+const get_all_tools = async()=>{
 
+if(moduleLinks === undefined){return}
+ 
+  if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
+  if(all_Tools.length  === undefined || all_Tools.length === 0  ){
+    try{
+      const res = await axios.get(`${backEndURL}/tools`);
+      if (res){ 
+          const all_tools_no_links =  res.data
+          // console.log("all_tools_no_links",all_tools_no_links);
+
+all_tools_no_links.forEach(tool => {
+for (let index = 0; index < moduleLinks.length; index++) {
+if ( moduleLinks[index]?.toolID === tool?.tool_id){
+  tool.toolURL =  moduleLinks[index]?.toolURL
+}
+}
+});
+
+console.log("set all moduleLinks", moduleLinks);
+
+
+
+
+          set_all_Tools(all_tools_no_links)   }}
+      catch(err){console.log(err);}
+
+  }
+  }
  
 
 const get_all_resource_types = async()=>{
@@ -71,7 +100,10 @@ const get_all_resource_types = async()=>{
   catch(err){console.log(err);}
               }
 
-useEffect(() => {get_all_resource_types() }, [backEndURL]);
+useEffect(() => {
+  get_all_resource_types();
+  get_all_tools();
+ }, [backEndURL,moduleLinks]);
 
 
   return (

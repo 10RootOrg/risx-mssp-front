@@ -21,7 +21,7 @@ import TestPage from './Pages/TestPage'
 
 export default function App() {
 
-  const [visblePage, set_visblePage] = useState("Dashboard")
+  const [visblePage, set_visblePage]  = useState(localStorage.getItem('visiblePage') || 'Dashboard');
   const [show_SideBar, set_show_SideBar] = useState(false)
   const [notification_number, set_notification_number] = useState(0)
 
@@ -40,10 +40,10 @@ export default function App() {
       <Routes>
            <Route path="/" element={<Navigate replace to="/login" />} />
           <Route path="login" element={<Login   set_show_SideBar={set_show_SideBar}/>} />
-          <Route path="resourcegroup" element={<ResourceGroup  show_SideBar={show_SideBar} set_show_SideBar={set_show_SideBar}/>} />
-          <Route path="dashboard"     element={<DashBoard   show_SideBar={show_SideBar}     set_show_SideBar={set_show_SideBar} notification_number={notification_number}/>} />
-          <Route path="results"      element={<Results   set_notification_number={set_notification_number}   show_SideBar={show_SideBar}     set_show_SideBar={set_show_SideBar}/>} />
-          <Route path="settings"      element={<Settings   set_notification_number={set_notification_number}   show_SideBar={show_SideBar}     set_show_SideBar={set_show_SideBar}/>} />
+          <Route path="resourcegroup" element={<ResourceGroup  show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
+          <Route path="dashboard"     element={<DashBoard      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
+          <Route path="results"      element={<Results         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   set_notification_number={set_notification_number}     />} />
+          <Route path="settings"      element={<Settings       show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}     />} />
 
  
 

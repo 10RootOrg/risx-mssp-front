@@ -12,7 +12,8 @@ import React, { useState } from 'react';
 
 
 function App() {
-  const [visblePage, set_visblePage] = useState("Dashboard")
+  const [visblePage, set_visblePage]  = useState(localStorage.getItem('visiblePage') || 'Dashboard');
+ console.log("visblePage app" , visblePage);
 
   return (
 

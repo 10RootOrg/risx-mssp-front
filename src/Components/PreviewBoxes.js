@@ -2,8 +2,8 @@ import React , {useState , useEffect , useContext} from 'react';
 import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
  import { ReactComponent as IcoKey } from './icons/ico-eye.svg';
- import { ReactComponent as IcoModule } from './icons/ico-module-nonedge.svg';
- import { ReactComponent as IcoLink } from './icons/ico-link-nonedge.svg';
+ import { ReactComponent as IcoModule } from './icons/ico-module-nonedge-blue.svg';
+ import { ReactComponent as IcoLink } from './icons/ico-link-nonedge-blue.svg';
 
  
 
@@ -35,7 +35,7 @@ import { Doughnut , Bar } from 'react-chartjs-2';
    
   );
 
- 
+//  console.log("tool_id",tool_id);
  
  
 
@@ -279,13 +279,7 @@ const handleLeave = () => {
      <IconLastRun />
      <div className='font-type-very-sml-txt '>{date}</div>
 
-{/* {date != "NA"&&
-<>
-<IconLastRun />
-<div className='font-type-very-sml-txt ' >{date}</div>
-</>
-} */}
-   
+
 
      </div> {/*dont delete */}
     </div>
@@ -724,17 +718,11 @@ function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,lo
 
   const [IconAddressForSrc, set_IconAddressForSrc] = useState("")
   const [popUp_show, set_popUp_show] = useState(false);
-
   const [last_response, set_last_response] = useState(0)
-
   const [disabled, set_disabled] = useState(false)
   const [StatusColorClass, set_StatusColorClass] = useState("Bg-Grey2")
  
-  // [2].toolType
-  // useEffect(() => {
-  //   check_last_response2(Info,backEndURL,set_last_response,set_StatusColorClass);
-  //       }, [notification_number]);
-   
+
 
 
   const handleReadMore = () =>{
@@ -742,11 +730,8 @@ function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,lo
   }
 
  
-
-
 async function  ShowInUi (Info){
 
- 
   try{
     // set_disable_ShowInUi_btn(true);
     const res = await
@@ -777,7 +762,6 @@ async function  ShowInUi (Info){
         // set_disable_ShowInUi_btn(false);
         console.log(err);}
    }
- 
  
    async function  enable_disable_module(Info){
     console.log("enable_disable_module", !Info?.isActive);
@@ -859,14 +843,24 @@ async function  ShowInUi (Info){
     > 
 
     <div className='PreviewBox_HeadLine' >
-
+{Info?.toolType === "module" ?  
     <label className="switch"><input type="checkbox" 
 checked={Info?.isActive}
 disabled={disabled}
  onClick={() => enable_disable_module(Info)} 
 //  onChange={console.log(Info) }
- /> <span className="slider round"></span></label>  
+ /> <span className="slider round"></span></label> 
+ 
+ : <div></div>
+}
+
+
+
 {Info.BoxType === "Tools_a" &&  <>
+
+
+
+
  {/* ///////////// 1 or 2 logos /////////////// */}
 
 
@@ -878,7 +872,11 @@ disabled={disabled}
      <img src={logoAddress_2_ForSrc} alt="logo"     className='responsive-logos-type_a'  />
      </div>
     ):(
-      <div className='display-flex ' style={{marginRight:"24px"}}>
+
+      
+      <div className='display-flex '
+       style={{marginRight:Info?.toolType === "module" ? "14px" : "-12px"}}
+       >
         
       <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
       <img src={logoAddress_1_ForSrc} alt="logo" maxwidth="140" height="20"  />
@@ -939,7 +937,10 @@ disabled={disabled}
 
     <button className="btn-type3 mb-c" onClick={()=>handleReadMore()}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 "  />  </button>
 
+
+   { tool_id !="2001005" &&
     <button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL,backEndURL )}
+    
      style={{
       paddingRight: Info?.toolType !== undefined && 
       Info?.toolType !== "" && 
@@ -965,7 +966,7 @@ disabled={disabled}
  
     </div>  
     </button> 
-
+}
    
     </div>
 

@@ -7,10 +7,13 @@ import './../ResourceGroup/ResourceGroup.css';
 // import jsonData from '../../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
 import GeneralContext from '../../Context.js';
 
-function ResourceGroup({show_SideBar,set_show_SideBar}) {
+function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
 
-    const { all_Tools ,set_all_Tools , backEndURL  ,all_Resource_Types,moduleLinks} = useContext(GeneralContext);
+
+    set_visblePage("ResourceGroup");
+
+    const { backEndURL  ,all_Resource_Types,moduleLinks} = useContext(GeneralContext);
     const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
     const [loader , set_loader] = useState(true)
@@ -18,39 +21,7 @@ function ResourceGroup({show_SideBar,set_show_SideBar}) {
     // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
 
  
-
-    // get all tool if this list is empty
-    useEffect(() => {
-        if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
-        if(all_Tools.length  === undefined || all_Tools.length === 0  )
-     {
-        const get_all_tools = async()=>{
-
-  
-            try{
-                const res = await axios.get(`${backEndURL}/tools`);
-                if (res){ 
-                    const all_tools_no_links =  res.data
-    
-    
-                    console.log("all_tools_no_links",all_tools_no_links);
-    
-    
-    
-    all_tools_no_links.forEach(tool => {
-    for (let index = 0; index < moduleLinks.length; index++) {
-        if ( moduleLinks[index]?.toolID === tool?.tool_id){
-            tool.toolURL =  moduleLinks[index]?.toolURL
-        }
-    }
-    });
-    
-                    set_all_Tools(all_tools_no_links)   }}
-                catch(err){console.log(err);}  }
-      get_all_tools();   
-     }  }, [backEndURL]);
-
-
+ 
 
 
   // dont show sidebar in this page
@@ -65,7 +36,7 @@ useEffect(() => {
     const get_all_resources = async()=>{ 
       
         console.log("get_all_resources               backEndURL" , backEndURL);
-    // if no filter take all resources
+if (backEndURL === undefined){return};
 if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
  
     try{
@@ -111,7 +82,7 @@ else{
 
 }
  
-    get_all_resources();  }, [filter_Resource]);
+    get_all_resources();  }, [filter_Resource,backEndURL]);
 
  
 

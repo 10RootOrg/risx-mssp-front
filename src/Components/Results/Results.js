@@ -11,10 +11,10 @@ import GeneralContext from '../../Context.js';
 import { format_date_type_a,format_date_type_c } from '../Features/DateFormat';
 
 
-function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
+function Results({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage}) {
+  set_visblePage("Results");
 
-
-    const { all_Tools ,set_all_Tools , backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
+    const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
     const [Preview_this_Results, set_Preview_this_Results] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
     const [loader , set_loader] = useState(true)
@@ -22,23 +22,9 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
     const [Status_Legend , set_Status_Legend] = useState({})
     const [counts, setCounts] = useState([]);
 
-    // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
+ 
 
-    useEffect(() => {
-        if(all_Tools.length  === undefined || all_Tools.length === 0 )
-     {
-         const get_all_tools = async()=>{
-             try{
-                 const res = await axios.get(`${backEndURL}/tools`);
-                 if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  
-                
-                
-                
-                
-                }
-       get_all_tools();      
-                     
-     }  }, []);
+
   // dont show sidebar in this page
     useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 
@@ -49,6 +35,8 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
 useEffect(() => { 
 
     const get_all_Results = async()=>{ 
+if (backEndURL === undefined){return}
+  
     try{
         set_loader(true)
         const res = await axios.get(`${backEndURL}/results/get_all_requests_table`);
@@ -90,7 +78,7 @@ useEffect(() => {
 
 
 }
-    get_all_Results();  }, [filter_Resource]);
+    get_all_Results();  }, [filter_Resource, backEndURL]);
 
 
 
@@ -150,7 +138,7 @@ set_Status_Legend({completed_InTime_Count: completed_InTime_Count,completed_not_
  
 // make dates to ---  big numbers
     useEffect(() => {
- 
+ if(Preview_this_Results === undefined){return}
       const get_all_latest_results_dates = async()=>{ 
         try{
             const res = await axios.get(`${backEndURL}/results/get_all_latest_results_dates`,{params:{results:Preview_this_Results}});

@@ -148,6 +148,7 @@ const handle_view_or_edit = ()=>{
 
 
   const get_config = async() =>{
+    if(backEndURL === undefined){return};
      try{
       const res = await axios.get(`${backEndURL}/config`);
 
@@ -156,7 +157,7 @@ const handle_view_or_edit = ()=>{
     }
     catch(err){console.log(err);}
         } 
-useEffect(() => {  {get_config()}}, []);
+useEffect(() => {  {get_config()}}, [backEndURL]);
 
 
 

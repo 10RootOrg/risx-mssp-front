@@ -387,7 +387,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 </div>
 {/* <p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{Info?.Status}    {Info?.TimeNote}   </p>  */}
 
-<ResourceGroup_buttomLine/>
+<ResourceGroup_buttomLine records_number={Preview_this_Results.length || 0}/>
 </>
 )}
 

@@ -40,6 +40,9 @@ const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",par
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
 
+const [download_drop_down, set_download_drop_down] = useState(false);
+
+
 
 const handleMouseEnter = () => {
   setIsHovered(true);
@@ -51,7 +54,7 @@ const handleMouseLeave = () => {
 
 
 
-
+console.log("visblePage",visblePage);
 
 // const handleSubMenu = (name) => {
 // if (openSubMenu === name ){set_openSubMenu("none")}
@@ -61,13 +64,14 @@ const handleMouseLeave = () => {
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
-
+  localStorage.setItem('visiblePage', page_name); // Store current page in localStorage
   navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name
 
 };
 
 
 const check_main_process_status = async () =>{
+  console.log("check_main_process_status");
   if(backEndURL === undefined){return}
   try{
            const res = await axios.get(`${backEndURL}/process/process-status`);
@@ -117,7 +121,10 @@ else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
 };
 
 
-
+const handle_download_drop_down =  () => {
+  set_download_drop_down(!download_drop_down)
+  
+};
 
 const handleDownload = async () => {
   window.open( "https://docs.velociraptor.app/downloads/"  , '_blank');
@@ -150,8 +157,8 @@ const handle_active_manual_process = async () => {
       set_PopUp_All_Good__txt({ HeadLine:"Activated",paragraph:"A Manual Process has Started to run", buttonTitle:"Close" })
       set_PopUp_All_Good__show(true);
       }
-
-      if(res.data === false){
+   
+      else {
         set_PopUp_Error____txt({ HeadLine:"Error", paragraph: "the Manual process could not be started", buttonTitle:"Close"})
         set_PopUp_Error____show(true)
         }
@@ -289,14 +296,23 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
 </button>  
 
 <button className="btn-menu"  onClick={handle_active_manual_process}>  
-        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Manual Activation</p> </div> 
+        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
        <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
 </button>  
 </div>
 
 <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
 
- <button className="btn-menu  "  onClick={handleDownload}>  
+
+{/* download_drop_down */}
+
+<div className="btn-menu-list"
+  onMouseLeave={()=>set_download_drop_down(false)}
+  //  onMouseEnter={()=>set_download_drop_down(true)}
+   >
+
+
+ <button className={`btn-menu  ${download_drop_down ? 'btn_look_hover' : ''} `} onClick={handle_download_drop_down} >  
         <div className='display-flex'>
           <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
           <p className='font-type-menu '>Download Agent</p>
@@ -304,6 +320,40 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
             </div> 
        <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
 </button>  
+
+
+<div className={`dropdown-menu ${download_drop_down ? 'open' : ''}`}>
+<button className="btn-menu  "  onClick={handleDownload}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
+          <p className='font-type-menu '>Windows</p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+
+<button className="btn-menu  "  onClick={handleDownload}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
+          <p className='font-type-menu '>linux</p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+
+<button className="btn-menu  "  onClick={handleDownload}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
+          <p className='font-type-menu '>Mac</p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+</div>
+
+
+</div>
+ 
 
       </div>
      

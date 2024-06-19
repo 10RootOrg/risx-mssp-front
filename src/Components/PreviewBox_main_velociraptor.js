@@ -306,13 +306,13 @@ disabled={disabled}
  <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent required</p></>
 )}
 
-<div className='mr-b'>
+<div className=' '>
 <button className="btn-type2" onClick={() => window.open(toolURL, '_blank')}>
       <p className='font-type-menu'>Site</p>
     </button>
     </div>
 
-  <button className="btn-type2 "
+  {/* <button className="btn-type2 ml-b "
   // disabled={checked_artifacts.length === 0}
   
 
@@ -320,7 +320,7 @@ disabled={disabled}
   disabled ={checked_artifacts2.length === 0}
   >
   <p className='font-type-menu ' >Run Artifacts</p>
-    </button> 
+    </button>  */}
 </div>
  
    </div>

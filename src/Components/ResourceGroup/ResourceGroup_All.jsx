@@ -422,7 +422,7 @@ if (dateString) {
 
 
 
-<ResourceGroup_buttomLine/>
+<ResourceGroup_buttomLine records_number={Preview_this_Resource.length || 0}/>
 </>
 )}
 

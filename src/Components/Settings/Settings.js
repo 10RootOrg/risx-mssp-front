@@ -7,15 +7,25 @@ import './../Settings/Settings.css';
 import './../Settings/Settings_section_config.jsx';
 import Settings_section_config from './Settings_section_config.jsx'
 import Settings_section_ShowInUi from './Settings_section_ShowInUi.jsx'
-
+import GeneralContext from '../../Context.js';
 
 
 // const {   backEndURL  } = useContext(GeneralContext);
 // const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
  
-function Settings({show_SideBar,set_show_SideBar,set_notification_number}) {
+function Settings({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage}) {
+
+  set_visblePage("Settings");
+  const { all_Tools    } = useContext(GeneralContext);
 
 
+
+
+
+
+console.log("all_Tools",all_Tools);
+
+ 
  
 //  show sidebar in this page
   useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
@@ -61,7 +71,7 @@ set_filter_Resource={set_filter_Resource}
 
 <Settings_section_config/>
 
- <Settings_section_ShowInUi/>
+ <Settings_section_ShowInUi all_Tools={all_Tools}/>
 
 </div>
 

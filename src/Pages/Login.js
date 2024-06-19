@@ -46,7 +46,11 @@ const [InputPassword, set_InputPassword] = useState("");
 const necessaryUser1  = "DorAmit"
 const necessaryUser2  = "YanivR"
 const necessaryUser3  = "7Ci"
+const necessaryUser4  = "admin@admin"
+const user4password   = "the1Admin"
 const user3password   = "oBf5@$fj!cYT"
+
+
 
 const [necessaryPassword , set_necessaryPassword] = useState("123");
 const [errorMessage , set_errorMessage] = useState("");
@@ -87,9 +91,14 @@ else if ( necessaryUser2 === InputUser  && necessaryPassword === InputPassword) 
 
 else if ( necessaryUser3 === InputUser  && user3password === InputPassword) {
   localStorage.setItem('username', necessaryUser3);  
-
   navigate(`/${"dashboard"}`);  
 }
+
+else if ( necessaryUser4 === InputUser  && user4password === InputPassword) {
+  localStorage.setItem('username', "Admin");  
+  navigate(`/${"dashboard"}`);  
+}
+
 
 else{
   set_errorMessage("Username or Password Incorrect")

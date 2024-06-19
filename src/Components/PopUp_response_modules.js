@@ -366,7 +366,7 @@ console.log();
     <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>Request</p></th>
     <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info?.request}</p></th>
   </tr>
-  <tr>
+  <tr> 
     <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>matcher-status</p></th>
     <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info ? (Info["matcher-status"] ? "True" : "False") : "not defined"}</p></th>
   </tr>
