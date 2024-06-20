@@ -367,12 +367,19 @@ p{color: var(--color-White);
   border: var(  --line-width-small) solid var(--color-DB-Blue-Active);
   color: var(--color-DB-Blue-Active);
 }
+
 .input-type1:focus {
   border-color:var(--color-DB-Blue-Glow);
   color: var(--color-DB-Blue-Glow);
 }
 
+/* .input-type1:hover > ,div .icon-type1-smaller{
+background-color: #00FF00;
+ 
+} */
 
+
+ 
 
 
 .input-type2::placeholder {
@@ -577,6 +584,31 @@ width: 28px;
   .btn-type4:hover .icon-type1  path{
     stroke: var(--color-Grey1)}
 
+    .btn-type1-smaller{
+      height:26px;
+      width: 26px;
+    }
+
+    .icon-type1-smaller{
+      height:26px;
+      width: 26px;
+      
+      transition: var(--transition-fast)
+      
+      }
+
+
+
+      /* .btn-type1 .icon-type1  path{
+        stroke: var(--color-Grey2);
+        transition: var(--transition-fast)
+      } */
+
+      /* .btn-type1:hover .icon-type1  path{
+        stroke: var(--color-DB-Blue-Glow);
+        transition: var(--transition-fast)
+      } */
+      
 
 
 .cutLongParagraph{

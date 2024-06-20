@@ -12,7 +12,7 @@ import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-down
 // import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
 import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
 import { ReactComponent as IconLastRun } from '../Components/icons/ico-lastrun.svg';
-import {PopUp_Error ,PopUp_All_Good,
+import {PopUp_Error ,PopUp_All_Good,PopUp_Are_You_Sure
   // PopUp_Are_You_Sure
 } from '../Components/PopUp_Smart'
  
@@ -40,7 +40,76 @@ const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",par
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
 
+const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] = useState(false);
+const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
+  HeadLine:"Are You Sure?",
+  paragraph:"The record will be deleted from the system",
+  buttonTrue:"True",
+  buttonFalse:"False"
+});
+
+
+
 const [download_drop_down, set_download_drop_down] = useState(false);
+
+
+const check_main_process_status = async () =>{
+  console.log("check_main_process_status");
+  if(backEndURL === undefined){return}
+  try{
+           const res = await axios.get(`${backEndURL}/process/process-status`);
+            if (res){ set_isMainProcessWork(res.data);
+if(res.data === false){ console.log("process ===" ,  res.data);
+
+  set_PopUp_Are_You_Sure__txt({
+    HeadLine:"Ineraval is off",
+    paragraph:"Do yo want enable it?",
+    buttonTrue:"Yes",
+    buttonFalse:"No"
+  });
+  
+  set_PopUp_Are_You_Sure__show(true)
+
+
+}
+
+
+
+            }}
+
+
+
+          catch(err){  console.log("process-status" ,err);}}
+
+ const check_and_active_interval_of_python = async()=>{ 
+  if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
+            try{
+                const res = await axios.get(`${backEndURL}/process/check-and-active-interval-of-python`);
+                if (res){
+                    console.log("check_and_active_interval_of_python ssssssssssssssssssssss" , res.data);
+            //    if(res.data){   
+                
+                
+            //     localStorage.setItem('check_and_active_interval_of_python', true);
+            //    }
+          
+            }}
+            catch(err){   console.log(err);}
+        }
+
+ useEffect(() => { check_main_process_status();}, [backEndURL]); // for first load
+
+useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },60000);  return () => clearInterval(interval);}, []); 
+
+const handle_Close_PopUp_Are_You_Sure = () => {
+   set_PopUp_Are_You_Sure__show(false)
+};
+  // check_and_active_interval_of_python
+  // useEffect(() => { check_and_active_interval_of_python();  }, [backEndURL]);
+
+
+
+
 
 
 
@@ -70,19 +139,7 @@ const handleClick = (page_name) => {
 };
 
 
-const check_main_process_status = async () =>{
-  console.log("check_main_process_status");
-  if(backEndURL === undefined){return}
-  try{
-           const res = await axios.get(`${backEndURL}/process/process-status`);
-            if (res){ set_isMainProcessWork(res.data);}}
-          catch(err){  console.log("process-status" ,err);}}
 
-
-
- useEffect(() => { check_main_process_status();}, [backEndURL]); // for first load
-
-useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },60000);  return () => clearInterval(interval);}, []); 
 
 
  
@@ -131,10 +188,7 @@ const handleDownload = async () => {
    
 };
 
-const handle_active_interval_process = async () => {
-  set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
-  set_PopUp_Error____show(true)
-};
+
 
 const handle_click_user = async () => {
   set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
@@ -184,6 +238,13 @@ useEffect(() => {
 
 
 
+
+const handle_active_interval_process = async () => {
+  set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
+  set_PopUp_Error____show(true)
+};
+
+
     return (
  
 
@@ -219,6 +280,28 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 buttonTitle={PopUp_Error____txt.buttonTitle}
  /> 
  }
+
+
+{PopUp_Are_You_Sure__show &&
+ <PopUp_Are_You_Sure
+ popUp_show={PopUp_Are_You_Sure__show}
+ set_popUp_show={set_PopUp_Are_You_Sure__show}
+
+ HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
+ paragraph={PopUp_Are_You_Sure__txt.paragraph} 
+
+ button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
+ button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
+
+True_action={check_and_active_interval_of_python}
+False_action={handle_Close_PopUp_Are_You_Sure}
+
+ /> }
+
+
+
+
+
 
 
 <RisxMsspLogo className="mt-c mb-b"/>

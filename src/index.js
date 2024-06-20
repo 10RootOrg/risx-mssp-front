@@ -5,7 +5,7 @@ import './App.css';
 // import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route  , Navigate  } from "react-router-dom";
 import { ContextProvider}from './Context'
-
+import GeneralContext from './Context';
 import SideBar from './SideBar/SideBar'
 import DashBoard from './Components/monitoring/DashBoard'
 import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
@@ -16,15 +16,18 @@ import NoPage404 from './Pages/NoPage404'
 import TestPage from './Pages/TestPage'
 
 
-
- 
-
 export default function App() {
 
   const [visblePage, set_visblePage]  = useState(localStorage.getItem('visiblePage') || 'Dashboard');
   const [show_SideBar, set_show_SideBar] = useState(false)
   const [notification_number, set_notification_number] = useState(0)
+  // const {  backEndURL } = useContext(GeneralContext);
 
+  // useEffect(() => {}, [backEndURL ? backEndURL: null ]);  
+  
+
+
+  
   return (
 <> 
       <div className='app-out' > 

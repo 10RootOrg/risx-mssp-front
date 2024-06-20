@@ -2,28 +2,28 @@ import React , {useState , useEffect ,useContext} from 'react';
 import { PreviewBox_type_module} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
+import Search_comp from '../Features/Search_comp'
+ 
 // import jsonData from '../../tmpjsons/previewBoxesTools.json';  
 import GeneralContext from '../../Context.js';
 import axios from 'axios';
-
 
 import { ReactComponent as IcoModule } from '../icons/ico-module.svg';
 import { ReactComponent as IcoLink } from '../icons/ico-link.svg';
 import { ReactComponent as IcoResults } from '../icons/ico-menu-Results.svg';
 import { useNavigate } from 'react-router-dom';
 
+
 function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visblePage}) {
     set_visblePage("Dashboard");
     const { all_Tools ,  backEndURL , set_all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
-    const [show_tool_PreviewBoxs_type_a_b, set_show_tool_PreviewBoxs_type_a_b] = useState(true)
-
-
     const [show_only_this_tools, set_show_only_this_tools] = useState([]) 
-    const [dont_show_this_tools2, set_dont_show_this_tools2] = useState([]) 
     const navigate = useNavigate();
 
 
+  
 
+    // get_all_artifacts
     useEffect(() => { 
         if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
         const get_all_artifacts = async()=>{ 
@@ -46,32 +46,18 @@ function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visble
     get_all_artifacts();  }, [backEndURL]);
     
 
- 
-
-
   useEffect(() => { if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 
+  useEffect(() => {
+    if(all_Tools.length === undefined   &&  typeof all_Tools === "string"){return}
+
+    set_show_only_this_tools(all_Tools)}, [all_Tools]);
 
 
+//      useEffect(() => {
 
-     useEffect(() => {
-
-
-////////////// make arry of tool ids////
-const item_arrary =[]
-if (all_Tools.length !== undefined){
-
-    for (let x of all_Tools) {
-        item_arrary.push(x.tool_id)
-      }
-//    set_all_tool_ids_array(item_arrary)
-   set_show_only_this_tools(item_arrary)
-
-}
-            }, [all_Tools ]);
-    
-
-            console.log(typeof all_Tools , "all_Tools  " , all_Tools) 
+ 
+ console.log(typeof all_Tools , "all_Tools  " , all_Tools) 
 
 
       
@@ -86,11 +72,12 @@ if (all_Tools.length !== undefined){
 <p  className="font-type-h3" >Dashboard</p>
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
-
  
-<div className='top-of-page-right'>
-<input className="input-type1 mr-a" placeholder="Search" />
-<button className="btn-type1 "><IconSearch className="icon-type1" />  </button>
+
+ <div className='top-of-page-right'>
+<Search_comp set_items_for_search={set_show_only_this_tools}    items_for_search={show_only_this_tools} />
+{/* <input className="input-type1 mr-a" placeholder="Search" />
+<button className="btn-type1 "><IconSearch className="icon-type1" />  </button> */}
 </div>
 
 
@@ -99,7 +86,7 @@ if (all_Tools.length !== undefined){
  
 
 
-<div className="display-flex mb-b mt-b"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules:</p></div>
+<div className="display-flex mb-b mt-b"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules</p></div>
 
 <div className='resource-group-top-boxes mb-c' >
 
@@ -109,12 +96,11 @@ if (all_Tools.length !== undefined){
 <PreviewBox_velociraptor />
  
   {/* modules */}
-{all_Tools.length !== undefined   &&  typeof all_Tools !== "string" && ( <>
-    {Array.isArray(all_Tools) && all_Tools?.map((Info, index) =>(
+{show_only_this_tools.length !== undefined   &&  typeof show_only_this_tools !== "string" && ( <>
+    {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
 {Info?.toolType === "module"   &&  Info?.tool_id !== "2000000" &&  Info?.ShowInUi &&     
-   show_only_this_tools.includes(Info?.tool_id)  ? 
-   (  
+ 
 <PreviewBox_type_module
  Info={Info}
 iconAddress={Info?.iconAddress}
@@ -131,18 +117,10 @@ buttonTitle={Info?.buttonTitle}
 toolURL={Info?.toolURL}
 
 all_Tools={all_Tools}
-
-show_only_this_tools={show_only_this_tools}
- set_show_only_this_tools={set_show_only_this_tools}
-
-//  dont_show_this_tools={dont_show_this_tools}
-//  set_dont_show_this_tools={set_dont_show_this_tools}
-
- dont_show_this_tools2={dont_show_this_tools2}
- set_dont_show_this_tools2={set_dont_show_this_tools2}
+ 
  backEndURL={backEndURL}
  notification_number={notification_number}
-            />  ) : null }
+            />   }
  
      </>   ))}
 </>)}
@@ -163,7 +141,7 @@ show_only_this_tools={show_only_this_tools}
  
 </div>
 
-<div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Linkes:</p></div>
+<div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Links</p></div>
  
 <div className='resource-group-top-boxes mb-c' >
 
@@ -173,12 +151,11 @@ show_only_this_tools={show_only_this_tools}
 
 
  {/* Tools_a */}
-{all_Tools.length !== undefined   &&  typeof all_Tools !== "string" && ( <>
-    {Array.isArray(all_Tools) && all_Tools?.map((Info, index) =>(
+{show_only_this_tools.length !== undefined   &&  typeof show_only_this_tools !== "string" && ( <>
+    {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
 {Info?.toolType === "link" && Info?.BoxType === "Tools_a"   &&  Info?.tool_id !== "2000000" &&  Info?.ShowInUi &&     
-   show_only_this_tools.includes(Info?.tool_id)  ? 
-   (  
+  
 <PreviewBox_type_module
  Info={Info}
 iconAddress={Info?.iconAddress}
@@ -195,19 +172,18 @@ buttonTitle={Info?.buttonTitle}
 toolURL={Info?.toolURL}
 all_Tools={all_Tools}
  backEndURL={backEndURL}
-            />  ) : null }
+            />   }
  
      </>   ))}
 </>)}
 
 
 {/* Tools_b */}
-{all_Tools.length !== undefined   &&  typeof all_Tools !== "string" &&( <>
- {Array.isArray(all_Tools) &&  all_Tools?.map((Info, index) =>(
+{show_only_this_tools.length !== undefined   &&  typeof show_only_this_tools !== "string" &&( <>
+ {Array.isArray(show_only_this_tools) &&  show_only_this_tools?.map((Info, index) =>(
 <>
 {Info?.toolType === "link" && Info?.BoxType === "Tools_b"   &&  Info?.tool_id !== "2000000" &&   Info?.ShowInUi &&         
-   show_only_this_tools.includes(Info?.tool_id)  ? 
-   (  
+  
 <PreviewBox_type_module
 // show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
 tool_id={Info?.tool_id}
@@ -228,17 +204,10 @@ toolURL={Info?.toolURL}
 
 all_Tools={all_Tools}
 
-// show_only_this_tools={show_only_this_tools}
-//  set_show_only_this_tools={set_show_only_this_tools}
-
-//  dont_show_this_tools={dont_show_this_tools}
-//  set_dont_show_this_tools={set_dont_show_this_tools}
-
-//  dont_show_this_tools2={dont_show_this_tools2}
-//  set_dont_show_this_tools2={set_dont_show_this_tools2}
+ 
  backEndURL={backEndURL}
  notification_number={notification_number}
-            />  ) : null }
+            />   }
 
      </>      
 

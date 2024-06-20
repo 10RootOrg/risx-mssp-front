@@ -177,9 +177,14 @@ else{ get_Json_single_response(Info);   return;}
 
 
 case "TimeSketch": ////////////////////////// TimeSketch //////////////////////////
-console.log("result TimeSketch");
+if (all_Tools=== undefined){console.log( "cant make TimeSketch, all_Tools is ",all_Tools);   return }
+if (all_Tools.length === 0){console.log( "cant make TimeSketch, all_Tools.length is ",all_Tools.length);   return }
 const TimeSketch = all_Tools.filter(item => item?.tool_id === "2001002" );
-console.log( "TimeSketch", TimeSketch);
+if (TimeSketch=== undefined){console.log( "cant make TimeSketch, all_Tools TimeSketch is",TimeSketch);   return }
+const link = TimeSketch[0]?.toolURL
+if (link=== undefined){console.log( "cant make TimeSketch link its",link);   return }
+window.open(  link   , '_blank');
+
 break;
 
 
