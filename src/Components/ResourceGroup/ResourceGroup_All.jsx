@@ -224,7 +224,7 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
  items_for_search={Preview_this_Resource}
  set_items_for_search={set_Preview_this_Resource}
 
-
+ show_btn_add={true}
 
  />
  

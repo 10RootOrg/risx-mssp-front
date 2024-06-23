@@ -41,27 +41,24 @@ if (backEndURL === undefined){return}
         set_loader(true)
         const res = await axios.get(`${backEndURL}/results/get_all_requests_table`);
         if (res){
-          console.log("new_res",res.data);
-          console.log("typeof",typeof res.data);
+          console.log("new_Results --------",res.data);
+          // console.log("typeof",typeof res.data);
 
             if (res.data === undefined) { console.log("no files ..............,"  ); return}
             if (res.data.length == 0) { console.log("no files ..............,"  ); }
       
-          localStorage.setItem(user_id + '_seeResults', res.data.length);
-          set_notification_number(0)
+          localStorage.setItem(user_id + '_seeResults', res.data?.results_list?.length);
+          set_notification_number(0);
+          set_last_updated(res.data?.latest_dates);
+           set_Preview_this_Results(res.data?.results_list);
 
-       
-          // const sortedResults = [...Results].sort((a, b) => {
+
+
+    // const sortedResults = [...Results].sort((a, b) => {
           //   const dateA = new Date(a.response);
           //   const dateB = new Date(b.response);
           //   return dateB - dateA;  
           // });
-
-            console.log("Results ------------------ Results" , res.data.data);
-            
- 
-            set_Preview_this_Results(res.data)
-
     
             // format_date_type_a
      
@@ -85,7 +82,14 @@ if (backEndURL === undefined){return}
  
 
 // make statistics to ---  Status Legend
+
+
     useEffect(() => {
+
+if(Preview_this_Results === undefined){return}
+
+
+
       const countOccurrences = () => {
         // console.log("Preview_this_Results" , Preview_this_Results);
         const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
@@ -104,25 +108,40 @@ if (backEndURL === undefined){return}
   // const count__Velo = Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length;
 //  const completed  = Preview_this_Results?.filter(item => item?.Status == "Complete");
 
-const completed_InTime_Count =     (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
-const completed_not_InTime_Count = (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
-const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
-const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
-const Failed_Count =               (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Failed" ).length : "NA";
+const completed_InTime_Count =     (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
+const completed_not_InTime_Count = (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
+
+const inProgress_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "inProgress"     && item?.TimeNote === "In Time").length : "NA";
+const inProgress_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "inProgress"     && item?.TimeNote  != "In Time").length : "NA";
 
 
-for (let index = 0; index < Preview_this_Results.length; index++) {
+const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
+const hunt_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
+const Failed_Count =               (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Failed" ).length : "NA";
+
+
+
+set_Status_Legend({
+  completed_InTime_Count: completed_InTime_Count,
+  completed_not_InTime_Count:completed_not_InTime_Count,
+  inProgress_InTime_Count:inProgress_InTime_Count,
+  inProgress_not_InTime_Count:inProgress_not_InTime_Count,
+  hunt_InTime_Count:hunt_InTime_Count,
+  hunt_not_InTime_Count:hunt_not_InTime_Count,
+  Failed_Count:Failed_Count })
+
+// console.log("Preview_this_Results?.results_list" ,Preview_this_Results  );
+// for (let index = 0; index < Preview_this_Results.length; index++) {
  
-  console.log(Preview_this_Results[index]?.LastIntervalDate);
+//   console.log(Preview_this_Results[index]?.LastIntervalDate);
  
   
-}
+// }
 
 
- console.log("completed_not_InTime_Count",completed_not_InTime_Count);
-set_Status_Legend({completed_InTime_Count: completed_InTime_Count,completed_not_InTime_Count:completed_not_InTime_Count,hunt_InTime_Count:hunt_InTime_Count,hunt_not_InTime_Count:hunt_not_InTime_Count,Failed_Count:Failed_Count })
+//  console.log("completed_not_InTime_Count",completed_not_InTime_Count);
   // console.log("completed" ,completed);
-  console.log(Status_Legend);
+  // console.log(Status_Legend);
   // set_Status_Legend
 
   // set_count_complete(count_complete)
@@ -137,27 +156,28 @@ set_Status_Legend({completed_InTime_Count: completed_InTime_Count,completed_not_
 
  
 // make dates to ---  big numbers
-    useEffect(() => {
- if(Preview_this_Results === undefined){return}
+//     useEffect(() => {
+//  if(Preview_this_Results === undefined){return}
 
 
 
  
-      const get_all_latest_results_dates = async()=>{ 
-        try{
-            const res = await axios.get(`${backEndURL}/results/get_all_latest_results_dates`,{params:{results:Preview_this_Results}});
-            if (res){
-              set_last_updated(res.data);
-              console.log("get_all_Results_dates",res.data);
-        }}
-        catch(err){
-            console.log(err);}
-    }
-    get_all_latest_results_dates();
+//       const get_all_latest_results_dates = async()=>{ 
+//         console.log("get_all_Results_dates1" );
+//         try{
+//             const res = await axios.get(`${backEndURL}/results/get_all_latest_results_dates`,{params:{results:Preview_this_Results}});
+//             if (res){
+//               set_last_updated(res.data);
+//               console.log("get_all_Results_dates2",res.data);
+//         }}
+//         catch(err){
+//             console.log(err);}
+//     }
+//     get_all_latest_results_dates();
 
-    }, [Preview_this_Results]);
+//     }, [Preview_this_Results]);
 
-
+console.log("last_updated",last_updated);
 
 
     return (
@@ -226,7 +246,7 @@ set_filter_Resource={set_filter_Resource}
 <PreviewBox_type1_number
 HeadLine="ALL Requests"
 resource_type_id={null}
-BigNumber={Preview_this_Results.length ? (Preview_this_Results.length):(0) }
+BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 SmallNumber={0}
 StatusColor={"blue"}
 date={format_date_type_a(last_updated?.Total) || "NA"}

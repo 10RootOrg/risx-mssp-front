@@ -52,14 +52,13 @@ const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
 
 const [download_drop_down, set_download_drop_down] = useState(false);
 
-
 const check_main_process_status = async () =>{
-  console.log("check_main_process_status");
   if(backEndURL === undefined){return}
   try{
            const res = await axios.get(`${backEndURL}/process/process-status`);
             if (res){ set_isMainProcessWork(res.data);
-if(res.data === false){ console.log("process ===" ,  res.data);
+if(res.data === false)
+  { console.log("process ===" ,  res.data);
 
   set_PopUp_Are_You_Sure__txt({
     HeadLine:"Ineraval is off",
@@ -86,12 +85,12 @@ if(res.data === false){ console.log("process ===" ,  res.data);
             try{
                 const res = await axios.get(`${backEndURL}/process/check-and-active-interval-of-python`);
                 if (res){
-                    console.log("check_and_active_interval_of_python ssssssssssssssssssssss" , res.data);
-            //    if(res.data){   
+                  
+               if(res.data){   
+                console.log("check_and_active_interval_of_python ssssssssssssssssssssss" , res.data);
                 
-                
-            //     localStorage.setItem('check_and_active_interval_of_python', true);
-            //    }
+                // localStorage.setItem('check_and_active_interval_of_python', true);
+               }
           
             }}
             catch(err){   console.log(err);}
@@ -101,13 +100,15 @@ if(res.data === false){ console.log("process ===" ,  res.data);
 
 useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },60000);  return () => clearInterval(interval);}, []); 
 
-const handle_Close_PopUp_Are_You_Sure = () => {
-   set_PopUp_Are_You_Sure__show(false)
-};
+const handle_Close_PopUp_Are_You_Sure = () => {set_PopUp_Are_You_Sure__show(false)};
   // check_and_active_interval_of_python
   // useEffect(() => { check_and_active_interval_of_python();  }, [backEndURL]);
 
 
+  const handle_active_interval_process = async () => {
+    set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
+    set_PopUp_Error____show(true)
+  };
 
 
 
@@ -145,37 +146,37 @@ const handleClick = (page_name) => {
  
 
 
-const countVelociraptorResponses = async () => {
-  try {
+// const countVelociraptorResponses = async () => {
+//   try {
    
-    const res = await axios.get(`${backEndURL}/results/count-responses-files`);
+//     const res = await axios.get(`${backEndURL}/results/count-responses-files`);
  
 
-    if (res) {
-      const list  = res.data.number
+//     if (res) {
+//       const list  = res.data.number
 
 
-      const listResults =  list
-      const seeResults =  localStorage.getItem(user_id + '_seeResults');
+//       const listResults =  list
+//       const seeResults =  localStorage.getItem(user_id + '_seeResults');
 
-      console.log(parseFloat(seeResults));
+//       console.log(parseFloat(seeResults));
      
-   if(parseFloat(seeResults) != listResults){
-const note_gap  = listResults - parseFloat(seeResults)
-set_notification_number(note_gap)
-   }
-else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
+//    if(parseFloat(seeResults) != listResults){
+// const note_gap  = listResults - parseFloat(seeResults)
+// set_notification_number(note_gap)
+//    }
+// else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
 
-      // console.log(parseFloat(seeResults) === listResults);
-      // console.log(parseFloat(seeResults) < listResults);
+//       // console.log(parseFloat(seeResults) === listResults);
+//       // console.log(parseFloat(seeResults) < listResults);
 
 
-      // set_notification_number
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
+//       // set_notification_number
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 
 const handle_download_drop_down =  () => {
@@ -239,10 +240,6 @@ useEffect(() => {
 
 
 
-const handle_active_interval_process = async () => {
-  set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
-  set_PopUp_Error____show(true)
-};
 
 
     return (
@@ -367,7 +364,7 @@ False_action={handle_Close_PopUp_Are_You_Sure}
 >  
         <div className='display-flex'>
           <IconLastRun className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu'>Inteval:
+          <p className='font-type-menu'>Output:
             {isMainProcessWork && !isHovered &&   <span className='font-type-menu Color-Blue-Glow ml-a'>on</span>}
             {isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Orange ml-a'>turn off</span>}
             {!isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Blue-Glow ml-a'>turn on</span> }

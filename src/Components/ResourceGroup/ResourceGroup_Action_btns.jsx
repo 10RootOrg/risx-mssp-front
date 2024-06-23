@@ -14,6 +14,8 @@ function ResourceGroup_Action_btns({
   set_item_types_list,
   set_item_tool_list,
   items_for_search,  set_items_for_search,
+
+  show_btn_add
 }) {
 
  
@@ -87,7 +89,9 @@ const filteredItems = all_items.filter(item => {
       <div className='resource-group-Right-Action_btns'>
       <input className="input-type1 mr-a" placeholder="Search"     onChange={(e) => set_filter_string(e.target.value)} />
       <button className="btn-type1"><IconSearch className="icon-type1" />  </button>
-      <button className="btn-type1" onClick={()=>add_resource_item()}><IconPlus className="icon-type1" /></button>
+
+
+      {show_btn_add&& <button className="btn-type1" onClick={()=>add_resource_item()}><IconPlus className="icon-type1" /></button>}
       <button className="btn-type1"><IconTrash className="icon-type1" />  </button>
       <button className="btn-type1"><IconSettings className="icon-type1" />  </button>
       <IconLine className="icon-type1" />

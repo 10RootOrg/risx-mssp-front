@@ -118,6 +118,9 @@ console.log(e.target.checked);
     function handle_add_or_edit_item(){
       // popUp_Add_or_Edit__status
 
+
+
+      
       const data = {
 "resource_id": resource_id,
 "resource_string": resource_string,
@@ -127,9 +130,11 @@ console.log(e.target.checked);
 "item_types_list": item_types_list 
       }
  
+
+
  
       if(popUp_Add_or_Edit__status == "add"){ 
-      
+        console.log("data to add =============== ",data);
         const add_resource = async()=>{
           try{
             set_error_message("")
@@ -154,7 +159,7 @@ console.log(e.target.checked);
     
     
      else if(popUp_Add_or_Edit__status == "edit"){
-  
+      console.log("data to edit =============== ",data);
 
    const edit_Resouce = async()=>{
     try{

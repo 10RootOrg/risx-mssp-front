@@ -10,7 +10,7 @@
         {
             "toolName": "Velociraptor",
             "toolID": "2000000",
-            "toolURL": "http://risxserverdev.westeurope.cloudapp.azure.com:3001/login/1/"
+            "toolURL": "https://docs.velociraptor.app/"
         },
         {
          "toolName": "Risx",

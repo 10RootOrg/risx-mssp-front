@@ -17,7 +17,11 @@ transition: var(--transition-fast);
 /* width: 8%;  */
 }
    
-
+.PreviewBoxLine{
+  height: auto; 
+  padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
+  width: auto;
+}
 
 
 .PreviewBox-of-tools{
