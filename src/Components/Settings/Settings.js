@@ -7,13 +7,14 @@ import './../Settings/Settings.css';
 import './../Settings/Settings_section_config.jsx';
 import Settings_section_config from './Settings_section_config.jsx'
 import Settings_section_ShowInUi from './Settings_section_ShowInUi.jsx'
+import Settings_section_process from './Settings_section_process.jsx'
 import GeneralContext from '../../Context.js';
 
 
 // const {   backEndURL  } = useContext(GeneralContext);
 // const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
  
-function Settings({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage}) {
+function Settings({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage,isMainProcessWork,set_isMainProcessWork}) {
 
   set_visblePage("Settings");
   const { all_Tools    } = useContext(GeneralContext);
@@ -71,7 +72,12 @@ set_filter_Resource={set_filter_Resource}
 
 <Settings_section_config/>
 
- <Settings_section_ShowInUi all_Tools={all_Tools}/>
+<Settings_section_ShowInUi all_Tools={all_Tools}/>
+
+<div style={{marginTop:"30px" , marginBottom:"30px"}}><Settings_section_process isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}/></div>
+
+
+
 
 </div>
 

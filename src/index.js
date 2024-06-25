@@ -14,13 +14,14 @@ import Settings from './Components/Settings/Settings'
 import Login from './Pages/Login'
 import NoPage404 from './Pages/NoPage404'
 import TestPage from './Pages/TestPage'
-
+import  Constantfunctions from './Constantfunctions/Constantfunctions'
 
 export default function App() {
 
   const [visblePage, set_visblePage]  = useState(localStorage.getItem('visiblePage') || 'Dashboard');
   const [show_SideBar, set_show_SideBar] = useState(false)
-  const [notification_number, set_notification_number] = useState(0)
+  const [notification_number, set_notification_number] = useState(0);
+  const [isMainProcessWork, set_isMainProcessWork] = useState(false);
   // const {  backEndURL } = useContext(GeneralContext);
 
   // useEffect(() => {}, [backEndURL ? backEndURL: null ]);  
@@ -36,8 +37,8 @@ export default function App() {
       <ContextProvider> 
          <BrowserRouter>
 
-    {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}notification_number={notification_number} set_notification_number={set_notification_number} />  }
-    
+    {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}notification_number={notification_number} set_notification_number={set_notification_number} isMainProcessWork={isMainProcessWork} />  }
+    < Constantfunctions  isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork} />
   
      
       <Routes>
@@ -46,7 +47,7 @@ export default function App() {
           <Route path="resourcegroup" element={<ResourceGroup  show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
           <Route path="dashboard"     element={<DashBoard      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
           <Route path="results"      element={<Results         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   set_notification_number={set_notification_number}     />} />
-          <Route path="settings"      element={<Settings       show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}     />} />
+          <Route path="settings"      element={<Settings       show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
 
  
 

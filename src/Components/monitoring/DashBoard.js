@@ -86,8 +86,8 @@ function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visble
  
 
 {/* {show_only_this_tools?.map((Info) =>(Info.toolType === "module"))?.length != 0    &&  */}
-<div className="display-flex mb-b mt-b"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules</p></div>
- 
+<div className="display-flex mb-b mt-b"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Artifact collectors</p></div>
+
 
 {/* <div className='PreviewBox PreviewBoxLine   ' style={{marginBottom:"var(--space-c)"}} > 
 <div className="display-flex"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules</p></div>
@@ -150,7 +150,7 @@ all_Tools={all_Tools}
 </div>
 
 {show_only_this_tools?.map((Info) =>(Info.toolType === "link"))?.length != 0    && 
-<div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Links</p></div>
+<div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Modules</p></div>
 }
 
 <div className='resource-group-top-boxes mb-c' >

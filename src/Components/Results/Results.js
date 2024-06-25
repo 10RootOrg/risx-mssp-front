@@ -111,14 +111,20 @@ if(Preview_this_Results === undefined){return}
 const completed_InTime_Count =     (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
 const completed_not_InTime_Count = (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
 
-const inProgress_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "inProgress"     && item?.TimeNote === "In Time").length : "NA";
-const inProgress_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "inProgress"     && item?.TimeNote  != "In Time").length : "NA";
+const inProgress_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "In Progress"     && item?.TimeNote === "In Time").length : "NA";
+const inProgress_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "in Progress"     && item?.TimeNote  != "In Time").length : "NA";
 
 
 const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
 const hunt_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
 const Failed_Count =               (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Failed" ).length : "NA";
 
+ 
+console.log("Preview_this_Results",Preview_this_Results);
+console.log("inProgress_InTime_Count",inProgress_InTime_Count);
+console.log("inProgress_not_InTime_Count",inProgress_not_InTime_Count);
+
+ 
 
 
 set_Status_Legend({

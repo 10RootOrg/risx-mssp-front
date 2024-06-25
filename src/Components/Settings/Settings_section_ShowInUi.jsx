@@ -121,7 +121,7 @@ False_action={handle_Cancel_Save_config}
 <p className='font-type-h4 Color-White mb-c'>UI Settings</p>
  <table className='setting_table  ' style={{lineHeight:"100%"}}>
                    
- <tbody>  
+ <tbody className="tbody_setting">  
             <tr >
                 <td className="setting_descriptions">
                 <p className='font-type-menu Color-White mb-a'>Module Display</p>
