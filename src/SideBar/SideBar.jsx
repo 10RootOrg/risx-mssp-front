@@ -11,7 +11,7 @@ import { ReactComponent as IcoSettings } from '../Components/icons/ico-settings.
 import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
 // import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
 import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
-import { ReactComponent as IconLastRun } from '../Components/icons/ico-lastrun.svg';
+import { ReactComponent as IconUsers } from '../Components/icons/ico-menu-users.svg';
 import {PopUp_Error ,PopUp_All_Good,PopUp_Are_You_Sure
   // PopUp_Are_You_Sure
 } from '../Components/PopUp_Smart'
@@ -122,8 +122,7 @@ const [download_drop_down, set_download_drop_down] = useState(false);
 
 
 
-console.log("visblePage",visblePage);
-
+ 
 // const handleSubMenu = (name) => {
 // if (openSubMenu === name ){set_openSubMenu("none")}
 // else{set_openSubMenu(name);}
@@ -345,7 +344,10 @@ False_action={handle_Close_PopUp_Are_You_Sure}
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 
-
+<button className="btn-menu  " onClick={()=>handleClick("Users")}   disabled={visblePage === "Users"}>
+        <div className='display-flex'><IconUsers className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Users</p></div>
+      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
+</button> 
 
 
 

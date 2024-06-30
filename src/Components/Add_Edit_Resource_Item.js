@@ -157,6 +157,9 @@ console.log("filtered_tools",  filtered_tools);
           try{
             set_error_message("")
               const res = await axios.post(`${backEndURL}/resources`,data );
+
+if(res){console.log("ssssssssssssss popUp_Add_or_Edit__status sssssssssssssssssssss",res.data);}
+
               if (res?.status === 200){ 
                 console.log("res.data" , res.data[0]);
                set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
@@ -382,6 +385,9 @@ className="item_info_left"
 <div className="item_info_tools"
  >
  
+
+ {tools_preview?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
+
 {Array.isArray(tools_preview) && tools_preview?.map((Info, index) => {
  
  

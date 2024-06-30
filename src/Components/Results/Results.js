@@ -17,7 +17,7 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number,set_visb
     const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
     const [Preview_this_Results, set_Preview_this_Results] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
-    const [loader , set_loader] = useState(true)
+    const [loader , set_loader] = useState(false)
     const [last_updated , set_last_updated] = useState({default:0})
     const [Status_Legend , set_Status_Legend] = useState({})
     const [counts, setCounts] = useState([]);
@@ -297,8 +297,8 @@ bar_title_legend = {"Count"}
 <div className='resource-group-all-the-Lists'>
 
 {/*  */}
- <Results_all Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource}/>
-
+ <Results_all Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} />
+ 
  
 
 </div>

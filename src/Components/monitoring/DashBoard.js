@@ -34,7 +34,7 @@ function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visble
             if (res){
                
                 console.log("get_all_artifacts res.data:" , res.data);
-                console.log("get_all_artifacts res :" , res );
+          
          set_all_artifacts(res.data)
         }}
         catch(err){
@@ -57,7 +57,7 @@ function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visble
 //      useEffect(() => {
 
  
- console.log(typeof all_Tools , "all_Tools  " , all_Tools) 
+//  console.log(typeof all_Tools , "all_Tools  " , all_Tools) 
 
 
       

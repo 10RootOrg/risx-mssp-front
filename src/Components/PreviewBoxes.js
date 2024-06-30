@@ -6,12 +6,8 @@ import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IcoLink } from './icons/ico-link-nonedge-blue.svg';
 
  
-
-
- import { PopUp_For_Read_More ,
-  //  PopUp_For_Nuclei_data ,
-    PopUp_For_Dehashed_data} from "./PopUp_Smart.js";
- import { PopUp_before_active_module____Nuclei } from "./PopUp_active_modules.js";
+//  import { PopUp_before_active_module____Nuclei } from "./PopUp_active_modules.js";
+ import { PopUp_For_Read_More ,} from "./PopUp_Smart.js";
  import { format_date_type_a } from '../Components/Features/DateFormat';
 import GeneralContext from '../Context';
 import  {Counter}  from './Features/AnimationCounter.js'
@@ -66,9 +62,22 @@ const Handle_active_module= async(tool_id,backEndURL)=>{
           {console.log(err);}
    }
 
-const handle_Main_Btn =(tool_id,toolURL,backEndURL ,set_Show_PopUp_before_active_module_id)=>{
+const handle_Main_Btn =(tool_id,toolURL,backEndURL,front_IP)=>{
 
-    console.log("tool_id" , tool_id);
+if(  toolURL.includes("${FRONT_IP}")){
+  const realURl = toolURL.replace("${FRONT_IP}", front_IP);
+ 
+  
+  openInNewTab(realURl)
+
+
+}
+else{
+ 
+  openInNewTab(toolURL)
+}
+
+
 
     // console.log("moduleLinks" , moduleLinks);
 
@@ -82,48 +91,11 @@ const handle_Main_Btn =(tool_id,toolURL,backEndURL ,set_Show_PopUp_before_active
   //  else if (tool_id ===  '2001009') { set_Show_PopUp_tool___Dehashed(true)  }
     // else { }
     
-openInNewTab(toolURL)
+
 
     
      
   }
-
-//   const check_last_response2 =async(Info,backEndURL,set_last_response,set_StatusColorClass)=>{
-//      const params = {module_id : Info.tool_id }
-//     try{
-//         const res = await axios.get(`${backEndURL}/results/check_last_req_and_res_for_module`,{params:params})
-//         if(res){
-
-//          set_last_response(res.data?.last_request);
-// console.log(res.data?.last_request);
-// if ( res.data?.last_response ){
-// // console.log("got some data for", Info?.Tool_name  );
-// // console.log("minute",Info?.threshold_time );
-// // console.log(res.data?.last_request - res.data?.last_response);
-// const nowTime = new Date ;
-// const lastResponseTime = new Date(res.data?.last_response );
-// console.log(nowTime);
-// console.log(lastResponseTime);
-// const timeDiffMs =  nowTime.getTime() -lastResponseTime.getTime() ;
-// const timeDiffMinutes = Math.floor(timeDiffMs / (1000 * 60));
-
-
-// console.log("last check in minutes" , timeDiffMinutes);
-// if ( timeDiffMinutes  > Info.threshold_time){console.log(timeDiffMinutes ,"too much time"); set_StatusColorClass('Bg-Red')}
-// else if ( timeDiffMinutes  <=  Info.threshold_time  ){console.log("it fine");  set_StatusColorClass('Bg-Blue-Glow')}
-// else{set_StatusColorClass('Bg-Grey2')}
-
-
-
-
-
-// }
-
-
-//           }
-//     }
-//     catch(err){console.log(err);}
-// }
 
 function PreviewBox_type0_static({
   HeadLine,BigNumber,
@@ -165,7 +137,6 @@ function PreviewBox_type1_number({
 HeadLine,BigNumber,
 SmallNumber,StatusColor,
 date, resource_type_id ,
- 
 filter_Resource,
 set_filter_Resource,
  
@@ -176,9 +147,7 @@ set_filter_Resource,
   const [is_Filtering, set_is_Filtering] = useState(false);
 
   useEffect(() => { 
-
-  
-        if (filter_Resource?.type_ids?.length === 0 ) {
+  if (filter_Resource?.type_ids?.length === 0 ) {
     
           // console.log("zero filter--999" );
     
@@ -716,7 +685,7 @@ function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_
           
  
 function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,logoAddress_2,  readMoreText,buttonTitle,iconAddress,toolURL , tool_id ,all_Tools , backEndURL }) {    
-  const {  set_all_Tools   } = useContext(GeneralContext);
+  const {  set_all_Tools  ,front_IP } = useContext(GeneralContext);
  
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
   const [logoAddress_2_ForSrc, set_logoAddress_2_ForSrc] = useState("")
@@ -946,7 +915,7 @@ disabled={disabled}
 
 
    { tool_id !="2001005" &&
-    <button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL,backEndURL )}
+    <button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL,backEndURL,front_IP )}
     
      style={{
       paddingRight: Info?.toolType !== undefined && 

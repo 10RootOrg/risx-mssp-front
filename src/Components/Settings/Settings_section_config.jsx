@@ -53,12 +53,23 @@ const handle_Save_config = () => {
       const res = await axios.put(`${backEndURL}/config`,{config:object});
 
       if (res)
-        
+     
+ 
+
+
         if(res.data?.error === "failed saving config"){
           console.log("error save",res.data?.error);
           return
         }
-      else {console.log("back from backend after save",res.data);}
+else if(res.status === 500){
+  console.log("error save",res.data?.error);
+}
+      else if (res.status === 200){
+        console.log("back from backend 200:",res.data);
+
+ 
+
+        ;}
 
 
 

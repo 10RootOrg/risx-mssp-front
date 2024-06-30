@@ -11,6 +11,7 @@ import DashBoard from './Components/monitoring/DashBoard'
 import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
 import Results from './Components/Results/Results'
 import Settings from './Components/Settings/Settings'
+import Users from './Components/Users/Users'
 import Login from './Pages/Login'
 import NoPage404 from './Pages/NoPage404'
 import TestPage from './Pages/TestPage'
@@ -24,9 +25,7 @@ export default function App() {
   const [isMainProcessWork, set_isMainProcessWork] = useState(false);
   // const {  backEndURL } = useContext(GeneralContext);
 
-  // useEffect(() => {}, [backEndURL ? backEndURL: null ]);  
-  
-
+ 
 
   
   return (
@@ -48,6 +47,7 @@ export default function App() {
           <Route path="dashboard"     element={<DashBoard      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
           <Route path="results"      element={<Results         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   set_notification_number={set_notification_number}     />} />
           <Route path="settings"      element={<Settings       show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
+          <Route path="users"         element={<Users          show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
 
  
 

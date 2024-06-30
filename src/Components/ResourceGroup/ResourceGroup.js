@@ -35,7 +35,7 @@ useEffect(() => {
 
     const get_all_resources = async()=>{ 
       
-        console.log("get_all_resources               backEndURL" , backEndURL);
+ 
 if (backEndURL === undefined){return};
 if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
  
@@ -46,7 +46,7 @@ if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length 
 
      
         if (res){
-            console.log("res.data66666666666666666666666666666666666666666" , res.data);
+            console.log("get_all_resources" , res.data);
             set_Preview_this_Resource(res.data)
             set_All_Resource_count(res.data.length)
             set_loader(false)

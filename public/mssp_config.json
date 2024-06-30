@@ -1,16 +1,16 @@
 {
-    
-    "backendUrl_old2": "http://localhost:5555", 
     "backendUrl": "http://40.69.58.105:5555",
-    "backendUrl_old1": "http://risxserverdev.westeurope.cloudapp.azure.com:5555",
+    "backendUrl_old1": "http://localhost:5555", 
+    "backendUrl_old2": "http://risxserverdev.westeurope.cloudapp.azure.com:5555",
 
+    "expiryDate":"28-06-2024",
     "clientApi": "https://api.example.com/user",
     "examInnterval_minutes" :15,
     "moduleLinks": [
         {
-            "toolName": "Velociraptor",
-            "toolID": "2000000",
-            "toolURL": "https://docs.velociraptor.app/"
+        "toolName": "Velociraptor",
+        "toolID": "2000000",
+        "toolURL": "https://${FRONT_IP}/velociraptor/"
         },
         {
          "toolName": "Risx",
@@ -19,11 +19,11 @@
      },{
          "toolName": "ELK",
          "toolID": "2001001",
-         "toolURL": "http://23.101.51.55:5601"
+         "toolURL": "http://${FRONT_IP}/kibana/"
      },{
-         "toolName": "Timeline",
+         "toolName": "Timesketch",
          "toolID": "2001002",
-         "toolURL": "http://timesketch-10root.northeurope.cloudapp.azure.com/"
+         "toolURL": "http://${FRONT_IP}/"
      },{
          "toolName": "Open CTI",
          "toolID": "2001003",
@@ -35,16 +35,12 @@
      },{
          "toolName": "Nuclei",
          "toolID": "2001005",
-         "toolURL": "https://10root.com/",
+         "toolURL": "",
           "expiretime": "25"
      },{
          "toolName": "AnyRun",
          "toolID": "2001006",
-         "toolURL": "http://20.123.30.155:9980/"
-     },{
-         "toolName": "HashR",
-         "toolID": "2001007",
-         "toolURL": "https://10root.com/"
+         "toolURL": "http://${FRONT_IP}/strelka/"
      },{
          "toolName": "Ail",
          "toolID": "2001008",

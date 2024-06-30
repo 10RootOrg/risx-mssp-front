@@ -7,15 +7,10 @@ import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as IconExpend } from '../icons/ico-expend.svg';
 import { ReactComponent as IconLine } from '../icons/ico-line.svg';
 function ResourceGroup_Action_btns({
-  set_popUp_Add_or_Edit__show,
-  popUp_Add_or_Edit__show ,
-  set_popUp_Add_or_Edit__status,
-
-  set_item_types_list,
-  set_item_tool_list,
   items_for_search,  set_items_for_search,
-
-  show_btn_add
+  show_btn_add,
+  btn_add_action,
+  btn_add_value
 }) {
 
  
@@ -41,15 +36,15 @@ if(items_for_search?.length > all_items?.length){
 
 
 
-  const  add_resource_item = () =>{
-    console.log("add_resource_item");
+  // const  add_resource_item = () =>{
+  //   console.log("add_resource_item");
 
-    set_item_types_list([])
-    set_item_tool_list([])
+  //   set_item_types_list([])
+  //   set_item_tool_list([])
   
-    set_popUp_Add_or_Edit__status("add")
-    set_popUp_Add_or_Edit__show(true)
-    }
+  //   set_popUp_Add_or_Edit__status("add")
+  //   set_popUp_Add_or_Edit__show(true)
+  //   }
 
 
 
@@ -59,7 +54,7 @@ if(items_for_search?.length > all_items?.length){
 
 useEffect(() => {
 
-console.log("all_items" , all_items);
+// console.log("all_items" , all_items);
  
 const filteredItems = all_items.filter(item => {
   const filterLower = filter_string.toLowerCase();
@@ -77,7 +72,7 @@ const filteredItems = all_items.filter(item => {
 
   set_items_for_search(filteredItems)
 
-  console.log("filteredItems", filteredItems);
+  // console.log("filteredItems", filteredItems);
 }, [filter_string])
 
 
@@ -91,7 +86,7 @@ const filteredItems = all_items.filter(item => {
       <button className="btn-type1"><IconSearch className="icon-type1" />  </button>
 
 
-      {show_btn_add&& <button className="btn-type1" onClick={()=>add_resource_item()}><IconPlus className="icon-type1" /></button>}
+      {show_btn_add&& <button className="btn-type1" onClick={()=>btn_add_action(btn_add_value)}><IconPlus className="icon-type1" /></button>}
       <button className="btn-type1"><IconTrash className="icon-type1" />  </button>
       <button className="btn-type1"><IconSettings className="icon-type1" />  </button>
       <IconLine className="icon-type1" />

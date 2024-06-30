@@ -22,7 +22,12 @@
   /* .PopUp-background.active {
 opacity: 1;
   } */
-
+  .PopUp-loader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)scale(01);
+  }
    
   .PopUp-content {
     width: 480px;
@@ -155,8 +160,8 @@ width:  calc(100% - var(--space-b)*2 - var(--line-width-small)*2);
  .item_info_tools_box{
  height: 150px; 
   /* max-height: 180px; */
-  overflow-y: scroll;
- 
+  /* overflow-y: scroll; */
+  overflow-y: auto;
  }
 
  .item_info_tools{

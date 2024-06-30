@@ -24,7 +24,7 @@ if(items_for_search?.length > all_items?.length){
 
 useEffect(() => {
 
-console.log("all_items" , all_items);
+// console.log("all_items" , all_items);
  
 const filteredItems = all_items.filter(item => {
   const filterLower = filter_string.toLowerCase();
@@ -61,7 +61,7 @@ if (
 
   set_items_for_search(filteredItems)
 
-  console.log("filteredItems", filteredItems  , filteredItems?.length);
+  // console.log("filteredItems", filteredItems  , filteredItems?.length);
 }, [filter_string])
 
 const handleClearFilter = () => {

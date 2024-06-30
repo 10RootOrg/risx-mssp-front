@@ -15,13 +15,9 @@ import {check_and_active_interval_of_python}from '../Components/Features/Process
 
 function  Constantfunctions({  isMainProcessWork, set_isMainProcessWork}) {
 
-// const navigate = useNavigate();
-// const [user_name, set_user_name] = useState("user")
-// const [notification_number, set_notification_number] = useState(0)
-const {backEndURL,user_id} =useContext(GeneralContext)
 
+const {backEndURL,user_id,expiryDate} =useContext(GeneralContext)
 
- 
 // const [isHovered, setIsHovered] = useState(false);
 
 
@@ -41,7 +37,42 @@ const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
 
 
 
+const checkExpiryDate = (expiryDate) => {
+  if(expiryDate === undefined || expiryDate === null || expiryDate === "" ){return}
+
+
+
+
+
+  function string_to_date(dateString){
  
+    try{
+     const dateStringArray = dateString.split("-");
+     const day = dateStringArray[0]
+     const month = dateStringArray[1]
+     const year = dateStringArray[2] 
+     const event = new Date(`${month} ${day}, ${year} `);
+
+   return event
+   }catch(err){console.log(err);return "error in date" }
+   
+   }
+
+const formattedExpiryDate = string_to_date(expiryDate);
+const currentDate = new Date();
+
+ 
+  if (    currentDate >  formattedExpiryDate) {
+  set_PopUp_Error____txt({ HeadLine:"Expired", paragraph: "This version of Risx MSSP has expired. Please contact us to renew your subscription. Please note that using the software beyond the expiration date is illegal.", buttonTitle:"Close"})
+  set_PopUp_Error____show(true);
+  } else {
+      console.log('Not yet expired.');
+  }
+};
+
+useEffect(() => {  checkExpiryDate(expiryDate);}, [expiryDate]);// for first load
+useEffect(() => { const interval = setInterval(() => { checkExpiryDate(expiryDate);}, 24 * 60 * 60 * 1000);   return () => clearInterval(interval);}, [expiryDate]);  // Set interval to check expiry daily
+
 
 const check_main_process_status = async () =>{
   if(backEndURL === undefined){return}
@@ -74,7 +105,6 @@ if(res.data === false)
 
           catch(err){  console.log("process-status" ,err);}}
 
-
 async function got_to_check_and_active_interval_of_python  () {
 
 
@@ -101,31 +131,13 @@ else if (do_active === false){
 }
 
 
-//  const check_and_active_interval_of_python = async()=>{ 
-
-
-
-
-//   if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
-//             try{
-//                 const res = await axios.get(`${backEndURL}/process/check-and-active-interval-of-python`);
-//                 if (res){
-                  
-//                if(res){   
-//                 console.log("check_and_active_interval_of_python 123" , res.data);
-                
-       
-//                }
-          
-//             }}
-//             catch(err){   console.log(err);}
-//         }
-
  useEffect(() => { check_main_process_status();}, [backEndURL]); // for first load
-
-useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },60000);  return () => clearInterval(interval);}, []); 
+useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },100000);  return () => clearInterval(interval);}, []); // Set interval to check expiry daily
 
 const handle_Close_PopUp_Are_You_Sure = () => {set_PopUp_Are_You_Sure__show(false)};
+
+
+
 
 
   const handle_active_interval_process = async () => {
@@ -134,20 +146,6 @@ const handle_Close_PopUp_Are_You_Sure = () => {set_PopUp_Are_You_Sure__show(fals
   };
 
 
-
-
-
-
-
-// useEffect(() => {
-//   const name = localStorage.getItem('username');
-
-//   if (name) {
-//     set_user_name(name);
-//   } else {
-//     console.log('No username found in local storage.');
-//   }
-// }, []); 
 
 
 
@@ -218,3 +216,43 @@ False_action={handle_Close_PopUp_Are_You_Sure}
   }
   
   export default  Constantfunctions;
+
+
+
+
+
+
+
+
+
+// useEffect(() => {
+//   const name = localStorage.getItem('username');
+
+//   if (name) {
+//     set_user_name(name);
+//   } else {
+//     console.log('No username found in local storage.');
+//   }
+// }, []); 
+
+
+
+//  const check_and_active_interval_of_python = async()=>{ 
+
+
+
+
+//   if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
+//             try{
+//                 const res = await axios.get(`${backEndURL}/process/check-and-active-interval-of-python`);
+//                 if (res){
+                  
+//                if(res){   
+//                 console.log("check_and_active_interval_of_python 123" , res.data);
+                
+       
+//                }
+          
+//             }}
+//             catch(err){   console.log(err);}
+//         }

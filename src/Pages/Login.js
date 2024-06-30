@@ -31,6 +31,8 @@ import { ReactComponent as Logo14 } from '../Pages/Login/Images/Timesketch.svg';
 
 
 import  './Login.css'
+ 
+
 // import { PreviewBox_type1_number, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big} from '../PreviewBoxes.js'
  
 // import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
@@ -145,7 +147,7 @@ else{
    }}/> 
 
 <div className='login-marketing-center'  style={{maxWidth:"740px"}}>
-<h1 className='font-type-h1    Color-Grey5 mb-c'  style={{fontWeight:"600"}}><span className='Color-Blue-Glow'>All-in-one </span>Mssp for improved,<br/>  streamlined Cybersecurity</h1>
+<h1 className='font-type-h1    Color-Grey5 mb-c'  style={{fontWeight:"600"}}><span className='Color-Blue-Glow '>All-in-one </span>Mssp for improved,<br/>  streamlined Cybersecurity</h1>
 <h2 className='font-type-h5 reading-height-less Color-Grey5 mb-e' >Alongside our services, benefit from advanced risk management capabilities, sophisticated threat detection, proactive measures against attacks, and continuous monitoring to prevent data breaches and operational disruptions</h2>
 
 <div className="logosBox-out  ">
@@ -256,7 +258,10 @@ else{
 </form>
 
 
-<Login_bar style={{
+<Login_bar 
+
+className="animated-login-bar"
+style={{
   position: "absolute",
   left: "-92px", 
   bottom: "0",

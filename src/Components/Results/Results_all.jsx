@@ -15,7 +15,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
   // Adjust the path as needed based on your project structure
  
  
-import {PopUp_All_Good ,PopUp_Request_info } from '../PopUp_Smart'
+import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader } from '../PopUp_Smart'
 
 
 
@@ -25,13 +25,12 @@ import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response} from '..
 function Results_All({
   Preview_this_Results ,
   set_Preview_this_Results,
-   loader ,
-    set_loader,
+  loader,set_loader,
     filter_Resource,
     set_filter_Resource
   }) {
     const {  backEndURL ,all_Tools } = useContext(GeneralContext);
-
+ 
 
   const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
   // const [popUp_Add_or_Edit__status, set_popUp_Add_or_Edit__status] = useState("edit");
@@ -53,9 +52,13 @@ function Results_All({
 
 const status_bar_width = "140px"
 
+ 
   const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show] = useState(false);
   const [json_file_info, set_json_file_info] = useState({})
   const [json_file_data, set_json_file_data] = useState({})
+  const [PopUp_loader__show, set_PopUp_loader__show] = useState(false);
+  
+
 
   const  get_Json_single_response = async(Info)=>{
 
@@ -65,14 +68,17 @@ const status_bar_width = "140px"
     const params = {file_name : Info?.ResponsePath }
     
     console.log(params);
+
+
+    set_PopUp_loader__show(true);
      const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
      
 
 
-    
      if (typeof res.data === "string") {
-
+      set_PopUp_loader__show(false);
      if(res.data === 'No data collected.'){ console.log(res.data ,Info);
+      set_PopUp_loader__show(false);
       set_PopUp_Request_info__txt({
          HeadLine: Info?.Status === "Hunting" ? "No Data Collected yet" :
                    Info?.Status === "Complete" ? "No Data Collected"   : "No Data Collected"   , 
@@ -87,7 +93,9 @@ const status_bar_width = "140px"
      }
 
     else{
+
       set_PopUp_Request_info__txt({ HeadLine:"No results", paragraph: "Looks like no results file been created yet"   , buttonTitle:"Close" })
+      set_PopUp_loader__show(false);
       set_PopUp_Request_info__show(true)
     }
 
@@ -104,7 +112,7 @@ const status_bar_width = "140px"
 
 
 
-
+ 
     return
      }
     
@@ -116,6 +124,7 @@ const status_bar_width = "140px"
      if (Info?.ModuleName === "Velociraptor") {
       set_json_file_data(Info)
       set_json_file_info(res.data)
+      set_PopUp_loader__show(false);
       set_PopUp_velociraptor_response__show(true)
      }
     else if (Info?.ModuleName === "Nuclei") {
@@ -123,9 +132,10 @@ const status_bar_width = "140px"
          console.log("tool" ,tool);
         let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
         console.log("updatedInfo" ,updatedInfo);
-        set_json_file_data(updatedInfo)
-        set_json_file_info(res.data)
-        set_PopUp_For__Nuclei__response__show(true)
+        set_json_file_data(updatedInfo);
+        set_json_file_info(res.data);
+        set_PopUp_loader__show(false);
+        set_PopUp_For__Nuclei__response__show(true);
     }
 
       ;}
@@ -134,8 +144,6 @@ const status_bar_width = "140px"
     catch(err){console.log(err);}
     
     }
-
-
 
 
 const handle_click_result = (Info) =>{
@@ -169,7 +177,7 @@ else{ return;  }
 
 case "Velociraptor": ////////////////////////// Velociraptor //////////////////////////
 if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
-  set_PopUp_Request_info__txt({ HeadLine:"In process", paragraph:"The request has been sent", buttonTitle:"Close" })
+  set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
   return}
 else{ get_Json_single_response(Info);   return;}
@@ -227,6 +235,11 @@ useEffect(() => {
  <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
   
 
+
+{PopUp_loader__show && <PopUp_loader popUp_show={PopUp_loader__show} /> }
+ 
+
+
   {PopUp_For__Nuclei__response__show &&
   <PopUp_For__Nuclei__response
   popUp_show={PopUp_For__Nuclei__response__show}
@@ -283,7 +296,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 <div className='resource-group-list-headline mb-c ' >
 
-<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Results List</p></div>
+<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Results list</p></div>
 
  <ResourceGroup_Action_btns
   items_for_search={Preview_this_Results}
