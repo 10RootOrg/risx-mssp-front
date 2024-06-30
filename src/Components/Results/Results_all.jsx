@@ -29,7 +29,7 @@ function Results_All({
     filter_Resource,
     set_filter_Resource
   }) {
-    const {  backEndURL ,all_Tools } = useContext(GeneralContext);
+    const {  backEndURL ,all_Tools ,front_IP} = useContext(GeneralContext);
  
 
   const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
@@ -191,7 +191,18 @@ const TimeSketch = all_Tools.filter(item => item?.tool_id === "2001002" );
 if (TimeSketch=== undefined){console.log( "cant make TimeSketch, all_Tools TimeSketch is",TimeSketch);   return }
 const link = TimeSketch[0]?.toolURL
 if (link=== undefined){console.log( "cant make TimeSketch link its",link);   return }
-window.open(  link   , '_blank');
+
+
+if ( link.includes("${FRONT_IP}")){ const realURl = link.replace("${FRONT_IP}", front_IP);
+  window.open(  realURl , '_blank');
+
+ ;   return }
+
+ if ( !link.includes("${FRONT_IP}")){ window.open(  link   , '_blank');;   return } 
+
+
+ 
+ 
 
 break;
 

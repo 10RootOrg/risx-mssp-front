@@ -73,16 +73,15 @@ const pathTOPic = all_artifacts?.filter((word) => word?.Toolname === json_file_d
 
 
 
-      console.log(json_file_info?.table[0]);
-      console.log(json_file_info?.table );
+
       
 
       const numberOfKeys = Object.keys(json_file_info?.table[0]).length;
-console.log();
-
+      console.log(json_file_info?.table[0]);
+      console.log(json_file_info?.table );
       console.log("json_file_data 1111111111111" , json_file_data);
-      console.log("json_file_info 22222222222222222" ,json_file_info );
-
+      console.log("json_file_data?.Arguments" ,json_file_data?.Arguments);
+      console.log("json_file_data?.Arguments" , JSON.stringify(json_file_data.Arguments));
     
 
       console.log("json_file_info props" ,props );
@@ -129,6 +128,12 @@ console.log();
     <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)}</p> 
     </div>
     
+    {/* <div className='velociraptor_response_top_row'>
+    <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >3sssssssssssssssssss3{json_file_data?.Arguments}</p> 
+     </div> */}
+
+
+
     </div>
     
     </div>

@@ -52,82 +52,9 @@ const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
 
 const [download_drop_down, set_download_drop_down] = useState(false);
 
-// const check_main_process_status = async () =>{
-//   if(backEndURL === undefined){return}
-//   try{
-//            const res = await axios.get(`${backEndURL}/process/process-status`);
-//             if (res){ set_isMainProcessWork(res.data);
-// if(res.data === false)
-//   { console.log("process ===" ,  res.data);
-
-//   set_PopUp_Are_You_Sure__txt({
-//     HeadLine:"Ineraval is off",
-//     paragraph:"Do yo want enable it?",
-//     buttonTrue:"Yes",
-//     buttonFalse:"No"
-//   });
-  
-//   set_PopUp_Are_You_Sure__show(true)
-
-
-// }
-
-
-
-//             }}
-
-
-
-//           catch(err){  console.log("process-status" ,err);}}
-
-//  const check_and_active_interval_of_python = async()=>{ 
-//   if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
-//             try{
-//                 const res = await axios.get(`${backEndURL}/process/check-and-active-interval-of-python`);
-//                 if (res){
-                  
-//                if(res.data){   
-//                 console.log("check_and_active_interval_of_python ssssssssssssssssssssss" , res.data);
-                
-       
-//                }
-          
-//             }}
-//             catch(err){   console.log(err);}
-//         }
-
-//  useEffect(() => { check_main_process_status();}, [backEndURL]); // for first load
-
-// useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },60000);  return () => clearInterval(interval);}, []); 
-
-// const handle_Close_PopUp_Are_You_Sure = () => {set_PopUp_Are_You_Sure__show(false)};
-
-
-  // const handle_active_interval_process = async () => {
-  //   set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
-  //   set_PopUp_Error____show(true)
-  // };
-
-
-
-
-
-// const handleMouseEnter = () => {
-//   setIsHovered(true);
-// };
-
-// const handleMouseLeave = () => {
-//   setIsHovered(false);
-// };
-
-
+ 
 
  
-// const handleSubMenu = (name) => {
-// if (openSubMenu === name ){set_openSubMenu("none")}
-// else{set_openSubMenu(name);}
-  
-// };
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);

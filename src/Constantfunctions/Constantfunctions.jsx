@@ -77,7 +77,7 @@ useEffect(() => { const interval = setInterval(() => { checkExpiryDate(expiryDat
 const check_main_process_status = async () =>{
   if(backEndURL === undefined){return}
   try{
-           const res = await axios.get(`${backEndURL}/process/process-status`);
+           const res = await axios.get(`${backEndURL}/process/check-interval-status`);
             if (res){ set_isMainProcessWork(res.data);
 
 console.log( "check_main_process_status22" , res.data);
@@ -103,7 +103,7 @@ if(res.data === false)
 
 
 
-          catch(err){  console.log("process-status" ,err);}}
+          catch(err){  console.log("check-interval-status" ,err);}}
 
 async function got_to_check_and_active_interval_of_python  () {
 

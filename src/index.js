@@ -42,7 +42,7 @@ export default function App() {
      
       <Routes>
            <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route path="login" element={<Login   set_show_SideBar={set_show_SideBar}/>} />
+          <Route path="login" element={<Login                  show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar}/>} />
           <Route path="resourcegroup" element={<ResourceGroup  show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
           <Route path="dashboard"     element={<DashBoard      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
           <Route path="results"      element={<Results         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   set_notification_number={set_notification_number}     />} />
