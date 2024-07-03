@@ -85,7 +85,7 @@ function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visble
 
  
 
-{/* {show_only_this_tools?.map((Info) =>(Info.toolType === "module"))?.length != 0    &&  */}
+
 <div className="display-flex mb-b mt-b"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Artifact collectors</p></div>
 
 
@@ -104,10 +104,10 @@ function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visble
 <PreviewBox_velociraptor />
  
   {/* modules */}
-{show_only_this_tools.length !== undefined   &&  typeof show_only_this_tools !== "string" && ( <>
+{show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
-{Info?.toolType === "module"   &&  Info?.tool_id !== "2000000" &&  Info?.ShowInUi &&     
+{Info?.toolType === "module"   &&  Info?.tool_id != "2000000" &&  Info?.ShowInUi &&     
  
 <PreviewBox_type_module
  Info={Info}
@@ -149,7 +149,8 @@ all_Tools={all_Tools}
  
 </div>
 
-{show_only_this_tools?.map((Info) =>(Info.toolType === "link"))?.length != 0    && 
+
+{show_only_this_tools?.map((Info) => (Info.toolType === "link"))?.length != 0 && 
 <div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Modules</p></div>
 }
 
@@ -161,10 +162,10 @@ all_Tools={all_Tools}
 
 
  {/* Tools_a */}
-{show_only_this_tools.length !== undefined   &&  typeof show_only_this_tools !== "string" && ( <>
+{show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
-{Info?.toolType === "link" && Info?.BoxType === "Tools_a"   &&  Info?.tool_id !== "2000000" &&  Info?.ShowInUi &&     
+{Info?.toolType === "link" && Info?.BoxType === "Tools_a"  &&  Info?.ShowInUi &&     
   
 <PreviewBox_type_module
  Info={Info}
@@ -189,10 +190,10 @@ all_Tools={all_Tools}
 
 
 {/* Tools_b */}
-{show_only_this_tools.length !== undefined   &&  typeof show_only_this_tools !== "string" &&( <>
- {Array.isArray(show_only_this_tools) &&  show_only_this_tools?.map((Info, index) =>(
+{show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
+    {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
-{Info?.toolType === "link" && Info?.BoxType === "Tools_b"   &&  Info?.tool_id !== "2000000" &&   Info?.ShowInUi &&         
+{Info?.toolType === "link" && Info?.BoxType === "Tools_b"  &&  Info?.ShowInUi &&        
   
 <PreviewBox_type_module
 // show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}

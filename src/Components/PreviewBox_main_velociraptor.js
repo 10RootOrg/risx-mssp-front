@@ -19,7 +19,7 @@ function PreviewBox_velociraptor({  }) {
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
-  const {  backEndURL ,all_artifacts,set_all_artifacts,all_Tools} = useContext(GeneralContext);
+  const {  backEndURL ,all_artifacts,set_all_artifacts,all_Tools,front_IP} = useContext(GeneralContext);
   const [popUp_show, set_popUp_show] = useState(false);
   const [popUp_headline, set_popUp_headline] = useState("");
   const [popUp_ReadMoreText, set_popUp_ReadMoreText] = useState("");
@@ -50,6 +50,29 @@ function PreviewBox_velociraptor({  }) {
 
     set_popUp_show(true);
   }
+
+
+
+  const handle_Main_Btn =(toolURL)=>{
+console.log("handle_Main_Btn",toolURL);
+    if(  toolURL.includes("${FRONT_IP}")){
+      const realURl = toolURL.replace("${FRONT_IP}", front_IP);
+     
+      
+      window.open(realURl, '_blank')
+    
+    
+    }
+    else{
+     
+      window.open(toolURL, '_blank')
+    }
+     
+    
+ 
+         
+      }
+
 
 
 
@@ -307,7 +330,7 @@ disabled={disabled}
 )}
 
 <div className=' '>
-<button className="btn-type2" onClick={() => window.open(toolURL, '_blank')}>
+<button className="btn-type2" onClick={()=>handle_Main_Btn(toolURL)}>
       <p className='font-type-menu'>Site</p>
     </button>
     </div>
@@ -325,7 +348,6 @@ disabled={disabled}
  
    </div>
 
-     
     </div>  
     
 

@@ -1,5 +1,5 @@
 import React , {useState , useEffect ,useContext,useRef } from 'react';
-// import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type2_pie,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
+ 
 
 
 import axios from 'axios';

@@ -61,9 +61,8 @@ const status_bar_width = "140px"
 
 
   const  get_Json_single_response = async(Info)=>{
-
+ 
     try{
-     console.log(Info);
      if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
     const params = {file_name : Info?.ResponsePath }
     
@@ -165,10 +164,16 @@ if(Info.Status  === "Failed"   ){
   set_PopUp_Request_info__show(true)
   return}
 
-else if( Info.Status   == null || Info.Status  == "" ||    Info.Status   == undefined ){
+else if( Info.Status   == null || Info.Status  == "" ||    Info.Status   == undefined  ){
 set_PopUp_Request_info__txt({ HeadLine:"Status undefined", paragraph:"When the mission status will be clear, we can refer to the results", buttonTitle:"Close" })
 set_PopUp_Request_info__show(true)
 return}
+
+else if(   Info.Status   == "In Progress" ){
+  set_PopUp_Request_info__txt({ HeadLine:"In Progress", paragraph:"The progress is running, please wait for results", buttonTitle:"Close" })
+  set_PopUp_Request_info__show(true)
+  return}
+
 
 if (Info.Status  === "Complete"){  get_Json_single_response(Info);  return}
 else{ return;  }
@@ -229,15 +234,21 @@ console.log("default");
 }
 
 
-useEffect(() => {
-  // Sorting the array and updating the state with the sorted array
-  const sortedResults = [...Preview_this_Results].sort((a, b) => {
-    const dateA = new Date(a. response_time);
-    const dateB = new Date(b. response_time);
-    return dateB - dateA;  
-  });
-  set_Preview_this_Results(sortedResults);
-}, [ ]); // This will re-sort the array whenever Preview_this_Results changes
+// useEffect(() => {
+//   const sortedResults = [...Preview_this_Results].sort((a, b) => {
+//     const datePartsA = a.StartDate.split('-').map(part => parseInt(part));
+//     const datePartsB = b.StartDate.split('-').map(part => parseInt(part));
+    
+//     // Create Date objects from parts
+//     const dateA = new Date(datePartsA[2], datePartsA[1] - 1, datePartsA[0], datePartsA[3], datePartsA[4], datePartsA[5]);
+//     const dateB = new Date(datePartsB[2], datePartsB[1] - 1, datePartsB[0], datePartsB[3], datePartsB[4], datePartsB[5]);
+    
+//     // Sort descending (latest date first)
+//     return dateB - dateA;
+//   });
+  
+//   set_Preview_this_Results(sortedResults);
+// }, [Preview_this_Results]);
 
 
 

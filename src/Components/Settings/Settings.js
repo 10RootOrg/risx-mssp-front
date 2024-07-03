@@ -1,6 +1,5 @@
 import React , {useState , useEffect ,useContext} from 'react';
-// import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type2_pie,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
-
+ 
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import axios from 'axios';
 import './../Settings/Settings.css';
@@ -53,17 +52,7 @@ console.log("all_Tools",all_Tools);
 
 <div className='resource-group-top-boxes mb-c' >
 
-{/* <PreviewBox_type1_number
-HeadLine="Total Request Count"
-resource_type_id={null}
-description_short="All Resource"
-BigNumber={7}
-SmallNumber={0}
-StatusColor={"blue"}
-date={"15-5-2024 14:44"}
-filter_Resource={filter_Resource}
-set_filter_Resource={set_filter_Resource}
-/> */}
+ 
 
  
  </div>

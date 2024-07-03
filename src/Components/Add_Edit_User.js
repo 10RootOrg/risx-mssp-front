@@ -19,7 +19,11 @@ import GeneralContext from '../Context.js';
                     set_PopUp_All_Good__txt,
                     set_PopUp_All_Good__show,
                     set_PopUp_Are_You_Sure__txt,
-                    set_PopUp_Are_You_Sure__show
+                    set_PopUp_Are_You_Sure__show,
+                    Preview_this_Results,
+                    set_Preview_this_Results,
+                    
+
                   } = props;
 
 const {   backEndURL,get_all_resource_types} = useContext(GeneralContext)
@@ -245,6 +249,49 @@ const [error_message, set_error_message] = useState("");
 
 //     }
 
+ 
+function handle_Registration_Successful(new_id){
+  console.log("handle_Registration_Successful");
+    set_error_message("");
+
+  
+
+const new_User = {
+    user_id: new_id,
+    type: "type1",
+    email: email,
+    Address:"",
+    state: "",
+    user_name: user_name,
+    // user_password: "12345678",
+    // can_watch: true,
+    // can_edit: true,
+    phone_number: "+972-37763688",
+    name: "First User",
+    last_login:  "",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+}
+
+    set_Preview_this_Results([...Preview_this_Results, new_User])
+
+    set_PopUp_All_Good__txt({
+      HeadLine:"Success",
+      paragraph:"Registration successful",
+      buttonTitle:"Close"
+    });
+
+
+
+
+    set_PopUp_All_Good__show(true);
+
+    handleClose();
+ 
+
+
+  }
+
   const handleRegister = async (e) => {
     // if (e && e.preventDefault) {
     //   e.preventDefault();
@@ -270,7 +317,10 @@ const [error_message, set_error_message] = useState("");
 
 
       if (response.data.success) {
-        alert('Registration successful! Please log in.');
+        const new_id =  response.data.new_id
+       
+        handle_Registration_Successful(new_id);
+        // alert('Registration successful! Please log in.');
         // navigate('/login');
       } else {
         set_error_message(response.data.message);
@@ -298,6 +348,10 @@ const [error_message, set_error_message] = useState("");
     return (
       <>
    
+
+
+
+
 
 
  {popUp_show && (

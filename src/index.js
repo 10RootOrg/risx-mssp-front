@@ -36,7 +36,7 @@ export default function App() {
       <ContextProvider> 
          <BrowserRouter>
 
-    {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}notification_number={notification_number} set_notification_number={set_notification_number} isMainProcessWork={isMainProcessWork} />  }
+    {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}   notification_number={notification_number} set_notification_number={set_notification_number} isMainProcessWork={isMainProcessWork} />  }
     < Constantfunctions  isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork} />
   
      

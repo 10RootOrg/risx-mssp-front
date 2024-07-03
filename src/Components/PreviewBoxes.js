@@ -98,13 +98,16 @@ else{
   }
 
 function PreviewBox_type0_static({
-  HeadLine,BigNumber,
-  SmallNumber,StatusColor,
-  date, resource_type_id ,
-  description_short,
-  filter_Resource,
-  set_filter_Resource,
-  text_under_big_number
+
+ BigNumber,
+ text_under_big_number,
+  // HeadLine,
+  // SmallNumber,StatusColor,
+  // date, resource_type_id ,
+  // description_short,
+  // filter_Resource,
+  // set_filter_Resource,
+  
   }) {
    
 
@@ -139,10 +142,12 @@ SmallNumber,StatusColor,
 date, resource_type_id ,
 filter_Resource,
 set_filter_Resource,
- 
+SmallNumberTxt,
+is_popup,
+txt_color
  
 }) {
- 
+
   const [isHovered, setIsHovered] = useState(false);
   const [is_Filtering, set_is_Filtering] = useState(false);
 
@@ -221,8 +226,13 @@ const handleLeave = () => {
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
 
+
+  
+
+
+
   return (
-    <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}`}
+    <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
     // className={`box ${isFocused ? 'focused' : ''}`}
     // is_Filtering
       onClick={()=>{handle_filter_by_Type(resource_type_id) }}
@@ -232,15 +242,16 @@ const handleLeave = () => {
     <div className='PreviewBox_HeadLine' >
       <p  className="font-type-menu" >{HeadLine}</p>
 
- <div className={`${StatusColorClass}  light-bulb-type1`}/>
-
-       </div>
+ <div className={`${StatusColorClass}  light-bulb-type1`} style={{backgroundColor:  isHovered ? "#00DBFF" : (txt_color || "")}}/>
+ 
+       </div> 
 
 
     <div> 
      
-    <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered} /> </div>
-    <div className='PreviewBox_SmallNumber   font-type-txt Color-White' >UnActive:{SmallNumber}</div>
+    <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
+    <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
+}} >{SmallNumberTxt}: {SmallNumber}</div>
     </div>
 
      <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
@@ -255,7 +266,9 @@ const handleLeave = () => {
   )
 }
 
-function PreviewBox_type2_pie({HeadLine , bar_numbers, bar_headlines, bar_title_legend}) {
+ 
+
+function PreviewBox_type2_pie({HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup }) {
  
 const [has_data, set_has_data]= useState(false)
 // const bar_numbers_zero = [1]
@@ -319,7 +332,7 @@ useEffect(() => {
   
   };
     return (
-      <div className='PreviewBox PreviewBox-twice-size' >
+<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
   
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
@@ -365,13 +378,25 @@ return(
     )
   }
 
-function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_legend}) {
+function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_legend ,is_popup, display_y_axis ,colors }) {
  
-  const backgroundColors = bar_numbers.map((item, index, array) => {
+
+  const BasicColors = bar_numbers.map((item, index, array) => {
     const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
     return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
   });
-  
+ 
+  const AlertColors = [
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Red'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange-Red'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Yellow')
+  ];  
+
+
+ 
+
+
   const data ={
     // labels: ['Yes', 'No'],
     labels:   bar_headlines,
@@ -379,7 +404,15 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
     datasets:[{
       label:bar_title_legend,
       data: bar_numbers,
-      backgroundColor:backgroundColors,
+      backgroundColor:    (() => {
+        if (colors === "Basic") {
+          return BasicColors;
+        } else if (colors === "Alert") {
+          return AlertColors;
+        } else {
+          return BasicColors; // default case
+        }
+      })(),
       borderWidth:0,
       borderRadius: 100,
       barPercentage: 1.0,
@@ -409,7 +442,7 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
         },
       },
       y: {
-        display: true,  
+        display: display_y_axis,  
         beginAtZero: true,
         grid: {
           display: false,  
@@ -425,7 +458,7 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
   
   };
     return (
-      <div className='PreviewBox PreviewBox-twice-size' >
+<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
   
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
@@ -440,7 +473,15 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
   {Array.isArray(bar_headlines) &&  bar_headlines?.map((Info, index) => {
 return(
 <div className='display-flex' style={{marginRight:"auto"}} key={index}>
-<div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+
+  {colors === "Basic" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+  }
+  {colors === "Alert" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
+  }
+ 
+
 <p className='   font-type-txt Color-White  ' >{Info} </p>
 </div>
 )
@@ -468,7 +509,7 @@ return(
           </div>
     )
   }
-  
+ 
 function PreviewBox_type4_legend2({HeadLine ,Status_Legend}) {
 
 const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Legend?.inProgress_not_InTime_Count
@@ -531,7 +572,33 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             )
           }
    
+          function PreviewBox_type5_table({ HeadLine, bar_numbers, bar_headlines, bar_title_legend, is_popup, Artifact, HuntID, Status, Error }) {
+            return (
+                <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
+                    <div className='PreviewBox_HeadLine'>
+                        <p className="font-type-menu">{HeadLine}</p>
+                    </div>
+                    <div className='display-flex justify-content-space-between' style={{ height: "100%" }}>
+                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys' style={{ gap: "6px"  }}>
+                            <p className='font-type-txt Color-White'>Artifact</p>
+                            <p className='font-type-txt Color-White'>Hunt ID</p>
+                            <p className='font-type-txt Color-White'>Status</p>
+                            <p className='font-type-txt Color-White'>Error</p>
+                        </div>
+                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-values' style={{ gap: "6px" }}>
+                            <p className='font-type-txt Color-White'>{Artifact}</p>
+                            <p className='font-type-txt Color-White'>{HuntID}</p>
+                            <p className='font-type-txt Color-White'>{Status}</p>
+                            <p className='font-type-txt Color-White'>{Error}</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
           
+
+
 function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_this_tools, dont_show_this_tools2, set_dont_show_this_tools2}) {
  
  
@@ -965,4 +1032,4 @@ disabled={disabled}
   )
 }
 
-export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar,   PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module};
+export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module};

@@ -29,10 +29,7 @@ const [user_name, set_user_name] = useState("user")
 // const [notification_number, set_notification_number] = useState(0)
 const {backEndURL,user_id} =useContext(GeneralContext)
 
-
-
 const [isHovered, setIsHovered] = useState(false);
-
 
 const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
 const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
@@ -52,9 +49,6 @@ const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
 
 const [download_drop_down, set_download_drop_down] = useState(false);
 
- 
-
- 
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
@@ -64,45 +58,6 @@ const handleClick = (page_name) => {
 };
 
 
-
-
-
- 
-
-
-// const countVelociraptorResponses = async () => {
-//   try {
-   
-//     const res = await axios.get(`${backEndURL}/results/count-responses-files`);
- 
-
-//     if (res) {
-//       const list  = res.data.number
-
-
-//       const listResults =  list
-//       const seeResults =  localStorage.getItem(user_id + '_seeResults');
-
-//       console.log(parseFloat(seeResults));
-     
-//    if(parseFloat(seeResults) != listResults){
-// const note_gap  = listResults - parseFloat(seeResults)
-// set_notification_number(note_gap)
-//    }
-// else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
-
-//       // console.log(parseFloat(seeResults) === listResults);
-//       // console.log(parseFloat(seeResults) < listResults);
-
-
-//       // set_notification_number
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-
 const handle_download_drop_down =  () => {
   set_download_drop_down(!download_drop_down)
   
@@ -110,9 +65,7 @@ const handle_download_drop_down =  () => {
 
 const handleDownload = async () => {
   window.open( "https://docs.velociraptor.app/downloads/"  , '_blank');
-   
 };
-
 
 
 const handle_click_user = async () => {
@@ -159,10 +112,6 @@ useEffect(() => {
     console.log('No username found in local storage.');
   }
 }, []); 
-
-
-
-
 
 
 
@@ -281,37 +230,17 @@ False_action={handle_Close_PopUp_Are_You_Sure}
  </div>
 <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
 
- {/* 
 
-<div style={{width:"100%"  }} >
-<button className="btn-menu "  style={{marginBottom:"var(--space-a)"}}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-  onClick={handle_active_interval_process}
->  
-        <div className='display-flex'>
-          <IconLastRun className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu'>Output:
-            {isMainProcessWork && !isHovered &&   <span className='font-type-menu Color-Blue-Glow ml-a'>on</span>}
-            {isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Orange ml-a'>turn off</span>}
-            {!isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Blue-Glow ml-a'>turn on</span> }
-            {!isMainProcessWork && !isHovered &&  <span className='font-type-menu Color-Orange ml-a'>off</span>}
-         </p>
-        
-            </div> 
-       <div className="btn-menu-icon-placeholder  "> </div> 
-</button>  
 
-<button className="btn-menu"  onClick={handle_active_manual_process}>  
-        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
-       <div className="btn-menu-icon-placeholder  "> </div> 
-</button>  
-</div> */}
-<button className="btn-menu"  onClick={handle_active_manual_process}>  
+ 
+  <button className="btn-menu"  onClick={handle_active_manual_process}>  
         <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
        <div className="btn-menu-icon-placeholder  "> </div> 
 </button>  
 <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+
+ 
+
 
 
 {/* download_drop_down */}
@@ -372,3 +301,65 @@ False_action={handle_Close_PopUp_Are_You_Sure}
   }
   
   export default SideBar;
+
+
+   {/* 
+
+<div style={{width:"100%"  }} >
+<button className="btn-menu "  style={{marginBottom:"var(--space-a)"}}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+  onClick={handle_active_interval_process}
+>  
+        <div className='display-flex'>
+          <IconLastRun className="btn-menu-icon-placeholder  mr-a " />
+          <p className='font-type-menu'>Output:
+            {isMainProcessWork && !isHovered &&   <span className='font-type-menu Color-Blue-Glow ml-a'>on</span>}
+            {isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Orange ml-a'>turn off</span>}
+            {!isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Blue-Glow ml-a'>turn on</span> }
+            {!isMainProcessWork && !isHovered &&  <span className='font-type-menu Color-Orange ml-a'>off</span>}
+         </p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> </div> 
+</button>  
+
+<button className="btn-menu"  onClick={handle_active_manual_process}>  
+        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
+       <div className="btn-menu-icon-placeholder  "> </div> 
+</button>  
+</div> */}
+
+
+// const countVelociraptorResponses = async () => {
+//   try {
+   
+//     const res = await axios.get(`${backEndURL}/results/count-responses-files`);
+ 
+
+//     if (res) {
+//       const list  = res.data.number
+
+
+//       const listResults =  list
+//       const seeResults =  localStorage.getItem(user_id + '_seeResults');
+
+//       console.log(parseFloat(seeResults));
+     
+//    if(parseFloat(seeResults) != listResults){
+// const note_gap  = listResults - parseFloat(seeResults)
+// set_notification_number(note_gap)
+//    }
+// else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
+
+//       // console.log(parseFloat(seeResults) === listResults);
+//       // console.log(parseFloat(seeResults) < listResults);
+
+
+//       // set_notification_number
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+

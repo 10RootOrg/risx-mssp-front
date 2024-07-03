@@ -66,7 +66,7 @@
   --color-Grey1: #AEB3BC; 
   --color-Grey2: #525C70; 
   --color-Grey3: #303e58; 
-  --color-Grey4: #283349; 
+  --color-Grey4: #2D3A50; 
   --color-Grey5: #242E42; 
   --color-DB-Blue-Glow: #00DBFF; 
   --color-DB-Blue-low: #00ddff15; 
@@ -74,9 +74,10 @@
   /* --color-DB-Blue-Hover: #00DBFF45;  */
   --color-DB-Blue-Hover: rgb(0, 221, 255,0.15);
   --color-DB-Blue-Hover-Real: rgb(0, 221, 255,0.45);
-  --color-Red: #FF0000; 
-  --color-Orange: #ffbb00; 
-  --color-Yellow: #FFFF00; 
+  --color-Red: rgb(255, 0, 0); 
+  --color-Orange-Red: rgb(255, 80, 0); 
+  --color-Orange: rgb(255, 170, 0); 
+  --color-Yellow: rgb(255, 255, 0); 
   --color-Green: #00FF00; 
   --popups-round-corner: 30px;
   --boxes-round-corner: 15px;
@@ -102,6 +103,7 @@
   
 }
 .Color-Red{color: var(--color-Red);}
+.Color-Orange-Red{color: var(--color-Orange-Red);}
 .Color-Orange{color: var(--color-Orange);}
 .Color-White{color: var(--color-White);}
 .Color-Grey1{color: var(--color-Grey1);}
@@ -119,6 +121,7 @@
 .Bg-Green{background-color:var(--color-Green)}
 .Bg-Yellow{background-color:var(--color-Yellow)}
 .Bg-Orange{background-color:var(--color-Orange)}
+.Bg-Orange-Red{background-color:var(--color-Orange-Red)}
 .Bg-Red{background-color:var(--color-Red)}
 
 .Bg-Grey1{background-color:var(--color-Grey1)}
@@ -194,11 +197,12 @@ p{color: var(--color-White);
   font-style: normal;
 }
 .font-type-h1{
-  font-size: 52px;
+  font-size: 56px;
   margin: 0;
   font-family: "Roboto", sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-style: normal; 
+ 
 }
 
 .reading-height{

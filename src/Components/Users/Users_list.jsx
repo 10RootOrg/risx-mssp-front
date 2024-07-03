@@ -91,7 +91,8 @@ set_PopUp_All_Good__show={set_PopUp_All_Good__show}
 set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
 set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 user_Info={user_Info}
- 
+Preview_this_Results={Preview_this_Results}
+set_Preview_this_Results={set_Preview_this_Results}
 
 
        />}
@@ -145,6 +146,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 <div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Email</p></div>
 <div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Type</p></div>
 <div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>State</p></div>
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Created</p></div>
 <div className='resource-group-list-item list-item-small' style={{marginRight:"26px"}}><p className='font-type-menu  make-underline Color-Grey1 '>Last Login</p></div>
 {/* <div className='its-only-space-for-the-scroller    '/>  */}
 </div>
@@ -159,6 +161,11 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.email }</p> 
 <div className='resource-group-list-item display-flex list-item-small' > <p className="font-type-txt   Color-Blue-Glow tagit_type1">{Info?.type === "type1" && "Admin"}{Info?.type === "type2" && "Editor"} {Info?.type === "type3" && "Viewer"}</p> </div>
  <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.state}</p> 
+ <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'> { Info?.createdAt &&  format_date_type_a(Info?.createdAt)}</p> 
+
+
+
+ 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.last_login &&  format_date_type_a(Info?.last_login)}</p> 
 
 </div>

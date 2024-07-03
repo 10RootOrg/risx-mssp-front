@@ -1,5 +1,5 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type2_pie,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
+import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
 import Results_all from '../Results/Results_all.jsx'
 
 
@@ -218,6 +218,7 @@ bar_headlines = {  counts?.map(item => Object.keys(item) )  }
 // bar_numbers = {[ "11","22","41","5"]}
 // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
 bar_title_legend = {"Count"}
+is_popup = {false}
 /> */}
 
  
@@ -232,6 +233,9 @@ bar_headlines = {  counts?.map(item => Object.keys(item) )  }
 // bar_numbers = {[ "11","22","41","5"]}
 // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
 bar_title_legend = {"Count"}
+is_popup = {false}
+display_y_axis = {true}
+colors={"Basic"}
 />
 
  
@@ -240,11 +244,14 @@ bar_title_legend = {"Count"}
 HeadLine="Hunting"
 resource_type_id={null}
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Hunting").length ? (Preview_this_Results?.filter(item => item?.Status == "Hunting").length):(0) }
-SmallNumber={0}
+SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
+
 date={format_date_type_a(last_updated?.Hunting) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+txt_color={""}
 />
 
 
@@ -253,22 +260,26 @@ set_filter_Resource={set_filter_Resource}
 HeadLine="ALL Requests"
 resource_type_id={null}
 BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-SmallNumber={0}
+SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={format_date_type_a(last_updated?.Total) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+txt_color={""}
 />
 
 <PreviewBox_type1_number
 HeadLine="Complete"
 resource_type_id={null}
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Complete").length? (Preview_this_Results?.filter(item => item?.Status == "Complete").length):(0) }
-SmallNumber={0}
+SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={format_date_type_a(last_updated?.Complete) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+txt_color={""}
 /> 
 
  

@@ -7,8 +7,13 @@ import lottie from 'lottie-web';
 import animationData from '../Components/Logos/Risx-mssp-logo-anim.json';
 
 function TestPage() {
-const backEndURL = "http://localhost:5000"
-      
+const backEndURL = "http://40.69.58.105:5555"
+const [backendData, set_backendData]= useState([{}])   
+    
+const [Resources, set_Resources]= useState([])   
+
+
+
 
 const get_all_tabels= async()=>{
     console.log("getAlldata");
@@ -21,13 +26,6 @@ const get_all_tabels= async()=>{
         {console.log(err);}
     }
 
-// const event = new Date('06 04, 2024 18:29:30');
-// console.log(event);
-// console.log(event.toTimeString());
-
-// const event2 = new Date('06 04, 2024 18:29:30');
-// console.log(event2);
-// console.log(event2.toTimeString());
 
 
 function string_to_date(dateString){
@@ -110,57 +108,123 @@ useEffect(() => {
 
 
 
-    const [backendData, set_backendData]= useState([{}])   
+
+
+
+
+
+
+
+
+const change_table_risx= async()=>{
+
+const toolData = {
+    tool_id: "1100",
+        tool_name: "velociraptor",
+        artifacts: ["Hardening Kitty"],
+
+    };
+
+try{
+    const res = await axios.put(`${backEndURL}/tools/tmp1`,{params:toolData} );
+    console.log("res.data", res.data);
+
     
-    const [Resources, set_Resources]= useState([])   
+        }catch(err)
+        {console.log(err);}
+}
 
- 
-    const change_table_risx= async()=>{
 
-        const toolData = {
-            tool_id: "1100",
-             tool_name: "velociraptor",
-             artifacts: ["Hardening Kitty"],
-     
-            };
-   
-        try{
-            const res = await axios.put(`${backEndURL}/tools/tmp1`,{params:toolData} );
-           console.log("res.data", res.data);
-       
-           
-               }catch(err)
-               {console.log(err);}
-        }
+const make_json_to_v_raptor= async()=>{
+const time = new Date()
+const toolData = {
+    tool_id: "1100",
+        tool_name: "velociraptor",
+        artifacts: ["Hardening Kitty"],
+        time: time
+    };
+// const Jason_to_nof = JSON.stringify(obj);
+
+
+try{
+    const res = await axios.get(`${backEndURL}/tools/active-tool`,{params:toolData} );
+    console.log("res.data", res.data);
+
     
-
-
-
-    const make_json_to_v_raptor= async()=>{
-        const time = new Date()
-        const toolData = {
-            tool_id: "1100",
-             tool_name: "velociraptor",
-             artifacts: ["Hardening Kitty"],
-             time: time
-            };
-        // const Jason_to_nof = JSON.stringify(obj);
-
-        
-        try{
-            const res = await axios.get(`${backEndURL}/tools/active-tool`,{params:toolData} );
-           console.log("res.data", res.data);
-       
-           
-               }catch(err)
-               {console.log(err);}
-        }
+        }catch(err)
+        {console.log(err);}
+}
 
 
 const app_get_all= async()=>{
 console.log("getAlldata");
+try{
+const res = await axios.get(`${backEndURL}/Resources`);
+console.log("res.data", res.data);
+console.log("res.data", typeof res.data);
+
+}catch(err)
+{console.log(err);}
+}
+
+const app_post= async()=>{
+try{
+
+    const postData = {
+        Name: "john11",
+        address: "NY"  
+    };
+
+const res = await axios.post(`${backEndURL}/Resources` ,postData );
+console.log("res.data", res.data);
+// console.log("res.data", typeof res.data);
+
+}catch(err)
+
+{
+    
+    
+    console.log(err.response.data);
+    // console.log(err?.response?.data[0]?.message );
+    
+    ;}
+}
+
+const app_delete= async()=>{
+try{
+
+    const resourceId = '222';
+
+const res = await axios.delete(`${backEndURL}/Resources/${resourceId}`);
+console.log("res.data", res.data);
+// console.log("res.data", typeof res.data);
+
+}catch(err)
+
+{
+    
+    
+    console.log(err.response.data);
+    // console.log(err?.response?.data[0]?.message );
+    
+    ;}
+}
+
+const get_All_Resources_filtered= async()=>{
+console.log("get_All_Resources_filtered" );
     try{
- const res = await axios.get(`${backEndURL}/Resources`);
+
+        const type_list =  ['2004']
+        const tool_list =  []
+
+
+        const params ={
+            type_ids:type_list,
+            tool_ids:tool_list
+        }
+    
+
+    const res = await axios.get(`${backEndURL}/Resources/all-resource-filtered`,{ params: params});
 console.log("res.data", res.data);
 console.log("res.data", typeof res.data);
 
@@ -168,64 +232,27 @@ console.log("res.data", typeof res.data);
     {console.log(err);}
 }
 
-const app_post= async()=>{
+const get_json= async()=>{
+    console.log("getAlldata");
+
+
+
         try{
-
-            const postData = {
-                Name: "john11",
-                address: "NY"  
-            };
-
-     const res = await axios.post(`${backEndURL}/Resources` ,postData );
+        const res = await axios.get(`${backEndURL}/tools/dehashed-json`,);
     console.log("res.data", res.data);
-    // console.log("res.data", typeof res.data);
+    console.log("res.data", typeof res.data);
     
         }catch(err)
-
-        {
-           
-            
-            console.log(err.response.data);
-            // console.log(err?.response?.data[0]?.message );
-            
-            ;}
+        {console.log(err);}
     }
 
-const app_delete= async()=>{
-        try{
+const get_XML= async()=>{
+        console.log("getAlldata",backEndURL);
 
-            const resourceId = '222';
 
-     const res = await axios.delete(`${backEndURL}/Resources/${resourceId}`);
-    console.log("res.data", res.data);
-    // console.log("res.data", typeof res.data);
-    
-        }catch(err)
 
-        {
-           
-            
-            console.log(err.response.data);
-            // console.log(err?.response?.data[0]?.message );
-            
-            ;}
-    }
-
-    const get_All_Resources_filtered= async()=>{
-        console.log("get_All_Resources_filtered" );
             try{
-
-                const type_list =  ['2004']
-                const tool_list =  []
-
-
-                const params ={
-                    type_ids:type_list,
-                    tool_ids:tool_list
-                }
-            
-
-         const res = await axios.get(`${backEndURL}/Resources/all-resource-filtered`,{ params: params});
+            const res = await axios.get(`${backEndURL}/tools/get-xml`,);
         console.log("res.data", res.data);
         console.log("res.data", typeof res.data);
         
@@ -233,34 +260,6 @@ const app_delete= async()=>{
             {console.log(err);}
         }
 
-     const get_json= async()=>{
-            console.log("getAlldata");
-
-
-
-                try{
-             const res = await axios.get(`${backEndURL}/tools/dehashed-json`,);
-            console.log("res.data", res.data);
-            console.log("res.data", typeof res.data);
-            
-                }catch(err)
-                {console.log(err);}
-            }
-
-  const get_XML= async()=>{
-                console.log("getAlldata",backEndURL);
-    
-    
-    
-                    try{
-                 const res = await axios.get(`${backEndURL}/tools/get-xml`,);
-                console.log("res.data", res.data);
-                console.log("res.data", typeof res.data);
-                
-                    }catch(err)
-                    {console.log(err);}
-                }
-    
 
 
 const write_to_csv= async()=>{
@@ -279,6 +278,46 @@ const write_to_csv= async()=>{
                     {console.log(err.response.data)}  }
 
 
+
+
+async function get_aggregate_macro_data(SubModuleName,ResponsePath){
+
+if(SubModuleName === undefined){console.log("SubModuleName undefined"); return}
+if(ResponsePath === undefined){console.log("ResponsePath undefined"); return}
+
+        try{ 
+        
+            console.log("get_aggregate_macro_data for ", SubModuleName);
+            const res = await axios.get(`${backEndURL}/results/velociraptor-aggregate-macro`, {
+                params: {
+                    SubModuleName: SubModuleName,
+                    ResponseFile: ResponsePath
+                }
+            });
+
+            // if (res  ) {
+            //     console.log("sssssssssssssssssssssssssssss",  res);
+            // }
+
+            if (res.data.success === false ) {
+                console.log("aggregate_macro_data_from false",  res.data);
+            }
+            
+
+            if (res.data.success === true) {
+                console.log("aggregate_macro_data_from  true",  res.data.data );
+            
+            
+            }
+            
+
+        } catch (err) {
+            console.log(   '----------', err);
+            console.log(err.response?.data?.message || 'An error occurred');
+           }
+        }
+                
+
   return (
     <div >
 
@@ -288,20 +327,20 @@ const write_to_csv= async()=>{
         <div style={{display:"flex", gap:"12px", flexDirection:"column"}}>
 
 
-
-
         
-        <button onClick={change_table_risx}>change_table_risx</button>
+
+<button onClick={()=>get_aggregate_macro_data("HardeningKitty","response_VelociraptorHardeningKitty_01-07-2024-08-38-56")}>get_aggregate_macro_data</button>  
+<button onClick={change_table_risx}>change_table_risx</button>
 <button onClick={make_json_to_v_raptor}> make json to v raptor</button>
 <button onClick={get_json}> get json from david</button>
 <button onClick={app_get_all}> app.get - all</button>
- <button onClick={app_post}> app.post</button>
- <button onClick={app_delete}> app.delete</button>
- <button onClick={get_All_Resources_filtered}> Resources_filtered</button>
+<button onClick={app_post}> app.post</button>
+<button onClick={app_delete}> app.delete</button>
+<button onClick={get_All_Resources_filtered}> Resources_filtered</button>
 
- <button onClick={get_XML}> get_XML</button>
+<button onClick={get_XML}> get_XML</button>
 
- <button onClick={write_to_csv }> write to csv </button>
+<button onClick={write_to_csv }> write to csv </button>
 
 
  <div id="your-animation-container" style={{ width: '50%', height: '100%' }}></div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Counter = ({ target, isHovered  }) => {
+const Counter = ({ target, isHovered  ,txt_color}) => {
   const [count, setCount] = useState(0);
   const [color, setColor] = useState("rgb(229, 229, 229)");
  
@@ -79,8 +79,13 @@ const Counter = ({ target, isHovered  }) => {
     >
       <p
         style={{
-          color: isHovered ? "#00DBFF" : color,
+
+          // color:     isHovered ? "#00DBFF" : color,
+          // color: txt_color  ?   txt_color :  isHovered ? "#00DBFF" : color,
+          color: isHovered ? "#00DBFF" : (txt_color || color),
+
           transition: "color 0.15s ease-in-out",
+          
         }}
       >
         {count}

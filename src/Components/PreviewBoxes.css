@@ -29,6 +29,8 @@ transition: var(--transition-fast);
    min-width: 220px;
    width: 18%;
 }
+
+
 /* .PreviewBox-of-tools:nth-last-child(-n+4) {
   max-width: 22.5%;
  } */
@@ -96,6 +98,30 @@ Color-Grey1 */
     width: 21%; 
     min-width: 260px;
 }
+
+
+
+.PreviewBox-of-pop-up-all{
+  /* background-color: blueviolet; */
+  width: 100%;
+  gap: var(--space-c);
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.PreviewBox-of-pop-up{
+  background:var(--color-Grey4);
+  /* background-color: blueviolet; */
+  width: 15%; 
+  min-width: 220px;
+  /* width: auto; */
+  /* width: 30%; 
+  min-width: 320px; */
+ 
+}
+
+
+
 
 
   .PreviewBox_HeadLine{
@@ -228,8 +254,7 @@ width: 100%; */
 
 .parent-container {
  
- 
-  /* display: flex;
+display: inline;  /* display: flex;
   justify-content: center;
   align-items: center; */
   /* width: 100%;  
@@ -238,13 +263,55 @@ width: 100%; */
 .table_smart_col {
   flex: 1;
   margin-right: 15px;
-  display: block; /* block is generally suitable for <p> */
+  display: inline-block;  
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   height: var(--space-d); /* Ensure this is set to a specific value */
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align:middle;  
   /* width: auto;
   min-width: auto;
   max-width: auto; */
  
+}
+
+
+.pop-up-top-boxes-macro{
+
+ 
+  /* display: inline-flex;
+  align-items: stretch;
+  gap: 12px;
+  justify-content: space-between; */
+  gap: var(--space-c);
+  display: inline-flex;
+  /* flex-wrap: wrap; */
+  /* flex-direction: row; */
+}
+
+.pop-up-basic-data{
+  align-items: start;
+  
+}
+
+.pop-up-basic-data-keys{
+  white-space: nowrap;       /* Prevents the text from wrapping */
+  max-width: 100%;  
+  width:25%; 
+}
+.pop-up-basic-data-values {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+ width:75%;   
+}
+
+.pop-up-basic-data-values p {
+  margin: 0;                /* Remove default margin */
+  white-space: nowrap;      /* Prevents the text from wrapping */
+  overflow: hidden;         /* Hides any overflow beyond the specified width */
+  text-overflow: ellipsis;  /* Displays an ellipsis (...) to represent clipped text */
+  max-width: 100%;          /* Ensure it doesn't overflow horizontally */
 }

@@ -95,16 +95,6 @@ if (backEndURL === undefined){return}
 
 
 
-
-<PreviewBox_type3_bar
-HeadLine="Result Distribution"
-bar_numbers = { counts?.map(item => Object.values(item) ) }
-bar_headlines = {  counts?.map(item => Object.keys(item) )  }
-// bar_numbers = {[ "11","22","41","5"]}
-// bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
-bar_title_legend = {"Count"}
-/>
-
  
  
 

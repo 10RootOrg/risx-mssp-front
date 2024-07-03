@@ -36,10 +36,8 @@ import { ReactComponent as Logo14 } from '../Pages/Login/Images/Timesketch.svg';
 import  './Login.css'
  
 
-// import { PreviewBox_type1_number, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big} from '../PreviewBoxes.js'
- 
-// import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
- 
+  
+  
  
  
  
@@ -314,8 +312,8 @@ else{
  }} 
 
 
- onClick={handleLogin}
-  // onClick={handleClick}
+//  onClick={handleLogin}
+  onClick={handleClick}
   >
     
     
