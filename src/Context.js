@@ -4,15 +4,13 @@ import axios from "axios";
  const GeneralContext = createContext();
 export function ContextProvider  ({ children }) {
   const [backEndURL, set_backEndURL] = useState("");
+  const [front_IP, set_front_IP] = useState("");
   const [moduleLinks, set_moduleLinks] = useState();
+  const [expiryDate, set_expiryDate] = useState("");
   const [examInnterval_minutes, set_examInnterval_minutes] = useState(2);
 
-//for local
-// const backEndURL = "http://localhost:5000"
-//for riskDev
-// const [backEndURL, set_backEndURL] = useState("http://risxserverdev.westeurope.cloudapp.azure.com:5000");
-//for hyperview 85.64.194.88
 
+console.log("backEndURL", backEndURL);
 useEffect(() => {
   const fetchConfig = async () => {
     try {
@@ -26,8 +24,10 @@ useEffect(() => {
 // console.log("config", config);
    set_examInnterval_minutes(config.examInnterval_minutes);
    set_moduleLinks(config.moduleLinks);
-    // set_moduleLinks(config.moduleLinks);
+   set_expiryDate(config.expiryDate);
     set_backEndURL(config.backendUrl);
+
+
     get_all_resource_types();
   } else {
     console.error('Configuration is null.');
@@ -42,7 +42,27 @@ useEffect(() => {
   fetchConfig();
 }, []);
 
- 
+
+
+
+useEffect(() => {
+      if (!backEndURL) return; 
+      const fetchFromENV = async()=>{
+
+         try{
+             const res = await axios.get(`${backEndURL}/config/from_env`);
+             if (res){
+              set_front_IP(res.data?.FRONT_IP);
+              
+                }}
+         catch(err){console.log(err);}
+                     }
+    
+      fetchFromENV();
+}, [backEndURL]);
+
+
+
 
 
 const [all_Resource_Types, set_all_Resource_Types] = useState([]);
@@ -57,6 +77,37 @@ const addToCart = (name,price)=>{
  
 
 
+
+const get_all_tools = async()=>{
+
+if(moduleLinks === undefined){return}
+ 
+  if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
+  if(all_Tools.length  === undefined || all_Tools.length === 0  ){
+    try{
+      const res = await axios.get(`${backEndURL}/tools`);
+      if (res){ 
+          const all_tools_no_links =  res.data
+          // console.log("all_tools_no_links",all_tools_no_links);
+
+all_tools_no_links.forEach(tool => {
+for (let index = 0; index < moduleLinks.length; index++) {
+if ( moduleLinks[index]?.toolID === tool?.tool_id){
+  tool.toolURL =  moduleLinks[index]?.toolURL
+}
+}
+});
+
+console.log("set all moduleLinks", moduleLinks);
+
+
+
+
+          set_all_Tools(all_tools_no_links)   }}
+      catch(err){console.log(err);}
+
+  }
+  }
  
 
 const get_all_resource_types = async()=>{
@@ -71,7 +122,10 @@ const get_all_resource_types = async()=>{
   catch(err){console.log(err);}
               }
 
-useEffect(() => {get_all_resource_types() }, [backEndURL]);
+useEffect(() => {
+  get_all_resource_types();
+  get_all_tools();
+ }, [backEndURL,moduleLinks]);
 
 
   return (
@@ -86,7 +140,9 @@ useEffect(() => {get_all_resource_types() }, [backEndURL]);
       user_id,
       get_all_resource_types,
       moduleLinks,
-      examInnterval_minutes
+      examInnterval_minutes,
+      expiryDate,
+      front_IP
       }} >
       {children}
     </GeneralContext.Provider>

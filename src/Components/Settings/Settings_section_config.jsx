@@ -1,5 +1,5 @@
-import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type2_pie,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
+import React , {useState , useEffect ,useContext,useRef } from 'react';
+ 
 
 
 import axios from 'axios';
@@ -15,7 +15,7 @@ function Settings_section_config({show_SideBar,set_show_SideBar,set_notification
     const [config_save_btn, set_config_save_btn] = useState(false);
     // const [loader , set_loader] = useState(true)
  const {   backEndURL  } = useContext(GeneralContext);
- 
+ const textAreaRef = useRef(null);
  const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] = useState(false);
  const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
    HeadLine:"Are You Sure?",
@@ -53,12 +53,23 @@ const handle_Save_config = () => {
       const res = await axios.put(`${backEndURL}/config`,{config:object});
 
       if (res)
-        
+     
+ 
+
+
         if(res.data?.error === "failed saving config"){
           console.log("error save",res.data?.error);
           return
         }
-      else {console.log("back from backend after save",res.data);}
+else if(res.status === 500){
+  console.log("error save",res.data?.error);
+}
+      else if (res.status === 200){
+        console.log("back from backend 200:",res.data);
+
+ 
+
+        ;}
 
 
 
@@ -90,17 +101,22 @@ const handle_view_or_edit = ()=>{
   set_preview_or_edit(!preview_or_edit)
 }
 
-  const handleTextAreaChange = (event) => {
- console.log("handleTextAreaChange",event?.target?.value);
-    set_config_save_btn(true)
-    try {
+const handleTextAreaChange = (event) => {
+
+console.log(" textAreaRef.current",  textAreaRef.current);
+console.log(" textAreaRef.current.scrollTop", textAreaRef.current.scrollTop);
+  const scrollTop = textAreaRef.current.scrollTop; // Save the scroll position
+  set_config_save_btn(true);
+  try {
       const value = JSON.parse(event.target.value);
       setObject(value);
-    } catch (error) {
-      // Handle parsing error, e.g., display a message to the user
+  } catch (error) {
       console.error('Error parsing JSON:', error);
-    }
-  };
+  }
+  setTimeout(() => {
+      textAreaRef.current.scrollTop = scrollTop; // Restore the scroll position
+  }, 0);
+};
 
   const customTheme = {
     '--w-rjv-font-family': 'roboto',
@@ -148,6 +164,7 @@ const handle_view_or_edit = ()=>{
 
 
   const get_config = async() =>{
+    if(backEndURL === undefined){return};
      try{
       const res = await axios.get(`${backEndURL}/config`);
 
@@ -156,7 +173,7 @@ const handle_view_or_edit = ()=>{
     }
     catch(err){console.log(err);}
         } 
-useEffect(() => {  {get_config()}}, []);
+useEffect(() => {  {get_config()}}, [backEndURL]);
 
 
 
@@ -207,6 +224,7 @@ False_action={handle_Cancel_Save_config}
 
                        <textarea  className="input-type3_settings reading-height  setting_element"   style={{width:"100%"  }} 
                       value={JSON.stringify(object, null, 2)} // Convert object to string for textarea value
+                      ref={textAreaRef}
                       onChange={handleTextAreaChange} // Update object state when textarea content changes
                         placeholder={ 'Description'}></textarea>
  

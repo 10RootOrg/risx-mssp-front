@@ -25,30 +25,32 @@ import { useContext } from "react";
                     set_PopUp_All_Good__show,
                     Preview_this_Resource,
                     set_Preview_this_Resource,
-                  
-
+    
                     set_PopUp_Are_You_Sure__txt,
                     set_PopUp_Are_You_Sure__show
                   } = props;
 
 const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useContext(GeneralContext)
-// console.log("popUp_Add_or_Edit__status",popUp_Add_or_Edit__status);
+
 
 
 
      const [resource_string, set_resource_string] = useState(resourceItem?.resource_string || '');
-  
-
      const [monitoring, set_monitoring] = useState(resourceItem?.monitoring === 1 ? true : false);
-
- 
      const [description, setDescription] = useState(resourceItem?.description || '');
      const [resource_id, set_resource_id] = useState(resourceItem?.resource_id || '');
-     
      const [error_message, set_error_message] = useState("");
+     const [tools_preview, set_tools_preview] = useState(  []);
+
+
+
+console.log("item_tool_list",item_tool_list);
+     console.log("tools_preview ------------------------------",tools_preview);
+     console.log("item_types_list ------------------------------",item_types_list);
+
 
      const Handele_are_you_sure =( ) =>{
-console.log("resource_id" ,resource_id);
+   console.log("resource_id" ,resource_id);
     set_popUp_show(false) /// the add adit popup
       
       set_PopUp_Are_You_Sure__txt({
@@ -63,10 +65,10 @@ console.log("resource_id" ,resource_id);
       
 
   
-
-
     const handle_Types_Checkbox_Change = (e, resourceTypeId) => {
+
       const isChecked = e.target.checked;
+
       if (isChecked) {
         set_item_types_list([...item_types_list, resourceTypeId]); // Add the resourceTypeId to the array
       } else {
@@ -92,6 +94,25 @@ console.log(e.target.checked);
    console.log("item_tool_list" , item_tool_list);
     };
 
+
+    const change_tools_preview_acording_asset_types=()=>{
+if(item_types_list.length === 0 ){ set_tools_preview([]); return}
+
+
+const filtered_tools = all_Tools.filter(tool =>
+  item_types_list.some(item_type =>
+      tool.useResourceType.includes(item_type)
+  )
+);
+set_tools_preview(filtered_tools);
+console.log("filtered_tools",  filtered_tools);
+
+
+    }
+
+    useEffect(() => { change_tools_preview_acording_asset_types(); }, [item_types_list]);
+
+    console.log("item_types_list 222",item_types_list);
 
 // console.log("all_Tools", all_Tools);
 
@@ -127,13 +148,18 @@ console.log(e.target.checked);
 "item_types_list": item_types_list 
       }
  
+
+
  
       if(popUp_Add_or_Edit__status == "add"){ 
-      
+        console.log("data to add =============== ",data);
         const add_resource = async()=>{
           try{
             set_error_message("")
               const res = await axios.post(`${backEndURL}/resources`,data );
+
+if(res){console.log("ssssssssssssss popUp_Add_or_Edit__status sssssssssssssssssssss",res.data);}
+
               if (res?.status === 200){ 
                 console.log("res.data" , res.data[0]);
                set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
@@ -154,7 +180,7 @@ console.log(e.target.checked);
     
     
      else if(popUp_Add_or_Edit__status == "edit"){
-  
+      console.log("data to edit =============== ",data);
 
    const edit_Resouce = async()=>{
     try{
@@ -333,9 +359,11 @@ className="item_info_left"
 
 {/* //////////////////// */}
 
-<div className="item_info_tools_all">
-
-<div className="titles mb-c">
+<div className="item_info_tools_all"
+//  style={{height:"100px"}}
+ >
+{/* {item_types_list.length != 0 &&  } */}
+<div className="titles mb-c"  style={{visibility:item_types_list.length === 0 && "hidden"}}>
 <label className="container" style={{visibility:"hidden"}}> 
 <input type="checkbox" 
 // defaultChecked 
@@ -357,7 +385,10 @@ className="item_info_left"
 <div className="item_info_tools"
  >
  
-{Array.isArray(all_Tools) && all_Tools?.map((Info, index) => {
+
+ {tools_preview?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
+
+{Array.isArray(tools_preview) && tools_preview?.map((Info, index) => {
  
  
 
@@ -381,21 +412,7 @@ className="item_info_left"
   </label>
   </div>
   
- {/* 
-//   ):(
-//     <div style={{  
-//   width: "20px", 
-//   height: "20px",  
-//   display: "flex",  
-//   justifyContent: "center",  
-//   alignItems: "center",  
-//   position: "relative",
-
-//  }}>
-//   <IconCart style={{ zIndex: 22    }}/>
-//   </div>
-//   )}
-*/}
+ 
 
  <div className='column column-small  '>
   

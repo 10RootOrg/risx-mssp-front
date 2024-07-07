@@ -1,5 +1,5 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type2_pie,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
+ 
 
 
 import axios from 'axios';
@@ -9,13 +9,13 @@ import GeneralContext from '../../Context.js';
 import JsonView from '@uiw/react-json-view';
 import {PopUp_All_Good ,PopUp_Are_You_Sure} from '../PopUp_Smart'
 
-function Settings_section_ShowInUi({show_SideBar,set_show_SideBar,set_notification_number}) {
+function Settings_section_ShowInUi({show_SideBar,set_show_SideBar,set_notification_number, }) {
  
     const [preview_or_edit, set_preview_or_edit] = useState(true);
     const [config_save_btn, set_config_save_btn] = useState(false);
     // const [loader , set_loader] = useState(true)
- const {   backEndURL  ,set_all_Tools, all_Tools} = useContext(GeneralContext);
- 
+ const {   backEndURL  ,set_all_Tools,all_Tools } = useContext(GeneralContext);
+ const [loadig, set_loading] = useState(false);
  const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] = useState(false);
  const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
    HeadLine:"Are You Sure?",
@@ -58,8 +58,9 @@ useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 async function  edit_checked (tool_id ,ShowInUi){
   console.log("now is ------------- ", tool_id);
   console.log("change to  --- ---------- ", ShowInUi);
- 
+  if(backEndURL === undefined){return};
   try{
+   
     // set_disable_ShowInUi_btn(true);
     const res = await
     axios.put(`${backEndURL}/tools/show-in-ui`,  {
@@ -91,8 +92,9 @@ async function  edit_checked (tool_id ,ShowInUi){
    }
  
 
+   useEffect(() => {    console.log("change", all_Tools);        }, [all_Tools]);
 
- 
+  
  
 
 
@@ -119,7 +121,7 @@ False_action={handle_Cancel_Save_config}
 <p className='font-type-h4 Color-White mb-c'>UI Settings</p>
  <table className='setting_table  ' style={{lineHeight:"100%"}}>
                    
- <tbody>  
+ <tbody className="tbody_setting">  
             <tr >
                 <td className="setting_descriptions">
                 <p className='font-type-menu Color-White mb-a'>Module Display</p>
@@ -145,7 +147,7 @@ False_action={handle_Cancel_Save_config}
         </thead>
         <tbody>
 
-
+        {loadig ? (<><p>loading</p></>):(<>
           {all_Tools.map((tool ) => (
 
             <tr ey={tool?.tool_id}>
@@ -200,6 +202,9 @@ False_action={handle_Cancel_Save_config}
               
             </tr>
           ))}
+</>)}
+
+          
         </tbody>
       </table>
 

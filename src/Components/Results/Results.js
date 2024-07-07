@@ -1,5 +1,5 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type2_pie,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
+import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
 import Results_all from '../Results/Results_all.jsx'
 
 
@@ -8,43 +8,23 @@ import axios from 'axios';
 import './../ResourceGroup/ResourceGroup.css';
 import GeneralContext from '../../Context.js';
 
-import { format_date_type_a } from '../Features/DateFormat';
+import { format_date_type_a,format_date_type_c } from '../Features/DateFormat';
 
 
-function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
+function Results({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage}) {
+  set_visblePage("Results");
 
-
-    const { all_Tools ,set_all_Tools , backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
+    const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
     const [Preview_this_Results, set_Preview_this_Results] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
-    const [loader , set_loader] = useState(true)
-    const [All_Resource_count , set_All_Resource_count] = useState(0)
-    const [last_update , set_last_update] = useState(0)
+    const [loader , set_loader] = useState(false)
+    const [last_updated , set_last_updated] = useState({default:0})
     const [Status_Legend , set_Status_Legend] = useState({})
     const [counts, setCounts] = useState([]);
 
  
 
-    // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
 
- 
- 
- 
-    useEffect(() => {
-        if(all_Tools.length  === undefined || all_Tools.length === 0 )
-     {
-         const get_all_tools = async()=>{
-             try{
-                 const res = await axios.get(`${backEndURL}/tools`);
-                 if (res){  set_all_Tools(res.data)   }} catch(err){console.log(err);}  
-                
-                
-                
-                
-                }
-       get_all_tools();      
-                     
-     }  }, []);
   // dont show sidebar in this page
     useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 
@@ -53,54 +33,35 @@ function Results({show_SideBar,set_show_SideBar,set_notification_number}) {
 
 
 useEffect(() => { 
-    
 
     const get_all_Results = async()=>{ 
- 
+if (backEndURL === undefined){return}
+  
     try{
-    
         set_loader(true)
         const res = await axios.get(`${backEndURL}/results/get_all_requests_table`);
-        // const old_res = await axios.get(`${backEndURL}/results/all-request-and-response`);
-
-//  console.log("old_res",old_res.data);
-
-        // const res = await axios.get(`${backEndURL}/results/all-velociraptor-results`);
         if (res){
-          console.log("new_res",res.data);
-          console.log("typeof",typeof res.data);
-
-
+          console.log("new_Results --------",res.data);
+          // console.log("typeof",typeof res.data);
 
             if (res.data === undefined) { console.log("no files ..............,"  ); return}
             if (res.data.length == 0) { console.log("no files ..............,"  ); }
       
-          localStorage.setItem(user_id + '_seeResults', res.data.length);
-          set_notification_number(0)
+          localStorage.setItem(user_id + '_seeResults', res.data?.results_list?.length);
+          set_notification_number(0);
+          set_last_updated(res.data?.latest_dates);
+           set_Preview_this_Results(res.data?.results_list);
 
-       
-          // const sortedResults = [...Results].sort((a, b) => {
+
+
+    // const sortedResults = [...Results].sort((a, b) => {
           //   const dateA = new Date(a.response);
           //   const dateB = new Date(b.response);
           //   return dateB - dateA;  
           // });
-
-            console.log("Results ------------------ Results" , res.data.data);
-            
- 
-            set_Preview_this_Results(res.data)
-
-            // set_last_update(format_date_type_a(sortedResults[0]?.response))
+    
             // format_date_type_a
-            // set_last_update
-
-
-
-
-
-
-
-
+     
             // set_All_Resource_count(res.data.length)
             set_loader(false)
     }}
@@ -114,14 +75,21 @@ useEffect(() => {
 
 
 }
-    get_all_Results();  }, [filter_Resource]);
+    get_all_Results();  }, [filter_Resource, backEndURL]);
 
 
 
  
 
+// make statistics to ---  Status Legend
+
 
     useEffect(() => {
+
+if(Preview_this_Results === undefined){return}
+
+
+
       const countOccurrences = () => {
         // console.log("Preview_this_Results" , Preview_this_Results);
         const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
@@ -140,25 +108,46 @@ useEffect(() => {
   // const count__Velo = Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length;
 //  const completed  = Preview_this_Results?.filter(item => item?.Status == "Complete");
 
-const completed_InTime_Count =     (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
-const completed_not_InTime_Count = (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
-const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
-const hunt_not_InTime_Count =      (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
-const Failed_Count =               (Preview_this_Results || []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Failed" ).length : "NA";
+const completed_InTime_Count =     (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
+const completed_not_InTime_Count = (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
+
+const inProgress_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "In Progress"     && item?.TimeNote === "In Time").length : "NA";
+const inProgress_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "in Progress"     && item?.TimeNote  != "In Time").length : "NA";
 
 
-for (let index = 0; index < Preview_this_Results.length; index++) {
+const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
+const hunt_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
+const Failed_Count =               (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Failed" ).length : "NA";
+
  
-  console.log(Preview_this_Results[index]?.LastIntervalDate);
+console.log("Preview_this_Results",Preview_this_Results);
+console.log("inProgress_InTime_Count",inProgress_InTime_Count);
+console.log("inProgress_not_InTime_Count",inProgress_not_InTime_Count);
+
+ 
+
+
+set_Status_Legend({
+  completed_InTime_Count: completed_InTime_Count,
+  completed_not_InTime_Count:completed_not_InTime_Count,
+  inProgress_InTime_Count:inProgress_InTime_Count,
+  inProgress_not_InTime_Count:inProgress_not_InTime_Count,
+  hunt_InTime_Count:hunt_InTime_Count,
+  hunt_not_InTime_Count:hunt_not_InTime_Count,
+  Failed_Count:Failed_Count })
+
+// console.log("Preview_this_Results?.results_list" ,Preview_this_Results  );
+// for (let index = 0; index < Preview_this_Results.length; index++) {
+ 
+//   console.log(Preview_this_Results[index]?.LastIntervalDate);
  
   
-}
+// }
 
 
- console.log("completed_not_InTime_Count",completed_not_InTime_Count);
-set_Status_Legend({completed_InTime_Count: completed_InTime_Count,completed_not_InTime_Count:completed_not_InTime_Count,hunt_InTime_Count:hunt_InTime_Count,hunt_not_InTime_Count:hunt_not_InTime_Count,Failed_Count:Failed_Count })
+//  console.log("completed_not_InTime_Count",completed_not_InTime_Count);
   // console.log("completed" ,completed);
-  console.log(Status_Legend);
+  // console.log(Status_Legend);
   // set_Status_Legend
 
   // set_count_complete(count_complete)
@@ -171,10 +160,8 @@ set_Status_Legend({completed_InTime_Count: completed_InTime_Count,completed_not_
       countOccurrences();
     }, [Preview_this_Results]);
 
- 
-// function  clear_all_btns_filter_preview()=>{()}
 
-
+console.log("last_updated",last_updated);
 
 
     return (
@@ -209,6 +196,7 @@ bar_headlines = {  counts?.map(item => Object.keys(item) )  }
 // bar_numbers = {[ "11","22","41","5"]}
 // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
 bar_title_legend = {"Count"}
+is_popup = {false}
 /> */}
 
  
@@ -223,6 +211,9 @@ bar_headlines = {  counts?.map(item => Object.keys(item) )  }
 // bar_numbers = {[ "11","22","41","5"]}
 // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
 bar_title_legend = {"Count"}
+is_popup = {false}
+display_y_axis = {true}
+colors={"Basic"}
 />
 
  
@@ -230,41 +221,43 @@ bar_title_legend = {"Count"}
  <PreviewBox_type1_number
 HeadLine="Hunting"
 resource_type_id={null}
-description_short="Velociraptor Count"
-// BigNumber={count_veloci ? (count_veloci):(0) }
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Hunting").length ? (Preview_this_Results?.filter(item => item?.Status == "Hunting").length):(0) }
-SmallNumber={0}
+SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 
-date={last_update}
+date={format_date_type_a(last_updated?.Hunting) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+txt_color={""}
 />
 
 
 
 <PreviewBox_type1_number
-HeadLine="Total Request Count"
+HeadLine="ALL Requests"
 resource_type_id={null}
-description_short="All Resource"
-BigNumber={Preview_this_Results.length ? (Preview_this_Results.length):(0) }
-SmallNumber={0}
+BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
-date={last_update}
+date={format_date_type_a(last_updated?.Total) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+txt_color={""}
 />
 
 <PreviewBox_type1_number
 HeadLine="Complete"
 resource_type_id={null}
-description_short="Complete Count"
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Complete").length? (Preview_this_Results?.filter(item => item?.Status == "Complete").length):(0) }
-SmallNumber={0}
+SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
-date={last_update}
+date={format_date_type_a(last_updated?.Complete) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+txt_color={""}
 /> 
 
  
@@ -293,8 +286,8 @@ bar_title_legend = {"Count"}
 <div className='resource-group-all-the-Lists'>
 
 {/*  */}
- <Results_all Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource}/>
-
+ <Results_all Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} />
+ 
  
 
 </div>

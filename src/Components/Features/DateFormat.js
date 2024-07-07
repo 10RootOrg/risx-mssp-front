@@ -1,5 +1,12 @@
 function format_date_type_a(response_String) {
+ 
     const date = new Date(response_String);
+    if (isNaN(date.getTime())) {
+      return "NA"; // Invalid date
+  }
+    // console.log("date",date,   date ===  Invalid Date ,);
+    // if (date != typeof object){return "NA"}
+    // console.log("date",date,response_String);
     const day = String(date.getDate()).padStart(2, '0'); // Ensure two digits with leading zero
     const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure two digits with leading zero
     const year = String(date.getMonth() + 1).padStart(2, '0'); // Ensure two digits with leading zero

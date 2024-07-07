@@ -133,7 +133,18 @@ const handle_Cancel_Delete = () => {
   set_PopUp_Are_You_Sure__show(false)
 };
 
- 
+const  add_resource_item = () =>{
+  console.log("add_resource_item 00");
+
+  set_item_types_list([])
+  set_item_tool_list([])
+
+  set_popUp_Add_or_Edit__status("add")
+  set_popUp_Add_or_Edit__show(true)
+  }
+
+
+
 
 useEffect(() => {
 const sorted = Preview_this_Resource.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -215,14 +226,17 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 
  <ResourceGroup_Action_btns
  
-   set_item_types_list={set_item_types_list}
-   set_item_tool_list={set_item_tool_list}
- set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
- popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
- set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
+ set_item_types_list={set_item_types_list}
+ set_item_tool_list={set_item_tool_list}
+set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
+popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
+set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
 
- items_for_search={Preview_this_Resource}
- set_items_for_search={set_Preview_this_Resource}
+items_for_search={Preview_this_Resource}
+set_items_for_search={set_Preview_this_Resource}
+
+show_btn_add={true}
+btn_add_action={add_resource_item}
 
 
 
@@ -272,18 +286,6 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 {Preview_this_Resource?.length === 0 &&  
 
 <div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-
-{/* <p className='  font-type-txt   Color-Grey1   ' style={{   display:"flex" , alignItems:"center"}}>
- It is recommended to fill in all available resources to get the most features,
-Look for the icon 
-</p> 
-<span  style={{  marginTop:"2px"}}> <IconAdd/></span>
-<p className='  font-type-txt   Color-Grey1   ' style={{   display:"flex" , alignItems:"center"}}>
-in the button bar
-</p> 
-</div> */}
-
-
 <p className='  font-type-txt   Color-Grey1 '   >
 It is recommended to fill in all available resources to get the most features. Look for the icon '
 <span style={{ display: 'inline-flex',  verticalAlign:"middle"}}>
@@ -291,8 +293,6 @@ It is recommended to fill in all available resources to get the most features. L
 </span>
 ' in the button bar.
 </p>
-
-
 </div>
 
 

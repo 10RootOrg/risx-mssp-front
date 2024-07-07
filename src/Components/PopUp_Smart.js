@@ -7,7 +7,7 @@ import { ReactComponent as CloseButton } from '../Components/icons/ico-Close_typ
 import {ReactComponent as SuccessIcon} from '../Components/icons/General-icons-success.svg';
  import {ReactComponent as  CarefulIcon} from '../Components/icons/General-icons-careful.svg';
  import {ReactComponent as  InfofulIcon} from '../Components/icons/General-icons-info.svg';
- 
+ import { ReactComponent as Loader } from '../Components/icons/loader_typea.svg';
  
 // import jsonData from '../tmpjsons/Nuclei.json'
 import axios from 'axios';
@@ -61,7 +61,7 @@ export const PopUp_Request_info = (props) => {
 {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           
-          <div className={`PopUp-content  ${active ? 'popup-enter-active' : 'popup-enter'}`} style={{   width:"250px" ,paddingBottom:" "}}>
+          <div className={`PopUp-content  ${active ? 'popup-enter-active' : 'popup-enter'}`} style={{   width:"auto" ,paddingBottom:" "}}>
 
 <div className="display-flex justify-content-end  " style={{marginRight:"-40px"  }}>
 <button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
@@ -618,3 +618,34 @@ set_Dehashed_data(tmpdata2);
     );
   }
    
+
+  export const PopUp_loader = (props) => {
+    const {  popUp_show, set_popUp_show     } = props;
+    const [active, setActive] = useState(false);
+   
+    // useEffect(() => {
+    //   set_popUp_show(popUp_show)
+    // }, [popUp_show]);
+  
+ 
+ 
+  
+  
+  
+    return (
+      <>
+   
+  
+  
+  {popUp_show && (
+          <div className={`PopUp-background`}  >
+            
+<div className="PopUp-loader"> <Loader/></div>
+           
+ 
+
+          </div>)}
+    
+      </>
+    );
+  }

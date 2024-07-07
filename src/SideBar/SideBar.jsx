@@ -11,8 +11,8 @@ import { ReactComponent as IcoSettings } from '../Components/icons/ico-settings.
 import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
 // import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
 import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
-import { ReactComponent as IconLastRun } from '../Components/icons/ico-lastrun.svg';
-import {PopUp_Error ,PopUp_All_Good,
+import { ReactComponent as IconUsers } from '../Components/icons/ico-menu-users.svg';
+import {PopUp_Error ,PopUp_All_Good,PopUp_Are_You_Sure
   // PopUp_Are_You_Sure
 } from '../Components/PopUp_Smart'
  
@@ -21,18 +21,15 @@ import axios from 'axios';
 
  
  
-function SideBar({ visblePage, set_visblePage, notification_number, set_notification_number}) {
+function SideBar({ visblePage, set_visblePage, notification_number, set_notification_number ,isMainProcessWork, set_isMainProcessWork}) {
 
 const navigate = useNavigate();
-const [openSubMenu, set_openSubMenu] = useState("none")
+// const [openSubMenu, set_openSubMenu] = useState("none")
 const [user_name, set_user_name] = useState("user")
 // const [notification_number, set_notification_number] = useState(0)
 const {backEndURL,user_id} =useContext(GeneralContext)
 
-
-const [isMainProcessWork, set_isMainProcessWork] = useState(true);
 const [isHovered, setIsHovered] = useState(false);
-
 
 const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
 const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
@@ -40,94 +37,36 @@ const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",par
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
 
-
-const handleMouseEnter = () => {
-  setIsHovered(true);
-};
-
-const handleMouseLeave = () => {
-  setIsHovered(false);
-};
-
+const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] = useState(false);
+const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
+  HeadLine:"Are You Sure?",
+  paragraph:"The record will be deleted from the system",
+  buttonTrue:"True",
+  buttonFalse:"False"
+});
 
 
 
+const [download_drop_down, set_download_drop_down] = useState(false);
 
-// const handleSubMenu = (name) => {
-// if (openSubMenu === name ){set_openSubMenu("none")}
-// else{set_openSubMenu(name);}
-  
-// };
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
-
+  localStorage.setItem('visiblePage', page_name); // Store current page in localStorage
   navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name
 
 };
 
 
-const check_main_process_status = async () =>{
-  if(backEndURL === undefined){return}
-  try{
-           const res = await axios.get(`${backEndURL}/process/process-status`);
-            if (res){ set_isMainProcessWork(res.data);}}
-          catch(err){  console.log("process-status" ,err);}}
-
-
-
- useEffect(() => { check_main_process_status();}, [backEndURL]); // for first load
-
-useEffect(() => { const interval = setInterval(() => {check_main_process_status(); },60000);  return () => clearInterval(interval);}, []); 
-
-
- 
-
-
-const countVelociraptorResponses = async () => {
-  try {
-   
-    const res = await axios.get(`${backEndURL}/results/count-responses-files`);
- 
-
-    if (res) {
-      const list  = res.data.number
-
-
-      const listResults =  list
-      const seeResults =  localStorage.getItem(user_id + '_seeResults');
-
-      console.log(parseFloat(seeResults));
-     
-   if(parseFloat(seeResults) != listResults){
-const note_gap  = listResults - parseFloat(seeResults)
-set_notification_number(note_gap)
-   }
-else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
-
-      // console.log(parseFloat(seeResults) === listResults);
-      // console.log(parseFloat(seeResults) < listResults);
-
-
-      // set_notification_number
-    }
-  } catch (err) {
-    console.log(err);
-  }
+const handle_download_drop_down =  () => {
+  set_download_drop_down(!download_drop_down)
+  
 };
-
-
-
 
 const handleDownload = async () => {
   window.open( "https://docs.velociraptor.app/downloads/"  , '_blank');
-   
 };
 
-const handle_active_interval_process = async () => {
-  set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
-  set_PopUp_Error____show(true)
-};
 
 const handle_click_user = async () => {
   set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
@@ -150,8 +89,8 @@ const handle_active_manual_process = async () => {
       set_PopUp_All_Good__txt({ HeadLine:"Activated",paragraph:"A Manual Process has Started to run", buttonTitle:"Close" })
       set_PopUp_All_Good__show(true);
       }
-
-      if(res.data === false){
+   
+      else {
         set_PopUp_Error____txt({ HeadLine:"Error", paragraph: "the Manual process could not be started", buttonTitle:"Close"})
         set_PopUp_Error____show(true)
         }
@@ -173,7 +112,6 @@ useEffect(() => {
     console.log('No username found in local storage.');
   }
 }, []); 
-
 
 
 
@@ -214,6 +152,28 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
  }
 
 
+{/* {PopUp_Are_You_Sure__show &&
+ <PopUp_Are_You_Sure
+ popUp_show={PopUp_Are_You_Sure__show}
+ set_popUp_show={set_PopUp_Are_You_Sure__show}
+
+ HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
+ paragraph={PopUp_Are_You_Sure__txt.paragraph} 
+
+ button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
+ button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
+
+True_action={check_and_active_interval_of_python}
+False_action={handle_Close_PopUp_Are_You_Sure}
+
+ /> } */}
+
+
+
+
+
+
+
 <RisxMsspLogo className="mt-c mb-b"/>
  
 
@@ -237,8 +197,8 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
  
  
  
-<button className="btn-menu  " onClick={()=>handleClick("Dashboard")}   disabled={visblePage === "Dashboard"}>
-        <div className='display-flex'><IcoMonitor className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Dashboard</p></div>
+<button className="btn-menu  " onClick={()=>handleClick("Modules")}   disabled={visblePage === "Modules"}>
+        <div className='display-flex'><IcoMonitor className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Modules</p></div>
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 
@@ -260,14 +220,90 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 
-
+<button className="btn-menu  " onClick={()=>handleClick("Users")}   disabled={visblePage === "Users"}>
+        <div className='display-flex'><IconUsers className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Users</p></div>
+      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
+</button> 
 
 
 
  </div>
+<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
 
 
- <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+
+ 
+  <button className="btn-menu"  onClick={handle_active_manual_process}>  
+        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
+       <div className="btn-menu-icon-placeholder  "> </div> 
+</button>  
+<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+
+ 
+
+
+
+{/* download_drop_down */}
+
+<div className="btn-menu-list"
+  onMouseLeave={()=>set_download_drop_down(false)}
+  //  onMouseEnter={()=>set_download_drop_down(true)}
+   >
+
+
+ <button className={`btn-menu  ${download_drop_down ? 'btn_look_hover' : ''} `} onClick={handle_download_drop_down} >  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
+          <p className='font-type-menu '>Download Agent</p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+
+
+<div className={`dropdown-menu ${download_drop_down ? 'open' : ''}`}>
+<button className="btn-menu  "  onClick={handleDownload}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
+          <p className='font-type-menu '>Windows</p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+
+<button className="btn-menu  "  onClick={handleDownload}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
+          <p className='font-type-menu '>linux</p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+
+<button className="btn-menu  "  onClick={handleDownload}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
+          <p className='font-type-menu '>Mac</p>
+        
+            </div> 
+       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+</div>
+
+
+</div>
+ 
+
+      </div>
+     
+ 
+    );
+  }
+  
+  export default SideBar;
+
+
+   {/* 
 
 <div style={{width:"100%"  }} >
 <button className="btn-menu "  style={{marginBottom:"var(--space-a)"}}
@@ -277,7 +313,7 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
 >  
         <div className='display-flex'>
           <IconLastRun className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu'>Inteval:
+          <p className='font-type-menu'>Output:
             {isMainProcessWork && !isHovered &&   <span className='font-type-menu Color-Blue-Glow ml-a'>on</span>}
             {isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Orange ml-a'>turn off</span>}
             {!isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Blue-Glow ml-a'>turn on</span> }
@@ -285,30 +321,45 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
          </p>
         
             </div> 
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+       <div className="btn-menu-icon-placeholder  "> </div> 
 </button>  
 
 <button className="btn-menu"  onClick={handle_active_manual_process}>  
-        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Manual Activation</p> </div> 
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
+       <div className="btn-menu-icon-placeholder  "> </div> 
 </button>  
-</div>
+</div> */}
 
-<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
 
- <button className="btn-menu  "  onClick={handleDownload}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu '>Download Agent</p>
-        
-            </div> 
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
-</button>  
-
-      </div>
-     
+// const countVelociraptorResponses = async () => {
+//   try {
+   
+//     const res = await axios.get(`${backEndURL}/results/count-responses-files`);
  
-    );
-  }
-  
-  export default SideBar;
+
+//     if (res) {
+//       const list  = res.data.number
+
+
+//       const listResults =  list
+//       const seeResults =  localStorage.getItem(user_id + '_seeResults');
+
+//       console.log(parseFloat(seeResults));
+     
+//    if(parseFloat(seeResults) != listResults){
+// const note_gap  = listResults - parseFloat(seeResults)
+// set_notification_number(note_gap)
+//    }
+// else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
+
+//       // console.log(parseFloat(seeResults) === listResults);
+//       // console.log(parseFloat(seeResults) < listResults);
+
+
+//       // set_notification_number
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+

@@ -1,5 +1,8 @@
-import React , {useState , useEffect} from 'react';
+import React , {useState , useEffect ,useContext} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import GeneralContext from '../Context.js';
+ 
 import { ReactComponent as RisxMsspLogo } from '../Components/Logos/RisxMssp_logo_Standart.svg';
  
 import { ReactComponent as IcoKey } from '../Pages/Login/Images/ico-login-key.svg';
@@ -31,25 +34,30 @@ import { ReactComponent as Logo14 } from '../Pages/Login/Images/Timesketch.svg';
 
 
 import  './Login.css'
-// import { PreviewBox_type1_number, PreviewBox_type2 ,PreviewBox_type_tools_a,PreviewBox_type_tools_b,PreviewBox_type_tools_big} from '../PreviewBoxes.js'
  
-// import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
- 
- 
- 
- 
-function Login({ set_show_SideBar}) {
 
-const [InputUser, set_InputUser] = useState("");
-const [InputPassword, set_InputPassword] = useState("");
+  
+  
+ 
+ 
+ 
+function Login({ set_show_SideBar, show_SideBar}) {
+
+const [input_email, set_input_email]                   = useState("");
+const [input_password, set_input_password] = useState("");
 
 const necessaryUser1  = "DorAmit"
 const necessaryUser2  = "YanivR"
 const necessaryUser3  = "7Ci"
+const necessaryUser4  = "admin@admin"
+const user4password   = "the1Admin"
 const user3password   = "oBf5@$fj!cYT"
 
-const [necessaryPassword , set_necessaryPassword] = useState("123");
+
+
+const  necessaryPassword  = "123" ;
 const [errorMessage , set_errorMessage] = useState("");
+const {   backEndURL } = useContext(GeneralContext)
 
 
 ///for logo animation
@@ -58,16 +66,82 @@ const [activeGroup, setActiveGroup] = useState('logoBulk1');
   
   const navigate = useNavigate();
 
+
+
+
+  const valitator = () => {
+    if (!input_email.trim()) {
+      console.log("Email cannot be empty");
+      set_errorMessage("Email cannot be empty"); return true;
+    }
+   else if (!input_password.trim()) {
+      console.log("Password cannot be empty");
+      set_errorMessage("Password cannot be empty"); return true;
+    }
+    else if (backEndURL === undefined) {
+      console.log("backEndURL undefined");
+      set_errorMessage("backEndURL undefined"); return true;
+    }
+
+    return null; // No error
+  };
+
+
+
+  const handleLogin = async (e) => {
+
+
+    e.preventDefault();
+
+  
+
+    const validationError = valitator();
+
+    if (validationError) { console.log("validationError find problem");  return; }
+
+
+
+ 
+    set_errorMessage("")
+    try {
+      const response = await axios.post(`${backEndURL}/users/login`, {input_email , input_password }, {
+        withCredentials: true // This is important for including cookies in the request
+      });
+      if (response.data.success) {
+        console.log("response.data.success");
+
+        // No need to manually store the token
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        navigate(`/${"Modules"}`); 
+      } else {
+        console.log("response.data.success false");
+
+        set_errorMessage(response.data.message)
+  
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('An error occurred during login.');
+    }
+  }
+
+
+
+
+
+
+
+
     useEffect(() => {
       set_show_SideBar(false) 
-        }, []);
+        }, [show_SideBar]);
       
         const handlePasswordChange = (event) => {
-          set_InputPassword(event.target.value);  
+          set_input_password(event.target.value);  
         };
 
         const handleUserChange = (event) => {
-          set_InputUser(event.target.value);  
+          set_input_email(event.target.value);  
         };
 
 
@@ -75,21 +149,26 @@ const handleClick = (event) => {
 
   event.preventDefault(); // Prevent form submission and page reload
   set_errorMessage("")
-if ( necessaryUser1 === InputUser  && necessaryPassword === InputPassword) {
+if ( necessaryUser1 === input_email  && necessaryPassword === input_password) {
   localStorage.setItem('username', "Dor Amit");  
-  navigate(`/${"dashboard"}`);  
+  navigate(`/${"Modules"}`);  
 }
 
-else if ( necessaryUser2 === InputUser  && necessaryPassword === InputPassword) {
+else if ( necessaryUser2 === input_email  && necessaryPassword === input_password) {
   localStorage.setItem('username', "Yaniv Radunsky");  
-  navigate(`/${"dashboard"}`);  
+  navigate(`/${"Modules"}`);  
 }
 
-else if ( necessaryUser3 === InputUser  && user3password === InputPassword) {
+else if ( necessaryUser3 === input_email  && user3password === input_password) {
   localStorage.setItem('username', necessaryUser3);  
-
-  navigate(`/${"dashboard"}`);  
+  navigate(`/${"Modules"}`);  
 }
+
+else if ( necessaryUser4 === input_email  && user4password === input_password) {
+  localStorage.setItem('username', "Admin");  
+  navigate(`/${"Modules"}`);  
+}
+
 
 else{
   set_errorMessage("Username or Password Incorrect")
@@ -99,6 +178,16 @@ else{
         };
         
 
+
+
+
+
+
+
+
+
+
+        
         useEffect(() => {
           let nextGroup = 'logoBulk1';
           const interval = setInterval(() => {
@@ -136,7 +225,7 @@ else{
    }}/> 
 
 <div className='login-marketing-center'  style={{maxWidth:"740px"}}>
-<h1 className='font-type-h1    Color-Grey5 mb-c'  style={{fontWeight:"600"}}><span className='Color-Blue-Glow'>All-in-one </span>Mssp for improved,<br/>  streamlined Cybersecurity</h1>
+<h1 className='font-type-h1    Color-Grey5 mb-c'  style={{fontWeight:"600"}}><span className='Color-Blue-Glow '>All-in-one </span>Mssp for improved,<br/>  streamlined Cybersecurity</h1>
 <h2 className='font-type-h5 reading-height-less Color-Grey5 mb-e' >Alongside our services, benefit from advanced risk management capabilities, sophisticated threat detection, proactive measures against attacks, and continuous monitoring to prevent data breaches and operational disruptions</h2>
 
 <div className="logosBox-out  ">
@@ -193,11 +282,11 @@ else{
 
 <div className="input-wrapper">
     <IcoUser />
-    <input className="input-type2 mb-a " type="text"  value={InputUser}  onChange={handleUserChange}  placeholder="UserName" autoComplete="off" />
+    <input className="input-type2 mb-a " type="text"  value={input_email}  onChange={handleUserChange}  placeholder="Email" autoComplete="off" />
   </div>
   <div className="input-wrapper">
     <IcoKey />
-    <input className="input-type2 mb-a " type="password"  value={InputPassword}  onChange={handlePasswordChange}   placeholder="PassWord" autoComplete="off" />
+    <input className="input-type2 mb-a " type="password"  value={input_password}  onChange={handlePasswordChange}   placeholder="Password" autoComplete="off" />
   </div>
 
 
@@ -221,7 +310,14 @@ else{
   height:"40px" ,width:"100%"
   // paddingRight:"60px" ,paddingLeft:"45px"
  }} 
-  onClick={handleClick}><p className='font-type-menu '>Log in</p>  </button> 
+
+
+//  onClick={handleLogin}
+  onClick={handleClick}
+  >
+    
+    
+    <p className='font-type-menu '>Log in</p>  </button> 
 <p className='font-type-txt   Color-Red  ' style={{height:"20px", marginBottom:"-4px" ,marginTop:"2px"}}>{errorMessage}</p>
 
 </div>
@@ -247,7 +343,10 @@ else{
 </form>
 
 
-<Login_bar style={{
+<Login_bar 
+
+className="animated-login-bar"
+style={{
   position: "absolute",
   left: "-92px", 
   bottom: "0",

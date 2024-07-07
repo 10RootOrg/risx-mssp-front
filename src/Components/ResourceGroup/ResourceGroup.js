@@ -1,5 +1,5 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type1_number, PreviewBox_type2_pie ,PreviewBox_type3_bar} from '../PreviewBoxes.js'
+import { PreviewBox_type1_number, PreviewBox_type2_pie } from '../PreviewBoxes.js'
 import ResourceGroup_All from './ResourceGroup_All.jsx'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import axios from 'axios';
@@ -7,10 +7,13 @@ import './../ResourceGroup/ResourceGroup.css';
 // import jsonData from '../../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
 import GeneralContext from '../../Context.js';
 
-function ResourceGroup({show_SideBar,set_show_SideBar}) {
+function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
 
-    const { all_Tools ,set_all_Tools , backEndURL  ,all_Resource_Types,moduleLinks} = useContext(GeneralContext);
+
+    set_visblePage("ResourceGroup");
+
+    const { backEndURL  ,all_Resource_Types,moduleLinks} = useContext(GeneralContext);
     const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
     const [loader , set_loader] = useState(true)
@@ -18,39 +21,7 @@ function ResourceGroup({show_SideBar,set_show_SideBar}) {
     // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
 
  
-
-    // get all tool if this list is empty
-    useEffect(() => {
-        if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
-        if(all_Tools.length  === undefined || all_Tools.length === 0  )
-     {
-        const get_all_tools = async()=>{
-
-  
-            try{
-                const res = await axios.get(`${backEndURL}/tools`);
-                if (res){ 
-                    const all_tools_no_links =  res.data
-    
-    
-                    console.log("all_tools_no_links",all_tools_no_links);
-    
-    
-    
-    all_tools_no_links.forEach(tool => {
-    for (let index = 0; index < moduleLinks.length; index++) {
-        if ( moduleLinks[index]?.toolID === tool?.tool_id){
-            tool.toolURL =  moduleLinks[index]?.toolURL
-        }
-    }
-    });
-    
-                    set_all_Tools(all_tools_no_links)   }}
-                catch(err){console.log(err);}  }
-      get_all_tools();   
-     }  }, [backEndURL]);
-
-
+ 
 
 
   // dont show sidebar in this page
@@ -64,8 +35,8 @@ useEffect(() => {
 
     const get_all_resources = async()=>{ 
       
-        console.log("get_all_resources               backEndURL" , backEndURL);
-    // if no filter take all resources
+ 
+if (backEndURL === undefined){return};
 if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
  
     try{
@@ -75,7 +46,7 @@ if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length 
 
      
         if (res){
-            console.log("res.data66666666666666666666666666666666666666666" , res.data);
+            console.log("get_all_resources" , res.data);
             set_Preview_this_Resource(res.data)
             set_All_Resource_count(res.data.length)
             set_loader(false)
@@ -111,7 +82,7 @@ else{
 
 }
  
-    get_all_resources();  }, [filter_Resource]);
+    get_all_resources();  }, [filter_Resource,backEndURL]);
 
  
 
@@ -142,86 +113,91 @@ else{
 
 <div className='resource-group-top-boxes mb-c' >
 
-{/* <PreviewBox_type2
- HeadLine="Group Distribution"
-  all_Resource_Types={all_Resource_Types }
-  />  */}
-{/* <PreviewBox_type2_pie
-HeadLine="Group Distribution"
-bar_numbers = {[ "11","22","41","5"]}
-bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
-bar_title_legend = {["bar_title_legend"]}
-/> */}
+ 
 <PreviewBox_type2_pie
 HeadLine="Result Distribution"
 bar_numbers = {all_Resource_Types.map(item => item.count)}
 bar_headlines = {all_Resource_Types.map(item => item.resource_type_name)}
 bar_title_legend = {["total"]}
+is_popup = {false}
 />
 
  
 
 
 
-
+{/* domain */}
 <PreviewBox_type1_number
 HeadLine={all_Resource_Types[0]?.resource_type_name}
 resource_type_id={all_Resource_Types[0]?.resource_type_id}
 description_short={all_Resource_Types[0]?.description_short}
-BigNumber={all_Resource_Types[0]?.count} SmallNumber={3}
+BigNumber={all_Resource_Types[0]?.count} 
+SmallNumber={All_Resource_count} 
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"16/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
+txt_color={""}
+ 
+
  
  />
-
+{/* ip */}
 <PreviewBox_type1_number
 HeadLine={all_Resource_Types[1]?.resource_type_name}
 resource_type_id={all_Resource_Types[1]?.resource_type_id}
 description_short={all_Resource_Types[1]?.description_short}
-BigNumber={all_Resource_Types[1]?.count} SmallNumber={3}
+BigNumber={all_Resource_Types[1]?.count} 
+SmallNumber={All_Resource_count} 
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"17/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
- 
+txt_color={""}
 />
-
+{/* social */}
 <PreviewBox_type1_number
 HeadLine={all_Resource_Types[2]?.resource_type_name}
 resource_type_id={all_Resource_Types[2]?.resource_type_id}
 description_short={all_Resource_Types[2]?.description_short}
-BigNumber={all_Resource_Types[2]?.count} SmallNumber={0}
+BigNumber={all_Resource_Types[2]?.count} 
+SmallNumber={All_Resource_count} 
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"16/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
- 
+txt_color={""}
 />
 
 <PreviewBox_type1_number
 HeadLine={all_Resource_Types[3]?.resource_type_name}
 resource_type_id={all_Resource_Types[3]?.resource_type_id}
 description_short={all_Resource_Types[3]?.description_short}
-BigNumber={all_Resource_Types[3]?.count} SmallNumber={1}
+BigNumber={all_Resource_Types[3]?.count} 
+SmallNumber={All_Resource_count} 
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"16/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
- 
+txt_color={""}
 />
-
+{/* All Resource */}
 <PreviewBox_type1_number
 HeadLine="All Resource"
 resource_type_id={null}
 description_short="All Resource"
-BigNumber={All_Resource_count} SmallNumber={6}
+BigNumber={All_Resource_count} 
+SmallNumber={All_Resource_count} 
+SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"14/5/20224"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
- 
+txt_color={""}
 />
 
  </div>

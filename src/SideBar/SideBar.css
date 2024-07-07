@@ -54,20 +54,22 @@
     transition: var(--transition-fast)
   }
   
-  .btn-menu:hover{
+  .btn-menu:hover, .btn_look_hover{
 
     background-color: var(--color-DB-Blue-Hover);
     
     cursor: pointer;
     
   }
+
+
   .btn-menu p{
     color: var(--color-White);
     transition: var(--transition-fast)
 
   }
 
-  .btn-menu:hover p    {
+  .btn-menu:hover p   , .btn_look_hover p {
     color: var(--color-DB-Blue-Glow);
     transition: var(--transition-fast)
   }
@@ -79,7 +81,7 @@
     transition: var(--transition-fast)
   }
 
-  .btn-menu:hover  .btn-menu-icon-placeholder  path  {
+  .btn-menu:hover  .btn-menu-icon-placeholder  path  , .btn_look_hover .btn-menu-icon-placeholder  path{
  
     stroke: var(--color-DB-Blue-Glow);
   }
@@ -155,4 +157,18 @@
 
 }
 
+ 
+.dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+ 
+  transition: var(--transition-med)
+}
+
+.dropdown-menu.open {
+  max-height: 400px; /* Adjust as needed */
+ background-color: var(--color-Grey4);
+ border-radius: var(--elemtns-round-corner-medium);
+ transition: var(--transition-med)
+}
  

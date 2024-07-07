@@ -19,7 +19,7 @@ function PreviewBox_velociraptor({  }) {
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
-  const {  backEndURL ,all_artifacts,set_all_artifacts,all_Tools} = useContext(GeneralContext);
+  const {  backEndURL ,all_artifacts,set_all_artifacts,all_Tools,front_IP} = useContext(GeneralContext);
   const [popUp_show, set_popUp_show] = useState(false);
   const [popUp_headline, set_popUp_headline] = useState("");
   const [popUp_ReadMoreText, set_popUp_ReadMoreText] = useState("");
@@ -53,8 +53,31 @@ function PreviewBox_velociraptor({  }) {
 
 
 
+  const handle_Main_Btn =(toolURL)=>{
+console.log("handle_Main_Btn",toolURL);
+    if(  toolURL.includes("${FRONT_IP}")){
+      const realURl = toolURL.replace("${FRONT_IP}", front_IP);
+     
+      
+      window.open(realURl, '_blank')
+    
+    
+    }
+    else{
+     
+      window.open(toolURL, '_blank')
+    }
+     
+    
+ 
+         
+      }
+
+
+
+
 const handle_click_velociraptor= async()=>{
- window.open( toolURL , '_blank');
+//  window.open( toolURL , '_blank');
   try{
       const res = await
       axios.get(`${backEndURL}/tools/active-velociraptor-artifact`, {
@@ -159,11 +182,7 @@ set_toolURL(url)
   }, [ all_Tools]);
  
 
-
-
-// console.log("velociraptor_from_all_tools[0]?.toolURL", velociraptor_from_all_tools[0]?.toolURL);
-
-  // onClick={()=>handleReadMore(Info?.headline, Info?.readMoreText  , Info?.logoAddress_1 ,"Close"    )}
+ 
   return (
 
 
@@ -310,13 +329,13 @@ disabled={disabled}
  <p className='ml-a font-type-txt  Color-Grey1 mr-b'><b> </b>Agent required</p></>
 )}
 
-<div className='mr-b'>
-<button className="btn-type2" onClick={() => window.open(toolURL, '_blank')}>
+<div className=' '>
+<button className="btn-type2" onClick={()=>handle_Main_Btn(toolURL)}>
       <p className='font-type-menu'>Site</p>
     </button>
     </div>
 
-  <button className="btn-type2 "
+  {/* <button className="btn-type2 ml-b "
   // disabled={checked_artifacts.length === 0}
   
 
@@ -324,12 +343,11 @@ disabled={disabled}
   disabled ={checked_artifacts2.length === 0}
   >
   <p className='font-type-menu ' >Run Artifacts</p>
-    </button> 
+    </button>  */}
 </div>
  
    </div>
 
-     
     </div>  
     
 

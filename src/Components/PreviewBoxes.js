@@ -2,14 +2,10 @@ import React , {useState , useEffect , useContext} from 'react';
 import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
  import { ReactComponent as IcoKey } from './icons/ico-eye.svg';
- import { ReactComponent as IcoModule } from './icons/ico-module.svg';
- import { ReactComponent as IcoLink } from './icons/ico-link.svg';
+ import { ReactComponent as IcoModule } from './icons/ico-module-nonedge-blue.svg';
+ import { ReactComponent as IcoLink } from './icons/ico-link-nonedge-blue.svg';
 
-
- import { PopUp_For_Read_More ,
-  //  PopUp_For_Nuclei_data ,
-    PopUp_For_Dehashed_data} from "./PopUp_Smart.js";
- import { PopUp_before_active_module____Nuclei } from "./PopUp_active_modules.js";
+  import { PopUp_For_Read_More ,} from "./PopUp_Smart.js";
  import { format_date_type_a } from '../Components/Features/DateFormat';
 import GeneralContext from '../Context';
 import  {Counter}  from './Features/AnimationCounter.js'
@@ -17,13 +13,7 @@ import axios from 'axios';
 import './PreviewBoxes.css';
 import './StatusDisplay.css';
 
-
-
-import{  Chart as ChartJS,
-   ArcElement,
-  BarElement,CategoryScale,LinearScale,
-  Tooltip
-  } from 'chart.js';
+import{  Chart as ChartJS,ArcElement,BarElement,CategoryScale,LinearScale, Tooltip} from 'chart.js';
 import { Doughnut , Bar } from 'react-chartjs-2';
 
   ChartJS.register(
@@ -33,7 +23,7 @@ import { Doughnut , Bar } from 'react-chartjs-2';
    
   );
 
- 
+//  console.log("tool_id",tool_id);
  
  
 
@@ -64,9 +54,22 @@ const Handle_active_module= async(tool_id,backEndURL)=>{
           {console.log(err);}
    }
 
-const handle_Main_Btn =(tool_id,toolURL,backEndURL ,set_Show_PopUp_before_active_module_id)=>{
+const handle_Main_Btn =(tool_id,toolURL,backEndURL,front_IP)=>{
 
-    console.log("tool_id" , tool_id);
+if(  toolURL.includes("${FRONT_IP}")){
+  const realURl = toolURL.replace("${FRONT_IP}", front_IP);
+ 
+  
+  openInNewTab(realURl)
+
+
+}
+else{
+ 
+  openInNewTab(toolURL)
+}
+
+
 
     // console.log("moduleLinks" , moduleLinks);
 
@@ -80,57 +83,17 @@ const handle_Main_Btn =(tool_id,toolURL,backEndURL ,set_Show_PopUp_before_active
   //  else if (tool_id ===  '2001009') { set_Show_PopUp_tool___Dehashed(true)  }
     // else { }
     
-openInNewTab(toolURL)
+
 
     
      
   }
 
-  const check_last_response2 =async(Info,backEndURL,set_last_response,set_StatusColorClass)=>{
-     const params = {module_id : Info.tool_id }
-    try{
-        const res = await axios.get(`${backEndURL}/results/check_last_req_and_res_for_module`,{params:params})
-        if(res){
-
-         set_last_response(res.data?.last_request);
-console.log(res.data?.last_request);
-if ( res.data?.last_response ){
-// console.log("got some data for", Info?.Tool_name  );
-// console.log("minute",Info?.threshold_time );
-// console.log(res.data?.last_request - res.data?.last_response);
-const nowTime = new Date ;
-const lastResponseTime = new Date(res.data?.last_response );
-console.log(nowTime);
-console.log(lastResponseTime);
-const timeDiffMs =  nowTime.getTime() -lastResponseTime.getTime() ;
-const timeDiffMinutes = Math.floor(timeDiffMs / (1000 * 60));
-
-
-console.log("last check in minutes" , timeDiffMinutes);
-if ( timeDiffMinutes  > Info.threshold_time){console.log(timeDiffMinutes ,"too much time"); set_StatusColorClass('Bg-Red')}
-else if ( timeDiffMinutes  <=  Info.threshold_time  ){console.log("it fine");  set_StatusColorClass('Bg-Blue-Glow')}
-else{set_StatusColorClass('Bg-Grey2')}
-
-
-
-
-
-}
-
-
-          }
-    }
-    catch(err){console.log(err);}
-}
-
 function PreviewBox_type0_static({
-  HeadLine,BigNumber,
-  SmallNumber,StatusColor,
-  date, resource_type_id ,
-  description_short,
-  filter_Resource,
-  set_filter_Resource,
-  text_under_big_number
+
+ BigNumber,
+ text_under_big_number,
+ 
   }) {
    
 
@@ -163,20 +126,19 @@ function PreviewBox_type1_number({
 HeadLine,BigNumber,
 SmallNumber,StatusColor,
 date, resource_type_id ,
-description_short,
 filter_Resource,
 set_filter_Resource,
- 
+SmallNumberTxt,
+is_popup,
+txt_color
  
 }) {
- 
+
   const [isHovered, setIsHovered] = useState(false);
   const [is_Filtering, set_is_Filtering] = useState(false);
 
   useEffect(() => { 
-
-  
-        if (filter_Resource?.type_ids?.length === 0 ) {
+  if (filter_Resource?.type_ids?.length === 0 ) {
     
           // console.log("zero filter--999" );
     
@@ -188,15 +150,10 @@ set_filter_Resource,
     
  
 const  handle_filter_by_Type = (id) => {
- 
-  
 if (id === null || id === undefined){
  
-  
   set_filter_Resource({type_ids:[],tool_ids:[]})
-  // set_clear_all_btns_filter_preview(true)
-  // const stayAsYouR = filter_Resource.tool_ids
-  // set_filter_Resource({type_ids:[],tool_ids:stayAsYouR})
+
   return
 }
 
@@ -245,55 +202,154 @@ const handleLeave = () => {
   setIsHovered(false);
 };
 
+  const StatusColorClass =
 
+  StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
+  StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
+  StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
+  StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+
+  StatusColor === 'red' ? 'Bg-Red' :
+  StatusColor === 'blue' ?'Bg-Blue-Glow' : 
+  StatusColor == '' ?  'Bg-Grey2' : 
+  StatusColor == undefined ?  'Bg-Grey2'  :
+  'Bg-Grey2'   ;
+ 
 
 
  
 
 
-
-
-  const StatusColorClass =
-  StatusColor === 'red' ? 'Bg-Red' :
-  StatusColor === 'blue' ?'Bg-Blue-Glow' : 
-  'Bg-Grey2';
-
   return (
-    <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}`}
+    <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
     // className={`box ${isFocused ? 'focused' : ''}`}
     // is_Filtering
       onClick={()=>{handle_filter_by_Type(resource_type_id) }}
       onMouseEnter={handleHover}
       onMouseLeave={handleLeave}
-      
-      
       > 
     <div className='PreviewBox_HeadLine' >
       <p  className="font-type-menu" >{HeadLine}</p>
 
- <div className={`${StatusColorClass}  light-bulb-type1`}/>
-
-       </div>
+ <div className={`${StatusColorClass}  light-bulb-type1`} style={{backgroundColor:  isHovered ? "#00DBFF" : (txt_color || "")}}/>
+ 
+       </div> 
 
 
     <div> 
      
-    <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered} /> </div>
-    <div className='PreviewBox_SmallNumber   font-type-txt Color-White' >UnActive:{SmallNumber}</div>
+    <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
+    <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
+}} >{SmallNumberTxt}: {SmallNumber}</div>
     </div>
 
-     <div className='PreviewBox_ButtomLine' >
+     <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
 
-       <IconLastRun />
-       <div className='font-type-very-sml-txt ' >{date}</div>
+     <IconLastRun />
+     <div className='font-type-very-sml-txt '>{date}</div>
+
+
 
      </div> {/*dont delete */}
     </div>
   )
 }
 
-function PreviewBox_type2_pie({HeadLine , bar_numbers, bar_headlines, bar_title_legend}) {
+function PreviewBox_type1_number_no_filters({
+  HeadLine,BigNumber,
+  SmallNumber,StatusColor,
+  date, 
+  SmallNumberTxt,
+  is_popup,
+  txt_color,
+  display_this,
+  set_display_this,
+  display_this_value
+   
+  }) {
+  
+
+    // display_this={display_data_type}
+    // set_display_this={set_display_data_type}
+    // display_this_value={"Critical"}
+
+
+
+    
+    const [isHovered, setIsHovered] = useState(false);
+    const [is_Filtering, set_is_Filtering] = useState(false);
+  
+
+      
+   
+const  handle_click = () => {
+  if(display_this === display_this_value){ set_display_this("prime_data")}
+  else{ set_display_this(display_this_value)}
+}
+  
+  const handleHover = () => {
+    setIsHovered(true);
+  };
+  
+  const handleLeave = () => {
+    setIsHovered(false);
+  };
+  
+    const StatusColorClass =
+    StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
+    StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
+    StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
+    StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+    StatusColor === 'red' ? 'Bg-Red' :
+    StatusColor === 'blue' ?'Bg-Blue-Glow' : 
+    StatusColor == '' ?  'Bg-Grey2' : 
+    StatusColor == undefined ?  'Bg-Grey2'  :
+    'Bg-Grey2'   ;
+   
+  
+    return (
+      <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
+        onClick={handle_click}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleLeave}
+        > 
+      <div className='PreviewBox_HeadLine' >
+        <p  className="font-type-menu" >{HeadLine}</p>
+  
+   <div className={`${StatusColorClass}  light-bulb-type1`} style={{backgroundColor:  isHovered ? "#00DBFF" : (txt_color || "")}}/>
+   
+         </div> 
+  
+  
+      <div> 
+       
+      <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
+      <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
+  }} >{SmallNumberTxt}: {SmallNumber}</div>
+      </div>
+  
+       <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
+  
+       <IconLastRun />
+       <div className='font-type-very-sml-txt '>{date}</div>
+  
+       </div> {/*dont delete */}
+      </div>
+    )
+  }
+
+function PreviewBox_type2_pie({HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
+}) {
  
+   
+  const  handle_click = () => {
+    if(display_this === display_this_value){ set_display_this("prime_data")}
+    else{ set_display_this(display_this_value)}
+  }
+    
+
+ 
+
 const [has_data, set_has_data]= useState(false)
 // const bar_numbers_zero = [1]
 
@@ -314,11 +370,7 @@ useEffect(() => {
    
 
   
-
-  // console.log(bar_numbers);
-  // console.log(all_Resource_Types);
-  // const countArray = all_Resource_Types.map(item => item.count);
-  // console.log(countArray); // This will log: [7, 2]
+ 
   const backgroundColors = bar_numbers.map((item, index, array) => {
     const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
     return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
@@ -356,8 +408,7 @@ useEffect(() => {
   
   };
     return (
-      <div className='PreviewBox PreviewBox-twice-size' >
-  
+<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}      onClick={handle_click}>
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
         <div className='display-flex   justify-content-space-between' style={{ height:"100%"}}>
@@ -402,13 +453,30 @@ return(
     )
   }
 
-function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_legend}) {
+function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_legend ,is_popup, display_y_axis ,colors , enable_hover, display_this, set_display_this,display_this_value}) {
  
-  const backgroundColors = bar_numbers.map((item, index, array) => {
+
+  const BasicColors = bar_numbers.map((item, index, array) => {
     const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
     return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
   });
-  
+ 
+  const AlertColors = [
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Red'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange-Red'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Yellow')
+  ];  
+
+
+    
+  const  handle_click = () => {
+    if(display_this === display_this_value){ set_display_this("prime_data")}
+    else{ set_display_this(display_this_value)}
+  }
+    
+
+
   const data ={
     // labels: ['Yes', 'No'],
     labels:   bar_headlines,
@@ -416,7 +484,15 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
     datasets:[{
       label:bar_title_legend,
       data: bar_numbers,
-      backgroundColor:backgroundColors,
+      backgroundColor:    (() => {
+        if (colors === "Basic") {
+          return BasicColors;
+        } else if (colors === "Alert") {
+          return AlertColors;
+        } else {
+          return BasicColors; // default case
+        }
+      })(),
       borderWidth:0,
       borderRadius: 100,
       barPercentage: 1.0,
@@ -446,7 +522,7 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
         },
       },
       y: {
-        display: true,  
+        display: display_y_axis,  
         beginAtZero: true,
         grid: {
           display: false,  
@@ -462,7 +538,10 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
   
   };
     return (
-      <div className='PreviewBox PreviewBox-twice-size' >
+
+      <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}      onClick={handle_click}>
+
+{/* <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}> */}
   
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
@@ -477,7 +556,15 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
   {Array.isArray(bar_headlines) &&  bar_headlines?.map((Info, index) => {
 return(
 <div className='display-flex' style={{marginRight:"auto"}} key={index}>
-<div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+
+  {colors === "Basic" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+  }
+  {colors === "Alert" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
+  }
+ 
+
 <p className='   font-type-txt Color-White  ' >{Info} </p>
 </div>
 )
@@ -505,19 +592,26 @@ return(
           </div>
     )
   }
-  
+ 
 function PreviewBox_type4_legend2({HeadLine ,Status_Legend}) {
 
-
+const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Legend?.inProgress_not_InTime_Count
 
       // const process_height = 16;
       // const process_width = 66;
 
       const statuses = [
         { count: Status_Legend?.completed_InTime_Count,     label: 'Complete',        description:"", bar: 'finish', time_text:"" ,error_note:false},
-        { count: Status_Legend?.completed_not_InTime_Count, label: 'Complete*',       description:"(not in time)", bar: 'finish', time_text:"+15 Days" ,error_note:true},
+        { count: Status_Legend?.completed_not_InTime_Count, label: 'Complete*',       description:"(Delayed)", bar: 'finish', time_text:"+1 Day" ,error_note:true},
+
+        { count: inProgress_combined,    label: 'In Progress',     description:"(On-time & Delayed)", bar: 'half', time_text:""   ,error_note:false},
+
+        // { count: Status_Legend?.inProgress_InTime_Count,    label: 'In Progress',     description:"", bar: 'half', time_text:""   ,error_note:false},
+        // { count: Status_Legend?.inProgress_not_InTime_Count,label: 'In Progress*',    description:"(not in time)",bar: 'half', time_text:"+15 Days" ,error_note:true},
+
         { count: Status_Legend?.hunt_InTime_Count,          label: 'Hunting',      description:"", bar: 'half', time_text:""   ,error_note:false},
-        { count: Status_Legend?.hunt_not_InTime_Count,      label: 'Hunting*',     description:"(time passed)", bar: 'half',  time_text:"+20 Hrs" ,error_note:true},
+        { count: Status_Legend?.hunt_not_InTime_Count,      label: 'Hunting*',     description:"(Delayed)", bar: 'half',  time_text:"+2 Hrs" ,error_note:true},
+
         { count: Status_Legend?.Failed_Count,               label: 'Failed',          description:"",  bar: 'failed' ,time_text:"",  error_note:false},
       ];
       
@@ -561,7 +655,33 @@ function PreviewBox_type4_legend2({HeadLine ,Status_Legend}) {
             )
           }
    
+          function PreviewBox_type5_table({ HeadLine, bar_numbers, bar_headlines, bar_title_legend, is_popup, Artifact, HuntID, Status, Error }) {
+            return (
+                <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
+                    <div className='PreviewBox_HeadLine'>
+                        <p className="font-type-menu">{HeadLine}</p>
+                    </div>
+                    <div className='display-flex justify-content-space-between' style={{ height: "100%" }}>
+                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys' style={{ gap: "6px"  }}>
+                            <p className='font-type-txt Color-White'>Artifact</p>
+                            <p className='font-type-txt Color-White'>Hunt ID</p>
+                            <p className='font-type-txt Color-White'>Status</p>
+                            <p className='font-type-txt Color-White'>Error</p>
+                        </div>
+                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-values' style={{ gap: "6px" }}>
+                            <p className='font-type-txt Color-White'>{Artifact}</p>
+                            <p className='font-type-txt Color-White'>{HuntID}</p>
+                            <p className='font-type-txt Color-White'>{Status}</p>
+                            <p className='font-type-txt Color-White'>{Error}</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        
           
+
+
 function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_this_tools, dont_show_this_tools2, set_dont_show_this_tools2}) {
  
  
@@ -715,7 +835,7 @@ function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_
           
  
 function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,logoAddress_2,  readMoreText,buttonTitle,iconAddress,toolURL , tool_id ,all_Tools , backEndURL }) {    
-  const {  set_all_Tools   } = useContext(GeneralContext);
+  const {  set_all_Tools  ,front_IP } = useContext(GeneralContext);
  
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
   const [logoAddress_2_ForSrc, set_logoAddress_2_ForSrc] = useState("")
@@ -724,17 +844,11 @@ function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,lo
 
   const [IconAddressForSrc, set_IconAddressForSrc] = useState("")
   const [popUp_show, set_popUp_show] = useState(false);
-
   const [last_response, set_last_response] = useState(0)
-
   const [disabled, set_disabled] = useState(false)
   const [StatusColorClass, set_StatusColorClass] = useState("Bg-Grey2")
  
-  // [2].toolType
-  // useEffect(() => {
-  //   check_last_response2(Info,backEndURL,set_last_response,set_StatusColorClass);
-  //       }, [notification_number]);
-   
+
 
 
   const handleReadMore = () =>{
@@ -742,12 +856,8 @@ function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,lo
   }
 
  
-
-
 async function  ShowInUi (Info){
-  console.log("now is ------------- ", Info?.ShowInUi);
-  console.log("change to  --- ---------- ", !Info?.ShowInUi);
- 
+
   try{
     // set_disable_ShowInUi_btn(true);
     const res = await
@@ -778,7 +888,6 @@ async function  ShowInUi (Info){
         // set_disable_ShowInUi_btn(false);
         console.log(err);}
    }
- 
  
    async function  enable_disable_module(Info){
     console.log("enable_disable_module", !Info?.isActive);
@@ -836,6 +945,7 @@ async function  ShowInUi (Info){
 
     }, []);
 
+
  
   return (
 
@@ -859,14 +969,24 @@ async function  ShowInUi (Info){
     > 
 
     <div className='PreviewBox_HeadLine' >
-
+{Info?.toolType === "module" ?  
     <label className="switch"><input type="checkbox" 
 checked={Info?.isActive}
 disabled={disabled}
  onClick={() => enable_disable_module(Info)} 
 //  onChange={console.log(Info) }
- /> <span className="slider round"></span></label>  
+ /> <span className="slider round"></span></label> 
+ 
+ : <div></div>
+}
+
+
+
 {Info.BoxType === "Tools_a" &&  <>
+
+
+
+
  {/* ///////////// 1 or 2 logos /////////////// */}
 
 
@@ -878,7 +998,11 @@ disabled={disabled}
      <img src={logoAddress_2_ForSrc} alt="logo"     className='responsive-logos-type_a'  />
      </div>
     ):(
-      <div className='display-flex ' style={{marginRight:"24px"}}>
+
+      
+      <div className='display-flex '
+       style={{marginRight:Info?.toolType === "module" ? "14px" : "-12px"}}
+       >
         
       <p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
       <img src={logoAddress_1_ForSrc} alt="logo" maxwidth="140" height="20"  />
@@ -935,12 +1059,40 @@ disabled={disabled}
 
 
 
-
+{/* IcoLink IcoModule */}
 
     <button className="btn-type3 mb-c" onClick={()=>handleReadMore()}><p className=' font-type-txt'>Read More</p><IconReadMore className="icon-type1 "  />  </button>
 
-    <button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL,backEndURL )}><p className='font-type-menu ' >{buttonTitle} </p>  </button> 
 
+   { tool_id !="2001005" &&
+    <button className="btn-type2" onClick={()=>handle_Main_Btn(tool_id,toolURL,backEndURL,front_IP )}
+    
+     style={{
+      paddingRight: Info?.toolType !== undefined && 
+      Info?.toolType !== "" && 
+      Info?.toolType !== null 
+        ? "calc(var(--space-d) - 5px)"
+      : undefined 
+     }}
+     
+     
+     >
+    <div style={{display:"flex", alignItems:"center"  }}>
+
+   
+    <p className='font-type-menu'>{buttonTitle}</p>
+
+
+    {/* { Info?.toolType === "link" && <IcoLink     style={{height:"var(--space-c)" ,width:"var(--space-c)" ,marginLeft:"3px"}}/>} */}
+
+ 
+{ Info?.toolType === "link" && <IcoLink     style={{height:"var(--space-c)" ,width:"var(--space-c)" ,marginLeft:"4px"  }}/>}
+{ Info?.toolType === "module" && <IcoModule style={{height:"var(--space-c)" ,width:"var(--space-c)"  ,marginLeft:"3px"}} />}
+  
+ 
+    </div>  
+    </button> 
+}
    
     </div>
 
@@ -963,4 +1115,4 @@ disabled={disabled}
   )
 }
 
-export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar,   PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module};
+export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters};

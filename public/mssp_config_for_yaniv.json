@@ -15,15 +15,15 @@
         {
          "toolName": "Risx",
          "toolID": "2001000",
-         "toolURL": "http://risxserverdev.westeurope.cloudapp.azure.com:3001/login/2/"
+         "toolURL": "http://risxserverdev.westeurope.cloudapp.azure.com:3001/login/"
      },{
          "toolName": "ELK",
          "toolID": "2001001",
-         "toolURL": "http://${FRONT_IP}/kibana/"
+         "toolURL": "http://23.101.51.55:5601"
      },{
          "toolName": "Timesketch",
          "toolID": "2001002",
-         "toolURL": "http://${FRONT_IP}/"
+         "toolURL": "http://timesketch-10root.northeurope.cloudapp.azure.com/"
      },{
          "toolName": "Open CTI",
          "toolID": "2001003",
@@ -35,12 +35,12 @@
      },{
          "toolName": "Nuclei",
          "toolID": "2001005",
-         "toolURL": "",
+         "toolURL": "https://10root.com/",
           "expiretime": "25"
      },{
          "toolName": "AnyRun",
          "toolID": "2001006",
-         "toolURL": "http://${FRONT_IP}/strelka/"
+         "toolURL": "http://20.123.30.155:9980/"
      },{
          "toolName": "Ail",
          "toolID": "2001008",
@@ -61,7 +61,12 @@
          "toolName": "MISP",
          "toolID": "2001012",
          "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com/"
-     }
+     },
+     {
+        "toolName": "HashR",
+        "toolID": "2001007",
+        "toolURL": "https://10root.com/"
+    }
  ]
                            
   }

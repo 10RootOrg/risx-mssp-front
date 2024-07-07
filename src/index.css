@@ -46,6 +46,6 @@ code {
 }
 
 ::-webkit-scrollbar-corner{
- 
+  background: #ff0000; /* Red thumb */
   visibility: hidden;
 }
