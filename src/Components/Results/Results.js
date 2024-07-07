@@ -160,28 +160,6 @@ set_Status_Legend({
       countOccurrences();
     }, [Preview_this_Results]);
 
- 
-// make dates to ---  big numbers
-//     useEffect(() => {
-//  if(Preview_this_Results === undefined){return}
-
-
-
- 
-//       const get_all_latest_results_dates = async()=>{ 
-//         console.log("get_all_Results_dates1" );
-//         try{
-//             const res = await axios.get(`${backEndURL}/results/get_all_latest_results_dates`,{params:{results:Preview_this_Results}});
-//             if (res){
-//               set_last_updated(res.data);
-//               console.log("get_all_Results_dates2",res.data);
-//         }}
-//         catch(err){
-//             console.log(err);}
-//     }
-//     get_all_latest_results_dates();
-
-//     }, [Preview_this_Results]);
 
 console.log("last_updated",last_updated);
 

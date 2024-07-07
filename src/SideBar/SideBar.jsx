@@ -197,8 +197,8 @@ False_action={handle_Close_PopUp_Are_You_Sure}
  
  
  
-<button className="btn-menu  " onClick={()=>handleClick("Dashboard")}   disabled={visblePage === "Dashboard"}>
-        <div className='display-flex'><IcoMonitor className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Dashboard</p></div>
+<button className="btn-menu  " onClick={()=>handleClick("Modules")}   disabled={visblePage === "Modules"}>
+        <div className='display-flex'><IcoMonitor className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Modules</p></div>
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 

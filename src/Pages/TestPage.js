@@ -7,6 +7,7 @@ import lottie from 'lottie-web';
 import animationData from '../Components/Logos/Risx-mssp-logo-anim.json';
 
 function TestPage() {
+
 const backEndURL = "http://40.69.58.105:5555"
 const [backendData, set_backendData]= useState([{}])   
     
@@ -14,6 +15,50 @@ const [Resources, set_Resources]= useState([])
 
 
 
+
+
+
+
+const json_file_info ={
+    "table": [
+      {
+        "Column1": "Value1",
+        "Column2": "Value2",
+        "Column3": "critical",
+        "Column4": "High",
+        "Column5": "Vafffffffffff fffffffffffff  ffffffffff fdddddddd df df fd fd df df dffdgfffffflue5"
+      },
+      {
+        "Column1": "Valu ffffffff gfhgfh gfh dfg dfg dfsdgfkj e rot34509 jp43fjpoei4jfpoweijrfp prej podirj fpoirfedjg poifedj podfi jvpofdij vpo e6",
+        "Column2": "Value7",
+        "Column3": "Value8",
+        "Column4": "Value9",
+        "Column5": "Value10"
+      },
+      {
+        "Column1": "Value11",
+        "Column2": "High",
+        "Column3": "Value13",
+        "Column4": "Critical",
+        "Column5": "Value15"
+      }
+    ]
+  }
+  
+
+
+  const [cell_width, set_cell_width] = useState(() => {
+    if (json_file_info?.table[0]) {
+      const totalKeys = Object.keys(json_file_info.table[0]).length;
+      const width1 = 190/totalKeys;
+      const finalWidth = width1 > 30 ? 30 : width1;
+      document.documentElement.style.setProperty('--cell-width', `${finalWidth}vh`);
+      return `${finalWidth}vh`;
+    } else {
+      document.documentElement.style.setProperty('--cell-width', '100px');
+      return "100px";
+    }
+  });
 
 const get_all_tabels= async()=>{
     console.log("getAlldata");
@@ -358,6 +403,75 @@ if(ResponsePath === undefined){console.log("ResponsePath undefined"); return}
         <p key={i}>{user}</p>
     ))
 ) }
+
+
+
+{json_file_info?.table?.length !== 0 ? (
+  <>               
+    <div className="table_smart">
+      {Object.keys(json_file_info?.table[0]).map((key) => (
+        <div className="parent-container" onClick={()=>set_cell_width("500px")} key={key} style={{width: cell_width}}>
+          <p className="table_smart_col font-type-menu Color-White">{key}</p>
+        </div>
+      ))}
+    </div>
+    {json_file_info?.table.map((item, index) => (
+      <div key={index} className="table_smart">
+        {Object.keys(item).map((key, idx) => {
+          const value = item[key];
+          return (
+            <div className="parent-container" key={idx} style={{width: cell_width}}>
+              <div className="table_smart_col">
+              {/* {typeof value === 'string' && value.toLowerCase() === 'high' ? (
+                  <span className="tagit_type1 tagit_type1_high">
+                    {value}
+                  </span>
+                ) : (
+                  
+                  <span 
+                    className="cell-content"
+                    style={{
+                      color: (() => {
+                        if (typeof value === 'string') {
+                          const lowerValue = value.toLowerCase();
+                          if (lowerValue === 'critical') return "var(--color-Red)";
+                          if (lowerValue === 'high') return "var(--color-Orange-Red)";
+                        }
+                        return 'var(--color-Grey1)';  // Default color
+                      })(),
+                    }}
+                  >
+                    {typeof value === 'object' ? JSON.stringify(value) : value}
+                  </span>
+                )} */}
+
+
+
+
+                {typeof value === 'string' &&  (
+                  <span 
+                    className="cell-content"
+                    style={{
+                      color: (() => {
+                        if (typeof value === 'string') {
+                          const lowerValue = value.toLowerCase();
+                          if (lowerValue === 'critical') return "var(--color-Red)";
+                          if (lowerValue === 'high') return "var(--color-Orange-Red)";
+                        }
+                        return 'var(--color-Grey1)';  // Default color
+                      })(),    }}
+                  >
+                    {typeof value === 'object' ? JSON.stringify(value) : value}
+                  </span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ))}
+  </>
+) : null}
 
 
 

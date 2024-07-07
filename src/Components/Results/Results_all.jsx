@@ -72,7 +72,11 @@ const status_bar_width = "140px"
     set_PopUp_loader__show(true);
      const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
      
+  
 
+    
+
+    //  if (res) {console.log("get_Json_single_response3"   ,res);}
 
      if (typeof res.data === "string") {
       set_PopUp_loader__show(false);
@@ -91,7 +95,12 @@ const status_bar_width = "140px"
       set_PopUp_Request_info__show(true)
      }
 
+
+
     else{
+ 
+
+
 
       set_PopUp_Request_info__txt({ HeadLine:"No results", paragraph: "Looks like no results file been created yet"   , buttonTitle:"Close" })
       set_PopUp_loader__show(false);
@@ -110,22 +119,34 @@ const status_bar_width = "140px"
 
 
 
-
- 
     return
      }
     
     
-    
+
+
+
+
     if (res){
-     
        console.log("   Info    ",Info);
+       console.log("   res.data   ",res.data);
      if (Info?.ModuleName === "Velociraptor") {
+
+
+   
+      if (res?.data?.fileSize != 'Too big') {   set_json_file_info(res.data) }
+      if (res?.data?.fileSize == 'Too big') {   set_json_file_info({huntid:Info.UniqueID , status:Info?.Status ,fileSize:"Too big" , ResponsePath:Info?.ResponsePath,  table:[]      }) }
+
+
       set_json_file_data(Info)
-      set_json_file_info(res.data)
       set_PopUp_loader__show(false);
       set_PopUp_velociraptor_response__show(true)
      }
+
+
+
+
+
     else if (Info?.ModuleName === "Nuclei") {
          const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
          console.log("tool" ,tool);

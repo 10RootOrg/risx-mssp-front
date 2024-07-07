@@ -286,18 +286,6 @@ btn_add_action={add_resource_item}
 {Preview_this_Resource?.length === 0 &&  
 
 <div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-
-{/* <p className='  font-type-txt   Color-Grey1   ' style={{   display:"flex" , alignItems:"center"}}>
- It is recommended to fill in all available resources to get the most features,
-Look for the icon 
-</p> 
-<span  style={{  marginTop:"2px"}}> <IconAdd/></span>
-<p className='  font-type-txt   Color-Grey1   ' style={{   display:"flex" , alignItems:"center"}}>
-in the button bar
-</p> 
-</div> */}
-
-
 <p className='  font-type-txt   Color-Grey1 '   >
 It is recommended to fill in all available resources to get the most features. Look for the icon '
 <span style={{ display: 'inline-flex',  verticalAlign:"middle"}}>
@@ -305,8 +293,6 @@ It is recommended to fill in all available resources to get the most features. L
 </span>
 ' in the button bar.
 </p>
-
-
 </div>
 
 

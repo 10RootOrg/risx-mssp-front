@@ -112,7 +112,7 @@ const [activeGroup, setActiveGroup] = useState('logoBulk1');
 
         // No need to manually store the token
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate(`/${"dashboard"}`); 
+        navigate(`/${"Modules"}`); 
       } else {
         console.log("response.data.success false");
 
@@ -151,22 +151,22 @@ const handleClick = (event) => {
   set_errorMessage("")
 if ( necessaryUser1 === input_email  && necessaryPassword === input_password) {
   localStorage.setItem('username', "Dor Amit");  
-  navigate(`/${"dashboard"}`);  
+  navigate(`/${"Modules"}`);  
 }
 
 else if ( necessaryUser2 === input_email  && necessaryPassword === input_password) {
   localStorage.setItem('username', "Yaniv Radunsky");  
-  navigate(`/${"dashboard"}`);  
+  navigate(`/${"Modules"}`);  
 }
 
 else if ( necessaryUser3 === input_email  && user3password === input_password) {
   localStorage.setItem('username', necessaryUser3);  
-  navigate(`/${"dashboard"}`);  
+  navigate(`/${"Modules"}`);  
 }
 
 else if ( necessaryUser4 === input_email  && user4password === input_password) {
   localStorage.setItem('username', "Admin");  
-  navigate(`/${"dashboard"}`);  
+  navigate(`/${"Modules"}`);  
 }
 
 

@@ -5,9 +5,7 @@ import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
  import { ReactComponent as IcoModule } from './icons/ico-module-nonedge-blue.svg';
  import { ReactComponent as IcoLink } from './icons/ico-link-nonedge-blue.svg';
 
- 
-//  import { PopUp_before_active_module____Nuclei } from "./PopUp_active_modules.js";
- import { PopUp_For_Read_More ,} from "./PopUp_Smart.js";
+  import { PopUp_For_Read_More ,} from "./PopUp_Smart.js";
  import { format_date_type_a } from '../Components/Features/DateFormat';
 import GeneralContext from '../Context';
 import  {Counter}  from './Features/AnimationCounter.js'
@@ -15,13 +13,7 @@ import axios from 'axios';
 import './PreviewBoxes.css';
 import './StatusDisplay.css';
 
-
-
-import{  Chart as ChartJS,
-   ArcElement,
-  BarElement,CategoryScale,LinearScale,
-  Tooltip
-  } from 'chart.js';
+import{  Chart as ChartJS,ArcElement,BarElement,CategoryScale,LinearScale, Tooltip} from 'chart.js';
 import { Doughnut , Bar } from 'react-chartjs-2';
 
   ChartJS.register(
@@ -101,13 +93,7 @@ function PreviewBox_type0_static({
 
  BigNumber,
  text_under_big_number,
-  // HeadLine,
-  // SmallNumber,StatusColor,
-  // date, resource_type_id ,
-  // description_short,
-  // filter_Resource,
-  // set_filter_Resource,
-  
+ 
   }) {
    
 
@@ -164,15 +150,10 @@ txt_color
     
  
 const  handle_filter_by_Type = (id) => {
- 
-  
 if (id === null || id === undefined){
  
-  
   set_filter_Resource({type_ids:[],tool_ids:[]})
-  // set_clear_all_btns_filter_preview(true)
-  // const stayAsYouR = filter_Resource.tool_ids
-  // set_filter_Resource({type_ids:[],tool_ids:stayAsYouR})
+
   return
 }
 
@@ -222,13 +203,21 @@ const handleLeave = () => {
 };
 
   const StatusColorClass =
+
+  StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
+  StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
+  StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
+  StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
-  'Bg-Grey2';
+  StatusColor == '' ?  'Bg-Grey2' : 
+  StatusColor == undefined ?  'Bg-Grey2'  :
+  'Bg-Grey2'   ;
+ 
 
 
-  
-
+ 
 
 
   return (
@@ -266,10 +255,101 @@ const handleLeave = () => {
   )
 }
 
+function PreviewBox_type1_number_no_filters({
+  HeadLine,BigNumber,
+  SmallNumber,StatusColor,
+  date, 
+  SmallNumberTxt,
+  is_popup,
+  txt_color,
+  display_this,
+  set_display_this,
+  display_this_value
+   
+  }) {
+  
+
+    // display_this={display_data_type}
+    // set_display_this={set_display_data_type}
+    // display_this_value={"Critical"}
+
+
+
+    
+    const [isHovered, setIsHovered] = useState(false);
+    const [is_Filtering, set_is_Filtering] = useState(false);
+  
+
+      
+   
+const  handle_click = () => {
+  if(display_this === display_this_value){ set_display_this("prime_data")}
+  else{ set_display_this(display_this_value)}
+}
+  
+  const handleHover = () => {
+    setIsHovered(true);
+  };
+  
+  const handleLeave = () => {
+    setIsHovered(false);
+  };
+  
+    const StatusColorClass =
+    StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
+    StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
+    StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
+    StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+    StatusColor === 'red' ? 'Bg-Red' :
+    StatusColor === 'blue' ?'Bg-Blue-Glow' : 
+    StatusColor == '' ?  'Bg-Grey2' : 
+    StatusColor == undefined ?  'Bg-Grey2'  :
+    'Bg-Grey2'   ;
+   
+  
+    return (
+      <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
+        onClick={handle_click}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleLeave}
+        > 
+      <div className='PreviewBox_HeadLine' >
+        <p  className="font-type-menu" >{HeadLine}</p>
+  
+   <div className={`${StatusColorClass}  light-bulb-type1`} style={{backgroundColor:  isHovered ? "#00DBFF" : (txt_color || "")}}/>
+   
+         </div> 
+  
+  
+      <div> 
+       
+      <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
+      <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
+  }} >{SmallNumberTxt}: {SmallNumber}</div>
+      </div>
+  
+       <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
+  
+       <IconLastRun />
+       <div className='font-type-very-sml-txt '>{date}</div>
+  
+       </div> {/*dont delete */}
+      </div>
+    )
+  }
+
+function PreviewBox_type2_pie({HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
+}) {
+ 
+   
+  const  handle_click = () => {
+    if(display_this === display_this_value){ set_display_this("prime_data")}
+    else{ set_display_this(display_this_value)}
+  }
+    
+
  
 
-function PreviewBox_type2_pie({HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup }) {
- 
 const [has_data, set_has_data]= useState(false)
 // const bar_numbers_zero = [1]
 
@@ -290,11 +370,7 @@ useEffect(() => {
    
 
   
-
-  // console.log(bar_numbers);
-  // console.log(all_Resource_Types);
-  // const countArray = all_Resource_Types.map(item => item.count);
-  // console.log(countArray); // This will log: [7, 2]
+ 
   const backgroundColors = bar_numbers.map((item, index, array) => {
     const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
     return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
@@ -332,8 +408,7 @@ useEffect(() => {
   
   };
     return (
-<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
-  
+<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}      onClick={handle_click}>
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
         <div className='display-flex   justify-content-space-between' style={{ height:"100%"}}>
@@ -378,7 +453,7 @@ return(
     )
   }
 
-function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_legend ,is_popup, display_y_axis ,colors }) {
+function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_legend ,is_popup, display_y_axis ,colors , enable_hover, display_this, set_display_this,display_this_value}) {
  
 
   const BasicColors = bar_numbers.map((item, index, array) => {
@@ -394,7 +469,12 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
   ];  
 
 
- 
+    
+  const  handle_click = () => {
+    if(display_this === display_this_value){ set_display_this("prime_data")}
+    else{ set_display_this(display_this_value)}
+  }
+    
 
 
   const data ={
@@ -458,7 +538,10 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
   
   };
     return (
-<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
+
+      <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}      onClick={handle_click}>
+
+{/* <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}> */}
   
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
@@ -1032,4 +1115,4 @@ disabled={disabled}
   )
 }
 
-export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module};
+export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters};

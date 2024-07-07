@@ -244,43 +244,40 @@ Color-Grey1 */
   width: 100%;
 }
 
-
-.table_smart{
+.table_smart {
   display: flex;
-/* max-width: 100%;
-width: 100%; */
-
+  gap: 15px;
 }
 
 .parent-container {
- 
-display: inline;  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  /* width: 100%;  
-  max-width: 100%;   */
-}
-.table_smart_col {
-  flex: 1;
-  margin-right: 15px;
-  display: inline-block;  
   overflow: hidden;
+  flex-shrink: 0;
+  width: var(--cell-width);
+}
+
+.table_smart_col {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  height: var(--space-d);
+  width: 100%;
+}
+
+.cell-content {
   white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
-  height: var(--space-d); /* Ensure this is set to a specific value */
-  margin-top: auto;
-  margin-bottom: auto;
-  vertical-align:middle;  
-  /* width: auto;
-  min-width: auto;
-  max-width: auto; */
- 
+  width: 100%;
+}
+
+.List_of_computers_line{
+  height: 28px;
+  display: flex;
+  align-items: center;
 }
 
 
 .pop-up-top-boxes-macro{
-
- 
   /* display: inline-flex;
   align-items: stretch;
   gap: 12px;

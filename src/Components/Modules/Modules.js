@@ -2,7 +2,7 @@ import React , {useState , useEffect ,useContext} from 'react';
 import { PreviewBox_type_module} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
-import Search_comp from '../Features/Search_comp'
+import Search_comp from '../Features/Search_comp.jsx'
  
 // import jsonData from '../../tmpjsons/previewBoxesTools.json';  
 import GeneralContext from '../../Context.js';
@@ -14,8 +14,8 @@ import { ReactComponent as IcoResults } from '../icons/ico-menu-Results.svg';
 import { useNavigate } from 'react-router-dom';
 
 
-function DashBoard({show_SideBar,set_show_SideBar,notification_number,set_visblePage}) {
-    set_visblePage("Dashboard");
+function Modules({show_SideBar,set_show_SideBar,notification_number,set_visblePage}) {
+    set_visblePage("Modules");
     const { all_Tools ,  backEndURL , set_all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
     const [show_only_this_tools, set_show_only_this_tools] = useState([]) 
     const navigate = useNavigate();
@@ -254,5 +254,5 @@ all_Tools={all_Tools}
     );
   }
   
-  export default DashBoard;
+  export default Modules;
 
