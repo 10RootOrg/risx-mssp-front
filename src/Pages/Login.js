@@ -224,7 +224,7 @@ else{
   height: "35vw" 
    }}/> 
 
-<div className='login-marketing-center'  style={{maxWidth:"740px"}}>
+<div className='login-marketing-center'  style={{maxWidth:"760px"}}>
 <h1 className='font-type-h1    Color-Grey5 mb-c'  style={{fontWeight:"600"}}><span className='Color-Blue-Glow '>All-in-one </span>Mssp for improved,<br/>  streamlined Cybersecurity</h1>
 <h2 className='font-type-h5 reading-height-less Color-Grey5 mb-e' >Alongside our services, benefit from advanced risk management capabilities, sophisticated threat detection, proactive measures against attacks, and continuous monitoring to prevent data breaches and operational disruptions</h2>
 

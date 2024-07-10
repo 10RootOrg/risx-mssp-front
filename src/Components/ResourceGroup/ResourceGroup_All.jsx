@@ -220,7 +220,7 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 <div className='resource-group-list-headline mb-c ' >
 
 <div className='resource-group-list-headline-left ' >
-  <IconBIG/> <p className='font-type-h4   Color-White ml-b'>Resource List</p>
+  <IconBIG/> <p className='font-type-h4   Color-White ml-b'>Assets List</p>
  
                   </div>
 
@@ -274,8 +274,8 @@ btn_add_action={add_resource_item}
 <div className='resource-group-list-item    '>
 <p className='font-type-menu  make-underline Color-Grey1 '>Checked</p>
 </div>
-<div className='resource-group-list-item   list-item-small  '>
-<p className='font-type-menu  make-underline Color-Grey1  '>Status</p>
+<div className='resource-group-list-item   list-item-small  ' style={{textAlign:"center"}}>
+<p className='font-type-menu  make-underline Color-Grey1  ' >Status</p>
 </div>
  
  <div className='its-only-space-for-the-scroller    '/> 
@@ -421,8 +421,9 @@ if (dateString) {
 
 
 
+<ResourceGroup_buttomLine records_number={Preview_this_Resource?.length || 0}/>
 
-<ResourceGroup_buttomLine/>
+{/* <ResourceGroup_buttomLine/> */}
 </>
 )}
 

@@ -261,7 +261,7 @@ set_PopUp_All_Good__show(true)
 
  
 <div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>
-  {popUp_Add_or_Edit__status === "add" ? (<>Add Item</>):(<>Edit Item</> )}
+  {popUp_Add_or_Edit__status === "add" ? (<>Add Asset</>):(<>Edit Asset</> )}
  
   </p></div>
 
@@ -303,7 +303,7 @@ className="item_info_left"
 </div>
 
 <div className="item_info_left "> 
-<p className='font-type-menu   Color-Grey1 '>Resource Type</p>
+<p className='font-type-menu   Color-Grey1 '>Asset Type</p>
 <div className="item_info_tools_all">
 <div className="">
 {Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => {

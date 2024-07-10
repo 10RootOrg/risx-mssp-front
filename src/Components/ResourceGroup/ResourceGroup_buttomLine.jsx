@@ -2,10 +2,14 @@ import React from 'react'
 
 import { ReactComponent as IconArrowRight } from '../icons/ico-arrowRight.svg';
 import { ReactComponent as IconArrowLeft } from '../icons/ico-arrowLeft.svg';
-
+import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
 function ResourceGroup_buttomLine({records_number}) {
 
-      
+const time = new Date()
+const format_date = format_date_type_a(time);
+ 
+
+
     return (
  
 <div  className='resource-group-list-buttomLine   mt-b'>
@@ -19,7 +23,7 @@ function ResourceGroup_buttomLine({records_number}) {
   
   </div>
 
-  <p className='font-type-menu  Color-Grey1  '>modified: 18/06/22 09:30</p>
+  <p className='font-type-menu Color-Grey1'>{format_date}</p>
  
 </div>
 

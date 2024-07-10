@@ -1,6 +1,6 @@
 import React , {useState , useEffect ,useContext} from 'react';
 import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
-import Results_all from '../Results/Results_all.jsx'
+import Results_all from './Dashboard_Results_all.jsx'
 
 
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
@@ -8,11 +8,11 @@ import axios from 'axios';
 import './../ResourceGroup/ResourceGroup.css';
 import GeneralContext from '../../Context.js';
 
-import { format_date_type_a,format_date_type_c } from '../Features/DateFormat';
+import { format_date_type_a,format_date_type_c } from '../Features/DateFormat.js';
 
 
 function Results({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage}) {
-  set_visblePage("Results");
+  set_visblePage("dashboard-general");
 
     const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
     const [Preview_this_Results, set_Preview_this_Results] = useState([]);
@@ -170,16 +170,16 @@ console.log("last_updated",last_updated);
 <div className='app-main' >
 <div className='top-of-page'> 
 
-<div className='top-of-page-left mb-b'>
-<p  className="font-type-menu" >User Request:</p>
-<p  className="font-type-h3" >Results</p>
-</div>
+{/* <div className='top-of-page-left mb-b'>
+<p  className="font-type-menu" >Dashboards:</p>
+<p  className="font-type-h3" >General</p>
+</div> */}
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 
-<div className='top-of-page-right'>
+{/* <div className='top-of-page-right'>
 <input className="input-type1 mr-a" placeholder="Search" />
 <button className="btn-type1 "><IconSearch className="icon-type1" />  </button>
-</div>
+</div> */}
 
 
 </div>
@@ -279,7 +279,7 @@ bar_title_legend = {"Count"}
 
  </div>
      <div>
- <p className='font-type-menu   Color-Grey1 mb-c'>Results Edit:</p>
+ {/* <p className='font-type-menu   Color-Grey1 mb-c'>Results Edit:</p> */}
 
 
 </div>

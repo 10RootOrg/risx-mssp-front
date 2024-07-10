@@ -11,7 +11,7 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
 
 
-    set_visblePage("ResourceGroup");
+    set_visblePage("assets");
 
     const { backEndURL  ,all_Resource_Types,moduleLinks} = useContext(GeneralContext);
     const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
@@ -98,8 +98,8 @@ else{
 <div className='top-of-page'> 
 
 <div className='top-of-page-left mb-b'>
-<p  className="font-type-menu" >Resource Group:</p>
-<p  className="font-type-h3" >General</p>
+{/* <p  className="font-type-menu" >Resource Group:</p> */}
+<p  className="font-type-h3" >Assets</p>
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 
@@ -135,7 +135,7 @@ BigNumber={all_Resource_Types[0]?.count}
 SmallNumber={All_Resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
-date={"16/5/20224"}
+date={"16/6/2024"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
@@ -152,7 +152,7 @@ BigNumber={all_Resource_Types[1]?.count}
 SmallNumber={All_Resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
-date={"17/5/20224"}
+date={"17/6/2024"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
@@ -166,7 +166,7 @@ BigNumber={all_Resource_Types[2]?.count}
 SmallNumber={All_Resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
-date={"16/5/20224"}
+date={"16/6/2024"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
@@ -180,21 +180,21 @@ BigNumber={all_Resource_Types[3]?.count}
 SmallNumber={All_Resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
-date={"16/5/20224"}
+date={"16/6/2024"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
 />
 {/* All Resource */}
 <PreviewBox_type1_number
-HeadLine="All Resource"
+HeadLine="All Assets"
 resource_type_id={null}
-description_short="All Resource"
+description_short="All Assets"
 BigNumber={All_Resource_count} 
 SmallNumber={All_Resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
-date={"14/5/20224"}
+date={"14/6/2024"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
@@ -202,7 +202,7 @@ txt_color={""}
 
  </div>
      <div>
- <p className='font-type-menu   Color-Grey1 mb-c'>Resource Edit:</p>
+ {/* <p className='font-type-menu   Color-Grey1 mb-c'>Resource Edit:</p> */}
 
 
 </div>

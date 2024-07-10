@@ -1,13 +1,19 @@
 import React , {useState , useEffect ,useContext} from 'react';
+ 
+
+
 import axios from 'axios';
 import './../Settings/Settings.css';
 import './custom-json-view.css';
 import GeneralContext from '../../Context.js';
+import JsonView from '@uiw/react-json-view';
+import {PopUp_All_Good } from '../PopUp_Smart.js'
 
 function Settings_section_edit_mssp_config_json({show_SideBar,set_show_SideBar,set_notification_number, }) {
  
-
- const {   backEndURL   ,moduleLinks,front_URL,front_IP} = useContext(GeneralContext);
+ 
+    // const [loader , set_loader] = useState(true)
+ const {     moduleLinks,mssp_config_json, set_mssp_config_json} = useContext(GeneralContext);
  const [tmp_moduleLinks, set_tmp_moduleLinks] = useState(moduleLinks);
  const [save_btn, set_save_btn] = useState(false);
 
@@ -20,33 +26,26 @@ function Settings_section_edit_mssp_config_json({show_SideBar,set_show_SideBar,s
 
 };
 
+
+ 
+ 
         
-const handle_Save_config = async () => {
-try{
-  const res = await axios.put(`${backEndURL}/config/mssp-config-json-links`,tmp_moduleLinks );
-  if (res){
-    console.log("handle_Save_config",res.data);
-  }
-  
-}
+const handle_Save_config = () => {
 
 
-catch(err){
-  console.log("handle_Save_config" , err);
-}
-
-};
+  console.log("tmp_moduleLinks",tmp_moduleLinks);
+  handleClose();};
          
+ 
+
+function handleClose() {
+
+}
 
 
 useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 
-useEffect(() => {
-  if(tmp_moduleLinks != undefined) {return}
-else {set_tmp_moduleLinks(moduleLinks)}
-
-}, [moduleLinks]);
-
+ 
 
 
     return (
@@ -61,7 +60,7 @@ else {set_tmp_moduleLinks(moduleLinks)}
                                     <tr >
                                     <td className="setting_descriptions setting_descriptions" >
                                     <p className='font-type-menu Color-White  mb-a'  >Modules paths</p>
-                                    <p className='font-type-txt Color-Grey1 '>After Save The Page will refresh</p>
+                                    <p className='font-type-txt Color-Grey1 '>The changes will be reflected after saving and re-entering</p>
                                     </td>
                                     {/* moduleLinks */}
 
@@ -80,40 +79,30 @@ else {set_tmp_moduleLinks(moduleLinks)}
   );
 })}
  
-
-
-
-
- <tr className=''  style={{  }}>
-      <td className="" >   </td>
-      <td className="" style={{ }}> 
- <div  style={{ marginBottom:"var(--space-d)" ,marginTop:"var(--space-a)" , display:'flex' ,justifyContent:"end", gap:"var(--space-b)", alignItems:"center"}}>
-
- <p className='font-type-txt Color-Grey1' style={{marginRight:'auto'}}><span className='mr-c'>{`{FRONT_URL} ${front_URL}`}</span>|<span className='ml-c'>{`{FRONT_IP} ${front_IP}`}</span></p>
-{save_btn &&
-(<>
-<p className='font-type-txt Color-Grey1 '>Clicking will refresh the page</p>
+                  
+                                </tr>
+                    
+                     
+                                </tbody> 
+                    </table>
+{save_btn && 
+ <div  style={{ marginBottom:"var(--space-d)" ,marginTop:"var(--space-a)" , display:'flex' ,justifyContent:"end", gap:"var(--space-b)"}}>
  <button className="btn-type2" style={{ }} onClick={handle_Save_config}  ><p className='font-type-menu '>Save</p></button> 
-</>) 
- 
+</div>
+
 
 }
 
-</div>
-</td>
- </tr>
 
 
-
-                                </tr>
-                                </tbody> 
-                    </table>
 
 </div>
  
  
  </>
 
+
+ 
 
     );
   }

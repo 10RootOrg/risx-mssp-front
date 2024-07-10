@@ -5,23 +5,23 @@ import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as Loader } from '../icons/loader_typea.svg';
 
 
- import ResourceGroup_Action_btns from '../ResourceGroup/ResourceGroup_Action_btns';
- import ResourceGroup_buttomLine from '../ResourceGroup/ResourceGroup_buttomLine';
+ import ResourceGroup_Action_btns from '../ResourceGroup/ResourceGroup_Action_btns.jsx';
+ import ResourceGroup_buttomLine from '../ResourceGroup/ResourceGroup_buttomLine.jsx';
  import axios from 'axios';
  import GeneralContext from '../../Context.js';
- import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat';
+ import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
  import '../StatusDisplay.css'; 
 
   // Adjust the path as needed based on your project structure
  
  
-import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader } from '../PopUp_Smart'
+import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader } from '../PopUp_Smart.js'
 
 
 
-import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response} from '../PopUp_response_modules'
+import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response} from '../PopUp_response_modules.js'
  import LMloader from "../Features/LMloader.svg";
- import './Results_all.css'
+ import './Dashboard_Results_all.css'
 function Results_All({
   Preview_this_Results ,
   set_Preview_this_Results,
@@ -50,8 +50,8 @@ function Results_All({
     buttonTitle:"Close"
   });
 
-const status_bar_width = "140px"
-
+// const status_bar_width = "140px"
+const status_bar_width = "200px"
  
   const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show] = useState(false);
   const [json_file_info, set_json_file_info] = useState({})
@@ -431,7 +431,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.ExpireDate &&  format_date_type_c(Info?.StartDate)}</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.Status}</p> 
 
-<div className="status-bar-and-time" style={{width:status_bar_width}}>  
+<div className="status-bar-and-time " style={{width:status_bar_width}}>  
 <div className="status-bar">
             {/* <div className={`status-bar-fill `}/> */}
             <div className={`status-bar-fill ${Info?.Status}`}/>

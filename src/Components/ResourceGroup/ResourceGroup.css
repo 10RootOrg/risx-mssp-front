@@ -27,7 +27,8 @@
 
   .resource-group-list-box{
  height: calc(100% - var(--space-d ) - var(--space-d ) - var(--space-d )  - var(--space-d )  - var(--space-d ) - var(--space-d ) - var(--space-d ) - var(--space-d )   );
- height: 360px;
+ height: 400px;
+max-height:  400px;
 
 overflow-y: scroll;
 

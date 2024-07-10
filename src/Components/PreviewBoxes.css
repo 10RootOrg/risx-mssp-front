@@ -17,6 +17,17 @@ transition: var(--transition-fast);
 /* width: 8%;  */
 }
    
+
+.PreviewBox_for_cut_right{
+  /* border-top-right-radius:   var(--boxes-round-corner)  ;
+  border-bottom-right-radius:   var(--boxes-round-corner)  ;
+  border-top-left-radius:var(--boxes-round-corner)    ;  
+  border-bottom-left-radius:var(--boxes-round-corner)    ;   */
+  /* border-radius: var(--boxes-round-corner); */
+ 
+
+}
+
 .PreviewBoxLine{
   height: auto; 
   padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
@@ -85,6 +96,7 @@ Color-Grey1 */
 
 
 .PreviewBox_static{
+  /* max-width: fit-content; */
   background:var(--color-DB-Blue-Hover);
     transition: var(--transition-fast);
   /* cursor: pointer; */

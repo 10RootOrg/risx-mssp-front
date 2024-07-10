@@ -58,8 +58,7 @@ console.log("backEndURL",backEndURL);
 const EditTools = (Info) =>{
 
 console.log('EditTools' ,'info' , Info);
-
-  set_resourceItem(Info)
+   set_resourceItem(Info)
   
 //  make array from item types
 const resource_arrary =[]
@@ -396,24 +395,7 @@ if (dateString) {
 <div className='resource-group-list-item display-flex list-item-big' >
 <button className="btn-type1"><IconSettings className="icon-type1 " />  </button>
  
-{/* no tools */}
-{/* {Info?.tools?.length === 1
-  &&  Info?.tools[0]?.Toolid === null ||  Info?.tools[0]?.Toolid === "" ||  Info?.tools[0]?.Toolid === undefined
-  ? (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  } */}
-
-
-
-
-{/* 2 tools */}
-{/* {Info?.tools?.length === 2
-  &&  Info?.tools[0]?.Toolid !== null &&  Info?.tools[0]?.Toolid !== "" &&  Info?.tools[0]?.Toolid !== undefined
-  ? (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]?.toolname}</p><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[1]?.toolname}</p></> ) : null  } */}
-
-{/* > 2 tools */}
-{/* {Info?.tools?.length > 2
-  &&  Info?.tools[0]?.Toolid !== null &&  Info?.tools[0]?.Toolid !== "" &&  Info?.tools[0]?.Toolid !== undefined
-  ? (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]?.toolname}</p>  <p className=' ml-a font-type-txt   Color-Grey1  '>+{Info?.tools?.length -1} More</p></>) : null  } */}
-
+ 
 
 {/* no tools */}
 {Info?.tools?.length === 1
@@ -472,8 +454,8 @@ if (dateString) {
 
 
 
-
-<ResourceGroup_buttomLine records_number={Preview_this_Resource.length || 0}/>
+ 
+<ResourceGroup_buttomLine records_number={Preview_this_Resource?.length || 0}/>
 </>
 )}
 
