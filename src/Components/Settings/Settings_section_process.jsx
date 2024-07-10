@@ -98,7 +98,7 @@ onClick={enable_disable_MainProcess}
                      
                      </td>
  
-                  <td className="" style={{}}><p className='font-type-txt Color-Grey1  '>Activation and deactivation of VelociraptorInterval.py</p>
+                  <td className="" style={{}}><p className='font-type-txt Color-Grey1  '>Activation and deactivation of Interval.py</p>
                   
               
                   {/* <label className="switch"><input type="checkbox" 

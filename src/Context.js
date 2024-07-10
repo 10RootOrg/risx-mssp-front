@@ -4,9 +4,15 @@ import axios from "axios";
  const GeneralContext = createContext();
 export function ContextProvider  ({ children }) {
   const [backEndURL, set_backEndURL] = useState("");
+  const [mssp_config_json, set_mssp_config_json] = useState({});
   const [front_IP, set_front_IP] = useState("");
+  const [front_URL, set_front_URL] = useState("");
+
+  
   const [moduleLinks, set_moduleLinks] = useState();
   const [expiryDate, set_expiryDate] = useState("");
+
+
   const [examInnterval_minutes, set_examInnterval_minutes] = useState(2);
 
 
@@ -22,6 +28,8 @@ useEffect(() => {
 
  
 // console.log("config", config);
+
+   set_mssp_config_json(config)
    set_examInnterval_minutes(config.examInnterval_minutes);
    set_moduleLinks(config.moduleLinks);
    set_expiryDate(config.expiryDate);
@@ -53,7 +61,10 @@ useEffect(() => {
              const res = await axios.get(`${backEndURL}/config/from_env`);
              if (res){
               set_front_IP(res.data?.FRONT_IP);
+              set_front_URL(res.data?.FRONT_URL);
+
               
+
                 }}
          catch(err){console.log(err);}
                      }
@@ -142,7 +153,9 @@ useEffect(() => {
       moduleLinks,
       examInnterval_minutes,
       expiryDate,
-      front_IP
+      front_IP,
+      front_URL,
+      mssp_config_json, set_mssp_config_json
       }} >
       {children}
     </GeneralContext.Provider>

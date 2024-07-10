@@ -26,7 +26,7 @@ function NoPage404( ) {
   height: "35vw" 
    }}/> 
 
-<div className='login-marketing-center'  style={{maxWidth:"740px"}}>
+<div className='login-marketing-center'  style={{maxWidth:"750px"}}>
 <h1 className='font-type-h1    Color-White  '  style={{fontWeight:"600"}}>Where will you go?</h1>
 <h1 className='font-type-h1     Color-Blue-Glow mb-c'  style={{fontWeight:"600" ,fontSize:"251px" ,lineHeight:"90%"}}>404</h1>
  

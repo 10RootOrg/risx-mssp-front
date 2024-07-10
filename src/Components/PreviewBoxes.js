@@ -25,6 +25,8 @@ import { Doughnut , Bar } from 'react-chartjs-2';
 
 //  console.log("tool_id",tool_id);
  
+const time = new Date()
+const format_date = format_date_type_a(time);
  
 
 
@@ -139,9 +141,6 @@ txt_color
 
   useEffect(() => { 
   if (filter_Resource?.type_ids?.length === 0 ) {
-    
-          // console.log("zero filter--999" );
-    
           set_is_Filtering(false)
         }
      
@@ -162,7 +161,6 @@ if (id === null || id === undefined){
 else{
 
 const found = filter_Resource.type_ids.find((ids) => ids ===  id);
- 
 
 
 if (found  === undefined){
@@ -175,23 +173,15 @@ return
 }
 
 else if (found  === id){
-   
-  const index = filter_Resource.type_ids.indexOf(id);
+  // const index = filter_Resource.type_ids.indexOf(id);
  const filterd = filter_Resource.type_ids.filter(element => element  !== id);
-
  const stayAsYouR = filter_Resource.tool_ids
  set_filter_Resource({type_ids:filterd,tool_ids:stayAsYouR})
  set_is_Filtering(false)
  
 return
 }
-
- 
-
 }
- 
- 
-
 }
 
 const handleHover = () => {
@@ -203,7 +193,6 @@ const handleLeave = () => {
 };
 
   const StatusColorClass =
-
   StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
   StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
   StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
@@ -217,7 +206,6 @@ const handleLeave = () => {
  
 
 
- 
 
 
   return (
@@ -230,20 +218,21 @@ const handleLeave = () => {
       > 
     <div className='PreviewBox_HeadLine' >
       <p  className="font-type-menu" >{HeadLine}</p>
-
  <div className={`${StatusColorClass}  light-bulb-type1`} style={{backgroundColor:  isHovered ? "#00DBFF" : (txt_color || "")}}/>
  
        </div> 
 
 
     <div> 
-     
     <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
     <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
 }} >{SmallNumberTxt}: {SmallNumber}</div>
     </div>
 
-     <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
+     <div className='PreviewBox_ButtomLine'
+     
+    //  style={{  visibility: date === "NA" &&  'hidden' }}
+      >
 
      <IconLastRun />
      <div className='font-type-very-sml-txt '>{date}</div>
@@ -1101,7 +1090,7 @@ disabled={disabled}
 
     <div className='PreviewBox_ButtomLine' >
      <IconLastRun />
-     <div className='font-type-very-sml-txt Color-Grey1' style={{marginRight:"auto"}}>{last_response == 0 ? ("UnRealized"):(format_date_type_a(last_response))}   </div>
+     <div className='font-type-very-sml-txt Color-Grey1' style={{marginRight:"auto"}}>{last_response == 0 ? (format_date):(format_date_type_a(last_response))}   </div>
      <button className="btn-type4"   tool_id={Info?.tool_id}      onClick={() => ShowInUi(Info)} ><p className=' font-type-txt'></p><IcoKey className="icon-type1"/></button>
 
 

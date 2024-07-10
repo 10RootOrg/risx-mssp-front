@@ -3,33 +3,21 @@ import React , {useState , useEffect ,useContext} from 'react';
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import axios from 'axios';
 import './../Settings/Settings.css';
-import './../Settings/Settings_section_config.jsx';
+// import './../Settings/Settings_section_config.jsx';
 import Settings_section_config from './Settings_section_config.jsx'
 import Settings_section_ShowInUi from './Settings_section_ShowInUi.jsx'
 import Settings_section_process from './Settings_section_process.jsx'
 import Settings_section_edit_mssp_config_json from './Settings_section_edit_mssp_config_json.jsx'
-
-
-
+import Settings_section_logs from './Settings_section_logs.jsx'
 import GeneralContext from '../../Context.js';
 
 
-// const {   backEndURL  } = useContext(GeneralContext);
-// const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
- 
 function Settings({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage,isMainProcessWork,set_isMainProcessWork}) {
 
   set_visblePage("Settings");
+  
   const { all_Tools    } = useContext(GeneralContext);
 
-
-
-
-
-
-console.log("all_Tools",all_Tools);
-
- 
  
 //  show sidebar in this page
   useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
@@ -62,9 +50,20 @@ console.log("all_Tools",all_Tools);
 
 <Settings_section_ShowInUi all_Tools={all_Tools}/>
 
-{/* <Settings_section_edit_mssp_config_json all_Tools={all_Tools}/> */}
+<Settings_section_edit_mssp_config_json all_Tools={all_Tools}/>
 
 <Settings_section_process isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}/>
+
+
+<Settings_section_logs    usethis={"log_mssp_backend"}     fileName={"mssp-back.log"}     headline={"MSSP Backend"}     subline={"Node JS backend"} />
+<Settings_section_logs    usethis={"log_python_main"}      fileName={"main.log"}          headline={"Python Interval"}  subline={"Python Interval log"} />
+<Settings_section_logs    usethis={"log_python_interval"}  fileName={"interval.log"}      headline={"Python main"}      subline={"Active Now"} />
+
+{/* 
+// fetchLog("log_mssp_backend",set_log_data);
+  fetchLog("log_python_interval",set_log_data);
+  // fetchLog("log_python_main",set_log_data); */}
+
 
 </div>
 

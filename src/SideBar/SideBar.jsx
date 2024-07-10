@@ -4,6 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import './SideBar.css';
 import { ReactComponent as RisxMsspLogo } from '../Components/Logos/RisxMssp_logo_Standart.svg';
 import { ReactComponent as IcoMonitor } from '../Components/icons/ico-menu-monitor.svg';
+import { ReactComponent as IcoModules } from '../Components/icons/ico-menu-modules.svg';
+import { ReactComponent as IcoLink } from '../Components/icons/ico-menu-link.svg';
+import { ReactComponent as IcoIframe } from '../Components/icons/ico-menu-iframe.svg';
+
+
+// c:\Users\alonk\Downloads\ico-menu-iframe.svg c:\Users\alonk\Downloads\ico-menu-link.svg
 import { ReactComponent as IcoResults } from '../Components/icons/ico-menu-Results.svg';
 import { ReactComponent as IcoResourceGroup } from '../Components/icons/ico-menu-Resource-Group.svg';
 import { ReactComponent as IcoAccount } from '../Components/icons/ico-menu-account.svg';
@@ -12,24 +18,23 @@ import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-down
 // import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
 import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
 import { ReactComponent as IconUsers } from '../Components/icons/ico-menu-users.svg';
-import {PopUp_Error ,PopUp_All_Good,PopUp_Are_You_Sure
-  // PopUp_Are_You_Sure
-} from '../Components/PopUp_Smart'
+import {PopUp_Error ,PopUp_All_Good } from '../Components/PopUp_Smart'
  
 import GeneralContext from '../Context';
 import axios from 'axios';
 
- 
- 
+import {make_url_from_id} from '../Components/Dashboards/functions_for_dashboards'
+
+
+
 function SideBar({ visblePage, set_visblePage, notification_number, set_notification_number ,isMainProcessWork, set_isMainProcessWork}) {
 
-const navigate = useNavigate();
-// const [openSubMenu, set_openSubMenu] = useState("none")
-const [user_name, set_user_name] = useState("user")
+// const [isHovered, setIsHovered] = useState(false);
 // const [notification_number, set_notification_number] = useState(0)
-const {backEndURL,user_id} =useContext(GeneralContext)
-
-const [isHovered, setIsHovered] = useState(false);
+// const [openSubMenu, set_openSubMenu] = useState("none")
+const navigate = useNavigate();
+const [user_name, set_user_name] = useState("user")
+const {backEndURL,user_id,moduleLinks,front_IP} =useContext(GeneralContext)
 
 const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
 const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
@@ -37,18 +42,10 @@ const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",par
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
 
-const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] = useState(false);
-const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
-  HeadLine:"Are You Sure?",
-  paragraph:"The record will be deleted from the system",
-  buttonTrue:"True",
-  buttonFalse:"False"
-});
-
-
+ 
 
 const [download_drop_down, set_download_drop_down] = useState(false);
-
+const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
 
 const handleClick = (page_name) => {
   set_visblePage(page_name);
@@ -57,6 +54,22 @@ const handleClick = (page_name) => {
 
 };
 
+
+const handleNewWindow = (dashboard_name) => {
+  const url = make_url_from_id(dashboard_name,moduleLinks,front_IP);
+
+
+if(url){  window.open(url, '_blank')}
+
+
+};
+
+
+
+const handle_Dashboards_drop_down =  () => {
+  set_Dashboards_drop_down(!Dashboards_drop_down)
+  
+};
 
 const handle_download_drop_down =  () => {
   set_download_drop_down(!download_drop_down)
@@ -73,7 +86,6 @@ const handle_click_user = async () => {
   set_PopUp_Error____show(true)
 
 };
-
 
 const handle_active_manual_process = async () => {
  console.log("handle_active_manual_process");
@@ -151,24 +163,7 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
  /> 
  }
 
-
-{/* {PopUp_Are_You_Sure__show &&
- <PopUp_Are_You_Sure
- popUp_show={PopUp_Are_You_Sure__show}
- set_popUp_show={set_PopUp_Are_You_Sure__show}
-
- HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
- paragraph={PopUp_Are_You_Sure__txt.paragraph} 
-
- button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
- button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
-
-True_action={check_and_active_interval_of_python}
-False_action={handle_Close_PopUp_Are_You_Sure}
-
- /> } */}
-
-
+ 
 
 
 
@@ -195,25 +190,115 @@ False_action={handle_Close_PopUp_Are_You_Sure}
  <div className="btn-menu-list  ">
 
  
+ {/* ..........Dashboards.......srart.... */}
+
+<div className="btn-menu-list"
+  onMouseLeave={()=>set_Dashboards_drop_down(false)}
+  //  onMouseEnter={()=>set_download_drop_down(true)}
+   >
+
+ <button className={`btn-menu  ${Dashboards_drop_down ||  visblePage.startsWith('dashboard')   ? 'btn_look_hover' : ''} `} onClick={handle_Dashboards_drop_down} >  
+        <div className='display-flex'>
+          <IcoMonitor className="btn-menu-icon-placeholder  mr-a " />
+        
+          <p className='font-type-menu '>Dashboards</p>
+   {visblePage.startsWith('dashboard') &&   <p className='  ml-a font-type-very-sml-txt'>:
+    {visblePage.replace("dashboard-", '').charAt(0).toUpperCase()
+     + visblePage.replace("dashboard-", '').slice(1)
+      }
+    </p> }      
+  
+
+         
+            </div> 
+  <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
+</button>  
+
  
+
+
+<div className={`dropdown-menu ${Dashboards_drop_down ? 'open' : ''} `}  >
+
+
+<button className="btn-menu"  onClick={()=>handleClick("dashboard-general")} disabled={visblePage === "dashboard-general"}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
+          <p className='font-type-menu '>General</p>
+            </div> 
+            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoResults/></div> 
+</button>  
+
+
+<button className="btn-menu"  onClick={()=>handleClick("dashboard-risx")} disabled={visblePage === "dashboard-risx"}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
+          <p className='font-type-menu '>Risx</p>
+            </div> 
+            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoIframe/></div> 
+</button>  
+
+<button className="btn-menu"  onClick={()=>handleClick("dashboard-timesketch")} disabled={visblePage === "dashboard-timesketch"}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
+          <p className='font-type-menu '>Timesketch</p>
+            </div> 
+            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoIframe/></div> 
+</button>  
+
+<button className="btn-menu"  onClick={()=>handleNewWindow("dashboard-misp")} disabled={visblePage === "dashboard-misp"}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
+          <p className='font-type-menu '>Misp</p>
+            </div> 
+            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoLink/></div> 
+</button>  
+
+<button className="btn-menu"  onClick={()=>handleNewWindow("dashboard-cti")} disabled={visblePage === "dashboard-cti"}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
+          <p className='font-type-menu '>CTI</p>
+            </div> 
+            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoLink/></div> 
+</button>  
+
+<button className="btn-menu"  onClick={()=>handleNewWindow("dashboard-iris")} disabled={visblePage === "dashboard-iris"}>  
+        <div className='display-flex'>
+          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
+          <p className='font-type-menu '>IRIS</p>
+            </div> 
+       <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoLink/></div> 
+</button>  
+
  
+</div>
+ 
+
+</div>
+ 
+
+{/* ..........Dashboards..........end. */}
+ 
+
+
+
+
 <button className="btn-menu  " onClick={()=>handleClick("Modules")}   disabled={visblePage === "Modules"}>
-        <div className='display-flex'><IcoMonitor className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Modules</p></div>
+        <div className='display-flex'><IcoModules className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Modules</p></div>
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 
-<button className="btn-menu  " onClick={()=>handleClick("ResourceGroup")}   disabled={visblePage === "ResourceGroup"}>
-        <div className='display-flex'><IcoResourceGroup className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Resource Group</p></div>
+<button className="btn-menu  " onClick={()=>handleClick("assets")}   disabled={visblePage === "assets"}>
+        <div className='display-flex'><IcoResourceGroup className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Assets</p></div>
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 
-<button className="btn-menu  " onClick={()=>handleClick("Results")}   disabled={visblePage === "Results"}>
-        <div className='display-flex'><IcoResults className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Results</p>
-        {notification_number != 0 &&  <span className='notification'><p className='font-type-very-sml-txt'>{notification_number}</p></span>}
-       
-        </div>
-      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
-</button> 
+
+
+
+
+
+
+
 
 <button className="btn-menu  " onClick={()=>handleClick("Settings")}   disabled={visblePage === "Settings"}>
         <div className='display-flex'><IcoSettings className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Settings</p></div>
@@ -243,7 +328,7 @@ False_action={handle_Close_PopUp_Are_You_Sure}
 
 
 
-{/* download_drop_down */}
+ 
 
 <div className="btn-menu-list"
   onMouseLeave={()=>set_download_drop_down(false)}
@@ -283,8 +368,7 @@ False_action={handle_Close_PopUp_Are_You_Sure}
 <button className="btn-menu  "  onClick={handleDownload}>  
         <div className='display-flex'>
           <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
-          <p className='font-type-menu '>Mac</p>
-        
+          <p className='font-type-menu '>Mac</p>        
             </div> 
        <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
 </button>  

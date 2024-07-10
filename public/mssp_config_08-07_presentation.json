@@ -1,0 +1,71 @@
+{
+    "backendUrl": "http://40.69.58.105:5555",
+    "backendUrl_old1": "http://localhost:5555", 
+    "backendUrl_old2": "http://risxserverdev.westeurope.cloudapp.azure.com:5555",
+
+    "expiryDate":"28-07-2024",
+    "clientApi": "https://api.example.com/user",
+    "examInnterval_minutes" :15,
+    "moduleLinks": [
+        {
+        "toolName": "Velociraptor",
+        "toolID": "2000000",
+        "toolURL": "https://mssp-dev.northeurope.cloudapp.azure.com/velociraptor/"
+        },
+        {
+         "toolName": "Risx",
+         "toolID": "2001000",
+         "toolURL": "http://risxserverdev.westeurope.cloudapp.azure.com:3001/login/"
+     },{
+         "toolName": "ELK",
+         "toolID": "2001001",
+         "toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/"
+     },{
+         "toolName": "Timesketch",
+         "toolID": "2001002",
+         "toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/"
+     },{
+         "toolName": "Open CTI",
+         "toolID": "2001003",
+         "toolURL": "http://opencti.northeurope.cloudapp.azure.com:8080/"
+     },{
+         "toolName": "10Root Osint",
+         "toolID": "2001004",
+         "toolURL": "https://inteltechniques.com/tools/Search.html"
+     },{
+         "toolName": "Nuclei",
+         "toolID": "2001005",
+         "toolURL": "",
+          "expiretime": "25"
+     },{
+         "toolName": "AnyRun",
+         "toolID": "2001006",
+         "toolURL": "http://mssp-10root-7ci.italynorth.cloudapp.azure.com/strelka/"
+     },{
+         "toolName": "Ail",
+         "toolID": "2001008",
+         "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com:7000/"
+     },{
+         "toolName": "Dehashed",
+         "toolID": "2001009",
+         "toolURL": "https://leakcheck.net/api?key=4fe5da6d3a2bbf2ca7a6d3492c32099126d5e727&type=domain_email&check=tesla.com"
+     },{
+         "toolName": "IRIS",
+         "toolID": "2001010",
+         "toolURL": "https://tenroot-iris.northeurope.cloudapp.azure.com"
+     },{
+         "toolName": "Shodan",
+         "toolID": "2001011",
+         "toolURL": "https://leakcheck.net/api?key=4fe5da6d3a2bbf2ca7a6d3492c32099126d5e727&type=domain_email&check=sheba.co.il"
+     },{
+         "toolName": "MISP",
+         "toolID": "2001012",
+         "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com/"
+     }
+ ]
+                           
+  }
+
+
+
+  

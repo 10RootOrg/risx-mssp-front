@@ -159,16 +159,19 @@
 
  
 .dropdown-menu {
+ 
   max-height: 0;
   overflow: hidden;
- 
-  transition: var(--transition-med)
+  transition: var(--transition-med);
+
 }
 
 .dropdown-menu.open {
+ 
   max-height: 400px; /* Adjust as needed */
  background-color: var(--color-Grey4);
  border-radius: var(--elemtns-round-corner-medium);
- transition: var(--transition-med)
+ transition: var(--transition-med);
+ margin-bottom: var(--space-a);
 }
  

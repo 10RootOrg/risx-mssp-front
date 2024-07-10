@@ -67,18 +67,16 @@ function Modules({show_SideBar,set_show_SideBar,notification_number,set_visblePa
 <div className='app-main' >
 <div className='top-of-page'> 
 
-<div className='top-of-page-left mb-b'>
-<p  className="font-type-menu" >Monitoring:</p>
-<p  className="font-type-h3" >Dashboard</p>
-</div>
+{/* <div className='top-of-page-left mb-b'>
+<p  className="font-type-menu" >Mssp:</p>
+<p  className="font-type-h3" >Modules</p>
+</div> */}
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
  
 
- <div className='top-of-page-right'>
+ {/* <div className='top-of-page-right'>
 <Search_comp set_items_for_search={set_show_only_this_tools}    items_for_search={show_only_this_tools} />
-{/* <input className="input-type1 mr-a" placeholder="Search" />
-<button className="btn-type1 "><IconSearch className="icon-type1" />  </button> */}
-</div>
+ </div> */}
 
 
 </div>
@@ -86,7 +84,14 @@ function Modules({show_SideBar,set_show_SideBar,notification_number,set_visblePa
  
 
 
-<div className="display-flex mb-b mt-b"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Artifact collectors</p></div>
+<div className="display-flex mb-b mt-b"><IcoModule style={{  }}/>
+<p  className="font-type-menu Color-White ml-a " style={{marginRight:"auto"}} >Artifact collectors</p>
+ 
+<Search_comp set_items_for_search={set_show_only_this_tools}    items_for_search={show_only_this_tools} />
+ 
+
+
+</div>
 
 
 {/* <div className='PreviewBox PreviewBoxLine   ' style={{marginBottom:"var(--space-c)"}} > 
@@ -94,11 +99,7 @@ function Modules({show_SideBar,set_show_SideBar,notification_number,set_visblePa
 </div> */}
 
 
-
-
 <div className='resource-group-top-boxes mb-c' >
-
-
 
 
 <PreviewBox_velociraptor />
@@ -107,7 +108,7 @@ function Modules({show_SideBar,set_show_SideBar,notification_number,set_visblePa
 {show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
-{Info?.toolType === "module"   &&  Info?.tool_id != "2000000" &&  Info?.ShowInUi &&     
+{Info?.toolType === "module"   &&  Info?.tool_id != "2000000" &&  Info?.ShowInUi === 1 &&     
  
 <PreviewBox_type_module
  Info={Info}
@@ -165,7 +166,7 @@ all_Tools={all_Tools}
 {show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
-{Info?.toolType === "link" && Info?.BoxType === "Tools_a"  &&  Info?.ShowInUi &&     
+{Info?.toolType === "link" && Info?.BoxType === "Tools_a"  &&  Info?.ShowInUi === 1 &&     
   
 <PreviewBox_type_module
  Info={Info}
@@ -193,7 +194,7 @@ all_Tools={all_Tools}
 {show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
-{Info?.toolType === "link" && Info?.BoxType === "Tools_b"  &&  Info?.ShowInUi &&        
+{Info?.toolType === "link" && Info?.BoxType === "Tools_b"  &&  Info?.ShowInUi === 1 &&        
   
 <PreviewBox_type_module
 // show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
@@ -243,7 +244,7 @@ all_Tools={all_Tools}
 
 
  {show_only_this_tools?.length > 4    &&   
-<button className="btn-type4 mb-a"  onClick={()=>  navigate(`/${"results"}`)}><p className='font-type-menu ' >Watch Results</p><IcoResults className="icon-type1 " />  </button>
+<button className="btn-type4 mb-a"  onClick={()=>  navigate(`/${"dashboard-general"}`)}><p className='font-type-menu ' >Watch Results</p><IcoResults className="icon-type1 " />  </button>
  }
 </div>
 
