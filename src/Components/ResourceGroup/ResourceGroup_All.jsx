@@ -10,7 +10,7 @@ import axios from 'axios'
   // Adjust the path as needed based on your project structure
  
  import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
-import {PopUp_All_Good ,PopUp_Are_You_Sure} from '../PopUp_Smart'
+import {PopUp_All_Good ,PopUp_Are_You_Sure ,PopUp_Under_Construction} from '../PopUp_Smart'
 
  import LMloader from "../Features/LMloader.svg";
 function ResourceGroup_All({
@@ -43,10 +43,6 @@ function ResourceGroup_All({
   });
   
   
-
-
-
-
 
   const [resourceItem , set_resourceItem] = useState({})
   const [item_types_list, set_item_types_list] = useState([]);
@@ -94,8 +90,6 @@ const resource_arrary =[]
 }
 
 const handle_Confirm_Delete = () => {
-
- 
 
  const  delete_item = async() =>{
   console.log('Deleting item...', resourceItem.resource_id);
@@ -161,20 +155,16 @@ console.log(typeof Preview_this_Resource == "object");
  <PopUp_Are_You_Sure
  popUp_show={PopUp_Are_You_Sure__show}
  set_popUp_show={set_PopUp_Are_You_Sure__show}
-
  HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
  paragraph={PopUp_Are_You_Sure__txt.paragraph} 
-
  button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
  button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
-
 True_action={handle_Confirm_Delete}
 False_action={handle_Cancel_Delete}
 
  /> 
  }
  
-
 
 {PopUp_All_Good__show &&
  <PopUp_All_Good
@@ -211,8 +201,6 @@ set_PopUp_All_Good__show={set_PopUp_All_Good__show}
 
 set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
 set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
-
- 
       />}
  
 
@@ -225,7 +213,6 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
                   </div>
 
  <ResourceGroup_Action_btns
- 
  set_item_types_list={set_item_types_list}
  set_item_tool_list={set_item_tool_list}
 set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
@@ -235,9 +222,12 @@ set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
 items_for_search={Preview_this_Resource}
 set_items_for_search={set_Preview_this_Resource}
 
-show_btn_add={true}
-btn_add_action={add_resource_item}
+btn_add_single_show={true}
+btn_add_single_action={add_resource_item}
+btn_add_single_value={"add"}
 
+btn_add_many_show={true}
+btn_add_many_action={add_resource_item}
 
 
  />

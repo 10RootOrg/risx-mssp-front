@@ -2,15 +2,20 @@ import React, { useState,useEffect } from 'react'
  
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import { ReactComponent as IconPlus } from '../icons/ico-plus.svg';
+import { ReactComponent as IconPlusMany } from '../icons/ico-plus-many.svg';
 import { ReactComponent as IconTrash } from '../icons/ico-trash.svg';
 import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as IconExpend } from '../icons/ico-expend.svg';
 import { ReactComponent as IconLine } from '../icons/ico-line.svg';
+
 function ResourceGroup_Action_btns({
   items_for_search,  set_items_for_search,
-  show_btn_add,
-  btn_add_action,
-  btn_add_value
+  btn_add_single_show,
+  btn_add_single_action,
+  btn_add_single_value,
+
+  btn_add_many_show,
+  btn_add_many_action
 }) {
 
  
@@ -36,26 +41,8 @@ if(items_for_search?.length > all_items?.length){
 
 
 
-  // const  add_resource_item = () =>{
-  //   console.log("add_resource_item");
-
-  //   set_item_types_list([])
-  //   set_item_tool_list([])
-  
-  //   set_popUp_Add_or_Edit__status("add")
-  //   set_popUp_Add_or_Edit__show(true)
-  //   }
-
-
-
-
-
-
 
 useEffect(() => {
-
-// console.log("all_items" , all_items);
- 
 const filteredItems = all_items.filter(item => {
   const filterLower = filter_string.toLowerCase();
   for (const key in item) {
@@ -85,8 +72,10 @@ const filteredItems = all_items.filter(item => {
       <input className="input-type1 mr-a" placeholder="Search"     onChange={(e) => set_filter_string(e.target.value)} />
       <button className="btn-type1"><IconSearch className="icon-type1" />  </button>
 
+      {btn_add_many_show    &&   <button className="btn-type1" onClick={btn_add_many_action}><IconPlusMany className="icon-type1" /></button>}
 
-      {show_btn_add&& <button className="btn-type1" onClick={()=>btn_add_action(btn_add_value)}><IconPlus className="icon-type1" /></button>}
+      {btn_add_single_show  && <button className="btn-type1" onClick={()=>btn_add_single_action(btn_add_single_value)}><IconPlus className="icon-type1" /></button>}
+
       <button className="btn-type1"><IconTrash className="icon-type1" />  </button>
       <button className="btn-type1"><IconSettings className="icon-type1" />  </button>
       <IconLine className="icon-type1" />

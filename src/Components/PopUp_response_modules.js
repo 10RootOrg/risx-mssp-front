@@ -319,12 +319,12 @@ Status={json_file_info?.status}
 Error={json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)}
 />
 </div>
-
+{json_file_info?.fileSize != "Too big"  && 
 <PreviewBox_type0_static 
 BigNumber={json_file_info?.table?.length === undefined ? 0 : json_file_info?.table?.length}
 text_under_big_number={"Object Find"}
 />
- 
+ }
 </>
 }
 

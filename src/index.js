@@ -30,40 +30,34 @@ export default function App() {
   const [isMainProcessWork, set_isMainProcessWork] = useState(false);
   // const {  backEndURL } = useContext(GeneralContext);
 
- 
+  console.log("visblePage" , visblePage);
 
   
   return (
 <> 
       <div className='app-out' > 
  
-    
+ 
       <ContextProvider> 
          <BrowserRouter>
 
     {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}   notification_number={notification_number} set_notification_number={set_notification_number} isMainProcessWork={isMainProcessWork} />  }
-    < Constantfunctions  isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork} />
+
+   {visblePage != "login"  && < Constantfunctions  isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork} /> } 
   
      
       <Routes>
            <Route path="/" element={<Navigate replace to="/login" />} />
-          <Route path="login"               element={<Login              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar}/>} />
+          <Route path="login"               element={<Login              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}/>} />
           <Route path="assets"              element={<ResourceGroup      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
           <Route path="Modules"             element={<Modules            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
 
-
-          {/* <Route path="dashboard-old"        element={<Dashboardold        show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} /> */}
           <Route path="dashboard-general"    element={<DashboardResults    show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   set_notification_number={set_notification_number}     />} />
           <Route path="dashboard-risx"       element={<DashboardRisx       show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-timesketch" element={<DashboardTimesketch show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
 
-      
-
           <Route path="settings"            element={<Settings           show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
           <Route path="users"               element={<Users              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
-
- 
-
       
           <Route path="TestPage"     element={<TestPage />} />   
           <Route path='*' element={<NoPage404/> }/>

@@ -77,10 +77,14 @@ const enable_disable_MainProcess =() =>{
                      
    <tbody  className="tbody_setting">  
               <tr >
-                  <td className="setting_descriptions setting_descriptions_one_line" >
+                  <td className="setting_descriptions " >
                   <p className='font-type-menu Color-White  '  >Output sample</p>
                    </td>
-  
+
+                   {/* <td className="setting_descriptions setting_descriptions_one_line" >
+                  <p className='font-type-menu Color-White  '  >Output sample</p>
+                   </td> */}
+
                    <td className="" style={{}}>
                      {/* {!isMainProcessWork &&    <p className='font-type-menu Color-Orange ml-a'>off</p>} {isMainProcessWork && <p className='font-type-menu Color-Blue-Glow ml-a'>on</p>} */}
                      

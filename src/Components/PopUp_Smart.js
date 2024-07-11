@@ -5,6 +5,7 @@ import './PopUp.css'; // import CSS file for modal styling
 import { PreviewBox_type0_static   } from './PreviewBoxes.js'
 import { ReactComponent as CloseButton } from '../Components/icons/ico-Close_type1.svg';
 import {ReactComponent as SuccessIcon} from '../Components/icons/General-icons-success.svg';
+import {ReactComponent as UnderConstruction} from '../Components/icons/General-icons-code.svg';
  import {ReactComponent as  CarefulIcon} from '../Components/icons/General-icons-careful.svg';
  import {ReactComponent as  InfofulIcon} from '../Components/icons/General-icons-info.svg';
  import { ReactComponent as Loader } from '../Components/icons/loader_typea.svg';
@@ -644,6 +645,75 @@ set_Dehashed_data(tmpdata2);
            
  
 
+          </div>)}
+    
+      </>
+    );
+  }
+
+
+  export const PopUp_Under_Construction = (props) => {
+    const { HeadLine, paragraph   ,popUp_show, set_popUp_show  ,buttonTitle     } = props;
+    const [active, setActive] = useState(false);
+   
+    useEffect(() => {
+      set_popUp_show(popUp_show)
+    }, [popUp_show]);
+  
+    useEffect(() => {
+      if (popUp_show) {
+          setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+      }
+    }, [popUp_show]);
+  
+  
+    function handleClickOutside(e) {
+      if (e.target.className === 'PopUp-background') {
+        setActive(false); // Trigger exit animation
+        setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+      }
+    }
+  
+    function handleClose() {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+    }
+  
+  
+  
+  
+    return (
+      <>
+   
+  
+  
+  {popUp_show && (
+          <div className={`PopUp-background`} onClick={handleClickOutside}>
+            
+            <div className={`PopUp-content  ${active ? 'popup-enter-active' : 'popup-enter'}`} style={{   width:"250px" ,paddingBottom:" "}}>
+  
+  <div className="display-flex justify-content-end  " style={{marginRight:"-40px"  }}>
+  <button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
+  </div>
+  
+  <UnderConstruction className="mb-a "
+  alt="Icon" width="100px" height="70px"    style={{ marginLeft:"-15px" }}
+  />
+                
+  <p className="font-type-h4 Color-White mb-a">{HeadLine}</p>
+  <p  className="font-type-txt  reading-height Color-White"  >{paragraph}</p>
+      
+  
+   <div className='display-flex mt-c' style={{  }}>
+      <button className="btn-type2   '" style={{ marginLeft:"auto" }} onClick={handleClose} ><p className='font-type-menu '>{buttonTitle}</p>  </button> 
+   
+    </div>
+  
+  
+  
+              
+            
+            </div>
           </div>)}
     
       </>

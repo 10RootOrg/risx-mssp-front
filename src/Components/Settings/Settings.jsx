@@ -9,6 +9,12 @@ import Settings_section_ShowInUi from './Settings_section_ShowInUi.jsx'
 import Settings_section_process from './Settings_section_process.jsx'
 import Settings_section_edit_mssp_config_json from './Settings_section_edit_mssp_config_json.jsx'
 import Settings_section_logs from './Settings_section_logs.jsx'
+
+
+
+import Settings_Menu from './Settings_Menu.jsx'
+
+
 import GeneralContext from '../../Context.js';
 
 
@@ -44,7 +50,11 @@ function Settings({show_SideBar,set_show_SideBar,set_notification_number,set_vis
 <div className='resource-group-top-boxes mb-c' ></div>
 
 
+<div className='mb-c'><Settings_Menu/> </div>
+
 <div  style={{display:"flex" , flexDirection:"column" ,gap:"45px"}}>
+
+
 
 <Settings_section_config/>
 
@@ -59,11 +69,7 @@ function Settings({show_SideBar,set_show_SideBar,set_notification_number,set_vis
 <Settings_section_logs    usethis={"log_python_main"}      fileName={"main.log"}          headline={"Python Interval"}  subline={"Python Interval log"} />
 <Settings_section_logs    usethis={"log_python_interval"}  fileName={"interval.log"}      headline={"Python main"}      subline={"Active Now"} />
 
-{/* 
-// fetchLog("log_mssp_backend",set_log_data);
-  fetchLog("log_python_interval",set_log_data);
-  // fetchLog("log_python_main",set_log_data); */}
-
+ 
 
 </div>
 

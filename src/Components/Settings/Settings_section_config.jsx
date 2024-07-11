@@ -199,12 +199,13 @@ False_action={handle_Cancel_Save_config}
  }
  
  <div>
-<p className='font-type-h4 Color-White mb-c'>Config Files</p>
+{/* <p className='font-type-h4 Color-White mb-c'>Config Files</p> */}
  <table className='setting_table  ' style={{lineHeight:"100%"}}>
                    
  <tbody>  
             <tr >
                 <td className="setting_descriptions">
+                <p className='font-type-h4 Color-White mb-c'>Config Files</p>
                 <p className='font-type-menu Color-White mb-a'>config.json</p>
                 <p className='font-type-txt Color-Grey1 mb-b'>This is the place to update the general config file.</p>
                 <p className='font-type-txt Color-Orange'> Caution: Incorrect input may damage the functionality of the software.</p>

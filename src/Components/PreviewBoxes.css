@@ -15,6 +15,7 @@ flex-direction: column;
 justify-content:space-between;
 transition: var(--transition-fast);
 /* width: 8%;  */
+/* box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.185); */
 }
    
 
