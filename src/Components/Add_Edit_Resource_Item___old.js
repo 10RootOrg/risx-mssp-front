@@ -23,11 +23,16 @@ import { useContext } from "react";
                     set_filter_Resource, 
                     set_PopUp_All_Good__txt,
                     set_PopUp_All_Good__show,
+                    Preview_this_Resource,
+                    set_Preview_this_Resource,
+    
                     set_PopUp_Are_You_Sure__txt,
                     set_PopUp_Are_You_Sure__show
                   } = props;
 
 const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useContext(GeneralContext)
+
+
 
 
      const [resource_string, set_resource_string] = useState(resourceItem?.resource_string || '');
@@ -36,7 +41,7 @@ const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useCo
      const [resource_id, set_resource_id] = useState(resourceItem?.resource_id || '');
      const [error_message, set_error_message] = useState("");
      const [tools_preview, set_tools_preview] = useState(  []);
-     const [resource_type, set_resource_type] = useState({});
+
 
 
     console.log("item_tool_list ------------------------------",item_tool_list);
@@ -62,16 +67,21 @@ const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useCo
   
     const handle_Types_Checkbox_Change = (e, resourceTypeId) => {
 
-      // if(popUp_Add_or_Edit__status == "add" ){  set_item_tool_list([]);}
 
-   
+
+
 
       const isChecked = e.target.checked;
+
       if (isChecked) {
         set_item_types_list([...item_types_list, resourceTypeId]); // Add the resourceTypeId to the array
       } else {
         set_item_types_list(item_types_list.filter(id => id !== resourceTypeId)); // Remove the resourceTypeId from the array
       }
+
+
+
+   
     };
 
 
@@ -88,7 +98,7 @@ console.log(e.target.checked);
     };
 
 
- const change_tools_preview_acording_asset_types=()=>{
+    const change_tools_preview_acording_asset_types=()=>{
 if(item_types_list.length === 0 ){ set_tools_preview([]); return}
 
 
@@ -97,26 +107,12 @@ const filtered_tools = all_Tools.filter(tool =>
       tool.useResourceType.includes(item_type)
   )
 );
-
-
 set_tools_preview(filtered_tools);
+console.log("filtered_tools",  filtered_tools);
 
 
     }
 
-
-
-    useEffect(() => { 
-  
-   if(popUp_Add_or_Edit__status == "add" ){
- console.log("bbbbbbbbbb  1111",item_types_list);
-
- const idArray = tools_preview.map(item => item.tool_id);
- console.log("bbbbbbbbbb  idArray",idArray);
-
-
- set_item_tool_list(idArray);}
-     }, [tools_preview]);
 
 
     // useEffect(() => { 
@@ -134,28 +130,29 @@ set_tools_preview(filtered_tools);
     useEffect(() => { change_tools_preview_acording_asset_types(); }, [item_types_list]);
 
 
-    useEffect(() => {
-      console.log("all_Resource_Types",all_Resource_Types);
-
- 
-      const found = all_Resource_Types.find((element) => element.resource_type_id === item_types_list[0]);
-      set_resource_type(found)
-    
-      }, []);
-
-    
 
     const handleInputChange = (setter) => (event) => setter(event.target.value);
     useEffect(() => {  set_popUp_show(popUp_show) }, [popUp_show]);
   
+ 
+
     // function to close modal when user clicks outside of it
     function handleClickOutside(e) {
       // console.log("e.target.className" , e.target.className);
        if (e.target.className === 'PopUp-background') { set_popUp_show(false); } }
   
-    function handleClose() { set_popUp_show(false);}
+    function handleClose() {
+      set_popUp_show(false);
  
+    }
+ 
+
+
+
+
+    
     function handle_add_or_edit_item(){
+      // popUp_Add_or_Edit__status
 
       const data = {
 "resource_id": resource_id,
@@ -175,6 +172,11 @@ set_tools_preview(filtered_tools);
           try{
             set_error_message("")
               const res = await axios.post(`${backEndURL}/resources`,data );
+
+if(res){
+  // console.log("ssssssssssssss popUp_Add_or_Edit__status sssssssssssssssssssss",res.data);
+}
+
               if (res?.status === 200){ 
                 console.log("res.data" , res.data[0]);
                set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
@@ -235,19 +237,29 @@ set_PopUp_All_Good__show(true)
         set_monitoring(true);
         setDescription("");
         set_item_tool_list([]);
-        // set_item_types_list([]);
+        set_item_types_list([]);
       }
 
      else if(popUp_Add_or_Edit__status == "edit"){
       set_resource_id(resourceItem?.resource_id  || '');
       set_resource_string(resourceItem?.resource_string  || '');
       set_monitoring(resourceItem?.monitoring === 1 ? true : false);
+
+   
       setDescription(resourceItem?.description || '');
+  
       }
+   
+
+
 
     }, [ popUp_Add_or_Edit__status]); // Re-initialize state if `resourceItem` changes
   
  
+       
+ 
+     
+
     return (
       <>
    
@@ -262,10 +274,14 @@ set_PopUp_All_Good__show(true)
             <button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
             </div>
 
+
+
+ 
 <div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>
-  {popUp_Add_or_Edit__status === "add" ? (<>Add {resource_type?.resource_type_name}</>):(<>Edit {resource_type?.resource_type_name}</> )}
+  {popUp_Add_or_Edit__status === "add" ? (<>Add Asset</>):(<>Edit Asset</> )}
  
   </p></div>
+
 
 <div className="items_top_center_buttom">
 
@@ -273,27 +289,37 @@ set_PopUp_All_Good__show(true)
 
 <div className="items_left">
   
-<div className="item_info_left">
+<div 
+className="item_info_left"
+>
 <p className='font-type-menu   Color-Grey1 pb-b'>String</p>
-<input className="input-type2 mb-a " type="text" value={resource_string}      placeholder={resourceItem?.Name || 'Name'} onChange={handleInputChange(set_resource_string)}/>
+<input className="input-type2 mb-a " type="text"
+//  style={{width:"100%"}}
+  value={resource_string}      placeholder={resourceItem?.Name || 'Name'}
+     onChange={handleInputChange(set_resource_string)}
+ />
 </div>
 
-<div className="item_info_left">
-<p className='font-type-menu   Color-Grey1 pb-b'>Description</p>
-<input className="input-type2 mb-a " type="text" value={description}      placeholder={resourceItem?.Description || 'Description'} onChange={handleInputChange(setDescription)}/>
-</div>
 
- {/* <div  className="item_info_left"  style={{width:"" ,height:"100%"}}> 
+ 
+
+ <div  className="item_info_left"  style={{width:"" ,height:"100%"}}> 
 <p className='font-type-menu   Color-Grey1 '>Description</p>
 <textarea  className="input-type2 reading-height  "   style={{width:"" ,height:"100%"}}  value={description}      placeholder={resourceItem?.Description || 'Description'}
      onChange={handleInputChange(setDescription)}
  />
  
- </div> */}
+ </div>
+
+
+
+
+
 
  
 </div>
-{/* <div className="item_info_left "> 
+
+<div className="item_info_left "> 
 <p className='font-type-menu   Color-Grey1 '>Asset Type</p>
 <div className="item_info_tools_all">
 <div className="">
@@ -302,6 +328,7 @@ set_PopUp_All_Good__show(true)
  
 
     return (
+
 <div key={index} className="toolsData  " style={{width:"180px"}}>
   <div className="toolsData-checkbox " >
   <label className="container" >  
@@ -326,7 +353,7 @@ set_PopUp_All_Good__show(true)
 </div>
 </div>
 
-</div> */}
+</div>
 
 
 </div>
@@ -349,26 +376,50 @@ set_PopUp_All_Good__show(true)
  
 </div>
 
-<div className="item_info_tools_box"> 
-
-<div className="item_info_tools">
+<div className="item_info_tools_box"
  
-{tools_preview?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
+ > 
+
+
+
+<div className="item_info_tools"
+ >
+ 
+
+ {tools_preview?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
 
 {Array.isArray(tools_preview) && tools_preview?.map((Info, index) => {
  
  
+
     return (
 
-<div className="toolsData  ">
-<div className="toolsData-checkbox">
+<div className="toolsData  "
+>
+  
+
+ 
+  <div className="toolsData-checkbox">
 
 {/* tools_preview */}
   <label className="container" > 
   <input type="checkbox"
   value={item_tool_list}
-  // defaultChecked={ popUp_Add_or_Edit__status === "add" }
-  checked={ item_tool_list.find((type) => type == Info?.tool_id) }
+
+
+  // defaultChecked={true}
+  checked={
+    // popUp_Add_or_Edit__status === "edit" &&
+    item_tool_list.find((type) => type == Info?.tool_id) }
+    
+    
+    // ||
+
+    // popUp_Add_or_Edit__status === "add" &&
+    // item_tool_list.includes(Info?.tool_id)
+    //  }
+
+     
   onChange={(e) => handle_Tools_Checkbox_Change(e,Info?.tool_id)}
   />
   <span className="checkmark"></span>

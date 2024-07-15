@@ -49,6 +49,22 @@ function Settings_section_edit_mssp_config_json({
     }
   }, [moduleLinks]);
 
+    return (
+ <>
+ 
+ 
+ <div>
+
+<table className='setting_table  ' style={{lineHeight:"100%"}}>
+                     
+                     <tbody  className="tbody_setting">  
+                                    <tr >
+                                    <td className="setting_descriptions setting_descriptions" >
+                                    <p className='font-type-h4 Color-White mb-c'>Modules path</p>
+                                    <p className='font-type-menu Color-White  mb-a'  >mssp_config.json</p>
+                                    <p className='font-type-txt Color-Grey1 '>After Save The Page will refresh</p>
+                                    </td>
+                                    {/* moduleLinks */}
   return (
     <>
       <div>

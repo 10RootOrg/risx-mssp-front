@@ -12,18 +12,18 @@ const format_date = format_date_type_a(time);
 
     return (
  
-<div  className='resource-group-list-buttomLine   mt-b'>
+<div  className='resource-group-list-buttomLine   '>
 
-<p className='font-type-menu  Color-Grey1  '>Records: {records_number || 0}</p>
+<p className='font-type-menu  Color-Grey2  '>Records: {records_number || 0}</p>
 
 <div className='display-flex'>
   <button className="btn-type1"><IconArrowLeft className="icon-type1 " />  </button>
-  <p className='font-type-menu   Color-Grey1 mr-b ml-b'>Page 1 of 1</p>
+  <p className='font-type-menu   Color-Grey2 mr-b ml-b'>Page 1 of 1</p>
   <button className="btn-type1"><IconArrowRight className="icon-type1 " />  </button>
   
   </div>
 
-  <p className='font-type-menu Color-Grey1'>{format_date}</p>
+  <p className='font-type-menu Color-Grey2'>{format_date}</p>
  
 </div>
 

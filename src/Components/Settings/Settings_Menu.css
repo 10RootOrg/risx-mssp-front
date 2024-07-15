@@ -1,0 +1,73 @@
+.SubMenu-all {
+  /* Add any styles if needed */
+}
+
+.SubMenu-in {
+  display: flex;
+  background-color: var(--color-Grey5);
+  width: auto;
+  border-radius: var(--boxes-round-corner);
+}
+
+.SubMenu-btn {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  transition: var(--transition-fast);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.SubMenu-btn p {
+  color: var(--color-White);
+  padding: var(--space-c) var(--space-d);
+  transition: var(--transition-fast);
+}
+
+.SubMenu-btn:first-child {
+  border-radius: var(--boxes-round-corner) 0 0 var(--boxes-round-corner);
+}
+
+.SubMenu-gap {
+  visibility: visible;
+  width: 2px;
+  height: 50%;
+  background-color: var(--color-Grey3);
+}
+
+.SubMenu-btn:last-child .SubMenu-gap {
+  visibility: hidden;
+}
+
+.SubMenu-btn:hover {
+  background-color: var(--color-DB-Blue-Hover);
+  cursor: pointer;
+}
+
+.SubMenu-btn:hover p {
+  color: var(--color-DB-Blue-Glow);
+  transition: var(--transition-fast);
+}
+
+.SubMenu-btn:hover .SubMenu-gap {
+  visibility: hidden;
+  transition: var(--transition-fast);
+}
+
+ 
+
+.SubMenu-btn:active {
+  background-color: var(--color-DB-Blue-Hover-Real);
+}
+
+.SubMenu-btn:hover:disabled {
+  background-color: var(--color-DB-Blue-Hover-Real);
+  transition: var(--transition-fast);
+  cursor: auto;
+}
+
+.SubMenu-btn:hover:disabled p {
+  color: var(--color-DB-Blue-Glow);
+  transition: var(--transition-fast);
+}

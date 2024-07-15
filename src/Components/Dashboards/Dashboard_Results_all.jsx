@@ -344,7 +344,15 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
  <ResourceGroup_Action_btns
   items_for_search={Preview_this_Results}
   set_items_for_search={set_Preview_this_Results}
-  show_btn_add={false}
+
+  btn_add_single_show={false}
+  // btn_add_single_action={add_resource_item}
+  // btn_add_single_value={"add"}
+
+  btn_add_many_show={false}
+  // btn_add_many_action={}
+
+
  />
  
 </div>

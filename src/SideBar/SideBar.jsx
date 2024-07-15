@@ -7,19 +7,20 @@ import { ReactComponent as IcoMonitor } from '../Components/icons/ico-menu-monit
 import { ReactComponent as IcoModules } from '../Components/icons/ico-menu-modules.svg';
 import { ReactComponent as IcoLink } from '../Components/icons/ico-menu-link.svg';
 import { ReactComponent as IcoIframe } from '../Components/icons/ico-menu-iframe.svg';
-
-
-// c:\Users\alonk\Downloads\ico-menu-iframe.svg c:\Users\alonk\Downloads\ico-menu-link.svg
 import { ReactComponent as IcoResults } from '../Components/icons/ico-menu-Results.svg';
 import { ReactComponent as IcoResourceGroup } from '../Components/icons/ico-menu-Resource-Group.svg';
 import { ReactComponent as IcoAccount } from '../Components/icons/ico-menu-account.svg';
 import { ReactComponent as IcoSettings } from '../Components/icons/ico-settings.svg';
 import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
-// import { ReactComponent as IcoProcess } from '../Components/icons/ico-menu-process.svg';
 import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
 import { ReactComponent as IconUsers } from '../Components/icons/ico-menu-users.svg';
-import {PopUp_Error ,PopUp_All_Good } from '../Components/PopUp_Smart'
+import { ReactComponent as IconAlert } from '../Components/icons/ico-menu-alert.svg';
+
+import {PopUp_Error ,PopUp_All_Good ,PopUp_Under_Construction} from '../Components/PopUp_Smart'
  
+
+
+
 import GeneralContext from '../Context';
 import axios from 'axios';
 
@@ -42,7 +43,13 @@ const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",par
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
 
- 
+const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] = useState(false);
+const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine:"Coming Soon!", paragraph:"We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle:"Close"});
+
+
+
+
+
 
 const [download_drop_down, set_download_drop_down] = useState(false);
 const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
@@ -54,7 +61,6 @@ const handleClick = (page_name) => {
 
 };
 
-
 const handleNewWindow = (dashboard_name) => {
   const url = make_url_from_id(dashboard_name,moduleLinks,front_IP);
 
@@ -63,8 +69,6 @@ if(url){  window.open(url, '_blank')}
 
 
 };
-
-
 
 const handle_Dashboards_drop_down =  () => {
   set_Dashboards_drop_down(!Dashboards_drop_down)
@@ -127,6 +131,17 @@ useEffect(() => {
 
 
 
+const handleClickComingSoon = (page_name) => {
+ 
+set_PopUp_Under_Construction__txt({ HeadLine:"Coming Soon!", paragraph:`We are working on creating the ${page_name} section. Stay tuned for updates as we finalize the details.`, buttonTitle:"Close"});
+set_PopUp_Under_Construction__show(true);
+ };
+
+
+
+
+
+
     return (
  
 
@@ -134,9 +149,17 @@ useEffect(() => {
 
 
       
-      <div className='side-bar-desktop-out'>
+<div className='side-bar-desktop-out'>
 
-
+{PopUp_Under_Construction__show &&
+ <PopUp_Under_Construction
+ popUp_show={PopUp_Under_Construction__show}
+ set_popUp_show={set_PopUp_Under_Construction__show}
+ HeadLine={PopUp_Under_Construction__txt.HeadLine}
+ paragraph={PopUp_Under_Construction__txt.paragraph} 
+buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+ /> 
+ }
 
 {PopUp_All_Good__show &&
  <PopUp_All_Good
@@ -147,9 +170,6 @@ useEffect(() => {
 buttonTitle={PopUp_All_Good__txt.buttonTitle}
  /> 
  }
-
-
-
 
 
 
@@ -292,14 +312,6 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 
-
-
-
-
-
-
-
-
 <button className="btn-menu  " onClick={()=>handleClick("Settings")}   disabled={visblePage === "Settings"}>
         <div className='display-flex'><IcoSettings className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Settings</p></div>
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
@@ -310,6 +322,13 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
       <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
 </button> 
 
+<button className="btn-menu  " onClick={()=>handleClickComingSoon("Alerts")}   disabled={visblePage === "Alerts"}>
+  
+        <div className='display-flex'><IconAlert className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Alerts</p>   <div className={`Bg-Red  light-bulb-type2 `}  style={{ marginLeft:"2px", marginBottom:"12px"}}/></div>
+      <div className="btn-menu-icon-placeholder  ">   </div> 
+</button> 
+
+
 
 
  </div>
@@ -317,7 +336,6 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
 
 
 
- 
   <button className="btn-menu"  onClick={handle_active_manual_process}>  
         <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
        <div className="btn-menu-icon-placeholder  "> </div> 

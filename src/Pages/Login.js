@@ -41,8 +41,8 @@ import  './Login.css'
  
  
  
-function Login({ set_show_SideBar, show_SideBar}) {
-
+function Login({ set_show_SideBar, show_SideBar,set_visblePage}) {
+  set_visblePage("login");
 const [input_email, set_input_email]                   = useState("");
 const [input_password, set_input_password] = useState("");
 

@@ -3,14 +3,16 @@ import React, { useState , useContext, useEffect } from 'react'
 import { ReactComponent as IconBIG } from '../icons/ico-Resource-Group.svg';
 import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as IconAdd } from '../icons/ico-plus.svg';
- import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
- import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
+import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
+import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
 import axios from 'axios'
- import GeneralContext from '../../Context.js';
+import GeneralContext from '../../Context.js';
+
+import ResourceGroup_List from './ResourceGroup_List.jsx'
   // Adjust the path as needed based on your project structure
  
  import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
-import {PopUp_All_Good ,PopUp_Are_You_Sure} from '../PopUp_Smart'
+import {PopUp_All_Good ,PopUp_Are_You_Sure ,PopUp_Under_Construction} from '../PopUp_Smart'
 
  import LMloader from "../Features/LMloader.svg";
 function ResourceGroup_All({
@@ -44,10 +46,6 @@ function ResourceGroup_All({
   
   
 
-console.log("backEndURL",backEndURL);
-
-
-
   const [resourceItem , set_resourceItem] = useState({})
   const [item_types_list, set_item_types_list] = useState([]);
   const [item_tool_list, set_item_tool_list] = useState([]);
@@ -57,8 +55,9 @@ console.log("backEndURL",backEndURL);
 
 const EditTools = (Info) =>{
 
-console.log('EditTools' ,'info' , Info);
-   set_resourceItem(Info)
+console.log(Info);
+
+  set_resourceItem(Info)
   
 //  make array from item types
 const resource_arrary =[]
@@ -93,8 +92,6 @@ const resource_arrary =[]
 }
 
 const handle_Confirm_Delete = () => {
-
- 
 
  const  delete_item = async() =>{
   console.log('Deleting item...', resourceItem.resource_id);
@@ -132,7 +129,18 @@ const handle_Cancel_Delete = () => {
   set_PopUp_Are_You_Sure__show(false)
 };
 
- 
+const  add_resource_item = () =>{
+  console.log("add_resource_item 00");
+
+  set_item_types_list([])
+  set_item_tool_list([])
+
+  set_popUp_Add_or_Edit__status("add")
+  set_popUp_Add_or_Edit__show(true)
+  }
+
+
+
 
 useEffect(() => {
 const sorted = Preview_this_Resource.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -140,30 +148,25 @@ set_Preview_this_Resource(sorted);
 
 }, [Preview_this_Resource])
 console.log(typeof Preview_this_Resource == "object");
-
-
-
-console.log("Preview_this_Resource",Preview_this_Resource);
-
      return (
  
  
       <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
 
+
+
+
+
 {PopUp_Are_You_Sure__show &&
  <PopUp_Are_You_Sure
  popUp_show={PopUp_Are_You_Sure__show}
  set_popUp_show={set_PopUp_Are_You_Sure__show}
-
  HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
  paragraph={PopUp_Are_You_Sure__txt.paragraph} 
-
  button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
  button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
-
 True_action={handle_Confirm_Delete}
 False_action={handle_Cancel_Delete}
-
  /> 
  }
  
@@ -204,31 +207,36 @@ set_PopUp_All_Good__show={set_PopUp_All_Good__show}
 
 set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
 set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
-
- 
       />}
  
+
+
 
 
 <div className='resource-group-list-headline mb-c ' >
 
 <div className='resource-group-list-headline-left ' >
-  <IconBIG/> <p className='font-type-h4   Color-White ml-b'>Resource List</p>
+  <IconBIG/> <p className='font-type-h4   Color-White ml-b'>Assets List</p>
  
                   </div>
 
  <ResourceGroup_Action_btns
- 
-   set_item_types_list={set_item_types_list}
-   set_item_tool_list={set_item_tool_list}
- set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
- popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
- set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
+ set_item_types_list={set_item_types_list}
+ set_item_tool_list={set_item_tool_list}
+set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
+popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
+set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
 
- items_for_search={Preview_this_Resource}
- set_items_for_search={set_Preview_this_Resource}
+items_for_search={Preview_this_Resource}
+set_items_for_search={set_Preview_this_Resource}
 
- show_btn_add={true}
+btn_add_single_show={true}
+btn_add_single_action={add_resource_item}
+btn_add_single_value={"add"}
+
+btn_add_many_show={true}
+btn_add_many_action={add_resource_item}
+
 
  />
  
@@ -243,6 +251,10 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 
 
   <>
+
+
+
+
 <div className='resource-group-list-keyNames mb-a  '  >
 
 <div className='resource-group-list-item list-item-big   '>
@@ -264,8 +276,8 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 <div className='resource-group-list-item    '>
 <p className='font-type-menu  make-underline Color-Grey1 '>Checked</p>
 </div>
-<div className='resource-group-list-item   list-item-small  '>
-<p className='font-type-menu  make-underline Color-Grey1  '>Status</p>
+<div className='resource-group-list-item   list-item-small  ' style={{textAlign:"center"}}>
+<p className='font-type-menu  make-underline Color-Grey1  ' >Status</p>
 </div>
  
  <div className='its-only-space-for-the-scroller    '/> 
@@ -276,18 +288,6 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 {Preview_this_Resource?.length === 0 &&  
 
 <div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-
-{/* <p className='  font-type-txt   Color-Grey1   ' style={{   display:"flex" , alignItems:"center"}}>
- It is recommended to fill in all available resources to get the most features,
-Look for the icon 
-</p> 
-<span  style={{  marginTop:"2px"}}> <IconAdd/></span>
-<p className='  font-type-txt   Color-Grey1   ' style={{   display:"flex" , alignItems:"center"}}>
-in the button bar
-</p> 
-</div> */}
-
-
 <p className='  font-type-txt   Color-Grey1 '   >
 It is recommended to fill in all available resources to get the most features. Look for the icon '
 <span style={{ display: 'inline-flex',  verticalAlign:"middle"}}>
@@ -295,8 +295,6 @@ It is recommended to fill in all available resources to get the most features. L
 </span>
 ' in the button bar.
 </p>
-
-
 </div>
 
 
@@ -307,27 +305,6 @@ It is recommended to fill in all available resources to get the most features. L
 
 
   {Array.isArray(Preview_this_Resource) && Preview_this_Resource?.map((Info, index) => {
-
-
-if (Info.tools && typeof Info.tools === "string") {
-  // console.log("Info.tools", Info.resource_string, Info.tools);
-  const arr = Info.tools.split(",");
-  // console.log("arr", Info.resource_string, arr);
-  Info.tools = arr;
-} else if (!Info.tools) {
-  Info.tools = [];
-}
-
-if (Info.type && typeof Info.type === "string") {
-  // console.log("Info.type", Info.resource_string, Info.type);
-  const arr = Info.type.split(",");
-  // console.log("arr", Info.resource_string, arr);
-  Info.types = arr;
-} else if (!Info.type) {
-  Info.types = [];
-}
-
-
 
 
 // Preview_this_Resource.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
@@ -352,8 +329,14 @@ if (dateString) {
                               'Bg-Grey2';
   
     return (
-      
+
+
+
+
+
+
       <div className='resource-group-list-line' key={index} onClick={()=>EditTools(Info)}>
+{/* <ResourceGroup_List Preview_this_Resource={Preview_this_Resource} set_Preview_this_Resource={set_Preview_this_Resource}/> */}
 
   <div className='resource-group-list-item display-flex  list-item-big' >
 
@@ -361,20 +344,19 @@ if (dateString) {
 {  Info?.types  === null   ||  Info?.types  === undefined   ||    Info?.types  === ""  ?
   (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  }
 
-
 {/* if there is only one type */}
-{Info?.types?.length === 1 && Info.types[0] ? (
-  <p className='ml-a font-type-txt Color-Grey1 tagit_type1 tagit_type2'>{Info.types[0]}</p>
-) : null}
+{Info?.types?.length === 1
+  &&  Info?.types[0]?.resource_type_id !== null &&  Info?.types[0]?.resource_type_id !== "" &&  Info?.types[0]?.resource_type_id !== undefined
+  ? (<p className='ml-a  font-type-txt   Color-Grey1 tagit_type1 tagit_type2'>{Info?.types[0]?.resource_type_name}</p> ) : null  }
 
 
 {/* 2 types */}
-{Info?.types?.length === 2 && Info.types[0] && Info.types[1] ? (
-  <>
-    <p className='ml-a font-type-txt Color-Grey1 tagit_type1 tagit_type2'>{Info.types[0]}</p>
-    <p className='ml-a font-type-txt Color-Grey1 tagit_type1 tagit_type2'>{Info.types[1]}</p>
-  </>
-) : null}
+{Info?.types?.length === 2
+  &&  Info?.types[0]?.resource_type_id !== null &&  Info?.types[0]?.resource_type_id !== "" &&  Info?.types[0]?.resource_type_id !== undefined
+  ? (<>
+  <p className='ml-a  font-type-txt    Color-Grey1 tagit_type1 tagit_type2'>{Info?.types[0]?.resource_type_name}</p>
+  <p className='ml-a  font-type-txt    Color-Grey1 tagit_type1 tagit_type2'>{Info?.types[1]?.resource_type_name}</p>
+  </> ) : null  }
 
 {/* > 2 types */}
 {Info?.types?.length > 2
@@ -395,33 +377,27 @@ if (dateString) {
 <div className='resource-group-list-item display-flex list-item-big' >
 <button className="btn-type1"><IconSettings className="icon-type1 " />  </button>
  
- 
-
 {/* no tools */}
 {Info?.tools?.length === 1
-  &&  Info?.tools[0] === null ||  Info?.tools[0] === "" ||  Info?.tools[0] === undefined
+  &&  Info?.tools[0]?.Toolid === null ||  Info?.tools[0]?.Toolid === "" ||  Info?.tools[0]?.Toolid === undefined
   ? (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  }
-
-
 
 
 {/* if there is only one tool */}
 {Info?.tools?.length === 1
-  &&  Info?.tools[0] !== null &&  Info?.tools[0] !== "" &&  Info?.tools[0] !== undefined
-  ? (<p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]}</p> ) : null  }
+  &&  Info?.tools[0]?.Toolid !== null &&  Info?.tools[0]?.Toolid !== "" &&  Info?.tools[0]?.Toolid !== undefined
+  ? (<p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]?.toolname}</p> ) : null  }
 
 
 {/* 2 tools */}
 {Info?.tools?.length === 2
-  &&  Info?.tools[0] !== null &&  Info?.tools[0] !== "" &&  Info?.tools[0] !== undefined
-  ? (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]}</p><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[1]}</p></> ) : null  }
-
-
+  &&  Info?.tools[0]?.Toolid !== null &&  Info?.tools[0]?.Toolid !== "" &&  Info?.tools[0]?.Toolid !== undefined
+  ? (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]?.toolname}</p><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[1]?.toolname}</p></> ) : null  }
 
 {/* > 2 tools */}
 {Info?.tools?.length > 2
-  &&  Info?.tools[0] !== null &&  Info?.tools[0] !== "" &&  Info?.tools[0] !== undefined
-  ? (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]}</p>  <p className=' ml-a font-type-txt   Color-Grey1  '>+{Info?.tools?.length -1} More</p></>) : null  }
+  &&  Info?.tools[0]?.Toolid !== null &&  Info?.tools[0]?.Toolid !== "" &&  Info?.tools[0]?.Toolid !== undefined
+  ? (<><p className='ml-a  font-type-txt   Color-Blue-Glow tagit_type1'>{Info?.tools[0]?.toolname}</p>  <p className=' ml-a font-type-txt   Color-Grey1  '>+{Info?.tools?.length -1} More</p></>) : null  }
 
 
 </div>
@@ -454,8 +430,9 @@ if (dateString) {
 
 
 
- 
 <ResourceGroup_buttomLine records_number={Preview_this_Resource?.length || 0}/>
+
+{/* <ResourceGroup_buttomLine/> */}
 </>
 )}
 
