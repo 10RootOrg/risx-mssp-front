@@ -79,6 +79,19 @@ function Settings_section_config({
     set_PopUp_Are_You_Sure__show(true);
   };
 
+  const HandleResetConfig = async () => {
+    console.log("Reset Click!!");
+    try {
+      const res = await axios.get(`${backEndURL}/config/ResetConfigToBasic`);
+      if (res.data == "Updated successfully") {
+        console.log("Updated successfully The Config");
+        get_config();
+      }
+    } catch (error) {
+      console.log("Error in Reset Config", error);
+    }
+  };
+
   const handle_Save_config = () => {
     handleClose();
     // handleTextAreaChange();
@@ -235,6 +248,13 @@ function Settings_section_config({
                   Caution: Incorrect input may damage the functionality of the
                   software.
                 </p>
+                <button
+                  className="btn-type2"
+                  style={{ marginTop: 10 }}
+                  onClick={HandleResetConfig}
+                >
+                  <p className="font-type-menu ">Reset</p>
+                </button>
               </td>
 
               <td
