@@ -21,7 +21,7 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
     // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
 
  
- 
+    // console.log("Preview_this_Resource",Preview_this_Resource);
 
 
   // dont show sidebar in this page
@@ -31,7 +31,7 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
 
 useEffect(() => { 
-    
+   console.log("dddddddddddddddddddddddddddddddddddddddddd1"); 
 
     const get_all_resources = async()=>{ 
       

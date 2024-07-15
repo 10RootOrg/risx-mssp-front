@@ -36,7 +36,7 @@ const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useCo
      const [resource_id, set_resource_id] = useState(resourceItem?.resource_id || '');
      const [error_message, set_error_message] = useState("");
      const [tools_preview, set_tools_preview] = useState(  []);
-
+     const [resource_type, set_resource_type] = useState({});
 
 
     console.log("item_tool_list ------------------------------",item_tool_list);
@@ -134,6 +134,16 @@ set_tools_preview(filtered_tools);
     useEffect(() => { change_tools_preview_acording_asset_types(); }, [item_types_list]);
 
 
+    useEffect(() => {
+      console.log("all_Resource_Types",all_Resource_Types);
+
+ 
+      const found = all_Resource_Types.find((element) => element.resource_type_id === item_types_list[0]);
+      set_resource_type(found)
+    
+      }, []);
+
+    
 
     const handleInputChange = (setter) => (event) => setter(event.target.value);
     useEffect(() => {  set_popUp_show(popUp_show) }, [popUp_show]);
@@ -225,7 +235,7 @@ set_PopUp_All_Good__show(true)
         set_monitoring(true);
         setDescription("");
         set_item_tool_list([]);
-        set_item_types_list([]);
+        // set_item_types_list([]);
       }
 
      else if(popUp_Add_or_Edit__status == "edit"){
@@ -253,7 +263,7 @@ set_PopUp_All_Good__show(true)
             </div>
 
 <div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>
-  {popUp_Add_or_Edit__status === "add" ? (<>Add Asset</>):(<>Edit Asset</> )}
+  {popUp_Add_or_Edit__status === "add" ? (<>Add {resource_type?.resource_type_name}</>):(<>Edit {resource_type?.resource_type_name}</> )}
  
   </p></div>
 
@@ -263,28 +273,27 @@ set_PopUp_All_Good__show(true)
 
 <div className="items_left">
   
-<div 
-className="item_info_left"
->
+<div className="item_info_left">
 <p className='font-type-menu   Color-Grey1 pb-b'>String</p>
-<input className="input-type2 mb-a " type="text"
-//  style={{width:"100%"}}
-  value={resource_string}      placeholder={resourceItem?.Name || 'Name'}
-     onChange={handleInputChange(set_resource_string)}
- />
+<input className="input-type2 mb-a " type="text" value={resource_string}      placeholder={resourceItem?.Name || 'Name'} onChange={handleInputChange(set_resource_string)}/>
 </div>
 
- <div  className="item_info_left"  style={{width:"" ,height:"100%"}}> 
+<div className="item_info_left">
+<p className='font-type-menu   Color-Grey1 pb-b'>Description</p>
+<input className="input-type2 mb-a " type="text" value={description}      placeholder={resourceItem?.Description || 'Description'} onChange={handleInputChange(setDescription)}/>
+</div>
+
+ {/* <div  className="item_info_left"  style={{width:"" ,height:"100%"}}> 
 <p className='font-type-menu   Color-Grey1 '>Description</p>
 <textarea  className="input-type2 reading-height  "   style={{width:"" ,height:"100%"}}  value={description}      placeholder={resourceItem?.Description || 'Description'}
      onChange={handleInputChange(setDescription)}
  />
  
- </div>
+ </div> */}
 
  
 </div>
-<div className="item_info_left "> 
+{/* <div className="item_info_left "> 
 <p className='font-type-menu   Color-Grey1 '>Asset Type</p>
 <div className="item_info_tools_all">
 <div className="">
@@ -317,7 +326,7 @@ className="item_info_left"
 </div>
 </div>
 
-</div>
+</div> */}
 
 
 </div>
@@ -340,22 +349,15 @@ className="item_info_left"
  
 </div>
 
-<div className="item_info_tools_box"
+<div className="item_info_tools_box"> 
+
+<div className="item_info_tools">
  
- > 
-
-
-
-<div className="item_info_tools"
- >
- 
-
- {tools_preview?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
+{tools_preview?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
 
 {Array.isArray(tools_preview) && tools_preview?.map((Info, index) => {
  
  
-
     return (
 
 <div className="toolsData  ">

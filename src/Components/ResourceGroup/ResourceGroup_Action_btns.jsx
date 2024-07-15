@@ -15,7 +15,8 @@ function ResourceGroup_Action_btns({
   btn_add_single_value,
 
   btn_add_many_show,
-  btn_add_many_action
+  btn_add_many_action,
+  btn_add_single_id
 }) {
 
  
@@ -74,11 +75,12 @@ const filteredItems = all_items.filter(item => {
 
       {btn_add_many_show    &&   <button className="btn-type1" onClick={btn_add_many_action}><IconPlusMany className="icon-type1" /></button>}
 
-      {btn_add_single_show  && <button className="btn-type1" onClick={()=>btn_add_single_action(btn_add_single_value)}><IconPlus className="icon-type1" /></button>}
+      {btn_add_single_show  && <button className="btn-type1" onClick={()=>btn_add_single_action(btn_add_single_value,btn_add_single_id)}><IconPlus className="icon-type1" /></button>}
 
       <button className="btn-type1"><IconTrash className="icon-type1" />  </button>
       <button className="btn-type1"><IconSettings className="icon-type1" />  </button>
-      <IconLine className="icon-type1" />
+     
+      <IconLine className=" " />
       <button className="btn-type1"><IconExpend className="icon-type1" />  </button>
      
        </div>

@@ -81,12 +81,17 @@
     transition: var(--transition-fast)
   }
 
-  .btn-menu:hover  .btn-menu-icon-placeholder  path  , .btn_look_hover .btn-menu-icon-placeholder  path{
+  .btn-menu:hover  .btn-menu-icon-placeholder  path  , .btn_look_hover .btn-menu-icon-placeholder  path ,.btn-menu:hover  div img{
  
     stroke: var(--color-DB-Blue-Glow);
+ 
   }
 
 
+
+
+
+  /* background-color: blue; */
 
   .btn-menu:disabled  {
     background-color: var(--color-DB-Blue-Hover-Real);

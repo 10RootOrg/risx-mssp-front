@@ -559,7 +559,7 @@ width: 28px;
   
 }
 
-.btn-type1 .icon-type1  path{
+.btn-type1 .icon-type1  path, .btn-type1 .icon-type1  path svg{
   stroke: var(--color-Grey2);
   transition: var(--transition-fast)
 }

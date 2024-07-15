@@ -26,9 +26,9 @@
 
 
   .resource-group-list-box{
- height: calc(100% - var(--space-d ) - var(--space-d ) - var(--space-d )  - var(--space-d )  - var(--space-d ) - var(--space-d ) - var(--space-d ) - var(--space-d )   );
- height: 400px;
-max-height:  400px;
+ /* height: calc(100% - var(--space-d ) - var(--space-d ) - var(--space-d )  - var(--space-d )  - var(--space-d ) - var(--space-d ) - var(--space-d ) - var(--space-d )   ); */
+ /* height: 400px; */
+max-height:  800px;
 
 overflow-y: scroll;
 
@@ -148,8 +148,32 @@ color: var(--color-DB-Blue-Glow);
  
   
 
-  .resource-group-list-line:hover > .resource-group-list-item   .btn-type1   .icon-type1 path {
+ .resource-group-list-line:hover > .resource-group-list-item   .btn-type1   .icon-type1 path {
     stroke:var(--color-DB-Blue-Glow);
     
      }
 
+
+
+
+     .resource-group-icon svg path {
+      stroke: var(--color-White);
+      transition: var(--transition-fast)
+    }
+    .resource-group-icon svg path {
+      stroke: var(--color-White);
+      transition: var(--transition-fast)
+    }
+
+
+    .resource-group-list-headline:hover .resource-group-icon svg path {
+      stroke: var(--color-DB-Blue-Glow);
+   
+    }
+    /*  
+     .resource-group-list-headline:hover div svg path ,   .resource-group-list-headline:hover div  input{
+      stroke: var(--color-DB-Blue-Active);
+      border: var(--line-width-small) solid var(--color-DB-Blue-Active)
+ 
+    }
+   */

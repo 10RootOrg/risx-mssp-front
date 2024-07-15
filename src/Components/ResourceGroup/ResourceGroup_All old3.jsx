@@ -55,20 +55,9 @@ function ResourceGroup_All({
   
   const [resourceItem , set_resourceItem] = useState({})
   const [item_types_list, set_item_types_list] = useState([]);
-
   const [item_tool_list, set_item_tool_list] = useState([]);
+
   const [show_this_list, set_show_this_list] = useState("");
-
-
-
-  const [use_this_resource_type, set_use_this_resource_type] = useState({});
-  const [Preview_this_List, set_Preview_this_List] = useState([]);
-
-
-
-  const [Preview_List, set_Preview_List] = useState(false);
-
-
 
 const alllist = [
   {title:"Computers",
@@ -121,10 +110,9 @@ const alllist = [
 
  
  
-console.log("all_Resource_Types ",all_Resource_Types);
+ 
 
-console.log("Preview_this_Resource",Preview_this_Resource);
-console.log("use_this_resource_type",use_this_resource_type);
+ 
 
 
 
@@ -213,39 +201,13 @@ const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
   set_popUp_Add_or_Edit__show(true)
   }
 
+const handle_show_list=(resource_type_id)=>{
+  console.log("handle_show_list",resource_type_id);
+if(resource_type_id === show_this_list){set_show_this_list("");return}
+  set_show_this_list(resource_type_id)
+}
 
-  
-
-  const handle_show_list = (resource_type_id) => {
-
-    console.log("Preview_this_Resource ", Preview_this_Resource);
-    console.log("handle_show_list ", Preview_this_Resource[resource_type_id]);
-
-    set_Preview_this_List(Preview_this_Resource[resource_type_id])
-
-    const [resource_type_filtered] = all_Resource_Types.filter(type => type.resource_type_id === resource_type_id)
-    set_use_this_resource_type(resource_type_filtered);
-
-
-
-
-    // console.log("alllist",alllist);
-    // console.log("handle_show_list",resource_type_id);
-    if (resource_type_id === show_this_list) { set_Preview_List(false); return }
-    else { set_Preview_List(true) }
-    // set_show_this_list(resource_type_id)
-
-  }
-
-
-
-
-console.log( "Preview_this_List"  , Preview_this_List);
-
-
-
-
-
+console.log(typeof Preview_this_Resource  , Preview_this_Resource["2006"]);
      return (
  
       <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
@@ -313,48 +275,29 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 <div style={{display:"flex" , flexDirection:"column" , gap:"var(--space-d)"}}>
 
 
+
+
  
-{Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => {
+{/* {Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => {
+ 
+
 return (<>
-<button onClick={()=>{handle_show_list(Info?.resource_type_id)}}   value={Info?.resource_type_id}>{Info?.resource_type_name}</button>
+
+<button value={Info?.resource_type_id}>{Info?.resource_type_name}</button>
  </>)})}
-
-{Preview_List  &&
- <ResourceGroup_List
- title={use_this_resource_type?.resource_type_name}
- asset_type_id={use_this_resource_type?.resource_type_id}
- IconBIGpath={"IconBIGpath"} 
- 
- Preview_this_Resource={Preview_this_List}
- set_Preview_this_Resource={set_Preview_this_Resource}
- 
- set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
- set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
- popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
- 
- add_resource_item={add_resource_item}
- EditTools={EditTools}
- handle_show_list={handle_show_list}
- show_this_list={show_this_list}
-   />
-
-
-}
+ */}
 
 
 
 
 
-
-
-
-
-{/* 
- 
 {Array.isArray(alllist) &&  alllist?.map((Info, index) => {
+  const shouldShow = show_this_list === "" || Info?.asset_type_id === "1000";
+
  return (
 
 <>
+
 
  {   true &&
  
@@ -388,7 +331,7 @@ show_this_list={show_this_list}
 
  );
 })}
- */}
+
 
 
 

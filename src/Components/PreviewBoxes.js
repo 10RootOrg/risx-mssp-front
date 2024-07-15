@@ -31,10 +31,10 @@ const format_date = format_date_type_a(time);
 
 
 function openInNewTab (toolURL) {
-  
   const newWindow = window.open(toolURL, '_blank', 'noopener,noreferrer')
   if (newWindow) newWindow.opener = null
 }
+
 const Handle_active_module= async(tool_id,backEndURL)=>{
 
    try{
