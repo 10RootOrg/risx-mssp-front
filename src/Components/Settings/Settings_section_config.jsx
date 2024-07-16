@@ -24,6 +24,9 @@ function Settings_section_config({
   const textAreaRef = useRef(null);
   const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] =
     useState(false);
+  const [PopUpYesFunc, setPopUpYesFunc] = useState(() => {
+    console.log("nooooooooooooooooooooo!!!!!!!!!!!!1");
+  });
   const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
     HeadLine: "Are You Sure?",
     paragraph: "The record will be deleted from the system",
@@ -75,11 +78,14 @@ function Settings_section_config({
       buttonTrue: "Yes",
       buttonFalse: "No",
     });
+    setPopUpYesFunc(false);
 
     set_PopUp_Are_You_Sure__show(true);
   };
 
   const HandleResetConfig = async () => {
+    handleClose();
+
     console.log("Reset Click!!");
     try {
       const res = await axios.get(`${backEndURL}/config/ResetConfigToBasic`);
@@ -93,6 +99,9 @@ function Settings_section_config({
   };
 
   const handle_Save_config = () => {
+    console.log(
+      "ASdas23333333333333333333333333333333333333333333333333333333333333dasdsdasd"
+    );
     handleClose();
     // handleTextAreaChange();
     set_config_save_btn(false);
@@ -228,7 +237,7 @@ function Settings_section_config({
           paragraph={PopUp_Are_You_Sure__txt.paragraph}
           button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
           button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
-          True_action={handle_Save_config}
+          True_action={PopUpYesFunc ? HandleResetConfig : handle_Save_config}
           False_action={handle_Cancel_Save_config}
         />
       )}
@@ -251,7 +260,18 @@ function Settings_section_config({
                 <button
                   className="btn-type2"
                   style={{ marginTop: 10 }}
-                  onClick={HandleResetConfig}
+                  onClick={() => {
+                    setPopUpYesFunc(true);
+                    set_PopUp_Are_You_Sure__txt({
+                      HeadLine: "Reset config?",
+                      paragraph:
+                        "Are you sure you want to Reset the config to Default all changes to the config will be lost?",
+                      buttonTrue: "Yes",
+                      buttonFalse: "No",
+                    });
+
+                    set_PopUp_Are_You_Sure__show(true);
+                  }}
                 >
                   <p className="font-type-menu ">Reset</p>
                 </button>

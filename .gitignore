@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 .log
-mssp-back.log
+msspBack.log
 # testing
 /coverage
 
