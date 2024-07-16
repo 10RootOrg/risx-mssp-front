@@ -159,7 +159,7 @@ width:  calc(100% - var(--space-b)*2 - var(--line-width-small)*2);
  
  .item_info_tools_box{
  /* height: 150px;  */
-  /* max-height: 180px; */
+  max-height: 200px;
   /* overflow-y: scroll; */
   overflow-y: auto;
  }
@@ -207,7 +207,7 @@ transition: var(--transition-fast)
   border: var(--line-width-small) solid var(--color-Grey1);
   border-radius: var(--elemtns-round-corner-medium);
   transition: var(--transition-fast);
- 
+
   
  }
 

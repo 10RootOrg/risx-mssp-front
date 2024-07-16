@@ -19,15 +19,19 @@ import ResourceGroup_List from './ResourceGroup_List.jsx'
   // Adjust the path as needed based on your project structure
  
  import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
+ import { Add_Many_Resource_Items } from "../Add_Many_Resource_Items";
+
+ 
+
 import {PopUp_All_Good ,PopUp_Are_You_Sure ,PopUp_Under_Construction} from '../PopUp_Smart'
 
  import LMloader from "../Features/LMloader.svg";
 function ResourceGroup_All({
-  Preview_this_Resource ,
-  set_Preview_this_Resource,
+  // Preview_this_Resource ,
+  // set_Preview_this_Resource,
    loader ,
-    set_loader,
-    filter_Resource,
+    // set_loader,
+    // filter_Resource,
     set_filter_Resource
   }) {
 
@@ -35,8 +39,17 @@ function ResourceGroup_All({
 
   const {backEndURL ,all_Resource_Types} = useContext(GeneralContext)
 
+
+  const [popUp_Add_Many_Resource_Items__show, set_popUp_Add_Many_Resource_Items__show] = useState(false);
+  const [popUp_Add_Many_Resource_Items__group_id, set_popUp_Add_Many_Resource_Items__group_id] = useState("");
+
+
   const [popUp_Add_or_Edit__show, set_popUp_Add_or_Edit__show] = useState(false);
   const [popUp_Add_or_Edit__status, set_popUp_Add_or_Edit__status] = useState("edit");
+
+
+
+
 
   const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
   const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
@@ -53,7 +66,6 @@ function ResourceGroup_All({
     buttonFalse:"False"
   });
   
-  
   const [resourceItem , set_resourceItem] = useState({})
   const [item_types_list, set_item_types_list] = useState([]);
 
@@ -61,17 +73,13 @@ function ResourceGroup_All({
   const [show_this_list, set_show_this_list] = useState("");
 
   const [use_this_resource_type, set_use_this_resource_type] = useState({});
-  const [Preview_this_List, set_Preview_this_List] = useState([]);
-
   const [Preview_List, set_Preview_List] = useState(false);
-  const [icon_path, set_icon_path] = useState("");
 
   const time = new Date()
   const format_date = format_date_type_a(time);
-
-console.log("all_Resource_Types ",all_Resource_Types);
-console.log("Preview_this_Resource",Preview_this_Resource);
-console.log("use_this_resource_type",use_this_resource_type);
+  const [assets_list_from_db, set_assets_list_from_db] = useState([]);
+// console.log("all_Resource_Types ",all_Resource_Types);
+//  console.log("use_this_resource_type",use_this_resource_type);
 
 const EditTools = (Info) =>{
 
@@ -108,6 +116,32 @@ console.log(Info?.type);
   set_popUp_Add_or_Edit__show(true);
 }
 
+const Add_Many = (btn_add_many_id ) =>{
+ 
+
+//   console.log(Info?.type);
+  
+    // set_resourceItem(Info)
+    
+  
+    // set_item_types_list( [Info?.type])
+ 
+    // const item_arrary =[]
+    // if(Info?.tools)
+    // {
+    //   for (let x of Info?.tools) {
+    //     item_arrary.push(x.Toolid)
+    //   }
+    //   set_item_tool_list(item_arrary)
+     
+    // }
+
+    set_popUp_Add_Many_Resource_Items__group_id(btn_add_many_id)
+    set_popUp_Add_Many_Resource_Items__show(true);
+  }
+  
+
+
 const handle_Confirm_Delete = () => {
 
  const  delete_item = async() =>{
@@ -117,6 +151,14 @@ const handle_Confirm_Delete = () => {
     if (res){ 
       if(res.data === true){
        
+
+        const  list_without_the_updated_item = assets_list_from_db.filter(item => item.resource_id !== resourceItem.resource_id);
+
+        set_assets_list_from_db(list_without_the_updated_item);
+    
+
+
+
         set_PopUp_Are_You_Sure__show(false);
         set_PopUp_All_Good__txt({
           HeadLine:"Deleted",
@@ -147,7 +189,7 @@ const handle_Cancel_Delete = () => {
 };
 
 const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
-  console.log("add_resource_item 00",btn_add_single_value,btn_add_single_id);
+  // console.log("add_resource_item 00",btn_add_single_value,btn_add_single_id);
 
   set_item_types_list([btn_add_single_id])
   set_item_tool_list([])
@@ -159,11 +201,7 @@ const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
 
   const handle_show_list = (resource_type_id) => {
 
-    console.log("Preview_this_Resource ", Preview_this_Resource);
-    console.log("handle_show_list ", Preview_this_Resource[resource_type_id]);
-
-    set_Preview_this_List(Preview_this_Resource[resource_type_id])
-
+  
     const [resource_type_filtered] = all_Resource_Types.filter(type => type.resource_type_id === resource_type_id)
     set_use_this_resource_type(resource_type_filtered);
 
@@ -171,21 +209,24 @@ const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
     else { set_Preview_List(true) }
   }
 
-console.log( "Preview_this_List"  , Preview_this_List);
+  const handle_show_all_assets_type_list = () => {
+    console.log("handle_show_all_assets_type_list");
+    set_Preview_List(false);
+
+  }
 
 
 
 
-useEffect(() => {
+// useEffect(() => {
   
 
-   const  Src = require('../icons/ico-plus.svg')
-   set_icon_path(Src)
+//    const  Src = require('../icons/ico-plus.svg')
+//    set_icon_path(Src)
   
 
-  }, []);
+//   }, []);
 
-  // const  Src = require( `${"logoAddress_1"}`)
 
   const renderIcon = (resource_type_id) => {
 
@@ -259,8 +300,8 @@ set_item_types_list={set_item_types_list}
 item_tool_list={item_tool_list}
 set_item_tool_list={set_item_tool_list}
 
-Preview_this_Resource={Preview_this_Resource}
-set_Preview_this_Resource={set_Preview_this_Resource}
+assets_list_from_db={assets_list_from_db}
+set_assets_list_from_db={set_assets_list_from_db}
 
 set_filter_Resource={set_filter_Resource}
 
@@ -271,6 +312,47 @@ set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
 set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
       />}
  
+
+ {popUp_Add_Many_Resource_Items__show && 
+<Add_Many_Resource_Items
+popUp_show={popUp_Add_Many_Resource_Items__show}
+set_popUp_show={set_popUp_Add_Many_Resource_Items__show}
+IconBIG={IconBIG}
+group_id={popUp_Add_Many_Resource_Items__group_id}
+
+
+resourceItem={resourceItem}
+// set_resourceItem={set_resourceItem}
+item_types_list={item_types_list} 
+set_item_types_list={set_item_types_list} 
+
+// item_tool_list={item_tool_list}
+// set_item_tool_list={set_item_tool_list}
+
+assets_list_from_db={assets_list_from_db}
+set_assets_list_from_db={set_assets_list_from_db}
+
+set_filter_Resource={set_filter_Resource}
+
+set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+
+set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
+set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
+      />}
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+
 {loader ? (<>
 <div className='  loader-type-a' >  <img  src={LMloader} className="" alt="Loading Resources"/></div>
 </>):( <>
@@ -278,13 +360,7 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 
 {!Preview_List && <>
   <div style={{display:"flex", flexDirection:"" , justifyContent:"center" , alignItems:"center" , padding:"0 var(--space-b)"}} className='mb-d'>
-    {/* <IconBIG/>
-  <p className={ `font-type-h4   Color-White` } style={{marginRight:"auto", marginLeft:"var(--space-b)"}} >Asset type</p> 
-  
-    <p className={ `font-type-menu  Color-White` } >  Last Update</p>
-    
-     */}
-    
+ 
     <IconBIG/>
   
   <p className={`font-type-h4   Color-White ml-b`} style={{ width: "25%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
@@ -348,23 +424,31 @@ return (
 
 
 {Preview_List  &&
+
+
+<>
+
  <ResourceGroup_List
  title={use_this_resource_type?.resource_type_name}
  asset_type_id={use_this_resource_type?.resource_type_id}
- IconBIGpath={"IconBIGpath"} 
  
- Preview_this_Resource={Preview_this_List}
- set_Preview_this_Resource={set_Preview_this_Resource}
- 
- set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
+  set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
  set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
  popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
  
  add_resource_item={add_resource_item}
  EditTools={EditTools}
- handle_show_list={handle_show_list}
- show_this_list={show_this_list}
+ Add_Many={Add_Many}
+//  handle_show_list={handle_show_list}
+//  show_this_list={show_this_list}
+assets_list_from_db={assets_list_from_db}
+set_assets_list_from_db={set_assets_list_from_db}
+
+ handle_back={handle_show_all_assets_type_list}
    />
+
+
+</>
 }
 
 
