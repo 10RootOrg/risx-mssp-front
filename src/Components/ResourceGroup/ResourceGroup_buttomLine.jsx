@@ -2,7 +2,7 @@ import React from 'react'
 
 import { ReactComponent as IconArrowRight } from '../icons/ico-arrowRight.svg';
 import { ReactComponent as IconArrowLeft } from '../icons/ico-arrowLeft.svg';
-import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
+import { format_date_type_a } from '../Features/DateFormat.js';
 function ResourceGroup_buttomLine({records_number}) {
 
 const time = new Date()
@@ -23,7 +23,7 @@ const format_date = format_date_type_a(time);
   
   </div>
 
-  <p className='font-type-menu Color-Grey2'>{format_date}</p>
+  {/* <p className='font-type-menu Color-Grey2'>{format_date}</p> */}
  
 </div>
 

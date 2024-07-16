@@ -1,12 +1,19 @@
 import React, { useState , useContext, useEffect } from 'react'
- 
 import { ReactComponent as IconBIG } from '../icons/ico-Resource-Group.svg';
-import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
-import { ReactComponent as IconAdd } from '../icons/ico-plus.svg';
-import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
-import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
+ 
+import { ReactComponent as IconComputer } from './asset-icons/ico-computers.svg';
+import { ReactComponent as IconEmail } from './asset-icons/ico-email.svg';
+import { ReactComponent as IconNoIcon } from './asset-icons/ico-no-icon.svg';
+import { ReactComponent as IconDns } from './asset-icons/ico-dns.svg';
+import { ReactComponent as IconIp } from './asset-icons/ico-ip.svg';
+import { ReactComponent as IconPhonenumber } from './asset-icons/ico-phonenumbers.svg';
+import { ReactComponent as IconUserNameSocial } from './asset-icons/ico-username.svg';
+import { ReactComponent as IconFullName } from './asset-icons/ico-fullname.svg';
+import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
+
 import axios from 'axios'
 import GeneralContext from '../../Context.js';
+import { format_date_type_a } from '../Features/DateFormat.js';
 
 import ResourceGroup_List from './ResourceGroup_List.jsx'
   // Adjust the path as needed based on your project structure
@@ -23,12 +30,6 @@ function ResourceGroup_All({
     filter_Resource,
     set_filter_Resource
   }) {
-
-
-
-
-
-
 
 
 
@@ -59,76 +60,18 @@ function ResourceGroup_All({
   const [item_tool_list, set_item_tool_list] = useState([]);
   const [show_this_list, set_show_this_list] = useState("");
 
-
-
   const [use_this_resource_type, set_use_this_resource_type] = useState({});
   const [Preview_this_List, set_Preview_this_List] = useState([]);
 
-
-
   const [Preview_List, set_Preview_List] = useState(false);
+  const [icon_path, set_icon_path] = useState("");
 
+  const time = new Date()
+  const format_date = format_date_type_a(time);
 
-
-const alllist = [
-  {title:"Computers",
-  IconBIGpath:"./asset-icons/ico-computers.svg",
-  Preview_this_Resource: Preview_this_Resource["2008"],
-  asset_type_id:"2008",
- },
- {title:"Company Name",
-  IconBIGpath:"./asset-icons/ico-email.svg",
-  Preview_this_Resource: Preview_this_Resource["2007"],
-  asset_type_id:"2007",
- },
-
- {title:"Email Adress",
-  IconBIGpath:"./asset-icons/ico-email.svg",
-  Preview_this_Resource: Preview_this_Resource["2006"],
-  asset_type_id:"2006",
- }
- ,
- {title:"Full Name",
-  IconBIGpath:"./asset-icons/ico-phonenumbers.svg",
-  Preview_this_Resource: Preview_this_Resource["2005"],
-  asset_type_id:"2005",
- }
- ,
- {title:"Phone Number",
-  IconBIGpath:"./asset-icons/ico-phonenumbers.svg",
-  Preview_this_Resource: Preview_this_Resource["2004"],
-  asset_type_id:"2004",
- }
- , 
- {title:"Username (Social)",
-  IconBIGpath:"./asset-icons/ico-ip.svg",
-  Preview_this_Resource: Preview_this_Resource["2003"],
-  asset_type_id:"2003",
- }
- , 
- {title:"IP Address",
-  IconBIGpath:"./asset-icons/ico-ip.svg",
-  Preview_this_Resource: Preview_this_Resource["2002"],
-  asset_type_id:"2002",
- }
- ,
- {title:"Domain",
-  IconBIGpath:"./asset-icons/ico-dns.svg",
-  Preview_this_Resource: Preview_this_Resource["2001"],
-  asset_type_id:"2001",
- }
-]
-
- 
- 
 console.log("all_Resource_Types ",all_Resource_Types);
-
 console.log("Preview_this_Resource",Preview_this_Resource);
 console.log("use_this_resource_type",use_this_resource_type);
-
-
-
-
 
 const EditTools = (Info) =>{
 
@@ -214,8 +157,6 @@ const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
   }
 
 
-  
-
   const handle_show_list = (resource_type_id) => {
 
     console.log("Preview_this_Resource ", Preview_this_Resource);
@@ -226,30 +167,60 @@ const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
     const [resource_type_filtered] = all_Resource_Types.filter(type => type.resource_type_id === resource_type_id)
     set_use_this_resource_type(resource_type_filtered);
 
-
-
-
-    // console.log("alllist",alllist);
-    // console.log("handle_show_list",resource_type_id);
     if (resource_type_id === show_this_list) { set_Preview_List(false); return }
     else { set_Preview_List(true) }
-    // set_show_this_list(resource_type_id)
-
   }
-
-
-
 
 console.log( "Preview_this_List"  , Preview_this_List);
 
 
 
 
+useEffect(() => {
+  
+
+   const  Src = require('../icons/ico-plus.svg')
+   set_icon_path(Src)
+  
+
+  }, []);
+
+  // const  Src = require( `${"logoAddress_1"}`)
+
+  const renderIcon = (resource_type_id) => {
+
+           if (resource_type_id === "2001") {
+      return <IconDns />;
+
+    } else if (resource_type_id === "2002") {
+      return <IconIp />;
+
+    } else if (resource_type_id === "2003") {
+      return <IconUserNameSocial />;
+
+    } else if (resource_type_id === "2004") {
+      return <IconPhonenumber />;
+
+    } else if (resource_type_id === "2005") {
+      return <IconFullName />;
+
+    } else if (resource_type_id === "2006") {
+      return <IconEmail />;
+
+    } else if (resource_type_id === "2007") {
+      return <IconCompany />;
+
+    } else if (resource_type_id === "2008") {
+      return <IconComputer />;
+
+    } else {
+       return <IconNoIcon />;
+    }
+  };
+
 
      return (
- 
       <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
-
 
 {PopUp_Are_You_Sure__show &&
  <PopUp_Are_You_Sure
@@ -300,24 +271,81 @@ set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
 set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
       />}
  
-
-
-{/* <div className='resource-group-list-headline mb-c ' ></div> */}
-
 {loader ? (<>
 <div className='  loader-type-a' >  <img  src={LMloader} className="" alt="Loading Resources"/></div>
-</>):(
-
-  <>
-
-<div style={{display:"flex" , flexDirection:"column" , gap:"var(--space-d)"}}>
+</>):( <>
 
 
- 
+{!Preview_List && <>
+  <div style={{display:"flex", flexDirection:"" , justifyContent:"center" , alignItems:"center" , padding:"0 var(--space-b)"}} className='mb-d'>
+    {/* <IconBIG/>
+  <p className={ `font-type-h4   Color-White` } style={{marginRight:"auto", marginLeft:"var(--space-b)"}} >Asset type</p> 
+  
+    <p className={ `font-type-menu  Color-White` } >  Last Update</p>
+    
+     */}
+    
+    <IconBIG/>
+  
+  <p className={`font-type-h4   Color-White ml-b`} style={{ width: "25%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+  Asset type
+  </p>
+  
+  <p className={`font-type-txt Color-Grey1 ml-b`} style={{ width: "60%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+    Description
+  </p>
+  
+  <p className={`font-type-menu Color-Grey1 ml-b`} style={{ width: "5%",textAlign:"center" }}>
+    Count
+  </p>
+  
+  <p className={`font-type-menu  Color-White`} style={{ width: "10%",overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" ,textAlign:"right" }}>
+  Last Update
+  </p>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+
+
+
+
+
+<div style={{display:"flex" , flexDirection:"column" ,}}>
 {Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => {
-return (<>
-<button onClick={()=>{handle_show_list(Info?.resource_type_id)}}   value={Info?.resource_type_id}>{Info?.resource_type_name}</button>
- </>)})}
+return (
+<div className='resource_type_list' style={{ display: "flex", flexDirection: "", justifyContent: "center", alignItems: "center" }} onClick={() => { handle_show_list(Info?.resource_type_id) }}>
+  {renderIcon(Info?.resource_type_id)}
+  
+  <p className={`font-type-menu Color-Grey1 ml-b`} style={{ width: "25%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+    {Info?.resource_type_name}
+  </p>
+  
+  <p className={`font-type-txt Color-Grey1 ml-b`} style={{ width: "60%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+    {Info?.description_short}
+  </p>
+  
+  <p className={`font-type-menu Color-Grey1 ml-b`} style={{ width: "5%" ,textAlign:"center"}}>
+    {Info?.count}
+  </p>
+  
+  <p className={`font-type-txt Color-Grey1`} style={{ width: "10%",overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" ,textAlign:"right" }}>
+    {format_date}
+  </p>
+</div>
+)})}
+
+</div>
+
+</>
+}
+
 
 {Preview_List  &&
  <ResourceGroup_List
@@ -337,138 +365,9 @@ return (<>
  handle_show_list={handle_show_list}
  show_this_list={show_this_list}
    />
-
-
 }
 
 
-
-
-
-
-
-
-
-{/* 
- 
-{Array.isArray(alllist) &&  alllist?.map((Info, index) => {
- return (
-
-<>
-
- {   true &&
- 
-
-<div key={index} className="" style={{}}>
-
-<ResourceGroup_List
-title={Info?.title}
-asset_type_id={Info?.asset_type_id}
-IconBIGpath={Info?.IconBIGpath} 
-
-Preview_this_Resource={Preview_this_Resource[Info?.asset_type_id]}
-set_Preview_this_Resource={set_Preview_this_Resource}
-
-set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
-set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
-popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
-
-add_resource_item={add_resource_item}
-EditTools={EditTools}
-handle_show_list={handle_show_list}
-show_this_list={show_this_list}
-  />
-
-
-
-</div>
- }
-
-</>
-
- );
-})}
- */}
-
-
-
-
-
-
-
-
-
-{/* 
- <ResourceGroup_List
-title={"Computers"}
-asset_type_id={"2008"}
-IconBIGpath={"./asset-icons/ico-computers.svg"} 
-
-Preview_this_Resource={Preview_this_Resource["2008"]}
-set_Preview_this_Resource={set_Preview_this_Resource}
-
-set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
-set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
-popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
-
-add_resource_item={add_resource_item}
-EditTools={EditTools}
-handle_show_list={handle_show_list}
-show_this_list={show_this_list}
-  /> */}
-
-{/* <ResourceGroup_List
-title={"Email Adress"}
-asset_type_id={"2006"}
-IconBIGpath={"./asset-icons/ico-email.svg"} 
-Preview_this_Resource={Preview_this_Resource["2006"]}
-set_Preview_this_Resource={set_Preview_this_Resource}
-
-set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
-set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
-popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
-add_resource_item={add_resource_item}
-EditTools={EditTools}
-handle_show_list={handle_show_list}
-show_this_list={show_this_list}
-  />
-
-<ResourceGroup_List
-title={"Phone Number"}
-asset_type_id={"2004"}
-IconBIGpath={"./asset-icons/ico-phonenumbers.svg"} 
-Preview_this_Resource={Preview_this_Resource["2004"]}
-set_Preview_this_Resource={set_Preview_this_Resource}
-
-set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
-set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
-popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
-
-add_resource_item={add_resource_item}
-EditTools={EditTools}
-handle_show_list={handle_show_list}
-show_this_list={show_this_list}
-  />
-
-<ResourceGroup_List
-title={"Domain"}
-asset_type_id={"2001"}
-IconBIGpath={"./asset-icons/ico-no-icon.svg"} 
-Preview_this_Resource={Preview_this_Resource["2001"]}
-set_Preview_this_Resource={set_Preview_this_Resource}
-
-set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
-set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
-popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
-
-add_resource_item={add_resource_item}
-EditTools={EditTools}
-handle_show_list={handle_show_list}
-show_this_list={show_this_list}
-  /> */}
-
-
-</div>
 </>
 )}
 </div>
