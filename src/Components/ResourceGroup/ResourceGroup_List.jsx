@@ -4,19 +4,19 @@ import React, { useState , useContext, useEffect } from 'react'
 import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as IconAdd } from '../icons/ico-plus.svg';
 
-
-
-
 import { ReactComponent as IconComputer } from './asset-icons/ico-computers.svg';
 import { ReactComponent as IconEmail } from './asset-icons/ico-email.svg';
 import { ReactComponent as IconNoIcon } from './asset-icons/ico-no-icon.svg';
 import { ReactComponent as IconDns } from './asset-icons/ico-dns.svg';
 import { ReactComponent as IconIp } from './asset-icons/ico-ip.svg';
 import { ReactComponent as IconPhonenumber } from './asset-icons/ico-phonenumbers.svg';
+import { ReactComponent as IconUserNameSocial } from './asset-icons/ico-username.svg';
+import { ReactComponent as IconFullName } from './asset-icons/ico-fullname.svg';
+import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
 
  import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
  import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
-
+ import { ReactComponent as IcoResults } from '../icons/ico-menu-Results.svg';
  import { ReactSVG } from "react-svg";
 
 
@@ -76,35 +76,40 @@ console.log("454444444444444444444444");
 
 
 
-
+console.log("resource_type_id");
 
   
-  const renderIcon = () => {
+  const renderIcon = (resource_type_id) => {
 
+    if (resource_type_id === "2001") {
+return <IconDns />;
 
-    console.log("asset_type_id",typeof asset_type_id ,asset_type_id);
-    if (asset_type_id === "2008") {
-      return <IconComputer />;
+} else if (resource_type_id === "2002") {
+return <IconIp />;
 
-    } else if (asset_type_id === "2001") {
-      return <IconDns />;
+} else if (resource_type_id === "2003") {
+return <IconUserNameSocial />;
 
-    } else if (asset_type_id === "2002") {
-      return <IconIp />;
+} else if (resource_type_id === "2004") {
+return <IconPhonenumber />;
 
-    } else if (asset_type_id === "2004") {
-      return <IconPhonenumber />;
+} else if (resource_type_id === "2005") {
+return <IconFullName />;
 
-    } else if (asset_type_id === "2006") {
-      return <IconEmail />;
+} else if (resource_type_id === "2006") {
+return <IconEmail />;
 
+} else if (resource_type_id === "2007") {
+return <IconCompany />;
 
+} else if (resource_type_id === "2008") {
+return <IconComputer />;
 
-    } else {
-      // Default case, render SettingsIcon or handle other cases
-      return <IconNoIcon />;
-    }
-  };
+} else {
+return <IconNoIcon />;
+}
+};
+
 
    {/* <img src={Icon_BIG_path} alt={Icon_BIG_path}  />  */}
  
@@ -143,11 +148,13 @@ console.log(typeof Preview_this_Resource == "object");
 
 <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
 
-<button className='resource-group-list-headline mb-b   btn-menu'  onClick={()=>{handle_show_list(asset_type_id)}}>
+<div className='resource-group-list-headline mb-b    ' 
+//  onClick={()=>{handle_show_list(asset_type_id)}}
+ >
 
 <div className='resource-group-list-headline-left '>  
 
-<div className='resource-group-icon'>{renderIcon()}</div>   <p className={ `  ${show_this_list === asset_type_id ?    "font-type-h4" : "font-type-menu"   }       font-type-menu   Color-White ml-a`}>{title}</p>
+<div className='resource-group-icon'>{renderIcon(asset_type_id)}</div>   <p className={ ` font-type-h4  Color-White ml-b`}>{title}</p>
 
 </div>
 
@@ -185,7 +192,7 @@ btn_add_many_show={true}
 btn_add_many_action={add_resource_item}
  />
 
-</button>
+</div>
 
 
 
@@ -229,7 +236,7 @@ btn_add_many_action={add_resource_item}
  <div className='its-only-space-for-the-scroller    '/> 
 </div>
 
-<div className='resource-group-list-box  mb-a' >
+<div className='resource-group-list-box  mb-c' >
 
 
 
@@ -318,6 +325,7 @@ if (dateString) {
 
 {/* </>} */}
 </div>
+<button className="btn-type4 mb-a"  ><p className='font-type-menu ' >Back to Assets Type</p><IcoResults className="icon-type1 " />  </button>
 
 
 </>

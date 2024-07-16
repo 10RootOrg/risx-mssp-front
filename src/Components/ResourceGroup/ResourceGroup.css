@@ -144,11 +144,35 @@ color: var(--color-DB-Blue-Glow);
       }
  
 
+      .resource_type_list {
+     padding: var(--space-b) var(--space-b);
+     border-radius: var(--elemtns-round-corner-medium);
+     cursor: pointer;
+     transition: var(--transition-fast) 
 
+      }
+    
  
-  
+  .resource_type_list svg path{
+    stroke:var(--color-Grey1);
+    transition: var(--transition-fast) 
+  }
 
- .resource-group-list-line:hover > .resource-group-list-item   .btn-type1   .icon-type1 path {
+  .resource_type_list:hover svg path{
+    stroke:var(--color-DB-Blue-Glow);
+    transition: var(--transition-fast) 
+  }
+
+  .resource_type_list:hover  .font-type-menu , .resource_type_list:hover  .font-type-txt{
+    color:var(--color-DB-Blue-Glow);
+  }
+
+  .resource_type_list:hover{
+    background-color: var(--color-DB-Blue-Hover) ;
+  }
+ 
+
+ /* .resource-group-list-line:hover > .resource-group-list-item   .btn-type1   .icon-type1 path {
     stroke:var(--color-DB-Blue-Glow);
     
      }
@@ -169,7 +193,7 @@ color: var(--color-DB-Blue-Glow);
     .resource-group-list-headline:hover .resource-group-icon svg path {
       stroke: var(--color-DB-Blue-Glow);
    
-    }
+    } */
     /*  
      .resource-group-list-headline:hover div svg path ,   .resource-group-list-headline:hover div  input{
       stroke: var(--color-DB-Blue-Active);
