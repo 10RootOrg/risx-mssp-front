@@ -65,7 +65,7 @@ function Settings({show_SideBar,set_show_SideBar,set_notification_number,set_vis
 <Settings_section_process isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}/>
 
 
-<Settings_section_logs    usethis={"log_mssp_backend"}     fileName={"mssp-back.log"}     headline={"MSSP Backend"}     subline={"Node JS backend"} />
+<Settings_section_logs    usethis={"log_mssp_backend"}     fileName={"msspBack.log"}     headline={"MSSP Backend"}     subline={"Node JS backend"} />
 <Settings_section_logs    usethis={"log_python_main"}      fileName={"main.log"}          headline={"Python Interval"}  subline={"Python Interval log"} />
 <Settings_section_logs    usethis={"log_python_interval"}  fileName={"interval.log"}      headline={"Python main"}      subline={"Active Now"} />
 

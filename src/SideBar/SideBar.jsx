@@ -1,411 +1,587 @@
-import React, { useState ,useContext,useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import './SideBar.css';
-import { ReactComponent as RisxMsspLogo } from '../Components/Logos/RisxMssp_logo_Standart.svg';
-import { ReactComponent as IcoMonitor } from '../Components/icons/ico-menu-monitor.svg';
-import { ReactComponent as IcoModules } from '../Components/icons/ico-menu-modules.svg';
-import { ReactComponent as IcoLink } from '../Components/icons/ico-menu-link.svg';
-import { ReactComponent as IcoIframe } from '../Components/icons/ico-menu-iframe.svg';
-import { ReactComponent as IcoResults } from '../Components/icons/ico-menu-Results.svg';
-import { ReactComponent as IcoResourceGroup } from '../Components/icons/ico-menu-Resource-Group.svg';
-import { ReactComponent as IcoAccount } from '../Components/icons/ico-menu-account.svg';
-import { ReactComponent as IcoSettings } from '../Components/icons/ico-settings.svg';
-import { ReactComponent as IcoDownload } from '../Components/icons/ico-menu-download.svg';
-import { ReactComponent as IcoACtive } from '../Components/icons/ico-menu-active.svg';
-import { ReactComponent as IconUsers } from '../Components/icons/ico-menu-users.svg';
-import { ReactComponent as IconAlert } from '../Components/icons/ico-menu-alert.svg';
+import "./SideBar.css";
+import { ReactComponent as RisxMsspLogo } from "../Components/Logos/RisxMssp_logo_Standart.svg";
+import { ReactComponent as IcoMonitor } from "../Components/icons/ico-menu-monitor.svg";
+import { ReactComponent as IcoModules } from "../Components/icons/ico-menu-modules.svg";
+import { ReactComponent as IcoLink } from "../Components/icons/ico-menu-link.svg";
+import { ReactComponent as IcoIframe } from "../Components/icons/ico-menu-iframe.svg";
+import { ReactComponent as IcoResults } from "../Components/icons/ico-menu-Results.svg";
+import { ReactComponent as IcoResourceGroup } from "../Components/icons/ico-menu-Resource-Group.svg";
+import { ReactComponent as IcoAccount } from "../Components/icons/ico-menu-account.svg";
+import { ReactComponent as IcoSettings } from "../Components/icons/ico-settings.svg";
+import { ReactComponent as IcoDownload } from "../Components/icons/ico-menu-download.svg";
+import { ReactComponent as IcoACtive } from "../Components/icons/ico-menu-active.svg";
+import { ReactComponent as IconUsers } from "../Components/icons/ico-menu-users.svg";
+import { ReactComponent as IconAlert } from "../Components/icons/ico-menu-alert.svg";
 
-import {PopUp_Error ,PopUp_All_Good ,PopUp_Under_Construction} from '../Components/PopUp_Smart'
- 
+import {
+  PopUp_Error,
+  PopUp_All_Good,
+  PopUp_Under_Construction,
+} from "../Components/PopUp_Smart";
 
+import GeneralContext from "../Context";
+import axios from "axios";
 
+import { make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
 
-import GeneralContext from '../Context';
-import axios from 'axios';
+function SideBar({
+  visblePage,
+  set_visblePage,
+  notification_number,
+  set_notification_number,
+  isMainProcessWork,
+  set_isMainProcessWork,
+}) {
+  // const [isHovered, setIsHovered] = useState(false);
+  // const [notification_number, set_notification_number] = useState(0)
+  // const [openSubMenu, set_openSubMenu] = useState("none")
+  const navigate = useNavigate();
+  const [user_name, set_user_name] = useState("user");
+  const { backEndURL, user_id, moduleLinks, front_IP, mssp_config_json } =
+    useContext(GeneralContext);
 
-import {make_url_from_id} from '../Components/Dashboards/functions_for_dashboards'
+  const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
+  const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({
+    HeadLine: "",
+    paragraph: "",
+    buttonTitle: "",
+  });
 
+  const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+  const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
+    HeadLine: "Success",
+    paragraph: "successfully",
+    buttonTitle: "Close",
+  });
 
+  const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =
+    useState(false);
+  const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] =
+    useState({
+      HeadLine: "Coming Soon!",
+      paragraph:
+        "We are working on creating this section. Stay tuned for updates as we finalize the details.",
+      buttonTitle: "Close",
+    });
 
-function SideBar({ visblePage, set_visblePage, notification_number, set_notification_number ,isMainProcessWork, set_isMainProcessWork}) {
+  const [download_drop_down, set_download_drop_down] = useState(false);
+  const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
 
-// const [isHovered, setIsHovered] = useState(false);
-// const [notification_number, set_notification_number] = useState(0)
-// const [openSubMenu, set_openSubMenu] = useState("none")
-const navigate = useNavigate();
-const [user_name, set_user_name] = useState("user")
-const {backEndURL,user_id,moduleLinks,front_IP} =useContext(GeneralContext)
+  const [object, setObject] = useState({});
 
-const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
-const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({  HeadLine:"",paragraph:"" ,buttonTitle:""})
-
-const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
-const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
-
-const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] = useState(false);
-const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine:"Coming Soon!", paragraph:"We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle:"Close"});
-
-
-
-
-
-
-const [download_drop_down, set_download_drop_down] = useState(false);
-const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
-
-const handleClick = (page_name) => {
-  set_visblePage(page_name);
-  localStorage.setItem('visiblePage', page_name); // Store current page in localStorage
-  navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name
-
-};
-
-const handleNewWindow = (dashboard_name) => {
-  const url = make_url_from_id(dashboard_name,moduleLinks,front_IP);
-
-
-if(url){  window.open(url, '_blank')}
-
-
-};
-
-const handle_Dashboards_drop_down =  () => {
-  set_Dashboards_drop_down(!Dashboards_drop_down)
-  
-};
-
-const handle_download_drop_down =  () => {
-  set_download_drop_down(!download_drop_down)
-  
-};
-
-const handleDownload = async () => {
-  window.open( "https://docs.velociraptor.app/downloads/"  , '_blank');
-};
-
-
-const handle_click_user = async () => {
-  set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
-  set_PopUp_Error____show(true)
-
-};
-
-const handle_active_manual_process = async () => {
- console.log("handle_active_manual_process");
-  try{
-    const res = await
-    axios.get(`${backEndURL}/process/active-manual-process`, {  params: { param1:  "param1value" } });
-
-     if(res.data){
-      console.log("handle_active_manual_process", res.data);
-
-
-      if(res.data === true){
-      set_PopUp_All_Good__txt({ HeadLine:"Activated",paragraph:"A Manual Process has Started to run", buttonTitle:"Close" })
-      set_PopUp_All_Good__show(true);
-      }
-   
-      else {
-        set_PopUp_Error____txt({ HeadLine:"Error", paragraph: "the Manual process could not be started", buttonTitle:"Close"})
-        set_PopUp_Error____show(true)
-        }
-
-
-
+  const get_config = async () => {
+    if (backEndURL === undefined) {
+      return;
     }
+    try {
+      const res = await axios.get(`${backEndURL}/config`);
 
-       }catch(err)
-       {console.log(err);}
-};
-
-useEffect(() => {
-  const name = localStorage.getItem('username');
-
-  if (name) {
-    set_user_name(name);
-  } else {
-    console.log('No username found in local storage.');
-  }
-}, []); 
-
-
-
-const handleClickComingSoon = (page_name) => {
- 
-set_PopUp_Under_Construction__txt({ HeadLine:"Coming Soon!", paragraph:`We are working on creating the ${page_name} section. Stay tuned for updates as we finalize the details.`, buttonTitle:"Close"});
-set_PopUp_Under_Construction__show(true);
- };
-
-
-
-
-
-
-    return (
- 
-
-
-
-
-      
-<div className='side-bar-desktop-out'>
-
-{PopUp_Under_Construction__show &&
- <PopUp_Under_Construction
- popUp_show={PopUp_Under_Construction__show}
- set_popUp_show={set_PopUp_Under_Construction__show}
- HeadLine={PopUp_Under_Construction__txt.HeadLine}
- paragraph={PopUp_Under_Construction__txt.paragraph} 
-buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
- /> 
- }
-
-{PopUp_All_Good__show &&
- <PopUp_All_Good
- popUp_show={PopUp_All_Good__show}
- set_popUp_show={set_PopUp_All_Good__show}
- HeadLine={PopUp_All_Good__txt.HeadLine}
- paragraph={PopUp_All_Good__txt.paragraph} 
-buttonTitle={PopUp_All_Good__txt.buttonTitle}
- /> 
- }
-
-
-
-{PopUp_Error____show &&
- <PopUp_Error
- popUp_show={PopUp_Error____show}
- set_popUp_show={set_PopUp_Error____show}
- HeadLine={PopUp_Error____txt.HeadLine}
- paragraph={PopUp_Error____txt.paragraph} 
-buttonTitle={PopUp_Error____txt.buttonTitle}
- /> 
- }
-
- 
-
-
-
-
-
-<RisxMsspLogo className="mt-c mb-b"/>
- 
-
-<button className="btn-menu  "   onClick={handle_click_user}>
-        <div className='display-flex'>
-          <IcoAccount className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu '>{user_name}</p>
-            {/* <span className='notification'><p className='font-type-very-sml-txt'>2</p></span> */}
-            </div>
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
-</button> 
-
-
- <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
-
-
-
-
- <div className="btn-menu-list  ">
-
- 
- {/* ..........Dashboards.......srart.... */}
-
-<div className="btn-menu-list"
-  onMouseLeave={()=>set_Dashboards_drop_down(false)}
-  //  onMouseEnter={()=>set_download_drop_down(true)}
-   >
-
- <button className={`btn-menu  ${Dashboards_drop_down ||  visblePage.startsWith('dashboard')   ? 'btn_look_hover' : ''} `} onClick={handle_Dashboards_drop_down} >  
-        <div className='display-flex'>
-          <IcoMonitor className="btn-menu-icon-placeholder  mr-a " />
-        
-          <p className='font-type-menu '>Dashboards</p>
-   {visblePage.startsWith('dashboard') &&   <p className='  ml-a font-type-very-sml-txt'>:
-    {visblePage.replace("dashboard-", '').charAt(0).toUpperCase()
-     + visblePage.replace("dashboard-", '').slice(1)
+      if (res) {
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa", res.data);
       }
-    </p> }      
-  
+      setObject(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-         
-            </div> 
-  <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
-</button>  
+  useEffect(() => {
+    if (backEndURL) {
+      get_config();
+    }
+  }, [backEndURL]);
 
- 
+  const handleClick = (page_name) => {
+    set_visblePage(page_name);
+    localStorage.setItem("visiblePage", page_name); // Store current page in localStorage
+    navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name
+  };
 
+  const handleNewWindow = (dashboard_name) => {
+    const url = make_url_from_id(dashboard_name, moduleLinks, front_IP);
 
-<div className={`dropdown-menu ${Dashboards_drop_down ? 'open' : ''} `}  >
+    if (url) {
+      window.open(url, "_blank");
+    }
+  };
 
+  const handle_Dashboards_drop_down = () => {
+    set_Dashboards_drop_down(!Dashboards_drop_down);
+  };
 
-<button className="btn-menu"  onClick={()=>handleClick("dashboard-general")} disabled={visblePage === "dashboard-general"}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
-          <p className='font-type-menu '>General</p>
-            </div> 
-            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoResults/></div> 
-</button>  
+  const handle_download_drop_down = () => {
+    set_download_drop_down(!download_drop_down);
+  };
 
+  const handleDownload = async (os) => {
+    window.open(object?.General?.AgentLinks[os]);
+  };
 
-<button className="btn-menu"  onClick={()=>handleClick("dashboard-risx")} disabled={visblePage === "dashboard-risx"}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
-          <p className='font-type-menu '>Risx</p>
-            </div> 
-            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoIframe/></div> 
-</button>  
+  const handle_click_user = async () => {
+    set_PopUp_Error____txt({
+      HeadLine: "Work in Progress..",
+      paragraph:
+        "Final touches underway; anticipate completion shortly. Stay tuned for updates.",
+      buttonTitle: "Close",
+    });
+    set_PopUp_Error____show(true);
+  };
 
-<button className="btn-menu"  onClick={()=>handleClick("dashboard-timesketch")} disabled={visblePage === "dashboard-timesketch"}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
-          <p className='font-type-menu '>Timesketch</p>
-            </div> 
-            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoIframe/></div> 
-</button>  
+  const handle_active_manual_process = async () => {
+    console.log("handle_active_manual_process");
+    try {
+      const res = await axios.get(
+        `${backEndURL}/process/active-manual-process`,
+        { params: { param1: "param1value" } }
+      );
 
-<button className="btn-menu"  onClick={()=>handleNewWindow("dashboard-misp")} disabled={visblePage === "dashboard-misp"}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
-          <p className='font-type-menu '>Misp</p>
-            </div> 
-            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoLink/></div> 
-</button>  
+      if (res.data) {
+        console.log("handle_active_manual_process", res.data);
 
-<button className="btn-menu"  onClick={()=>handleNewWindow("dashboard-cti")} disabled={visblePage === "dashboard-cti"}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
-          <p className='font-type-menu '>CTI</p>
-            </div> 
-            <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoLink/></div> 
-</button>  
+        if (res.data === true) {
+          set_PopUp_All_Good__txt({
+            HeadLine: "Activated",
+            paragraph: "A Manual Process has Started to run",
+            buttonTitle: "Close",
+          });
+          set_PopUp_All_Good__show(true);
+        } else {
+          set_PopUp_Error____txt({
+            HeadLine: "Error",
+            paragraph: "the Manual process could not be started",
+            buttonTitle: "Close",
+          });
+          set_PopUp_Error____show(true);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-<button className="btn-menu"  onClick={()=>handleNewWindow("dashboard-iris")} disabled={visblePage === "dashboard-iris"}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{visibility:'hidden'}} />
-          <p className='font-type-menu '>IRIS</p>
-            </div> 
-       <div className="btn-menu-icon-placeholder" style={{scale:"0.95"}}> <IcoLink/></div> 
-</button>  
+  useEffect(() => {
+    const name = localStorage.getItem("username");
 
- 
-</div>
- 
+    if (name) {
+      set_user_name(name);
+    } else {
+      console.log("No username found in local storage.");
+    }
+  }, []);
 
-</div>
- 
+  const handleClickComingSoon = (page_name) => {
+    set_PopUp_Under_Construction__txt({
+      HeadLine: "Coming Soon!",
+      paragraph: `We are working on creating the ${page_name} section. Stay tuned for updates as we finalize the details.`,
+      buttonTitle: "Close",
+    });
+    set_PopUp_Under_Construction__show(true);
+  };
 
-{/* ..........Dashboards..........end. */}
- 
+  return (
+    <div className="side-bar-desktop-out">
+      {PopUp_Under_Construction__show && (
+        <PopUp_Under_Construction
+          popUp_show={PopUp_Under_Construction__show}
+          set_popUp_show={set_PopUp_Under_Construction__show}
+          HeadLine={PopUp_Under_Construction__txt.HeadLine}
+          paragraph={PopUp_Under_Construction__txt.paragraph}
+          buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+        />
+      )}
 
+      {PopUp_All_Good__show && (
+        <PopUp_All_Good
+          popUp_show={PopUp_All_Good__show}
+          set_popUp_show={set_PopUp_All_Good__show}
+          HeadLine={PopUp_All_Good__txt.HeadLine}
+          paragraph={PopUp_All_Good__txt.paragraph}
+          buttonTitle={PopUp_All_Good__txt.buttonTitle}
+        />
+      )}
 
+      {PopUp_Error____show && (
+        <PopUp_Error
+          popUp_show={PopUp_Error____show}
+          set_popUp_show={set_PopUp_Error____show}
+          HeadLine={PopUp_Error____txt.HeadLine}
+          paragraph={PopUp_Error____txt.paragraph}
+          buttonTitle={PopUp_Error____txt.buttonTitle}
+        />
+      )}
 
+      <RisxMsspLogo className="mt-c mb-b" />
 
-<button className="btn-menu  " onClick={()=>handleClick("Modules")}   disabled={visblePage === "Modules"}>
-        <div className='display-flex'><IcoModules className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Modules</p></div>
-      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
-</button> 
+      <button className="btn-menu  " onClick={handle_click_user}>
+        <div className="display-flex">
+          <IcoAccount className="btn-menu-icon-placeholder  mr-a " />
+          <p className="font-type-menu ">{user_name}</p>
+          {/* <span className='notification'><p className='font-type-very-sml-txt'>2</p></span> */}
+        </div>
+        <div className="btn-menu-icon-placeholder  ">
+          {" "}
+          {/*  <MenuArrowDown  />*/}
+        </div>
+      </button>
 
-<button className="btn-menu  " onClick={()=>handleClick("assets")}   disabled={visblePage === "assets"}>
-        <div className='display-flex'><IcoResourceGroup className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Assets</p></div>
-      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
-</button> 
+      <div
+        className="Bg-Grey2"
+        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+      />
 
-<button className="btn-menu  " onClick={()=>handleClick("Settings")}   disabled={visblePage === "Settings"}>
-        <div className='display-flex'><IcoSettings className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Settings</p></div>
-      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
-</button> 
+      <div className="btn-menu-list  ">
+        {/* ..........Dashboards.......srart.... */}
 
-<button className="btn-menu  " onClick={()=>handleClick("Users")}   disabled={visblePage === "Users"}>
-        <div className='display-flex'><IconUsers className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Users</p></div>
-      <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/}</div> 
-</button> 
+        <div
+          className="btn-menu-list"
+          onMouseLeave={() => set_Dashboards_drop_down(false)}
+          //  onMouseEnter={()=>set_download_drop_down(true)}
+        >
+          <button
+            className={`btn-menu  ${
+              Dashboards_drop_down || visblePage.startsWith("dashboard")
+                ? "btn_look_hover"
+                : ""
+            } `}
+            onClick={handle_Dashboards_drop_down}
+          >
+            <div className="display-flex">
+              <IcoMonitor className="btn-menu-icon-placeholder  mr-a " />
 
-<button className="btn-menu  " onClick={()=>handleClickComingSoon("Alerts")}   disabled={visblePage === "Alerts"}>
-  
-        <div className='display-flex'><IconAlert className="btn-menu-icon-placeholder  mr-a " /><p className='font-type-menu '>Alerts</p>   <div className={`Bg-Red  light-bulb-type2 `}  style={{ marginLeft:"2px", marginBottom:"12px"}}/></div>
-      <div className="btn-menu-icon-placeholder  ">   </div> 
-</button> 
+              <p className="font-type-menu ">Dashboards</p>
+              {visblePage.startsWith("dashboard") && (
+                <p className="  ml-a font-type-very-sml-txt">
+                  :
+                  {visblePage
+                    .replace("dashboard-", "")
+                    .charAt(0)
+                    .toUpperCase() +
+                    visblePage.replace("dashboard-", "").slice(1)}
+                </p>
+              )}
+            </div>
+            <div className="btn-menu-icon-placeholder  ">
+              {" "}
+              {/*  <MenuArrowDown  />*/}
+            </div>
+          </button>
 
+          <div
+            className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
+          >
+            <button
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-general")}
+              disabled={visblePage === "dashboard-general"}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">General</p>
+              </div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                {" "}
+                <IcoResults />
+              </div>
+            </button>
 
+            <button
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-risx")}
+              disabled={visblePage === "dashboard-risx"}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Risx</p>
+              </div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                {" "}
+                <IcoIframe />
+              </div>
+            </button>
 
+            <button
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-timesketch")}
+              disabled={visblePage === "dashboard-timesketch"}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Timesketch</p>
+              </div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                {" "}
+                <IcoIframe />
+              </div>
+            </button>
 
- </div>
-<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+            <button
+              className="btn-menu"
+              onClick={() => handleNewWindow("dashboard-misp")}
+              disabled={visblePage === "dashboard-misp"}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Misp</p>
+              </div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                {" "}
+                <IcoLink />
+              </div>
+            </button>
 
+            <button
+              className="btn-menu"
+              onClick={() => handleNewWindow("dashboard-cti")}
+              disabled={visblePage === "dashboard-cti"}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">CTI</p>
+              </div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                {" "}
+                <IcoLink />
+              </div>
+            </button>
 
+            <button
+              className="btn-menu"
+              onClick={() => handleNewWindow("dashboard-iris")}
+              disabled={visblePage === "dashboard-iris"}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">IRIS</p>
+              </div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                {" "}
+                <IcoLink />
+              </div>
+            </button>
+          </div>
+        </div>
 
-  <button className="btn-menu"  onClick={handle_active_manual_process}>  
-        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
-       <div className="btn-menu-icon-placeholder  "> </div> 
-</button>  
-<div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/>
+        {/* ..........Dashboards..........end. */}
 
- 
+        <button
+          className="btn-menu  "
+          onClick={() => handleClick("Modules")}
+          disabled={visblePage === "Modules"}
+        >
+          <div className="display-flex">
+            <IcoModules className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">Modules</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+            {/*  <MenuArrowDown  />*/}
+          </div>
+        </button>
 
+        <button
+          className="btn-menu  "
+          onClick={() => handleClick("assets")}
+          disabled={visblePage === "assets"}
+        >
+          <div className="display-flex">
+            <IcoResourceGroup className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">Assets</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+            {/*  <MenuArrowDown  />*/}
+          </div>
+        </button>
 
+        <button
+          className="btn-menu  "
+          onClick={() => handleClick("Settings")}
+          disabled={visblePage === "Settings"}
+        >
+          <div className="display-flex">
+            <IcoSettings className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">Settings</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+            {/*  <MenuArrowDown  />*/}
+          </div>
+        </button>
 
- 
+        <button
+          className="btn-menu  "
+          onClick={() => handleClick("Users")}
+          disabled={visblePage === "Users"}
+        >
+          <div className="display-flex">
+            <IconUsers className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">Users</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+            {/*  <MenuArrowDown  />*/}
+          </div>
+        </button>
 
-<div className="btn-menu-list"
-  onMouseLeave={()=>set_download_drop_down(false)}
-  //  onMouseEnter={()=>set_download_drop_down(true)}
-   >
-
-
- <button className={`btn-menu  ${download_drop_down ? 'btn_look_hover' : ''} `} onClick={handle_download_drop_down} >  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu '>Download Agent</p>
-        
-            </div> 
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
-</button>  
-
-
-<div className={`dropdown-menu ${download_drop_down ? 'open' : ''}`}>
-<button className="btn-menu  "  onClick={handleDownload}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
-          <p className='font-type-menu '>Windows</p>
-        
-            </div> 
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
-</button>  
-
-<button className="btn-menu  "  onClick={handleDownload}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
-          <p className='font-type-menu '>linux</p>
-        
-            </div> 
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
-</button>  
-
-<button className="btn-menu  "  onClick={handleDownload}>  
-        <div className='display-flex'>
-          <IcoDownload className="btn-menu-icon-placeholder  mr-a " style={{  visibility:   'hidden' }} />
-          <p className='font-type-menu '>Mac</p>        
-            </div> 
-       <div className="btn-menu-icon-placeholder  "> {/*  <MenuArrowDown  />*/}</div> 
-</button>  
-</div>
-
-
-</div>
- 
-
+        <button
+          className="btn-menu  "
+          onClick={() => handleClickComingSoon("Alerts")}
+          disabled={visblePage === "Alerts"}
+        >
+          <div className="display-flex">
+            <IconAlert className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">Alerts</p>{" "}
+            <div
+              className={`Bg-Red  light-bulb-type2 `}
+              style={{ marginLeft: "2px", marginBottom: "12px" }}
+            />
+          </div>
+          <div className="btn-menu-icon-placeholder  "> </div>
+        </button>
       </div>
-     
- 
-    );
-  }
-  
-  export default SideBar;
+      <div
+        className="Bg-Grey2"
+        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+      />
 
+      <button className="btn-menu" onClick={handle_active_manual_process}>
+        <div className="display-flex">
+          {" "}
+          <IcoACtive className="btn-menu-icon-placeholder  mr-a " />{" "}
+          <p className="font-type-menu ">Run Selected</p>{" "}
+        </div>
+        <div className="btn-menu-icon-placeholder  "> </div>
+      </button>
+      <div
+        className="Bg-Grey2"
+        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+      />
 
-   {/* 
+      <div
+        className="btn-menu-list"
+        onMouseLeave={() => set_download_drop_down(false)}
+        //  onMouseEnter={()=>set_download_drop_down(true)}
+      >
+        <button
+          className={`btn-menu  ${download_drop_down ? "btn_look_hover" : ""} `}
+          onClick={handle_download_drop_down}
+        >
+          <div className="display-flex">
+            <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">Download Agent</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+            {/*  <MenuArrowDown  />*/}
+          </div>
+        </button>
+
+        <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}>
+          <button
+            className="btn-menu  "
+            onClick={(e) => {
+              handleDownload("Windows");
+            }}
+          >
+            <div className="display-flex">
+              <IcoDownload
+                className="btn-menu-icon-placeholder  mr-a "
+                style={{ visibility: "hidden" }}
+              />
+              <p className="font-type-menu ">Windows</p>
+            </div>
+            <div className="btn-menu-icon-placeholder  ">
+              {" "}
+              {/*  <MenuArrowDown  />*/}
+            </div>
+          </button>
+
+          <button
+            className="btn-menu  "
+            onClick={(e) => {
+              handleDownload("Linux");
+            }}
+          >
+            <div className="display-flex">
+              <IcoDownload
+                className="btn-menu-icon-placeholder  mr-a "
+                style={{ visibility: "hidden" }}
+              />
+              <p className="font-type-menu ">linux</p>
+            </div>
+            <div className="btn-menu-icon-placeholder  ">
+              {" "}
+              {/*  <MenuArrowDown  />*/}
+            </div>
+          </button>
+
+          <button
+            className="btn-menu  "
+            onClick={(e) => {
+              handleDownload("Mac");
+            }}
+          >
+            <div className="display-flex">
+              <IcoDownload
+                className="btn-menu-icon-placeholder  mr-a "
+                style={{ visibility: "hidden" }}
+              />
+              <p className="font-type-menu ">Mac</p>
+            </div>
+            <div className="btn-menu-icon-placeholder  ">
+              {" "}
+              {/*  <MenuArrowDown  />*/}
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default SideBar;
+
+{
+  /* 
 
 <div style={{width:"100%"  }} >
 <button className="btn-menu "  style={{marginBottom:"var(--space-a)"}}
@@ -430,24 +606,22 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
         <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
        <div className="btn-menu-icon-placeholder  "> </div> 
 </button>  
-</div> */}
-
+</div> */
+}
 
 // const countVelociraptorResponses = async () => {
 //   try {
-   
+
 //     const res = await axios.get(`${backEndURL}/results/count-responses-files`);
- 
 
 //     if (res) {
 //       const list  = res.data.number
-
 
 //       const listResults =  list
 //       const seeResults =  localStorage.getItem(user_id + '_seeResults');
 
 //       console.log(parseFloat(seeResults));
-     
+
 //    if(parseFloat(seeResults) != listResults){
 // const note_gap  = listResults - parseFloat(seeResults)
 // set_notification_number(note_gap)
@@ -457,11 +631,9 @@ buttonTitle={PopUp_Error____txt.buttonTitle}
 //       // console.log(parseFloat(seeResults) === listResults);
 //       // console.log(parseFloat(seeResults) < listResults);
 
-
 //       // set_notification_number
 //     }
 //   } catch (err) {
 //     console.log(err);
 //   }
 // };
-

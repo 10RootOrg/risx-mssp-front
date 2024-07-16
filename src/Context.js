@@ -17,35 +17,36 @@ export function ContextProvider  ({ children }) {
 
 
 console.log("backEndURL", backEndURL);
-useEffect(() => {
-  const fetchConfig = async () => {
-    try {
-      const response = await fetch('/mssp_config.json');
-      const config = await response.json();
- 
-   
-   if (  config.backendUrl !== undefined ) {
+const fetchConfig = async () => {
+  try {
+    const response = await fetch('/mssp_config.json');
+    const config = await response.json();
 
  
+ if (  config.backendUrl !== undefined ) {
+
+
 // console.log("config", config);
 
-   set_mssp_config_json(config)
-   set_examInnterval_minutes(config.examInnterval_minutes);
-   set_moduleLinks(config.moduleLinks);
-   set_expiryDate(config.expiryDate);
-    set_backEndURL(config.backendUrl);
+ set_mssp_config_json(config)
+ set_examInnterval_minutes(config.examInnterval_minutes);
+ set_moduleLinks(config.moduleLinks);
+ set_expiryDate(config.expiryDate);
+  set_backEndURL(config.backendUrl);
 
 
-    get_all_resource_types();
-  } else {
-    console.error('Configuration is null.');
+  get_all_resource_types();
+} else {
+  console.error('Configuration is null.');
+}
+
+
+  } catch (error) {
+    console.error('Error fetching mssp_config.json:', error);
   }
+};
+useEffect(() => {
 
-
-    } catch (error) {
-      console.error('Error fetching mssp_config.json:', error);
-    }
-  };
 
   fetchConfig();
 }, []);
@@ -141,7 +142,7 @@ useEffect(() => {
 
   return (
     <GeneralContext.Provider  value={{
-      backEndURL,
+      backEndURL,fetchConfig,
       all_Resource_Types,
       all_Tools, set_all_Tools,
       all_artifacts, set_all_artifacts,
