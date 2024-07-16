@@ -20,7 +20,10 @@ value:'Modules paths'
   preview_name:'Output Sample',
   value:'Output Sample'
   },
- 
+  {   
+    preview_name:'Portainer',
+    value:'Portainer'
+    },
   {   
     preview_name:'Backend Log',
     value:'Backend Log'
