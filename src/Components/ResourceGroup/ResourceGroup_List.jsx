@@ -1,7 +1,6 @@
 import React, { useState , useContext, useEffect } from 'react'
- 
-// import { ReactComponent as IconBIG } from '../icons/ico-Resource-Group.svg';
-import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
+import { ReactComponent as IconMain } from '../icons/ico-Resource-Group.svg';
+ import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as IconAdd } from '../icons/ico-plus.svg';
 
 import { ReactComponent as IconComputer } from './asset-icons/ico-computers.svg';
@@ -17,68 +16,42 @@ import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
  import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
  import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
  import { ReactComponent as IcoResults } from '../icons/ico-menu-Results.svg';
- import { ReactSVG } from "react-svg";
-
-
+ 
 import axios from 'axios'
  import GeneralContext from '../../Context.js';
-  // Adjust the path as needed based on your project structure
- 
- import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
-import {PopUp_All_Good ,PopUp_Are_You_Sure ,PopUp_Under_Construction} from '../PopUp_Smart'
+
+//  import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
+// import {PopUp_All_Good ,PopUp_Are_You_Sure ,PopUp_Under_Construction} from '../PopUp_Smart'
 
  import LMloader from "../Features/LMloader.svg";
 function ResourceGroup_List({
-  Preview_this_Resource ,
-  set_Preview_this_Resource,
+
    loader ,
     set_popUp_Add_or_Edit__status,
     set_popUp_Add_or_Edit__show,
     popUp_Add_or_Edit__show, 
     add_resource_item,
     title,
-    IconBIGpath,
     EditTools,
+    Add_Many,
     asset_type_id,
+    handle_back,
+ 
+    assets_list_from_db,
+    set_assets_list_from_db,
 
-    handle_show_list ,
-    show_this_list
+ 
+
   }) {
 
 
-  // const IconBIG =  require(IconBIGpath)
-  const {backEndURL} = useContext(GeneralContext)
-  const [resourceItem , set_resourceItem] = useState({})
+  const {backEndURL} = useContext(GeneralContext);
+
   const [item_types_list, set_item_types_list] = useState([]);
   const [item_tool_list, set_item_tool_list] = useState([]);
-  const [Icon_BIG_path, set_Icon_BIG_path] = useState('');
+  // const [assets_list_from_db, set_assets_list_from_db] = useState([]);
+  const [is_search, set_is_search] = useState(false);
 
-  const [Icon_Path, set_Icon_Path] = useState('');
-
-
-
-  // console.log("Preview_this_Resource",Preview_this_Resource);
-
-
-  useEffect(() => {
-console.log("454444444444444444444444");
-    if(   Preview_this_Resource?.length != 0 &&          (show_this_list == "" ||   show_this_list == asset_type_id)){
-      console.log("showme");
-    }
- else{
-  console.log("hideme");
- }
-
-  }, [])
-
-
-
-
-
-
-console.log("resource_type_id");
-
-  
   const renderIcon = (resource_type_id) => {
 
     if (resource_type_id === "2001") {
@@ -111,40 +84,47 @@ return <IconNoIcon />;
 };
 
 
-   {/* <img src={Icon_BIG_path} alt={Icon_BIG_path}  />  */}
- 
+// console.log("assets_list_from_db", assets_list_from_db);
 
-useEffect(() => {
-  if (IconBIGpath) {
- 
-    try {
 
-      // console.log("src0",IconBIGpath);
-      const src1 = require(`${IconBIGpath}`);
-      //  console.log("src1",src1);
-      // const src2 = require(IconBIGpath);
-      // console.log("src2",src2);
 
-      // set_Icon_BIG_path(IconBIGpath);
-      set_Icon_BIG_path(src1);
+useEffect(() => { 
+   const get_resources_from_same_type = async()=>{ 
+if (backEndURL === undefined){return};
 
- 
-    } catch (error) {
-      console.error('Error loading the SVG file:', error);
-    }
-  }
-}, [IconBIGpath]);
- 
 
-console.log(typeof Preview_this_Resource == "object");
-     return (
+const data = {
+  asset_type_id:asset_type_id
+}
+
+   try{
+      //  set_loader(true)
+       const res = await axios.get(`${backEndURL}/Resources/same-type`,{ params: data});
+       if (res){
+           console.log("get_resources_from_same_type" , res.data);
+           set_assets_list_from_db(res.data);
+          //  set_loader(false)
+   }}
+   catch(err){
+      //  set_loader(false)
+       console.log(err);}
+              
+}
+
+   get_resources_from_same_type();  }, [  backEndURL]);
+
+
+
+
+
+
+
+
+      return (
  
 <>
 
-
-{/* {Preview_this_Resource?.length != 0 &&          (show_this_list == "" ||   show_this_list == asset_type_id) &&
  
- } */}
 
 <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
 
@@ -155,21 +135,11 @@ console.log(typeof Preview_this_Resource == "object");
 <div className='resource-group-list-headline-left '>  
 
 <div className='resource-group-icon'>{renderIcon(asset_type_id)}</div>   <p className={ ` font-type-h4  Color-White ml-b`}>{title}</p>
-
+ 
 </div>
 
 
-{Preview_this_Resource?.length === 0 &&  
-<div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-<p className='  font-type-txt   Color-Grey1 '   >
-No Records of {title}s.  Use the '
-<span style={{ display: 'inline-flex',  verticalAlign:"middle"}}>
-  <IconAdd  style={{    margin:"0" , padding:"0"}} />
-</span>
-' icon to to add assets.
-</p>
-</div>
-}
+
 
 
 <ResourceGroup_Action_btns set_item_types_list={set_item_types_list}
@@ -179,8 +149,10 @@ popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
 
 set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
 
-items_for_search={Preview_this_Resource}
-set_items_for_search={set_Preview_this_Resource}
+items_for_search={assets_list_from_db}
+set_items_for_search={set_assets_list_from_db}
+set_is_search={set_is_search}
+
 
 btn_add_single_show={true}
 btn_add_single_action={add_resource_item}
@@ -189,17 +161,17 @@ btn_add_single_id={asset_type_id}
 
 
 btn_add_many_show={true} 
-btn_add_many_action={add_resource_item}
+btn_add_many_action={Add_Many}
+btn_add_many_id={asset_type_id}
+
+btn_collapse_show={true}
+btn_collapse_action={handle_back}
+
+
+
  />
 
 </div>
-
-
-
-     {/* {Preview_this_Resource?.length != 0 && show_this_list === asset_type_id && <> */}
-
-
-
 
 
 
@@ -214,7 +186,7 @@ btn_add_many_action={add_resource_item}
 
 <div className='resource-group-list-keyNames mb-a  mt-c '  >
 
-<div className='resource-group-list-item list-item-big    '>
+<div className='resource-group-list-item list-item-big   ml-b '>
 <p className='font-type-menu  make-underline Color-Grey1 '>String</p>
 </div>
 <div className='resource-group-list-item   list-item-big '>
@@ -241,7 +213,7 @@ btn_add_many_action={add_resource_item}
 
 
 
-{Array.isArray(Preview_this_Resource) && Preview_this_Resource?.map((Info, index) => {
+{Array.isArray(assets_list_from_db) && assets_list_from_db?.map((Info, index) => {
 
 const dateString = Info?.checked;
 let formattedDate = "Never"; // Default value
@@ -267,7 +239,7 @@ if (dateString) {
        onClick={()=>EditTools(Info)}
        >
 
-  <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'>{Info?.resource_string}</p> 
+  <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big ml-b'>{Info?.resource_string}</p> 
   <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'>{Info?.description}</p> 
 
 <div className='resource-group-list-item display-flex list-item-big' >
@@ -317,7 +289,33 @@ if (dateString) {
   })}
 
 </div>
-<ResourceGroup_buttomLine  records_number={Preview_this_Resource?.length || 0}/>
+
+
+
+
+{assets_list_from_db?.length === 0 &&   is_search === false &&
+<div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+<p className='  font-type-txt   Color-Grey1 '   >
+No Records of {title}s.  Use the '
+<span style={{ display: 'inline-flex',  verticalAlign:"middle"}}>
+  <IconAdd  style={{    margin:"0" , padding:"0"}} />
+</span>
+' icon to to add assets.
+</p>
+</div>
+}
+
+{assets_list_from_db?.length === 0 &&   is_search === true &&
+<div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+<p className='  font-type-txt   Color-Grey1 '   >
+No Records of {title}s for this search.
+</p>
+</div>
+}
+
+{assets_list_from_db?.length != 0 && is_search === false&&   <ResourceGroup_buttomLine  records_number={assets_list_from_db?.length || 0}/>  }
+
+
  
 </>
 )}
@@ -325,7 +323,7 @@ if (dateString) {
 
 {/* </>} */}
 </div>
-<button className="btn-type4 mb-a"  ><p className='font-type-menu ' >Back to Assets Type</p><IcoResults className="icon-type1 " />  </button>
+<button className="btn-type4 mb-a"  onClick={handle_back}><p className='font-type-menu mr-a' >Back to Assets Type</p><div style={{ transform: "scale(0.9)" }}><IconMain className="icon-type1 "/></div>  </button>
 
 
 </>

@@ -13,16 +13,13 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
     set_visblePage("assets");
 
-    const { backEndURL  ,all_Resource_Types,moduleLinks} = useContext(GeneralContext);
-    const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
+    const { backEndURL  ,all_Resource_Types} = useContext(GeneralContext);
+    // const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
-    const [loader , set_loader] = useState(true)
-    const [All_Resource_count , set_All_Resource_count] = useState(0)
-    // const [clear_all_btns_filter_preview , set_clear_all_btns_filter_preview] = useState(false)
-
+    // const [loader , set_loader] = useState(true)
+    // const [All_Resource_count , set_All_Resource_count] = useState(0)
+    const [total_resource_count, set_total_resource_count] = useState(0);
  
-    // console.log("Preview_this_Resource",Preview_this_Resource);
-
 
   // dont show sidebar in this page
     useEffect(() => {
@@ -30,65 +27,72 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
         }, []);
 
 
-useEffect(() => { 
-   console.log("dddddddddddddddddddddddddddddddddddddddddd1"); 
-
-    const get_all_resources = async()=>{ 
+// useEffect(() => { 
+ 
+//     const get_all_resources = async()=>{ 
       
  
-if (backEndURL === undefined){return};
-if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
+// if (backEndURL === undefined){return};
+// if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
  
-    try{
+//     try{
 
-        set_loader(true)
-        const res = await axios.get(`${backEndURL}/Resources`);
+//         set_loader(true)
+//         const res = await axios.get(`${backEndURL}/Resources`);
 
      
-        if (res){
-            console.log("get_all_resources" , res.data);
-            set_Preview_this_Resource(res.data)
-            set_All_Resource_count(res.data.length)
-            set_loader(false)
-    }}
-    catch(err){
-        set_loader(false)
-        console.log(err);}
-                }
+//         if (res){
+//             console.log("get_all_resources" , res.data);
+//             // set_Preview_this_Resource(res.data)
+//             // set_All_Resource_count(res.data.length)
+//             set_loader(false)
+//     }}
+//     catch(err){
+//         set_loader(false)
+//         console.log(err);}
+//                 }
 
 
-else{
+// else{
 
    
-    try{
-        console.log("lets filtered", filter_Resource);
+//     try{
+//         console.log("lets filtered", filter_Resource);
 
-        set_loader(true)
-        const res = await axios.get(`${backEndURL}/Resources/all-resource-filtered`,{ params: filter_Resource});
-        if (res){
-            console.log("fffff", res.data);
-            set_Preview_this_Resource(res.data)
-            // set_All_Resource_count(res.data.length)
-            set_loader(false)
-    }}
-    catch(err){
-        set_loader(false)
-        console.log(err);}
+//         set_loader(true)
+//         const res = await axios.get(`${backEndURL}/Resources/all-resource-filtered`,{ params: filter_Resource});
+//         if (res){
+//             console.log("fffff", res.data);
+//             set_Preview_this_Resource(res.data)
+//             // set_All_Resource_count(res.data.length)
+//             set_loader(false)
+//     }}
+//     catch(err){
+//         set_loader(false)
+//         console.log(err);}
              
 
-}
+// }
 
 
 
-}
+// }
  
-    get_all_resources();  }, [filter_Resource,backEndURL]);
+//     get_all_resources();  }, [filter_Resource,backEndURL]);
 
  
-
-
-// function  clear_all_btns_filter_preview()=>{()}
+    useEffect(() => { 
  
+        console.log(all_Resource_Types); 
+        const totalCount = all_Resource_Types.reduce((total, item) => total + item.count, 0);
+
+          set_total_resource_count(totalCount);
+       
+
+
+           }, [all_Resource_Types   ]);
+
+
 
 
     return (
@@ -132,7 +136,7 @@ HeadLine={all_Resource_Types[0]?.resource_type_name}
 resource_type_id={all_Resource_Types[0]?.resource_type_id}
 description_short={all_Resource_Types[0]?.description_short}
 BigNumber={all_Resource_Types[0]?.count} 
-SmallNumber={All_Resource_count} 
+SmallNumber={total_resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"16/6/2024"}
@@ -149,7 +153,7 @@ HeadLine={all_Resource_Types[1]?.resource_type_name}
 resource_type_id={all_Resource_Types[1]?.resource_type_id}
 description_short={all_Resource_Types[1]?.description_short}
 BigNumber={all_Resource_Types[1]?.count} 
-SmallNumber={All_Resource_count} 
+SmallNumber={total_resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"17/6/2024"}
@@ -163,7 +167,7 @@ HeadLine={all_Resource_Types[2]?.resource_type_name}
 resource_type_id={all_Resource_Types[2]?.resource_type_id}
 description_short={all_Resource_Types[2]?.description_short}
 BigNumber={all_Resource_Types[2]?.count} 
-SmallNumber={All_Resource_count} 
+SmallNumber={total_resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"16/6/2024"}
@@ -177,7 +181,7 @@ HeadLine={all_Resource_Types[3]?.resource_type_name}
 resource_type_id={all_Resource_Types[3]?.resource_type_id}
 description_short={all_Resource_Types[3]?.description_short}
 BigNumber={all_Resource_Types[3]?.count} 
-SmallNumber={All_Resource_count} 
+SmallNumber={total_resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"16/6/2024"}
@@ -190,8 +194,8 @@ txt_color={""}
 HeadLine="All Assets"
 resource_type_id={null}
 description_short="All Assets"
-BigNumber={All_Resource_count} 
-SmallNumber={All_Resource_count} 
+BigNumber={total_resource_count} 
+SmallNumber={total_resource_count} 
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 date={"14/6/2024"}
@@ -208,7 +212,10 @@ txt_color={""}
 </div>
 <div className='resource-group-all-the-Lists'>
 
-<ResourceGroup_All Preview_this_Resource={Preview_this_Resource} set_Preview_this_Resource={set_Preview_this_Resource} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource}/>
+<ResourceGroup_All
+//  Preview_this_Resource={Preview_this_Resource}
+//   set_Preview_this_Resource={set_Preview_this_Resource} 
+  filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource}/>
 
 
 

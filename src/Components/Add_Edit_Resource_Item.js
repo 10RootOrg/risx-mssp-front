@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import '../Components/PopUp.css'; // import CSS file for modal styling
 // import CloseButton from "./CloseButton";
 import { ReactComponent as CloseButton } from './icons/ico-Close_type1.svg';
-import { ReactComponent as IconCart } from './icons/ico-cart.svg';
+// import { ReactComponent as IconCart } from './icons/ico-cart.svg';
 import axios from 'axios';
 // import Tools from '../tmpjsons/previewBoxesTools.json';
 import { ReactComponent as IconTrash } from '../Components/icons/ico-trash.svg';
@@ -14,7 +14,7 @@ import { useContext } from "react";
        set_popUp_show
           ,IconBIG
            ,resourceItem,
-             set_resourceItem,
+            //  set_resourceItem,
                  item_types_list, 
                   set_item_types_list,
                   item_tool_list,
@@ -24,7 +24,10 @@ import { useContext } from "react";
                     set_PopUp_All_Good__txt,
                     set_PopUp_All_Good__show,
                     set_PopUp_Are_You_Sure__txt,
-                    set_PopUp_Are_You_Sure__show
+                    set_PopUp_Are_You_Sure__show,
+
+                    assets_list_from_db,
+                    set_assets_list_from_db
                   } = props;
 
 const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useContext(GeneralContext)
@@ -39,9 +42,11 @@ const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useCo
      const [resource_type, set_resource_type] = useState({});
 
 
-    console.log("item_tool_list ------------------------------",item_tool_list);
-     console.log("tools_preview ------------------------------",tools_preview);
-     console.log("item_types_list ------------------------------",item_types_list);
+     console.log("popUp_Add_or_Edit__status",popUp_Add_or_Edit__status);
+    //  console.log("all_Tools" ,all_Tools);
+    //  console.log("tools_preview" ,tools_preview);
+    // console.log("item_tool_list ------------------------------",item_tool_list);
+//  console.log("item_tool_list ------------------------------",all_Tools.filter(item => item.tool_id === ["2222, "3333"]);
 
 
      const Handele_are_you_sure =( ) =>{
@@ -60,19 +65,19 @@ const {all_Resource_Types ,all_Tools, backEndURL,get_all_resource_types} = useCo
       
 
   
-    const handle_Types_Checkbox_Change = (e, resourceTypeId) => {
+    // const handle_Types_Checkbox_Change = (e, resourceTypeId) => {
 
-      // if(popUp_Add_or_Edit__status == "add" ){  set_item_tool_list([]);}
+    //   // if(popUp_Add_or_Edit__status == "add" ){  set_item_tool_list([]);}
 
    
 
-      const isChecked = e.target.checked;
-      if (isChecked) {
-        set_item_types_list([...item_types_list, resourceTypeId]); // Add the resourceTypeId to the array
-      } else {
-        set_item_types_list(item_types_list.filter(id => id !== resourceTypeId)); // Remove the resourceTypeId from the array
-      }
-    };
+    //   const isChecked = e.target.checked;
+    //   if (isChecked) {
+    //     set_item_types_list([...item_types_list, resourceTypeId]); // Add the resourceTypeId to the array
+    //   } else {
+    //     set_item_types_list(item_types_list.filter(id => id !== resourceTypeId)); // Remove the resourceTypeId from the array
+    //   }
+    // };
 
 
 const handle_Tools_Checkbox_Change = (e, ToolId) => {
@@ -89,9 +94,10 @@ console.log(e.target.checked);
 
 
  const change_tools_preview_acording_asset_types=()=>{
+
 if(item_types_list.length === 0 ){ set_tools_preview([]); return}
 
-
+  console.log("item_types_list",item_types_list);
 const filtered_tools = all_Tools.filter(tool =>
   item_types_list.some(item_type =>
       tool.useResourceType.includes(item_type)
@@ -106,38 +112,17 @@ set_tools_preview(filtered_tools);
 
 
 
-    useEffect(() => { 
-  
-   if(popUp_Add_or_Edit__status == "add" ){
- console.log("bbbbbbbbbb  1111",item_types_list);
-
- const idArray = tools_preview.map(item => item.tool_id);
- console.log("bbbbbbbbbb  idArray",idArray);
+useEffect(() => {
+     if(popUp_Add_or_Edit__status == "add" ){ const idArray = tools_preview.map(item => item.tool_id); set_item_tool_list(idArray);} 
+}, [tools_preview]);
 
 
- set_item_tool_list(idArray);}
-     }, [tools_preview]);
-
-
-    // useEffect(() => { 
-  
-    //   if(popUp_Add_or_Edit__status == "add" ){
-    //     const idArray = tools_preview.map(item => item.tool_id);
-    //   console.log("אאאאאאאאאאאאאא", tools_preview);
-    //   console.log("אאאאאאאאאאאאאא"   , idArray);
-    //  set_tools_preview(idArray);
-    // }
-    
-    //  }, []);
-
-
-    useEffect(() => { change_tools_preview_acording_asset_types(); }, [item_types_list]);
+useEffect(() => {
+   change_tools_preview_acording_asset_types(); 
+  }, [item_types_list]);
 
 
     useEffect(() => {
-      console.log("all_Resource_Types",all_Resource_Types);
-
- 
       const found = all_Resource_Types.find((element) => element.resource_type_id === item_types_list[0]);
       set_resource_type(found)
     
@@ -146,6 +131,7 @@ set_tools_preview(filtered_tools);
     
 
     const handleInputChange = (setter) => (event) => setter(event.target.value);
+
     useEffect(() => {  set_popUp_show(popUp_show) }, [popUp_show]);
   
     // function to close modal when user clicks outside of it
@@ -177,8 +163,27 @@ set_tools_preview(filtered_tools);
               const res = await axios.post(`${backEndURL}/resources`,data );
               if (res?.status === 200){ 
                 console.log("res.data" , res.data[0]);
-               set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
-               get_all_resource_types(); // for count again
+              //  set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
+
+               // Update the state with the new array
+
+
+               const filteredTools = all_Tools.filter(item => item_tool_list.includes(item.tool_id));
+              // Extract only tool_id and tool_name
+              const modifiedTools = filteredTools.map(({ tool_id, Tool_name }) => ({
+                Toolid: tool_id,
+                toolname: Tool_name
+              }));
+
+              const item =  res.data[0]
+              const item_and_tools = {...item,tools:modifiedTools} ;
+
+              const updatedAssetsList = [...assets_list_from_db, item_and_tools];
+              set_assets_list_from_db(updatedAssetsList);
+
+
+              // Update the state fo the big numbers
+               get_all_resource_types();  
 
                set_popUp_show(false) // close this popup
                set_PopUp_All_Good__txt({ HeadLine:"Successfully Saved", paragraph:"The resource has been successfully saved in the database.", buttonTitle:"Close"})
@@ -202,9 +207,26 @@ set_tools_preview(filtered_tools);
       set_error_message("")
         const res = await axios.put(`${backEndURL}/resources`,data );
         if (res?.status === 200){ 
+          console.log("res.data1" , res.data[0].resource_id);
+          console.log("res.data2" , res.data );
 
+       const  list_without_the_updated_item = assets_list_from_db.filter(item => item.resource_id !== resource_id);
+
+       const filteredTools = all_Tools.filter(item => item_tool_list.includes(item.tool_id));
+              // Extract only tool_id and tool_name
+              const modifiedTools = filteredTools.map(({ tool_id, Tool_name }) => ({
+                Toolid: tool_id,
+                toolname: Tool_name
+              }));
+
+             const item =  res.data[0]
+              const item_and_tools = {...item,tools:modifiedTools} ;
+
+              const updatedAssetsList = [...list_without_the_updated_item, item_and_tools];
+              set_assets_list_from_db(updatedAssetsList);
+          
 // update the object 
-set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
+// set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
 set_popUp_show(false) // close this popup
 set_PopUp_All_Good__txt({ HeadLine:"Successfully Updated", paragraph:"The resource has been successfully update in the database.", buttonTitle:"Close"})
 set_PopUp_All_Good__show(true)
@@ -283,54 +305,16 @@ set_PopUp_All_Good__show(true)
 <input className="input-type2 mb-a " type="text" value={description}      placeholder={resourceItem?.Description || 'Description'} onChange={handleInputChange(setDescription)}/>
 </div>
 
- {/* <div  className="item_info_left"  style={{width:"" ,height:"100%"}}> 
-<p className='font-type-menu   Color-Grey1 '>Description</p>
-<textarea  className="input-type2 reading-height  "   style={{width:"" ,height:"100%"}}  value={description}      placeholder={resourceItem?.Description || 'Description'}
-     onChange={handleInputChange(setDescription)}
- />
- 
- </div> */}
-
- 
-</div>
-{/* <div className="item_info_left "> 
-<p className='font-type-menu   Color-Grey1 '>Asset Type</p>
-<div className="item_info_tools_all">
-<div className="">
-{Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => {
- 
- 
-
-    return (
-<div key={index} className="toolsData  " style={{width:"180px"}}>
-  <div className="toolsData-checkbox " >
-  <label className="container" >  
-  <input type="checkbox"
-  value={item_types_list}
- checked={item_types_list.find((type) => type  == Info?.resource_type_id)}
- onChange={(e) => handle_Types_Checkbox_Change(e, Info?.resource_type_id)}
- />
-  <span className="checkmark"></span>
-  </label>
-  </div>
-
- <div className='  'style={{marginTop:"auto"}}>
- <p className='    font-type-txt   Color-Grey1 tagit_type1 tagit_type2_on_popup' >{Info?.resource_type_name}  </p>  
- </div>
-
-</div>
-   
- 
-    );
-  })}
-</div>
 </div>
 
-</div> */}
 
 
 </div>
 
+<div style={{display:"flex" , justifyContent:"space-between"}}>
+<p className='font-type-menu   Color-Grey1 pb-b'>Modules</p>  
+{popUp_Add_or_Edit__status === "add" && <p className='font-type-txt   Color-Grey1 pb-b'>Note: When adding assets, the intended modules are selected by default.</p>  }
+</div>
 
 <div className="item_info_tools_all"
 //  style={{height:"100px"}}
@@ -353,9 +337,9 @@ set_PopUp_All_Good__show(true)
 
 <div className="item_info_tools">
  
-{tools_preview?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
+{all_Tools?.length === 0 && <div style={{  marginTop: "50px" }}> <p  className="font-type-menu  Color-Grey2" style={{   textAlign: "center" }}>Choose Resource Type..</p></div>}
 
-{Array.isArray(tools_preview) && tools_preview?.map((Info, index) => {
+{Array.isArray(all_Tools) && all_Tools?.map((Info, index) => {
  
  
     return (
