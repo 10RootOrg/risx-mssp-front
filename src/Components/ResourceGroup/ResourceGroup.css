@@ -125,10 +125,15 @@ color: var(--color-DB-Blue-Glow);
   
   .list-item-small{
     max-width :120px;
-    width: 20%;   
+    width: 10%;   
  
 }
 
+.list-item-biggest{
+  max-width :540px;
+ width: 55%;   
+  /* max-width: 20%;  */
+}
 
 .list-item-big{
   max-width :250px;

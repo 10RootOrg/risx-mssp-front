@@ -460,6 +460,9 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
 
     
   const  handle_click = () => {
+
+if (set_display_this === undefined) {return}
+
     if(display_this === display_this_value){ set_display_this("prime_data")}
     else{ set_display_this(display_this_value)}
   }

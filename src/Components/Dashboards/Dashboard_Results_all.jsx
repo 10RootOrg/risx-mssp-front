@@ -373,7 +373,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   <>
 <div className='resource-group-list-keyNames mb-a  '  >
 
-<div className='resource-group-list-item list-item-big  ml-a '  ><p className='font-type-menu  make-underline Color-Grey1 ml-a '>Artifact Name</p></div>
+<div className='resource-group-list-item list-item-biggest ml-a '  ><p className='font-type-menu  make-underline Color-Grey1 ml-a '>Artifact Name</p></div>
 <div className='resource-group-list-item   list-item-big '
 //  style={{width:"60%" , maxWidth:"60%"}}
  ><p className='font-type-menu  make-underline Color-Grey1 '>Arguments</p></div>
@@ -394,32 +394,37 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
   {Array.isArray(Preview_this_Results) && Preview_this_Results?.map((Info, index) => {
     
- 
+    let SubModuleName = Info?.SubModuleName; // Get the SubModuleName
+
+    // Check if it starts with "BestPractice@"
+    if (SubModuleName && SubModuleName.startsWith("BestPractice@")) {
+      SubModuleName = "BP - " + SubModuleName.slice("BestPractice@".length); // Replace with "momo"
+    }
 
     return (
 <div className='resource-group-list-line' key={index} onClick={()=>handle_click_result(Info)}>
  
 
-<div className='ml-a  resource-group-list-item display-flex  list-item-big' >
+<div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >
 
 
 
-{  Info?.ModuleName  === ""   &&    Info?.SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
+{  Info?.ModuleName  === ""   &&   SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
 
 
 
-{Info?.ModuleName && Info?.SubModuleName && 
+{Info?.ModuleName && SubModuleName && 
 (<>
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p>
 <p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p>
- <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModuleName}</p>
+ <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleName}</p>
 
  </>)
 
 }
 
 
-{Info?.ModuleName && !Info?.SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
+{Info?.ModuleName && !SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
 
 
 

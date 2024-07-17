@@ -88,22 +88,43 @@ if (backEndURL === undefined){return}
 
 if(Preview_this_Results === undefined){return}
 
-
-
+const  BestPractice = "BestPractice"
+  // count the best practice
       const countOccurrences = () => {
-        // console.log("Preview_this_Results" , Preview_this_Results);
-        const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
-          const key = SubModuleName || ModuleName;
-          acc[key] = acc[key] ? acc[key] + 1 : 1;
-          return acc;
-        }, {});
-  
-   // Convert the countsMap object to an array, sort it, and then format it
-   const countsArray = Object.entries(countsMap)
-   .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
-   .map(([name, count]) => ({ [name]: count }));
+        const countUniqueStartDates = (Preview_this_Results) => {
+          const uniqueStartDates = new Set();
+        
+          Preview_this_Results.forEach(({ SubModuleName, StartDate }) => {
+            // Check if SubModuleName starts with "BestPractice"
+            if (SubModuleName.startsWith(BestPractice)) {
+              uniqueStartDates.add(StartDate); // Add StartDate to the Set
+            }
+          });
+        
+          return uniqueStartDates.size; // Return the count of unique StartDate
+        };
+        const count_Best_Practice_per_date = countUniqueStartDates(Preview_this_Results);
+ 
+          // Count all entries except those where SubModuleName starts with "BestPractice"
+const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
+  // Ignore SubModuleName that starts with "bbbbbbbb"
+  if (SubModuleName && !SubModuleName.startsWith(BestPractice)) {
+    const key = SubModuleName || ModuleName;
+    acc[key] = acc[key] ? acc[key] + 1 : 1;
+  }
+  return acc;
+}, {});
 
-  setCounts(countsArray);
+console.log("countsMap", countsMap);
+
+// Convert the countsMap object to an array, sort it, and then format it
+const countsArray = Object.entries(countsMap)
+  .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
+  .map(([name, count]) => ({ [name]: count }));
+
+console.log("countsArray", countsArray);
+
+setCounts([ ...countsArray,{"BP (Best Practice)": count_Best_Practice_per_date}]);
  
   // const count__Velo = Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length;
 //  const completed  = Preview_this_Results?.filter(item => item?.Status == "Complete");
