@@ -16,15 +16,9 @@ import { useContext } from "react";
            ,resourceItem,
             //  set_resourceItem,
                  item_types_list, 
-         
-                  // item_tool_list,
-                  //  set_item_tool_list,
-             
-     
                     set_PopUp_All_Good__txt,
                     set_PopUp_All_Good__show,
-       
-
+    
                     assets_list_from_db,
                     set_assets_list_from_db,
                     group_id
@@ -69,50 +63,60 @@ const handle_Tools_Checkbox_Change = (e, ToolId) => {
     
     function handle_add_or_edit_item(){
       const data = {
-"resource_id": resource_id,
+// "resource_id": resource_id,
 "resource_string": resource_string,
 "monitoring": monitoring ,
 "description":description,
 "item_tool_list": item_tool_list,
-"item_types_list": item_types_list 
+"item_types_list": [group_id]
       }
- 
+      // data.item_types_list.push(resource_id);
 
-
- 
          console.log("data to add =============== ",data);
+
         const add_resource = async()=>{
           try{
             set_error_message("")
-              const res = await axios.post(`${backEndURL}/resources`,data );
+              const res = await axios.post(`${backEndURL}/resources/many`,data );
               if (res?.status === 200){ 
-                console.log("res.data" , res.data[0]);
+                console.log("res.data 22" , res.data);
+                console.log("res.data 333" , res.data[0]);
               //  set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
 
                // Update the state with the new array
 
 
                const filteredTools = all_Tools.filter(item => item_tool_list.includes(item.tool_id));
-              // Extract only tool_id and tool_name
               const modifiedTools = filteredTools.map(({ tool_id, Tool_name }) => ({
                 Toolid: tool_id,
                 toolname: Tool_name
               }));
 
-              const item =  res.data[0]
-              const item_and_tools = {...item,tools:modifiedTools} ;
+              const items =  res.data
+              console.log("items1",items);
 
-              const updatedAssetsList = [...assets_list_from_db, item_and_tools];
+              items.forEach(item => {
+                item.tools = modifiedTools; // Add the tools property
+              });
+
+              console.log("items2",items);
+
+              
+
+// console.log("assets_list_from_db 1",assets_list_from_db);
+
+//               const item_and_tools = {...items,tools:modifiedTools} ;
+
+              const updatedAssetsList = [...assets_list_from_db, ...items];
               set_assets_list_from_db(updatedAssetsList);
 
-
+              console.log("assets_list_from_db 2",assets_list_from_db);
               // Update the state fo the big numbers
                get_all_resource_types();  
 
                set_popUp_show(false) // close this popup
                set_PopUp_All_Good__txt({ HeadLine:"Successfully Saved", paragraph:"The resource has been successfully saved in the database.", buttonTitle:"Close"})
                set_PopUp_All_Good__show(true)
-
 
 
                  }} catch(err){ 
@@ -128,15 +132,16 @@ const handle_Tools_Checkbox_Change = (e, ToolId) => {
 
     }
 
+
     useEffect(() => {
 
       const found = all_Resource_Types.find((element) => element.resource_type_id === group_id);
       set_resource_type(found)
 
-        set_resource_id("");
+        // set_resource_id("");
         set_resource_string("");
         set_monitoring(true);
-    
+        setDescription("");
         set_item_tool_list(["0","0"])
 
 
@@ -207,8 +212,8 @@ const handle_Tools_Checkbox_Change = (e, ToolId) => {
 <div  className="item_info_left"  style={{width:"" ,height:"100%",minHeight:"200px"}}> 
 
 <div style={{display:"flex" , justifyContent:"space-between"  }}>
-<p className='font-type-menu   Color-Grey1 'style={{ marginBottom:'var(--space-b)'}}>{resource_type?.resource_type_name} Names</p>
-<p className='font-type-txt   Color-Grey1  'style={{ marginBottom:'var(--space-b)'}}>Note: use comma ( , ) to separate.</p>   
+<p className='font-type-menu   Color-Grey1 'style={{ marginBottom:'var(--space-a)'}}>{resource_type?.resource_type_name} Names</p>
+<p className='font-type-txt   Color-Grey1  'style={{ marginBottom:'var(--space-a)'}}>Note: use comma ( , ) to separate.</p>   
 </div>
 
 
@@ -216,9 +221,17 @@ const handle_Tools_Checkbox_Change = (e, ToolId) => {
      onChange={handleInputChange(set_resource_string)}
  />
  
- </div>
 
-  
+
+
+ 
+ </div>
+ <div className="item_info_left">
+<p className='font-type-menu   Color-Grey1 ' style={{ marginBottom:'var(--space-a)'}}>Description</p>
+<input className="input-type2 mb-a " type="text" value={description}      placeholder={'Description for all.. '} onChange={handleInputChange(setDescription)}/>
+</div>
+
+ {/* description, setDescription */}
 
  
 
@@ -231,8 +244,8 @@ const handle_Tools_Checkbox_Change = (e, ToolId) => {
 
 <div>
 <div style={{display:"flex" , justifyContent:"space-between"}}>
-<p className='font-type-menu   Color-Grey1  'style={{ marginBottom:'var(--space-b)'}}>Modules</p>  
- <p className='font-type-txt   Color-Grey1  'style={{ marginBottom:'var(--space-b)'}}>Note: When adding assets, the intended modules are selected by default.</p>   
+<p className='font-type-menu   Color-Grey1  'style={{ marginBottom:'var(--space-a)'}}>Modules</p>  
+ <p className='font-type-txt   Color-Grey1  'style={{ marginBottom:'var(--space-a)'}}>Note: When adding assets, the intended modules are selected by default.</p>   
 </div>
 
 <div className="item_info_tools_all"
@@ -261,7 +274,7 @@ const handle_Tools_Checkbox_Change = (e, ToolId) => {
 {Array.isArray(all_Tools) && all_Tools?.map((Info, index) => {
   const checked = item_tool_list.find((type) => type == Info?.tool_id)
 
-  console.log("checked",checked);
+  // console.log("checked",checked);
     return (
 
 <div className="toolsData  ">
