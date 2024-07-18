@@ -3,8 +3,8 @@ import "./Settings_Menu.css";
 function Settings_Menu({ setMenuSelector, MenuSelector }) {
   const sub_menu_options = [
     {
-      preview_name: "Config Files",
-      value: "Config Files",
+      preview_name: "Main Config",
+      value: "Main Config",
     },
     {
       preview_name: "UI Settings",
@@ -42,7 +42,7 @@ function Settings_Menu({ setMenuSelector, MenuSelector }) {
         {sub_menu_options.map((item, index) => (
           <button
             disabled={MenuSelector == item?.value}
-            className="SubMenu-btn"
+            className={`SubMenu-btn  ${MenuSelector == item?.value && `SubMenu-btn-active`  } `}
             key={index}
             onClick={() => {
               setMenuSelector(item?.value);

@@ -97,7 +97,8 @@ function SideBar({
   const handleClick = (page_name) => {
     set_visblePage(page_name);
     localStorage.setItem("visiblePage", page_name); // Store current page in localStorage
-    navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name
+    navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name\
+ 
   };
 
   const handleNewWindow = (dashboard_name) => {
@@ -106,6 +107,7 @@ function SideBar({
     if (url) {
       window.open(url, "_blank");
     }
+   
   };
 
   const handle_Dashboards_drop_down = () => {
@@ -237,7 +239,7 @@ function SideBar({
 
         <div
           className="btn-menu-list"
-          onMouseLeave={() => set_Dashboards_drop_down(false)}
+          // onMouseLeave={() => set_Dashboards_drop_down(false)}
           //  onMouseEnter={()=>set_download_drop_down(true)}
         >
           <button
@@ -292,6 +294,28 @@ function SideBar({
                 <IcoResults />
               </div>
             </button>
+
+            <button
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-forensics")}
+              disabled={visblePage === "dashboard-forensics"}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Forensics</p>
+              </div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                {" "}
+                <IcoResults />
+              </div>
+            </button>
+
 
             <button
               className="btn-menu"
@@ -464,7 +488,8 @@ function SideBar({
 
         <button
           className="btn-menu  "
-          onClick={() => handleClickComingSoon("Alerts")}
+          onClick={() => handleClick("Alerts")}
+          // onClick={() => handleClickComingSoon("Alerts")}
           disabled={visblePage === "Alerts"}
         >
           <div className="display-flex">

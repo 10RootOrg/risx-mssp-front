@@ -26,7 +26,7 @@ function Settings({
 
   const { all_Tools, front_URL } = useContext(GeneralContext);
 
-  const [MenuSelector, setMenuSelector] = useState("Config Files");
+  const [MenuSelector, setMenuSelector] = useState("Main Config");
 
   //  show sidebar in this page
   useEffect(() => {
@@ -38,10 +38,10 @@ function Settings({
   const PortAiner = () => {
     return (
       <div style={{ flexDirection: "column", display: "flex" }}>
-        <p className="font-type-h4 Color-White mb-c">Portainer</p>
+        <p className="font-type-h4 Color-White mb-a ">Portainer</p>
 
         <iframe
-          style={{ height: 700, marginTop: 20 }}
+          style={{ height: 700, marginTop: 0 }}
           src={`https://${front_URL.replace("http://", "")}/portainer`}
           frameborder="0"
         />
@@ -53,7 +53,7 @@ function Settings({
     <>
       <div className="app-main">
         <div className="top-of-page">
-          <div className="top-of-page-left mb-b">
+          <div className="top-of-page-left mb-a">
             <p className="font-type-menu">Settings:</p>
             <p className="font-type-h3">General Settings</p>
           </div>
@@ -70,12 +70,12 @@ function Settings({
 
         <div className="resource-group-top-boxes mb-c"></div>
 
-        <div className="mb-c">
+        <div className="mb-d">
           <Settings_Menu setMenuSelector={setMenuSelector} MenuSelector={MenuSelector} />{" "}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "45px" }}>
-          {MenuSelector == "Config Files" && <Settings_section_config />}
+          {MenuSelector == "Main Config" && <Settings_section_config />}
 
           {MenuSelector == "UI Settings" && (
             <Settings_section_ShowInUi all_Tools={all_Tools} />

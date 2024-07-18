@@ -212,6 +212,7 @@ const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
   const handle_show_all_assets_type_list = () => {
     console.log("handle_show_all_assets_type_list");
     set_Preview_List(false);
+    set_assets_list_from_db([]);
 
   }
 

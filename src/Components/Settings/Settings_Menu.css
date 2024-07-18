@@ -45,21 +45,23 @@
   cursor: pointer;
 }
 
-.SubMenu-btn:hover p {
+.SubMenu-btn:hover p ,.SubMenu-btn-active p{
   color: var(--color-DB-Blue-Glow);
   transition: var(--transition-fast);
 }
 
-.SubMenu-btn:hover .SubMenu-gap {
+.SubMenu-btn:hover .SubMenu-gap ,.SubMenu-btn-active  .SubMenu-gap {
   visibility: hidden;
   transition: var(--transition-fast);
 }
 
  
 
-.SubMenu-btn:active {
+.SubMenu-btn:active ,.SubMenu-btn-active{
   background-color: var(--color-DB-Blue-Hover-Real);
 }
+
+
 
 .SubMenu-btn:hover:disabled {
   background-color: var(--color-DB-Blue-Hover-Real);
@@ -67,7 +69,7 @@
   cursor: auto;
 }
 
-.SubMenu-btn:hover:disabled p {
+.SubMenu-btn:hover:disabled p ,.SubMenu-btn-active p{
   color: var(--color-DB-Blue-Glow);
   transition: var(--transition-fast);
 }

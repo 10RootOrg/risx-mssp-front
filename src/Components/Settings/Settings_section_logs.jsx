@@ -58,7 +58,7 @@ function Settings_section_logs({
 
   return (
     <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
-      {/* <p className="font-type-h4 Color-White mb-a">Logs</p> */}
+      {/* <p className="font-type-h4 Color-White mb-a">{headline}</p> */}
       <p className="font-type-menu Color-White mb-a">{headline}</p>
       <p className="font-type-txt Color-Grey1 mb-b">{fileName}</p>
       <div
