@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, useContext, useRef } from "react";
 
 import axios from "axios";
@@ -11,6 +13,9 @@ import { json, jsonLanguage, jsonParseLinter } from "@codemirror/lang-json";
 import { tags as t } from "@lezer/highlight";
 import { createTheme } from "@uiw/codemirror-themes";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { ReactComponent as IconReverse } from '../icons/ico-reverse.svg';
+ 
+
 
 function Settings_section_config({
   show_SideBar,
@@ -39,31 +44,31 @@ function Settings_section_config({
   const myTheme = createTheme({
     theme: "dark",
     settings: {
-      background: "#030208",
+      background: "transperent",
       backgroundImage: "",
-      foreground: "#9CFF7E",
-      caret: "#5d00ff",
-      selection: "#036dd626",
-      selectionMatch: "#036dd626",
-      lineHighlight: "#8a91991a",
-      gutterBackground: "#14085A",
-      gutterForeground: "#8a919966",
+      foreground:  "var(--color-Grey1)",
+      caret: "var(--color-DB-Blue-Active)",
+      selection: "var(--color-Grey4)",
+      selectionMatch: "var(--color-Orange)",
+      lineHighlight: "transperent",
+      gutterBackground: "var(--color-Grey5)",
+      gutterForeground: "var(--color-Grey1)",
     },
     styles: [
-      { tag: t.comment, color: "#ffffff" },
-      { tag: t.variableName, color: "#ffffff" },
-      { tag: [t.string, t.special(t.brace)], color: "#DC1B1B" },
-      { tag: t.number, color: "#F853E2" },
-      { tag: t.bool, color: "#5c6166" },
-      { tag: t.null, color: "#5c6166" },
-      { tag: t.keyword, color: "#5c6166" },
-      { tag: t.operator, color: "#5c6166" },
-      { tag: t.className, color: "#5c6166" },
+      { tag: t.comment,  color: "var(--color-White)" },
+      { tag: t.variableName,  color: "var(--color-White)" },
+      { tag: [t.string, t.special(t.brace)], color: "var(--color-DB-Blue-Active)"},
+      { tag: t.number,  color: "var(--color-White)" },
+      { tag: t.bool,  color: "var(--color-White)" },
+      { tag: t.null,  color: "var(--color-White)" },
+      { tag: t.keyword,  color: "var(--color-White)" },
+      { tag: t.operator,  color: "var(--color-White)" },
+      { tag: t.className,  color: "var(--color-White)" },
       { tag: t.definition(t.typeName), color: "#5c6166" },
-      { tag: t.typeName, color: "#5c6166" },
-      { tag: t.angleBracket, color: "#5c6166" },
-      { tag: t.tagName, color: "#9CFF7E" },
-      { tag: t.attributeName, color: "#5c6166" },
+      { tag: t.typeName, color: "var(--color-White)" },
+      { tag: t.angleBracket,  color: "var(--color-White)" },
+      { tag: t.tagName,  color: "var(--color-White)" },
+      { tag: t.attributeName,  color: "var(--color-White)" },
     ],
   });
 
@@ -243,11 +248,12 @@ function Settings_section_config({
       )}
 
       <div>
-        <p className="font-type-h4 Color-White mb-c">Config Files</p>
+     
         <table className="setting_table  " style={{ lineHeight: "100%" }}>
           <tbody>
             <tr>
               <td className="setting_descriptions">
+              <p className="font-type-h4 Color-White mb-c">Main Config</p>
                 <p className="font-type-menu Color-White mb-a">config.json</p>
                 <p className="font-type-txt Color-Grey1 mb-b">
                   This is the place to update the general config file.
@@ -257,8 +263,33 @@ function Settings_section_config({
                   Caution: Incorrect input may damage the functionality of the
                   software.
                 </p>
+
                 <button
-                  className="btn-type2"
+                 className="btn-type4  btn-type4_careful  mt-b"
+                  style={{padding:0}}
+                  onClick={() => {
+                    setPopUpYesFunc(true);
+                    set_PopUp_Are_You_Sure__txt({
+                      HeadLine: "Reset config?",
+                      paragraph:
+                        "Are you sure you want to Reset the config to Default all changes to the config will be lost?",
+                      buttonTrue: "Yes",
+                      buttonFalse: "No",
+                    });
+
+                    set_PopUp_Are_You_Sure__show(true);
+                  }}
+                  >
+                    
+                    <div style={{ transform: "scale(1)" ,marginLeft:"-5px"}}
+             
+                  
+                  ><IconReverse className="icon-type1 "/></div><p className='font-type-menu mr-a' >Reset</p> </button>
+
+
+
+                {/* <button
+                   className="btn-type4  btn-type4_careful  mt-b"
                   style={{ marginTop: 10 }}
                   onClick={() => {
                     setPopUpYesFunc(true);
@@ -274,19 +305,13 @@ function Settings_section_config({
                   }}
                 >
                   <p className="font-type-menu ">Reset</p>
-                </button>
+                </button> */}
               </td>
 
-              <td
-                className="setting_element PreviewBox"
-                style={{ height: "auto" }}
-              >
+              <td  className="setting_element PreviewBox"  style={{ height: "auto" }}    >
                 <div className=" ">
                   {preview_or_edit ? (
-                    <div
-                      className="setting_element"
-                      style={{ overflowY: "scroll" }}
-                    >
+                    <div className="setting_element"    style={{ overflowY: "scroll" }}   >
                       <JsonView
                         value={object}
                         keyName="root"
@@ -297,20 +322,12 @@ function Settings_section_config({
                       />{" "}
                     </div>
                   ) : (
-                    // <textarea
-                    //   className="input-type3_settings reading-height  setting_element"
-                    //   style={{ width: "100%" }}
-                    //   value={JSON.stringify(object, null, 2)} // Convert object to string for textarea value
-                    //   ref={textAreaRef}
-                    //   onChange={handleTextAreaChange} // Update object state when textarea content changes
-                    //   placeholder={"Description"}
-                    // ></textarea>
-                    <>
+                    <> 
                       {ErrString && (
                         <div
                           style={{
                             width: "auto",
-                            backgroundColor: "#AA1E1E",
+                            backgroundColor: "var(--color-Orange)",
                             color: "#FFFFFF",
                             opacity: 0.7,
                             position: "absolute",
@@ -321,10 +338,14 @@ function Settings_section_config({
                           {ErrString}
                         </div>
                       )}
+                
+ 
                       <CodeMirror
                         value={JSON.stringify(object, null, 2)}
                         height="600px"
-                        width="900px"
+                        // width="600px"
+                        // maxWidth="auto"
+                    
                         onChange={async (x) => {
                           try {
                             console.log("flip", JSON.parse(x));
@@ -338,10 +359,13 @@ function Settings_section_config({
                           }
                         }}
                         extensions={[json()]}
-                        // theme={myTheme} // Custom Style For The Editor
-                        theme={vscodeDark} // Pre made style for the editor
+                        theme={myTheme} // Custom Style For The Editor
+                        // theme={vscodeDark} // Pre made style for the editor
                         highlightActiveLine={true}
                       />
+
+
+                      
                     </>
                   )}
                 </div>
@@ -384,3 +408,4 @@ function Settings_section_config({
 }
 
 export default Settings_section_config;
+

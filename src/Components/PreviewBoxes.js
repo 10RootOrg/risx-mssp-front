@@ -244,6 +244,126 @@ const handleLeave = () => {
   )
 }
 
+function PreviewBox_type1_number_for_dashbords({
+  HeadLine,BigNumber,
+  SmallNumber,StatusColor,
+  date, resource_type_id ,
+  filter_Resource,
+  set_filter_Resource,
+  SmallNumberTxt,
+  is_popup,
+  txt_color
+   
+  }) {
+  
+    const [isHovered, setIsHovered] = useState(false);
+    const [is_Filtering, set_is_Filtering] = useState(false);
+  
+    useEffect(() => { 
+    if (filter_Resource?.type_ids?.length === 0 ) {
+            set_is_Filtering(false)
+          }
+       
+      
+      },[filter_Resource])
+      
+   
+  const  handle_filter_by_Type = (id) => {
+  if (id === null || id === undefined){
+   
+    set_filter_Resource({type_ids:[],tool_ids:[]})
+  
+    return
+  }
+  
+  
+  
+  else{
+  
+  const found = filter_Resource.type_ids.find((ids) => ids ===  id);
+  
+  
+  if (found  === undefined){
+  const stayAsYouR = filter_Resource.tool_ids
+  set_filter_Resource({type_ids:[...filter_Resource.type_ids,id],    tool_ids:stayAsYouR})
+  set_is_Filtering(true)
+  // set_clear_all_btns_filter_preview(false)
+  
+  return
+  }
+  
+  else if (found  === id){
+    // const index = filter_Resource.type_ids.indexOf(id);
+   const filterd = filter_Resource.type_ids.filter(element => element  !== id);
+   const stayAsYouR = filter_Resource.tool_ids
+   set_filter_Resource({type_ids:filterd,tool_ids:stayAsYouR})
+   set_is_Filtering(false)
+   
+  return
+  }
+  }
+  }
+  
+  const handleHover = () => {
+    setIsHovered(true);
+  };
+  
+  const handleLeave = () => {
+    setIsHovered(false);
+  };
+  
+    const StatusColorClass =
+    StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
+    StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
+    StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
+    StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+  
+    StatusColor === 'red' ? 'Bg-Red' :
+    StatusColor === 'blue' ?'Bg-Blue-Glow' : 
+    StatusColor == '' ?  'Bg-Grey2' : 
+    StatusColor == undefined ?  'Bg-Grey2'  :
+    'Bg-Grey2'   ;
+   
+  
+  
+  
+  
+    return (
+      <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
+      // className={`box ${isFocused ? 'focused' : ''}`}
+      // is_Filtering
+        onClick={()=>{handle_filter_by_Type(resource_type_id) }}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleLeave}
+        > 
+      <div className='PreviewBox_HeadLine' >
+        <p  className="font-type-menu" >{HeadLine}</p>
+   <div className={`${StatusColorClass}  light-bulb-type1`} style={{backgroundColor:  isHovered ? "#00DBFF" : (txt_color || "")}}/>
+   
+         </div> 
+  
+  
+      <div> 
+      <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
+      <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
+  }} >{SmallNumberTxt}: {SmallNumber}</div>
+      </div>
+  
+       <div className='PreviewBox_ButtomLine'
+       
+      //  style={{  visibility: date === "NA" &&  'hidden' }}
+        >
+  
+       <IconLastRun />
+       <div className='font-type-very-sml-txt '>{date}</div>
+  
+  
+  
+       </div> {/*dont delete */}
+      </div>
+    )
+  }
+
 function PreviewBox_type1_number_no_filters({
   HeadLine,BigNumber,
   SmallNumber,StatusColor,
@@ -557,7 +677,7 @@ return(
   }
  
 
-<p className='   font-type-txt Color-White  ' >{Info} </p>
+<p className='font-type-txt Color-White'style={{width:"max-content"}}>{Info} </p>
 </div>
 )
 })}
@@ -567,7 +687,7 @@ return(
        {Array.isArray(bar_numbers) &&  bar_numbers?.map((Info, index) => {
   return(
     <div className='display-flex'  style={{  marginLeft:"auto"}} key={index}>
-     <p className='   font-type-txt Color-White  '> {Info}</p>
+     <p className='   font-type-txt Color-White  '>{Info}</p>
     </div>
   )
    })}

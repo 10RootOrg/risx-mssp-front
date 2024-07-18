@@ -62,3 +62,10 @@ th td {
  width:auto;
  
  }
+
+
+ .CodeMirror {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 1.5; /* Optional: Adjust line height as needed */
+}

@@ -48,7 +48,9 @@ function ResourceGroup_List({
   const [sort_by, set_sort_by] = useState("");
   // const [item_types_list, set_item_types_list] = useState([]);
   // const [item_tool_list, set_item_tool_list] = useState([]);
-
+console.log("sort_by",sort_by);
+console.log("firstTimeData",firstTimeData);
+console.log("asset_type_id",asset_type_id);
 
 
   const renderIcon = (resource_type_id) => {
@@ -110,6 +112,7 @@ const data = {
    get_resources_from_same_type();  }, [  backEndURL]);
 
 const normal_sort = (column) => {
+  console.log("start sort on ",asset_type_id);
 console.log("sort this column: " , column);
 
   if (!column) {
@@ -196,6 +199,7 @@ const complex_sort = (column) => {
 
 // for first load  =>  sorting the list
 useEffect(() => {
+  console.log("make sort form use effect",asset_type_id,"list",assets_list_from_db);
 if (assets_list_from_db?.length >=2&&firstTimeData ) {
   normal_sort("resource_string");
   setfirstTimeData(false)

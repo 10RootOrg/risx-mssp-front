@@ -9,10 +9,14 @@ import { ContextProvider}from './Context'
 import SideBar from './SideBar/SideBar'
 import Modules from './Components/Modules/Modules'
 import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
+import Alerts from './Components/Alerts/Alerts_main'
 
 import DashboardResults from './Components/Dashboards/Dashboard_Results'
 import DashboardRisx from './Components/Dashboards/Dashboard_Risx'
 import DashboardTimesketch from './Components/Dashboards/Dashboard_Timesketch'
+import Dashboard_Forensics from './Components/Dashboards/Dashboard_Forensics'
+
+
 // import Dashboardold from './Components/Dashboards/Dashboard_old'
 
 import Settings from './Components/Settings/Settings'
@@ -51,10 +55,19 @@ export default function App() {
           <Route path="login"               element={<Login              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}/>} />
           <Route path="assets"              element={<ResourceGroup      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
           <Route path="Modules"             element={<Modules            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
+          <Route path="alerts"              element={<Alerts             show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
+
+          
+
 
           <Route path="dashboard-general"    element={<DashboardResults    show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   set_notification_number={set_notification_number}     />} />
           <Route path="dashboard-risx"       element={<DashboardRisx       show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-timesketch" element={<DashboardTimesketch show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
+          <Route path="dashboard-forensics"  element={<Dashboard_Forensics show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
+
+
+          
+
 
           <Route path="settings"            element={<Settings           show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
           <Route path="users"               element={<Users              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
