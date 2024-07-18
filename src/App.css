@@ -214,9 +214,11 @@ p{color: var(--color-White);
 
 
  
+ 
 
 
-.make-underline{
+
+.make-underline, .no-underline{
   display: inline-block; /* Makes sure the border applies correctly for inline elements like <span> or <a> */
   border-bottom: 2px solid transparent; /* Creates a 2px thick underline. 'currentColor' uses the text's current color */
   padding-bottom: 3px; /* Adjusts the distance of the underline from the text */
@@ -246,6 +248,14 @@ p{color: var(--color-White);
   /* padding-bottom: 2px;  */
   cursor: pointer;
 }
+
+
+
+ 
+
+
+
+
 
 
 .ml-a{ margin-left: 5px;}
