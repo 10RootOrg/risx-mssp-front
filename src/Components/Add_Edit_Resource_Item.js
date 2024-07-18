@@ -296,7 +296,7 @@ set_PopUp_All_Good__show(true)
 <div className="items_left">
   
 <div className="item_info_left">
-<p className='font-type-menu   Color-Grey1 pb-b'>String</p>
+<p className='font-type-menu   Color-Grey1 pb-b'>Name</p>
 <input className="input-type2 mb-a " type="text" value={resource_string}      placeholder={resourceItem?.Name || 'Name'} onChange={handleInputChange(set_resource_string)}/>
 </div>
 

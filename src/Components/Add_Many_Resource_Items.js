@@ -196,7 +196,7 @@ const handle_Tools_Checkbox_Change = (e, ToolId) => {
 
 <div className='display-flex mb-d' >
   <IconBIG/> 
-  <p className='font-type-h4   Color-White ml-b'>Add Many {resource_type?.resource_type_name} </p></div>
+  <p className='font-type-h4   Color-White ml-b'>Bulk Add {resource_type?.resource_type_name}</p></div>
 
 <div className="items_top_center_buttom">
 

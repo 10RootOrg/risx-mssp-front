@@ -129,6 +129,13 @@ color: var(--color-DB-Blue-Glow);
  
 }
 
+
+
+.list-item-status-color{
+  max-width :120px;
+  width: 10%;   
+ 
+}
 .list-item-biggest{
   max-width :540px;
  width: 55%;   

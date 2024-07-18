@@ -10,6 +10,10 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import axios from 'axios';
  import GeneralContext from '../../Context.js';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
+ 
+
+
+
  import '../StatusDisplay.css'; 
 
   // Adjust the path as needed based on your project structure
@@ -25,9 +29,7 @@ import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response} from '..
 function Results_All({
   Preview_this_Results ,
   set_Preview_this_Results,
-  loader,set_loader,
-    filter_Resource,
-    set_filter_Resource
+  loader
   }) {
     const {  backEndURL ,all_Tools ,front_IP} = useContext(GeneralContext);
  
@@ -57,8 +59,8 @@ const status_bar_width = "200px"
   const [json_file_info, set_json_file_info] = useState({})
   const [json_file_data, set_json_file_data] = useState({})
   const [PopUp_loader__show, set_PopUp_loader__show] = useState(false);
-  
-
+  const [sort_by, set_sort_by] = useState("StartDate");
+  const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
 
   const  get_Json_single_response = async(Info)=>{
  
@@ -227,50 +229,60 @@ if ( link.includes("${FRONT_IP}")){ const realURl = link.replace("${FRONT_IP}", 
  if ( !link.includes("${FRONT_IP}")){ window.open(  link   , '_blank');;   return } 
 
 
- 
- 
-
 break;
-
 
 default:
 console.log("default");
 }
 
 
-
-
-
-  // if (Info.Status  != "Complete" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
-  //   set_PopUp_Request_info__txt({ HeadLine:"In process", paragraph:"The request has been sent", buttonTitle:"Close" })
-  //   set_PopUp_Request_info__show(true)
-  //   return}
-
-
-
-
+}
 
  
 
+
+
+const do_sort = (column) => {
+
+console.log("sort this column: " , column);
+
+  if (!column) {
+    console.log("Can't sort ", column);
+    return;
+  }
+
+  if (column === sort_by) {
+    console.log("It's already sorted like this, reversing the order");
+    const sorted = [...Preview_this_Results].sort((a, b) => {console.log("b[column]", b[column]);
+      if (b[column] < a[column]) return -1;
+      if (b[column] > a[column]) return 1;
+      return 0;
+    });
+    console.log("Sorted descending:", sorted);
+    set_Preview_this_Results(sorted);
+    set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+
+  } else {
+    set_sort_by(column);
+    const sorted = [...Preview_this_Results].sort((a, b) => {
+      if (a[column] < b[column]) return -1;
+      if (a[column] > b[column]) return 1;
+      return 0;
+    });
+    console.log("Sorted ascending:", sorted);
+    set_Preview_this_Results(sorted);
+  }
+};
+
+
+// for first load  =>  sorting the list
+useEffect(() => {
+if (Preview_this_Results?.length >=2&&firstTimeData ) {
+  do_sort("StartDate");
+  setfirstTimeData(false)
 }
-
-
-// useEffect(() => {
-//   const sortedResults = [...Preview_this_Results].sort((a, b) => {
-//     const datePartsA = a.StartDate.split('-').map(part => parseInt(part));
-//     const datePartsB = b.StartDate.split('-').map(part => parseInt(part));
-    
-//     // Create Date objects from parts
-//     const dateA = new Date(datePartsA[2], datePartsA[1] - 1, datePartsA[0], datePartsA[3], datePartsA[4], datePartsA[5]);
-//     const dateB = new Date(datePartsB[2], datePartsB[1] - 1, datePartsB[0], datePartsB[3], datePartsB[4], datePartsB[5]);
-    
-//     // Sort descending (latest date first)
-//     return dateB - dateA;
-//   });
   
-//   set_Preview_this_Results(sortedResults);
-// }, [Preview_this_Results]);
-
+}, [Preview_this_Results])
 
 
  return (
@@ -373,18 +385,14 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   <>
 <div className='resource-group-list-keyNames mb-a  '  >
 
-<div className='resource-group-list-item list-item-biggest ml-a '  ><p className='font-type-menu  make-underline Color-Grey1 ml-a '>Artifact Name</p></div>
-<div className='resource-group-list-item   list-item-big '
-//  style={{width:"60%" , maxWidth:"60%"}}
- ><p className='font-type-menu  make-underline Color-Grey1 '>Arguments</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Start Date</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Last Interval</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
+             <div className='resource-group-list-item list-item-biggest ml-a' onClick={() => do_sort("SubModuleName")}>         <p className='font-type-menu  make-underline Color-Grey1 ml-a '>Module + Artifact</p></div>
+             <div className='resource-group-list-item   list-item-big'>                                                         <p className='font-type-menu  no-underline Color-Grey1 '>Arguments</p></div>
+             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div>
+             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("LastIntervalDate")}>             <p className='font-type-menu  make-underline Color-Grey1 '>Last Interval</p></div>
+             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
+             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("Status")}>                       <p className='font-type-menu  make-underline Color-Grey1 '>Status</p></div>
+             <div className='resource-group-list-item list-item-big  ' style={{ marginRight: "18px", width: status_bar_width }}><p className='font-type-menu  no-underline Color-Grey1  '>Status Display</p></div>
 
-
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-Grey1 '>Status</p></div>
-<div className='resource-group-list-item list-item-big  ' style={{marginRight:"18px" ,width:status_bar_width}}><p className='font-type-menu  make-underline Color-Grey1  '>Status Display</p></div>
- 
 </div>
 
 <div className='resource-group-list-box mb-c' >
