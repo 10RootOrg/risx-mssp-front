@@ -1,6 +1,6 @@
 import React , {useState , useEffect ,useContext} from 'react';
 import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type4_legend2} from '../PreviewBoxes.js'
-import Results_all from './Dashboard_Results_all.jsx'
+import Results_list from './Results_list.jsx'
 
 
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
@@ -191,10 +191,10 @@ console.log("last_updated",last_updated);
 <div className='app-main' >
 <div className='top-of-page'> 
 
-{/* <div className='top-of-page-left mb-b'>
+<div className='top-of-page-left mb-b'>
 <p  className="font-type-menu" >Dashboards:</p>
 <p  className="font-type-h3" >General</p>
-</div> */}
+</div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 
 {/* <div className='top-of-page-right'>
@@ -307,7 +307,7 @@ bar_title_legend = {"Count"}
 <div className='resource-group-all-the-Lists'>
 
 {/*  */}
- <Results_all Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} />
+ <Results_list Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} />
  
  
 

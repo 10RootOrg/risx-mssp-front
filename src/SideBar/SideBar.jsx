@@ -229,10 +229,7 @@ function SideBar({
         </div>
       </button>
 
-      <div
-        className="Bg-Grey2"
-        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
-      />
+      <div    className="Bg-Grey2" style={{ width: "100%", height: "2px", borderRadius: "5px" }}/>
 
       <div className="btn-menu-list  ">
         {/* ..........Dashboards.......srart.... */}
@@ -253,15 +250,22 @@ function SideBar({
             <div className="display-flex">
               <IcoMonitor className="btn-menu-icon-placeholder  mr-a " />
 
-              <p className="font-type-menu ">Dashboards</p>
+              <p className="font-type-menu " >Dashboards{visblePage.startsWith("dashboard")&&":"}</p>
+
               {visblePage.startsWith("dashboard") && (
-                <p className="  ml-a font-type-very-sml-txt">
-                  :
-                  {visblePage
-                    .replace("dashboard-", "")
-                    .charAt(0)
-                    .toUpperCase() +
-                    visblePage.replace("dashboard-", "").slice(1)}
+                <p className="  ml-a font-type-very-sml-txt "  style={{textAlign:"left"  }}>
+                  {/* : */}
+                  {
+  visblePage
+    .replace("dashboard-", "")
+    .replace("-", " ")
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}
+
+
+
                 </p>
               )}
             </div>
@@ -271,9 +275,7 @@ function SideBar({
             </div>
           </button>
 
-          <div
-            className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
-          >
+          <div   className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}  >
             <button
               className="btn-menu"
               onClick={() => handleClick("dashboard-general")}
@@ -296,25 +298,34 @@ function SideBar({
             </button>
 
             <button
-              className="btn-menu"
-              onClick={() => handleClick("dashboard-forensics")}
-              disabled={visblePage === "dashboard-forensics"}
-            >
+              className="btn-menu"  onClick={() => handleClick("dashboard-forensics")}   disabled={visblePage === "dashboard-forensics"}>
               <div className="display-flex">
-                <IcoDownload
-                  className="btn-menu-icon-placeholder  mr-a "
-                  style={{ visibility: "hidden" }}
-                />
+                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
                 <p className="font-type-menu ">Forensics</p>
               </div>
-              <div
-                className="btn-menu-icon-placeholder"
-                style={{ scale: "0.95" }}
-              >
-                {" "}
-                <IcoResults />
-              </div>
+              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
             </button>
+
+
+            <button
+              className="btn-menu"  onClick={() => handleClick("dashboard-threat-hunting")}   disabled={visblePage === "dashboard-threat-hunting"}>
+              <div className="display-flex">
+                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                <p className="font-type-menu ">Threat Hunting</p>
+              </div>
+              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
+            </button>
+
+            <button
+              className="btn-menu"  onClick={() => handleClick("dashboard-cti")}   disabled={visblePage === "dashboard-cti"}>
+              <div className="display-flex">
+                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                <p className="font-type-menu ">CTI</p>
+              </div>
+              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
+            </button>
+
+            <div  className="Bg-Grey2" style={{ width: "90%", height: "2px", borderRadius: "5px" ,marginLeft:"auto",marginRight:"auto", marginTop:"5px", marginBottom:"5px"   }}/>
 
 
             <button
@@ -337,6 +348,8 @@ function SideBar({
                 <IcoIframe />
               </div>
             </button>
+
+
 
             <button
               className="btn-menu"
@@ -362,7 +375,7 @@ function SideBar({
             <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-misp")}
-              disabled={visblePage === "dashboard-misp"}
+              // disabled={visblePage === "dashboard-misp"}
             >
               <div className="display-flex">
                 <IcoDownload
@@ -383,7 +396,7 @@ function SideBar({
             <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-cti")}
-              disabled={visblePage === "dashboard-cti"}
+              // disabled={visblePage === "dashboard-cti"}
             >
               <div className="display-flex">
                 <IcoDownload
@@ -404,7 +417,7 @@ function SideBar({
             <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-iris")}
-              disabled={visblePage === "dashboard-iris"}
+              // disabled={visblePage === "dashboard-iris"}
             >
               <div className="display-flex">
                 <IcoDownload
@@ -503,10 +516,7 @@ function SideBar({
           <div className="btn-menu-icon-placeholder  "> </div>
         </button>
       </div>
-      <div
-        className="Bg-Grey2"
-        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
-      />
+      <div  className="Bg-Grey2" style={{ width: "100%", height: "2px", borderRadius: "5px" }}/>
 
       <button className="btn-menu" onClick={handle_active_manual_process}>
         <div className="display-flex">

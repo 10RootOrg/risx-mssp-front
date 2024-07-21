@@ -10,10 +10,6 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import axios from 'axios';
  import GeneralContext from '../../Context.js';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
- 
-
-
-
  import '../StatusDisplay.css'; 
 
   // Adjust the path as needed based on your project structure
@@ -26,7 +22,7 @@ import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader } from '../PopUp_Smart.j
 import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response} from '../PopUp_response_modules.js'
  import LMloader from "../Features/LMloader.svg";
  import './Dashboard_Results_all.css'
-function Results_All({
+function Results_list({
   Preview_this_Results ,
   set_Preview_this_Results,
   loader
@@ -484,5 +480,5 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
     );
   }
   
-  export default Results_All;
+  export default Results_list;
 

@@ -33,10 +33,7 @@
  
 }
 
-.btn-menu-icon-placeholder {
-  width: 28px;
-}
-
+ 
   .btn-menu{
     height:36px;
     width: 100%;
@@ -172,11 +169,14 @@
 }
 
 .dropdown-menu.open {
- 
+
   max-height: 400px; /* Adjust as needed */
  background-color: var(--color-Grey4);
  border-radius: var(--elemtns-round-corner-medium);
  transition: var(--transition-med);
  margin-bottom: var(--space-a);
+ /* display: flex;
+ flex-direction: column;
+ gap: var(--space-a); */
 }
  
