@@ -434,7 +434,7 @@ const  handle_click = () => {
        
       <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
       <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
-  }} >{SmallNumberTxt}: {SmallNumber}</div>
+  }} >{SmallNumberTxt}{SmallNumber && ": "}{SmallNumber}</div>
       </div>
   
        <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
@@ -791,8 +791,60 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             );
         }
         
-          
 
+
+
+
+
+          
+        function PreviewBox_type6_list_box({ HeadLine, is_popup, enable_hover,
+          list_array_column2,
+          list_array_column1,
+          list_array
+        
+        
+        
+        }) {
+         const handle_click = () => {
+            console.log("click on PreviewBox_type6_list_box" );
+          }
+        
+          return (
+            <div className={`PreviewBox ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{  overflow: 'hidden' }} onClick={handle_click}>
+        
+              <div className='PreviewBox_HeadLine '>
+                <p className="font-type-menu">{HeadLine}</p>
+              </div>
+        
+              <div className='table-container' style={{ 
+                height: 'calc(100% - 20px)',
+                 overflowY: 'auto' }}>
+                <table style={{ width: '100%',
+                  //  borderCollapse: 'collapse' 
+                   }}>
+                  <thead style={{ position: 'sticky', top: 0, backgroundColor: 'var(--color-Grey5)', zIndex: 1  }}>
+                    <tr  style={{ textAlign: 'left' ,height:"30px"}}>
+                      <th className='font-type-menu Color-Grey1' style={{}}>{list_array_column1?.previewName}</th>
+                      <th className='font-type-menu Color-Grey1'  style={{textAlign:"right" ,paddingRight:"5px"}}>{list_array_column2?.previewName}</th>
+                    </tr>
+                  </thead>
+                  <tbody style={{   overflowY: 'auto',
+                    //  maxHeight: 'calc(100% - 40px)'
+                      }}>
+                    {list_array?.map((item, index) => (
+                      <tr key={index}>
+                        <td className='font-type-txt Color-Grey1 ' style={{ }}>{item[list_array_column1?.key]}</td>
+                        <td className='font-type-txt Color-Grey1 ' style={{textAlign:"right" ,paddingRight:"5px"}}>{item[list_array_column2?.key]}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+        
+            </div>
+          );
+      
+        }
 
 function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_this_tools, dont_show_this_tools2, set_dont_show_this_tools2}) {
  
@@ -1227,4 +1279,4 @@ disabled={disabled}
   )
 }
 
-export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters};
+export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box};

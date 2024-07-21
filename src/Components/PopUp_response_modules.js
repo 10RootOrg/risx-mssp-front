@@ -595,8 +595,12 @@ text_under_big_number={"Object Find"}
         </div>
      
         <div className="velociraptor_response_all_top mb-d">
-        <div className='velociraptor_response_top_texts mb-c' >
-        
+
+
+        <div className='velociraptor_response_top_texts mb-c'  style={{display:"flex" ,justifyContent:"stretch" , alignItems:"stretch" }}>   
+
+
+<div>
         <div>
         <p className="font-type-h4 Color-White mb-a">{HeadLine} </p>
         <p  className="font-type-txt  reading-height Color-Grey1  mb-b"  >Response Results</p> 
@@ -615,14 +619,27 @@ text_under_big_number={"Object Find"}
         <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  > {json_file_data?.Status}</p> 
          </div>
         </div>
-        
         </div>
-        
-        <PreviewBox_type0_static   BigNumber={json_file_info?.length} text_under_big_number={"Object Find"}
-        // StatusColor={"blue"}
-        // date={"14/5/20224"}
-         
-        />
+</div>
+
+
+
+     <div  style={{marginLeft:"auto" ,  }}>   <PreviewBox_type0_static   BigNumber={json_file_info?.length} text_under_big_number={"Object Find"} /></div>
+
+ <div>
+
+
+
+
+
+
+
+        </div>
+      
+
+
+   
+    
          
         </div>
       
@@ -636,12 +653,16 @@ text_under_big_number={"Object Find"}
  <p className=' font-type-txt   Color-Blue-Glow  tagit_type1   mb-b'style={{width:"fit-content"}}>Object No {index+1}</p>
  {/* <p className='  font-type-menu   Color-White mb-b'>Object No {index+1}</p>    */}
   <tr>
-    <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>host</p></th>
+    <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>Host</p></th>
     <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info?.host}</p></th>
   </tr>
   <tr>
-    <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>Request</p></th>
-    <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info?.request}</p></th>
+    <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>Severity</p></th>
+    <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info?.info?.severity}</p></th>
+  </tr>
+  <tr>
+    <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>Type</p></th>
+    <th className='response_table_long_row'><p className=' font-type-txt  Color-Grey1'>{Info?.type}</p></th>
   </tr>
   <tr> 
     <th className='response_table_short_row'><p className='  font-type-menu   Color-Grey1'>matcher-status</p></th>
