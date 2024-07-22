@@ -67,7 +67,7 @@ transition: var(--transition-fast);
 
 
 .PreviewBox_for_type_count    .PreviewBox_HeadLine p ,
-.PreviewBox_for_type_count  div .PreviewBox_SmallNumber {
+.PreviewBox_for_type_count  div .PreviewBox_SmallNumber,    .PreviewBox_BigDate {
   color: var(--color-White);
   transition: var(--transition-fast);
 }

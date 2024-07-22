@@ -124,6 +124,7 @@ bar_numbers = {all_Resource_Types.map(item => item.count)}
 bar_headlines = {all_Resource_Types.map(item => item.resource_type_name)}
 bar_title_legend = {["total"]}
 is_popup = {false}
+colors={"Basic"} // Basic , Alert
 />
 
  
