@@ -800,10 +800,10 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
         function PreviewBox_type6_list_box({ HeadLine, is_popup, enable_hover,
           list_array_column2,
           list_array_column1,
-          list_array
+          list_array,
         
         
-        
+          is_tags
         }) {
          const handle_click = () => {
             console.log("click on PreviewBox_type6_list_box" );
@@ -833,7 +833,12 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
                       }}>
                     {list_array?.map((item, index) => (
                       <tr key={index}>
-                        <td className='font-type-txt Color-Grey1 ' style={{ }}>{item[list_array_column1?.key]}</td>
+
+                        {is_tags ? (
+                         <td className='font-type-txt Color-Grey1 ' style={{ }}>{item[list_array_column1?.key]}</td>
+                        ):(
+                       <td className='font-type-txt Color-Grey1 ' style={{ }}>{item[list_array_column1?.key]}</td>
+                       ) }
                         <td className='font-type-txt Color-Grey1 ' style={{textAlign:"right" ,paddingRight:"5px"}}>{item[list_array_column2?.key]}</td>
                       </tr>
                     ))}

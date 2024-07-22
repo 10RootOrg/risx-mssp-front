@@ -81,7 +81,7 @@ function Settings({
             <Settings_section_ShowInUi all_Tools={all_Tools} />
           )}
 
-          {MenuSelector == "Modules paths" && (
+          {MenuSelector == "Module paths" && (
             <Settings_section_edit_mssp_config_json all_Tools={all_Tools} />
           )}
 

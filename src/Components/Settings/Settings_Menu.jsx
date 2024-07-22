@@ -11,8 +11,8 @@ function Settings_Menu({ setMenuSelector, MenuSelector }) {
       value: "UI Settings",
     },
     {
-      preview_name: "Modules paths",
-      value: "Modules paths",
+      preview_name: "Module paths",
+      value: "Module paths",
     },
     {
       preview_name: "Output Sample",

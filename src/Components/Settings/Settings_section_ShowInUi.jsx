@@ -125,7 +125,7 @@ False_action={handle_Cancel_Save_config}
                 <td className="setting_descriptions">
                 <p className='font-type-h4 Color-White mb-c'>UI Settings</p>
                 <p className='font-type-menu Color-White mb-a'>Module Display</p>
-                <p className='font-type-txt Color-Grey1 mb-b'>Turn off and on modules in the interfaceThis option will not hear about the test process.</p>
+                <p className='font-type-txt Color-Grey1 mb-b'>Turn off and on modules in the interface. This option will not interfere with the test process.</p>
                 {/* <p className='font-type-txt Color-Orange'> Caution: Incorrect....</p> */}
                 </td>
 
