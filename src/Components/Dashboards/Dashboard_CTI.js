@@ -1,5 +1,5 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type3_bar, PreviewBox_type1_number_no_filters ,PreviewBox_type6_list_box} from '../PreviewBoxes.js'
+import { PreviewBox_type3_bar, PreviewBox_type1_number_no_filters ,PreviewBox_type6_list_box,PreviewBox_type7_wide_bar,PreviewBox_type2_pie} from '../PreviewBoxes.js'
 
 import axios from 'axios';
 import GeneralContext from '../../Context.js';
@@ -13960,24 +13960,47 @@ function Dashboard_CTI({show_SideBar,set_show_SideBar,set_visblePage}) {
 
 
 
-
-
-const Trending_Tags =[
-  {name:"\tBlackMatter" , count:123},
-  {name:"\tDiskWriter" , count:58},
-  {name:"\tmalware_classification:malware-category=\"Botnet\"" , count:44},
-  {name:"\tAresLoader" , count:31},
-  {name:"\tGandCrab" , count:1323},
-  {name:"\tYellowCockatoo" , count:94},
-  {name:"AgentTesla" ,count:29},
-  {name:"Multi-factor Authentication (MFA)" , count:18},
-  {name:"C2" , count:46},
-  {name:"ClipBanker" , count:42},
- 
+const Tags =[
+  {name:"Fishing" , count:213},
+  {name:"globalC" , count:67},
+  {name:"Botnet" , count:8},
+  {name:"ClipBanker" , count:45},
+  {name:"Risx_BP" , count:23},
+  {name:"gsa-474" , count:23},
+  {name:"spacex" ,count:10},
+  {name:"fdr" , count:9},
+  {name:"mezo-nz" , count:9},
+  {name:"Csr" , count:2},
   ]
 
 
 
+const Trending_Tags =[
+  {name:"\tBlackMatter" , count:75},
+  {name:"\tDiskWriter" , count:65},
+  {name:"tmalware_Botnet" , count:44},
+  {name:"\tAresLoader" , count:45},
+  {name:"\tGandCrab" , count:23},
+  {name:"\tYellowCockatoo" , count:23},
+  {name:"AgentTesla" ,count:10},
+  {name:"Multi-factor-Authentication" , count:9},
+  {name:"C2" , count:2},
+  {name:"ClipBanker" , count:1},
+  ]
+
+
+  const misp_names =[
+    {name:"Sha1" , count:283},
+    {name:"md5" , count:164},
+    {name:"shh3-384" , count:28},
+    {name:"ssdeep" , count:21},
+    {name:"mine-types" , count:21},
+    {name:"tlsh" , count:9},
+    {name:"argentina-core" ,count:7},
+    {name:"MFA-base" , count:6},
+    {name:"Csr" , count:5},
+    {name:"imphash" , count:1},
+    ]
  
 
 
@@ -14002,18 +14025,37 @@ const Trending_Tags =[
 
 <div className='resource-group-top-boxes mb-c' >
  
-
-{/* <PreviewBox_type3_bar
-HeadLine="Trending Tags - Misp (*)"
-bar_numbers = {  Trending_Tags?.map(tag => tag?.count )  }
-bar_headlines = {  Trending_Tags?.map(tag => tag?.name )  }
+<PreviewBox_type3_bar
+HeadLine="MISP Attirbuttes Top 5 Tags (*)"
+ bar_numbers = { Tags?.slice(0, 5).map(item => item?.count ) }
+ bar_headlines =   { Tags?.slice(0, 5).map(item => item?.name ) }
 // bar_numbers = {[ "11","22","41","5"]}
 // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
 bar_title_legend = {"Count"}
 is_popup = {false}
 display_y_axis = {true}
 colors={"Basic"}
-/> */}
+/>
+
+<PreviewBox_type6_list_box
+HeadLine="MISP Attirbuttes Top10 Tags (*)"
+list_array_column1={{key:"name" ,previewName:"Tag Name"}}
+list_array_column2={{key:"count" ,previewName:"#"}}
+list_array = {Tags}
+is_popup = {false}
+is_tags= {true}
+/>
+
+<PreviewBox_type6_list_box
+HeadLine="MISP - Trending Tags (*)"
+list_array_column1={{key:"name" ,previewName:"Tag Name"}}
+list_array_column2={{key:"count" ,previewName:"#"}}
+list_array = {Trending_Tags}
+is_popup = {false}
+is_tags= {true}
+/>
+
+
 
 <PreviewBox_type1_number_no_filters
 HeadLine="Number of Results (*)"
@@ -14031,20 +14073,8 @@ display_this_value={"Overall Clients"}
 txt_color={""}
 />
 
-
-<PreviewBox_type6_list_box
-HeadLine="Trending Tags - Misp (*)"
-list_array_column1={{key:"name" ,previewName:"Name"}}
-list_array_column2={{key:"count" ,previewName:"Num"}}
-list_array = {Trending_Tags}
-is_popup = {false}
-is_tags= {true}
-/>
-
-
-
 <PreviewBox_type1_number_no_filters
-HeadLine="Number of Tags (*)"
+HeadLine="Number of sum attributes (*)"
 resource_type_id={null}
 BigNumber={14458}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={21}
@@ -14059,54 +14089,44 @@ display_this_value={"Overall Clients"}
 txt_color={""}
 />
 
+<PreviewBox_type7_wide_bar
+HeadLine="MISP Attirbuttes Top10 Categorys (*)"
+list_array_column1={{key:"name" ,previewName:"Category"}}
+list_array_column2={{key:"count" ,previewName:"#"}}
+list_array = {Trending_Tags}
+is_popup = {false}
+is_tags = {false}
+/>
 
-<PreviewBox_type1_number_no_filters
-HeadLine="Null (*)"
-resource_type_id={null}
-BigNumber={0}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-// SmallNumber={21}
-SmallNumberTxt={"Null"}
-StatusColor={"blue"}
-// date={"17-09-2024"}// date={format_date_type_a(last_updated?.Total) || "NA"}
-date={"NA"}
- is_popup={false}
-display_this={display_data_type}
-set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
-txt_color={""}
-/>
+
+
+<PreviewBox_type2_pie
+HeadLine="MISP Attirbuttes Top 5 Names (*)"
+// bar_numbers={["4","32","261","113" ]}
+bar_numbers={ misp_names?.slice(0, 5).map(item => item?.count ) }
+bar_headlines = { misp_names?.slice(0, 5).map(item => item?.name ) }
+bar_title_legend = {["total"]}
+is_popup = {false}
+colors={"Basic"} // Basic , Alert
  
-<PreviewBox_type1_number_no_filters
-HeadLine="Null (*)"
-resource_type_id={null}
-BigNumber={0}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-// SmallNumber={21}
-SmallNumberTxt={"Null"}
-StatusColor={"blue"}
-// date={"17-09-2024"}// date={format_date_type_a(last_updated?.Total) || "NA"}
-date={"NA"}
- is_popup={false}
-display_this={display_data_type}
-set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
-txt_color={""}
 />
- 
-<PreviewBox_type1_number_no_filters
-HeadLine="Null (*)"
-resource_type_id={null}
-BigNumber={0}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-// SmallNumber={21}
-SmallNumberTxt={"Null"}
-StatusColor={"blue"}
-// date={"17-09-2024"}// date={format_date_type_a(last_updated?.Total) || "NA"}
-date={"NA"}
- is_popup={false}
-display_this={display_data_type}
-set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
-txt_color={""}
+
+
+<PreviewBox_type6_list_box
+HeadLine="MISP Attirbuttes Top10 Names (*)"
+list_array_column1={{key:"name" ,previewName:"Name"}}
+list_array_column2={{key:"count" ,previewName:"#"}}
+list_array = {misp_names}
+is_popup = {false}
+is_tags = {false}
 />
+
+
+
+
+
+
+
  </div>
 
      <div>

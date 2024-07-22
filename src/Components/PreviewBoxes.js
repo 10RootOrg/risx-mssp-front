@@ -447,15 +447,31 @@ const  handle_click = () => {
     )
   }
 
-function PreviewBox_type2_pie({HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
+
+
+
+function PreviewBox_type2_pie({colors, HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
 }) {
  
    
   const  handle_click = () => {
+    if (set_display_this === undefined) {return}
     if(display_this === display_this_value){ set_display_this("prime_data")}
     else{ set_display_this(display_this_value)}
   }
     
+
+  const BasicColors = bar_numbers.map((item, index, array) => {
+    const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
+    return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
+  });
+
+  const AlertColors = [
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Red'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange-Red'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange'),
+    getComputedStyle(document.documentElement).getPropertyValue('--color-Yellow')
+  ];  
 
  
 
@@ -476,14 +492,11 @@ useEffect(() => {
     set_has_data(true);
   }
 }, [bar_numbers]);
-   
+
 
   
  
-  const backgroundColors = bar_numbers.map((item, index, array) => {
-    const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
-    return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
-  });
+
   
   const data ={
     // labels: ['Yes', 'No'],
@@ -494,10 +507,15 @@ useEffect(() => {
       // data: bar_numbers,
       // data: bar_numbers_zero,
       data:    has_data ? bar_numbers :  [1],
-
-  
-      
-      backgroundColor:backgroundColors,
+      backgroundColor: (() => {
+        if (colors == "Basic") {
+          return BasicColors;
+        } else if (colors == "Alert") {
+          return AlertColors;
+        } else {
+          return BasicColors; // default case
+        }
+      })(),
       borderWidth:0
       // style={{opacity:   (index +1) / all_Resource_Types.length   }} />
     }]
@@ -533,7 +551,12 @@ useEffect(() => {
   {Array.isArray(bar_headlines) && bar_headlines?.map((Info, index) => {
 return(
 <div className='display-flex' style={{marginRight:"auto"}} key={index}>
-<div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+{colors === "Basic" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+  }
+  {colors === "Alert" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
+  }
 <p className='   font-type-txt Color-White  ' >{Info} </p>
 </div>
 )
@@ -835,11 +858,11 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
                       <tr key={index}>
 
                         {is_tags ? (
-                         <td className='font-type-txt Color-Grey1 ' style={{ }}>{item[list_array_column1?.key]}</td>
+                         <td className='font-type-txt  font-type-txt   Color-Blue-Glow tagit_type1' style={{ }}>{item[list_array_column1?.key]}</td>
                         ):(
                        <td className='font-type-txt Color-Grey1 ' style={{ }}>{item[list_array_column1?.key]}</td>
                        ) }
-                        <td className='font-type-txt Color-Grey1 ' style={{textAlign:"right" ,paddingRight:"5px"}}>{item[list_array_column2?.key]}</td>
+                        <td className='font-type-txt Color-White ' style={{textAlign:"right" ,paddingRight:"5px"}}>{item[list_array_column2?.key]}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -850,6 +873,157 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
           );
       
         }
+
+
+
+
+        function PreviewBox_type7_wide_bar({ HeadLine, is_popup, enable_hover, list_array_column2, list_array_column1, list_array }) {
+          const handle_click = () => {
+            console.log("click on PreviewBox_type6_list_box");
+          };
+        
+          // Find the maximum value in the right column
+          const maxRightValue = Math.max(...list_array.map(item => item[list_array_column2?.key]));
+        
+          return (
+            <div
+              className={`PreviewBox ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`}
+              style={{ overflow: 'hidden' }}
+              onClick={handle_click}
+            >
+              <div className='PreviewBox_HeadLine'>
+                <p className="font-type-menu">{HeadLine}</p>
+              </div>
+        
+              <div className='table-container' style={{ height: 'calc(100% - 20px)', overflowY: 'auto' ,paddingRight:"var(--space-a)"}}>
+                <table style={{ width: '100%' }}>
+                  <thead style={{ position: 'sticky', top: 0, backgroundColor: 'var(--color-Grey5)', zIndex: 1 }}>
+                    <tr style={{ textAlign: 'left', height: "30px" }}>
+                      <th className='font-type-menu Color-Grey1' style={{  paddingRight: "var(--space-b)" }}>{list_array_column1?.previewName}</th>
+                      <th className='font-type-menu Color-Grey1' style={{ textAlign: "left",  paddingRight: "var(--space-a)" }}>{list_array_column2?.previewName}</th>
+                    </tr>
+                  </thead>
+                  <tbody style={{ overflowY: 'auto' }}>
+                    {list_array?.map((item, index) => {
+                      const rightValue = item[list_array_column2?.key];
+                      const barWidth = (rightValue / maxRightValue) * 100;
+        
+                      return (
+                        <tr key={index} >
+                          <td className='font-type-txt Color-Grey1' style={{ width: 'auto', paddingRight: "var(--space-b)" ,textWrap:"nowrap" }}>{item[list_array_column1?.key]}</td>
+                          <td className='font-type-txt Color-Grey1' style={{ width: '100%', textAlign: "left", paddingRight: "var(--space-a)" }}>
+                            <div className='font-type-txt Color-Blue-Glow like_tagit_for_wide_bar ' style={{ width: `${barWidth}%`, textAlign: 'left' }}>
+                              {/* {item[list_array_column1?.key]}  */}
+                              {/* Color-Blue-Glow tagit_type1 */}
+
+                              {rightValue}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        }
+        
+
+
+function PreviewBox_type8_time({
+  HeadLine,BigNumber,
+  SmallNumber,StatusColor,
+  date, 
+  is_popup,
+  txt_color,
+  display_this,
+  set_display_this,
+  display_this_value
+   
+  }) {
+  
+ 
+    
+    const [isHovered, setIsHovered] = useState(false);
+    const [is_Filtering, set_is_Filtering] = useState(false);
+  
+ 
+const  handle_click = () => {
+  if(display_this === display_this_value){ set_display_this("prime_data")}
+  else{ set_display_this(display_this_value)}
+}
+  
+  const handleHover = () => {
+    setIsHovered(true);
+  };
+  
+  const handleLeave = () => {
+    setIsHovered(false);
+  };
+  
+  const [showColon, setShowColon] = useState(true);
+ 
+  const [timeString, setTimeString] = useState(BigNumber);
+ 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowColon(prevShowColon => !prevShowColon);
+    }, 500); // Interval duration in milliseconds
+
+    return () => clearInterval(interval); // Cleanup function to clear interval
+  }, []);
+
+  // Update timeString whenever showColon changes
+  // useEffect(() => {
+  //   setTimeString(BigNumber.replace(':', showColon ? ':' : ''));
+  // }, [showColon, BigNumber]);
+
+
+
+
+    const StatusColorClass =
+    StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
+    StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
+    StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
+    StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+    StatusColor === 'red' ? 'Bg-Red' :
+    StatusColor === 'blue' ?'Bg-Blue-Glow' : 
+    StatusColor == '' ?  'Bg-Grey2' : 
+    StatusColor == undefined ?  'Bg-Grey2'  :
+    'Bg-Grey2'   ;
+   
+  
+    return (
+      <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
+        onClick={handle_click}
+        onMouseEnter={handleHover}
+        onMouseLeave={handleLeave}
+        > 
+      <div className='PreviewBox_HeadLine' >
+        <p  className="font-type-menu" >{HeadLine}</p>
+  
+   <div className={`${StatusColorClass}  light-bulb-type1`} style={{backgroundColor:  isHovered ? "#00DBFF" : (txt_color || "")}}/>
+   
+         </div> 
+  
+  
+      <div> 
+       
+      <div className='PreviewBox_BigNumber   PreviewBox_BigDate  font-type-h1 Color-White' style={{display:"flex", justifyContent:"center",  color: isHovered ? "#00DBFF" : (txt_color || ""),}}>{BigNumber?.slice(0,2)}  <p className="  " style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),  width:"14px" }}    >{showColon ? ":" : "  "}</p>{BigNumber?.slice(3,5)} </div>
+      <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),}}>{SmallNumber}</div>
+      </div>
+  
+       <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
+  
+       <IconLastRun />
+       <div className='font-type-very-sml-txt '>{date}</div>
+  
+       </div> {/*dont delete */}
+      </div>
+    )
+  }
+
 
 function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_this_tools, dont_show_this_tools2, set_dont_show_this_tools2}) {
  
@@ -1284,4 +1458,4 @@ disabled={disabled}
   )
 }
 
-export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box};
+export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time};

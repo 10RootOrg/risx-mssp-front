@@ -235,6 +235,7 @@ enable_hover={true}
 display_this={display_data_type}
 set_display_this={set_display_data_type}
 display_this_value={"prime_data"}
+colors={"Basic"} // Basic , Alert
 />
 
 <PreviewBox_type3_bar 

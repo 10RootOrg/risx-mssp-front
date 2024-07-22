@@ -103,7 +103,7 @@ function SideBar({
 
   const handleNewWindow = (dashboard_name) => {
     const url = make_url_from_id(dashboard_name, moduleLinks, front_IP);
-console.log("url 999999999999999", url);
+console.log("handleNewWindow url - ", url);
     if (url) {
       window.open(url, "_blank");
     }
@@ -253,21 +253,26 @@ console.log("url 999999999999999", url);
               <p className="font-type-menu " >Dashboards{visblePage.startsWith("dashboard")&&":"}</p>
 
               {visblePage.startsWith("dashboard") && (
-                <p className="  ml-a font-type-very-sml-txt "  style={{textAlign:"left"  }}>
-                  {/* : */}
-                  {
-  visblePage
-    .replace("dashboard-", "")
-    .replace("-", " ")
-    .split(" ")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
-}
+  <p className="ml-a font-type-very-sml-txt" style={{ textAlign: "left" }}>
+    {
+      visblePage
+        .replace("dashboard-", "")
+        .split("-")
+        .map((word, index) => {
+          if (index === 0 && word.length === 3) {
+            return word.toUpperCase();
+          }
+          return word
+            .split(" ")
+            .map(subWord => subWord.charAt(0).toUpperCase() + subWord.slice(1))
+            .join(" ");
+        })
+        .join(" ")
+    }
+  </p>
+)}
 
 
-
-                </p>
-              )}
             </div>
             <div className="btn-menu-icon-placeholder  ">
               {" "}
@@ -324,6 +329,20 @@ console.log("url 999999999999999", url);
               </div>
               <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
             </button>
+
+
+            <button
+              className="btn-menu"  onClick={() => handleClick("dashboard-asm")}   disabled={visblePage === "dashboard-asm"}>
+              <div className="display-flex">
+                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                <p className="font-type-menu ">ASM</p>
+              </div>
+              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
+            </button>
+
+
+
+
 
             <div  className="Bg-Grey2" style={{ width: "90%", height: "2px", borderRadius: "5px" ,marginLeft:"auto",marginRight:"auto", marginTop:"5px", marginBottom:"5px"   }}/>
 
