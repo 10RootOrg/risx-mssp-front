@@ -59,7 +59,7 @@ useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
                      <tbody  className="tbody_setting">  
                                     <tr >
                                     <td className="setting_descriptions setting_descriptions" >
-                                    <p className='font-type-menu Color-White  mb-a'  >Modules paths</p>
+                                    <p className='font-type-menu Color-White  mb-a'  >Module paths</p>
                                     <p className='font-type-txt Color-Grey1 '>The changes will be reflected after saving and re-entering</p>
                                     </td>
                                     {/* moduleLinks */}

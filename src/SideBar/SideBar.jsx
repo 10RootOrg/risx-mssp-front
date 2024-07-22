@@ -103,7 +103,7 @@ function SideBar({
 
   const handleNewWindow = (dashboard_name) => {
     const url = make_url_from_id(dashboard_name, moduleLinks, front_IP);
-
+console.log("url 999999999999999", url);
     if (url) {
       window.open(url, "_blank");
     }
@@ -330,7 +330,8 @@ function SideBar({
 
             <button
               className="btn-menu"
-              onClick={() => handleClick("dashboard-risx")}
+              // onClick={() => handleClick("dashboard-risx")}
+              onClick={() => handleNewWindow("dashboard-risx")}
               disabled={visblePage === "dashboard-risx"}
             >
               <div className="display-flex">
@@ -345,7 +346,7 @@ function SideBar({
                 style={{ scale: "0.95" }}
               >
                 {" "}
-                <IcoIframe />
+                <IcoLink />
               </div>
             </button>
 
@@ -353,7 +354,8 @@ function SideBar({
 
             <button
               className="btn-menu"
-              onClick={() => handleClick("dashboard-timesketch")}
+              onClick={() => handleNewWindow("dashboard-timesketch")}
+              // onClick={() => handleClick("dashboard-timesketch")}
               disabled={visblePage === "dashboard-timesketch"}
             >
               <div className="display-flex">
@@ -368,7 +370,7 @@ function SideBar({
                 style={{ scale: "0.95" }}
               >
                 {" "}
-                <IcoIframe />
+                <IcoLink />
               </div>
             </button>
 

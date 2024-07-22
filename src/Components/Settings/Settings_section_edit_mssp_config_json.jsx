@@ -58,7 +58,7 @@ function Settings_section_edit_mssp_config_json({
           <tbody className="tbody_setting">
             <tr>
               <td className="setting_descriptions setting_descriptions">
-              <p className="font-type-h4 Color-White mb-c">Modules paths</p>
+              <p className="font-type-h4 Color-White mb-c">Module paths</p>
                 <p className="font-type-menu Color-White  mb-b"> mssp_config.json </p>
                 <p className="font-type-txt Color-Grey1 mb-b">Configure the paths for each module according to your specific requirements.</p>
                 <p className="font-type-txt Color-Grey1  ">the page will automatically refresh to apply the changes.</p>
