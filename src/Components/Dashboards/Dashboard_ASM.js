@@ -18,6 +18,7 @@ function Dashboard_ASM({show_SideBar,set_show_SideBar,set_notification_number,se
     const [last_updated , set_last_updated] = useState({default:0})
     const [Status_Legend , set_Status_Legend] = useState({})
     const [counts, setCounts] = useState([]);
+    const [display_this, set_display_this] = useState("");
 
   // dont show sidebar in this page
     useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
@@ -45,7 +46,7 @@ function Dashboard_ASM({show_SideBar,set_show_SideBar,set_notification_number,se
 
 
 <PreviewBox_type2_pie
-HeadLine="Nuclei Last Run Distribution"
+HeadLine="Nuclei Last Run Distribution (*)"
 bar_numbers={["4","32","261","113" ]}
 bar_headlines = { ['Critical', 'High', 'Medium', 'Low'] }
 bar_title_legend = {["total"]}
@@ -75,9 +76,9 @@ SmallNumberTxt={"Nuclei"}
 StatusColor={"high"}
   date={"NA"}// date={format_date_type_a(last_updated?.Total) || "NA"}
 is_popup={false}
-// display_this={display_data_type}
-// set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
+display_this={display_this}
+set_display_this={set_display_this}
+display_this_value={""}
 txt_color={""}
 />
 
@@ -90,9 +91,9 @@ SmallNumberTxt={"Nuclei"}
 StatusColor={"Critical"}
   date={"NA"}// date={format_date_type_a(last_updated?.Total) || "NA"}
 is_popup={false}
-// display_this={display_data_type}
-// set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
+display_this={display_this}
+set_display_this={set_display_this}
+display_this_value={""}
 txt_color={""}
 />
 
@@ -105,9 +106,9 @@ SmallNumberTxt={"Nuclei"}
 StatusColor={"blue"}
   date={"NA"}// date={format_date_type_a(last_updated?.Total) || "NA"}
 is_popup={false}
-// display_this={display_data_type}
-// set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
+display_this={display_this}
+set_display_this={set_display_this}
+display_this_value={""}
 txt_color={""}
 />
 
