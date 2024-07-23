@@ -311,14 +311,21 @@ if (dateString) {
 }
 
     // Determine the class based on StatusColor
-    const StatusColorClass = Info?.resource_status
-    === 'red' ? 'Bg-Red' :
-                             Info?.resource_status
-                             === 'yellow' ? 'Bg-Yellow' :
-                             Info?.resource_status
-                             === 'green' ? 'Bg-Green' :
-                              
-                              'Bg-Grey2';
+const StatusColorClass = Info?.resource_status
+
+
+
+
+
+
+
+=== 'red' ? 'Bg-Red' :
+Info?.resource_status
+=== 'yellow' ? 'Bg-Yellow' :
+Info?.resource_status
+=== 'green' ? 'Bg-Green' :
+
+'Bg-Grey2';
   
     return (
       <div className='resource-group-list-line' key={index}

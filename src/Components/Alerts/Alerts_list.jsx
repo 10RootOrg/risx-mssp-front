@@ -13,7 +13,7 @@ import { ReactComponent as IconBIG } from '../icons/ico-menu-alert.svg';
   // Adjust the path as needed based on your project structure
  
  
-import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader } from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Alert_info,PopUp_loader } from '../PopUp_Smart.js'
 
  import LMloader from "../Features/LMloader.svg";
 //  import './Dashboard_Results_all.css'
@@ -28,23 +28,20 @@ function Alert_list({
 console.log("Preview_this_Results",Preview_this_Results);
 
 
-  const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
-  const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
-    HeadLine:"Success",
-    paragraph:"successfully",
+  const [PopUp_Alert_info__show, set_PopUp_Alert_info__show] = useState(false);
+  const [PopUp_Alert_info__txt, set_PopUp_Alert_info__txt] = useState({
+    HeadLine:"Alert",
+    description:"",
+    time:"",
+    severity:"",
     buttonTitle:"Close"
   });
 
 
-  const [PopUp_Request_info__show, set_PopUp_Request_info__show] = useState(false);
-  const [PopUp_Request_info__txt, set_PopUp_Request_info__txt] = useState({
-    HeadLine:"In process",
-    paragraph:"The request has been sent",
-    buttonTitle:"Close"
-  });
+
+  
 
 
- 
   const [PopUp_loader__show, set_PopUp_loader__show] = useState(false);
   const [sort_by, set_sort_by] = useState("StartDate");
   const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
@@ -53,8 +50,16 @@ console.log("Preview_this_Results",Preview_this_Results);
 
 const handle_click_result = (Info) =>{
 console.log("-------handle_click_result-------------",Info);
- 
 
+ set_PopUp_Alert_info__txt ({
+  HeadLine:"Alert Name",
+  description:Info?.description,
+  time:"14:22 23.7.2024",
+  severity:Info?.severity,
+  buttonTitle:"Close"
+});
+
+set_PopUp_Alert_info__show(true)
 }
 
  
@@ -62,9 +67,7 @@ console.log("-------handle_click_result-------------",Info);
 
 
 const do_sort = (column) => {
-
 console.log("sort this column: " , column);
-
   if (!column) {
     console.log("Can't sort ", column);
     return;
@@ -114,31 +117,18 @@ if (Preview_this_Results?.length >=2&&firstTimeData ) {
  
 
 
+{PopUp_Alert_info__show &&
+ <PopUp_Alert_info
+ popUp_show={PopUp_Alert_info__show}
+ set_popUp_show={set_PopUp_Alert_info__show}
 
-{/* PopUp_Request_info__show */}
-
-{PopUp_Request_info__show &&
- <PopUp_Request_info
- popUp_show={PopUp_Request_info__show}
- set_popUp_show={set_PopUp_Request_info__show}
- HeadLine={PopUp_Request_info__txt.HeadLine}
- paragraph={PopUp_Request_info__txt.paragraph} 
-buttonTitle={PopUp_Request_info__txt.buttonTitle}
- /> 
- }
-
-
-{PopUp_All_Good__show &&
- <PopUp_All_Good
- popUp_show={PopUp_All_Good__show}
- set_popUp_show={set_PopUp_All_Good__show}
- HeadLine={PopUp_All_Good__txt.HeadLine}
- paragraph={PopUp_All_Good__txt.paragraph} 
-buttonTitle={PopUp_All_Good__txt.buttonTitle}
- /> 
- }
+ HeadLine={PopUp_Alert_info__txt.HeadLine}
+ description={PopUp_Alert_info__txt.description} 
+ severity={PopUp_Alert_info__txt.severity}
+ time={PopUp_Alert_info__txt.time} 
  
-
+buttonTitle={PopUp_Alert_info__txt.buttonTitle}
+ /> }
 
 
 
@@ -149,13 +139,10 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
  <ResourceGroup_Action_btns
   items_for_search={Preview_this_Results}
   set_items_for_search={set_Preview_this_Results}
-
   set_is_search={set_is_search}
-
   btn_add_single_show={false}
   // btn_add_single_action={add_resource_item}
   // btn_add_single_value={"add"}
-
   btn_add_many_show={false}
   // btn_add_many_action={}
 
@@ -193,26 +180,48 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   {Array.isArray(Preview_this_Results) && Preview_this_Results?.map((Info, index) => {
     console.log("Info?.Response?.success ", Info?.Response?.success);
 
- const StatusColorClass =
+
+
+
+    // const AlertColors = [
+    //   getComputedStyle(document.documentElement).getPropertyValue('--alert-color-critical'),
+    //   getComputedStyle(document.documentElement).getPropertyValue('--alert-color-high'),
+    //       getComputedStyle(document.documentElement).getPropertyValue('--alert-color-medium'),
+    //       getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
+    //     ];  
+      
+
+
+
+
+
+ const AlertColors =
 
 Info?.severity?.toLowerCase()
-=== 'critical' ? 'Bg-Red' :
+=== 'critical' ? 'alert-bg-color-critical' :
 
 Info?.severity?.toLowerCase()
-=== 'high' ? 'Bg-Orange-Red' :
+=== 'high' ? 'alert-bg-color-high' :
 
 Info?.severity?.toLowerCase()
-=== 'medium' ? 'Bg-Orange' :
+=== 'medium' ? 'alert-bg-color-medium' :
 
 Info?.severity?.toLowerCase()
-=== 'low' ? 'Bg-Yellow' :
+=== 'low' ? 'alert-bg-color-low' :
 
 Info?.severity?.toLowerCase()
-=== 'green' ? 'Bg-Green' :
+=== 'all-good' ? 'alert-bg-color-no-alert' :
 
-'Bg-Grey2';
+'alert-bg-color-none';
 
 
+// .alert-bg-color-low{background-color:var(--alert-color-low)}
+// .alert-bg-color-medium{background-color:var(--alert-color-medium)}
+// .alert-bg-color-high{background-color:var(--alert-color-high)}
+// .alert-bg-color-critical{background-color:var(--alert-color-critical)}
+
+// .alert-bg-color-none{background-color:var(--alert-color-no-alert)}
+// .alert-bg-color-no-alert{background-color:var(--alert-color-none)}
 
 
     return (
@@ -227,9 +236,9 @@ Info?.severity?.toLowerCase()
 
  <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-b '>{ Info?.description }</p> 
 {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1 list-item-biggest'>{ JSON.stringify(Info?.Response?.result) }</p>  */}
-<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.severity}</p> 
+<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.severity ? Info?.severity : <span className="alert-color-medium">No Description</span>} </p> 
 
-<div className='resource-group-list-item   list-item-status-color '> <div className={`${StatusColorClass}  light-bulb-type1`} style={{marginLeft:"auto", marginRight:"auto"}}/></div>
+<div className='resource-group-list-item   list-item-status-color '> <div className={`${AlertColors}  light-bulb-type1`} style={{marginLeft:"auto", marginRight:"auto"}}/></div>
 
 {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.Response?.quota}</p>  */}
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.date}</p>

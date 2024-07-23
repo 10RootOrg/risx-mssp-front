@@ -79,6 +79,17 @@
   --color-Orange: rgb(255, 170, 0); 
   --color-Yellow: rgb(255, 255, 0); 
   --color-Green: #00FF00; 
+
+
+--alert-color-critical:var(--color-Red);
+--alert-color-high:var(--color-Orange-Red);
+--alert-color-medium:var(--color-Orange);
+--alert-color-low:var(--color-Yellow);
+--alert-color-no-alert:var(--color-Green);
+--alert-color-none:var(--color-Grey2);
+
+
+
   --popups-round-corner: 30px;
   --boxes-round-corner: 15px;
   --elemtns-round-corner-medium: 6px;
@@ -133,6 +144,21 @@
 .Bg-Blue-Hover-Real{background-color:var(--color-DB-Blue-Hover-Real)}
 .Bg-Blue-Hover{background-color:var(--color-DB-Blue-Hover)}
  
+
+
+.alert-bg-color-low{background-color:var(--alert-color-low)}
+.alert-bg-color-medium{background-color:var(--alert-color-medium)}
+.alert-bg-color-high{background-color:var(--alert-color-high)}
+.alert-bg-color-critical{background-color:var(--alert-color-critical)}
+.alert-bg-color-none{background-color:var(--alert-color-none)}
+.alert-bg-color-no-alert{background-color:var(--alert-color-no-alert)}
+
+.alert-color-low{color:var(--alert-color-low)}
+.alert-color-medium{color:var(--alert-color-medium)}
+.alert-color-high{color:var(--alert-color-high)}
+.alert-color-critical{color:var(--alert-color-critical)}
+.alert-color-none{color:var(--alert-color-none)}
+.alert-color-no-alert{color:var(--alert-color-no-alert)}
 
 
 p{color: var(--color-White);
