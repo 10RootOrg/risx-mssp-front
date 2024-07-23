@@ -7,6 +7,7 @@ import {
 
 import axios from "axios";
 import GeneralContext from "../../Context.js";
+import { format_date_type_a } from "../Features/DateFormat.js";
 
 function Dashboard_Forensics({
   show_SideBar,
@@ -19,7 +20,23 @@ function Dashboard_Forensics({
   // const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
   const [display_data_type, set_display_data_type] = useState("");
   const [DashBoardData, setDashBoardData] = useState({});
-
+  const [TimeOfHostCheck, setTimeOfHostCheck] = useState("N/A");
+  const get_config = async () => {
+    if (backEndURL === undefined) {
+      return;
+    }
+    try {
+      const res = await axios.get(`${backEndURL}/config`);
+      if (res) {
+        console.log("iiiiiiiiii", res.data);
+      }
+      setTimeOfHostCheck(
+        res.data?.General?.IntervalConfigurations?.GetDashboardsDataInHours
+      );
+    } catch (err) {
+      console.log("errrrrrrrrrrrrrrrrrrrrr", err);
+    }
+  };
   async function GetData() {
     try {
       const res = await axios.get(backEndURL + "/dashboard/Forensics");
@@ -27,6 +44,24 @@ function Dashboard_Forensics({
         "ssssssssssssaaaaaaaaaaaaaaaaaawwwwwwwwwwwwwwwwwwwwwwwwww",
         res.data
       );
+      res?.data?.Velociraptor?.RecentHosts.forEach((x) => {
+        console.log(
+          "format_date_type_a(x.LastSeen)",
+          format_date_type_a(x.LastSeen),
+          "ssssssssssss",
+          x.LastSeen
+        );
+        x.LastSeen = format_date_type_a(x.LastSeen);
+      });
+      res?.data?.Velociraptor?.NewUsers.forEach((x) => {
+        console.log(
+          "format_date_type_a(x.FirstSeen)",
+          format_date_type_a(x.FirstSeen),
+          "FirstSeen",
+          x.FirstSeen
+        );
+        x.FirstSeen = format_date_type_a(x.FirstSeen);
+      });
       setDashBoardData(res.data);
     } catch (error) {
       console.log("Error in Get Data OF dashboard");
@@ -42,6 +77,7 @@ function Dashboard_Forensics({
 
   useEffect(() => {
     if (backEndURL) {
+      get_config();
       GetData();
     }
   }, [backEndURL]);
@@ -82,7 +118,7 @@ function Dashboard_Forensics({
             // SmallNumber={682 }
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}
-            date={"17-09-2024"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
             display_this={display_data_type}
             set_display_this={set_display_data_type}
@@ -97,7 +133,7 @@ function Dashboard_Forensics({
             // SmallNumber={234 }
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}
-            date={"17-09-2024"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
             display_this={display_data_type}
             set_display_this={set_display_data_type}
@@ -112,7 +148,7 @@ function Dashboard_Forensics({
             // SmallNumber={21}
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}
-            date={"17-09-2024"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
             display_this={display_data_type}
             set_display_this={set_display_data_type}
@@ -134,11 +170,17 @@ function Dashboard_Forensics({
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
-
           <PreviewBox_type6_list_box
-            HeadLine="Recent Hosts  no"
-            list_array_column1={{ key: "name", previewName: "Name" }}
-            list_array_column2={{ key: "date", previewName: "Date" }}
+            HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
+            list_array_column1={{ key: "Hostname", previewName: "Name" }}
+            list_array_column2={{ key: "FirstSeen", previewName: "Date" }}
+            list_array={DashBoardData?.Velociraptor?.NewUsers}
+            is_popup={false}
+          />
+          <PreviewBox_type6_list_box
+            HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
+            list_array_column1={{ key: "Hostname", previewName: "Name" }}
+            list_array_column2={{ key: "LastSeen", previewName: "Date" }}
             list_array={DashBoardData?.Velociraptor?.RecentHosts}
             is_popup={false}
           />
