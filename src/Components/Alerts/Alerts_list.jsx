@@ -23,7 +23,8 @@ function Alert_list({
   loader
   }) {
     const {  backEndURL ,all_Tools ,front_IP} = useContext(GeneralContext);
- 
+    const [is_search, set_is_search] = useState(false);
+
 console.log("Preview_this_Results",Preview_this_Results);
 
 
@@ -149,6 +150,8 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   items_for_search={Preview_this_Results}
   set_items_for_search={set_Preview_this_Results}
 
+  set_is_search={set_is_search}
+
   btn_add_single_show={false}
   // btn_add_single_action={add_resource_item}
   // btn_add_single_value={"add"}
@@ -173,18 +176,50 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   <>
 <div className='resource-group-list-keyNames mb-a  '  >
 
-             <div className='resource-group-list-item   list-item-big ml-b'>                                                    <p className='font-type-menu  no-underline Color-Grey1 '>Description</p></div>
-             {/* <div className='resource-group-list-item list-item-biggest' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div> */}
-             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("LastIntervalDate")}>             <p className='font-type-menu  make-underline Color-Grey1 '>Severity</p></div>
+             <div className='resource-group-list-item   list-item-big ml-b' onClick={() => do_sort("description")}>     <p className='font-type-menu  make-underline Color-Grey1 '>Description</p></div>
+             {/* <div className='resource-group-list-item list-item-biggest' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  no-underline Color-Grey1'>Start Date</p></div> */}
+             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("severity")}>             <p className='font-type-menu  make-underline Color-Grey1 '>Severity</p></div>
              {/* <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Quota</p></div> */}
-             <div className='resource-group-list-item list-item-small ' onClick={() => do_sort("Status")}  style={{ marginRight: "25px"}}>   <p className='font-type-menu  make-underline Color-Grey1 '>Date</p></div>
+
+             
+
+             <div className='resource-group-list-item list-item-status-color' onClick={() => do_sort("severity")}  style={{textAlign:"center" }}> <p className='font-type-menu  make-underline Color-Grey1 ' >Color</p></div>
+
+             <div className='resource-group-list-item list-item-small ' onClick={() => do_sort("date")}  style={{ marginRight: "25px"}}>   <p className='font-type-menu  make-underline Color-Grey1 '>Date</p></div>
 </div>
 
 <div className='resource-group-list-box mb-c' >
 
   {Array.isArray(Preview_this_Results) && Preview_this_Results?.map((Info, index) => {
     console.log("Info?.Response?.success ", Info?.Response?.success);
+
+ const StatusColorClass =
+
+Info?.severity?.toLowerCase()
+=== 'critical' ? 'Bg-Red' :
+
+Info?.severity?.toLowerCase()
+=== 'high' ? 'Bg-Orange-Red' :
+
+Info?.severity?.toLowerCase()
+=== 'medium' ? 'Bg-Orange' :
+
+Info?.severity?.toLowerCase()
+=== 'low' ? 'Bg-Yellow' :
+
+Info?.severity?.toLowerCase()
+=== 'green' ? 'Bg-Green' :
+
+'Bg-Grey2';
+
+
+
+
     return (
+
+
+
+      
 <div className='resource-group-list-line' key={index} onClick={()=>handle_click_result(Info)}>
 
 {/* <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big   '>{ JSON.stringify(Info?.Arguments) }</p>  */}
@@ -193,8 +228,12 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
  <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-b '>{ Info?.description }</p> 
 {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1 list-item-biggest'>{ JSON.stringify(Info?.Response?.result) }</p>  */}
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.severity}</p> 
+
+<div className='resource-group-list-item   list-item-status-color '> <div className={`${StatusColorClass}  light-bulb-type1`} style={{marginLeft:"auto", marginRight:"auto"}}/></div>
+
 {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.Response?.quota}</p>  */}
-<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.date}</p> 
+<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.date}</p>
+ {/* list-item-last  */}
 
 </div>
  
