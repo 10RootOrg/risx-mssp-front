@@ -3,6 +3,7 @@ import {
   PreviewBox_type3_bar,
   PreviewBox_type1_number_no_filters,
   PreviewBox_type6_list_box,
+  PreviewBox_type2_pie
 } from "../PreviewBoxes.js";
 
 import axios from "axios";
@@ -96,52 +97,22 @@ function Dashboard_Forensics({
         </div>
 
         <div className="resource-group-top-boxes mb-c">
-          <PreviewBox_type3_bar
-            HeadLine="Hunts Distribution"
-            // bar_numbers = { counts?.map(item => Object.values(item) ) }
-            // bar_headlines = {  counts?.map(item => Object.keys(item) )  }
-            bar_numbers={[
-              DashBoardData?.Velociraptor?.FinishedHunts,
-              DashBoardData?.Velociraptor?.UnfinishedHunts,
-            ]}
-            bar_headlines={["Completed", "Uncompleted"]}
-            // bar_title_legend = {"Velociraptor"}
-            is_popup={false}
-            display_y_axis={true}
-            colors={"Basic"}
-          />
 
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Overall Clients "
-            resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.NumberOfClients} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={682 }
-            SmallNumberTxt={"Velociraptor"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
+<PreviewBox_type2_pie
+HeadLine="Hunts Distribution"
+// bar_numbers={["4","32","261","113" ]}
+bar_numbers={[
+DashBoardData?.Velociraptor?.FinishedHunts,
+DashBoardData?.Velociraptor?.UnfinishedHunts,
+]}
+bar_headlines={["Completed", "Uncompleted"]}
+// bar_headlines = { misp_names?.slice(0, 5).map(item => item?.name ) }
+// bar_title_legend = {["total"]}
+is_popup = {false}
+colors={"Basic"} // Basic , Alert
 
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Connected Clients "
-            resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.NumberOfConnectedClients} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={234 }
-            SmallNumberTxt={"Velociraptor"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
-
-          <PreviewBox_type1_number_no_filters
+/>
+<PreviewBox_type1_number_no_filters
             HeadLine="Uncompleted Hunts "
             resource_type_id={null}
             BigNumber={DashBoardData?.Velociraptor?.UnfinishedHunts} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
@@ -170,6 +141,81 @@ function Dashboard_Forensics({
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
+
+          {/* <PreviewBox_type3_bar
+            HeadLine="Hunts Distribution"
+            // bar_numbers = { counts?.map(item => Object.values(item) ) }
+            // bar_headlines = {  counts?.map(item => Object.keys(item) )  }
+            bar_numbers={[
+              DashBoardData?.Velociraptor?.FinishedHunts,
+              DashBoardData?.Velociraptor?.UnfinishedHunts,
+            ]}
+            bar_headlines={["Completed", "Uncompleted"]}
+            // bar_title_legend = {"Velociraptor"}
+            is_popup={false}
+            display_y_axis={true}
+            colors={"Basic"}
+          /> */}
+
+{/* all = 10
+connected =3 */}
+
+<PreviewBox_type2_pie
+HeadLine="Connected from Overall Clients"
+// bar_numbers={["4","32","261","113" ]}
+bar_numbers={[
+  `${DashBoardData?.Velociraptor?.NumberOfConnectedClients}`,`${DashBoardData?.Velociraptor?.NumberOfClients - DashBoardData?.Velociraptor?.NumberOfConnectedClients}` 
+]}
+bar_headlines={["Connected", "UnConnected"]}
+// bar_headlines = { misp_names?.slice(0, 5).map(item => item?.name ) }
+// bar_title_legend = {["total"]}
+is_popup = {false}
+colors={"Basic"} // Basic , Alert
+
+/>
+
+
+
+
+
+          <PreviewBox_type1_number_no_filters
+            HeadLine="Overall Clients "
+            resource_type_id={null}
+            BigNumber={DashBoardData?.Velociraptor?.NumberOfClients} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            // SmallNumber={682 }
+            SmallNumberTxt={"Velociraptor"}
+            StatusColor={"blue"}
+            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+            is_popup={false}
+            display_this={display_data_type}
+            set_display_this={set_display_data_type}
+            display_this_value={"Overall Clients"}
+            txt_color={""}
+          />
+
+
+
+
+
+
+
+
+          <PreviewBox_type1_number_no_filters
+            HeadLine="Connected Clients "
+            resource_type_id={null}
+            BigNumber={DashBoardData?.Velociraptor?.NumberOfConnectedClients} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            // SmallNumber={234 }
+            SmallNumberTxt={"Velociraptor"}
+            StatusColor={"blue"}
+            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+            is_popup={false}
+            display_this={display_data_type}
+            set_display_this={set_display_data_type}
+            display_this_value={"Overall Clients"}
+            txt_color={""}
+          />
+
+    
           <PreviewBox_type6_list_box
             HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
             list_array_column1={{ key: "Hostname", previewName: "Name" }}

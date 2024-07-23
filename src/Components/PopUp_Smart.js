@@ -8,6 +8,7 @@ import {ReactComponent as SuccessIcon} from '../Components/icons/General-icons-s
 import {ReactComponent as UnderConstruction} from '../Components/icons/General-icons-code.svg';
  import {ReactComponent as  CarefulIcon} from '../Components/icons/General-icons-careful.svg';
  import {ReactComponent as  InfofulIcon} from '../Components/icons/General-icons-info.svg';
+ import {ReactComponent as  AlertInfo} from '../Components/icons/General-icons-alert.svg';
  import { ReactComponent as Loader } from '../Components/icons/loader_typea.svg';
  
 // import jsonData from '../tmpjsons/Nuclei.json'
@@ -142,6 +143,112 @@ alt="Icon" width="100px" height="70px"    style={{ marginLeft:"-15px" }}
               
 <p className="font-type-h4 Color-White mb-a">{HeadLine}</p>
 <p  className="font-type-txt  reading-height Color-White"  >{paragraph}</p>
+    
+
+ <div className='display-flex mt-c' style={{  }}>
+    <button className="btn-type2   '" style={{ marginLeft:"auto" }} onClick={handleClose} ><p className='font-type-menu '>{buttonTitle}</p>  </button> 
+ 
+  </div>
+
+
+
+            
+          
+          </div>
+        </div>)}
+  
+    </>
+  );
+}
+
+export const PopUp_Alert_info = (props) => {
+  const { HeadLine, description  ,time ,popUp_show, set_popUp_show  ,buttonTitle    ,severity } = props;
+  const [active, setActive] = useState(false);
+  const [AlertColors, set_AlertColors] = useState(false);
+
+  useEffect(() => {
+
+
+ 
+
+    switch (severity.toLowerCase()) {
+      case 'critical':set_AlertColors('alert-bg-color-critical');  break;
+      case 'high':set_AlertColors('alert-bg-color-high');  break;
+      case 'medium':set_AlertColors('alert-bg-color-medium');  break;
+      case 'low':set_AlertColors('alert-bg-color-low');  break;
+      case 'all-good':set_AlertColors('alert-bg-color-none');  break;
+
+      default:
+        set_AlertColors('alert-bg-color-no-alert');  break;
+    }
+    
+
+  }, [severity]);
+
+
+
+
+  useEffect(() => {
+    set_popUp_show(popUp_show)
+  }, [popUp_show]);
+
+  useEffect(() => {
+    if (popUp_show) {
+        setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+    }
+  }, [popUp_show]);
+
+
+  function handleClickOutside(e) {
+    if (e.target.className === 'PopUp-background') {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+    }
+  }
+
+  function handleClose() {
+    setActive(false); // Trigger exit animation
+    setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+  }
+
+
+
+
+  return (
+    <>
+ 
+
+
+{popUp_show && (
+        <div className={`PopUp-background`} onClick={handleClickOutside}>
+          
+          <div className={`PopUp-content  ${active ? 'popup-enter-active' : 'popup-enter'}`} style={{   width:"350px" ,paddingBottom:" "}}>
+
+<div className="display-flex justify-content-end  " style={{marginRight:"-40px"  }}>
+<button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
+</div>
+
+
+<div style={{position:"relative"}}>
+<div className={`${AlertColors}   light-bulb-type1`}
+ style={{
+  // marginLeft:"auto", marginRight:"auto"
+ left:"44px",
+ top:'1px',
+position:"absolute"
+ }}
+ />
+<AlertInfo className="mb-a "
+alt="Icon" width="48px" height="70px"    style={{ marginLeft:" " }}
+/>
+ </div>             
+<p className="font-type-h4 Color-White mb-a">{HeadLine}</p>
+
+<p  className="font-type-txt  reading-height Color-Grey1"  ><span className="font-type-menu reading-height Color-White mr-a" >Description:</span>{description}</p>
+
+<p  className="font-type-txt  reading-height Color-Grey1"  ><span className="font-type-menu reading-height Color-White mr-a" >Time:</span>{time}</p>
+
+
     
 
  <div className='display-flex mt-c' style={{  }}>

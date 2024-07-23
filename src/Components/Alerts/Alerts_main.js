@@ -29,7 +29,7 @@ function Alerts_main({show_SideBar,set_show_SideBar,set_visblePage}) {
       },
       { 
         description: "Data Exfiltration Detected", 
-        severity: "High", 
+        severity: "Low", 
         date: "Fri Oct 18 2024 11:55:29 GMT+0300 (Israel Daylight Time)" 
       },
       { 
@@ -87,10 +87,12 @@ SmallNumberTxt={"Total"}
 StatusColor={"blue"}
   date={"NA"}// date={format_date_type_a(last_updated?.Total) || "NA"}
 is_popup={false}
+txt_color={""}
 display_this={display_this}
 set_display_this={set_display_this}
 display_this_value={""}
-txt_color={""}
+
+
 />
 
 <PreviewBox_type1_number_no_filters
@@ -102,6 +104,7 @@ SmallNumberTxt={"Total"}
 StatusColor={"blue"}
   date={"NA"}// date={format_date_type_a(last_updated?.Total) || "NA"}
 is_popup={false}
+
 display_this={display_this}
 set_display_this={set_display_this}
 display_this_value={""}

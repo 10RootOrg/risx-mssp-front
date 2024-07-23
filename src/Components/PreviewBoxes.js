@@ -466,12 +466,12 @@ function PreviewBox_type2_pie({colors, HeadLine , bar_numbers, bar_headlines, ba
     return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
   });
 
-  const AlertColors = [
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Red'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange-Red'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Yellow')
-  ];  
+const AlertColors = [
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-critical'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-high'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-medium'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
+];  
 
  
 
@@ -593,12 +593,13 @@ function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_
     return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
   });
  
-  const AlertColors = [
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Red'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange-Red'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Orange'),
-    getComputedStyle(document.documentElement).getPropertyValue('--color-Yellow')
-  ];  
+const AlertColors = [
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-critical'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-high'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-medium'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
+];  
+
 
 
     
