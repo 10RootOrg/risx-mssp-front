@@ -100,8 +100,11 @@ function Dashboard_Forensics({
             HeadLine="Hunts Distribution"
             // bar_numbers = { counts?.map(item => Object.values(item) ) }
             // bar_headlines = {  counts?.map(item => Object.keys(item) )  }
-            bar_numbers={["2","443","26","51" ]}
-            bar_headlines = { ['Critical', 'High', 'Medium', 'Low'] }
+            bar_numbers={[
+              DashBoardData?.Velociraptor?.FinishedHunts,
+              DashBoardData?.Velociraptor?.UnfinishedHunts,
+            ]}
+            bar_headlines={["Completed", "Uncompleted"]}
             // bar_title_legend = {"Velociraptor"}
             is_popup={false}
             display_y_axis={true}
