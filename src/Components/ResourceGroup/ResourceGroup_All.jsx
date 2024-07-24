@@ -369,7 +369,7 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
   </p>
   
   <p className={`font-type-txt Color-Grey1 ml-b`} style={{ width: "60%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
-    Description
+    {/* Description */}
   </p>
   
   <p className={`font-type-menu Color-Grey1 ml-b`} style={{ width: "5%",textAlign:"center" }}>
@@ -405,7 +405,7 @@ return (
   </p>
   
   <p className={`font-type-txt Color-Grey1 ml-b`} style={{ width: "60%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
-    {Info?.description_short}
+    {/* {Info?.description_short} */}
   </p>
   
   <p className={`font-type-menu Color-Grey1 ml-b`} style={{ width: "5%" ,textAlign:"center"}}>

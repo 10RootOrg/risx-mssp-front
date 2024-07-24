@@ -4,37 +4,32 @@ import {
   PreviewBox_type3_bar,
   PreviewBox_type4_legend2,
 } from "../PreviewBoxes.js";
-import Results_list from "./Results_list.jsx";
-
-import { ReactComponent as IconSearch } from "../icons/ico-search.svg";
+// import Results_list from "./Results_list.jsx";
 import axios from "axios";
 import "./../ResourceGroup/ResourceGroup.css";
 import GeneralContext from "../../Context.js";
 
-import {
-  format_date_type_a,
-  format_date_type_c,
-} from "../Features/DateFormat.js";
+// import { format_date_type_a,  format_date_type_c,} from "../Features/DateFormat.js";
 
 function Dashboard_Threat_Hunting({
   show_SideBar,
   set_show_SideBar,
-  set_unseen_alert_number,
   set_visblePage,
 }) {
   set_visblePage("dashboard-threat-hunting");
 
-  const { backEndURL, all_Resource_Types, all_artifacts, user_id } =
-    useContext(GeneralContext);
+  const { backEndURL, all_Resource_Types, all_artifacts, user_id } = useContext(GeneralContext);
+  const [display_this, set_display_this] = useState("");
+  
   const [Preview_this_Results, set_Preview_this_Results] = useState([]);
-  const [filter_Resource, set_filter_Resource] = useState({
-    type_ids: [],
-    tool_ids: [],
-  });
-  const [loader, set_loader] = useState(false);
-  const [last_updated, set_last_updated] = useState({ default: 0 });
-  const [Status_Legend, set_Status_Legend] = useState({});
-  const [counts, setCounts] = useState([]);
+  // const [filter_Resource, set_filter_Resource] = useState({
+  //   type_ids: [],
+  //   tool_ids: [],
+  // });
+  // const [loader, set_loader] = useState(false);
+  // const [last_updated, set_last_updated] = useState({ default: 0 });
+  // const [Status_Legend, set_Status_Legend] = useState({});
+  // const [counts, setCounts] = useState([]);
 
   // dont show sidebar in this page
   useEffect(() => {
@@ -71,8 +66,8 @@ function Dashboard_Threat_Hunting({
             StatusColor={"high"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
-            // display_this={display_data_type}
-            // set_display_this={set_display_data_type}
+            display_this={display_this} 
+            set_display_this={set_display_this}
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
@@ -86,8 +81,8 @@ function Dashboard_Threat_Hunting({
             StatusColor={"critical"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
-            // display_this={display_data_type}
-            // set_display_this={set_display_data_type}
+            display_this={display_this} 
+            set_display_this={set_display_this}
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
@@ -101,8 +96,8 @@ function Dashboard_Threat_Hunting({
             StatusColor={"high"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
-            // display_this={display_data_type}
-            // set_display_this={set_display_data_type}
+            display_this={display_this} 
+            set_display_this={set_display_this}
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
@@ -116,8 +111,8 @@ function Dashboard_Threat_Hunting({
             StatusColor={"critical"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
-            // display_this={display_data_type}
-            // set_display_this={set_display_data_type}
+            display_this={display_this} 
+            set_display_this={set_display_this}
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
@@ -131,8 +126,8 @@ function Dashboard_Threat_Hunting({
             StatusColor={"blue"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
-            // display_this={display_data_type}
-            // set_display_this={set_display_data_type}
+            display_this={display_this} 
+            set_display_this={set_display_this}
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
