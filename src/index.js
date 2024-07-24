@@ -34,7 +34,7 @@ export default function App() {
 
   const [visblePage, set_visblePage]  = useState(localStorage.getItem('visiblePage') || 'Modules');
   const [show_SideBar, set_show_SideBar] = useState(false)
-  const [notification_number, set_notification_number] = useState(0);
+  const [unseen_alert_number, set_unseen_alert_number] = useState(0);
   const [isMainProcessWork, set_isMainProcessWork] = useState(false);
   // const {  backEndURL } = useContext(GeneralContext);
 
@@ -49,7 +49,7 @@ export default function App() {
       <ContextProvider> 
          <BrowserRouter>
 
-    {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}   notification_number={notification_number} set_notification_number={set_notification_number} isMainProcessWork={isMainProcessWork} />  }
+    {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}   unseen_alert_number={unseen_alert_number} set_unseen_alert_number={set_unseen_alert_number} isMainProcessWork={isMainProcessWork} />  }
 
    {visblePage != "login"  && < Constantfunctions  isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork} /> } 
   
@@ -58,11 +58,11 @@ export default function App() {
            <Route path="/" element={<Navigate replace to="/login" />} />
           <Route path="login"               element={<Login              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}/>} />
           <Route path="assets"              element={<ResourceGroup      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
-          <Route path="Modules"             element={<Modules            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
-          <Route path="alerts"              element={<Alerts             show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} notification_number={notification_number} />} />
+          <Route path="Modules"             element={<Modules            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} />
+          <Route path="alerts"              element={<Alerts             show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} />
 
           
-          <Route path="dashboard-general"        element={<DashboardResults         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   set_notification_number={set_notification_number}     />} />
+          <Route path="dashboard-general"        element={<DashboardResults         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    />} />
           <Route path="dashboard-risx"           element={<DashboardRisx            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-timesketch"     element={<DashboardTimesketch      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-forensics"      element={<Dashboard_Forensics      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
@@ -71,8 +71,8 @@ export default function App() {
           <Route path="dashboard-asm"            element={<Dashboard_ASM            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
 
 
-          <Route path="settings"            element={<Settings           show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
-          <Route path="users"               element={<Users              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_notification_number={set_notification_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
+          <Route path="settings"            element={<Settings           show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_unseen_alert_number={set_unseen_alert_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
+          <Route path="users"               element={<Users              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_unseen_alert_number={set_unseen_alert_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
       
           <Route path="TestPage"     element={<TestPage />} />   
           <Route path='*' element={<NoPage404/> }/>

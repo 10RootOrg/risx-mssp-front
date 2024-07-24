@@ -270,6 +270,7 @@ alt="Icon" width="48px" height="70px"    style={{ marginLeft:" " }}
 export const PopUp_Are_You_Sure = (props) => {
   const { HeadLine, paragraph   ,popUp_show, set_popUp_show  ,button_True_text ,button_False_text   ,True_action ,False_action  } = props;
   const [active, setActive] = useState(false);
+  const [disable_buttons, set_disable_buttons] = useState(false);
 
   useEffect(() => {
     if (popUp_show) {
@@ -290,18 +291,11 @@ export const PopUp_Are_You_Sure = (props) => {
     setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
   }
 
- 
-  // function handleClickOutside(e) {
-  //   if (e.target.className === 'PopUp-background') {
-  //     False_action();
-  //   }
+  // function handleClose() {
+  //   // False_action();
+  //   setActive(false); // Trigger exit animation
+  //   setTimeout(() => False_action(), 100); // Wait for animation to finish before removing
   // }
-
-  function handleClose() {
-    // False_action();
-    setActive(false); // Trigger exit animation
-    setTimeout(() => False_action(), 100); // Wait for animation to finish before removing
-  }
 
 
   return (
@@ -327,12 +321,23 @@ alt="Icon" width="100px" height="70px"    style={{ marginLeft:"-15px" }}
 
  <div className='display-flex mt-c' style={{  }}>
     <button className="btn-type2" 
-
-    style={{ marginLeft:"auto" }} 
-     onClick={True_action} ><p className='font-type-menu '>{button_True_text}</p>  </button> 
+disabled={disable_buttons} 
+   style={{ marginLeft:"auto" }} 
+   onClick={() => {
+    True_action();
+    set_disable_buttons(true);  // Assuming disable_buttons is a function that accepts a boolean argument
+  }}><p className='font-type-menu '>{button_True_text}</p>  </button> 
     <button className="btn-type2"
+    disabled={disable_buttons} 
         style={{ marginLeft:"10px" }}
-     onClick={False_action} ><p className='font-type-menu '>{button_False_text}</p>  </button> 
+   
+     
+     onClick={() => {
+      False_action();
+      set_disable_buttons(true);  // Assuming disable_buttons is a function that accepts a boolean argument
+    }}
+     
+     ><p className='font-type-menu '>{button_False_text}</p>  </button> 
   </div>
 
 

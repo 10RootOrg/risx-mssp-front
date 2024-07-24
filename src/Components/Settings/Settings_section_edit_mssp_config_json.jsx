@@ -7,7 +7,7 @@ import GeneralContext from "../../Context.js";
 function Settings_section_edit_mssp_config_json({
   show_SideBar,
   set_show_SideBar,
-  set_notification_number,
+  set_unseen_alert_number,
 }) {
   const { backEndURL, moduleLinks, front_URL, front_IP } =
     useContext(GeneralContext);

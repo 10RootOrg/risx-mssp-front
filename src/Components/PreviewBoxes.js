@@ -377,7 +377,7 @@ function PreviewBox_type1_number_no_filters({
    
   }) {
   
-
+console.log("BigNumber" ,BigNumber);
     // display_this={display_data_type}
     // set_display_this={set_display_data_type}
     // display_this_value={"Critical"}
@@ -387,10 +387,21 @@ function PreviewBox_type1_number_no_filters({
     
     const [isHovered, setIsHovered] = useState(false);
     const [is_Filtering, set_is_Filtering] = useState(false);
-  
-
+    // const [is_big_number, set_is_big_number] = useState(false);
+    // const [big_number_type, set_big_number_type] = useState("");
       
    
+
+//     useEffect(() => {
+// if(!BigNumber){return}
+// else if(BigNumber < 999999 ){console.log(BigNumber, "small number")}
+// else if(BigNumber >= 1000000 && BigNumber <= 999999999 ){console.log(BigNumber ,"its milions")}
+// else if(BigNumber >= 100000000 && BigNumber <= 99999999999 ){console.log(BigNumber ,"its bilions")}
+
+
+ 
+//     }, [ BigNumber])
+    
 const  handle_click = () => {
   if(display_this === display_this_value){ set_display_this("prime_data")}
   else{ set_display_this(display_this_value)}
@@ -432,7 +443,27 @@ const  handle_click = () => {
   
       <div> 
        
-      <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
+      <div className='PreviewBox_BigNumber     font-type-h1 Color-White' >
+
+      <Counter target={BigNumber} isHovered={isHovered} txt_color={txt_color} />
+
+
+      {/* {BigNumber <= 999999 && (
+        <Counter target={BigNumber} isHovered={isHovered} txt_color={txt_color} is_big_number={is_big_number} big_number_type={big_number_type}/>
+      )}
+      {BigNumber >= 1000000 && BigNumber <= 999999999 && (
+        <div style={{display:"flex" ,justifyContent:"center" }}>
+        <Counter target={parseFloat((BigNumber / 1000000).toFixed(1))} isHovered={isHovered} txt_color={txt_color} is_big_number={is_big_number} big_number_type={big_number_type}/>
+        <p  style={{display:"flex" ,alignSelf:"end" ,marginBottom:"5px"}} className='font-type-h3'>m</p>
+        </div>
+
+
+ 
+      )} */}
+
+
+
+          </div>
       <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
   }} >{SmallNumberTxt}{SmallNumber && ": "}{SmallNumber}</div>
       </div>

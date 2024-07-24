@@ -82,6 +82,14 @@ function Dashboard_Forensics({
       GetData();
     }
   }, [backEndURL]);
+  console.log("DashBoardData",DashBoardData);
+  console.log("DashBoardData?.Velociraptor",DashBoardData?.Velociraptor);
+  console.log("DashBoardData?.Velociraptor?.FinishedHunts",DashBoardData?.Velociraptor?.FinishedHunts,);
+ 
+
+  
+
+
 
   return (
     <>
@@ -98,13 +106,21 @@ function Dashboard_Forensics({
 
         <div className="resource-group-top-boxes mb-c">
 
+
+
 <PreviewBox_type2_pie
 HeadLine="Hunts Distribution"
 // bar_numbers={["4","32","261","113" ]}
 bar_numbers={[
-DashBoardData?.Velociraptor?.FinishedHunts,
-DashBoardData?.Velociraptor?.UnfinishedHunts,
+DashBoardData?.Velociraptor?.FinishedHunts   ? DashBoardData?.Velociraptor?.FinishedHunts   :"NA",
+DashBoardData?.Velociraptor?.UnfinishedHunts ? DashBoardData?.Velociraptor?.UnfinishedHunts :"NA" ,
 ]}
+
+// bar_numbers={[
+//   DashBoardData?.Velociraptor?.FinishedHunts,
+//   DashBoardData?.Velociraptor?.UnfinishedHunts,
+//   ]}
+
 bar_headlines={["Completed", "Uncompleted"]}
 // bar_headlines = { misp_names?.slice(0, 5).map(item => item?.name ) }
 // bar_title_legend = {["total"]}
@@ -115,7 +131,7 @@ colors={"Basic"} // Basic , Alert
 <PreviewBox_type1_number_no_filters
             HeadLine="Uncompleted Hunts "
             resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.UnfinishedHunts} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            BigNumber={DashBoardData?.Velociraptor?.UnfinishedHunts  } // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={21}
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}

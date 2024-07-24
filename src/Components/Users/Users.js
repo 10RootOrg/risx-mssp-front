@@ -7,7 +7,7 @@ import GeneralContext from '../../Context.js';
 import { format_date_type_a,format_date_type_c } from '../Features/DateFormat.js';
 
 
-function Users({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage}) {
+function Users({show_SideBar,set_show_SideBar,set_unseen_alert_number,set_visblePage}) {
   set_visblePage("Users");
 
     const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
@@ -43,7 +43,7 @@ if (backEndURL === undefined){return}
             if (res.data.length == 0) { console.log("no files ..............,"  ); }
       
           // localStorage.setItem(user_id + '_seeResults', res.data?.results_list?.length);
-          // set_notification_number(0);
+          // set_unseen_alert_number(0);
           // set_last_updated(res.data?.latest_dates);
            set_Preview_this_Results(res.data);
 

@@ -30,13 +30,13 @@ import { make_url_from_id } from "../Components/Dashboards/functions_for_dashboa
 function SideBar({
   visblePage,
   set_visblePage,
-  notification_number,
-  set_notification_number,
+  unseen_alert_number,
+  set_unseen_alert_number,
   isMainProcessWork,
   set_isMainProcessWork,
 }) {
   // const [isHovered, setIsHovered] = useState(false);
-  // const [notification_number, set_notification_number] = useState(0)
+  // const [unseen_alert_number, set_unseen_alert_number] = useState(0)
   // const [openSubMenu, set_openSubMenu] = useState("none")
   const navigate = useNavigate();
   const [user_name, set_user_name] = useState("user");
@@ -528,7 +528,10 @@ console.log("handleNewWindow url - ", url);
         >
           <div className="display-flex">
             <IconAlert className="btn-menu-icon-placeholder  mr-a " />
-            <p className="font-type-menu ">Alerts</p>{" "}
+            <p className="font-type-menu ">Alerts</p>
+
+
+            {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
             <div
               className={`Bg-Red  light-bulb-type2 `}
               style={{ marginLeft: "2px", marginBottom: "12px" }}
@@ -680,14 +683,14 @@ export default SideBar;
 
 //    if(parseFloat(seeResults) != listResults){
 // const note_gap  = listResults - parseFloat(seeResults)
-// set_notification_number(note_gap)
+// set_unseen_alert_number(note_gap)
 //    }
-// else if(parseFloat(seeResults) === listResults){set_notification_number(0)}
+// else if(parseFloat(seeResults) === listResults){set_unseen_alert_number(0)}
 
 //       // console.log(parseFloat(seeResults) === listResults);
 //       // console.log(parseFloat(seeResults) < listResults);
 
-//       // set_notification_number
+//       // set_unseen_alert_number
 //     }
 //   } catch (err) {
 //     console.log(err);

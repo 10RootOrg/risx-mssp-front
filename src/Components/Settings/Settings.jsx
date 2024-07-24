@@ -17,7 +17,7 @@ import GeneralContext from "../../Context.js";
 function Settings({
   show_SideBar,
   set_show_SideBar,
-  set_notification_number,
+  set_unseen_alert_number,
   set_visblePage,
   isMainProcessWork,
   set_isMainProcessWork,

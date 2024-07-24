@@ -19,7 +19,7 @@ import {
 function Dashboard_Threat_Hunting({
   show_SideBar,
   set_show_SideBar,
-  set_notification_number,
+  set_unseen_alert_number,
   set_visblePage,
 }) {
   set_visblePage("dashboard-threat-hunting");

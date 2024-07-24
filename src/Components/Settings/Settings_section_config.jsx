@@ -20,7 +20,7 @@ import { ReactComponent as IconReverse } from '../icons/ico-reverse.svg';
 function Settings_section_config({
   show_SideBar,
   set_show_SideBar,
-  set_notification_number,
+  set_unseen_alert_number,
 }) {
   const [preview_or_edit, set_preview_or_edit] = useState(true);
   const [config_save_btn, set_config_save_btn] = useState(false);

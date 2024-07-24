@@ -9,7 +9,7 @@ import GeneralContext from '../../Context.js';
 import JsonView from '@uiw/react-json-view';
 import {PopUp_All_Good ,PopUp_Are_You_Sure} from '../PopUp_Smart'
 
-function Settings_section_ShowInUi({show_SideBar,set_show_SideBar,set_notification_number, }) {
+function Settings_section_ShowInUi({show_SideBar,set_show_SideBar,set_unseen_alert_number, }) {
  
     const [preview_or_edit, set_preview_or_edit] = useState(true);
     const [config_save_btn, set_config_save_btn] = useState(false);
