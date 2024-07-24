@@ -25,7 +25,7 @@ import {
 import GeneralContext from "../Context";
 import axios from "axios";
 
-import { make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
+import { Make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
 
 function SideBar({
   visblePage,
@@ -40,7 +40,7 @@ function SideBar({
   // const [openSubMenu, set_openSubMenu] = useState("none")
   const navigate = useNavigate();
   const [user_name, set_user_name] = useState("user");
-  const { backEndURL, user_id, moduleLinks, front_IP, mssp_config_json } =
+  const { backEndURL, user_id, moduleLinks, front_IP ,front_URL, mssp_config_json } =
     useContext(GeneralContext);
 
   const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
@@ -101,14 +101,20 @@ function SideBar({
  
   };
 
-  const handleNewWindow = (dashboard_name) => {
-    const url = make_url_from_id(dashboard_name, moduleLinks, front_IP);
-console.log("handleNewWindow url - ", url);
+
+
+  const handleNewWindow = (id) => {
+    console.log("handleNewWindow");
+
+    const url = Make_url_from_id(id, moduleLinks, front_IP ,front_URL);
+// console.log("handleNewWindow url - ", url);
     if (url) {
       window.open(url, "_blank");
     }
    
   };
+
+
 
   const handle_Dashboards_drop_down = () => {
     set_Dashboards_drop_down(!Dashboards_drop_down);
@@ -350,7 +356,7 @@ console.log("handleNewWindow url - ", url);
             <button
               className="btn-menu"
               // onClick={() => handleClick("dashboard-risx")}
-              onClick={() => handleNewWindow("dashboard-risx")}
+              onClick={() => handleNewWindow('2001000')}
               disabled={visblePage === "dashboard-risx"}
             >
               <div className="display-flex">
@@ -371,7 +377,7 @@ console.log("handleNewWindow url - ", url);
 
 
 
-            <button
+            {/* <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-timesketch")}
               // onClick={() => handleClick("dashboard-timesketch")}
@@ -391,9 +397,9 @@ console.log("handleNewWindow url - ", url);
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-misp")}
               // disabled={visblePage === "dashboard-misp"}
@@ -412,9 +418,9 @@ console.log("handleNewWindow url - ", url);
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-cti")}
               // disabled={visblePage === "dashboard-cti"}
@@ -433,9 +439,9 @@ console.log("handleNewWindow url - ", url);
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-iris")}
               // disabled={visblePage === "dashboard-iris"}
@@ -454,7 +460,8 @@ console.log("handleNewWindow url - ", url);
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
+
           </div>
         </div>
 

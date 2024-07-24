@@ -12,8 +12,8 @@ import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
 import Alerts from './Components/Alerts/Alerts_main'
 
 import DashboardResults from './Components/Dashboards/Dashboard_Results'
-import DashboardRisx from './Components/Dashboards/Dashboard_Risx'
-import DashboardTimesketch from './Components/Dashboards/Dashboard_Timesketch'
+// import DashboardRisx from './Components/Dashboards/Dashboard_Risx'
+// import DashboardTimesketch from './Components/Dashboards/Dashboard_Timesketch'
 import Dashboard_Forensics from './Components/Dashboards/Dashboard_Forensics'
 import Dashboard_Threat_Hunting from './Components/Dashboards/Dashboard_Threat_Hunting'
 import Dashboard_CTI from './Components/Dashboards/Dashboard_CTI'
@@ -63,8 +63,8 @@ export default function App() {
 
           
           <Route path="dashboard-general"        element={<DashboardResults         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    />} />
-          <Route path="dashboard-risx"           element={<DashboardRisx            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
-          <Route path="dashboard-timesketch"     element={<DashboardTimesketch      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
+          {/* <Route path="dashboard-risx"           element={<DashboardRisx            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} /> */}
+          {/* <Route path="dashboard-timesketch"     element={<DashboardTimesketch      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} /> */}
           <Route path="dashboard-forensics"      element={<Dashboard_Forensics      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-threat-hunting" element={<Dashboard_Threat_Hunting show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-cti"            element={<Dashboard_CTI            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />

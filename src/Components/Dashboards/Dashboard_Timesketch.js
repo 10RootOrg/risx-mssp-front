@@ -1,7 +1,7 @@
 import React , {useState , useEffect ,useContext} from 'react';
  import './Dashboard_iframes.css';
 import GeneralContext from '../../Context.js';
-import {make_url_from_id} from './functions_for_dashboards.js'
+import {Make_url_from_id} from './functions_for_dashboards.js'
 
 function Dashboard({show_SideBar,set_show_SideBar,set_visblePage,visblePage}) {
   set_visblePage("dashboard-timesketch");
@@ -78,7 +78,7 @@ useEffect(() => {  if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 // console.log("iframe_url", iframe_url);
 useEffect(() => {  
   if(moduleLinks === undefined || moduleLinks.length === 0){return}
-  const url = make_url_from_id(visblePage,moduleLinks,front_IP)
+  const url = Make_url_from_id(visblePage,moduleLinks,front_IP)
 console.log("url -------- ",url);
 set_iframe_url(url);
       }, [visblePage,moduleLinks]);

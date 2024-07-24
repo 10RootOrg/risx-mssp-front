@@ -1,6 +1,5 @@
 {
   "backendUrl": "http://40.69.58.105:5555",
-  
   "expiryDate": "28-07-2024",
   "clientApi": "https://api.example.com/user",
   "examInnterval_minutes": 15,
@@ -18,12 +17,12 @@
     {
       "toolName": "ELK",
       "toolID": "2001001",
-      "toolURL": "http://${FRONT_IP}/kibana/"
+      "toolURL": "${FRONT_URL}/kibana/"
     },
     {
       "toolName": "Timesketch",
       "toolID": "2001002",
-      "toolURL": "http://${FRONT_IP}/"
+      "toolURL": "${FRONT_URL}"
     },
     {
       "toolName": "Open CTI",
@@ -42,7 +41,7 @@
       "expiretime": "25"
     },
     {
-      "toolName": "AnyRun",
+      "toolName": "Strelka",
       "toolID": "2001006",
       "toolURL": "http://${FRONT_IP}/strelka/"
     },
