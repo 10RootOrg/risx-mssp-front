@@ -84,7 +84,7 @@ function Dashboard_Forensics({
   }, [backEndURL]);
   console.log("DashBoardData",DashBoardData);
   console.log("DashBoardData?.Velociraptor",DashBoardData?.Velociraptor);
-  console.log("DashBoardData?.Velociraptor?.FinishedHunts",DashBoardData?.Velociraptor?.FinishedHunts,);
+  console.log("DashBoardData?.Velociraptor?.FinishedHunts",DashBoardData?.TimeSketch?.tag_counts);
  
 
   
@@ -112,9 +112,10 @@ function Dashboard_Forensics({
 HeadLine="Hunts Distribution"
 // bar_numbers={["4","32","261","113" ]}
 bar_numbers={[
-DashBoardData?.Velociraptor?.FinishedHunts   ? DashBoardData?.Velociraptor?.FinishedHunts   :"NA",
-DashBoardData?.Velociraptor?.UnfinishedHunts ? DashBoardData?.Velociraptor?.UnfinishedHunts :"NA" ,
+  DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA",
+  DashBoardData?.Velociraptor?.UnfinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.UnfinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.UnfinishedHunts : "NA",
 ]}
+// {DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA"}
 
 // bar_numbers={[
 //   DashBoardData?.Velociraptor?.FinishedHunts,
@@ -180,7 +181,12 @@ connected =3 */}
 HeadLine="Connected from Overall Clients"
 // bar_numbers={["4","32","261","113" ]}
 bar_numbers={[
-  `${DashBoardData?.Velociraptor?.NumberOfConnectedClients}`,`${DashBoardData?.Velociraptor?.NumberOfClients - DashBoardData?.Velociraptor?.NumberOfConnectedClients}` 
+   DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA"
+   ,
+   DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  &&  DashBoardData?.Velociraptor?.NumberOfClients  !== undefined &&  DashBoardData?.Velociraptor?.NumberOfClients  !== null ? 
+   `${DashBoardData?.Velociraptor?.NumberOfClients - DashBoardData?.Velociraptor?.NumberOfConnectedClients}`  : "NA",
+
+  
 ]}
 bar_headlines={["Connected", "UnConnected"]}
 // bar_headlines = { misp_names?.slice(0, 5).map(item => item?.name ) }
@@ -190,6 +196,7 @@ colors={"Basic"} // Basic , Alert
 
 />
 
+{/* DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA", */}
 
 
 
@@ -268,7 +275,7 @@ colors={"Basic"} // Basic , Alert
             BigNumber={DashBoardData?.TimeSketch?.tag_counts?.high} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}
             SmallNumberTxt={"Timesketch"}
-            StatusColor={"blue"}
+            StatusColor={"High"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
             display_this={display_data_type}

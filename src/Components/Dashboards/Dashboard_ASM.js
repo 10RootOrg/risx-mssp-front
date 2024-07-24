@@ -100,7 +100,7 @@ txt_color={""}
 <PreviewBox_type1_number_no_filters
 HeadLine="Last Run - Object Found (*)"
 resource_type_id={null}
-BigNumber={844}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+BigNumber={44}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
 SmallNumberTxt={"Nuclei"}
 StatusColor={"blue"}

@@ -377,7 +377,7 @@ function PreviewBox_type1_number_no_filters({
    
   }) {
   
-console.log("BigNumber" ,BigNumber);
+// console.log("BigNumber" ,BigNumber);
     // display_this={display_data_type}
     // set_display_this={set_display_data_type}
     // display_this_value={"Critical"}
@@ -823,6 +823,7 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
           }
    
           function PreviewBox_type5_table({ HeadLine, bar_numbers, bar_headlines, bar_title_legend, is_popup, Artifact, HuntID, Status, Error }) {
+    
             return (
                 <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
                     <div className='PreviewBox_HeadLine'>
@@ -860,8 +861,12 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
         
           is_tags
         }) {
+
+
+          console.log("list_array",list_array);
          const handle_click = () => {
             console.log("click on PreviewBox_type6_list_box" );
+    
           }
         
           return (
@@ -870,7 +875,7 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
               <div className='PreviewBox_HeadLine '>
                 <p className="font-type-menu">{HeadLine}</p>
               </div>
-        
+  {!list_array || list_array.length != 0  &&      
               <div className='table-container' style={{ 
                 height: 'calc(100% - 20px)',
                  overflowY: 'auto' }}>
@@ -897,10 +902,42 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
                         <td className='font-type-txt Color-White ' style={{textAlign:"right" ,paddingRight:"5px"}}>{item[list_array_column2?.key]}</td>
                       </tr>
                     ))}
+ 
+
                   </tbody>
                 </table>
+
+
+
+
               </div>
-        
+} 
+
+
+{!list_array || list_array.length === 0  &&      
+<div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}>
+
+              {list_array == undefined && 
+<p className='font-type-h2'
+style={{
+
+}}
+>NA</p>}
+
+{list_array  && list_array.length === 0 &&
+<p className='font-type-h4'
+style={{
+ 
+  // textAlign:"center"
+  // color: isHovered ? "#00DBFF" : (txt_color || color),
+  // transition: "color 0.15s ease-in-out",
+}}
+>No Records</p>}
+</div>
+        }
+
+
+
             </div>
           );
       

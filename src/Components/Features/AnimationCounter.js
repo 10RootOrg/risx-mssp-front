@@ -14,26 +14,30 @@ const Counter = ({ target, isHovered, txt_color }) => {
   
 
 
-
-  useEffect(() => { 
+   useEffect(() => { 
  
+
+    // console.log("target2",target);
       if(!target){ return}
       
         if(target < 999999 ){
         set_count_this_number(target);   
-        console.log(target, "small number")}
+        // console.log(target, "small number")
+      }
 
       else if(target >= 1000000 && target <= 999999999 ){
         set_is_big_number_type(true);
         set_count_this_number(target/ 1000000);  
         set_big_number_type("M");
-        console.log(target ,"its milions")}
+        console.log(target ,"its milions")
+      }
 
       else if(target >= 1000000000 && target <= 999999999999 ){
         set_is_big_number_type(true);
         set_count_this_number(target / 1000000000); 
         set_big_number_type("B");
-        console.log(target ,"its bilions")}
+        console.log(target ,"its bilions")
+      }
       
 
         else if(target >= 100000000000 ){
@@ -43,7 +47,7 @@ const Counter = ({ target, isHovered, txt_color }) => {
           console.log(target ,"its Trillion")}
         // trillion
 
-  }, [count_this_number]);
+  }, [target]);
 
 
 
@@ -155,8 +159,8 @@ duration = 2200; // 1.5 seconds in milliseconds
 
   return (
     <div style={{ transition: "color 0.15s ease-in-out" }}>
-{target ?
-      <p
+{target !== undefined &&  target !== null  ?
+      <p className='font-type-h1'
         style={{
           color: isHovered ? "#00DBFF" : (txt_color || color),
           transition: "color 0.15s ease-in-out",
@@ -168,7 +172,7 @@ duration = 2200; // 1.5 seconds in milliseconds
     
       </p>
 :
-<p
+<p className='font-type-h2'
 style={{
   color: isHovered ? "#00DBFF" : (txt_color || color),
   transition: "color 0.15s ease-in-out",
