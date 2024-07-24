@@ -9,7 +9,7 @@ import GeneralContext from '../../Context.js';
 import JsonView from '@uiw/react-json-view';
 import {PopUp_All_Good } from '../PopUp_Smart.js'
 
-function Settings_section_edit_mssp_config_json({show_SideBar,set_show_SideBar,set_notification_number, }) {
+function Settings_section_edit_mssp_config_json({show_SideBar,set_show_SideBar,set_unseen_alert_number, }) {
  
  
     // const [loader , set_loader] = useState(true)

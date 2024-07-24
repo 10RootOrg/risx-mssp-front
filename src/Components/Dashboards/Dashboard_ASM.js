@@ -8,7 +8,7 @@ import GeneralContext from '../../Context.js';
 import { format_date_type_a,format_date_type_c } from '../Features/DateFormat.js';
 
 
-function Dashboard_ASM({show_SideBar,set_show_SideBar,set_notification_number,set_visblePage}) {
+function Dashboard_ASM({show_SideBar,set_show_SideBar,set_unseen_alert_number,set_visblePage}) {
   set_visblePage("dashboard-asm");
   
     const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
@@ -70,7 +70,7 @@ colors={"Alert"} // Basic , Alert
  <PreviewBox_type1_number_no_filters
 HeadLine="Last Run High (*)"
 resource_type_id={null}
-BigNumber={29}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+BigNumber={8342}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
 SmallNumberTxt={"Nuclei"}
 StatusColor={"high"}
@@ -85,7 +85,7 @@ txt_color={""}
 <PreviewBox_type1_number_no_filters
 HeadLine="Last Run Critical (*)"
 resource_type_id={null}
-BigNumber={3}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+BigNumber={37773113}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
 SmallNumberTxt={"Nuclei"}
 StatusColor={"Critical"}
@@ -100,7 +100,7 @@ txt_color={""}
 <PreviewBox_type1_number_no_filters
 HeadLine="Last Run - Object Found (*)"
 resource_type_id={null}
-BigNumber={511}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+BigNumber={844}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
 SmallNumberTxt={"Nuclei"}
 StatusColor={"blue"}
@@ -111,6 +111,9 @@ set_display_this={set_display_this}
 display_this_value={""}
 txt_color={""}
 />
+
+ 
+
 
 
  </div>

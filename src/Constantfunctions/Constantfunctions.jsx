@@ -110,7 +110,7 @@ async function got_to_check_and_active_interval_of_python  () {
 
  const   do_active =  await check_and_active_interval_of_python(backEndURL,isMainProcessWork,set_isMainProcessWork);
 
-
+console.log("do_active", do_active);
 
  if (do_active){
   console.log("do_active" , do_active);

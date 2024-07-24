@@ -16,7 +16,7 @@ import {check_and_active_interval_of_python , kill_interval_of_python}from '../F
 
 
   
-  function Settings_section_process({show_SideBar,set_show_SideBar,set_notification_number,isMainProcessWork,set_isMainProcessWork }) {
+  function Settings_section_process({show_SideBar,set_show_SideBar,set_unseen_alert_number,isMainProcessWork,set_isMainProcessWork }) {
     const [isHovered, setIsHovered] = useState(false);
       // const [loader , set_loader] = useState(true)
    const {   backEndURL  ,set_all_Tools,all_Tools } = useContext(GeneralContext);

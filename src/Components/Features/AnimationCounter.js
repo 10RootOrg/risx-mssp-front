@@ -1,22 +1,112 @@
 import React, { useState, useEffect } from "react";
 
-const Counter = ({ target, isHovered  ,txt_color}) => {
-  const [count, setCount] = useState(0);
+const Counter = ({ target, isHovered, txt_color }) => {
+
+  
+  const [count_this_number, set_count_this_number] = useState(0);
+  const [is_big_number_type, set_is_big_number_type] = useState(false);
+  const [big_number_type, set_big_number_type] = useState("");
+
+
+
+   const [count, setCount] = useState(0);
   const [color, setColor] = useState("rgb(229, 229, 229)");
- 
+  
 
- 
- 
 
-  // const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => { 
+ 
+      if(!target){ return}
+      
+        if(target < 999999 ){
+        set_count_this_number(target);   
+        console.log(target, "small number")}
+
+      else if(target >= 1000000 && target <= 999999999 ){
+        set_is_big_number_type(true);
+        set_count_this_number(target/ 1000000);  
+        set_big_number_type("M");
+        console.log(target ,"its milions")}
+
+      else if(target >= 1000000000 && target <= 999999999999 ){
+        set_is_big_number_type(true);
+        set_count_this_number(target / 1000000000); 
+        set_big_number_type("B");
+        console.log(target ,"its bilions")}
+      
+
+        else if(target >= 100000000000 ){
+          set_is_big_number_type(true);
+          set_count_this_number(target / 1000000000000); 
+          set_big_number_type("Trillion");
+          console.log(target ,"its Trillion")}
+        // trillion
+
+  }, [count_this_number]);
+
+
+
+
+
+
 
   useEffect(() => {
- let fast___set = 40 
-    if ( target > 200){fast___set = 0.1 }
- 
+    let duration = 1000;;
+    let fast___set = 40;
+
+if (count_this_number > 1 && count_this_number < 10) {
+console.log("count_this_number aa" , count_this_number);
+  fast___set = 22
+duration = 1200; // 1.5 seconds in milliseconds
+
+}
+
+
+else if (11 < count_this_number   && count_this_number  <19 ) {
+  console.log("count_this_number bb" , count_this_number);
+  fast___set = 20
+duration = 2200; // 1.5 seconds in milliseconds
+
+}
+
+  else if (20 < count_this_number  &&  count_this_number< 200 ) {
+    console.log("count_this_number cc" , count_this_number);
+    fast___set = 90
+  duration = 2500; // 1.5 seconds in milliseconds
+
+}
+
+
+
+   else if (count_this_number > 1000) {
+    console.log("count_this_number dd" , count_this_number);
+    fast___set = 30
+      duration = 1500; // 1.5 seconds in milliseconds
+
+    }
+    
+    else {
+      
+      console.log("count_this_number ee" , count_this_number);
+
+      if (count_this_number > 200 && count_this_number < 999) {
+
+        console.log("2222222222222" , count_this_number);
+        fast___set = 5;
+        duration = 1000;
+      }
+
+      if (201 > count_this_number > 0) {
+        console.log("3333333333333333333333", count_this_number);
+        fast___set = 0.2;
+      }
+
+
+      duration = count_this_number * fast___set;
+    }
 
     let startTimestamp = null;
-    const duration = target * fast___set;
     const colorTransitionStartTimestamp = duration;
     const endColorTransitionDuration = 500;
 
@@ -29,7 +119,7 @@ const Counter = ({ target, isHovered  ,txt_color}) => {
           ? 2 * progress * progress
           : -1 + (4 - 2 * progress) * progress;
 
-      setCount(Math.floor(easeInOutProgress * target));
+      setCount(Math.floor(easeInOutProgress * count_this_number));
 
       if (elapsedTime <= duration) {
         const colorIntensity = easeInOutProgress;
@@ -61,40 +151,38 @@ const Counter = ({ target, isHovered  ,txt_color}) => {
     };
 
     window.requestAnimationFrame(step);
-  }, [target]);
-
-  // const handleHover = () => {
-  //   setIsHovered(true);
-  // };
-
-  // const handleLeave = () => {
-  //   setIsHovered(false);
-  // };
+  }, [count_this_number]);
 
   return (
-    <div
-      // onMouseEnter={handleHover}
-      // onMouseLeave={handleLeave}
-      style={{ transition: "color 0.15s ease-in-out" }}
-    >
+    <div style={{ transition: "color 0.15s ease-in-out" }}>
+{target ?
       <p
         style={{
-
-          // color:     isHovered ? "#00DBFF" : color,
-          // color: txt_color  ?   txt_color :  isHovered ? "#00DBFF" : color,
           color: isHovered ? "#00DBFF" : (txt_color || color),
-
           transition: "color 0.15s ease-in-out",
-          
         }}
       >
         {count}
+
+     {is_big_number_type && <span className='font-type-h3'>{big_number_type}</span> }
+    
       </p>
+:
+<p
+style={{
+  color: isHovered ? "#00DBFF" : (txt_color || color),
+  transition: "color 0.15s ease-in-out",
+}}
+>
+NA
+
+</p>
+
+ }
+
+
     </div>
   );
 };
-
- 
-
 
 export { Counter };

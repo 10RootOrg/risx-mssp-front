@@ -14,7 +14,7 @@ import { ReactComponent as IcoResults } from '../icons/ico-menu-Results.svg';
 import { useNavigate } from 'react-router-dom';
 
 
-function Modules({show_SideBar,set_show_SideBar,notification_number,set_visblePage}) {
+function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePage}) {
     set_visblePage("Modules");
     const { all_Tools ,  backEndURL , set_all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
     const [show_only_this_tools, set_show_only_this_tools] = useState([]) 
@@ -128,7 +128,7 @@ toolURL={Info?.toolURL}
 all_Tools={all_Tools}
  
  backEndURL={backEndURL}
- notification_number={notification_number}
+ unseen_alert_number={unseen_alert_number}
             />   }
  
      </>   ))}
@@ -218,7 +218,7 @@ all_Tools={all_Tools}
 
  
  backEndURL={backEndURL}
- notification_number={notification_number}
+ unseen_alert_number={unseen_alert_number}
             />   }
 
      </>      
