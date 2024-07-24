@@ -142,9 +142,9 @@ function Dashboard_Threat_Hunting({
           height="1200"
           width="100%"
         ></iframe>
-        <div className="resource-group-all-the-Lists">
-          {/* <Results_list Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} /> */}
-        </div>
+       {/*   <div className="resource-group-all-the-Lists">
+         <Results_list Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} /> 
+        </div>*/}
       </div>
     </>
   );
