@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useContext, useRef } from "react";
 
 import axios from "axios";
@@ -13,9 +11,7 @@ import { json, jsonLanguage, jsonParseLinter } from "@codemirror/lang-json";
 import { tags as t } from "@lezer/highlight";
 import { createTheme } from "@uiw/codemirror-themes";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
-import { ReactComponent as IconReverse } from '../icons/ico-reverse.svg';
- 
-
+import { ReactComponent as IconReverse } from "../icons/ico-reverse.svg";
 
 function Settings_section_config({
   show_SideBar,
@@ -30,7 +26,7 @@ function Settings_section_config({
   const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] =
     useState(false);
   const [PopUpYesFunc, setPopUpYesFunc] = useState(() => {
-    console.log("nooooooooooooooooooooo!!!!!!!!!!!!1");
+    console.log("nnnnnnnnnnnnoooooooooooooooooooooo!!!!!!!!!!!!");
   });
   const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
     HeadLine: "Are You Sure?",
@@ -46,29 +42,32 @@ function Settings_section_config({
     settings: {
       background: "transperent",
       backgroundImage: "",
-      foreground:  "var(--color-Grey1)",
+      foreground: "var(--color-Grey1)",
       caret: "var(--color-DB-Blue-Active)",
       selection: "var(--color-Grey4)",
-      selectionMatch: "var(--color-Orange)",
+      selectionMatch: "var(--color-Grey2)",
       lineHighlight: "transperent",
       gutterBackground: "var(--color-Grey5)",
       gutterForeground: "var(--color-Grey1)",
     },
     styles: [
-      { tag: t.comment,  color: "var(--color-White)" },
-      { tag: t.variableName,  color: "var(--color-White)" },
-      { tag: [t.string, t.special(t.brace)], color: "var(--color-DB-Blue-Active)"},
-      { tag: t.number,  color: "var(--color-White)" },
-      { tag: t.bool,  color: "var(--color-White)" },
-      { tag: t.null,  color: "var(--color-White)" },
-      { tag: t.keyword,  color: "var(--color-White)" },
-      { tag: t.operator,  color: "var(--color-White)" },
-      { tag: t.className,  color: "var(--color-White)" },
+      { tag: t.comment, color: "var(--color-White)" },
+      { tag: t.variableName, color: "var(--color-White)" },
+      {
+        tag: [t.string, t.special(t.brace)],
+        color: "var(--color-DB-Blue-Active)",
+      },
+      { tag: t.number, color: "var(--color-White)" },
+      { tag: t.bool, color: "var(--color-White)" },
+      { tag: t.null, color: "var(--color-White)" },
+      { tag: t.keyword, color: "var(--color-White)" },
+      { tag: t.operator, color: "var(--color-White)" },
+      { tag: t.className, color: "var(--color-White)" },
       { tag: t.definition(t.typeName), color: "#5c6166" },
       { tag: t.typeName, color: "var(--color-White)" },
-      { tag: t.angleBracket,  color: "var(--color-White)" },
-      { tag: t.tagName,  color: "var(--color-White)" },
-      { tag: t.attributeName,  color: "var(--color-White)" },
+      { tag: t.angleBracket, color: "var(--color-White)" },
+      { tag: t.tagName, color: "var(--color-White)" },
+      { tag: t.attributeName, color: "var(--color-White)" },
     ],
   });
 
@@ -248,12 +247,11 @@ function Settings_section_config({
       )}
 
       <div>
-     
         <table className="setting_table  " style={{ lineHeight: "100%" }}>
           <tbody>
             <tr>
               <td className="setting_descriptions">
-              <p className="font-type-h4 Color-White mb-c">Main Config</p>
+                <p className="font-type-h4 Color-White mb-c">Main Config</p>
                 <p className="font-type-menu Color-White mb-a">config.json</p>
                 <p className="font-type-txt Color-Grey1 mb-b">
                   This is the place to update the general config file.
@@ -265,8 +263,8 @@ function Settings_section_config({
                 </p>
 
                 <button
-                 className="btn-type4  btn-type4_careful  mt-b"
-                  style={{padding:0}}
+                  className="btn-type4  btn-type4_careful  mt-b"
+                  style={{ padding: 0 }}
                   onClick={() => {
                     setPopUpYesFunc(true);
                     set_PopUp_Are_You_Sure__txt({
@@ -279,14 +277,12 @@ function Settings_section_config({
 
                     set_PopUp_Are_You_Sure__show(true);
                   }}
-                  >
-                    
-                    <div style={{ transform: "scale(1)" ,marginLeft:"-5px"}}
-             
-                  
-                  ><IconReverse className="icon-type1 "/></div><p className='font-type-menu mr-a' >Reset</p> </button>
-
-
+                >
+                  <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
+                    <IconReverse className="icon-type1 " />
+                  </div>
+                  <p className="font-type-menu mr-a">Reset</p>{" "}
+                </button>
 
                 {/* <button
                    className="btn-type4  btn-type4_careful  mt-b"
@@ -308,10 +304,16 @@ function Settings_section_config({
                 </button> */}
               </td>
 
-              <td  className="setting_element PreviewBox"  style={{ height: "auto" }}    >
+              <td
+                className="setting_element PreviewBox"
+                style={{ height: "auto" }}
+              >
                 <div className=" ">
                   {preview_or_edit ? (
-                    <div className="setting_element"    style={{ overflowY: "scroll" }}   >
+                    <div
+                      className="setting_element"
+                      style={{ overflowY: "scroll" }}
+                    >
                       <JsonView
                         value={object}
                         keyName="root"
@@ -322,7 +324,7 @@ function Settings_section_config({
                       />{" "}
                     </div>
                   ) : (
-                    <> 
+                    <>
                       {ErrString && (
                         <div
                           style={{
@@ -338,14 +340,13 @@ function Settings_section_config({
                           {ErrString}
                         </div>
                       )}
-                
- 
+
                       <CodeMirror
                         value={JSON.stringify(object, null, 2)}
                         height="600px"
                         // width="600px"
                         // maxWidth="auto"
-                    
+
                         onChange={async (x) => {
                           try {
                             console.log("flip", JSON.parse(x));
@@ -363,9 +364,6 @@ function Settings_section_config({
                         // theme={vscodeDark} // Pre made style for the editor
                         highlightActiveLine={true}
                       />
-
-
-                      
                     </>
                   )}
                 </div>
@@ -408,4 +406,3 @@ function Settings_section_config({
 }
 
 export default Settings_section_config;
-

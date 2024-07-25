@@ -98,16 +98,14 @@ function SideBar({
     set_visblePage(page_name);
     localStorage.setItem("visiblePage", page_name); // Store current page in localStorage
     navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name\
- 
   };
 
   const handleNewWindow = (dashboard_name) => {
     const url = make_url_from_id(dashboard_name, moduleLinks, front_IP);
-console.log("handleNewWindow url - ", url);
+    console.log("handleNewWindow url - ", url);
     if (url) {
       window.open(url, "_blank");
     }
-   
   };
 
   const handle_Dashboards_drop_down = () => {
@@ -119,7 +117,39 @@ console.log("handleNewWindow url - ", url);
   };
 
   const handleDownload = async (os) => {
-    window.open(object?.General?.AgentLinks[os]);
+    // window.open(object?.General?.AgentLinks[os]);
+    try {
+      const res = await axios.post(
+        `${backEndURL}/config/DownloadAgent`,
+        {
+          PathOs: object?.General?.AgentLinks[os],
+        },
+        { responseType: "blob" }
+      );
+
+      if (res) {
+        console.log("ssssssssssssssssssssssss", res);
+        const url = window.URL.createObjectURL(res.data);
+        console.log(url);
+
+        // window.open(url)
+        console.log(
+          os == "Windows"
+            ? "Velociraptor Client" + ".msi"
+            : "Velociraptor Client",
+          "zzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+        );
+        var link = document.createElement("a");
+        link.href = url;
+        link.download =
+          os == "Windows"
+            ? "Velociraptor Client" + ".msi"
+            : "Velociraptor Client";
+        link.click();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handle_click_user = async () => {
@@ -229,7 +259,10 @@ console.log("handleNewWindow url - ", url);
         </div>
       </button>
 
-      <div    className="Bg-Grey2" style={{ width: "100%", height: "2px", borderRadius: "5px" }}/>
+      <div
+        className="Bg-Grey2"
+        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+      />
 
       <div className="btn-menu-list  ">
         {/* ..........Dashboards.......srart.... */}
@@ -250,29 +283,33 @@ console.log("handleNewWindow url - ", url);
             <div className="display-flex">
               <IcoMonitor className="btn-menu-icon-placeholder  mr-a " />
 
-              <p className="font-type-menu " >Dashboards{visblePage.startsWith("dashboard")&&":"}</p>
+              <p className="font-type-menu ">
+                Dashboards{visblePage.startsWith("dashboard") && ":"}
+              </p>
 
               {visblePage.startsWith("dashboard") && (
-  <p className="ml-a font-type-very-sml-txt" style={{ textAlign: "left" }}>
-    {
-      visblePage
-        .replace("dashboard-", "")
-        .split("-")
-        .map((word, index) => {
-          if (index === 0 && word.length === 3) {
-            return word.toUpperCase();
-          }
-          return word
-            .split(" ")
-            .map(subWord => subWord.charAt(0).toUpperCase() + subWord.slice(1))
-            .join(" ");
-        })
-        .join(" ")
-    }
-  </p>
-)}
-
-
+                <p
+                  className="ml-a font-type-very-sml-txt"
+                  style={{ textAlign: "left" }}
+                >
+                  {visblePage
+                    .replace("dashboard-", "")
+                    .split("-")
+                    .map((word, index) => {
+                      if (index === 0 && word.length === 3) {
+                        return word.toUpperCase();
+                      }
+                      return word
+                        .split(" ")
+                        .map(
+                          (subWord) =>
+                            subWord.charAt(0).toUpperCase() + subWord.slice(1)
+                        )
+                        .join(" ");
+                    })
+                    .join(" ")}
+                </p>
+              )}
             </div>
             <div className="btn-menu-icon-placeholder  ">
               {" "}
@@ -280,7 +317,9 @@ console.log("handleNewWindow url - ", url);
             </div>
           </button>
 
-          <div   className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}  >
+          <div
+            className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
+          >
             <button
               className="btn-menu"
               onClick={() => handleClick("dashboard-general")}
@@ -303,49 +342,97 @@ console.log("handleNewWindow url - ", url);
             </button>
 
             <button
-              className="btn-menu"  onClick={() => handleClick("dashboard-forensics")}   disabled={visblePage === "dashboard-forensics"}>
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-forensics")}
+              disabled={visblePage === "dashboard-forensics"}
+            >
               <div className="display-flex">
-                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
                 <p className="font-type-menu ">Forensics</p>
               </div>
-              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                <IcoResults />
+              </div>
             </button>
 
-
             <button
-              className="btn-menu"  onClick={() => handleClick("dashboard-threat-hunting")}   disabled={visblePage === "dashboard-threat-hunting"}>
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-threat-hunting")}
+              disabled={visblePage === "dashboard-threat-hunting"}
+            >
               <div className="display-flex">
-                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
                 <p className="font-type-menu ">Threat Hunting</p>
               </div>
-              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                <IcoResults />
+              </div>
             </button>
 
             <button
-              className="btn-menu"  onClick={() => handleClick("dashboard-cti")}   disabled={visblePage === "dashboard-cti"}>
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-cti")}
+              disabled={visblePage === "dashboard-cti"}
+            >
               <div className="display-flex">
-                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
                 <p className="font-type-menu ">CTI</p>
               </div>
-              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                <IcoResults />
+              </div>
             </button>
-
 
             <button
-              className="btn-menu"  onClick={() => handleClick("dashboard-asm")}   disabled={visblePage === "dashboard-asm"}>
+              className="btn-menu"
+              onClick={() => handleClick("dashboard-asm")}
+              disabled={visblePage === "dashboard-asm"}
+            >
               <div className="display-flex">
-                <IcoDownload   className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
                 <p className="font-type-menu ">ASM</p>
               </div>
-              <div className="btn-menu-icon-placeholder" style={{ scale: "0.95" }}><IcoResults /></div>
+              <div
+                className="btn-menu-icon-placeholder"
+                style={{ scale: "0.95" }}
+              >
+                <IcoResults />
+              </div>
             </button>
 
-
-
-
-
-            <div  className="Bg-Grey2" style={{ width: "90%", height: "2px", borderRadius: "5px" ,marginLeft:"auto",marginRight:"auto", marginTop:"5px", marginBottom:"5px"   }}/>
-
+            <div
+              className="Bg-Grey2"
+              style={{
+                width: "90%",
+                height: "2px",
+                borderRadius: "5px",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "5px",
+                marginBottom: "5px",
+              }}
+            />
 
             <button
               className="btn-menu"
@@ -368,8 +455,6 @@ console.log("handleNewWindow url - ", url);
                 <IcoLink />
               </div>
             </button>
-
-
 
             <button
               className="btn-menu"
@@ -530,7 +615,6 @@ console.log("handleNewWindow url - ", url);
             <IconAlert className="btn-menu-icon-placeholder  mr-a " />
             <p className="font-type-menu ">Alerts</p>
 
-
             {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
             <div
               className={`Bg-Red  light-bulb-type2 `}
@@ -540,7 +624,10 @@ console.log("handleNewWindow url - ", url);
           <div className="btn-menu-icon-placeholder  "> </div>
         </button>
       </div>
-      <div  className="Bg-Grey2" style={{ width: "100%", height: "2px", borderRadius: "5px" }}/>
+      <div
+        className="Bg-Grey2"
+        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+      />
 
       <button className="btn-menu" onClick={handle_active_manual_process}>
         <div className="display-flex">
@@ -573,7 +660,7 @@ console.log("handleNewWindow url - ", url);
             {/*  <MenuArrowDown  />*/}
           </div>
         </button>
-
+        {/* fix */}
         <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}>
           <button
             className="btn-menu  "
