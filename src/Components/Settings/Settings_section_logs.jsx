@@ -83,8 +83,8 @@ function Settings_section_logs({
                 style={{
                   height: "auto",
                   maxHeight: maxHeight,
-                  overflowY: "auto",
-                  overflowX: "auto",
+                  // overflowY: "auto",
+                  // overflowX: "auto",
                   whiteSpace: "pre",
                   width: "100%",
                 }}
