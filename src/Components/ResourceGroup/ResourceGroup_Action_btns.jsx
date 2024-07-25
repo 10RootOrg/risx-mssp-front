@@ -9,7 +9,11 @@ import { ReactComponent as IconExpend } from '../icons/ico-expend.svg';
 import { ReactComponent as IconLine } from '../icons/ico-line.svg';
 
 function ResourceGroup_Action_btns({
-  items_for_search,  set_items_for_search,set_is_search ,
+  items_for_search,  
+  set_items_for_search,
+  
+  set_is_search ,
+
   btn_add_single_show,
   btn_add_single_action,
   btn_add_single_value,
@@ -18,20 +22,26 @@ function ResourceGroup_Action_btns({
   btn_add_many_action,
   btn_add_many_id,
 
-
   btn_add_single_id,
-
 
   btn_collapse_show,
   btn_collapse_action,
 
   btn_trash_show,
   btn_trash_action,
+  btn_trash_id,
 
-
+  btn_gear_show,
+  btn_gear_action,
+  btn_gear_id,
 }) {
 
- 
+
+
+
+
+
+
 const [filter_string , set_filter_string] = useState("");
 const [all_items , set_all_items] = useState([]);
 
@@ -90,10 +100,9 @@ const filteredItems = all_items.filter(item => {
 
       {btn_add_single_show  && <button className="btn-type1" onClick={()=>btn_add_single_action(btn_add_single_value,btn_add_single_id)}><IconPlus className="icon-type1" /></button>}
 
-      <button className="btn-type1"><IconTrash className="icon-type1"
-        // onClick={()=>btn_trash_action()}
-        />  </button>
-      <button className="btn-type1"><IconSettings className="icon-type1" />  </button>
+     {btn_trash_show && <button className="btn-type1"><IconTrash className="icon-type1" onClick={()=>btn_trash_action(btn_trash_id)} />  </button>}
+
+     {btn_gear_show &&  <button className="btn-type1"><IconSettings className="icon-type1" onClick={()=>btn_gear_action(btn_gear_id)}/>  </button>}
 
       {btn_collapse_show  && <> <IconLine className=" " /><button className="btn-type1" onClick={btn_collapse_action}><IconExpend className="icon-type1" /></button></>}
 

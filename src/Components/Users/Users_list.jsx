@@ -7,7 +7,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import axios from 'axios';
  import GeneralContext from '../../Context.js';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
-import {PopUp_All_Good ,PopUp_Request_info } from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Request_info ,PopUp_Under_Construction} from '../PopUp_Smart.js'
 import {Add_Edit_User  } from '../Add_Edit_User.js'
 
 
@@ -15,7 +15,7 @@ import {Add_Edit_User  } from '../Add_Edit_User.js'
  
  import LMloader from "../Features/LMloader.svg";
  import './Users_list.css'
-function Results_All({
+function Users_list({
   Preview_this_Results ,
   set_Preview_this_Results,
    loader ,
@@ -25,6 +25,11 @@ function Results_All({
   }) {
     const {  backEndURL ,all_Tools } = useContext(GeneralContext);
     const [is_search, set_is_search] = useState(false);
+
+    const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
+    const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
+  
+
 
   const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
   const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
@@ -51,6 +56,7 @@ function Results_All({
     buttonTrue:"True",
     buttonFalse:"False"
   });
+
   const [user_Info, set_user_Info] = useState([]);
   
 
@@ -64,7 +70,14 @@ function Results_All({
   set_popUp_Add_or_Edit__show(true)
     }
   
-
+    const handleClickComingSoon = () => {
+      set_PopUp_Under_Construction__txt({
+        HeadLine: "Coming Soon!",
+        paragraph: `We are working on creating this feature. Stay tuned for updates as we finalize the details.`,
+        buttonTitle: "Close",
+      });
+      set_PopUp_Under_Construction__show(true);
+    };
 
 
 
@@ -72,7 +85,15 @@ function Results_All({
  
  <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
   
-
+  {PopUp_Under_Construction__show && (
+<PopUp_Under_Construction
+popUp_show={PopUp_Under_Construction__show}
+set_popUp_show={set_PopUp_Under_Construction__show}
+HeadLine={PopUp_Under_Construction__txt.HeadLine}
+paragraph={PopUp_Under_Construction__txt.paragraph}
+buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+/>
+)}
 
   {popUp_Add_or_Edit__show && 
 <Add_Edit_User
@@ -136,6 +157,13 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   btn_add_many_show={false}
   // btn_add_single_action={add_resource_item}
 
+  btn_trash_show={true} 
+  btn_trash_action={handleClickComingSoon}
+  btn_trash_id={"tmp"}
+  
+  btn_gear_show={true} 
+  btn_gear_action={handleClickComingSoon}
+  btn_gear_id={""}
 
  />
  
@@ -205,5 +233,5 @@ No Records for this search.
     );
   }
   
-  export default Results_All;
+  export default Users_list;
 

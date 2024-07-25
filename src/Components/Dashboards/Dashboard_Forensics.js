@@ -243,16 +243,22 @@ colors={"Basic"} // Basic , Alert
             HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
             list_array_column1={{ key: "Hostname", previewName: "Name" }}
             list_array_column2={{ key: "FirstSeen", previewName: "Date" }}
-            list_array={DashBoardData?.Velociraptor?.NewUsers}
+            list_array={DashBoardData?.Velociraptor?.NewUsers || []}
             is_popup={false}
           />
           <PreviewBox_type6_list_box
             HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
             list_array_column1={{ key: "Hostname", previewName: "Name" }}
             list_array_column2={{ key: "LastSeen", previewName: "Date" }}
-            list_array={DashBoardData?.Velociraptor?.RecentHosts}
+            list_array={DashBoardData?.Velociraptor?.RecentHosts  || []}
             is_popup={false}
           />
+
+
+
+ 
+
+
 
           <PreviewBox_type1_number_no_filters
             HeadLine="Number of Sketches "

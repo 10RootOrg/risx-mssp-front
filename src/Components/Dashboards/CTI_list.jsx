@@ -15,7 +15,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
   // Adjust the path as needed based on your project structure
  
  
-import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader } from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader ,PopUp_Under_Construction} from '../PopUp_Smart.js'
 
  import LMloader from "../Features/LMloader.svg";
  import './Dashboard_Results_all.css'
@@ -63,7 +63,15 @@ console.log("-------handle_click_result-------------",Info);
 
 }
 
- 
+const handleClickComingSoon = () => {
+  set_PopUp_Under_Construction__txt({
+    HeadLine: "Coming Soon!",
+    paragraph: `We are working on creating this feature. Stay tuned for updates as we finalize the details.`,
+    buttonTitle: "Close",
+  });
+  set_PopUp_Under_Construction__show(true);
+};
+
 
 
 
@@ -121,7 +129,15 @@ if (Preview_this_Results?.length >=2&&firstTimeData ) {
 
 
 
-{/* PopUp_Request_info__show */}
+{PopUp_Under_Construction__show && (
+<PopUp_Under_Construction
+popUp_show={PopUp_Under_Construction__show}
+set_popUp_show={set_PopUp_Under_Construction__show}
+HeadLine={PopUp_Under_Construction__txt.HeadLine}
+paragraph={PopUp_Under_Construction__txt.paragraph}
+buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+/>
+)}
 
 {PopUp_Request_info__show &&
  <PopUp_Request_info
@@ -163,7 +179,13 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   btn_add_many_show={false}
   // btn_add_many_action={}
 
-
+  btn_trash_show={true} 
+  btn_trash_action={handleClickComingSoon}
+  btn_trash_id={"tmp"}
+  
+  btn_gear_show={true} 
+  btn_gear_action={handleClickComingSoon}
+  btn_gear_id={""}
  />
  
 </div>

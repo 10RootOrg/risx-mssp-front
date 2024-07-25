@@ -13,7 +13,7 @@ import { ReactComponent as IconBIG } from '../icons/ico-menu-alert.svg';
   // Adjust the path as needed based on your project structure
  
  
-import {PopUp_All_Good ,PopUp_Alert_info,PopUp_loader } from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Alert_info,PopUp_loader,PopUp_Under_Construction } from '../PopUp_Smart.js'
 
  import LMloader from "../Features/LMloader.svg";
 //  import './Dashboard_Results_all.css'
@@ -26,6 +26,9 @@ function Alert_list({
     const [is_search, set_is_search] = useState(false);
 
 console.log("Preview_this_Results",Preview_this_Results);
+const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
+const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
+
 
 
   const [PopUp_Alert_info__show, set_PopUp_Alert_info__show] = useState(false);
@@ -46,7 +49,16 @@ console.log("Preview_this_Results",Preview_this_Results);
   const [sort_by, set_sort_by] = useState("StartDate");
   const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
 
- 
+  const handleClickComingSoon = () => {
+    set_PopUp_Under_Construction__txt({
+      HeadLine: "Coming Soon!",
+      paragraph: `We are working on creating this feature. Stay tuned for updates as we finalize the details.`,
+      buttonTitle: "Close",
+    });
+    set_PopUp_Under_Construction__show(true);
+  };
+
+
 
 const handle_click_result = (Info) =>{
 console.log("-------handle_click_result-------------",Info);
@@ -115,7 +127,15 @@ if (Preview_this_Results?.length >=2&&firstTimeData ) {
 
 {PopUp_loader__show && <PopUp_loader popUp_show={PopUp_loader__show} /> }
  
-
+{PopUp_Under_Construction__show && (
+<PopUp_Under_Construction
+popUp_show={PopUp_Under_Construction__show}
+set_popUp_show={set_PopUp_Under_Construction__show}
+HeadLine={PopUp_Under_Construction__txt.HeadLine}
+paragraph={PopUp_Under_Construction__txt.paragraph}
+buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+/>
+)}
 
 {PopUp_Alert_info__show &&
  <PopUp_Alert_info
@@ -134,7 +154,7 @@ buttonTitle={PopUp_Alert_info__txt.buttonTitle}
 
 <div className='resource-group-list-headline mb-c ' >
 
-<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Alert list</p></div>
+<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Alert list (work in progress)</p></div>
 
  <ResourceGroup_Action_btns
   items_for_search={Preview_this_Results}
@@ -146,7 +166,13 @@ buttonTitle={PopUp_Alert_info__txt.buttonTitle}
   btn_add_many_show={false}
   // btn_add_many_action={}
 
-
+  btn_trash_show={true} 
+  btn_trash_action={handleClickComingSoon}
+  btn_trash_id={"tmp"}
+  
+  btn_gear_show={true} 
+  btn_gear_action={handleClickComingSoon}
+  btn_gear_id={""}
  />
  
 </div>

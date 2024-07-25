@@ -415,6 +415,7 @@ function PreviewBox_type1_number_no_filters({
     // set_display_this={set_display_data_type}
     // display_this_value={"Critical"}
 
+    const dont_display_color  = getComputedStyle(document.documentElement).getPropertyValue('--color-Grey2');
 
 
     
@@ -459,8 +460,9 @@ const  handle_click = () => {
     StatusColor == undefined ?  'Bg-Grey2'  :
     'Bg-Grey2'   ;
    
-  
-    return (
+
+    console.log("BigNumber",HeadLine, BigNumber);
+     return (
       <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
         onClick={handle_click}
         onMouseEnter={handleHover}
@@ -497,7 +499,10 @@ const  handle_click = () => {
 
 
           </div>
-      <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
+      <div className='PreviewBox_SmallNumber   font-type-txt Color-White'
+       style={{    color:   (isHovered ? "#00DBFF" : ( !BigNumber   ? dont_display_color   :               txt_color || ""))
+
+        ,
   }} >{SmallNumberTxt}{SmallNumber && ": "}{SmallNumber}</div>
       </div>
   
@@ -517,7 +522,9 @@ const  handle_click = () => {
 function PreviewBox_type2_pie({colors, HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
 }) {
  
-   
+  const [display_data, set_display_data] = useState(false);
+const [has_data, set_has_data]= useState(false)
+
   const  handle_click = () => {
     if (set_display_this === undefined) {return}
     if(display_this === display_this_value){ set_display_this("prime_data")}
@@ -537,9 +544,8 @@ getComputedStyle(document.documentElement).getPropertyValue('--alert-color-mediu
 getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
 ];  
 
- 
+ const dont_display_color  = getComputedStyle(document.documentElement).getPropertyValue('--color-Grey2');
 
-const [has_data, set_has_data]= useState(false)
 // const bar_numbers_zero = [1]
 
 useEffect(() => {
@@ -558,9 +564,45 @@ useEffect(() => {
 }, [bar_numbers]);
 
 
-  
- 
+useEffect(() => {
 
+  console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
+  console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
+  console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
+  console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
+  console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
+  console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
+  console.log(HeadLine," bar_numbers", bar_numbers);
+
+
+ 
+      if (
+        Array.isArray(bar_numbers) &&
+        bar_numbers.length === 1 &&
+        bar_numbers[0] === "NA"
+        //  &&
+        // Array.isArray(bar_headlines) &&
+        // bar_headlines.length === 1 &&
+        // bar_headlines[0] === "NA" 
+      ) 
+      
+      
+      {
+        set_display_data(false); 
+      }
+      else if(
+        bar_numbers.length > 1 && bar_numbers.every(item => item === "NA") ){
+          set_display_data(false); 
+            console.log(HeadLine,"its more then 1 everybody id NA ", bar_numbers);
+      }
+
+
+
+
+  else{set_display_data(true); }
+    }, [bar_numbers, bar_headlines]);
+ 
+    
   
   const data ={
     // labels: ['Yes', 'No'],
@@ -570,11 +612,13 @@ useEffect(() => {
       label:bar_title_legend,
       // data: bar_numbers,
       // data: bar_numbers_zero,
-      data:    has_data ? bar_numbers :  [1],
+      data: display_data === false ? [1] : (has_data ? bar_numbers : [1]),
       backgroundColor: (() => {
-        if (colors == "Basic") {
+        if (display_data === false || has_data === false) {
+          return dont_display_color;
+        } else if (colors === "Basic") {
           return BasicColors;
-        } else if (colors == "Alert") {
+        } else if (colors === "Alert") {
           return AlertColors;
         } else {
           return BasicColors; // default case
@@ -611,7 +655,12 @@ useEffect(() => {
   
   
 <div className='display-flex  justify-content-center  ' style={{   width:"100%" ,gap:"2px" }}>
+
+   { display_data && <>
         <div className='display-flex flex-direction-column justify-content-center  ' style={{ marginRight:"10px",   gap:"2px" }}>
+
+     
+
   {Array.isArray(bar_headlines) && bar_headlines?.map((Info, index) => {
 return(
 <div className='display-flex' style={{marginRight:"auto"}} key={index}>
@@ -625,8 +674,9 @@ return(
 </div>
 )
 })}
-  </div>
 
+  </div>
+  
        <div className='display-flex flex-direction-column   ' style={{  gap:"2px"  }}>
        {Array.isArray(bar_numbers) &&  bar_numbers?.map((Info, index) => {
   return(
@@ -636,6 +686,13 @@ return(
   )
    })}
        </div>
+</>  }     
+
+
+
+       {!display_data &&  <div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}><p className='font-type-h4 Color-Grey2' style={{}}>No Records</p> </div>}
+
+
        </div>
 
 
@@ -643,7 +700,7 @@ return(
 
         </div>
          
-   
+
          
           </div>
     )
@@ -651,6 +708,7 @@ return(
 
 function PreviewBox_type3_bar({HeadLine , bar_numbers, bar_headlines, bar_title_legend ,is_popup, display_y_axis ,colors , enable_hover, display_this, set_display_this,display_this_value}) {
  
+  const [display_data, set_display_data] = useState(false);
 
   const BasicColors = bar_numbers.map((item, index, array) => {
     const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
@@ -664,7 +722,31 @@ getComputedStyle(document.documentElement).getPropertyValue('--alert-color-mediu
 getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
 ];  
 
+useEffect(() => {
 
+  console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
+  console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
+  console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
+  console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
+  console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
+  console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
+  console.log(HeadLine," bar_numbers", bar_numbers);
+
+
+ 
+      if (
+        Array.isArray(bar_numbers) &&
+        bar_numbers.length === 1 &&
+        bar_numbers[0] === "NA" &&
+        Array.isArray(bar_headlines) &&
+        bar_headlines.length === 1 &&
+        bar_headlines[0] === "NA" 
+      ) {
+        set_display_data(false); 
+      }
+  
+  else{set_display_data(true); }
+    }, [bar_numbers, bar_headlines]);
 
     
   const  handle_click = () => {
@@ -683,8 +765,8 @@ if (set_display_this === undefined) {return}
     // labels:   all_Resource_Types.map(item => item.resource_type_name),
     datasets:[{
       label:bar_title_legend,
-      data: bar_numbers,
-      backgroundColor:    (() => {
+      data:   bar_numbers,
+      backgroundColor: display_data === false ? "grey" : (() => {
         if (colors === "Basic") {
           return BasicColors;
         } else if (colors === "Alert") {
@@ -737,6 +819,10 @@ if (set_display_this === undefined) {return}
   
   
   };
+
+
+
+
     return (
 
       <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}      onClick={handle_click}>
@@ -745,12 +831,12 @@ if (set_display_this === undefined) {return}
   
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
-        <div className='display-flex   justify-content-space-between' style={{ height:"100%" ,paddingRight:"20px", paddingLeft:"20px" , gap:"20px"}}>
-  
+
+
+            {display_data &&
+         <div className='display-flex   justify-content-space-between' style={{ height:"100%" ,paddingRight:"20px", paddingLeft:"20px" , gap:"20px"}}>
         <div className='display-flex  'style={{ height: "auto", maxHeight: "150px", width: "100%", maxWidth: "600px", overflow: "hidden" }}> 
         <Bar  data={data}  options={options}  style={{   width:"auto" }} ></Bar></div>
-  
-  
 <div className='display-flex  justify-content-center  ' style={{   width:"auto" ,gap:"2px" }}>
         <div className='display-flex flex-direction-column justify-content-center  ' style={{ marginRight:"10px",   gap:"2px" }}>
   {Array.isArray(bar_headlines) &&  bar_headlines?.map((Info, index) => {
@@ -786,10 +872,10 @@ return(
 
 
         </div>
-         
-   
-         
-          </div>
+         }
+        {!display_data &&  <div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}><p className='font-type-h4 Color-Grey2' style={{}}>No Records</p> </div>}
+
+ </div>
     )
   }
  
@@ -895,20 +981,90 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
           is_tags
         }) {
 
-
-          console.log("list_array",list_array);
+          const [display_data, set_display_data] = useState(false);
+       
          const handle_click = () => {
             console.log("click on PreviewBox_type6_list_box" );
     
           }
-        
+
+
+          useEffect(() => {
+            // console.log(HeadLine,"list_array",list_array, list_array.length === 0 ,  );
+            // set_display_data(true);
+            // console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
+            // console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
+            // console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
+            // console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
+            // console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
+            // console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
+            // console.log(HeadLine," bar_numbers", bar_numbers);
+          
+          
+               if (
+              Array.isArray(list_array) &&
+              list_array.length === 0 
+
+
+              // Array.isArray(bar_headlines) &&
+
+              //  &&
+              // Array.isArray(bar_headlines) &&
+              // bar_headlines.length === 1 &&
+              // bar_headlines[0] === "NA" 
+            ) 
+            
+            
+            {
+
+
+              console.log(HeadLine, "111111111111111111");
+              set_display_data(true); 
+            }
+           
+              else  if (
+                  Array.isArray(list_array) &&
+                  list_array.length === 1 &&
+                  list_array[0] === "NA"
+                  //  &&
+                  // Array.isArray(bar_headlines) &&
+                  // bar_headlines.length === 1 &&
+                  // bar_headlines[0] === "NA" 
+                ) 
+                
+                
+                {
+                  console.log(HeadLine, "22222222222222222");
+                  set_display_data(false); 
+                }
+                else if(
+                  list_array.length > 1 && list_array.every(item => item === "NA") ){
+                    set_display_data(false); 
+                      console.log(HeadLine,"its more then 1 everybody id NA ", list_array);
+                      console.log(HeadLine, "33333333333333333");
+                }
+          
+          
+          
+          
+            else{
+              set_display_data(true);
+              console.log(HeadLine, "4444444444444444444");
+             }
+              }, [list_array ]);
+
+
+          console.log(HeadLine, "list_array" , list_array   );
+          console.log(HeadLine, "list_array.length" ,   list_array.length   );
+
+
           return (
             <div className={`PreviewBox ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{  overflow: 'hidden' }} onClick={handle_click}>
         
               <div className='PreviewBox_HeadLine '>
                 <p className="font-type-menu">{HeadLine}</p>
               </div>
-  {!list_array || list_array.length != 0  &&      
+  {list_array.length != 0 &&  display_data   &&      
               <div className='table-container' style={{ 
                 height: 'calc(100% - 20px)',
                  overflowY: 'auto' }}>
@@ -947,18 +1103,24 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
 } 
 
 
-{!list_array || list_array.length === 0  &&      
+{/* {HeadLine} */}
+
+
+{     !display_data && 
 <div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}>
 
-              {list_array == undefined && 
-<p className='font-type-h2'
+
+
+
+           
+<p className='font-type-h2 Color-Grey2'
 style={{
 
 }}
->NA</p>}
+>NA</p> 
 
-{list_array  && list_array.length === 0 &&
-<p className='font-type-h4'
+{ list_array.length === 0 &&  display_data && 
+<p className='font-type-h4  Color-Grey2'
 style={{
  
   // textAlign:"center"
@@ -968,6 +1130,29 @@ style={{
 >No Records</p>}
 </div>
         }
+
+
+{     list_array.length === 0 &&  display_data && 
+<div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}>
+
+
+
+
+ 
+
+ 
+<p className='font-type-h4  Color-Grey2'
+style={{
+ 
+  // textAlign:"center"
+  // color: isHovered ? "#00DBFF" : (txt_color || color),
+  // transition: "color 0.15s ease-in-out",
+}}
+>No Records</p> 
+</div>
+        }
+
+
 
 
 
@@ -980,6 +1165,51 @@ style={{
 
 
         function PreviewBox_type7_wide_bar({ HeadLine, is_popup, enable_hover, list_array_column2, list_array_column1, list_array }) {
+          const [display_data, set_display_data] = useState(false);
+
+
+          useEffect(() => {
+               if (
+              Array.isArray(list_array) &&
+              list_array.length === 0 
+            ) 
+          
+            {
+              console.log(HeadLine, "111111111111111111");
+              set_display_data(true); 
+            }
+           
+              else  if (
+                  Array.isArray(list_array) &&
+                  list_array.length === 1 &&
+                  list_array[0] === "NA"
+                ) 
+                
+                
+                {
+                  console.log(HeadLine, "22222222222222222");
+                  set_display_data(false); 
+                }
+                else if(
+                  list_array.length > 1 && list_array.every(item => item === "NA") ){
+                    set_display_data(false); 
+                      console.log(HeadLine,"its more then 1 everybody id NA ", list_array);
+                      console.log(HeadLine, "33333333333333333");
+                }
+          
+          
+          
+          
+            else{
+              set_display_data(true);
+              console.log(HeadLine, "4444444444444444444");
+             }
+              }, [list_array ]);
+
+
+
+
+
           const handle_click = () => {
             console.log("click on PreviewBox_type6_list_box");
           };
