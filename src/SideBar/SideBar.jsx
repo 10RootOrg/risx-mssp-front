@@ -598,7 +598,7 @@ function SideBar({
           </div>
         </button>
 
-        <button
+        {/* <button
           className="btn-menu  "
           onClick={() => handleClick("Users")}
           disabled={visblePage === "Users"}
@@ -609,9 +609,9 @@ function SideBar({
           </div>
           <div className="btn-menu-icon-placeholder  ">
             {" "}
-            {/*  <MenuArrowDown  />*/}
+         
           </div>
-        </button>
+        </button> */}
 
         <button
           className="btn-menu  "
