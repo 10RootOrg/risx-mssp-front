@@ -21,7 +21,7 @@ import axios from 'axios'
  import GeneralContext from '../../Context.js';
 
 //  import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
-// import {PopUp_All_Good ,PopUp_Are_You_Sure ,PopUp_Under_Construction} from '../PopUp_Smart'
+ import { PopUp_Under_Construction} from '../PopUp_Smart'
 
  import LMloader from "../Features/LMloader.svg";
 function ResourceGroup_List({
@@ -48,6 +48,11 @@ function ResourceGroup_List({
   const [sort_by, set_sort_by] = useState("");
   // const [item_types_list, set_item_types_list] = useState([]);
   // const [item_tool_list, set_item_tool_list] = useState([]);
+
+  const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
+  const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
+  
+
 console.log("sort_by",sort_by);
 console.log("firstTimeData",firstTimeData);
 console.log("asset_type_id",asset_type_id);
@@ -84,6 +89,15 @@ return <IconNoIcon />;
 }
 };
 
+const handleClickComingSoon = (x) => {
+  console.log(x);
+  set_PopUp_Under_Construction__txt({
+    HeadLine: "Coming Soon!",
+    paragraph: `We are working on creating this feature. Stay tuned for updates as we finalize the details.`,
+    buttonTitle: "Close",
+  });
+  set_PopUp_Under_Construction__show(true);
+};
 
  
 useEffect(() => { 
@@ -214,7 +228,15 @@ if (assets_list_from_db?.length >=2&&firstTimeData ) {
  
 <>
 
- 
+{PopUp_Under_Construction__show && (
+<PopUp_Under_Construction
+popUp_show={PopUp_Under_Construction__show}
+set_popUp_show={set_PopUp_Under_Construction__show}
+HeadLine={PopUp_Under_Construction__txt.HeadLine}
+paragraph={PopUp_Under_Construction__txt.paragraph}
+buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+/>
+)}
 
 <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
 
@@ -253,8 +275,21 @@ btn_add_many_show={true}
 btn_add_many_action={Add_Many}
 btn_add_many_id={asset_type_id}
 
+btn_trash_show={true} 
+btn_trash_action={handleClickComingSoon}
+btn_trash_id={"tmp"}
+
+btn_gear_show={true} 
+btn_gear_action={handleClickComingSoon}
+btn_gear_id={""}
+
+
+
 btn_collapse_show={true}
 btn_collapse_action={handle_back}
+
+
+
  />
 
 </div>

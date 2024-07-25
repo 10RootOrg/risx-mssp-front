@@ -73,7 +73,7 @@ function Dashboard_Threat_Hunting({
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="Tag: Critical (*)"
+            HeadLine="Tag: Critical (work in progress)"
             resource_type_id={null}
             BigNumber={1} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}
@@ -88,7 +88,7 @@ function Dashboard_Threat_Hunting({
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="Tag: High (*)"
+            HeadLine="Tag: High (work in progress)"
             resource_type_id={null}
             BigNumber={11} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}
@@ -103,7 +103,7 @@ function Dashboard_Threat_Hunting({
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="Tag: Critical (*)"
+            HeadLine="Tag: Critical (work in progress)"
             resource_type_id={null}
             BigNumber={8} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}
@@ -118,7 +118,7 @@ function Dashboard_Threat_Hunting({
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="Number of results (*)"
+            HeadLine="Number of results (work in progress)"
             resource_type_id={null}
             BigNumber={37} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}

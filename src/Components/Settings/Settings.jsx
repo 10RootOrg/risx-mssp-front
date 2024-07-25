@@ -9,6 +9,10 @@ import Settings_section_ShowInUi from "./Settings_section_ShowInUi.jsx";
 import Settings_section_process from "./Settings_section_process.jsx";
 import Settings_section_edit_mssp_config_json from "./Settings_section_edit_mssp_config_json.jsx";
 import Settings_section_logs from "./Settings_section_logs.jsx";
+import Users from "../Users/Users.js"
+
+
+
 
 import Settings_Menu from "./Settings_Menu.jsx";
 
@@ -26,7 +30,119 @@ function Settings({
 
   const { all_Tools, front_URL } = useContext(GeneralContext);
 
-  const [MenuSelector, setMenuSelector] = useState("Main Config");
+  const [Preview_This_comp, set_Preview_This_comp] = useState("Main Config");
+  const [Preview_This_in_menu, set_Preview_This_in_menu] = useState("Main Config");
+
+
+
+  const [show_nested, set_show_nested] = useState(false);
+
+
+const handle_Click_Btn =(value ,is_nasted , show_nested , fater_value) =>{
+
+
+  console.log("Preview_This_comp" , Preview_This_comp);
+  console.log("value        fater_value"    , fater_value);
+  console.log("value             value"    , value);
+  console.log("value        22222"    , value != fater_value);
+
+ 
+ 
+
+  // set_Preview_This_comp(value);
+
+  if (is_nasted === false){ 
+
+
+if(value != fater_value){ 
+  console.log("he has a father");
+  console.log("i am your fater " , fater_value);
+  // set_Preview_This_comp(fater_value);
+  set_Preview_This_comp(value);
+  set_Preview_This_in_menu(fater_value);
+  return
+}
+else{
+  set_show_nested(false)
+  set_Preview_This_comp(value);
+  set_Preview_This_in_menu(value);
+  return
+}
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
+else{ 
+
+  console.log("nested");
+
+if(show_nested === true){ 
+  
+  // set_Preview_This_in_menu(value);
+  set_show_nested(false)}
+
+else{  
+   set_show_nested(true)}
+
+   }
+
+
+
+}
+
+
+
+
+const handle_Click_child_Btn =(value ,is_nasted , show_nested , fater_value) =>{
+  console.log("Preview_This_comp" , Preview_This_comp);
+
+
+
+  console.log("value        22222" , value);
+
+  console.log("fater_value  3333" , fater_value);
+ 
+
+  // set_Preview_This_comp(value);
+
+  if (is_nasted === false){ 
+    console.log("notnested");
+    set_show_nested(false)
+    set_Preview_This_comp(value);
+
+  }
+
+
+else{ 
+
+  console.log("nested");
+
+if(show_nested === true){ 
+  console.log("dddddddddddddddddddddd");
+  
+  set_show_nested(false)}
+
+else{   set_show_nested(true)}
+
+   }
+
+
+
+}
+
+
+
 
   //  show sidebar in this page
   useEffect(() => {
@@ -71,28 +187,28 @@ function Settings({
         <div className="resource-group-top-boxes mb-c"></div>
 
         <div className="mb-d">
-          <Settings_Menu setMenuSelector={setMenuSelector} MenuSelector={MenuSelector} />{" "}
+          <Settings_Menu Preview_This_in_menu={Preview_This_in_menu} Preview_This_comp={Preview_This_comp} show_nested={show_nested}  set_show_nested={set_show_nested}        handle_Click_Btn={handle_Click_Btn}/>{" "}
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "45px" }}>
-          {MenuSelector == "Main Config" && <Settings_section_config />}
+          {Preview_This_comp == "Main Config" && <Settings_section_config />}
 
-          {MenuSelector == "UI Settings" && (
+          {Preview_This_comp == "UI Settings" && (
             <Settings_section_ShowInUi all_Tools={all_Tools} />
           )}
 
-          {MenuSelector == "Module paths" && (
+          {Preview_This_comp == "Module paths" && (
             <Settings_section_edit_mssp_config_json all_Tools={all_Tools} />
           )}
 
-          {MenuSelector == "Output Sample" && (
+          {Preview_This_comp == "Output Sample" && (
             <Settings_section_process
               isMainProcessWork={isMainProcessWork}
               set_isMainProcessWork={set_isMainProcessWork}
             />
           )}
-          {MenuSelector == "Portainer" && <PortAiner />}
-          {MenuSelector == "Backend Log" && (
+          {Preview_This_comp == "Portainer" && <PortAiner />}
+          {Preview_This_comp == "Backend Log" && (
             <Settings_section_logs
               usethis={"log_mssp_backend"}
               fileName={"msspBack.log"}
@@ -100,7 +216,7 @@ function Settings({
               subline={"Node JS backend"}
             />
           )}
-          {MenuSelector == "Python Main Log" && (
+          {Preview_This_comp == "Python Main Log" && (
             <Settings_section_logs
               usethis={"log_python_main"}
               fileName={"main.log"}
@@ -108,7 +224,7 @@ function Settings({
               subline={"Python Main log"}
             />
           )}
-          {MenuSelector == "Python Interval Log" && (
+          {Preview_This_comp == "Python Interval Log" && (
             <Settings_section_logs
               usethis={"log_python_interval"}
               fileName={"interval.log"}
@@ -116,6 +232,20 @@ function Settings({
               subline={"Active Now"}
             />
           )}
+
+{/* {Preview_This_comp == "Python Interval Log" && (
+            <Users_list
+              usethis={"log_python_interval"}
+              fileName={"interval.log"}
+              headline={"Python Interval"}
+              subline={"Active Now"}
+            />
+          )} */}
+     {Preview_This_comp == "Users" && ( <Users />)}
+
+
+
+
         </div>
       </div>
     </>

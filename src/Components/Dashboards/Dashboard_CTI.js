@@ -92,13 +92,13 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
               MISPData?.Response?.top_10_tags
                 .sort((a, b) => b.Count - a.Count)
                 ?.slice(0, 5)
-                ?.map((item) => item?.Count) || []
+                ?.map((item) => item?.Count) || ["NA"]
             }
             bar_headlines={
               MISPData?.Response?.top_10_tags
                 .sort((a, b) => b.Count - a.Count)
                 ?.slice(0, 5)
-                ?.map((item) => item?.Name) || []
+                ?.map((item) => item?.Name) || ["NA"]
             }
             // bar_numbers = {[ "11","22","41","5"]}
             // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
@@ -115,7 +115,7 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
             list_array={
               MISPData?.Response?.top_10_tags.sort(
                 (a, b) => b.Count - a.Count
-              ) || []
+              ) || ["NA"]
             }
             is_popup={false}
             is_tags={true}
@@ -187,18 +187,33 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
               MISPData?.Response?.top_10_attribute_types
                 .sort((a, b) => b.Count - a.Count)
                 ?.slice(0, 5)
-                ?.map((item) => item?.Count) || []
+                ?.map((item) => item?.Count) || ["NA"]
             }
             bar_headlines={
               MISPData?.Response?.top_10_attribute_types
                 .sort((a, b) => b.Count - a.Count)
                 ?.slice(0, 5)
-                ?.map((item) => item?.Name) || []
+                ?.map((item) => item?.Name) || ["NA"]
             }
             bar_title_legend={["total"]}
             is_popup={false}
             colors={"Basic"} // Basic , Alert
           />
+
+
+{/* <PreviewBox_type2_pie
+HeadLine="Hunts Distribution"
+// bar_numbers={["4","32","261","113" ]}
+bar_numbers={[
+  DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA",
+  DashBoardData?.Velociraptor?.UnfinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.UnfinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.UnfinishedHunts : "NA",
+]}
+ */}
+
+
+
+
+
 
           <PreviewBox_type6_list_box
             HeadLine="MISP Attributes Top10 Types"

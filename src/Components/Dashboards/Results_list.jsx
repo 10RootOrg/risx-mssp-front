@@ -378,17 +378,21 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   items_for_search={Preview_this_Results}
   set_items_for_search={set_Preview_this_Results}
   set_is_search={set_is_search}
+
   btn_add_single_show={false}
   // btn_add_single_action={add_resource_item}
   // btn_add_single_value={"add"}
-
   btn_add_many_show={false}
   // btn_add_many_action={}
 
 
-  btn_trash_show={true}
+  btn_trash_show={true} 
   btn_trash_action={handleClickComingSoon}
-
+  btn_trash_id={"tmp"}
+  
+  btn_gear_show={true} 
+  btn_gear_action={handleClickComingSoon}
+  btn_gear_id={""}
 
  />
  

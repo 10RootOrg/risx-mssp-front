@@ -8,10 +8,10 @@ const Counter = ({ target, isHovered, txt_color }) => {
   const [big_number_type, set_big_number_type] = useState("");
 
 
-
+  const dont_display_color  = getComputedStyle(document.documentElement).getPropertyValue('--color-Grey2');
    const [count, setCount] = useState(0);
-  const [color, setColor] = useState("rgb(229, 229, 229)");
-  
+  const [color, setColor] = useState(  target !== undefined &&  target !== null  ? "rgb(229, 229, 229)" : dont_display_color);
+
 
 
    useEffect(() => { 
@@ -96,13 +96,13 @@ duration = 2200; // 1.5 seconds in milliseconds
 
       if (count_this_number > 200 && count_this_number < 999) {
 
-        console.log("2222222222222" , count_this_number);
+        console.log("count_this_number" , count_this_number);
         fast___set = 5;
         duration = 1000;
       }
 
       if (201 > count_this_number > 0) {
-        console.log("3333333333333333333333", count_this_number);
+        console.log("count_this_number", count_this_number);
         fast___set = 0.2;
       }
 
@@ -150,7 +150,10 @@ duration = 2200; // 1.5 seconds in milliseconds
         setColor(`rgb(${r}, ${g}, ${b})`);
         window.requestAnimationFrame(step);
       } else {
-        setColor("rgb(229, 229, 229)");
+
+        if(target == undefined &&  target == null )   {setColor(dont_display_color)}   
+       else{ setColor("rgb(229, 229, 229)")}
+       
       }
     };
 

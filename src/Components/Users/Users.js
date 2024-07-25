@@ -8,7 +8,7 @@ import { format_date_type_a,format_date_type_c } from '../Features/DateFormat.js
 
 
 function Users({show_SideBar,set_show_SideBar,set_unseen_alert_number,set_visblePage}) {
-  set_visblePage("Users");
+  // set_visblePage("Users");
 
     const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
     const [Preview_this_Results, set_Preview_this_Results] = useState([]);
@@ -70,41 +70,8 @@ if (backEndURL === undefined){return}
     return (
  
 <>
-<div className='app-main' >
-
-  
-{/* <div className='top-of-page'> 
-
-<div className='top-of-page-left mb-b'>
-<p  className="font-type-menu" >Admin:</p>
-<p  className="font-type-h3" >Users</p>
-</div>
-<div className='top-of-page-center'> </div>
-
-<div className='top-of-page-right'>
-<input className="input-type1 mr-a" placeholder="Search" />
-<button className="btn-type1 "><IconSearch className="icon-type1" />  </button>
-</div>
-
-
-</div> */}
-
-{/* <div className='resource-group-top-boxes mb-c' >
 
  
-
-
-
- 
- 
-
-
- </div> */}
-     <div>
- {/* <p className='font-type-menu   Color-Grey1 mb-c'>Admin only:</p> */}
-
-
-</div>
 <div className='resource-group-all-the-Lists'>
 
 {/*  */}
@@ -114,7 +81,7 @@ if (backEndURL === undefined){return}
 
 </div>
 
-</div>
+
  
 </>
 
