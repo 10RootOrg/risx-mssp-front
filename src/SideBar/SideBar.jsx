@@ -24,8 +24,8 @@ import {
 
 import GeneralContext from "../Context";
 import axios from "axios";
-
 import { Make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
+
 
 function SideBar({
   visblePage,
@@ -102,7 +102,7 @@ function SideBar({
 
 
   const handleNewWindow = (dashboard_name) => {
-    const url = make_url_from_id(dashboard_name, moduleLinks, front_IP);
+    const url = Make_url_from_id(dashboard_name, moduleLinks, front_IP);
     console.log("handleNewWindow url - ", url);
 
     if (url) {
