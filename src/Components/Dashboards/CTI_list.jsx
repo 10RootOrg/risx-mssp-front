@@ -29,6 +29,8 @@ function CTI_list({
 
 console.log("Preview_this_Results",Preview_this_Results);
 
+const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
+const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
 
   const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
   const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({

@@ -24,6 +24,11 @@ function ResourceGroup_Action_btns({
 
   btn_collapse_show,
   btn_collapse_action,
+
+  btn_trash_show,
+  btn_trash_action,
+
+
 }) {
 
  
@@ -41,13 +46,6 @@ if(items_for_search?.length > all_items?.length){
 }
 
   }, [items_for_search ])
-
-
-
-
-
-
-
 
 
 useEffect(() => {
@@ -92,7 +90,9 @@ const filteredItems = all_items.filter(item => {
 
       {btn_add_single_show  && <button className="btn-type1" onClick={()=>btn_add_single_action(btn_add_single_value,btn_add_single_id)}><IconPlus className="icon-type1" /></button>}
 
-      <button className="btn-type1"><IconTrash className="icon-type1" />  </button>
+      <button className="btn-type1"><IconTrash className="icon-type1"
+        // onClick={()=>btn_trash_action()}
+        />  </button>
       <button className="btn-type1"><IconSettings className="icon-type1" />  </button>
 
       {btn_collapse_show  && <> <IconLine className=" " /><button className="btn-type1" onClick={btn_collapse_action}><IconExpend className="icon-type1" /></button></>}
