@@ -26,7 +26,6 @@ import GeneralContext from "../Context";
 import axios from "axios";
 import { Make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
 
-
 function SideBar({
   visblePage,
   set_visblePage,
@@ -40,8 +39,14 @@ function SideBar({
   // const [openSubMenu, set_openSubMenu] = useState("none")
   const navigate = useNavigate();
   const [user_name, set_user_name] = useState("user");
-  const { backEndURL, user_id, moduleLinks, front_IP ,front_URL, mssp_config_json } =
-    useContext(GeneralContext);
+  const {
+    backEndURL,
+    user_id,
+    moduleLinks,
+    front_IP,
+    front_URL,
+    mssp_config_json,
+  } = useContext(GeneralContext);
 
   const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
   const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({
@@ -100,7 +105,6 @@ function SideBar({
     navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name\
   };
 
-
   const handleNewWindow = (dashboard_name) => {
     const url = Make_url_from_id(dashboard_name, moduleLinks, front_IP);
     console.log("handleNewWindow url - ", url);
@@ -109,8 +113,6 @@ function SideBar({
       window.open(url, "_blank");
     }
   };
-
-
 
   const handle_Dashboards_drop_down = () => {
     set_Dashboards_drop_down(!Dashboards_drop_down);
@@ -132,23 +134,21 @@ function SideBar({
       );
 
       if (res) {
-        console.log("ssssssssssssssssssssssss", res);
+        console.log(
+          "ssssssssssssssssssssssss",
+          object?.General?.AgentLinks[os].split("/").pop()
+        );
         const url = window.URL.createObjectURL(res.data);
         console.log(url);
 
         // window.open(url)
         console.log(
-          os == "Windows"
-            ? "Velociraptor Client" + ".msi"
-            : "Velociraptor Client",
+          object?.General?.AgentLinks[os].split("/").pop(),
           "zzzzzzzzzzzzzzzzzzzzzzzzzzzz"
         );
         var link = document.createElement("a");
         link.href = url;
-        link.download =
-          os == "Windows"
-            ? "Velociraptor Client" + ".msi"
-            : "Velociraptor Client";
+        link.download = object?.General?.AgentLinks[os].split("/").pop();
         link.click();
       }
     } catch (err) {
@@ -441,7 +441,7 @@ function SideBar({
             <button
               className="btn-menu"
               // onClick={() => handleClick("dashboard-risx")}
-              onClick={() => handleNewWindow('2001000')}
+              onClick={() => handleNewWindow("2001000")}
               disabled={visblePage === "dashboard-risx"}
             >
               <div className="display-flex">
@@ -459,8 +459,6 @@ function SideBar({
                 <IcoLink />
               </div>
             </button>
-
-
 
             {/* <button
 
@@ -547,7 +545,6 @@ function SideBar({
                 <IcoLink />
               </div>
             </button> */}
-
           </div>
         </div>
 
