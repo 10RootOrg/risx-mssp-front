@@ -10,12 +10,13 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import axios from 'axios';
  import GeneralContext from '../../Context.js';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
+ import { Make_url_from_id ,fix_path} from "../../Components/Dashboards/functions_for_dashboards.js"
  import '../StatusDisplay.css'; 
 
   // Adjust the path as needed based on your project structure
  
  
-import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader } from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction } from '../PopUp_Smart.js'
 
 
 
@@ -27,7 +28,7 @@ function Results_list({
   set_Preview_this_Results,
   loader
   }) {
-    const {  backEndURL ,all_Tools ,front_IP} = useContext(GeneralContext);
+    const {  backEndURL ,all_Tools ,front_IP,front_URL} = useContext(GeneralContext);
     const [is_search, set_is_search] = useState(false);
 
 
@@ -49,6 +50,8 @@ function Results_list({
     buttonTitle:"Close"
   });
 
+  const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
+  const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
 // const status_bar_width = "140px"
 const status_bar_width = "200px"
  
@@ -164,6 +167,15 @@ const status_bar_width = "200px"
     
     }
 
+    const handleClickComingSoon = () => {
+      set_PopUp_Under_Construction__txt({
+        HeadLine: "Coming Soon!",
+        paragraph: `We are working on creating this feature. Stay tuned for updates as we finalize the details.`,
+        buttonTitle: "Close",
+      });
+      set_PopUp_Under_Construction__show(true);
+    };
+
 
 const handle_click_result = (Info) =>{
 console.log("-------handle_click_result-------------",Info);
@@ -217,19 +229,23 @@ if (TimeSketch=== undefined){console.log( "cant make TimeSketch, all_Tools TimeS
 const link = TimeSketch[0]?.toolURL
 if (link=== undefined){console.log( "cant make TimeSketch link its",link);   return }
 
+console.log("all_Tools --------------- --- - - -", all_Tools);
+console.log("link --------------- --- - - -", link);
 
-if ( link.includes("${FRONT_IP}")){ const realURl = link.replace("${FRONT_IP}", front_IP);
-  window.open(  realURl , '_blank');
+const  path = fix_path(link,front_IP,front_URL)
 
- ;   return }
+if (path) { 
+  console.log("TimeSketch path: ", path);
+   window.open(  path , '_blank') ;
+}
+ 
+else{console.log("problem with TimeSketch path, it is:", path); }
 
- if ( !link.includes("${FRONT_IP}")){ window.open(  link   , '_blank');;   return } 
-
-
+ 
 break;
 
 default:
-console.log("default");
+ 
 }
 
 
@@ -290,7 +306,15 @@ if (Preview_this_Results?.length >=2&&firstTimeData ) {
 
 {PopUp_loader__show && <PopUp_loader popUp_show={PopUp_loader__show} /> }
  
-
+{PopUp_Under_Construction__show && (
+<PopUp_Under_Construction
+popUp_show={PopUp_Under_Construction__show}
+set_popUp_show={set_PopUp_Under_Construction__show}
+HeadLine={PopUp_Under_Construction__txt.HeadLine}
+paragraph={PopUp_Under_Construction__txt.paragraph}
+buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+/>
+)}
 
   {PopUp_For__Nuclei__response__show &&
   <PopUp_For__Nuclei__response
@@ -360,6 +384,10 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
   btn_add_many_show={false}
   // btn_add_many_action={}
+
+
+  btn_trash_show={true}
+  btn_trash_action={handleClickComingSoon}
 
 
  />

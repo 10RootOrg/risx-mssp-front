@@ -122,7 +122,7 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
           />
 
           <PreviewBox_type6_list_box
-            HeadLine="MISP - Trending Tags (*)"
+            HeadLine="MISP - Trending Tags (work in progress)"
             list_array_column1={{ key: "name", previewName: "Tag Name" }}
             list_array_column2={{ key: "count", previewName: "#" }}
             list_array={Trending_Tags}

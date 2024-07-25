@@ -3,6 +3,8 @@ import React , {useState , useEffect, useContext} from 'react';
  import { ReactComponent as RisxMssp_logo_wide_small} from './Logos/RisxMssp_logo_wide_small.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
  import { PopUp_For_Read_More ,PopUp_All_Good} from "./PopUp_Smart.js";
+ import { Make_url_from_id ,fix_path} from "../Components/Dashboards/functions_for_dashboards";
+
 //  import jsonData from '../tmpjsons/previewBox-main-velociraptor.json'
  import axios from 'axios';
  import GeneralContext from '../Context.js';
@@ -19,7 +21,7 @@ function PreviewBox_velociraptor({  }) {
   StatusColor === 'red' ? 'Bg-Red' :
   StatusColor === 'blue' ?'Bg-Blue-Glow' : 
   'Bg-Grey2';
-  const {  backEndURL ,all_artifacts,set_all_artifacts,all_Tools,front_IP} = useContext(GeneralContext);
+  const {  backEndURL ,all_artifacts,set_all_artifacts,all_Tools,front_IP,front_URL} = useContext(GeneralContext);
   const [popUp_show, set_popUp_show] = useState(false);
   const [popUp_headline, set_popUp_headline] = useState("");
   const [popUp_ReadMoreText, set_popUp_ReadMoreText] = useState("");
@@ -55,18 +57,19 @@ function PreviewBox_velociraptor({  }) {
 
   const handle_Main_Btn =(toolURL)=>{
 console.log("handle_Main_Btn",toolURL);
-    if(  toolURL.includes("${FRONT_IP}")){
-      const realURl = toolURL.replace("${FRONT_IP}", front_IP);
-     
-      
-      window.open(realURl, '_blank')
-    
-    
-    }
-    else{
-     
-      window.open(toolURL, '_blank')
-    }
+
+
+
+const  path = fix_path(toolURL,front_IP,front_URL)
+
+if (path) { 
+  console.log("Velo path: ", path);
+   window.open(  path , '_blank') ;
+}
+ 
+else{console.log("problem with velociraptor path, it is:", path); }
+
+ 
      
     
  

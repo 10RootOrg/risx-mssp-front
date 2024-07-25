@@ -46,7 +46,7 @@ function Dashboard_ASM({show_SideBar,set_show_SideBar,set_unseen_alert_number,se
 
 
 <PreviewBox_type2_pie
-HeadLine="Nuclei Last Run Distribution (*)"
+HeadLine="Nuclei Last Run Distribution (work in progress)"
 bar_numbers={["4","32","261","113" ]}
 bar_headlines = { ['Critical', 'High', 'Medium', 'Low'] }
 bar_title_legend = {["total"]}
@@ -68,7 +68,7 @@ colors={"Alert"} // Basic , Alert
           /> */}
   
  <PreviewBox_type1_number_no_filters
-HeadLine="Last Run High (*)"
+HeadLine="Last Run High (work in progress)"
 resource_type_id={null}
 BigNumber={8342}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
@@ -83,7 +83,7 @@ txt_color={""}
 />
 
 <PreviewBox_type1_number_no_filters
-HeadLine="Last Run Critical (*)"
+HeadLine="Last Run Critical (work in progress)"
 resource_type_id={null}
 BigNumber={37773113}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
@@ -98,7 +98,7 @@ txt_color={""}
 />
 
 <PreviewBox_type1_number_no_filters
-HeadLine="Last Run - Object Found (*)"
+HeadLine="Last Run - Object Found (work in progress)"
 resource_type_id={null}
 BigNumber={44}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
