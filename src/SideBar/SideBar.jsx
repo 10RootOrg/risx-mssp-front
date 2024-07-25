@@ -25,7 +25,7 @@ import {
 import GeneralContext from "../Context";
 import axios from "axios";
 
-import { make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
+import { Make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
 
 function SideBar({
   visblePage,
@@ -40,7 +40,7 @@ function SideBar({
   // const [openSubMenu, set_openSubMenu] = useState("none")
   const navigate = useNavigate();
   const [user_name, set_user_name] = useState("user");
-  const { backEndURL, user_id, moduleLinks, front_IP, mssp_config_json } =
+  const { backEndURL, user_id, moduleLinks, front_IP ,front_URL, mssp_config_json } =
     useContext(GeneralContext);
 
   const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
@@ -100,13 +100,17 @@ function SideBar({
     navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name\
   };
 
+
   const handleNewWindow = (dashboard_name) => {
     const url = make_url_from_id(dashboard_name, moduleLinks, front_IP);
     console.log("handleNewWindow url - ", url);
+
     if (url) {
       window.open(url, "_blank");
     }
   };
+
+
 
   const handle_Dashboards_drop_down = () => {
     set_Dashboards_drop_down(!Dashboards_drop_down);
@@ -437,7 +441,7 @@ function SideBar({
             <button
               className="btn-menu"
               // onClick={() => handleClick("dashboard-risx")}
-              onClick={() => handleNewWindow("dashboard-risx")}
+              onClick={() => handleNewWindow('2001000')}
               disabled={visblePage === "dashboard-risx"}
             >
               <div className="display-flex">
@@ -456,7 +460,10 @@ function SideBar({
               </div>
             </button>
 
-            <button
+
+
+            {/* <button
+
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-timesketch")}
               // onClick={() => handleClick("dashboard-timesketch")}
@@ -476,9 +483,9 @@ function SideBar({
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-misp")}
               // disabled={visblePage === "dashboard-misp"}
@@ -497,9 +504,9 @@ function SideBar({
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-cti")}
               // disabled={visblePage === "dashboard-cti"}
@@ -518,9 +525,9 @@ function SideBar({
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
 
-            <button
+            {/* <button
               className="btn-menu"
               onClick={() => handleNewWindow("dashboard-iris")}
               // disabled={visblePage === "dashboard-iris"}
@@ -539,7 +546,8 @@ function SideBar({
                 {" "}
                 <IcoLink />
               </div>
-            </button>
+            </button> */}
+
           </div>
         </div>
 

@@ -25,7 +25,8 @@ function CTI_list({
   loader
   }) {
     const {  backEndURL ,all_Tools ,front_IP} = useContext(GeneralContext);
- 
+    const [is_search, set_is_search] = useState(false);
+
 console.log("Preview_this_Results",Preview_this_Results);
 
 
@@ -152,7 +153,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
  <ResourceGroup_Action_btns
   items_for_search={Preview_this_Results}
   set_items_for_search={set_Preview_this_Results}
-
+  set_is_search={set_is_search}
   btn_add_single_show={false}
   // btn_add_single_action={add_resource_item}
   // btn_add_single_value={"add"}
@@ -210,6 +211,17 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 </div>
 {/* <p className='resource-group-list-item    font-type-txt   Color-Grey1   list-item-big '>{Info?.Status}    {Info?.TimeNote}   </p>  */}
+
+
+{Preview_this_Results?.length === 0 &&   is_search === true &&
+<div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+<p className='  font-type-txt   Color-Grey1 '   >
+No Records for this search.
+</p>
+</div>
+}
+
+
 
 <ResourceGroup_buttomLine records_number={Preview_this_Results?.length || 0}/>
 </>

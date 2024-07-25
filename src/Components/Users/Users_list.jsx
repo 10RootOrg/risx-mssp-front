@@ -24,7 +24,7 @@ function Results_All({
     set_filter_Resource
   }) {
     const {  backEndURL ,all_Tools } = useContext(GeneralContext);
-
+    const [is_search, set_is_search] = useState(false);
 
   const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
   const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
@@ -127,6 +127,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
  <ResourceGroup_Action_btns
   items_for_search={Preview_this_Results}
   set_items_for_search={set_Preview_this_Results}
+  set_is_search={set_is_search}
 
   btn_add_single_show={true}
   btn_add_single_action={handle_add_user}
@@ -179,12 +180,22 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
     );
   })}
 
+
+{Preview_this_Results?.length === 0 &&   is_search === true &&
+<div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
+<p className='  font-type-txt   Color-Grey1 '   >
+No Records for this search.
+</p>
+</div>
+}
 </div>
 {/* <ResourceGroup_buttomLine records_number={Preview_this_Results?.length || 0}/> */}
 </>
 )}
 
  
+
+
 
 
 </div>
