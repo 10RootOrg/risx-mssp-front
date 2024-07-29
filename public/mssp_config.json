@@ -1,6 +1,6 @@
 {
-  "backendUrl": "http://40.69.58.105:5555",
-  "expiryDate": "28-07-2024",
+  "backendUrl": "http://localhost:5555",
+  "expiryDate": "28-08-2024",
   "clientApi": "https://api.example.com/user",
   "examInnterval_minutes": 15,
   "moduleLinks": [
@@ -53,7 +53,7 @@
     {
       "toolName": "Dehashed",
       "toolID": "2001009",
-      "toolURL": "https://leakcheck.net/api?key=4fe5da6d3a2bbf2ca7a6d3492c32099126d5e727&type=domain_email&check=tesla.com"
+      "toolURL": "https://leakcheck.io/api/v2/query/"
     },
     {
       "toolName": "IRIS",
@@ -63,7 +63,7 @@
     {
       "toolName": "Shodan",
       "toolID": "2001011",
-      "toolURL": "https://leakcheck.net/api?key=4fe5da6d3a2bbf2ca7a6d3492c32099126d5e727&type=domain_email&check=sheba.co.il"
+      "toolURL": "https://leakcheck.io/api/v2/query/"
     },
     {
       "toolName": "MISP",

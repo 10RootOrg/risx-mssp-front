@@ -59,7 +59,7 @@ const Handle_active_module= async(tool_id,backEndURL)=>{
           {console.log(err);}
    }
 
-const handle_Main_Btn =(tool_id,toolURL,backEndURL,front_IP,front_URL)=>{
+const handle_Main_Btn =async (tool_id,toolURL,backEndURL,front_IP,front_URL)=>{
 
 
 
@@ -79,11 +79,24 @@ const handle_Main_Btn =(tool_id,toolURL,backEndURL,front_IP,front_URL)=>{
 console.log("handle_Main_Btn toolURL" , toolURL);
 
 
-const fixed_path = fix_path(toolURL,front_IP,front_URL);
- 
-    if (fixed_path) {
-      window.open(fixed_path, "_blank");
-    }
+const fixed_path = fix_path(toolURL, front_IP, front_URL);
+
+if (fixed_path && tool_id !== "2001009") {
+  window.open(fixed_path, "_blank");
+} else {
+  // Get leakCheck api data
+  // Work in progress 
+
+  const data = await axios.get(`${backEndURL}/config/GetAllLeakAsset`);
+  console.log("LeakCheck url ", toolURL + data.data.join(","));
+  // const res = await axios.get(`${backEndURL}/config`);
+  // console.log(
+  //   res?.data?.ClientData?.API?.LeakCheck,
+  //   "44444444444444444444444444444444"
+  // );
+
+  // console.log("gggggggggggggggg",LeakJson);
+}
 
 
 
