@@ -78,7 +78,7 @@
     },
     {
 
-      "toolName": "LEAKCHECK",
+      "toolName": "LeakCheck",
       "toolID": "2001013",
       "toolURL": "https://leakcheck.io"
     }
