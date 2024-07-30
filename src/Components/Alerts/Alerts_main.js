@@ -20,15 +20,55 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
 
   const { backEndURL } = useContext(GeneralContext);
   const [AlertsData, setAlertsData] = useState([]);
+  const [TimeObject, setTimeObject] = useState({
+    week: "",
+    day: "newDateDay",
+    hour: "newDateHour",
+    lastAlert: "",
+  });
+  const [PieObjectStatus, setPieObjectStatus] = useState({
+    New: 0,
+    InProgress: 0,
+    "False Positive": 0,
+    "True Positive": 0,
+    Ignore: 0,
+    Closed: 0,
+    Reopened: 0,
+  });
 
   async function GetData() {
     try {
       const res = await axios.get(backEndURL + "/Alerts/GetAlertFileData");
       console.log("GetAlertFileData Data 111111111111", res.data);
+      const TestDate = res.data[1]["_ts"];
+      const newDateWeek = new Date();
+      const newDateDay = new Date().setUTCHours(0, 0, 0);
+      const newDateHour = new Date();
+      newDateWeek.setDate(newDateWeek.getDate() - 7);
+      newDateHour.setHours(newDateHour.getHours() - 1);
 
-      setAlertsData(res.data);
+      const Item = {
+        New: 0,
+        InProgress: 0,
+        "False Positive": 0,
+        "True Positive": 0,
+        Ignore: 0,
+        Closed: 0,
+        Reopened: 0,
+      };
+
+      res.data?.forEach((x) => Item[x?.UserInput?.Status]++);
+      console.log("ItemItemItemItemItemItemItem", Item);
+      setPieObjectStatus(Item);
+      setAlertsData(res?.data);
+      setTimeObject({
+        week: newDateWeek,
+        day: newDateDay,
+        hour: newDateHour,
+        lastAlert: res.data?.[0]?.["_ts"],
+      });
     } catch (error) {
-      console.log("Error in Get Data OF alerts");
+      console.log("Error in Get Data OF alerts", error);
     }
   }
 
@@ -38,35 +78,6 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
     }
   }, [backEndURL]);
 
-  const tmp_data = [
-    {
-      description: "Unauthorized Access Attempt",
-      severity: "High",
-      date: "Mon Jul 22 2024 17:14:50 GMT+0300 (Israel Daylight Time)",
-    },
-    {
-      description: "Malware Detected",
-      severity: "Critical",
-      date: "Tue Aug 13 2024 09:42:18 GMT+0300 (Israel Daylight Time)",
-    },
-    {
-      description: "Phishing Email Reported",
-      severity: "Medium",
-      date: "Wed Sep 04 2024 15:27:03 GMT+0300 (Israel Daylight Time)",
-    },
-    {
-      description: "Data Exfiltration Detected",
-      severity: "Low",
-      date: "Fri Oct 18 2024 11:55:29 GMT+0300 (Israel Daylight Time)",
-    },
-    {
-      description: "System Vulnerability Exploited",
-      severity: "Critical",
-      date: "Mon Nov 25 2024 18:06:14 GMT+0300 (Israel Daylight Time)",
-    },
-  ];
-
-  const [Preview_this_Results, set_Preview_this_Results] = useState(tmp_data);
   const [display_this, set_display_this] = useState("");
 
   const dateA = new Date();
@@ -92,18 +103,24 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
         </div>
         <div className="resource-group-top-boxes mb-c">
           <PreviewBox_type2_pie
-            HeadLine="Alert Distribution (*)"
-            bar_numbers={["14", "2", "4", "23"]}
-            bar_headlines={["Critical", "High", "Medium", "Low"]}
+            HeadLine="Alert Distribution"
+            bar_numbers={Object.values(PieObjectStatus)}
+            bar_headlines={Object.keys(PieObjectStatus)}
             bar_title_legend={["total"]}
             is_popup={false}
             colors={"Alert"} // Basic , Alert
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="Last Hour (*)"
+            HeadLine="Last Hour"
             resource_type_id={null}
-            BigNumber={0} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            BigNumber={AlertsData?.reduce((acc, cur) => {
+              if (cur?.["_ts"] > TimeObject?.hour) {
+                return acc + 1;
+              } else {
+                return acc;
+              }
+            }, 0)} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}
             SmallNumberTxt={"Total"}
             StatusColor={"blue"}
@@ -116,9 +133,15 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="This Day (*)"
+            HeadLine="This Day"
             resource_type_id={null}
-            BigNumber={2} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            BigNumber={AlertsData?.reduce((acc, cur) => {
+              if (cur?.["_ts"] > TimeObject?.day) {
+                return acc + 1;
+              } else {
+                return acc;
+              }
+            }, 0)} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}
             SmallNumberTxt={"Total"}
             StatusColor={"blue"}
@@ -131,9 +154,15 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="This Week (*)"
+            HeadLine="This Week"
             resource_type_id={null}
-            BigNumber={2} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            BigNumber={AlertsData?.reduce((acc, cur) => {
+              if (cur?.["_ts"] > TimeObject?.week) {
+                return acc + 1;
+              } else {
+                return acc;
+              }
+            }, 0)} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={9}
             SmallNumberTxt={"Total"}
             StatusColor={"blue"}
@@ -146,10 +175,10 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           />
 
           <PreviewBox_type8_time
-            HeadLine="Latest Alert (*)"
+            HeadLine="Latest Alert"
             resource_type_id={null}
-            BigNumber={format_date_type_a_only_hours(dateA)} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            SmallNumber={format_date_type_a_only_date(dateA)}
+            BigNumber={format_date_type_a_only_hours(TimeObject?.lastAlert)} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            SmallNumber={format_date_type_a_only_date(TimeObject?.lastAlert)}
             StatusColor={"blue"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
             is_popup={false}
@@ -165,8 +194,9 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           {/* <p  className="font-type-menu" >this page is under development</p>   */}
 
           <Alert_list
-            Preview_this_Results={Preview_this_Results}
-            set_Preview_this_Results={set_Preview_this_Results}
+            Preview_this_Results={AlertsData}
+            set_Preview_this_Results={setAlertsData}
+            GetData={GetData}
           />
         </div>
       </div>
