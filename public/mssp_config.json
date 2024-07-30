@@ -70,6 +70,11 @@
       "toolName": "MISP",
       "toolID": "2001012",
       "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com/"
+    },
+    {
+      "toolName": "HayabusaDashboardUrl",
+      "toolID": "0",
+      "toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15h%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"
     }
   ]
 }
