@@ -27,6 +27,7 @@ function Alert_list({
   Preview_this_Results,
   set_Preview_this_Results,
   loader,
+  GetData,
 }) {
   const { backEndURL, all_Tools, front_IP } = useContext(GeneralContext);
   const [is_search, set_is_search] = useState(false);
@@ -34,13 +35,7 @@ function Alert_list({
   console.log("Preview_this_Results", Preview_this_Results);
 
   const [PopUp_Alert_info__show, set_PopUp_Alert_info__show] = useState(false);
-  const [PopUp_Alert_info__txt, set_PopUp_Alert_info__txt] = useState({
-    HeadLine: "Alert",
-    description: "",
-    time: "",
-    severity: "",
-    buttonTitle: "Close",
-  });
+  const [PopUp_Alert_info__txt, set_PopUp_Alert_info__txt] = useState({});
 
   const [PopUp_loader__show, set_PopUp_loader__show] = useState(false);
   const [sort_by, set_sort_by] = useState("StartDate");
@@ -49,15 +44,51 @@ function Alert_list({
   const handle_click_result = (Info) => {
     console.log("-------handle_click_result-------------", Info);
 
-    set_PopUp_Alert_info__txt({
-      HeadLine: "Alert Name",
-      description: Info?.description,
-      time: "14:22 23.7.2024",
-      severity: Info?.severity,
-      buttonTitle: "Close",
-    });
-
+    Info.buttonTitle = "Close";
+    set_PopUp_Alert_info__txt(Info);
     set_PopUp_Alert_info__show(true);
+  };
+
+  const do_sortObject = (column, column2) => {
+    console.log("sort this column: ", column, column2, sort_by);
+    try {
+      if (!column) {
+        console.log("Can't sort ", column);
+        return;
+      }
+      if (column2 === sort_by) {
+        console.log("It's already sorted like this, reversing the order");
+        const sorted = [...Preview_this_Results].sort((a, b) => {
+          console.log(
+            "b[column]222222222222222222222222222222222222222222222222222222222222",
+            b[column]?.[column2]
+          );
+
+          if (b[column]?.[column2] < a[column]?.[column2]) return -1;
+          if (b[column]?.[column2] > a[column]?.[column2]) return 1;
+          return 0;
+        });
+        console.log("Sorted descending:", sorted);
+        set_Preview_this_Results(sorted);
+        set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+      } else {
+        set_sort_by(column2);
+        const sorted = [...Preview_this_Results].sort((a, b) => {
+          console.log(
+            "b[column]1111111111111111111111111111111111111111111111111111111111111",
+            b[column]?.[column2]
+          );
+
+          if (b[column]?.[column2] < a[column]?.[column2]) return 1;
+          if (b[column]?.[column2] > a[column]?.[column2]) return -1;
+          return 0;
+        });
+        console.log("Sorted ascending:", sorted);
+        set_Preview_this_Results(sorted);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const do_sort = (column) => {
@@ -81,6 +112,7 @@ function Alert_list({
     } else {
       set_sort_by(column);
       const sorted = [...Preview_this_Results].sort((a, b) => {
+        console.log(a[column], "llllllllllllllllllllllllllll");
         if (a[column] < b[column]) return -1;
         if (a[column] > b[column]) return 1;
         return 0;
@@ -93,7 +125,7 @@ function Alert_list({
   // for first load  =>  sorting the list
   useEffect(() => {
     if (Preview_this_Results?.length >= 2 && firstTimeData) {
-      do_sort("StartDate");
+      // do_sort("_ts");
       setfirstTimeData(false);
     }
   }, [Preview_this_Results]);
@@ -109,11 +141,10 @@ function Alert_list({
         <PopUp_Alert_info
           popUp_show={PopUp_Alert_info__show}
           set_popUp_show={set_PopUp_Alert_info__show}
-          HeadLine={PopUp_Alert_info__txt.HeadLine}
-          description={PopUp_Alert_info__txt.description}
-          severity={PopUp_Alert_info__txt.severity}
-          time={PopUp_Alert_info__txt.time}
-          buttonTitle={PopUp_Alert_info__txt.buttonTitle}
+          Info={PopUp_Alert_info__txt}
+          set_Preview_this_Results={set_Preview_this_Results}
+          backEndURL={backEndURL}
+          GetData={GetData}
         />
       )}
 
@@ -147,39 +178,58 @@ function Alert_list({
           <div className="resource-group-list-keyNames mb-a  ">
             <div
               className="resource-group-list-item   list-item-big ml-b"
-              onClick={() => do_sort("description")}
+              onClick={() => do_sort("Artifact")}
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
-                Description
+                Artifact
               </p>
             </div>
             {/* <div className='resource-group-list-item list-item-biggest' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  no-underline Color-Grey1'>Start Date</p></div> */}
             <div
-              className="resource-group-list-item list-item-small"
-              onClick={() => do_sort("severity")}
+              className="resource-group-list-item   list-item-big ml-b"
+              onClick={() => do_sort("ClientName")}
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
-                Severity
+                Client Name
               </p>
             </div>
             {/* <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Quota</p></div> */}
 
             <div
+              className="resource-group-list-item list-item-small"
+              onClick={() => do_sortObject("UserInput", "ChangedAt")}
+              style={{ marginRight: "25px" }}
+            >
+              {" "}
+              <p className="font-type-menu  make-underline Color-Grey1 ">
+                Changed At
+              </p>
+            </div>
+            <div
+              className="resource-group-list-item list-item-small"
+              onClick={() => do_sortObject("UserInput", "UserId")}
+              style={{ marginRight: "25px" }}
+            >
+              {" "}
+              <p className="font-type-menu  make-underline Color-Grey1 ">
+                Changed By
+              </p>
+            </div>
+            <div
               className="resource-group-list-item list-item-status-color"
-              onClick={() => do_sort("severity")}
+              onClick={() => do_sortObject("UserInput", "Status")}
               style={{ textAlign: "center" }}
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
-                Color
+                Status
               </p>
             </div>
-
             <div
               className="resource-group-list-item list-item-small "
-              onClick={() => do_sort("date")}
+              onClick={() => do_sort("_ts")}
               style={{ marginRight: "25px" }}
             >
               {" "}
@@ -192,38 +242,7 @@ function Alert_list({
           <div className="resource-group-list-box mb-c">
             {Array.isArray(Preview_this_Results) &&
               Preview_this_Results?.map((Info, index) => {
-                console.log(
-                  "Info?.Response?.success ",
-                  Info?.Response?.success
-                );
-
-                // const AlertColors = [
-                //   getComputedStyle(document.documentElement).getPropertyValue('--alert-color-critical'),
-                //   getComputedStyle(document.documentElement).getPropertyValue('--alert-color-high'),
-                //       getComputedStyle(document.documentElement).getPropertyValue('--alert-color-medium'),
-                //       getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
-                //     ];
-
-                const AlertColors =
-                  Info?.severity?.toLowerCase() === "critical"
-                    ? "alert-bg-color-critical"
-                    : Info?.severity?.toLowerCase() === "high"
-                    ? "alert-bg-color-high"
-                    : Info?.severity?.toLowerCase() === "medium"
-                    ? "alert-bg-color-medium"
-                    : Info?.severity?.toLowerCase() === "low"
-                    ? "alert-bg-color-low"
-                    : Info?.severity?.toLowerCase() === "all-good"
-                    ? "alert-bg-color-no-alert"
-                    : "alert-bg-color-none";
-
-                // .alert-bg-color-low{background-color:var(--alert-color-low)}
-                // .alert-bg-color-medium{background-color:var(--alert-color-medium)}
-                // .alert-bg-color-high{background-color:var(--alert-color-high)}
-                // .alert-bg-color-critical{background-color:var(--alert-color-critical)}
-
-                // .alert-bg-color-none{background-color:var(--alert-color-no-alert)}
-                // .alert-bg-color-no-alert{background-color:var(--alert-color-none)}
+                // console.log("Info info info info", Info);
 
                 return (
                   <div
@@ -234,30 +253,25 @@ function Alert_list({
                     {/* <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big   '>{ JSON.stringify(Info?.Arguments) }</p>  */}
 
                     <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-b ">
-                      {Info?.description}
+                      {Info?.Artifact}
                     </p>
                     {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1 list-item-biggest'>{ JSON.stringify(Info?.Response?.result) }</p>  */}
-                    <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">
-                      {Info?.severity ? (
-                        Info?.severity
-                      ) : (
-                        <span className="alert-color-medium">
-                          No Description
-                        </span>
-                      )}{" "}
+                    <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-b">
+                      {Info?.ClientName}
                     </p>
 
-                    <div className="resource-group-list-item   list-item-status-color ">
-                      {" "}
-                      <div
-                        className={`${AlertColors}  light-bulb-type1`}
-                        style={{ marginLeft: "auto", marginRight: "auto" }}
-                      />
-                    </div>
-
+                    <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">
+                      {format_date_type_a(Info?.UserInput?.ChangedAt)}{" "}
+                    </p>
+                    <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">
+                      {Info?.UserInput?.UserId}{" "}
+                    </p>
+                    <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small ">
+                      {Info?.UserInput?.Status}
+                    </p>
                     {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.Response?.quota}</p>  */}
                     <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">
-                      {Info?.date}
+                      {format_date_type_a(Info?.["_ts"])}
                     </p>
                     {/* list-item-last  */}
                   </div>
