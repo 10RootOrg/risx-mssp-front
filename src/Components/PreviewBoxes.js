@@ -359,19 +359,26 @@ function PreviewBox_type1_number_for_dashbords({
   };
   
     const StatusColorClass =
-    StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
-    StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
-    StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
-    StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+    StatusColor.toLowerCase() === 'critical' ? "alert-bg-color-critical" :
+    StatusColor.toLowerCase() === 'high' ? "alert-bg-color-high" :
+    StatusColor.toLowerCase() === 'medium' ? "alert-bg-color-medium" :
+    StatusColor.toLowerCase() === 'low' ? "alert-bg-color-low" :
+    StatusColor.toLowerCase() === 'all-good' ? "alert-bg-color-no-alert" :
+
   
     StatusColor === 'red' ? 'Bg-Red' :
     StatusColor === 'blue' ?'Bg-Blue-Glow' : 
-    StatusColor == '' ?  'Bg-Grey2' : 
-    StatusColor == undefined ?  'Bg-Grey2'  :
-    'Bg-Grey2'   ;
+    StatusColor === 'green' ?'alert-bg-color-no-alert' : 
+
+    StatusColor == '' ?  'alert-bg-color-none' : 
+    StatusColor == undefined ?  'alert-bg-color-none'  :
+    'alert-bg-color-none'   ;
    
   
-  
+ 
+
+
+
   
   
     return (
@@ -416,38 +423,21 @@ function PreviewBox_type1_number_no_filters({
   date, 
   SmallNumberTxt,
   is_popup,
+  
   txt_color,
   display_this,
   set_display_this,
-  display_this_value
-   
+  display_this_value,
+ 
   }) {
   
-// console.log("BigNumber" ,BigNumber);
-    // display_this={display_data_type}
-    // set_display_this={set_display_data_type}
-    // display_this_value={"Critical"}
 
     const dont_display_color  = getComputedStyle(document.documentElement).getPropertyValue('--color-Grey2');
-
-
-    
     const [isHovered, setIsHovered] = useState(false);
     const [is_Filtering, set_is_Filtering] = useState(false);
-    // const [is_big_number, set_is_big_number] = useState(false);
-    // const [big_number_type, set_big_number_type] = useState("");
-      
-   
-
-//     useEffect(() => {
-// if(!BigNumber){return}
-// else if(BigNumber < 999999 ){console.log(BigNumber, "small number")}
-// else if(BigNumber >= 1000000 && BigNumber <= 999999999 ){console.log(BigNumber ,"its milions")}
-// else if(BigNumber >= 100000000 && BigNumber <= 99999999999 ){console.log(BigNumber ,"its bilions")}
 
 
- 
-//     }, [ BigNumber])
+    console.log( HeadLine,BigNumber,);
     
 const  handle_click = () => {
   if(display_this === display_this_value){ set_display_this("prime_data")}
@@ -455,6 +445,7 @@ const  handle_click = () => {
 }
   
   const handleHover = () => {
+    
     setIsHovered(true);
   };
   
@@ -462,19 +453,27 @@ const  handle_click = () => {
     setIsHovered(false);
   };
   
-    const StatusColorClass =
-    StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
-    StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
-    StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
-    StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
-    StatusColor === 'red' ? 'Bg-Red' :
-    StatusColor === 'blue' ?'Bg-Blue-Glow' : 
-    StatusColor == '' ?  'Bg-Grey2' : 
-    StatusColor == undefined ?  'Bg-Grey2'  :
-    'Bg-Grey2'   ;
+  const StatusColorClass =
+  StatusColor.toLowerCase() === 'critical' ? "alert-bg-color-critical" :
+  StatusColor.toLowerCase() === 'high' ? "alert-bg-color-high" :
+  StatusColor.toLowerCase() === 'medium' ? "alert-bg-color-medium" :
+  StatusColor.toLowerCase() === 'low' ? "alert-bg-color-low" :
+  StatusColor.toLowerCase() === 'all-good' ? "alert-bg-color-no-alert" :
+
+
+  StatusColor === 'red' ? 'Bg-Red' :
+  StatusColor === 'blue' ?'Bg-Blue-Glow' : 
+  StatusColor === 'green' ?'alert-bg-color-no-alert' : 
+
+  StatusColor == '' ?  'alert-bg-color-none' : 
+  StatusColor == undefined ?  'alert-bg-color-none'  :
+  'alert-bg-color-none'   ;
+ 
+
+
    
 
-    console.log("BigNumber",HeadLine, BigNumber);
+    console.log("fffffffffffffffffffff",HeadLine, BigNumber);
      return (
       <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
         onClick={handle_click}
@@ -513,10 +512,7 @@ const  handle_click = () => {
 
           </div>
       <div className='PreviewBox_SmallNumber   font-type-txt Color-White'
-       style={{    color:   (isHovered ? "#00DBFF" : ( !BigNumber   ? dont_display_color   :               txt_color || ""))
-
-        ,
-  }} >{SmallNumberTxt}{SmallNumber && ": "}{SmallNumber}</div>
+       style={{    color:   (isHovered ? "#00DBFF" : ( BigNumber === "NA"  ?  dont_display_color : txt_color || "")) ,}} >{SmallNumberTxt}{SmallNumber && ": "}{SmallNumber}</div>
       </div>
   
        <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
@@ -579,13 +575,13 @@ useEffect(() => {
 
 useEffect(() => {
 
-  console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
-  console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
-  console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
-  console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
-  console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
-  console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
-  console.log(HeadLine," bar_numbers", bar_numbers);
+  // console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
+  // console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
+  // console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
+  // console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
+  // console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
+  // console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
+  // console.log(HeadLine," bar_numbers", bar_numbers);
 
 
  
@@ -737,13 +733,13 @@ getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
 
 useEffect(() => {
 
-  console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
-  console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
-  console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
-  console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
-  console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
-  console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
-  console.log(HeadLine," bar_numbers", bar_numbers);
+  // console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
+  // console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
+  // console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
+  // console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
+  // console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
+  // console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
+  // console.log(HeadLine," bar_numbers", bar_numbers);
 
 
  
@@ -954,7 +950,7 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             )
           }
    
-          function PreviewBox_type5_table({ HeadLine, bar_numbers, bar_headlines, bar_title_legend, is_popup, Artifact, HuntID, Status, Error }) {
+          function PreviewBox_type5_hunt_data_tabla({ HeadLine, is_popup, Artifact, HuntID, Status, Error,StartDate ,artifact_or_module}) {
     
             return (
                 <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
@@ -962,14 +958,16 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
                         <p className="font-type-menu">{HeadLine}</p>
                     </div>
                     <div className='display-flex justify-content-space-between' style={{ height: "100%" }}>
-                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys' style={{ gap: "6px"  }}>
-                            <p className='font-type-txt Color-White'>Artifact</p>
-                            <p className='font-type-txt Color-White'>Hunt ID</p>
-                            <p className='font-type-txt Color-White'>Status</p>
-                            <p className='font-type-txt Color-White'>Error</p>
+                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys mr-b' style={{ gap: "6px"  }}>
+                            <p className='font-type-menu Color-White'>{artifact_or_module}</p>
+                            <p className='font-type-menu Color-White'>Start Date</p>
+                            <p className='font-type-menu Color-White'>Hunt ID</p>
+                            <p className='font-type-menu Color-White'>Status</p>
+                            <p className='font-type-menu Color-White'>Error</p>
                         </div>
                         <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-values' style={{ gap: "6px" }}>
                             <p className='font-type-txt Color-White'>{Artifact}</p>
+                            <p className='font-type-txt Color-White'>{ StartDate}</p>
                             <p className='font-type-txt Color-White'>{HuntID}</p>
                             <p className='font-type-txt Color-White'>{Status}</p>
                             <p className='font-type-txt Color-White'>{Error}</p>
@@ -1328,16 +1326,21 @@ const  handle_click = () => {
 
 
     const StatusColorClass =
-    StatusColor.toLowerCase() === 'critical' ? 'Bg-Red' :
-    StatusColor.toLowerCase() === 'high' ? 'Bg-Orange-Red' :
-    StatusColor.toLowerCase() === 'medium' ? 'Bg-Orange' :
-    StatusColor.toLowerCase() === 'low' ? 'Bg-Yellow' :
+    StatusColor.toLowerCase() === 'critical' ? "alert-bg-color-critical" :
+    StatusColor.toLowerCase() === 'high' ? "alert-bg-color-high" :
+    StatusColor.toLowerCase() === 'medium' ? "alert-bg-color-medium" :
+    StatusColor.toLowerCase() === 'low' ? "alert-bg-color-low" :
+    StatusColor.toLowerCase() === 'all-good' ? "alert-bg-color-no-alert" :
+  
+  
     StatusColor === 'red' ? 'Bg-Red' :
     StatusColor === 'blue' ?'Bg-Blue-Glow' : 
-    StatusColor == '' ?  'Bg-Grey2' : 
-    StatusColor == undefined ?  'Bg-Grey2'  :
-    'Bg-Grey2'   ;
-   
+    StatusColor === 'yellow' ?'Bg-Yellow' : 
+    StatusColor === 'green' ?'alert-bg-color-no-alert' : 
+  
+    StatusColor == '' ?  'alert-bg-color-none' : 
+    StatusColor == undefined ?  'alert-bg-color-none'  :
+    'alert-bg-color-none'   ;
   
     return (
       <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
@@ -1803,4 +1806,4 @@ disabled={disabled}
   )
 }
 
-export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_table,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time};
+export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_hunt_data_tabla,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time};

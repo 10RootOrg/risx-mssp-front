@@ -2,8 +2,9 @@
 import React, { useEffect, useState ,useContext} from "react";
 import GeneralContext from '../Context.js';
 import './PopUp.css'; // import CSS file for modal styling
-import { PreviewBox_type0_static  ,PreviewBox_type3_bar ,PreviewBox_type2_pie ,PreviewBox_type5_table,PreviewBox_type1_number_no_filters} from './PreviewBoxes.js'
+import { PreviewBox_type0_static  ,PreviewBox_type3_bar ,PreviewBox_type2_pie ,PreviewBox_type5_hunt_data_tabla,PreviewBox_type1_number_no_filters} from './PreviewBoxes.js'
 import { ReactComponent as CloseButton } from '../Components/icons/ico-Close_type1.svg';
+import { ReactComponent as DownloadIconButton } from '../Components/icons/ico-menu-download.svg';
 import {ReactComponent as SuccessIcon} from '../Components/icons/General-icons-success.svg';
 import {   format_date_type_c } from './Features/DateFormat';
 import axios from 'axios';
@@ -72,8 +73,7 @@ const {all_artifacts, backEndURL} = useContext(GeneralContext);
 const [artifact_logo, set_artifact_logo]= useState("");
 const [aggregate_macro_data, set_aggregate_macro_data]= useState({});
 const [display_data_type, set_display_data_type]= useState("prime_data");
-    // Artifact_ID
-
+ 
 
     useEffect(() => {
 if(json_file_data === undefined || json_file_data === "" || json_file_data === null ){return}
@@ -81,12 +81,31 @@ if(json_file_data === undefined || json_file_data === "" || json_file_data === n
  if(json_file_data.length == 0 || all_artifacts.length == 0 ){return}
 console.log(all_artifacts);
 
-const pathTOPic = all_artifacts?.filter((word) => word?.Toolname === json_file_data?.SubModuleName);
- if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){console.log("artifact id problem");return}
-  
+
+
+if(json_file_data?.SubModulesCollection != "" && typeof json_file_data?.SubModulesCollection === "string"     ){
+   const pathTOPic= all_artifacts?.filter((word) => word?.Toolname === json_file_data?.SubModulesCollection);
+  if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){console.log("artifact id problem");return}
     const logoAddress_1 = pathTOPic[0]?.logoAddress_1
     const bbb = require(`${logoAddress_1}`)
      set_artifact_logo(bbb);
+ 
+}
+
+
+else{
+ 
+ const pathTOPic= all_artifacts?.filter((word) => word?.Toolname === json_file_data?.SubModuleName);
+ if (pathTOPic === undefined || pathTOPic === "" || pathTOPic.length === 0){console.log("artifact id problem");return}
+ const logoAddress_1 = pathTOPic[0]?.logoAddress_1
+ const bbb = require(`${logoAddress_1}`)
+  set_artifact_logo(bbb);
+ 
+}
+
+ 
+
+
     }, [json_file_data]);
  
 
@@ -140,9 +159,8 @@ async function get_aggregate_macro_data(SubModuleName,ResponsePath){
 // console.log("get_aggregate_macro_data", SubModuleName, ResponsePath);
           if(SubModuleName === undefined){console.log("SubModuleName undefined"); return}
           if(ResponsePath === undefined){console.log("ResponsePath undefined"); return}
-          
                   try{ 
-                                        const res = await axios.get(`${backEndURL}/results/velociraptor-aggregate-macro`, {
+                      const res = await axios.get(`${backEndURL}/results/velociraptor-aggregate-macro`, {
                           params: {
                               SubModuleName: SubModuleName,
                               ResponseFile: ResponsePath
@@ -183,22 +201,20 @@ async function get_aggregate_macro_data(SubModuleName,ResponsePath){
           <>
      {popUp_show && (
               <div className={`PopUp-background`} onClick={handleClickOutside} >
-                <div className={`PopUp-content`} style={{width:"80%" }}>
+               <div className={`PopUp-content`} style={{width:    json_file_info?.fileSize == "Too big" ?  "auto" :  "80%" }}>
 
     <div className="display-flex justify-content-end  " style={{marginRight:"-40px"}}>
     <button className="PopUp-Close-btn" onClick={handleClose} ><CloseButton className="PopUp-Close-btn-img"/> </button>
     </div>
  
-    <div>
+    {/* <div>
     <p className="font-type-h4 Color-White mb-a">{HeadLine} </p>
     <p  className="font-type-txt  reading-height Color-Grey1  mb-b"  >Response Results</p> 
-    </div>
+    </div> */}
 
-    <div className="velociraptor_response_all_top mb-d">
+    <div className="velociraptor_response_all_top mb-c">
 
-    <div className='velociraptor_response_top_texts  ' >
-
-    </div>
+    <div className='velociraptor_response_top_texts  ' >  </div>
 
 
 <div className="pop-up-top-boxes-macro PreviewBox-of-pop-up-all">
@@ -211,16 +227,15 @@ async function get_aggregate_macro_data(SubModuleName,ResponsePath){
 
 
 
-<PreviewBox_type5_table 
+<PreviewBox_type5_hunt_data_tabla 
 HeadLine="Response Data"
-bar_numbers = { aggregate_macro_data?.severity_Counts ?  aggregate_macro_data?.severity_Counts : [0,0,0,0]  }
-bar_headlines = {  aggregate_macro_data?.severity_Order  ? aggregate_macro_data?.severity_Order   : ['Critical', 'High', 'Medium', 'Low'] }
-bar_title_legend = {"Vulnerabilities"}
+artifact_or_module={"Artifact"}
 is_popup = {true}
 display_y_axis = {false}
 Artifact={json_file_data?.SubModuleName}
 HuntID={json_file_info?.huntid}
 Status={json_file_info?.status}
+StartDate={json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) :"NA" }
 Error={json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)}
 />
 
@@ -275,9 +290,6 @@ display_this_value={"High"}
 
  /> 
 
-{/* getComputedStyle(document.documentElement).getPropertyValue('--color-Orange-Red'),          txt_color={"var(--color-Orange)"}
-*/}
-
 
 <PreviewBox_type1_number_no_filters
 HeadLine="Critical"
@@ -287,7 +299,7 @@ SmallNumberTxt={"Total"}
 SmallNumber={`${aggregate_macro_data?.Failed_Test_Number_of_tests[1]}`}
 // SmallNumber={ aggregate_macro_data?.severity_Counts  &&  aggregate_macro_data?.severity_Counts.length > 0 &&  aggregate_macro_data?.severity_Counts.reduce((a, b) => a + b, 0) || "NA"     }
 StatusColor="Critical"
-date={  "NA"}
+date={"NA"}
 // filter_Resource={display_data_type }
 // set_filter_Resource={set_display_data_type}
 is_popup = {true} 
@@ -307,25 +319,63 @@ display_this_value={"Critical"}
 
 <>
 <div style={{marginRight:'auto'}}>
-<PreviewBox_type5_table 
+  
+<PreviewBox_type5_hunt_data_tabla 
 HeadLine="Hunt Data"
-bar_numbers = { aggregate_macro_data?.severity_Counts ?  aggregate_macro_data?.severity_Counts : [0,0,0,0]  }
-bar_headlines = {  aggregate_macro_data?.severity_Order  ? aggregate_macro_data?.severity_Order   : ['Critical', 'High', 'Medium', 'Low'] }
-bar_title_legend = {"Vulnerabilities"}
+artifact_or_module={"Artifact"}
 is_popup = {true}
+StartDate={json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) :"NA" }
 display_y_axis = {false}
 Artifact={json_file_data?.SubModuleName}
 HuntID={json_file_info?.huntid}
 Status={json_file_info?.status}
 Error={json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)}
 />
+
+{/* too big file note */}
+{json_file_info?.fileSize === "Too big"  && 
+
+<div className="mt-c " style={{  display:"flex",  justifyContent:"space-between" , flexDirection:"column", }}>
+
+<div>
+ <p className='  font-type-txt   Color-Grey1 mt-c '   >Data file is too big. <br/>You can download it as a JSON file.</p>
+<button className="btn-type3 mb-d" style={{marginRight:"auto"}} ><p className='font-type-menu  '  onClick={()=>handle_download_Json_File(json_file_info ,backEndURL )}>Download JSON</p><DownloadIconButton className="icon-type1 " />  </button>
 </div>
+
+<div  className="" style={{display:"flex"  , alignItems:"center"}}>
+{artifact_logo === ""  ? null :(<><p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p> <img src={artifact_logo} alt="logo" maxwidth="140px" height="30"  /></>)}
+<button className="btn-type2 "   style={{ marginLeft:"auto" }}  onClick={handleClose} ><p className='font-type-menu ' >{buttonTitle}</p>  </button> 
+</div>
+
+</div>
+
+}
+
+</div>
+
+
+
 {json_file_info?.fileSize != "Too big"  && 
-<PreviewBox_type0_static 
-BigNumber={json_file_info?.table?.length === undefined ? 0 : json_file_info?.table?.length}
-text_under_big_number={"Object Find"}
-/>
+<PreviewBox_type1_number_no_filters
+HeadLine="Object Find"
+resource_type_id={null}
+BigNumber={   json_file_info?.table?.length === undefined ? 0 : json_file_info?.table?.length }
+SmallNumberTxt={""}
+SmallNumber={``}
+StatusColor=""
+date={"NA"}
+is_popup = {true} 
+txt_color={""}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"prime_data"}
+ /> 
  }
+
+
+
+
+
 </>
 }
 
@@ -342,13 +392,7 @@ text_under_big_number={"Object Find"}
  <div style={{   height:"auto" ,        maxHeight:"300px"    , overflowY:"auto" ,margin:0 , padding:0}}>
     
 
-{/* too big file note */}
-{json_file_info?.fileSize === "Too big"  && 
-<div style={{  height:"100px" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
-<p className='  font-type-txt   Color-Grey1 '   >Text data file is too big. You can download it below as a JSON file</p>
-</div>
-}
-
+ 
 
     {json_file_data?.artifact_id === '1000105' ? (<>
       <div className="table_smart"   >
@@ -493,48 +537,31 @@ text_under_big_number={"Object Find"}
 
 
 
-
-
-
-
-
-
     </>
 
     )}
     
 
     
-    <div className='display-flex   align-items-center' style={{width:cell_width  }}>
      
-     </div>
-    
     </div>
 
-       <div className='display-flex mt-c' style={{  }}>
-
-{artifact_logo === ""  ? null :(<>
-<p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p>
-          <img src={artifact_logo} alt="logo" maxwidth="140px" height="30" 
-          //  style={{marginRight:"auto"}} 
-           />
-</>)
 
 
-}
-        
-    
-
-          <div/>
+  {json_file_info?.fileSize != "Too big"  &&   
+<div className='display-flex  mt-a' style={{  }}>
+{artifact_logo === ""  ? null :(<><p  className="font-type-very-sml-txt   Color-Grey1 mr-a" >By:</p> <img src={artifact_logo} alt="logo" maxwidth="140px" height="30" /></>)} <div/>
           
-          <div style={{ display:"flex", justifyContent:"end" , gap:"10px", marginLeft:"auto"}}>
-      <button className="btn-type2    " onClick={()=>handle_download_Json_File(json_file_info ,backEndURL )} ><p className='font-type-menu'>Download JSON</p>  </button> 
-        <button className="btn-type2   " onClick={handleClose} ><p className='font-type-menu ' >{buttonTitle}</p>  </button> 
-
+        
+          <div className="mt-c" style={{ display:"flex", justifyContent:"end" , gap:"10px", marginLeft:"auto"}}>
+        <button className="btn-type3" onClick={()=>handle_download_Json_File(json_file_info ,backEndURL )} ><p className='font-type-menu ' >Download Data</p><DownloadIconButton className="icon-type1 " />  </button>
+         <button className="btn-type2   " onClick={handleClose} ><p className='font-type-menu ' >{buttonTitle}</p>  </button> 
+ 
       </div>
+    
 
           </div>
-    
+      }
 
                 </div>
               </div>)}
@@ -548,7 +575,8 @@ text_under_big_number={"Object Find"}
         const { HeadLine,  popUp_show, set_popUp_show    ,buttonTitle  ,  json_file_info , json_file_data} = props;
         const {all_Tools} = useContext(GeneralContext);
         const [module_logo, set_module_logo]= useState("")
- 
+        const [display_data_type, set_display_data_type]= useState("prime_data");
+
         console.log("json_file_info",json_file_info  );
         console.log("json_file_data",json_file_data  );
  
@@ -588,7 +616,7 @@ text_under_big_number={"Object Find"}
          {popUp_show && (
                   <div className={`PopUp-background`} onClick={handleClickOutside} >
         
-                    <div className={`PopUp-content`} style={{width:"80%" }}>
+                    <div className={`PopUp-content`} style={{width:    json_file_info?.fileSize == "Too big" ?  "auto" :  "80%" }}>
  
         
         <div className="display-flex justify-content-end  " style={{marginRight:"-40px"}}>
@@ -602,11 +630,30 @@ text_under_big_number={"Object Find"}
 
 
 <div>
-        <div>
+        {/* <div>
         <p className="font-type-h4 Color-White mb-a">{HeadLine} </p>
         <p  className="font-type-txt  reading-height Color-Grey1  mb-b"  >Response Results</p> 
-        </div>
-    
+        </div> */}
+
+
+<PreviewBox_type5_hunt_data_tabla 
+HeadLine="Hunt Data"
+is_popup = {true}
+artifact_or_module={"Module"}
+display_y_axis = {false}
+Artifact={json_file_data?.ModuleName}
+StartDate={json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) :"NA" }
+HuntID={json_file_info?.UniqueID ?   json_file_info?.UniqueID :   "NA"}
+Status={json_file_data?.Status}
+Error={json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)}
+/>
+
+
+
+
+
+
+{/* 
         <div  className='velociraptor_response_top_table' >
          <div  className='response_short_row' >
         <p  className="velociraptor_response_top_table_item   font-type-menu   Color-Grey1"  >Module</p> 
@@ -619,13 +666,29 @@ text_under_big_number={"Object Find"}
         <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) :"NA" }</p> 
         <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  > {json_file_data?.Status}</p> 
          </div>
-        </div>
+        </div> */}
         </div>
 </div>
 
 
 
-     <div  style={{marginLeft:"auto" ,  }}>   <PreviewBox_type0_static   BigNumber={json_file_info?.length} text_under_big_number={"Object Find"} /></div>
+<div  style={{marginLeft:"auto" ,  }}> 
+<PreviewBox_type1_number_no_filters
+HeadLine="Object Find"
+resource_type_id={null}
+BigNumber={json_file_info?.length}
+SmallNumberTxt={""}
+SmallNumber={``}
+StatusColor=""
+date={"NA"}
+is_popup = {true} 
+txt_color={""}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"prime_data"}
+ /> 
+        
+        </div>
 
  <div>
 
@@ -698,7 +761,9 @@ text_under_big_number={"Object Find"}
           <div/>
           
           <div style={{ display:"flex", justifyContent:"end" , gap:"10px"}}>
-      <button className="btn-type2    " onClick={()=>handle_download_Json_File(json_file_info)} ><p className='font-type-menu'>Download JSON</p>  </button> 
+      <button className="btn-type3" ><p className='font-type-menu '  onClick={()=>handle_download_Json_File(json_file_info )}>Download JSON</p><DownloadIconButton className="icon-type1 " />  </button>
+   
+      {/* <button className="btn-type2    " onClick={()=>handle_download_Json_File(json_file_info)} ><p className='font-type-menu'>Download JSON</p>  </button>  */}
         <button className="btn-type2   " onClick={handleClose} ><p className='font-type-menu ' >{buttonTitle}</p>  </button> 
 
       </div>

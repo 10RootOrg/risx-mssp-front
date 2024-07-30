@@ -22,18 +22,18 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
   const [loader, set_loader] = useState(false);
   const [LeakData, set_LeakData] = useState([]);
 
-  const Tags = [
-    { name: "Fishing", count: 213 },
-    { name: "globalC", count: 67 },
-    { name: "Botnet", count: 8 },
-    { name: "ClipBanker", count: 45 },
-    { name: "Risx_BP", count: 23 },
-    { name: "gsa-474", count: 23 },
-    { name: "spacex", count: 10 },
-    { name: "fdr", count: 9 },
-    { name: "mezo-nz", count: 9 },
-    { name: "Csr", count: 2 },
-  ];
+  // const Tags = [
+  //   { name: "Fishing", count: 213 },
+  //   { name: "globalC", count: 67 },
+  //   { name: "Botnet", count: 8 },
+  //   { name: "ClipBanker", count: 45 },
+  //   { name: "Risx_BP", count: 23 },
+  //   { name: "gsa-474", count: 23 },
+  //   { name: "spacex", count: 10 },
+  //   { name: "fdr", count: 9 },
+  //   { name: "mezo-nz", count: 9 },
+  //   { name: "Csr", count: 2 },
+  // ];
 
   const Trending_Tags = [
     { name: "\tBlackMatter", count: 75 },
@@ -47,6 +47,9 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
     { name: "C2", count: 2 },
     { name: "ClipBanker", count: 1 },
   ];
+
+
+console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator + x.Response.found, 0 ));
 
   // Don't show sidebar in this page
 
@@ -133,12 +136,12 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
           <PreviewBox_type1_number_no_filters
             HeadLine="Leaked Credentials"
             resource_type_id={null}
-            BigNumber={
-              LeakData?.reduce(
-                (accumulator, x) => accumulator + x.Response.found,
-                0
-              ) || "NA"
-            } // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+ 
+            BigNumber = {
+                                LeakData?.reduce( (accumulator, x) => accumulator + x.Response.found, 0 )
+                !== undefined ? LeakData?.reduce( (accumulator, x) => accumulator + x.Response.found, 0 ) 
+                 : "NA"}
+
             // SmallNumber={21}
             SmallNumberTxt={"DeHashed/LeakCheck"}
             StatusColor={"blue"}
