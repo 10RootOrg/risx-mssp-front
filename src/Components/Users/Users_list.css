@@ -20,3 +20,23 @@
     /* width: 40%;    */
  
 }
+
+
+ 
+
+.inputs{
+    width: 100%;
+ 
+}
+
+.inputs div input{
+    width: calc(100% - var(--space-c) - var(--line-width-small)  - var(--line-width-small) - var(--line-width-small));
+    }
+    input[type='number'] {
+        -moz-appearance:textfield;
+    }
+    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }

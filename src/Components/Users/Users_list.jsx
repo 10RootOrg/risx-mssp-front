@@ -7,7 +7,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import axios from 'axios';
  import GeneralContext from '../../Context.js';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
-import {PopUp_All_Good ,PopUp_Request_info ,PopUp_Under_Construction} from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Request_info ,PopUp_Under_Construction,PopUp_Are_You_Sure} from '../PopUp_Smart.js'
 import {Add_Edit_User  } from '../Add_Edit_User.js'
 
 
@@ -60,6 +60,16 @@ function Users_list({
   const [user_Info, set_user_Info] = useState([]);
   
 
+  const  handle_delete_user = () =>{
+    console.log("handle_delet_user" ,user_Info );
+ 
+
+    set_PopUp_Are_You_Sure__show(false)
+    set_PopUp_Under_Construction__show(true)
+    }
+
+
+
   const  handle_add_user = (add_or_edit,Info) =>{
     console.log("handle_add_user" ,add_or_edit );
     set_user_Info(Info);
@@ -85,6 +95,29 @@ function Users_list({
  
  <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
   
+
+
+  {PopUp_Are_You_Sure__show &&
+ <PopUp_Are_You_Sure
+ popUp_show={PopUp_Are_You_Sure__show}
+ set_popUp_show={set_PopUp_Are_You_Sure__show}
+
+ HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
+ paragraph={PopUp_Are_You_Sure__txt.paragraph} 
+
+ button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
+ button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
+
+ True_action={handle_delete_user}
+ False_action={()=>set_PopUp_Are_You_Sure__show(false)}
+ /> 
+ }
+
+
+
+
+
+
   {PopUp_Under_Construction__show && (
 <PopUp_Under_Construction
 popUp_show={PopUp_Under_Construction__show}

@@ -27,13 +27,20 @@ import GeneralContext from '../Context.js';
                   } = props;
 
 const {   backEndURL,get_all_resource_types} = useContext(GeneralContext)
-const [user_name, set_user_name] = useState(user_Info?.user_name || '');
-const [email, set_email] = useState(user_Info?.email || '');
+const [user_name, set_user_name]       = useState(user_Info?.user_name || '');
+const [email, set_email]               = useState(user_Info?.email || '');
+const [phone_number, set_phone_number] = useState(user_Info?.phone_number || '');
+const [address, set_address]           = useState(user_Info?.address || '');
+const [state, set_state]           = useState(user_Info?.state || '');
+
+
 const [password, set_password] = useState('');
 const [error_message, set_error_message] = useState("");
-    //  const [monitoring, set_monitoring] = useState(resourceItem?.monitoring === 1 ? true : false); 
 
 
+
+
+ 
  console.log("user_Info",user_Info);
 
    const validateInputs = () => {
@@ -46,19 +53,27 @@ const [error_message, set_error_message] = useState("");
      
 
  
-     const Handele_are_you_sure =( ) =>{
- 
+     const Handele_are_you_sure_delete =(id ) =>{
+ console.log("Handele_are_you_sure_delete 2" , id);
     set_popUp_show(false) /// the add adit popup
       
       set_PopUp_Are_You_Sure__txt({
-          HeadLine:"Are you sure you want to delete?",
-          paragraph:"This record will be permanently deleted from the database",
+          HeadLine:"Are you sure?",
+          paragraph:"This User will be permanently deleted",
           buttonTrue:"Yes",
           buttonFalse:"No"
         });
         
         set_PopUp_Are_You_Sure__show(true)
       }
+      
+
+
+
+
+
+
+
       
     const handleInputChange = (setter) => (event) => setter(event.target.value);
     useEffect(() => {  set_popUp_show(popUp_show) }, [popUp_show]);
@@ -78,18 +93,19 @@ const [error_message, set_error_message] = useState("");
         set_user_name("");
         set_email("");
         set_password("");
+        set_phone_number("");
+        set_address("");
+        set_state("");
       }
 
      else if(popUp_Add_or_Edit__status == "edit"){
- 
       set_user_name(user_Info?.user_name  || '');
       set_email(user_Info?.email  || '');
+      set_phone_number(user_Info?.phone_number  || '');
+      set_address(user_Info?.address  || '');
+      set_state(user_Info?.state  || '');
       set_password("");
       }
-   
-      
-
-
     }, [ popUp_Add_or_Edit__status]); // Re-initialize state if `resourceItem` changes
   
  
@@ -260,18 +276,23 @@ const new_User = {
     user_id: new_id,
     type: "type1",
     email: email,
-    Address:"",
-    state: "",
+    Address:address,
+    state: state,
     user_name: user_name,
-    // user_password: "12345678",
-    // can_watch: true,
-    // can_edit: true,
-    phone_number: "+972-37763688",
+    phone_number: phone_number,
     name: "First User",
     last_login:  "",
     createdAt: new Date(),
     updatedAt: new Date(),
 }
+
+
+
+
+
+
+
+
 
     set_Preview_this_Results([...Preview_this_Results, new_User])
 
@@ -308,9 +329,13 @@ const new_User = {
 
     try {
       const response = await axios.post(`${backEndURL}/users/create-user`, {
-        user_name,
-        email,
-        password
+            user_name,
+            email,
+            password,
+            type: "type1",
+            address,
+            state,
+            phone_number,
       });
 
       if (response) {console.log("response.data",response.data); }
@@ -381,44 +406,53 @@ const new_User = {
 
 <div className="items_left">
   
-<div 
-className="item_info_left"
->
+
+
+<div className=" " style={{display:"flex",  gap:"var(--space-d)"}}>
+
+
+<div className="inputs">
 
 <div>
-<p className='font-type-menu   Color-Grey1 pb-b'>User Name</p>
-<input className="input-type2 mb-a " type="text" value={user_name}      placeholder={user_Info?.Name || 'Choose Name'} onChange={handleInputChange(set_user_name)}/>
+<p className='font-type-menu  Color-Grey1 mb-a'>User Name</p>
+<input className="input-type2  " type="text" value={user_name}      placeholder={user_Info?.Name || 'Choose Name'} onChange={handleInputChange(set_user_name)}/>
 </div>
 
-<div className="mt-b">
-<p className='font-type-menu   Color-Grey1 pb-b '>Email</p>
-<input className="input-type2 mb-a " type="text" value={email}      placeholder={user_Info?.email || 'Enter Valid Email'} onChange={handleInputChange(set_email)}/>
+<div className="mt-c">
+<p className='font-type-menu   Color-Grey1 mb-a '>Email</p>
+<input className="input-type2 " type="text" value={email}      placeholder={user_Info?.email || 'Enter Valid Email'} onChange={handleInputChange(set_email)}/>
+</div>
+
+<div className="mt-c">
+<p className='font-type-menu   Color-Grey1  mb-a'>Phone Number</p>
+<input className="input-type2  " type="number" value={phone_number}      placeholder={user_Info?.PhoneNumber || '052..'} onChange={handleInputChange(set_phone_number)}/>
+</div>
+
 </div>
 
 
+<div className="inputs">
+
+<div className=" ">
+<p className='font-type-menu   Color-Grey1  mb-a '>State </p>
+<input className="input-type2 " type="text" value={state}      placeholder={user_Info?.state  || 'Select state'} onChange={handleInputChange(set_state)}/>
+</div>
+
+<div className="mt-c">
+<p className='font-type-menu   Color-Grey1  mb-a '>Address</p>
+<input className="input-type2  " type="text" value={address}      placeholder={user_Info?.Address || 'Your Address'} onChange={handleInputChange(set_address)}/>
+</div>
 
 {popUp_Add_or_Edit__status === "add" &&
-<div className="mt-b">
-<p className='font-type-menu   Color-Grey1 pb-b '>Password</p>
-<input className="input-type2 mb-a " type="text" value={password}      placeholder={password || 'Enter Valid Password'} onChange={handleInputChange(set_password)}/>
+<div className="mt-c">
+<p className='font-type-menu   Color-Grey1 mb-a '>Password</p>
+<input className="input-type2  " type="text" value={password}      placeholder={password || 'Enter Valid Password'} onChange={handleInputChange(set_password)}/>
 </div>
 }
 
 </div>
 
-
-{/* const [password, set_password] = useState(''); */}
-
-
- {/* <div  className="item_info_left"  style={{width:"" ,height:"100%"}}> 
-<p className='font-type-menu   Color-Grey1 '>Description</p>
-<textarea  className="input-type2 reading-height  "   style={{width:"" ,height:"100%"}}  value={description}      placeholder={resourceItem?.Description || 'Description'}
-     onChange={handleInputChange(setDescription)}
- />
- 
- </div> */}
-
-
+</div>
 
 
 
@@ -464,14 +498,17 @@ className="item_info_left"
           <div style={{marginLeft:"auto" ,display:"flex" ,alignItems:"center", justifyContent:"center", height:"22px"}}>
 {popUp_Add_or_Edit__status === "edit" ? (<>
   <p className='column font-type-menu   Color-Grey1 mr-a '  >ID</p>
-<p className=' font-type-txt     Color-Grey1'>  {user_Info?.user_id}</p>
+<p className=' font-type-txt     Color-Grey1 mr-a'>  {user_Info?.user_id}</p>
 
 </>):null}
 
 
 </div>
 
-        {popUp_Add_or_Edit__status === "edit" &&     <button className="btn-type1"style={{marginRight:"5px"}} onClick={Handele_are_you_sure}>
+        {popUp_Add_or_Edit__status === "edit" &&     <button className="btn-type1"style={{marginRight:"5px"}}
+         onClick={()=>Handele_are_you_sure_delete(user_Info?.user_id)}
+        
+        >
        
           
           <IconTrash className="icon-type1" />  </button>   }     

@@ -425,7 +425,7 @@ function SideBar({
               </div>
             </button>
 
-            <div
+            {/* <div
               className="Bg-Grey2"
               style={{
                 width: "90%",
@@ -436,7 +436,7 @@ function SideBar({
                 marginTop: "5px",
                 marginBottom: "5px",
               }}
-            />
+            /> */}
 
             <button
               className="btn-menu"
@@ -449,7 +449,7 @@ function SideBar({
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
                 />
-                <p className="font-type-menu ">Risx</p>
+                <p className="font-type-menu ">AD</p>
               </div>
               <div
                 className="btn-menu-icon-placeholder"

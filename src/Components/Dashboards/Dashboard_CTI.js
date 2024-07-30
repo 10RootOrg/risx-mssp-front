@@ -157,7 +157,7 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
           <PreviewBox_type1_number_no_filters
             HeadLine="Total Indicators"
             resource_type_id={null}
-            BigNumber={MISPData?.Response?.total_attributes} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            BigNumber={MISPData?.Response?.total_attributes   !== undefined    ?  MISPData?.Response?.total_attributes : "NA" } // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={21}
             SmallNumberTxt={"MISP"}
             StatusColor={"blue"}
