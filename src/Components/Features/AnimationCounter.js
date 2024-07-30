@@ -17,7 +17,9 @@ const Counter = ({ target, isHovered, txt_color }) => {
    useEffect(() => { 
  
 
-    // console.log("target2",target);
+ 
+
+
       if(!target){ return}
       
         if(target < 999999 ){
@@ -162,22 +164,20 @@ duration = 2200; // 1.5 seconds in milliseconds
 
   return (
     <div style={{ transition: "color 0.15s ease-in-out" }}>
-{target !== undefined &&  target !== null  ?
-      <p className='font-type-h1'
-        style={{
-          color: isHovered ? "#00DBFF" : (txt_color || color),
-          transition: "color 0.15s ease-in-out",
-        }}
-      >
-        {count}
+{target !== undefined &&  target !== null  &&  target !== "NA" ?
 
+
+
+
+      <p className='font-type-h1'  style={{  color: isHovered ? "#00DBFF" : (txt_color || color),  transition: "color 0.15s ease-in-out", }} >
+        {count}
      {is_big_number_type && <span className='font-type-h3'>{big_number_type}</span> }
     
       </p>
 :
 <p className='font-type-h2'
 style={{
-  color: isHovered ? "#00DBFF" : (txt_color || color),
+  color: isHovered ? "#00DBFF" : (dont_display_color || color),
   transition: "color 0.15s ease-in-out",
 }}
 >

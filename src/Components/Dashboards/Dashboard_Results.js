@@ -53,6 +53,36 @@ if (backEndURL === undefined){return}
            set_Preview_this_Results(res.data?.results_list);
 
 
+          //  const tmp = [
+          //   {
+          //     ModuleName:"Velociraptor",
+          //     SubModuleName:"Hayabusa",
+          //     Arguments:"its temp res",
+          //     Status: "Complete"
+          //   },    
+
+          //   {
+          //     ModuleName:"Velociraptor",
+          //     SubModuleName:"BestPractice",
+          //     Arguments:"its temp res",
+          //     Status: "Complete"
+          //   }, 
+
+
+
+            
+          //   {
+          //     ModuleName:"Nuc",
+          //     SubModuleName:"",
+          //     Arguments:"its temp res",
+          //     Status: "Complete"
+          //   },   
+            
+
+          // ]
+          // set_Preview_this_Results(tmp);
+
+
 
     // const sortedResults = [...Results].sort((a, b) => {
           //   const dateA = new Date(a.response);
@@ -83,106 +113,104 @@ if (backEndURL === undefined){return}
 
 // make statistics to ---  Status Legend
 
+ 
+useEffect(() => {
 
-    useEffect(() => {
+  if(Preview_this_Results === undefined){return}
+  
+  const  BestPractice = "BestPractice"
+    // count the best practice
+        const countOccurrences = () => {
 
-if(Preview_this_Results === undefined){return}
 
-const  BestPractice = "BestPractice"
-  // count the best practice
-      const countOccurrences = () => {
-        const countUniqueStartDates = (Preview_this_Results) => {
-          const uniqueStartDates = new Set();
-        
-          Preview_this_Results.forEach(({ SubModuleName, StartDate }) => {
-            // Check if SubModuleName starts with "BestPractice"
-            if (SubModuleName.startsWith(BestPractice)) {
-              uniqueStartDates.add(StartDate); // Add StartDate to the Set
-            }
-          });
-        
-          return uniqueStartDates.size; // Return the count of unique StartDate
+
+          // const countUniqueStartDates = (Preview_this_Results) => {
+          //   const uniqueStartDates = new Set();
+          
+          //   Preview_this_Results.forEach(({ SubModuleName, StartDate }) => {
+          //     // Check if SubModuleName starts with "BestPractice"
+          //     if (SubModuleName.startsWith(BestPractice)) {
+          //       uniqueStartDates.add(StartDate); // Add StartDate to the Set
+          //     }
+          //   });
+          
+          //   return uniqueStartDates.size; // Return the count of unique StartDate
+          // };
+
+
+          // const count_Best_Practice_per_date = countUniqueStartDates(Preview_this_Results);
+   
+            // Count all entries except those where SubModuleName starts with "BestPractice"
+  
+            
+  const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
+    // Ignore SubModuleName that starts with "bbbbbbbb"
+    if (SubModuleName || ModuleName
+      //  && !SubModuleName.startsWith(BestPractice)
+      ) {
+      const key = SubModuleName || ModuleName;
+      acc[key] = acc[key] ? acc[key] + 1 : 1;
+    }
+    return acc;
+  }, {});
+  
+  console.log("countsMap", countsMap);
+  
+  // Convert the countsMap object to an array, sort it, and then format it
+  const countsArray = Object.entries(countsMap)
+    .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
+    .map(([name, count]) => ({ [name]: count }));
+  
+  console.log("countsArray", countsArray);
+  // setCounts([ ...countsArray,{"BP (Best Practice)": count_Best_Practice_per_date}]);
+
+  setCounts(countsArray);
+   
+  
+  const completed_InTime_Count =     (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
+  const completed_not_InTime_Count = (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
+  
+  const inProgress_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "In Progress"     && item?.TimeNote === "In Time").length : "NA";
+  const inProgress_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "in Progress"     && item?.TimeNote  != "In Time").length : "NA";
+  
+  
+  const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
+  const hunt_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
+  const Failed_Count =               (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Failed" ).length : "NA";
+  
+   
+  console.log("Preview_this_Results",Preview_this_Results);
+  console.log("inProgress_InTime_Count",inProgress_InTime_Count);
+  console.log("inProgress_not_InTime_Count",inProgress_not_InTime_Count);
+  
+   
+  
+  set_Status_Legend({
+    completed_InTime_Count: completed_InTime_Count,
+    completed_not_InTime_Count:completed_not_InTime_Count,
+    inProgress_InTime_Count:inProgress_InTime_Count,
+    inProgress_not_InTime_Count:inProgress_not_InTime_Count,
+    hunt_InTime_Count:hunt_InTime_Count,
+    hunt_not_InTime_Count:hunt_not_InTime_Count,
+    Failed_Count:Failed_Count })
+  
+  
         };
-        const count_Best_Practice_per_date = countUniqueStartDates(Preview_this_Results);
- 
-          // Count all entries except those where SubModuleName starts with "BestPractice"
-const countsMap = Preview_this_Results?.reduce((acc, { SubModuleName, ModuleName }) => {
-  // Ignore SubModuleName that starts with "bbbbbbbb"
-  if (SubModuleName && !SubModuleName.startsWith(BestPractice)) {
-    const key = SubModuleName || ModuleName;
-    acc[key] = acc[key] ? acc[key] + 1 : 1;
-  }
-  return acc;
-}, {});
-
-console.log("countsMap", countsMap);
-
-// Convert the countsMap object to an array, sort it, and then format it
-const countsArray = Object.entries(countsMap)
-  .sort((a, b) => b[1] - a[1]) // Sort by count in descending order
-  .map(([name, count]) => ({ [name]: count }));
-
-console.log("countsArray", countsArray);
-
-setCounts([ ...countsArray,{"BP (Best Practice)": count_Best_Practice_per_date}]);
- 
-  // const count__Velo = Preview_this_Results?.filter(item => item?.Module_ID == "2000000").length;
-//  const completed  = Preview_this_Results?.filter(item => item?.Status == "Complete");
-
-const completed_InTime_Count =     (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote === "In Time").length : "NA";
-const completed_not_InTime_Count = (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Complete" && item?.TimeNote  != "In Time").length : "NA";
-
-const inProgress_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "In Progress"     && item?.TimeNote === "In Time").length : "NA";
-const inProgress_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "in Progress"     && item?.TimeNote  != "In Time").length : "NA";
+    
+        countOccurrences();
+      }, [Preview_this_Results]);
 
 
-const hunt_InTime_Count =          (Preview_this_Results || []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Hunting"     && item?.TimeNote === "In Time").length : "NA";
-const hunt_not_InTime_Count =      (Preview_this_Results|| []).length > 0 ? (Preview_this_Results || []).filter(item => item?.Status === "Hunting"     && item?.TimeNote  != "In Time").length : "NA";
-const Failed_Count =               (Preview_this_Results|| []).length > 0 ? (Preview_this_Results|| []).filter(item => item?.Status === "Failed" ).length : "NA";
-
- 
-console.log("Preview_this_Results",Preview_this_Results);
-console.log("inProgress_InTime_Count",inProgress_InTime_Count);
-console.log("inProgress_not_InTime_Count",inProgress_not_InTime_Count);
-
- 
-
-
-set_Status_Legend({
-  completed_InTime_Count: completed_InTime_Count,
-  completed_not_InTime_Count:completed_not_InTime_Count,
-  inProgress_InTime_Count:inProgress_InTime_Count,
-  inProgress_not_InTime_Count:inProgress_not_InTime_Count,
-  hunt_InTime_Count:hunt_InTime_Count,
-  hunt_not_InTime_Count:hunt_not_InTime_Count,
-  Failed_Count:Failed_Count })
-
-// console.log("Preview_this_Results?.results_list" ,Preview_this_Results  );
-// for (let index = 0; index < Preview_this_Results.length; index++) {
- 
-//   console.log(Preview_this_Results[index]?.LastIntervalDate);
- 
-  
-// }
-
-
-//  console.log("completed_not_InTime_Count",completed_not_InTime_Count);
-  // console.log("completed" ,completed);
-  // console.log(Status_Legend);
-  // set_Status_Legend
-
-  // set_count_complete(count_complete)
-//  set_count_veloci(count__Velo)
-
-
-
-      };
-  
-      countOccurrences();
-    }, [Preview_this_Results]);
 
 
 console.log("last_updated",last_updated);
+
+
+
+
+ 
+
+
 
 
     return (
@@ -206,22 +234,6 @@ console.log("last_updated",last_updated);
 </div>
 
 <div className='resource-group-top-boxes mb-c' >
-
- 
-
-
-{/* <PreviewBox_type2_pie
-HeadLine="Result Distribution"
-bar_numbers = { counts?.map(item => Object.values(item) ) }
-bar_headlines = {  counts?.map(item => Object.keys(item) )  }
-// bar_numbers = {[ "11","22","41","5"]}
-// bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
-bar_title_legend = {"Count"}
-is_popup = {false}
-/> */}
-
- 
-
 
 
 

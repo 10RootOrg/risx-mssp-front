@@ -82,14 +82,14 @@ function Dashboard_Forensics({
       GetData();
     }
   }, [backEndURL]);
-  console.log("DashBoardData",DashBoardData);
-  console.log("DashBoardData?.Velociraptor",DashBoardData?.Velociraptor);
-  console.log("DashBoardData?.Velociraptor?.FinishedHunts",DashBoardData?.TimeSketch?.tag_counts);
- 
+  // console.log("DashBoardData",DashBoardData);
+  // console.log("DashBoardData?.Velociraptor",DashBoardData?.Velociraptor);
+  // console.log("DashBoardData?.Velociraptor?.FinishedHunts",DashBoardData?.TimeSketch?.tag_counts);
+  console.log("UnfinishedHunts", DashBoardData?.Velociraptor?.UnfinishedHunts);
 
+  console.log("FinishedHunts",   DashBoardData?.Velociraptor?.FinishedHunts );
   
-
-
+ 
 
   return (
     <>
@@ -132,7 +132,7 @@ colors={"Basic"} // Basic , Alert
 <PreviewBox_type1_number_no_filters
             HeadLine="Uncompleted Hunts "
             resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.UnfinishedHunts  } // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            BigNumber={DashBoardData?.Velociraptor?.UnfinishedHunts || "NA"  } // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
             // SmallNumber={21}
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}
@@ -147,7 +147,8 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Completed Hunts "
             resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.FinishedHunts} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            const BigNumber = {DashBoardData?.Velociraptor?.FinishedHunts !== undefined ? DashBoardData.Velociraptor.FinishedHunts : "NA"}
+
             // SmallNumber={2}
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}
@@ -204,8 +205,9 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Overall Clients "
             resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.NumberOfClients} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={682 }
+           BigNumber = {DashBoardData?.Velociraptor?.NumberOfClients !== undefined ? DashBoardData?.Velociraptor?.NumberOfClients : "NA"}
+
+             // SmallNumber={682 }
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
@@ -226,8 +228,7 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Connected Clients "
             resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.NumberOfConnectedClients} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={234 }
+            BigNumber = {DashBoardData?.Velociraptor?.NumberOfConnectedClients !== undefined ? DashBoardData?.Velociraptor?.NumberOfConnectedClients : "NA"}
             SmallNumberTxt={"Velociraptor"}
             StatusColor={"blue"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
@@ -263,8 +264,8 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Number of Sketches "
             resource_type_id={null}
-            BigNumber={DashBoardData?.TimeSketch?.number_of_sketches} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={9}
+            BigNumber = {DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBoardData?.TimeSketch?.number_of_sketches : "NA"}
+             // SmallNumber={9}
             SmallNumberTxt={"Timesketch"}
             StatusColor={"blue"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
@@ -278,8 +279,8 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Tag: High "
             resource_type_id={null}
-            BigNumber={DashBoardData?.TimeSketch?.tag_counts?.high} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={9}
+            BigNumber = {DashBoardData?.TimeSketch?.tag_counts?.high !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.high : "NA"}
+             // SmallNumber={9}
             SmallNumberTxt={"Timesketch"}
             StatusColor={"High"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
@@ -292,7 +293,7 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Tag: Persistence "
             resource_type_id={null}
-            BigNumber={DashBoardData?.TimeSketch?.tag_counts?.Persistence} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+            BigNumber = {DashBoardData?.TimeSketch?.tag_counts?.Persistence !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.Persistence : "NA"}
             // SmallNumber={9}
             SmallNumberTxt={"Timesketch"}
             StatusColor={"blue"}
@@ -306,8 +307,8 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Tag: Phishy-Domain "
             resource_type_id={null}
-            BigNumber={DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"]} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={9}
+            BigNumber = {DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] !== undefined ?DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] : "NA"}
+             // SmallNumber={9}
             SmallNumberTxt={"Timesketch"}
             StatusColor={"blue"}
             date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
@@ -321,9 +322,10 @@ colors={"Basic"} // Basic , Alert
           <PreviewBox_type1_number_no_filters
             HeadLine="Tag: command and control "
             resource_type_id={null}
-            BigNumber={
-              DashBoardData?.TimeSketch?.tag_counts?.["command and control"]
-            } // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+ 
+
+            BigNumber = {DashBoardData?.TimeSketch?.tag_counts?.["command and control"]  !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.["command and control"]  : "NA"}
+
             // SmallNumber={9}
             SmallNumberTxt={"Timesketch"}
             StatusColor={"blue"}

@@ -1,7 +1,7 @@
 import React, { useState , useContext ,useEffect} from 'react'
  
 import { ReactComponent as IconBIG } from '../icons/ico-Results.svg';
-import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
+import { ReactComponent as IconNasted } from '../icons/nasted.svg';
 import { ReactComponent as Loader } from '../icons/loader_typea.svg';
 
 
@@ -12,13 +12,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
  import { Make_url_from_id ,fix_path} from "../../Components/Dashboards/functions_for_dashboards.js"
  import '../StatusDisplay.css'; 
-
-  // Adjust the path as needed based on your project structure
- 
- 
 import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction } from '../PopUp_Smart.js'
-
-
 
 import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response} from '../PopUp_response_modules.js'
  import LMloader from "../Features/LMloader.svg";
@@ -28,15 +22,14 @@ function Results_list({
   set_Preview_this_Results,
   loader
   }) {
-    const {  backEndURL ,all_Tools ,front_IP,front_URL} = useContext(GeneralContext);
-    const [is_search, set_is_search] = useState(false);
+const {  backEndURL ,all_Tools ,front_IP,front_URL} = useContext(GeneralContext);
+const [is_search, set_is_search] = useState(false);
 
+const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
+const [UniqueID_to_expand, set_UniqueID_to_expand] = useState("");
 
-  const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
-  // const [popUp_Add_or_Edit__status, set_popUp_Add_or_Edit__status] = useState("edit");
-
-  const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
-  const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
+const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
     HeadLine:"Success",
     paragraph:"successfully",
     buttonTitle:"Close"
@@ -63,7 +56,7 @@ const status_bar_width = "200px"
   const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
 
   const  get_Json_single_response = async(Info)=>{
- 
+ console.log("get_Json_single_response", Info);
     try{
      if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
     const params = {file_name : Info?.ResponsePath }
@@ -179,16 +172,14 @@ const status_bar_width = "200px"
 
 const handle_click_result = (Info) =>{
 console.log("-------handle_click_result-------------",Info);
+
 if (Info.status  == "Failed"   ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:"The process stopped for an unknown reason", buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
   return}
 
  
-
 switch (Info?.ModuleName) {
-
-
 
 case 'Nuclei': ////////////////////////// Nuclei //////////////////////////
 if(Info.Status  === "Failed"   ){
@@ -210,16 +201,18 @@ else if(   Info.Status   == "In Progress" ){
 if (Info.Status  === "Complete"){  get_Json_single_response(Info);  return}
 else{ return;  }
 
-
-
 case "Velociraptor": ////////////////////////// Velociraptor //////////////////////////
 if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
   return}
-else{ get_Json_single_response(Info);   return;}
 
+else if (Info.SubModuleName  === "BestPractice" ){
+console.log(" its a BestPractice!!");
+if (Info?.UniqueID === UniqueID_to_expand){set_UniqueID_to_expand("")}else{set_UniqueID_to_expand(Info?.UniqueID )} return}
 
+else{ get_Json_single_response(Info);   
+  return;}
 
 case "TimeSketch": ////////////////////////// TimeSketch //////////////////////////
 if (all_Tools=== undefined){console.log( "cant make TimeSketch, all_Tools is ",all_Tools);   return }
@@ -413,7 +406,6 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
   <>
 <div className='resource-group-list-keyNames mb-a  '  >
-
              <div className='resource-group-list-item list-item-biggest ml-a' onClick={() => do_sort("SubModuleName")}>         <p className='font-type-menu  make-underline Color-Grey1 ml-a '>Module + Artifact</p></div>
              <div className='resource-group-list-item   list-item-big'>                                                         <p className='font-type-menu  no-underline Color-Grey1 '>Arguments</p></div>
              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div>
@@ -421,76 +413,84 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("Status")}>                       <p className='font-type-menu  make-underline Color-Grey1 '>Status</p></div>
              <div className='resource-group-list-item list-item-big  ' style={{ marginRight: "18px", width: status_bar_width }}><p className='font-type-menu  no-underline Color-Grey1  '>Status Display</p></div>
-
 </div>
 
 <div className='resource-group-list-box mb-c' >
 
-
-
-
   {Array.isArray(Preview_this_Results) && Preview_this_Results?.map((Info, index) => {
-    
+  
     let SubModuleName = Info?.SubModuleName; // Get the SubModuleName
-
     // Check if it starts with "BestPractice@"
-    if (SubModuleName && SubModuleName.startsWith("BestPractice@")) {
-      SubModuleName = "BP - " + SubModuleName.slice("BestPractice@".length); // Replace with "momo"
-    }
-
+    // if (SubModuleName && SubModuleName.startsWith("BestPractice@")) {
+    //   SubModuleName = "BP - " + SubModuleName.slice("BestPractice@".length); // Replace with "momo"
+    // }
     return (
+      <div>
+
+
+ {/* .......  all lists ........... */}
 <div className='resource-group-list-line' key={index} onClick={()=>handle_click_result(Info)}>
  
-
 <div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >
 
+{Info?.ModuleName  === ""   &&   SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
 
-
-{  Info?.ModuleName  === ""   &&   SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
-
-
-
-{Info?.ModuleName && SubModuleName && 
-(<>
-  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p>
-<p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p>
- <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleName}</p>
-
- </>)
-
-}
-
+{Info?.ModuleName && SubModuleName &&  (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p><p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleName}</p> </>)}
 
 {Info?.ModuleName && !SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
 
-
-
 </div>
 
-
- <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big   '
-//  style={{width:"60%" , maxWidth:"60%" , marginRight:"15px"}}
- >{ JSON.stringify(Info?.Arguments) }</p> 
-
-
-
-
-
+<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-big'>{ JSON.stringify(Info?.Arguments) }</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.StartDate)}</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.LastIntervalDate)}</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.ExpireDate &&  format_date_type_c(Info?.StartDate)}</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.Status}</p> 
-
-<div className="status-bar-and-time " style={{width:status_bar_width}}>  
-<div className="status-bar">
-            {/* <div className={`status-bar-fill `}/> */}
-            <div className={`status-bar-fill ${Info?.Status}`}/>
-          </div>
-          <div className={`font-type-txt   time-general  ${Info?.TimeNote != "In Time" ?  'not-in-time' : 'in-time'}  `}>{Info?.TimeNote === "In Time" ? null : Info?.TimeNote}</div>
+<div className="status-bar-and-time " style={{width:status_bar_width}}> <div className="status-bar"><div className={`status-bar-fill ${Info?.Status}`}/></div>
+<div className={`font-type-txt   time-general  ${Info?.TimeNote != "In Time" ?  'not-in-time' : 'in-time'}  `}>{Info?.TimeNote === "In Time" ? null : Info?.TimeNote}</div>
 </div>
 </div>
  
-//  </div>
+
+ {/* .......  nasted best practice ........... */}
+  {SubModuleName === "BestPractice" &&   UniqueID_to_expand === Info?.UniqueID && 
+<>
+{ Info?.Arguments?.Modules?.map((SubModuleINFO, index) => {
+  return(
+  <div className='resource-group-list-line' key={index} onClick={()=>handle_click_result({...SubModuleINFO , ModuleName:"Velociraptor" , SubModulesCollection: Info?.SubModuleName })}>
+ <div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >
+   <div className="ml-a " style={{marginTop:'5px'}}> <IconNasted/></div>
+  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleINFO?.SubModuleName}</p>
+ </div>
+<p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'> </p> 
+ <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p> 
+ <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p> 
+ <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p> 
+ <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ SubModuleINFO?.Status}</p> 
+ <div className="status-bar-and-time " style={{width:status_bar_width}}>  
+ <div className="status-bar"><div className={`status-bar-fill ${SubModuleINFO?.Status}`}/></div>
+ <div className={`font-type-txt   time-general  ${SubModuleINFO?.TimeNote != "In Time" ?  'not-in-time' : 'in-time'}  `}>{SubModuleINFO?.TimeNote === "In Time" ? null : SubModuleINFO?.TimeNote}</div>
+ </div>
+
+
+ </div>
+
+
+)})}
+</>
+
+}
+ 
+
+
+
+
+
+
+
+
+
+  </div>
 
 
     );
