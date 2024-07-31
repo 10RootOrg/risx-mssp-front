@@ -200,7 +200,7 @@ function Alert_list({
             <div
               className="resource-group-list-item list-item-small"
               onClick={() => do_sortObject("UserInput", "ChangedAt")}
-              style={{ marginRight: "25px" }}
+              // style={{ marginRight: "25px" }}
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
@@ -210,17 +210,18 @@ function Alert_list({
             <div
               className="resource-group-list-item list-item-small"
               onClick={() => do_sortObject("UserInput", "UserId")}
-              style={{ marginRight: "25px" }}
+              // style={{ marginRight: "25px" }}
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
-                Changed By
+              Owner
               </p>
             </div>
             <div
-              className="resource-group-list-item list-item-status-color"
+              className="resource-group-list-item list-item-small"
               onClick={() => do_sortObject("UserInput", "Status")}
-              style={{ textAlign: "center" }}
+              // style={{ marginRight: "25px" }}
+              // style={{ textAlign: "center" }}
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">

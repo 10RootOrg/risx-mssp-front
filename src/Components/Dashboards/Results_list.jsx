@@ -29,12 +29,7 @@ const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show]
 const [UniqueID_to_expand, set_UniqueID_to_expand] = useState("");
 
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
-const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
-    HeadLine:"Success",
-    paragraph:"successfully",
-    buttonTitle:"Close"
-  });
-
+const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
 
   const [PopUp_Request_info__show, set_PopUp_Request_info__show] = useState(false);
   const [PopUp_Request_info__txt, set_PopUp_Request_info__txt] = useState({
@@ -181,6 +176,10 @@ if (Info.status  == "Failed"   ){
  
 switch (Info?.ModuleName) {
 
+
+
+
+
 case 'Nuclei': ////////////////////////// Nuclei //////////////////////////
 if(Info.Status  === "Failed"   ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:"process failed", buttonTitle:"Close" })
@@ -234,8 +233,31 @@ if (path) {
  
 else{console.log("problem with TimeSketch path, it is:", path); }
 
- 
 break;
+
+
+case "Shodan": ////////////////////////// Shodan //////////////////////////
+set_PopUp_Under_Construction__txt({
+  HeadLine: "Coming Soon!",
+  paragraph: `We are working on creating Shodan feature. Stay tuned for updates as we finalize the details.`,
+  buttonTitle: "Close",
+});
+set_PopUp_Under_Construction__show(true);
+break;
+
+case "LeakCheck": ////////////////////////// LeakCheck //////////////////////////
+ set_PopUp_Under_Construction__txt({
+  HeadLine: "Coming Soon!",
+  paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
+  buttonTitle: "Close",
+});
+set_PopUp_Under_Construction__show(true);
+break;
+
+
+
+
+
 
 default:
  
@@ -318,6 +340,8 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
   buttonTitle={"Close"}
   json_file_info={json_file_info}
   json_file_data={json_file_data}
+  set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+  set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
   /> 
   }
 
@@ -333,6 +357,8 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
  buttonTitle={"Close"}
  json_file_info={json_file_info}
  json_file_data={json_file_data}
+ set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+ set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
 />
 }
 

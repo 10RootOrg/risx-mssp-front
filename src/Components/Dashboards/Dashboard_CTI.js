@@ -107,7 +107,7 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
             // bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
             bar_title_legend={"Count"}
             is_popup={false}
-            display_y_axis={true}
+            display_y_axis={false}
             colors={"Basic"}
           />
 

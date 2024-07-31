@@ -657,7 +657,7 @@ useEffect(() => {
    
         <div className='display-flex   justify-content-space-between' style={{ height:"100%"}}>
   
-        <div className='display-flex  ' style={{   width:"100%" ,height:"130px",}}>
+        <div className='display-flex  ' style={{   width:"100%" ,height:"158px", justifyContent:"center" , }}>
         <Doughnut  data={data}  options={options}  ></Doughnut>
            {/* <Doughnut  data={has_data ? data : data}  options={options}  ></Doughnut> */}
            </div>
@@ -679,7 +679,14 @@ return(
   {colors === "Alert" &&
   <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
   }
-<p className='   font-type-txt Color-White  ' >{Info} </p>
+<p className='   font-type-txt Color-White  ' style={{
+whiteSpace: 'nowrap',
+overflow: 'hidden',
+textOverflow: 'ellipsis',
+// width: 'auto', // or any fixed width or max-width you prefer
+// maxWidth:"100px",
+// minWidth:"160px"
+}}>{Info} </p>
 </div>
 )
 })}
@@ -826,7 +833,8 @@ if (set_display_this === undefined) {return}
       },  
     },
   
-  
+    responsive: true,
+  maintainAspectRatio: false,
   };
 
 
@@ -843,44 +851,38 @@ if (set_display_this === undefined) {return}
 
 
             {display_data &&
-         <div className='display-flex   justify-content-space-between' style={{ height:"100%" ,paddingRight:"20px", paddingLeft:"20px" , gap:"20px"}}>
-        <div className='display-flex  'style={{ height: "auto", maxHeight: "150px", width: "100%", maxWidth: "600px", overflow: "hidden" }}> 
-        <Bar  data={data}  options={options}  style={{   width:"auto" }} ></Bar></div>
-<div className='display-flex  justify-content-center  ' style={{   width:"auto" ,gap:"2px" }}>
-        <div className='display-flex flex-direction-column justify-content-center  ' style={{ marginRight:"10px",   gap:"2px" }}>
-  {Array.isArray(bar_headlines) &&  bar_headlines?.map((Info, index) => {
-return(
-<div className='display-flex' style={{marginRight:"auto"}} key={index}>
-
-  {colors === "Basic" &&
-  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
-  }
-  {colors === "Alert" &&
-  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
-  }
- 
-
-<p className='font-type-txt Color-White'style={{width:"max-content"}}>{Info} </p>
+ <div className='display-flex justify-content-space-between' style={{ height: "100%", paddingRight: "20px", paddingLeft: "20px", gap: "20px" }}>
+  
+  <div className='display-flex' style={{ height: "170px", maxHeight: "170px", flexGrow: 1, overflow: "hidden" }}>
+  <Bar data={data} options={options} style={{ width: "100%", height: "100%" }} />
 </div>
-)
-})}
-  </div>
 
-       <div className='display-flex flex-direction-column   ' style={{  gap:"2px"  }}>
-       {Array.isArray(bar_numbers) &&  bar_numbers?.map((Info, index) => {
-  return(
-    <div className='display-flex'  style={{  marginLeft:"auto"}} key={index}>
-     <p className='   font-type-txt Color-White  '>{Info}</p>
-    </div>
-  )
-   })}
+ <div className='display-flex justify-content-center' style={{ width: "auto", gap: "2px" }}>
+   <div className='display-flex flex-direction-column justify-content-center' style={{ marginRight: "10px", gap: "2px" }}>
+     {Array.isArray(bar_headlines) && bar_headlines.map((Info, index) => (
+       <div className='display-flex' style={{ marginRight: "auto" }} key={index}>
+         {colors === "Basic" &&
+           <div className={`Bg-Blue-Glow light-bulb-type1 mr-a`} style={{ opacity: (index + 1) / bar_headlines.length }} />
+         }
+         {colors === "Alert" &&
+           <div className={`Bg-Blue-Glow light-bulb-type1 mr-a`} style={{ backgroundColor: AlertColors[index] }} />
+         }
+         <p className='font-type-txt Color-White' style={{ width: "max-content" }}>{Info}</p>
        </div>
+     ))}
+   </div>
+
+   <div className='display-flex flex-direction-column' style={{ gap: "2px" }}>
+     {Array.isArray(bar_numbers) && bar_numbers.map((Info, index) => (
+       <div className='display-flex' style={{ marginLeft: "auto" }} key={index}>
+         <p className='font-type-txt Color-White'>{Info}</p>
        </div>
+     ))}
+   </div>
+ </div>
 
+</div>
 
-
-
-        </div>
          }
         {!display_data &&  <div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}><p className='font-type-h4 Color-Grey2' style={{}}>No Records</p> </div>}
 

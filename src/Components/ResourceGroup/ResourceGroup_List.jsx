@@ -12,6 +12,10 @@ import { ReactComponent as IconPhonenumber } from './asset-icons/ico-phonenumber
 import { ReactComponent as IconUserNameSocial } from './asset-icons/ico-username.svg';
 import { ReactComponent as IconFullName } from './asset-icons/ico-fullname.svg';
 import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
+import { ReactComponent as IconEmailDomain } from './asset-icons/ico-email-domain.svg';
+// import { ReactComponent as IconEmailDomain } from "./asset-icons/ico-reverse.svg";
+
+
 
  import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
  import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
@@ -21,7 +25,7 @@ import axios from 'axios'
  import GeneralContext from '../../Context.js';
 
 //  import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
- import { PopUp_Under_Construction} from '../PopUp_Smart'
+ import { PopUp_Under_Construction ,PopUp_All_Good} from '../PopUp_Smart'
 
  import LMloader from "../Features/LMloader.svg";
 function ResourceGroup_List({
@@ -52,6 +56,8 @@ function ResourceGroup_List({
   const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
   const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
   
+  const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+  const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
 
 console.log("sort_by",sort_by);
 console.log("firstTimeData",firstTimeData);
@@ -83,6 +89,9 @@ return <IconCompany />;
 
 } else if (resource_type_id === "2008") {
 return <IconComputer />;
+
+} else if (resource_type_id === "2009") {
+  return <IconEmailDomain />;
 
 } else {
 return <IconNoIcon />;
@@ -227,6 +236,22 @@ if (assets_list_from_db?.length >=2&&firstTimeData ) {
       return (
  
 <>
+
+
+
+{PopUp_All_Good__show &&
+ <PopUp_All_Good
+ popUp_show={PopUp_All_Good__show}
+ set_popUp_show={set_PopUp_All_Good__show}
+ HeadLine={PopUp_All_Good__txt.HeadLine}
+ paragraph={PopUp_All_Good__txt.paragraph} 
+buttonTitle={PopUp_All_Good__txt.buttonTitle}
+ /> }
+ 
+
+
+
+
 
 {PopUp_Under_Construction__show && (
 <PopUp_Under_Construction
