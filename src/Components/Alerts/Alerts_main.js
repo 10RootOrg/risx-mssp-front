@@ -108,7 +108,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             bar_headlines={Object.keys(PieObjectStatus)}
             bar_title_legend={["total"]}
             is_popup={false}
-            colors={"Alert"} // Basic , Alert
+            colors={"Basic"} // Basic , Alert
           />
 
           <PreviewBox_type1_number_no_filters

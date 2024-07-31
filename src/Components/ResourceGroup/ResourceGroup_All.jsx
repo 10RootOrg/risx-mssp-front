@@ -10,6 +10,12 @@ import { ReactComponent as IconPhonenumber } from './asset-icons/ico-phonenumber
 import { ReactComponent as IconUserNameSocial } from './asset-icons/ico-username.svg';
 import { ReactComponent as IconFullName } from './asset-icons/ico-fullname.svg';
 import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
+import { ReactComponent as IconEmailDomain } from './asset-icons/ico-email-domain.svg';
+
+
+
+ 
+
 
 import axios from 'axios'
 import GeneralContext from '../../Context.js';
@@ -255,6 +261,10 @@ const  add_resource_item = (btn_add_single_value,btn_add_single_id) =>{
     } else if (resource_type_id === "2008") {
       return <IconComputer />;
 
+    } else if (resource_type_id === "2009") {
+      return <IconEmailDomain />;
+
+
     } else {
        return <IconNoIcon />;
     }
@@ -395,7 +405,13 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 
 
 <div style={{display:"flex" , flexDirection:"column" ,}}>
-{Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => {
+{/* {Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => { */}
+
+{Array.isArray(all_Resource_Types) && all_Resource_Types.length > 0 && 
+  all_Resource_Types.sort((a, b) => a.resource_type_name.localeCompare(b.resource_type_name)).map((Info, index) => {
+
+
+
 return (
 <div className='resource_type_list' style={{ display: "flex", flexDirection: "", justifyContent: "center", alignItems: "center" }} onClick={() => { handle_show_list(Info?.resource_type_id) }}>
   {renderIcon(Info?.resource_type_id)}

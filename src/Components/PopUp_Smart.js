@@ -14,6 +14,11 @@ import { ReactComponent as Loader } from "../Components/icons/loader_typea.svg";
 import axios from "axios";
 import { format_date_type_a } from "./Features/DateFormat.js";
 
+
+const keyStyle = { width: '140px' ,  backgroundColor: "yellow" };
+
+ 
+
 const downloadJsonFile = (file) => {
   console.log(file);
   const dataStr =
@@ -340,22 +345,19 @@ export const PopUp_Alert_info = (props) => {
               </span>
               {format_date_type_a(Info.UserInput?.ChangedAt)}
             </p>{" "}
-            {Object.keys(Info).map((key) => {
-              if (
-                ["UserInput", "_ts", "Artifact", "buttonTitle"].includes(key)
-              ) {
-                return;
-              }
-              return (
-                <p className="font-type-txt  reading-height Color-Grey1">
-                  <span className="font-type-menu reading-height Color-White mr-a">
-                    {key}:
-                  </span>
 
-                  {typeof Info[key] !== "object"
-                    ? Info[key]
-                    : JSON.stringify(Info[key])}
-                </p>
+
+
+            {Object.keys(Info).map((key) => {
+              if ( ["UserInput", "_ts", "Artifact", "buttonTitle"].includes(key)  ) {  return; }
+              return (
+                <div style={{height:" ", display:"flex"}} >
+
+                  <p className="font-type-menu reading-height  Color-White" style={{keyStyle}} >{key}:  </p>
+                  <p className="font-type-txt  reading-height Color-Grey1  "  > {typeof Info[key] !== "object" ? Info[key] : JSON.stringify(Info[key])}</p>
+
+                </div>
+
               );
             })}
             <div className="display-flex mt-c" style={{}}>

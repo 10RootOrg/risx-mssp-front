@@ -123,8 +123,15 @@ function SideBar({
   };
 
   const handleDownload = async (os) => {
+
+    console.log("os" ,os);
     // window.open(object?.General?.AgentLinks[os]);
     try {
+
+      set_PopUp_All_Good__txt({ HeadLine:`Download ${os} Agent Start`,paragraph: 'This download can take a few minutes. The file will appear in your download folder once the process is complete.',buttonTitle:"Close"});
+      set_PopUp_All_Good__show(true);
+
+
       const res = await axios.post(
         `${backEndURL}/config/DownloadAgent`,
         {
@@ -132,6 +139,10 @@ function SideBar({
         },
         { responseType: "blob" }
       );
+
+
+ 
+         
 
       if (res) {
         console.log(

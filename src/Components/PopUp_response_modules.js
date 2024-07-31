@@ -9,6 +9,8 @@ import {ReactComponent as SuccessIcon} from '../Components/icons/General-icons-s
 import {   format_date_type_c } from './Features/DateFormat';
 import axios from 'axios';
 
+import { PopUp_All_Good} from '../Components/PopUp_Smart.js'
+
 
 async function download_Json(ResponsePath,backEndURL){
  
@@ -20,7 +22,7 @@ async function download_Json(ResponsePath,backEndURL){
         params: { ResponsePath: ResponsePath },
         responseType: 'blob'  // Specify responseType as 'blob' for binary data
     });
-
+console.log("response",response);
     // Create a Blob object from the binary data received
     const blob = new Blob([response.data], { type: 'application/json' });
 
@@ -68,12 +70,35 @@ else{ // download the preview file
 
 export const PopUp_For_velociraptor_response = (props) => {
 
-const { HeadLine,  popUp_show, set_popUp_show ,logoAddress_1_ForSrc    ,toolURL,buttonTitle  ,IconAddressForSrc,  json_file_info , json_file_data} = props;
+const { HeadLine,  popUp_show, set_popUp_show  ,set_PopUp_All_Good__show ,set_PopUp_All_Good__txt  ,toolURL,buttonTitle  ,IconAddressForSrc,  json_file_info , json_file_data ,} = props;
 const {all_artifacts, backEndURL} = useContext(GeneralContext);
 const [artifact_logo, set_artifact_logo]= useState("");
 const [aggregate_macro_data, set_aggregate_macro_data]= useState({});
 const [display_data_type, set_display_data_type]= useState("prime_data");
  
+
+
+// const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+// const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
+
+
+
+
+const handle_click_download = (file,backEndURL) => {
+  console.log("handle_click_download");
+  if (file?.fileSize === "Too big" ){
+    console.log("handle_click_download  - Too big ");
+    handle_download_Json_File(file,backEndURL);
+    set_PopUp_All_Good__txt({ HeadLine:"Download Start",paragraph: 'This download can take a few minutes. The file will appear in your download folder once the process is complete.',buttonTitle:"Close"});
+    set_PopUp_All_Good__show(true);
+    set_popUp_show(false);
+  }
+  
+  else{  handle_download_Json_File(file,backEndURL); }
+    };
+
+
+
 
     useEffect(() => {
 if(json_file_data === undefined || json_file_data === "" || json_file_data === null ){return}
@@ -191,14 +216,34 @@ async function get_aggregate_macro_data(SubModuleName,ResponsePath){
                   }
                        
 
-      console.log(json_file_info?.table );
-      console.log(json_file_info?.SubModuleName);
-      console.log("json_file_info props" ,props );
-      console.log("json_file_data 1111111111111" , json_file_data);
-      console.log("aggregate_macro_data" , aggregate_macro_data["List of computers with High"]);
+      // console.log(json_file_info?.table );
+      // console.log(json_file_info?.SubModuleName);
+      // console.log("json_file_info props" ,props );
+      // console.log("json_file_data 1111111111111" , json_file_data);
+      // console.log("aggregate_macro_data" , aggregate_macro_data["List of computers with High"]);
 
         return (
           <>
+
+
+
+{/* {PopUp_All_Good__show &&
+ <PopUp_All_Good
+ popUp_show={PopUp_All_Good__show}
+ set_popUp_show={set_PopUp_All_Good__show}
+ HeadLine={PopUp_All_Good__txt.HeadLine}
+ paragraph={PopUp_All_Good__txt.paragraph} 
+buttonTitle={PopUp_All_Good__txt.buttonTitle}
+ /> 
+ }
+  */}
+
+
+
+
+
+
+
      {popUp_show && (
               <div className={`PopUp-background`} onClick={handleClickOutside} >
                <div className={`PopUp-content`} style={{width:    json_file_info?.fileSize == "Too big" ?  "auto" :  "80%" }}>
@@ -339,7 +384,7 @@ Error={json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)
 
 <div>
  <p className='  font-type-txt   Color-Grey1 mt-c '   >Data file is too big. <br/>You can download it as a JSON file.</p>
-<button className="btn-type3 mb-d" style={{marginRight:"auto"}} ><p className='font-type-menu  '  onClick={()=>handle_download_Json_File(json_file_info ,backEndURL )}>Download JSON</p><DownloadIconButton className="icon-type1 " />  </button>
+<button className="btn-type3 mb-d" style={{marginRight:"auto"}} ><p className='font-type-menu  '  onClick={()=>handle_click_download(json_file_info ,backEndURL )}>Download JSON</p><DownloadIconButton className="icon-type1 " />  </button>
 </div>
 
 <div  className="" style={{display:"flex"  , alignItems:"center"}}>
@@ -554,7 +599,7 @@ display_this_value={"prime_data"}
           
         
           <div className="mt-c" style={{ display:"flex", justifyContent:"end" , gap:"10px", marginLeft:"auto"}}>
-        <button className="btn-type3" onClick={()=>handle_download_Json_File(json_file_info ,backEndURL )} ><p className='font-type-menu ' >Download Data</p><DownloadIconButton className="icon-type1 " />  </button>
+        <button className="btn-type3" onClick={()=>handle_click_download(json_file_info ,backEndURL )} ><p className='font-type-menu ' >Download Data</p><DownloadIconButton className="icon-type1 " />  </button>
          <button className="btn-type2   " onClick={handleClose} ><p className='font-type-menu ' >{buttonTitle}</p>  </button> 
  
       </div>
@@ -572,14 +617,30 @@ display_this_value={"prime_data"}
       
 
   export const PopUp_For__Nuclei__response = (props) => {
-        const { HeadLine,  popUp_show, set_popUp_show    ,buttonTitle  ,  json_file_info , json_file_data} = props;
-        const {all_Tools} = useContext(GeneralContext);
+        const {   popUp_show, set_popUp_show    ,buttonTitle  ,  json_file_info , json_file_data, set_PopUp_All_Good__show,set_PopUp_All_Good__txt} = props;
+        const {all_Tools ,backEndURL} = useContext(GeneralContext);
         const [module_logo, set_module_logo]= useState("")
         const [display_data_type, set_display_data_type]= useState("prime_data");
-
+ 
         console.log("json_file_info",json_file_info  );
         console.log("json_file_data",json_file_data  );
  
+
+
+
+        const handle_click_download = (file,backEndURL) => {
+          console.log("handle_click_download");
+          if (file?.fileSize === "Too big" ){
+            console.log("handle_click_download  - Too big ");
+            handle_download_Json_File(file,backEndURL);
+            set_PopUp_All_Good__txt({ HeadLine:"Download Start",paragraph: 'This download can take a few minutes. The file will appear in your download folder once the process is complete.',buttonTitle:"Close"});
+            set_PopUp_All_Good__show(true);
+            set_popUp_show(false);
+          }
+          
+          else{  handle_download_Json_File(file,backEndURL); }
+            };
+
 
     useEffect(() => {
 
@@ -652,21 +713,7 @@ Error={json_file_data?.Error === "" ? (<>None</>):(<>{json_file_data?.Error}</>)
 
 
 
-
-{/* 
-        <div  className='velociraptor_response_top_table' >
-         <div  className='response_short_row' >
-        <p  className="velociraptor_response_top_table_item   font-type-menu   Color-Grey1"  >Module</p> 
-        <p  className="velociraptor_response_top_table_item   font-type-menu   Color-Grey1"  >Start Date</p> 
-        <p  className="velociraptor_response_top_table_item   font-type-menu   Color-Grey1"  >Status</p> 
-         </div>
-        
-        <div className='velociraptor_response_top_row'>
-        <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.ModuleName}</p>
-        <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  >{json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) :"NA" }</p> 
-        <p  className="velociraptor_response_top_table_item  font-type-txt  Color-Grey1"  > {json_file_data?.Status}</p> 
-         </div>
-        </div> */}
+ 
         </div>
 </div>
 
@@ -761,7 +808,7 @@ display_this_value={"prime_data"}
           <div/>
           
           <div style={{ display:"flex", justifyContent:"end" , gap:"10px"}}>
-      <button className="btn-type3" ><p className='font-type-menu '  onClick={()=>handle_download_Json_File(json_file_info )}>Download JSON</p><DownloadIconButton className="icon-type1 " />  </button>
+      <button className="btn-type3" ><p className='font-type-menu '  onClick={()=>handle_click_download(json_file_info ,backEndURL)}>Download JSON</p><DownloadIconButton className="icon-type1 " />  </button>
    
       {/* <button className="btn-type2    " onClick={()=>handle_download_Json_File(json_file_info)} ><p className='font-type-menu'>Download JSON</p>  </button>  */}
         <button className="btn-type2   " onClick={handleClose} ><p className='font-type-menu ' >{buttonTitle}</p>  </button> 

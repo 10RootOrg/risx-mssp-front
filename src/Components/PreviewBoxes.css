@@ -5,7 +5,7 @@
 background:var(--color-Grey5);
 border-radius: var(--boxes-round-corner);
 padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
-height: 200px; 
+height: 220px; 
 min-width: 200px;
 /* max-width: 500px;  */
 flex-shrink: 1;/*   default 1 */
@@ -39,7 +39,7 @@ transition: var(--transition-fast);
 .PreviewBox-of-tools{
   min-height: 340px; 
    min-width: 220px;
-   width: 18%;
+   width: 22%;
 }
 
 
@@ -109,7 +109,7 @@ Color-Grey1 */
 
 .PreviewBox-twice-size{
     width: 21%; 
-    min-width: 260px;
+    min-width: 320px;
 }
 
 
@@ -174,8 +174,8 @@ Color-Grey1 */
 
   .velociraptor-all{
     flex-direction: row;
-    min-width:47%;
-    max-width: 47%;
+    min-width:64%;
+    max-width: 100%;
     /* min-width:60%;
     max-width: 60%; */
     flex-grow: 5;
