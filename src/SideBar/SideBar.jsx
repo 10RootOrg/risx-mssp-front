@@ -25,6 +25,7 @@ import {
 import GeneralContext from "../Context";
 import axios from "axios";
 import { Make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
+import DownloadProgressBarItem from "./DownloadProgressBarItem";
 
 function SideBar({
   visblePage,
@@ -46,6 +47,10 @@ function SideBar({
     front_IP,
     front_URL,
     mssp_config_json,
+    DownloadProgressBar,
+    setDownloadProgressBar,
+    DownloadList,
+    setDownloadList,
   } = useContext(GeneralContext);
 
   const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
@@ -99,6 +104,14 @@ function SideBar({
     }
   }, [backEndURL]);
 
+  useEffect(() => {
+    console.log(
+      DownloadProgressBar,
+      "eeeeeee9999999999999999999999999eeeeeeeeeeeeeeeeeeeeee",
+      DownloadList
+    );
+  }, [DownloadProgressBar]);
+
   const handleClick = (page_name) => {
     set_visblePage(page_name);
     localStorage.setItem("visiblePage", page_name); // Store current page in localStorage
@@ -123,43 +136,67 @@ function SideBar({
   };
 
   const handleDownload = async (os) => {
-
-    console.log("os" ,os);
+    console.log("os", os);
     // window.open(object?.General?.AgentLinks[os]);
     try {
-
-      set_PopUp_All_Good__txt({ HeadLine:`Download ${os} Agent Start`,paragraph: 'This download can take a few minutes. The file will appear in your download folder once the process is complete.',buttonTitle:"Close"});
-      set_PopUp_All_Good__show(true);
-
-
+      set_PopUp_All_Good__txt({
+        HeadLine: `Download ${os} Agent Start`,
+        paragraph:
+          "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
+        buttonTitle: "Close",
+      });
+      // set_PopUp_All_Good__show(true);
+      const fileName = object?.General?.AgentLinks[os].split("/").pop();
       const res = await axios.post(
         `${backEndURL}/config/DownloadAgent`,
         {
           PathOs: object?.General?.AgentLinks[os],
         },
-        { responseType: "blob" }
+        {
+          responseType: "blob",
+          onDownloadProgress: (prog) => {
+            const value = Math.round((prog.loaded / prog.total ?? 1) * 100);
+            if (!DownloadProgressBar[fileName]) {
+              console.log("empty");
+              // const copy = DownloadList.map((x) => x);
+              // copy.push(fileName);
+              // console.log(
+              //   "DownloadListDownloadListDownloadListDownloadListDownloadListDownloadListDownloadListDownloadListDownloadList",
+              //   DownloadList
+              // );
+              // setDownloadList(copy);
+              DownloadProgressBar[fileName] = {
+                progress: value,
+                fileName: fileName,
+              };
+            }
+
+            if (
+              DownloadProgressBar[fileName].progress + 5 < value ||
+              (value >= 100 && DownloadProgressBar[fileName].progress != 100)
+            ) {
+              console.log("Download Prog ", value, DownloadProgressBar);
+              DownloadProgressBar[fileName] = {
+                progress: value,
+                fileName: fileName,
+              };
+              setDownloadProgressBar(DownloadProgressBar);
+              setDownloadList(Math.random());
+            }
+          },
+        }
       );
 
-
- 
-         
-
       if (res) {
-        console.log(
-          "ssssssssssssssssssssssss",
-          object?.General?.AgentLinks[os].split("/").pop()
-        );
+        console.log("ssssssssssssssssssssssss", fileName);
         const url = window.URL.createObjectURL(res.data);
         console.log(url);
 
         // window.open(url)
-        console.log(
-          object?.General?.AgentLinks[os].split("/").pop(),
-          "zzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-        );
+        console.log(fileName, "zzzzzzzzzzzzzzzzzzzzzzzzzzzz");
         var link = document.createElement("a");
         link.href = url;
-        link.download = object?.General?.AgentLinks[os].split("/").pop();
+        link.download = fileName;
         link.click();
       }
     } catch (err) {
@@ -735,6 +772,21 @@ function SideBar({
             </div>
           </button>
         </div>
+        {Object.keys(DownloadProgressBar).length && (
+          <>
+            <div className="btn-menu ">
+              <div className="display-flex">
+                <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
+                <p className="font-type-menu ">Download Progress</p>
+              </div>
+            </div>
+            <div style={{ width: "100%" }}>
+              {Object.values(DownloadProgressBar).map((item) => (
+                <DownloadProgressBarItem item={item} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
