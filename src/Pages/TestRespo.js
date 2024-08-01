@@ -53,10 +53,40 @@ box_height="400px"
 
  
 
+<PreviewBox_respo_pie 
+HeadLine={`PreviewBox_respo_pie2`}
+description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
 
-
-
+bar_numbers = {        [ "33", "31", '21',"33", "0", '21', "7777777", "31", '21',"33", "31", '21']                        }
+bar_headlines = {['Failed','Pass','None','Failed','sssss ssssssshhhhs','None','Failed','Pass','None','Failed','23424234234234234242384723098472309847239048723094873209482730498','None'] }
+// bar_title_legend = {["Tests"]}
+is_popup = {false}
+enable_hover={false}
  
+display_this_value={"prime_data"}
+colors={"Basic"} // Basic , Alert
+box_height="300px"
+/>
+
+<div style={{width:"300px"}}>
+<PreviewBox_respo_pie 
+HeadLine={`PreviewBox_respo_pie2`}
+description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
+
+bar_numbers = {        [ "33", "31", '21',"33", "4444", '21', "666666", "31", '21',"33", "31", '21']                        }
+bar_headlines = {['Failed','Pass','None','Failed','sssss ssssssshhhhs','None','Failed','Pass','None','Failed','23424234234234234242384723098472309847239048723094873209482730498','None'] }
+// bar_title_legend = {["Tests"]}
+is_popup = {false}
+enable_hover={false}
+ 
+display_this_value={"prime_data"}
+colors={"Basic"} // Basic , Alert
+box_height="300px"
+/>
+</div>
+
+
+
         </div>
   )
 }

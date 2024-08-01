@@ -50,10 +50,12 @@ const necessaryUser1  = "DorAmit"
 const necessaryUser2  = "YanivR"
 const necessaryUser3  = "7Ci"
 const necessaryUser4  = "admin@admin"
+const necessaryUser5  = "ChallengeGroup"
+
 const user4password   = "the1Admin"
 const user3password   = "oBf5@$fj!cYT"
 
-
+// challenge group
 
 const  necessaryPassword  = "123" ;
 const [errorMessage , set_errorMessage] = useState("");
@@ -168,6 +170,15 @@ else if ( necessaryUser4 === input_email  && user4password === input_password) {
   localStorage.setItem('username', "Admin");  
   navigate(`/${"Modules"}`);  
 }
+
+
+else if ( necessaryUser5 === input_email  && user3password === input_password) {
+  localStorage.setItem('username', necessaryUser5);  
+  navigate(`/${"Modules"}`);  
+}
+
+
+
 
 
 else{

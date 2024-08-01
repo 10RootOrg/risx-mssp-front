@@ -1963,18 +1963,18 @@ useEffect(() => {
      
 
   
-<div className='display-flex  justify-content-center  ' style={{   width:"auto" ,gap:"2px" , backgroundColor:"yellow" }}>
+<div className='display-flex  justify-content-center  ' style={{   width:"100%" ,gap:"2px" , backgroundColor:"yellow"  ,overflow:"hidden"}}>
 
    { display_data && <>
-        <div className='display-flex flex-direction-column justify-content-center  ' style={{ marginRight:"10px",   gap:"2px" , backgroundColor:'green' , width:"100%" }}>
+        <div className='display-flex flex-direction-column justify-content-center  ' style={{     gap:"2px" , backgroundColor:'green' , width:"100%" ,overflow:"hidden" }}>
 
      
 
   {Array.isArray(bar_headlines) && bar_headlines?.map((Info, index) => {
 return(
-<div className='display-flex  ' style={{marginRight:"auto" , }} key={index}>
+<div className='display-flex  ' style={{marginRight:"auto" , backgroundColor:'blue' , width:"95%"}} key={index}>
 {colors === "Basic" &&
-  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length,   width:"12px"  , minWidth:"12px"}} />
   }
   {colors === "Alert" &&
   <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
@@ -1984,6 +1984,7 @@ style={{
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
+   width:"auto"
  }}>{Info} </p>
 </div>
 )
@@ -1991,10 +1992,10 @@ style={{
 
   </div>
   
-       <div className='display-flex flex-direction-column   ' style={{  gap:"2px"  }}>
+       <div className='display-flex flex-direction-column   ' style={{  gap:"2px" , backgroundColor:"purple"  ,width:"auto" }}>
        {Array.isArray(bar_numbers) &&  bar_numbers?.map((Info, index) => {
   return(
-    <div className='display-flex'  style={{  marginLeft:"auto"}} key={index}>
+    <div className='display-flex'  style={{   }} key={index}>
      <p className='   font-type-txt Color-White  '> {Info}</p>
     </div>
   )

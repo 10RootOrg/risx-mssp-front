@@ -14,6 +14,9 @@ import { ReactComponent as IconCloseReadMore } from '../Components/icons/ico-clo
 import { ReactComponent as IconOpenReadMore } from '../Components/icons/ico-open-readmore.svg';
 import { ReactComponent as IcoModules } from "../Components/icons/ico-menu-modules.svg";
 
+import { ReactComponent as IcoEdit } from "../Components/icons/ico-edit.svg";
+
+
 // import jsonData from '../tmpjsons/Nuclei.json'
 import axios from "axios";
 import { format_date_type_a } from "./Features/DateFormat.js";
@@ -274,12 +277,19 @@ else{set_open_long_text_key(key);}
 
   const keyStyle ={width:"130px" ,minWidth:"130px"   };
 
-  const LineStyle ={height:" ",
+  const LineStyle ={
+    // maxHeight: "20px",
      display:"flex" ,
-
-    // gap:'var(--space-b)',
-  marginTop:'calc(var(--space-a)/2)'
+     transition: "height 0.3s ease",
+  marginTop:'calc(var(--space-a)/1 )'
 } ;
+
+const LineStyleOpen ={
+  maxHeight: "1110px",
+ 
+} ;
+
+
   const maxCharacters = 85;
 
   const firstValueStayle  = {
@@ -332,7 +342,7 @@ else{set_open_long_text_key(key);}
             }`}
             style={{
               width: "820px",
-              maxHeight: "70%",
+              maxHeight: "85%",
               paddingBottom: " ",
               overflowY: "auto",
             }}
@@ -368,24 +378,7 @@ else{set_open_long_text_key(key);}
 </div>
 
             </div>
-        
- 
-            <div style={ {
-              // ...LineStyle ,
-              backgroundColor:"yellow",
-              height:"100%",
-
-display:"flex",
-              //  marginBottom:"var(--space-e)",
-   
-        
-               }}  >
-                  <p className="font-type-menu reading-height  Color-White" style={{ ...keyStyle ,    height:"100%",
-                  //  marginTop:"auto", marginBottom:"auto"
-
-                  }} > Status:</p>
-
-                  {/* <p className="font-type-txt  reading-height Color-Grey1  " style={{ ...firstValueStayle,  marginLeft:'-9px',    }}> */}
+                      {/* <p className="font-type-txt  reading-height Color-Grey1  " style={{ ...firstValueStayle,  marginLeft:'-9px',    }}> */}
 
 
 {/* <button className= {`btn-menu           ${isDropdownOpen && "btn-menu-is-active"}     `}      onClick={() => { setIsDropdownOpen(!isDropdownOpen)}} style={{     }} >
@@ -394,13 +387,28 @@ display:"flex",
 </div>
 <div  className="btn-menu-icon-placeholder"   style={{ scale: "0.95" }} >  <IcoModules />  </div>
 </button> */}
+    
+   {/* 
+     marginBottom:"var(--space-e)",
+     ...LineStyle ,  // ...firstValueStayle,  
+                   //  marginTop:"auto", marginBottom:"auto"
+      */}
+ 
 
 
-<div style={{ 
-  // ...firstValueStayle,    
-     backgroundColor:"orange",
+ <div  style={ { 
+   height:"36px" ,
+   marginBottom:"var(--space-c)"
    
-         }}>
+   }} >
+            <div style={ { 
+              // backgroundColor:"yellow",
+               height:"100%",display:"flex", }}  >
+           <p className="font-type-menu reading-height  Color-White" style={{ ...keyStyle , marginTop:'auto'  ,marginBottom:'auto'    }} > Status:</p>
+
+
+        
+<div style={{   }}>
 
 
 <div
@@ -408,10 +416,11 @@ display:"flex",
         onMouseLeave={() => set_download_drop_down(false)}
         //  onMouseEnter={()=>set_download_drop_down(true)}
         style={{
-      marginLeft:'-9px',   
+      marginLeft:'-13px',
+      width:"auto",   
           position: "absolute",  
           zIndex: 1000,
-          backgroundColor:"green"
+          // backgroundColor:"green"
     
      
         }}
@@ -421,11 +430,12 @@ display:"flex",
           onClick={handle_download_drop_down}
         >
           <div className="display-flex">
-            <IcoModules className="btn-menu-icon-placeholder  mr-a " />
-            <p className="font-type-menu "> {Info.UserInput?.Status}</p>
+            {/* <IcoEdit className="btn-menu-icon-placeholder  mr-a " /> */}
+            
+            <p className="font-type-menu ml-b"> {Info.UserInput?.Status}</p>
           </div>
-          <div className="btn-menu-icon-placeholder  ">
-            {" "}
+          <div className="btn-menu-icon-placeholder  "   style={{justifyContent:"flex-start" , backgroundColor:"" ,marginLeft:"5px", marginRight:"auto"}}>
+          <IcoEdit className="btn-menu-icon-placeholder " />
         
           </div>
         </button>
@@ -440,11 +450,13 @@ display:"flex",
                      return <button className="btn-menu"   onClick={() => SelectDropHandle(y)}>
 
 <div className="display-flex">
-              <IcoModules  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
-              <p className="font-type-menu ">{y}</p>
+              {/* <IcoEdit  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} /> */}
+              <p className="font-type-menu ml-b">{y}</p>
             </div>
             
-            <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/} </div>
+            <div className="btn-menu-icon-placeholder  " >
+            <IcoEdit  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+                {/*  <MenuArrowDown  />*/} </div>
               
                     </button>;  })} 
     
@@ -457,7 +469,7 @@ display:"flex",
 
         </div>
       </div>
-
+</div>
 
 
                 {/* {isDropdownOpen &&
@@ -521,9 +533,16 @@ display:"flex",
 const paragraph = typeof Info[key] !== "object" ? String(Info[key]) : JSON.stringify(Info[key]);
 
               return (
-                <div   style={LineStyle}  >
- 
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}> {key}: </p>
+                <div   style={{...LineStyle   }}   >
+ {/* open_long_text_key === key && ...LineStyleOpen */}
+                  <p className="font-type-menu reading-height  Color-White"
+                   style={{...keyStyle,
+                    marginTop:open_long_text_key === key && "23px"
+                    // {open_long_text_key === key  ?
+
+
+                   }}>
+                     {key}: </p>
                    
                    <div style={{height:" ", display:"flex"   ,width:"100%"   , flexDirection:"row"}} >
 
@@ -533,8 +552,11 @@ const paragraph = typeof Info[key] !== "object" ? String(Info[key]) : JSON.strin
               <>
 
 <div className="mb-b">
+<button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ 
+  // height:"12px", 
+     marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Close</p><IconCloseReadMore className="icon-type1 " style={{height:"24px"}} />  </button>  
+
 <p className="font-type-txt  reading-height Color-Grey1 mb-b " style={fullValueStayle  }  >  {paragraph }     </p>
-<button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ height:"12px",    marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Close</p><IconCloseReadMore className="icon-type1 " style={{height:"24px"}} />  </button>  
 
 
 </div>
