@@ -146,7 +146,7 @@ function SideBar({
         buttonTitle: "Close",
       });
       // set_PopUp_All_Good__show(true);
-      const fileName = object?.General?.AgentLinks[os].split("/").pop();
+      const fileName = object?.General?.AgentLinks[os]?.split("/")?.pop();
       const res = await axios.post(
         `${backEndURL}/config/DownloadAgent`,
         {
@@ -349,13 +349,13 @@ function SideBar({
                     .split("-")
                     .map((word, index) => {
                       if (index === 0 && word.length === 3) {
-                        return word.toUpperCase();
+                        return word?.toUpperCase();
                       }
                       return word
                         .split(" ")
                         .map(
                           (subWord) =>
-                            subWord.charAt(0).toUpperCase() + subWord.slice(1)
+                            subWord?.charAt(0)?.toUpperCase() + subWord?.slice(1)
                         )
                         .join(" ");
                     })
@@ -501,7 +501,7 @@ function SideBar({
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
                 />
-                <p className="font-type-menu ">AD</p>
+                <p className="font-type-menu ">Active Directory</p>
               </div>
               <div
                 className="btn-menu-icon-placeholder"

@@ -49,7 +49,7 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
   ];
 
 
-console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator + x.Response.found, 0 ));
+console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator + x?.Response?.found, 0 ));
 
   // Don't show sidebar in this page
 
@@ -93,13 +93,13 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
             HeadLine="MISP Attributes Top 5 Tags"
             bar_numbers={
               MISPData?.Response?.top_10_tags
-                .sort((a, b) => b.Count - a.Count)
+                ?.sort((a, b) => b.Count - a.Count)
                 ?.slice(0, 5)
                 ?.map((item) => item?.Count) || ["NA"]
             }
             bar_headlines={
               MISPData?.Response?.top_10_tags
-                .sort((a, b) => b.Count - a.Count)
+                ?.sort((a, b) => b?.Count - a?.Count)
                 ?.slice(0, 5)
                 ?.map((item) => item?.Name) || ["NA"]
             }
@@ -116,8 +116,8 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
             list_array_column1={{ key: "Name", previewName: "Tag Name" }}
             list_array_column2={{ key: "Count", previewName: "#" }}
             list_array={
-              MISPData?.Response?.top_10_tags.sort(
-                (a, b) => b.Count - a.Count
+              MISPData?.Response?.top_10_tags?.sort(
+                (a, b) => b?.Count - a?.Count
               ) || ["NA"]
             }
             is_popup={false}
@@ -138,8 +138,8 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
             resource_type_id={null}
  
             BigNumber = {
-                                LeakData?.reduce( (accumulator, x) => accumulator + x.Response.found, 0 )
-                !== undefined ? LeakData?.reduce( (accumulator, x) => accumulator + x.Response.found, 0 ) 
+                                LeakData?.reduce( (accumulator, x) => accumulator + x?.Response?.found, 0 )
+                !== undefined ? LeakData?.reduce( (accumulator, x) => accumulator + x?.Response?.found, 0 ) 
                  : "NA"}
 
             // SmallNumber={21}
@@ -175,7 +175,7 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
             list_array_column1={{ key: "Name", previewName: "Category" }}
             list_array_column2={{ key: "Count", previewName: "#" }}
             list_array={
-              MISPData?.Response?.top_10_attribute_categories.sort(
+              MISPData?.Response?.top_10_attribute_categories?.sort(
                 (a, b) => b.Count - a.Count
               ) || []
             }
@@ -188,13 +188,13 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
             // bar_numbers={["4","32","261","113" ]}
             bar_numbers={
               MISPData?.Response?.top_10_attribute_types
-                .sort((a, b) => b.Count - a.Count)
+                ?.sort((a, b) => b.Count - a.Count)
                 ?.slice(0, 5)
                 ?.map((item) => item?.Count) || ["NA"]
             }
             bar_headlines={
               MISPData?.Response?.top_10_attribute_types
-                .sort((a, b) => b.Count - a.Count)
+                ?.sort((a, b) => b.Count - a.Count)
                 ?.slice(0, 5)
                 ?.map((item) => item?.Name) || ["NA"]
             }
@@ -223,7 +223,7 @@ bar_numbers={[
             list_array_column1={{ key: "Name", previewName: "Name" }}
             list_array_column2={{ key: "Count", previewName: "#" }}
             list_array={
-              MISPData?.Response?.top_10_attribute_types.sort(
+              MISPData?.Response?.top_10_attribute_types?.sort(
                 (a, b) => b.Count - a.Count
               ) || []
             }

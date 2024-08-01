@@ -58,7 +58,7 @@ function Alert_list({
       }
       if (column2 === sort_by) {
         console.log("It's already sorted like this, reversing the order");
-        const sorted = [...Preview_this_Results].sort((a, b) => {
+        const sorted = [...Preview_this_Results]?.sort((a, b) => {
           console.log(
             "b[column]222222222222222222222222222222222222222222222222222222222222",
             b[column]?.[column2]
@@ -73,7 +73,7 @@ function Alert_list({
         set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
       } else {
         set_sort_by(column2);
-        const sorted = [...Preview_this_Results].sort((a, b) => {
+        const sorted = [...Preview_this_Results]?.sort((a, b) => {
           console.log(
             "b[column]1111111111111111111111111111111111111111111111111111111111111",
             b[column]?.[column2]
@@ -100,7 +100,7 @@ function Alert_list({
 
     if (column === sort_by) {
       console.log("It's already sorted like this, reversing the order");
-      const sorted = [...Preview_this_Results].sort((a, b) => {
+      const sorted = [...Preview_this_Results]?.sort((a, b) => {
         console.log("b[column]", b[column]);
         if (b[column] < a[column]) return -1;
         if (b[column] > a[column]) return 1;
@@ -111,7 +111,7 @@ function Alert_list({
       set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
     } else {
       set_sort_by(column);
-      const sorted = [...Preview_this_Results].sort((a, b) => {
+      const sorted = [...Preview_this_Results]?.sort((a, b) => {
         console.log(a[column], "llllllllllllllllllllllllllll");
         if (a[column] < b[column]) return -1;
         if (a[column] > b[column]) return 1;

@@ -57,7 +57,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
         Reopened: 0,
       };
 
-      res.data?.forEach((x) => Item[x?.UserInput?.Status]++);
+      res?.data?.forEach((x) => Item[x?.UserInput?.Status]++);
       console.log("ItemItemItemItemItemItemItem", Item);
       setPieObjectStatus(Item);
       setAlertsData(res?.data);
