@@ -1808,4 +1808,215 @@ disabled={disabled}
   )
 }
 
-export {  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_hunt_data_tabla,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time};
+
+
+
+
+function PreviewBox_respo_pie({colors, HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
+  ,box_height,description_short}) {
+ 
+  const [display_data, set_display_data] = useState(false);
+const [has_data, set_has_data]= useState(false)
+
+  const  handle_click = () => {
+    if (set_display_this === undefined) {return}
+    if(display_this === display_this_value){ set_display_this("prime_data")}
+    else{ set_display_this(display_this_value)}
+  }
+    
+
+  const BasicColors = bar_numbers.map((item, index, array) => {
+    const alpha = (index + 1) / array.length; // Calculate alpha based on the item's position
+    return `rgba(0, 219, 255, ${alpha})`; // Return red with calculated transparency
+  });
+
+const AlertColors = [
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-critical'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-high'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-medium'),
+getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
+];  
+
+ const dont_display_color  = getComputedStyle(document.documentElement).getPropertyValue('--color-Grey2');
+
+// const bar_numbers_zero = [1]
+
+useEffect(() => {
+  let sum = 0;
+
+  for (let i = 0; i < bar_numbers.length; i++) {
+    // console.log(bar_numbers[i]);
+    sum += bar_numbers[i];
+  }
+
+  if (sum === 0) {
+    set_has_data(false);
+  } else {
+    set_has_data(true);
+  }
+}, [bar_numbers]);
+
+
+useEffect(() => {
+
+ 
+ 
+      if (
+        Array.isArray(bar_numbers) &&
+        bar_numbers.length === 1 &&
+        bar_numbers[0] === "NA"
+        //  &&
+        // Array.isArray(bar_headlines) &&
+        // bar_headlines.length === 1 &&
+        // bar_headlines[0] === "NA" 
+      ) 
+      
+      
+      {
+        set_display_data(false); 
+      }
+      else if(
+        bar_numbers.length > 1 && bar_numbers.every(item => item === "NA") ){
+          set_display_data(false); 
+            console.log(HeadLine,"its more then 1 everybody id NA ", bar_numbers);
+      }
+
+
+
+
+  else{set_display_data(true); }
+    }, [bar_numbers, bar_headlines]);
+ 
+    
+  
+  const data ={
+    // labels: ['Yes', 'No'],
+    labels:   bar_headlines,
+    // labels:   all_Resource_Types.map(item => item.resource_type_name),
+    datasets:[{
+      label:bar_title_legend,
+      // data: bar_numbers,
+      // data: bar_numbers_zero,
+      data: display_data === false ? [1] : (has_data ? bar_numbers : [1]),
+      backgroundColor: (() => {
+        if (display_data === false || has_data === false) {
+          return dont_display_color;
+        } else if (colors === "Basic") {
+          return BasicColors;
+        } else if (colors === "Alert") {
+          return AlertColors;
+        } else {
+          return BasicColors; // default case
+        }
+      })(),
+      borderWidth:0
+      // style={{opacity:   (index +1) / all_Resource_Types.length   }} />
+    }]
+  }
+   
+  const options= {
+    cutout: 15,
+    legend: {
+       display: false
+    },
+    tooltips: {
+       enabled: false
+    },
+  
+    responsive: true,
+    // maintainAspectRatio: false,
+  
+  
+  };
+    return (
+<div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}   style={{height:box_height}}   onClick={handle_click}>
+
+  
+            <div className='PreviewBox_respo_top' >
+               <p  className="font-type-menu  Color-White " >{HeadLine}</p>
+               <p className="font-type-txt   Color-Grey1 mt-a" >{description_short}</p>
+               <p className="font-type-txt  font-type-txt   Color-Blue-Glow t-a" >Read More</p>
+                </div>
+   
+        <div className=' PreviewBox_respo_middle    '  >
+       
+        <div className=''
+         style={{
+          marginBottom:"auto" ,marginTop:'auto',
+          width: "100%",  
+          maxWidth: "500px", 
+          height: "auto",
+          maxHeight: `calc(${box_height} /1.4)`,
+          margin: "auto",
+          padding:" 10px",
+          boxSizing: "border-box",
+          overflow: "hidden",
+        display:"flex",
+        flexDirection:"column"
+
+
+          }} >
+    
+        <Doughnut  data={data}  options={options}  ></Doughnut>  
+         
+         </div>
+     
+
+  
+<div className='display-flex  justify-content-center  ' style={{   width:"auto" ,gap:"2px" , backgroundColor:"yellow" }}>
+
+   { display_data && <>
+        <div className='display-flex flex-direction-column justify-content-center  ' style={{ marginRight:"10px",   gap:"2px" , backgroundColor:'green' , width:"100%" }}>
+
+     
+
+  {Array.isArray(bar_headlines) && bar_headlines?.map((Info, index) => {
+return(
+<div className='display-flex  ' style={{marginRight:"auto" , }} key={index}>
+{colors === "Basic" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length   }} />
+  }
+  {colors === "Alert" &&
+  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
+  }
+<p className='   font-type-txt Color-White  ' 
+style={{
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+ }}>{Info} </p>
+</div>
+)
+})}
+
+  </div>
+  
+       <div className='display-flex flex-direction-column   ' style={{  gap:"2px"  }}>
+       {Array.isArray(bar_numbers) &&  bar_numbers?.map((Info, index) => {
+  return(
+    <div className='display-flex'  style={{  marginLeft:"auto"}} key={index}>
+     <p className='   font-type-txt Color-White  '> {Info}</p>
+    </div>
+  )
+   })}
+       </div>
+</>  }     
+
+
+
+       {!display_data &&  <div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}><p className='font-type-h4 Color-Grey2' style={{}}>No Records</p> </div>}
+
+
+       </div>
+
+        </div>
+         
+
+
+        <div className='PreviewBox_respo_buttom' > <p  className="font-type-txt   Color-Grey1" >down</p> </div>
+         
+          </div>
+    )
+  }
+
+export {PreviewBox_respo_pie,  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_hunt_data_tabla,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time};

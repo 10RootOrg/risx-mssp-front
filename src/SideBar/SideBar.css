@@ -126,7 +126,7 @@
 
 
 .btn-menu-is-active{
-  background-color: yellowgreen;
+  background-color: var(--color-DB-Blue-Hover);
   color: var(--color-DB-Blue-Glow)!important;
   cursor: auto  !important;
 }

@@ -3,7 +3,10 @@
 import React ,{useEffect, useState} from 'react'
 import axios from 'axios';
 import lottie from 'lottie-web';
-// import animationData from '../tmp.json';
+import {
+  PreviewBox_respo_pie,
+ 
+} from "../Components/PreviewBoxes";
 import animationData from '../Components/Logos/Risx-mssp-logo-anim.json';
 
 function TestPage() {
@@ -367,7 +370,30 @@ if(ResponsePath === undefined){console.log("ResponsePath undefined"); return}
     <div >
 
 
-        <p className=' '>   TestPage</p>
+
+{/* <PreviewBox_respo_pie 
+HeadLine={`PreviewBox_respo_pie`}
+bar_numbers = {        [ "33", "31", '21']                        }
+bar_headlines = {['Failed','Pass','None'] }
+// bar_title_legend = {["Tests"]}
+is_popup = {false}
+enable_hover={false}
+ 
+display_this_value={"prime_data"}
+colors={"Basic"} // Basic , Alert
+/> */}
+        <p className=' mt-b'>   TestPage</p>
+
+
+
+
+
+
+
+
+
+
+
 
         <div style={{display:"flex", gap:"12px", flexDirection:"column"}}>
 
@@ -394,8 +420,7 @@ if(ResponsePath === undefined){console.log("ResponsePath undefined"); return}
         </div>
   
 
-     {/* <button onClick={getUserInfoByID}> Userdata</button> */}
-
+ 
 {(typeof backendData.users ===  "undefined") ? (
     <p>loading..</p>
 ):(
