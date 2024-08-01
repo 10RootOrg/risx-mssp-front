@@ -9,13 +9,17 @@ import { ReactComponent as CarefulIcon } from "../Components/icons/General-icons
 import { ReactComponent as InfofulIcon } from "../Components/icons/General-icons-info.svg";
 import { ReactComponent as AlertInfo } from "../Components/icons/General-icons-alert.svg";
 import { ReactComponent as Loader } from "../Components/icons/loader_typea.svg";
+import { ReactComponent as IconReadMore } from '../Components/icons/ico-readmore.svg';
+import { ReactComponent as IconCloseReadMore } from '../Components/icons/ico-close-readmore.svg';
+import { ReactComponent as IconOpenReadMore } from '../Components/icons/ico-open-readmore.svg';
+import { ReactComponent as IcoModules } from "../Components/icons/ico-menu-modules.svg";
 
 // import jsonData from '../tmpjsons/Nuclei.json'
 import axios from "axios";
 import { format_date_type_a } from "./Features/DateFormat.js";
 
 
-const keyStyle = { width: '140px' ,  backgroundColor: "yellow" };
+ 
 
  
 
@@ -190,9 +194,17 @@ export const PopUp_Alert_info = (props) => {
     set_Preview_this_Results,
     GetData,
   } = props;
+
   const [active, setActive] = useState(false);
   const [AlertColors, set_AlertColors] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [open_long_text_key, set_open_long_text_key] = useState('');
+  const [download_drop_down, set_download_drop_down] = useState(false);
+
+  const handle_download_drop_down = () => {
+    set_download_drop_down(!download_drop_down);
+  };
+
   const StatusTags = [
     "New",
     "InProgress",
@@ -247,7 +259,66 @@ export const PopUp_Alert_info = (props) => {
     setIsDropdownOpen(false);
     set_popUp_show(false);
   };
+
+
+const handle_open_long_text=(key)=>{
+console.log("handle_open_long_text"  , key);
+
+if (!key){return}
+if(open_long_text_key === key){set_open_long_text_key("");}
+else{set_open_long_text_key(key);}
+
+}
+
+
+
+  const keyStyle ={width:"130px" ,minWidth:"130px"   };
+
+  const LineStyle ={height:" ",
+     display:"flex" ,
+
+    // gap:'var(--space-b)',
+  marginTop:'calc(var(--space-a)/2)'
+} ;
+  const maxCharacters = 85;
+
+  const firstValueStayle  = {
+  // width:"100%",
+  // maxHeight:"150px" ,
+  overflowY:"auto" ,
+  // whiteSpace: "pre-wrap",
+
+  wordBreak: "break-word",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",  
+  overflow: "hidden",  
+  textOverflow: "ellipsis",
+  }
+  
+  const fullValueStayle  = {
+    // width:"100%",
+    wordBreak: "break-word",
+    maxHeight:"180px" ,
+    overflowY:"scroll" ,
+    paddingRight:"10px",
+ 
+    // whiteSpace: "pre-wrap",
+    // wordWrap: "break-word",
+    //  wordBreak: "break-word",
+    // textOverflow: "ellipsis",
+    // whiteSpace: "nowrap",  
+    // overflow: "hidden",  
+    // textOverflow: "ellipsis",
+    }
+
+
   return (
+
+
+
+
+
+    
     <>
       {popUp_show && (
         <div
@@ -260,10 +331,10 @@ export const PopUp_Alert_info = (props) => {
               active ? "popup-enter-active" : "popup-enter"
             }`}
             style={{
-              width: "70%",
+              width: "820px",
               maxHeight: "70%",
               paddingBottom: " ",
-              overflowY: "scroll",
+              overflowY: "auto",
             }}
           >
             <div
@@ -284,6 +355,7 @@ export const PopUp_Alert_info = (props) => {
                   position: "absolute",
                 }}
               />
+              <div style={{display:"flex"  ,alignItems:"center" , gap:"80px"}}>
               <AlertInfo
                 className="mb-a "
                 alt="Icon"
@@ -291,70 +363,198 @@ export const PopUp_Alert_info = (props) => {
                 height="70px"
                 style={{ marginLeft: " " }}
               />
+
+        <p className="font-type-h4 Color-White ">{format_date_type_a(Info?._ts)}</p>          
+</div>
+
             </div>
-            <p className="font-type-h4 Color-White mb-a">{""}</p>
-            <p className="font-type-txt  reading-height Color-Grey1">
-              <span className="font-type-menu reading-height Color-White mr-a">
-                Artifact:
-              </span>
-              {Info.Artifact}
-            </p>
-            <p className="font-type-txt  reading-height Color-Grey1">
-              <span className="font-type-menu reading-height Color-White mr-a">
-                Time:
-              </span>
-              {format_date_type_a(Info._ts)}
-            </p>
-            <p className="font-type-txt  reading-height Color-Grey1">
-              <span className="font-type-menu reading-height Color-White mr-a">
-                User Change:
-              </span>
-              {Info.UserInput?.UserId}
-            </p>{" "}
-            <div style={{ flexDirection: "row", display: "flex" }}>
-              <p className="font-type-txt  reading-height Color-Grey1">
-                <span className="font-type-menu reading-height Color-White mr-a">
-                  Status:
-                </span>
-              </p>
-              <div className="font-type-txt  reading-height Color-Grey1">
-                <div
-                  onClick={() => {
-                    console.log(
-                      "sssssssssssssssdddddddddddddddddddddddddddddddddddddd"
-                    );
-                    setIsDropdownOpen(!isDropdownOpen);
-                  }}
-                  style={{ zIndex: 5555 }}
-                >
-                  {Info.UserInput?.Status}
-                </div>
-                {isDropdownOpen && (
-                  <div>
-                    {StatusTags.map((y) => {
-                      if (y == Info.UserInput?.Status) return;
-                      return <div onClick={() => SelectDropHandle(y)}>{y}</div>;
-                    })}
+        
+ 
+            <div style={ {
+              // ...LineStyle ,
+              backgroundColor:"yellow",
+              height:"100%",
+
+display:"flex",
+              //  marginBottom:"var(--space-e)",
+   
+        
+               }}  >
+                  <p className="font-type-menu reading-height  Color-White" style={{ ...keyStyle ,    height:"100%",
+                  //  marginTop:"auto", marginBottom:"auto"
+
+                  }} > Status:</p>
+
+                  {/* <p className="font-type-txt  reading-height Color-Grey1  " style={{ ...firstValueStayle,  marginLeft:'-9px',    }}> */}
+
+
+{/* <button className= {`btn-menu           ${isDropdownOpen && "btn-menu-is-active"}     `}      onClick={() => { setIsDropdownOpen(!isDropdownOpen)}} style={{     }} >
+<div className="display-flex" >
+<p className=    {`font-type-menu ml-a    mr-a    `}      style={{color: isDropdownOpen && "var(--color-DB-Blue-Glow)"} }        >{Info.UserInput?.Status}      </p>
+</div>
+<div  className="btn-menu-icon-placeholder"   style={{ scale: "0.95" }} >  <IcoModules />  </div>
+</button> */}
+
+
+<div style={{ 
+  // ...firstValueStayle,    
+     backgroundColor:"orange",
+   
+         }}>
+
+
+<div
+        className="btn-menu-list"
+        onMouseLeave={() => set_download_drop_down(false)}
+        //  onMouseEnter={()=>set_download_drop_down(true)}
+        style={{
+      marginLeft:'-9px',   
+          position: "absolute",  
+          zIndex: 1000,
+          backgroundColor:"green"
+    
+     
+        }}
+      >
+        <button
+          className={`btn-menu  ${download_drop_down ? "btn_look_hover" : ""} `}
+          onClick={handle_download_drop_down}
+        >
+          <div className="display-flex">
+            <IcoModules className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu "> {Info.UserInput?.Status}</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+        
+          </div>
+        </button>
+
+
+        {/* fix */}
+        <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}
+        
+        >
+
+        {StatusTags.map((y) => { if (y == Info.UserInput?.Status) return;
+                     return <button className="btn-menu"   onClick={() => SelectDropHandle(y)}>
+
+<div className="display-flex">
+              <IcoModules  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
+              <p className="font-type-menu ">{y}</p>
+            </div>
+            
+            <div className="btn-menu-icon-placeholder  ">  {/*  <MenuArrowDown  />*/} </div>
+              
+                    </button>;  })} 
+    
+         
+     
+
+     
+
+
+
+        </div>
+      </div>
+
+
+
+                {/* {isDropdownOpen &&
+                 ( <div style={{backgroundColor:"var(--color-Grey4)" ,
+                  marginBottom:"var(--space-a)"  ,
+                   borderRadius:"var(--elemtns-round-corner-medium)",
+                   position: "absolute", // Ensure the element is positioned
+                   zIndex: 1000 // Set a high z-index to ensure it's on top
+                   
+                   
+                   }}>  
+
+                    {StatusTags.map((y) => { if (y == Info.UserInput?.Status) return;
+                     return <button className="btn-menu"   onClick={() => SelectDropHandle(y)}>
+                    <p className="font-type-menu ml-a " >{y}</p>
+                    </button>;  })} 
+                     </div>     )} */}
+
+                  {/* </p> */}
                   </div>
-                )}
-              </div>{" "}
-            </div>
-            <p className="font-type-txt  reading-height Color-Grey1">
-              <span className="font-type-menu reading-height Color-White mr-a">
-                Changed At:
-              </span>
-              {format_date_type_a(Info.UserInput?.ChangedAt)}
-            </p>{" "}
+                  </div>
 
 
 
+
+   
+
+                <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Artifact:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Artifact}</p>
+                  </div>
+
+                  {/* <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Time:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{format_date_type_a(Info?._ts)}</p>
+                  </div> */}
+
+
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > User Change:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info.UserInput?.UserId}</p>
+                  </div>
+     
+
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Changed At:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{format_date_type_a(Info.UserInput?.ChangedAt)}</p>
+                  </div>
+
+
+
+
+   
+
+       
+ 
             {Object.keys(Info).map((key) => {
               if ( ["UserInput", "_ts", "Artifact", "buttonTitle"].includes(key)  ) {  return; }
-              return (
-                <div style={{height:" ", display:"flex"}} >
 
-                  <p className="font-type-menu reading-height  Color-White" style={{keyStyle}} >{key}:  </p>
-                  <p className="font-type-txt  reading-height Color-Grey1  "  > {typeof Info[key] !== "object" ? Info[key] : JSON.stringify(Info[key])}</p>
+// const paragraph = typeof Info[key] !== "object" ? Info[key] : JSON.stringify(Info[key])
+const paragraph = typeof Info[key] !== "object" ? String(Info[key]) : JSON.stringify(Info[key]);
+
+              return (
+                <div   style={LineStyle}  >
+ 
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}> {key}: </p>
+                   
+                   <div style={{height:" ", display:"flex"   ,width:"100%"   , flexDirection:"row"}} >
+
+                    
+                {open_long_text_key === key  ? 
+                
+              <>
+
+<div className="mb-b">
+<p className="font-type-txt  reading-height Color-Grey1 mb-b " style={fullValueStayle  }  >  {paragraph }     </p>
+<button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ height:"12px",    marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Close</p><IconCloseReadMore className="icon-type1 " style={{height:"24px"}} />  </button>  
+
+
+</div>
+
+
+
+            </>
+              :
+
+              <>
+              <p className="font-type-txt  reading-height Color-Grey1 " style={firstValueStayle  }  >  {paragraph.slice(0, maxCharacters)}      {paragraph?.length >  maxCharacters && "..." }   </p>
+              {paragraph?.length >  maxCharacters &&  <button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ height:"12px",    marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Open</p><IconOpenReadMore className="icon-type1 " style={{height:"24px"}} />  </button> }
+              </>
+
+              }
+                
+
+
+
+                     </div>
 
                 </div>
 

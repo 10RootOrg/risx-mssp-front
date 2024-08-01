@@ -91,7 +91,9 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
 
   return (
     <>
-      <div className="app-main">
+      <div className="app-main" style={{
+        // flexDirection:"row"
+        }}>
         <div className="top-of-page">
           <div className="top-of-page-left mb-b">
             {/* <p  className="font-type-menu" >Dashboards:</p> */}

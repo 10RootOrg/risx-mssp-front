@@ -335,6 +335,10 @@ function SideBar({
           <div
             className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
           >
+
+
+
+            
             <button
               className="btn-menu"
               onClick={() => handleClick("dashboard-general")}
