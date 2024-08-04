@@ -147,6 +147,8 @@ function SideBar({
       });
       // set_PopUp_All_Good__show(true);
       const fileName = object?.General?.AgentLinks[os]?.split("/")?.pop();
+      const fileName2 = object?.General?.AgentLinks[os]?.split("/")?.pop()+Math.random();
+
       const res = await axios.post(
         `${backEndURL}/config/DownloadAgent`,
         {
@@ -156,7 +158,7 @@ function SideBar({
           responseType: "blob",
           onDownloadProgress: (prog) => {
             const value = Math.round((prog.loaded / prog.total ?? 1) * 100);
-            if (!DownloadProgressBar[fileName]) {
+            if (!DownloadProgressBar[fileName2]) {
               console.log("empty");
               // const copy = DownloadList.map((x) => x);
               // copy.push(fileName);
@@ -165,18 +167,18 @@ function SideBar({
               //   DownloadList
               // );
               // setDownloadList(copy);
-              DownloadProgressBar[fileName] = {
+              DownloadProgressBar[fileName2] = {
                 progress: value,
                 fileName: fileName,
               };
             }
 
             if (
-              DownloadProgressBar[fileName].progress + 5 < value ||
-              (value >= 100 && DownloadProgressBar[fileName].progress != 100)
+              DownloadProgressBar[fileName2].progress + 5 < value ||
+              (value >= 100 && DownloadProgressBar[fileName2].progress != 100)
             ) {
               console.log("Download Prog ", value, DownloadProgressBar);
-              DownloadProgressBar[fileName] = {
+              DownloadProgressBar[fileName2] = {
                 progress: value,
                 fileName: fileName,
               };
@@ -776,23 +778,33 @@ function SideBar({
             </div>
           </button>
         </div>
-        {Object.keys(DownloadProgressBar).length && (
-          <>
-            <div className="btn-menu ">
-              <div className="display-flex">
-                <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
-                <p className="font-type-menu ">Download Progress</p>
-              </div>
-            </div>
-            <div style={{ width: "100%" }}>
-              {Object.values(DownloadProgressBar).map((item) => (
-                <DownloadProgressBarItem item={item} />
-              ))}
-            </div>
-          </>
-        )}
+
+
+
+        
       </div>
-    </div>
+
+ 
+      {Object.keys(DownloadProgressBar).length >0  && (
+<div style={{
+            paddingRight: 'calc(var(--space-c) + var(--space-b))',
+            paddingLeft: 'calc(var(--space-c) + var(--space-b))',
+            // width: '100%',
+            position: 'fixed', // Use fixed positioning
+            bottom: 'var(--space-d)', // Position it at the bottom of the viewport
+       width:"-webkit-fill-available"
+
+     }}>
+
+<p className="font-type-menu  Color-Grey1  mb-a">Downloads Progress:</p>
+<div  className=" " style={{ width: "100% "  }}>
+  {Object.values(DownloadProgressBar).map((item) => ( <DownloadProgressBarItem item={item} />  ))}
+</div>
+</div>
+        )}
+
+</div>
+ 
   );
 }
 

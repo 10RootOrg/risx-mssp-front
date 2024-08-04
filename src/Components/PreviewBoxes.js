@@ -1817,7 +1817,7 @@ function PreviewBox_respo_pie({colors, HeadLine , bar_numbers, bar_headlines, ba
  
   const [display_data, set_display_data] = useState(false);
 const [has_data, set_has_data]= useState(false)
-
+const [combined_Array, set_combined_Array]= useState([])
   const  handle_click = () => {
     if (set_display_this === undefined) {return}
     if(display_this === display_this_value){ set_display_this("prime_data")}
@@ -1887,7 +1887,17 @@ useEffect(() => {
   else{set_display_data(true); }
     }, [bar_numbers, bar_headlines]);
  
-    
+
+
+    useEffect(() => {
+      if(!bar_numbers  || !bar_headlines  ||  bar_numbers.length ==0   ||  bar_headlines.length ==0    ) {return}
+      const combined = bar_headlines.map((headline, index) => ({
+        name: headline,
+        number: bar_numbers[index]
+      }));
+      set_combined_Array(combined);
+  
+    }, [bar_numbers, bar_headlines]);
   
   const data ={
     // labels: ['Yes', 'No'],
@@ -1928,96 +1938,99 @@ useEffect(() => {
   
   
   };
-    return (
-<div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}   style={{height:box_height}}   onClick={handle_click}>
-
+  return (
+    <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height }} onClick={handle_click}>
+      <div className='PreviewBox_respo_top'>
+        <p className="font-type-menu Color-White">{HeadLine}</p>
+        <p className="font-type-txt Color-Grey1 mt-a">{description_short}</p>
+        <p className="font-type-txt Color-Blue-Glow t-a">Read More</p>
+      </div>
   
-            <div className='PreviewBox_respo_top' >
-               <p  className="font-type-menu  Color-White " >{HeadLine}</p>
-               <p className="font-type-txt   Color-Grey1 mt-a" >{description_short}</p>
-               <p className="font-type-txt  font-type-txt   Color-Blue-Glow t-a" >Read More</p>
-                </div>
-   
-        <div className=' PreviewBox_respo_middle    '  >
-       
+      <div className='PreviewBox_respo_middle'    
+      
+      style={{
+        maxHeight: `calc(${box_height} / 1.4)`,
+        boxSizing: "border-box",
+        overflow: "hidden",     flexDirection: "column",
+        // backgroundColor:"green"
+      }}
+      
+      >
+
+
         <div className=''
-         style={{
-          marginBottom:"auto" ,marginTop:'auto',
-          width: "100%",  
-          maxWidth: "500px", 
-          height: "auto",
-          maxHeight: `calc(${box_height} /1.4)`,
-          margin: "auto",
-          padding:" 10px",
-          boxSizing: "border-box",
-          overflow: "hidden",
-        display:"flex",
-        flexDirection:"column"
-
-
-          }} >
+          style={{
+            marginBottom: "auto", marginTop: 'auto',
+            margin:"auto",
+            width: "100%",
+            // maxWidth: "500px",
+            height: "100%",
+            // maxHeight: "500px",
+   
     
-        <Doughnut  data={data}  options={options}  ></Doughnut>  
-         
-         </div>
-     
-
+        
+            // padding: "10px",
+            boxSizing: "border-box",
+            overflow: "hidden",
+            display: "flex",
+         justifyContent:"center",
+         alignItems:"center",
+            // backgroundColor: "pink"
+          }}>
+          <Doughnut data={data} options={options}></Doughnut>
+        </div>
   
-<div className='display-flex  justify-content-center  ' style={{   width:"100%" ,gap:"2px" , backgroundColor:"yellow"  ,overflow:"hidden"}}>
-
-   { display_data && <>
-        <div className='display-flex flex-direction-column justify-content-center  ' style={{     gap:"2px" , backgroundColor:'green' , width:"100%" ,overflow:"hidden" }}>
-
-     
-
-  {Array.isArray(bar_headlines) && bar_headlines?.map((Info, index) => {
-return(
-<div className='display-flex  ' style={{marginRight:"auto" , backgroundColor:'blue' , width:"95%"}} key={index}>
-{colors === "Basic" &&
-  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{opacity:   (index +1) / bar_headlines.length,   width:"12px"  , minWidth:"12px"}} />
-  }
-  {colors === "Alert" &&
-  <div className={` Bg-Blue-Glow light-bulb-type1 mr-a`}  style={{backgroundColor:   AlertColors[index ]  }} />
-  }
-<p className='   font-type-txt Color-White  ' 
-style={{
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-   width:"auto"
- }}>{Info} </p>
-</div>
-)
-})}
-
-  </div>
+        <div className='display-flex justify-content-center'
+          style={{
+            width: "100%", gap: "2px", backgroundColor: "", height: "auto",
+            maxHeight: "auto", overflowX: "hidden", overflowY: "auto"
+          }}>
   
-       <div className='display-flex flex-direction-column   ' style={{  gap:"2px" , backgroundColor:"purple"  ,width:"auto" }}>
-       {Array.isArray(bar_numbers) &&  bar_numbers?.map((Info, index) => {
-  return(
-    <div className='display-flex'  style={{   }} key={index}>
-     <p className='   font-type-txt Color-White  '> {Info}</p>
+          {display_data && <>
+            <div className='display-flex flex-direction-column justify-content-center'
+              style={{ gap: "2px", backgroundColor: '', width: "100%", overflow: "hidden" }}>
+              {Array.isArray(bar_headlines) && bar_headlines?.map((Info, index) => {
+                return (
+                  <div className='display-flex'
+                    style={{ marginRight: "auto", backgroundColor: '', width: "95%" }} key={index}>
+                    {colors === "Basic" && <div className={`Bg-Blue-Glow light-bulb-type1 mr-a`} style={{ opacity: (index + 1) / bar_headlines.length, width: "12px", minWidth: "12px" }} />}
+                    {colors === "Alert" && <div className={`Bg-Blue-Glow light-bulb-type1 mr-a`}   style={{ backgroundColor: AlertColors[index], width: "12px", minWidth: "12px" }} />}
+                    <p className='font-type-txt Color-White'
+                      style={{
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        width: "auto"
+                      }}>{Info}</p>
+                  </div>
+                )
+              })}
+            </div>
+  
+            <div className='display-flex flex-direction-column'
+              style={{ gap: "2px", backgroundColor: "", width: "auto"   , alignItems:"flex-end"}}>
+              {Array.isArray(bar_numbers) && bar_numbers?.map((Info, index) => {
+                return (
+                  <div className='display-flex' key={index}      style={{}}  >
+                    <p className='font-type-txt Color-White mr-a'     style={{}}> {Info}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </>}
+  
+          {!display_data && <div style={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <p className='font-type-h4 Color-Grey2'>No Records</p>
+          </div>}
+        </div>
+      </div>
+  
+      <div className='PreviewBox_respo_buttom'>
+        <p className="font-type-txt Color-Grey1">Updte</p>
+      </div>
     </div>
   )
-   })}
-       </div>
-</>  }     
-
-
-
-       {!display_data &&  <div style={{height:"100%" , display:"flex", justifyContent:"center" , alignItems:"center"}}><p className='font-type-h4 Color-Grey2' style={{}}>No Records</p> </div>}
-
-
-       </div>
-
-        </div>
-         
-
-
-        <div className='PreviewBox_respo_buttom' > <p  className="font-type-txt   Color-Grey1" >down</p> </div>
-         
-          </div>
-    )
+  
   }
 
 export {PreviewBox_respo_pie,  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_hunt_data_tabla,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time};
