@@ -4,6 +4,7 @@ import {
   PreviewBox_type1_number_no_filters,
   PreviewBox_type6_list_box,
   PreviewBox_type2_pie,
+  PreviewBox_respo_pie
 } from "../PreviewBoxes.js";
 
 import axios from "axios";
@@ -105,6 +106,102 @@ function Dashboard_Forensics({
         </div>
 
         <div className="resource-group-top-boxes mb-c">
+
+
+
+
+<div style={{display:"inline-flex", gap:"var(--space-c)"  , flexWrap:"wrap"}}>
+<PreviewBox_respo_pie 
+HeadLine={`PreviewBox_respo_pie2`}
+description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
+bar_numbers = {        [ "1", "1", '6', "5"]                        }
+bar_headlines = {['critical','high','medium','low'] }
+is_popup = {false}
+enable_hover={false}
+ 
+display_this_value={"prime_data"}
+colors={"Alert"} // Basic , Alert
+box_height="700px"
+/>
+
+<PreviewBox_respo_pie 
+HeadLine={`PreviewBox_respo_pie2`}
+description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
+bar_numbers = {        [ "1", "1", '6', "5"]                        }
+bar_headlines = {['critical','high','medium','low'] }
+is_popup = {false}
+enable_hover={false}
+ 
+display_this_value={"prime_data"}
+colors={"Alert"} // Basic , Alert
+box_height="700px"
+/>
+
+
+
+
+
+</div>
+
+<PreviewBox_type1_number_no_filters
+HeadLine="Overall Clients "
+resource_type_id={null}
+BigNumber={
+DashBoardData?.Velociraptor?.NumberOfClients !== undefined
+  ? DashBoardData?.Velociraptor?.NumberOfClients
+  : "NA"
+}
+// SmallNumber={682 }
+SmallNumberTxt={"Velociraptor"}
+StatusColor={"blue"}
+date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+is_popup={false}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"Overall Clients"}
+txt_color={""}
+/>
+
+<PreviewBox_type1_number_no_filters
+HeadLine="Connected Clients "
+resource_type_id={null}
+BigNumber={
+DashBoardData?.Velociraptor?.NumberOfConnectedClients !==
+undefined
+  ? DashBoardData?.Velociraptor?.NumberOfConnectedClients
+  : "NA"
+}
+SmallNumberTxt={"Velociraptor"}
+StatusColor={"blue"}
+date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+is_popup={false}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"Overall Clients"}
+txt_color={""}
+/>
+
+<PreviewBox_type1_number_no_filters
+HeadLine="Tag: High "
+resource_type_id={null}
+BigNumber={
+DashBoardData?.TimeSketch?.tag_counts?.high !== undefined
+  ? DashBoardData?.TimeSketch?.tag_counts?.high
+  : "NA"
+}
+// SmallNumber={9}
+SmallNumberTxt={"Timesketch"}
+StatusColor={"High"}
+date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
+is_popup={false}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"Overall Clients"}
+txt_color={""}
+/>
+
+
+
           <PreviewBox_type2_pie
             HeadLine="Hunts Distribution"
             // bar_numbers={["4","32","261","113" ]}
@@ -208,43 +305,7 @@ connected =3 */}
 
           {/* DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA", */}
 
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Overall Clients "
-            resource_type_id={null}
-            BigNumber={
-              DashBoardData?.Velociraptor?.NumberOfClients !== undefined
-                ? DashBoardData?.Velociraptor?.NumberOfClients
-                : "NA"
-            }
-            // SmallNumber={682 }
-            SmallNumberTxt={"Velociraptor"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
-
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Connected Clients "
-            resource_type_id={null}
-            BigNumber={
-              DashBoardData?.Velociraptor?.NumberOfConnectedClients !==
-              undefined
-                ? DashBoardData?.Velociraptor?.NumberOfConnectedClients
-                : "NA"
-            }
-            SmallNumberTxt={"Velociraptor"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
+  
 
           <PreviewBox_type6_list_box
             HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
@@ -280,24 +341,7 @@ connected =3 */}
             txt_color={""}
           />
 
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Tag: High "
-            resource_type_id={null}
-            BigNumber={
-              DashBoardData?.TimeSketch?.tag_counts?.high !== undefined
-                ? DashBoardData?.TimeSketch?.tag_counts?.high
-                : "NA"
-            }
-            // SmallNumber={9}
-            SmallNumberTxt={"Timesketch"}
-            StatusColor={"High"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
+
           <PreviewBox_type1_number_no_filters
             HeadLine="Tag: Persistence "
             resource_type_id={null}
