@@ -4,7 +4,7 @@ import React ,{useEffect, useState} from 'react'
 import axios from 'axios';
 import lottie from 'lottie-web';
 import {
-  PreviewBox_respo_pie,
+  PreviewBox_respo_chart,
  
 } from "../Components/PreviewBoxes";
 import animationData from '../Components/Logos/Risx-mssp-logo-anim.json';
@@ -371,8 +371,8 @@ if(ResponsePath === undefined){console.log("ResponsePath undefined"); return}
 
 
 
-{/* <PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie`}
+{/* <PreviewBox_respo_chart 
+HeadLine={`PreviewBox_respo_chart`}
 bar_numbers = {        [ "33", "31", '21']                        }
 bar_headlines = {['Failed','Pass','None'] }
 // bar_title_legend = {["Tests"]}

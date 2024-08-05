@@ -5,6 +5,11 @@ import {
   PreviewBox_type6_list_box,
   PreviewBox_type7_wide_bar,
   PreviewBox_type2_pie,
+
+  PreviewBox_respo_list_type6,
+  PreviewBox_respo_chart,
+  PreviewBox_respo_widebar_type7,
+  PreviewBox_respo_type1_number_no_filters
 } from "../PreviewBoxes.js";
 
 import axios from "axios";
@@ -22,18 +27,9 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
   const [loader, set_loader] = useState(false);
   const [LeakData, set_LeakData] = useState([]);
 
-  // const Tags = [
-  //   { name: "Fishing", count: 213 },
-  //   { name: "globalC", count: 67 },
-  //   { name: "Botnet", count: 8 },
-  //   { name: "ClipBanker", count: 45 },
-  //   { name: "Risx_BP", count: 23 },
-  //   { name: "gsa-474", count: 23 },
-  //   { name: "spacex", count: 10 },
-  //   { name: "fdr", count: 9 },
-  //   { name: "mezo-nz", count: 9 },
-  //   { name: "Csr", count: 2 },
-  // ];
+  const box_height = 800;
+  const box_height_2of3 = box_height * (3/5);
+  const box_height_1of3 = box_height * (2/5)   ;
 
   const Trending_Tags = [
     { name: "\tBlackMatter", count: 75 },
@@ -48,8 +44,8 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
     { name: "ClipBanker", count: 1 },
   ];
 
-
-console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator + x?.Response?.found, 0 ));
+  console.log("LeakData" , LeakData);
+// console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator + x?.Response?.found, 0 ));
 
   // Don't show sidebar in this page
 
@@ -88,7 +84,232 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
           {/* <div className='top-of-page-center'>"""placeholder for dropDown"""</div> */}
         </div>
 
-        <div className="resource-group-top-boxes mb-c">
+
+
+
+        <div  className="PreviewBox-respo-container   mb-c" >
+<PreviewBox_respo_chart 
+display_type={'bar'}  // pie , bar
+display_y_axis={false} // for the bar
+HeadLine="MISP Attributes Top 5 Tags"
+read_more_icon={''}
+description_short={'Streamlined logistics and inventory management for efficient distribution solutions...'}
+description_max_length={166}
+read_more={'Hunts Distribution specializes in optimizing logistics and inventory management, providing comprehensive solutions for efficient product distribution. With a focus on streamlining operations, Hunts Distribution ensures timely deliveries and accurate inventory tracking. Their innovative approach integrates advanced technology to manage and distribute products effectively, enhancing supply chain performance. By leveraging cutting-edge tools and data-driven strategies, Hunts Distribution aims to meet the unique needs of each client, delivering reliable and cost-effective distribution services to improve overall operational efficiency.'}
+bar_numbers={
+  MISPData?.Response?.top_10_tags
+    ?.sort((a, b) => b.Count - a.Count)
+    ?.slice(0, 5)
+    ?.map((item) => item?.Count) || ["NA"]
+}
+bar_headlines={
+  MISPData?.Response?.top_10_tags
+    ?.sort((a, b) => b?.Count - a?.Count)
+    ?.slice(0, 5)
+    ?.map((item) => item?.Name) || ["NA"]
+}
+// bar_numbers = {[ "11","22","41","5"]}
+// bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
+ is_popup = {false}
+enable_hover={false}
+display_this_value={"prime_data"}
+colors={"Basic"} // Basic , Alert
+date={"Near Real-Time"} // "NA"
+box_height={box_height}
+/>
+
+
+
+<PreviewBox_respo_chart 
+display_type={'pie'}  // pie , bar
+display_y_axis={false} // for the bar
+HeadLine="MISP Attributes Top 5 Types"
+read_more_icon={''}
+description_short={'Streamlined logistics and inventory management for efficient distribution solutions...'}
+description_max_length={166}
+read_more={'Hunts Distribution specializes in optimizing logistics and inventory management, providing comprehensive solutions for efficient product distribution. With a focus on streamlining operations, Hunts Distribution ensures timely deliveries and accurate inventory tracking. Their innovative approach integrates advanced technology to manage and distribute products effectively, enhancing supply chain performance. By leveraging cutting-edge tools and data-driven strategies, Hunts Distribution aims to meet the unique needs of each client, delivering reliable and cost-effective distribution services to improve overall operational efficiency.'}
+
+bar_numbers={
+  MISPData?.Response?.top_10_attribute_types
+    ?.sort((a, b) => b.Count - a.Count)
+    ?.slice(0, 5)
+    ?.map((item) => item?.Count) || ["NA"]
+}
+bar_headlines={
+  MISPData?.Response?.top_10_attribute_types
+    ?.sort((a, b) => b.Count - a.Count)
+    ?.slice(0, 5)
+    ?.map((item) => item?.Name) || ["NA"]
+}
+// bar_numbers = {[ "11","22","41","5"]}
+// bar_headlines = {["URL","IP Address","User Name","Phone Number"]}
+ is_popup = {false}
+enable_hover={false}
+display_this_value={"prime_data"}
+colors={"Basic"} // Basic , Alert
+date={"Near Real-Time"} // "NA"
+box_height={box_height}
+/>
+ 
+
+
+
+
+
+<div className="PreviewBox_for_2_tools" style={{ }} >
+
+<PreviewBox_respo_list_type6
+   HeadLine="MISP Attributes Top10 Tags"
+   read_more_icon={''}
+    description_max_length={88}
+   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+   list_array_column1={{ key: "Name", previewName: "Tag Name" }}
+   list_array_column2={{ key: "Count", previewName: "#" }}
+   list_array={
+    MISPData?.Response?.top_10_tags?.sort(
+      (a, b) => b?.Count - a?.Count
+    ) || ["NA"]
+  }
+   is_popup={false}
+   is_tags={true}
+   click_on_field={false}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height_1of3 -20 }
+/>
+
+<PreviewBox_respo_list_type6
+   HeadLine="MISP - Trending Tags (work in progress)"
+   read_more_icon={''}
+   description_short={'Aggregates all CTI data sourced from Velociraptor for analysis...'}
+   description_max_length={88}
+   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+   list_array_column1={{ key: "name", previewName: "Tag Name" }}
+   list_array_column2={{ key: "count", previewName: "#" }}
+   list_array={Trending_Tags}
+   is_popup={false}
+   is_tags={true}
+   click_on_field={true}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height_2of3 }
+/>
+
+</div>
+ 
+
+
+ 
+<div className="PreviewBox_for_2_tools" style={{ }} >
+
+<PreviewBox_respo_type1_number_no_filters
+HeadLine="Leaked Credentials"
+resource_type_id={null}
+read_more_icon={''}
+description_max_length={40}
+read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+BigNumber = {
+  LeakData !== undefined && LeakData.length !== 0      ? LeakData.reduce((accumulator, x) => accumulator + (x?.Response?.found || 0), 0)
+: "NA"}
+
+ 
+SmallNumberTxt={"DeHashed/LeakCheck"}
+StatusColor={"blue"}
+// date={"17-09-2024"}// date={format_date_type_a(last_updated?.Total) || "NA"}
+date={"Near Real-Time"} // "NA"
+is_popup={false}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"Overall Clients"}
+txt_color={""}
+ 
+box_height={box_height_1of3 -20 }
+/>
+
+
+
+<PreviewBox_respo_list_type6
+  HeadLine="MISP Attributes Top10 Types"
+   read_more_icon={''}
+    description_max_length={88}
+   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+   list_array_column1={{ key: "Name", previewName: "Name" }}
+   list_array_column2={{ key: "Count", previewName: "#" }}
+   list_array={
+     MISPData?.Response?.top_10_attribute_types?.sort(
+       (a, b) => b.Count - a.Count
+     ) || []
+   }
+   is_popup={false}
+   is_tags={false}
+   click_on_field={true}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height_2of3}
+/>
+
+</div>
+
+
+<div className="PreviewBox_for_2_tools" style={{ }} >
+
+
+<PreviewBox_respo_type1_number_no_filters
+      HeadLine="Total Indicators"
+resource_type_id={null}
+read_more_icon={''}
+description_max_length={40}
+read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+BigNumber={MISPData?.Response?.total_attributes   !== undefined    ?  MISPData?.Response?.total_attributes : "NA" } // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+SmallNumberTxt={"MISP"}
+StatusColor={"blue"}
+// date={"17-09-2024"}// date={format_date_type_a(last_updated?.Total) || "NA"}
+date={"Near Real-Time"} // "NA"
+is_popup={false}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"Overall Clients"}
+txt_color={""}
+box_height={box_height_1of3 -20 }
+/>
+
+ 
+
+
+
+
+
+<PreviewBox_respo_widebar_type7
+  HeadLine="MISP Attributes Top10 Category's"
+   read_more_icon={''}
+    description_max_length={144}
+   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+   list_array_column1={{ key: "Name", previewName: "Category" }}
+   list_array_column2={{ key: "Count", previewName: "#" }}
+   list_array={
+     MISPData?.Response?.top_10_attribute_categories?.sort(
+       (a, b) => b.Count - a.Count
+     ) || []
+   }
+   is_popup={false}
+   is_tags={false}
+   click_on_field={true}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height_2of3  }
+/>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+        {/* <div className="resource-group-top-boxes mb-c">
           <PreviewBox_type3_bar
             HeadLine="MISP Attributes Top 5 Tags"
             bar_numbers={
@@ -204,16 +425,7 @@ console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator +
           />
 
 
-{/* <PreviewBox_type2_pie
-HeadLine="Hunts Distribution"
-// bar_numbers={["4","32","261","113" ]}
-bar_numbers={[
-  DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA",
-  DashBoardData?.Velociraptor?.UnfinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.UnfinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.UnfinishedHunts : "NA",
-]}
- */}
-
-
+ 
 
 
 
@@ -230,9 +442,9 @@ bar_numbers={[
             is_popup={false}
             is_tags={false}
           />
-        </div>
+        </div> */}
 
-        <div></div>
+     
         <div className="resource-group-all-the-Lists">
           <CTI_list
             Preview_this_Results={LeakData}

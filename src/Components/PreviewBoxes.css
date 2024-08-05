@@ -19,52 +19,78 @@ transition: var(--transition-fast);
 }
    
 
+
+.PreviewBox-respo-container{
+    display: flex;
+  gap: var(--space-c);
+  flex-wrap: wrap;
+}
+
 .PreviewBox_respo{
-  background:var(--color-Grey5);
+  background: var(--color-Grey5);
   border-radius: var(--boxes-round-corner);
-  flex-shrink: 1;/*   default 1 */
-  flex-grow: 1;
-  /* width:  100%; */
-min-width: auto;
- max-width: auto; 
- min-width: 200px;
-  /* height: 220px;  */
-  /* min-width: 200px; */
-  /* max-width: 500px;  */
-  /* flex-shrink: 1;
-  flex-grow: 1; */
+  flex: 1; /* Ensures all boxes have equal size */
+  min-width: 200px;
+  width: calc(33.33% ); /* Adjust width according to the gap */
   display: flex;
   flex-direction: column;
-  justify-content:space-between;
+  justify-content: space-between;
   transition: var(--transition-fast);
-  /* width: 8%;  */
-  /* box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.185); */
+  box-sizing: border-box;
+  /* padding-left: var(--space-b);
+  padding-right: var(--space-b); */
+  padding-right: calc(var( --space-b) + var( --space-a));
+  padding-left: calc(var( --space-b) + var( --space-a));
+  padding-top:calc(var( --space-b) + var( --space-a));
+  padding-bottom:calc(var( --space-b) + var( --space-a));
+
+/* 
+  padding-top: var( --space-b);
+  padding-bottom: var( --space-b); */
   }
 
+
+.PreviewBox_for_2_tools{
+  display: flex;
+  gap: var(--space-c);
+  flex-wrap: wrap;
+ 
+  flex: 1; /* Ensures all boxes have equal size */
+ 
+  /* min-width: 200px;
+  width: 100%; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  transition: var(--transition-fast);
+ 
+ 
+}
+ 
 
   .PreviewBox_respo_top{
     height: auto; 
-    padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
+    /* padding: var( --space-b)   calc(var( --space-b) + var( --space-a)); */
     width: auto;
   }
 
-  .PreviewBox_respo_middle {
+  .PreviewBox_respo_middle{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust minmax as needed */
-    padding-right: calc(var( --space-b) + var( --space-a));
-    padding-left: calc(var( --space-b) + var( --space-a));
-    gap: var( --space-c) ;
+
+    gap: var( --space-a) ;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+ 
   }
  
 
   .PreviewBox_respo_buttom{
-    padding-top: var( --space-a) ;
+    /* padding-top: var( --space-a) ;
     padding-right: calc(var( --space-b) + var( --space-a));
     padding-left: calc(var( --space-b) + var( --space-a));
-    padding-bottom: var( --space-b) ;
+    padding-bottom: var( --space-b) ; */
   }
 
 
