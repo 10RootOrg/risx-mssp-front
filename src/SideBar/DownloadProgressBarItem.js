@@ -14,7 +14,7 @@ function DownloadProgressBarItem({ item }) {
       }}
     >
       <div
-        className="mb-a"
+        className="mb-a mt-b"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <p

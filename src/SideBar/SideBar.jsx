@@ -219,26 +219,48 @@ function SideBar({
         { params: { param1: "param1value" } }
       );
 
-      if (res.data) {
-        console.log("handle_active_manual_process", res.data);
 
-        if (res.data === true) {
+      if (res.data) {
+        console.log("handle_active_manual_process - data", res?.data);
+        console.log("handle_active_manual_process - status", res?.status);
+        console.log("handle_active_manual_process - message", res?.data?.message);
+        console.log("handle_active_manual_process - success", res?.data?.success);
+        
+        if (res?.data?.success === true) {
           set_PopUp_All_Good__txt({
             HeadLine: "Activated",
-            paragraph: "A Manual Process has Started to run",
+            // paragraph: "A Manual Process has Started to run",
+            paragraph: res?.data?.message,
+
+            
             buttonTitle: "Close",
           });
           set_PopUp_All_Good__show(true);
+
         } else {
           set_PopUp_Error____txt({
             HeadLine: "Error",
-            paragraph: "the Manual process could not be started",
+            paragraph: `${res?.data?.message}`,
             buttonTitle: "Close",
           });
           set_PopUp_Error____show(true);
         }
       }
     } catch (err) {
+
+      
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: `${err?.response?.data?.message}`,
+        buttonTitle: "Close",
+      });
+      set_PopUp_Error____show(true);
+
+      // The Manual process could not be started. Error Message: 
+      console.log("catch handle_active_manual_process - data", err?.response?.data);
+      console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
+      console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
+      console.log("catch handle_active_manual_process - success", err?.response?.data?.success);
       console.log(err);
     }
   };

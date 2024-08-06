@@ -828,27 +828,30 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
           }
    
           function PreviewBox_type5_hunt_data_tabla({ HeadLine, is_popup, Artifact, HuntID, Status, Error,StartDate ,artifact_or_module}) {
-    
+    const height_key_value = "18px"
             return (
                 <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
                     <div className='PreviewBox_HeadLine'>
                         <p className="font-type-menu">{HeadLine}</p>
                     </div>
                     <div className='display-flex justify-content-space-between' style={{ height: "100%" }}>
-                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys mr-b' style={{ gap: "6px"  }}>
-                            <p className='font-type-menu Color-White'>{artifact_or_module}</p>
-                            <p className='font-type-menu Color-White'>Start Date</p>
-                            <p className='font-type-menu Color-White'>Hunt ID</p>
-                            <p className='font-type-menu Color-White'>Status</p>
-                            <p className='font-type-menu Color-White'>Error</p>
+
+                        <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys mr-b' style={{  gap: "6px"  }}>
+                            <p className='font-type-menu Color-White' style={{height: height_key_value}}>{artifact_or_module}</p>
+                            <p className='font-type-menu Color-White' style={{height: height_key_value}}>Start Date</p>
+                            <p className='font-type-menu Color-White' style={{height: height_key_value}}>Hunt ID</p>
+                            <p className='font-type-menu Color-White' style={{height: height_key_value}}>Status</p>
+                            <p className='font-type-menu Color-White' style={{height: height_key_value}}>Error</p>
                         </div>
+
                         <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-values' style={{ gap: "6px" }}>
-                            <p className='font-type-txt Color-White'>{Artifact}</p>
-                            <p className='font-type-txt Color-White'>{ StartDate}</p>
-                            <p className='font-type-txt Color-White'>{HuntID}</p>
-                            <p className='font-type-txt Color-White'>{Status}</p>
-                            <p className='font-type-txt Color-White'>{Error}</p>
+                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{Artifact}</p>
+                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{ StartDate}</p>
+                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{HuntID}</p>
+                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{Status}</p>
+                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{Error}</p>
                         </div>
+
                     </div>
                 </div>
             );
