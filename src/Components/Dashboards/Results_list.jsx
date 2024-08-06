@@ -14,7 +14,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import '../StatusDisplay.css'; 
 import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction } from '../PopUp_Smart.js'
 
-import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response} from '../PopUp_response_modules.js'
+import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response ,PopUp_For_Shodan_response} from '../PopUp_response_modules.js'
  import LMloader from "../Features/LMloader.svg";
  import './Dashboard_Results_all.css'
 function Results_list({
@@ -26,10 +26,14 @@ const {  backEndURL ,all_Tools ,front_IP,front_URL} = useContext(GeneralContext)
 const [is_search, set_is_search] = useState(false);
 
 const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
+const [PopUp_For_Shodan_response__show,     set_PopUp_For_Shodan_response__show] = useState(false);
+const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show] = useState(false);
+
 const [UniqueID_to_expand, set_UniqueID_to_expand] = useState("");
 
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
+
 
   const [PopUp_Request_info__show, set_PopUp_Request_info__show] = useState(false);
   const [PopUp_Request_info__txt, set_PopUp_Request_info__txt] = useState({
@@ -43,7 +47,7 @@ const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Succ
 // const status_bar_width = "140px"
 const status_bar_width = "200px"
  
-  const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show] = useState(false);
+
   const [json_file_info, set_json_file_info] = useState({})
   const [json_file_data, set_json_file_data] = useState({})
   const [PopUp_loader__show, set_PopUp_loader__show] = useState(false);
@@ -51,20 +55,16 @@ const status_bar_width = "200px"
   const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
 
   const  get_Json_single_response = async(Info)=>{
- console.log("get_Json_single_response", Info);
+  console.log("get_Json_single_response", Info);
     try{
      if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
     const params = {file_name : Info?.ResponsePath }
-    
-    console.log(params);
-
+    console.log("get_Json_single_response", params);
+ 
 
     set_PopUp_loader__show(true);
      const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
      
-  
-
-    
 
     //  if (res) {console.log("get_Json_single_response3"   ,res);}
 
@@ -88,54 +88,26 @@ const status_bar_width = "200px"
 
 
     else{
- 
-
-
-
       set_PopUp_Request_info__txt({ HeadLine:"No results", paragraph: "Looks like no results file been created yet"   , buttonTitle:"Close" })
       set_PopUp_loader__show(false);
       set_PopUp_Request_info__show(true)
     }
-
-   
-    
  
-        // "status": "Complete",
- 
-// if (  Info.Status  == "Hunting"   && Info.Error  == "No data collected."){
-// set_PopUp_Request_info__txt({ HeadLine:"No Data Collected", paragraph:"the hunt is over,No data collected.", buttonTitle:"Close" })
-// set_PopUp_Request_info__show(true)
-// return}
-
-
-
     return
      }
     
-    
-
-
-
-
+  
     if (res){
-       console.log("   Info    ",Info);
-       console.log("   res.data   ",res.data);
+       console.log("got res Info    ",Info);
+       console.log("got res.data   ",res.data);
+
      if (Info?.ModuleName === "Velociraptor") {
-
-
-   
       if (res?.data?.fileSize != 'Too big') {   set_json_file_info(res.data) }
       if (res?.data?.fileSize == 'Too big') {   set_json_file_info({huntid:Info.UniqueID , status:Info?.Status ,fileSize:"Too big" , ResponsePath:Info?.ResponsePath,  table:[]      }) }
-
-
       set_json_file_data(Info)
       set_PopUp_loader__show(false);
       set_PopUp_velociraptor_response__show(true)
      }
-
-
-
-
 
     else if (Info?.ModuleName === "Nuclei") {
          const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
@@ -147,6 +119,26 @@ const status_bar_width = "200px"
         set_PopUp_loader__show(false);
         set_PopUp_For__Nuclei__response__show(true);
     }
+
+    else if (Info?.ModuleName === "Shodan") {
+
+      console.log("else if (Info?.ModuleName === Shodan");
+
+      const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
+      console.log("tool" ,tool);
+     let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
+     console.log("Shodan updatedInfo" ,updatedInfo);
+     console.log("Shodan    res.data" , res.data);
+    
+     set_json_file_data(updatedInfo);
+     set_json_file_info(res.data);
+      set_PopUp_loader__show(false);
+      set_PopUp_For_Shodan_response__show(true);
+ }
+
+else{ console.log("Info?.ModuleName not developed", Info?.ModuleName);  }
+     
+
 
       ;}
     }
@@ -175,10 +167,6 @@ if (Info.status  == "Failed"   ){
 
  
 switch (Info?.ModuleName) {
-
-
-
-
 
 case 'Nuclei': ////////////////////////// Nuclei //////////////////////////
 if(Info.Status  === "Failed"   ){
@@ -237,12 +225,28 @@ break;
 
 
 case "Shodan": ////////////////////////// Shodan //////////////////////////
-set_PopUp_Under_Construction__txt({
-  HeadLine: "Coming Soon!",
-  paragraph: `We are working on creating Shodan feature. Stay tuned for updates as we finalize the details.`,
-  buttonTitle: "Close",
-});
-set_PopUp_Under_Construction__show(true);
+
+if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
+  set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
+  set_PopUp_Request_info__show(true)
+  return}
+
+
+else{
+  console.log("-------handle_click_Shodan-result-",Info);
+  get_Json_single_response(Info);   
+
+  // set_PopUp_Under_Construction__txt({
+  //   HeadLine: "Coming Soon!",
+  //   paragraph: `We are working on creating Shodan feature. Stay tuned for updates as we finalize the details.`,
+  //   buttonTitle: "Close",
+  // });
+  // set_PopUp_Under_Construction__show(true);
+}
+
+
+
+
 break;
 
 case "LeakCheck": ////////////////////////// LeakCheck //////////////////////////
@@ -361,6 +365,28 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
  set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
 />
 }
+
+
+{PopUp_For_Shodan_response__show&&
+<PopUp_For_Shodan_response
+ popUp_show={PopUp_For_Shodan_response__show}
+ set_popUp_show={set_PopUp_For_Shodan_response__show}
+ HeadLine={"Response"}
+ logoAddress_1_ForSrc={""}
+ buttonTitle={"Close"}
+ json_file_info={json_file_info}
+ json_file_data={json_file_data}
+ set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+ set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
+/>
+}
+
+
+
+
+
+
+
 
 {/* PopUp_Request_info__show */}
 

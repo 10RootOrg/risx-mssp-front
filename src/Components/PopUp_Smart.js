@@ -1154,7 +1154,7 @@ export const PopUp_Error = (props) => {
             className={`PopUp-content  ${
               active ? "popup-enter-active" : "popup-enter"
             }`}
-            style={{ width: "250px", paddingBottom: " " }}
+            style={{ width: "-webkit-fill-available"  , minWidth:"250px", paddingBottom: " " }}
           >
             <div
               className="display-flex justify-content-end  "

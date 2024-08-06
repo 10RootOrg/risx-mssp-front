@@ -110,6 +110,7 @@ const handle_download_Json_File = (
   setDownloadList
 ) => {
   if (file?.fileSize === "Too big") {
+
     console.log("Too big  going to download from server", file);
     const ResponsePath = file?.ResponsePath;
     download_Json(
@@ -1194,6 +1195,679 @@ export const PopUp_For__Nuclei__response = (props) => {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+
+export const PopUp_For_Shodan_response = (props) => {
+  const {
+    popUp_show,
+    set_popUp_show,
+    set_PopUp_All_Good__show,
+    set_PopUp_All_Good__txt,
+    buttonTitle,
+    json_file_info,
+    json_file_data,
+  } = props;
+  const {
+    all_artifacts,
+    backEndURL,
+    DownloadProgressBar,
+    setDownloadProgressBar,
+    setDownloadList,
+  } = useContext(GeneralContext);
+  
+  const [artifact_logo, set_artifact_logo] = useState("");
+  const [aggregate_macro_data, set_aggregate_macro_data] = useState({});
+  const [display_data_type, set_display_data_type] = useState("prime_data");
+
+
+  console.log("PopUp_For_Shodan_response");
+
+
+  const handle_click_download = (file, backEndURL) => {
+    console.log("handle_click_download", file);
+    if (file?.fileSize === "Too big") {
+      console.log("handle_click_download  - Too big ");
+      handle_download_Json_File(
+        file,
+        backEndURL,
+        DownloadProgressBar,
+        setDownloadProgressBar,
+        setDownloadList
+      );
+      set_PopUp_All_Good__txt({
+        HeadLine: "Download Start",
+        paragraph:
+          "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
+        buttonTitle: "Close",
+      });
+      set_PopUp_All_Good__show(true);
+      set_popUp_show(false);
+    } else {
+      handle_download_Json_File(
+        file,
+        backEndURL,
+        DownloadProgressBar,
+        setDownloadProgressBar,
+        setDownloadList
+      );
+    }
+  };
+
+  // useEffect(() => {
+  //   if (
+  //     json_file_data === undefined ||
+  //     json_file_data === "" ||
+  //     json_file_data === null
+  //   ) {
+  //     return;
+  //   }
+  //   if (
+  //     all_artifacts === undefined ||
+  //     all_artifacts === "" ||
+  //     all_artifacts === null
+  //   ) {
+  //     return;
+  //   }
+  //   if (json_file_data.length == 0 || all_artifacts.length == 0) {
+  //     return;
+  //   }
+  //   console.log(all_artifacts);
+
+  //   if (
+  //     json_file_data?.SubModulesCollection != "" &&
+  //     typeof json_file_data?.SubModulesCollection === "string"
+  //   ) {
+  //     const pathTOPic = all_artifacts?.filter(
+  //       (word) => word?.Toolname === json_file_data?.SubModulesCollection
+  //     );
+  //     if (
+  //       pathTOPic === undefined ||
+  //       pathTOPic === "" ||
+  //       pathTOPic.length === 0
+  //     ) {
+  //       console.log("artifact id problem");
+  //       return;
+  //     }
+  //     const logoAddress_1 = pathTOPic[0]?.logoAddress_1;
+  //     const bbb = require(`${logoAddress_1}`);
+      
+  //     set_artifact_logo(bbb);
+  //   } else {
+  //     const pathTOPic = all_artifacts?.filter(
+  //       (word) => word?.Toolname === json_file_data?.SubModuleName
+  //     );
+  //     if (
+  //       pathTOPic === undefined ||
+  //       pathTOPic === "" ||
+  //       pathTOPic.length === 0
+  //     ) {
+  //       console.log("artifact id problem");
+  //       return;
+  //     }
+  //     const logoAddress_1 = pathTOPic[0]?.logoAddress_1;
+  //     const bbb = require(`${logoAddress_1}`);
+  //     set_artifact_logo(bbb);
+  //   }
+  // }, [json_file_data]);
+
+  useEffect(() => {
+    set_popUp_show(popUp_show);
+  }, [popUp_show]);
+
+  function handleClickOutside(e) {
+    if (e.target.className === "PopUp-background") {
+      set_popUp_show(false);
+    }
+  }
+
+  function handleClose() {
+    set_popUp_show(false);
+  }
+
+  // const [cell_width, set_cell_width] = useState(() => {
+  //   if (json_file_info?.table[0]) {
+  //     const totalKeys = Object.keys(json_file_info.table[0]).length;
+  //     const width1 = 190 / totalKeys;
+
+  //     if (width1 > 30) {
+  //       return `30vh`;
+  //     } else {
+  //       return `${width1}vh`;
+  //     }
+  //   } else {
+  //     return "100px"; // Default width if json_file_info?.table[0] is undefined or has no keys
+  //   }
+  // });
+
+  // useEffect(() => {
+  //   const SubModuleName = json_file_data?.SubModuleName;
+  //   const ResponsePath = json_file_data?.ResponsePath;
+  //   if (SubModuleName === undefined) {
+  //     return;
+  //   }
+  //   if (ResponsePath === undefined) {
+  //     return;
+  //   }
+  //   switch (SubModuleName) {
+  //     case "HardeningKitty":
+  //       get_aggregate_macro_data(SubModuleName, ResponsePath);
+  //       break;
+
+  //     default:
+  //       console.log("dont have macro Aggregate to this artifact");
+  //   }
+  // }, [popUp_show, json_file_data]);
+
+  // async function get_aggregate_macro_data(SubModuleName, ResponsePath) {
+  //   // console.log("get_aggregate_macro_data", SubModuleName, ResponsePath);
+  //   if (SubModuleName === undefined) {
+  //     console.log("SubModuleName undefined");
+  //     return;
+  //   }
+  //   if (ResponsePath === undefined) {
+  //     console.log("ResponsePath undefined");
+  //     return;
+  //   }
+  //   try {
+  //     const res = await axios.get(
+  //       `${backEndURL}/results/velociraptor-aggregate-macro`,
+  //       {
+  //         params: {
+  //           SubModuleName: SubModuleName,
+  //           ResponseFile: ResponsePath,
+  //         },
+  //       }
+  //     );
+
+  //     if (res) {
+  //       console.log("get_aggregate_macro_data res", res);
+  //     }
+
+  //     if (res.data.success === false) {
+  //       console.log("aggregate_macro_data_from false", res.data);
+  //     }
+
+  //     if (res.data.success === true) {
+  //       set_aggregate_macro_data(res?.data?.data);
+  //       console.log("aggregate_macro_data_from  true", res.data.data);
+  //     }
+  //   } catch (err) {
+  //     console.log("----------", err);
+  //     console.log(err.response?.data?.message || "An error occurred");
+  //   }
+  // }
+
+  // console.log(json_file_info?.table );
+  // console.log(json_file_info?.SubModuleName);
+  // console.log("json_file_info props" ,props );
+  // console.log("json_file_data 1111111111111" , json_file_data);
+  // console.log("aggregate_macro_data" , aggregate_macro_data["List of computers with High"]);
+
+  return (
+    <>
+      {/* {PopUp_All_Good__show &&
+ <PopUp_All_Good
+ popUp_show={PopUp_All_Good__show}
+ set_popUp_show={set_PopUp_All_Good__show}
+ HeadLine={PopUp_All_Good__txt.HeadLine}
+ paragraph={PopUp_All_Good__txt.paragraph} 
+buttonTitle={PopUp_All_Good__txt.buttonTitle}
+ /> 
+ }
+  */}
+
+      {popUp_show && (
+        <div className={`PopUp-background`} onClick={handleClickOutside}>
+          <div
+            className={`PopUp-content`}
+            style={{
+              width: json_file_info?.fileSize == "Too big" ? "auto" : "80%",
+            }}
+          >
+            <div
+              className="display-flex justify-content-end  "
+              style={{ marginRight: "-40px" }}
+            >
+              <button className="PopUp-Close-btn" onClick={handleClose}>
+                <CloseButton className="PopUp-Close-btn-img" />{" "}
+              </button>
+            </div>
+
+ 
+
+            <div className="velociraptor_response_all_top mb-c">
+              <div className="velociraptor_response_top_texts  "> </div>
+
+              <div className="pop-up-top-boxes-macro PreviewBox-of-pop-up-all">
+                {Object.keys(aggregate_macro_data).length != 0 ? (
+                  <>
+                    {/* <PreviewBox_type5_hunt_data_tabla
+                      HeadLine="Response Data"
+                      artifact_or_module={"Artifact"}
+                      is_popup={true}
+                      display_y_axis={false}
+                      Artifact={json_file_data?.SubModuleName}
+                      HuntID={json_file_info?.huntid}
+                      Status={json_file_info?.status}
+                      StartDate={
+                        json_file_data?.StartDate
+                          ? format_date_type_c(json_file_data?.StartDate)
+                          : "NA"
+                      }
+                      Error={
+                        json_file_data?.Error === "" ? (
+                          <>None</>
+                        ) : (
+                          <>{json_file_data?.Error}</>
+                        )
+                      }
+                    />
+
+                    <PreviewBox_type2_pie
+                      HeadLine={`Tests (${aggregate_macro_data?.Failed_Test_Number_of_tests[1]})`}
+                      bar_numbers={[
+                        aggregate_macro_data?.Failed_Test_Number_of_tests[0],
+                        aggregate_macro_data?.Failed_Test_Number_of_tests[1] -
+                          aggregate_macro_data?.Failed_Test_Number_of_tests[0],
+                      ]}
+                      bar_headlines={["Failed", "Pass"]}
+             
+                      is_popup={true}
+                      enable_hover={true}
+                      display_this={display_data_type}
+                      set_display_this={set_display_data_type}
+                      display_this_value={"prime_data"}
+                      colors={"Basic"} // Basic , Alert
+                    />
+
+                    <PreviewBox_type3_bar
+                      HeadLine="Vulnerabilities"
+                      bar_numbers={
+                        aggregate_macro_data?.severity_Counts
+                          ? aggregate_macro_data?.severity_Counts
+                          : [0, 0, 0, 0]
+                      }
+                      bar_headlines={
+                        aggregate_macro_data?.severity_Order
+                          ? aggregate_macro_data?.severity_Order
+                          : ["Critical", "High", "Medium", "Low"]
+                      }
+                      bar_title_legend={"Vulnerabilities"}
+                      is_popup={true}
+                      display_y_axis={false}
+                      colors={"Alert"}
+                      enable_hover={true}
+                      display_this={display_data_type}
+                      set_display_this={set_display_data_type}
+                      display_this_value={"prime_data"}
+                    />
+
+                    <PreviewBox_type1_number_no_filters
+                      HeadLine="High"
+                      resource_type_id={null}
+                      BigNumber={
+                        aggregate_macro_data?.["Count of High"] !== undefined
+                          ? aggregate_macro_data["Count of High"]
+                          : "NA"
+                      }
+                      SmallNumberTxt={"Total"}
+                      SmallNumber={`${aggregate_macro_data?.Failed_Test_Number_of_tests[1]}`}
+                      StatusColor="High"
+                      date={"NA"}
+                      is_popup={true}
+                      txt_color={""}
+                      display_this={display_data_type}
+                      set_display_this={set_display_data_type}
+                      display_this_value={"High"}
+                    />
+
+                    <PreviewBox_type1_number_no_filters
+                      HeadLine="Critical"
+                      resource_type_id={null}
+                      BigNumber={
+                        aggregate_macro_data?.["Count of Critical"] !==
+                        undefined
+                          ? aggregate_macro_data["Count of Critical"]
+                          : "NA"
+                      }
+                      SmallNumberTxt={"Total"}
+                      SmallNumber={`${aggregate_macro_data?.Failed_Test_Number_of_tests[1]}`}
+                      StatusColor="Critical"
+                      date={"NA"}
+                      is_popup={true}
+                      txt_color={""}
+                      display_this={display_data_type}
+                      set_display_this={set_display_data_type}
+                      display_this_value={"Critical"}
+                    /> */}
+                  </>
+                ) : (
+                  <>
+                    <div style={{ marginRight: "auto" }}>
+                      <PreviewBox_type5_hunt_data_tabla
+                        HeadLine="Hunt Data"
+                        artifact_or_module={"Module"}
+                        is_popup={true}
+                        StartDate={
+                          json_file_data?.StartDate
+                            ? format_date_type_c(json_file_data?.StartDate)
+                            : "NA"
+                        }
+                        // display_y_axis={false}
+                        Artifact={json_file_data?.ModuleName}
+                        HuntID={json_file_info?.huntid || "NA"}
+                        Status={json_file_data?.Status || "NA"}
+                        Error={
+                          json_file_data?.Error === "" ? (
+                            <>None</>
+                          ) : (
+                            <>{json_file_data?.Error}</>
+                          )
+                        }
+                      />
+
+                      {/* too big file note */}
+                      {json_file_info?.fileSize === "Too big" && (
+                        <div
+                          className="mt-c "
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <div>
+                            <p className="  font-type-txt   Color-Grey1 mt-c ">
+                              Data file is too big. <br />
+                              You can download it as a JSON file.
+                            </p>
+                            <button
+                              className="btn-type3 mb-d"
+                              style={{ marginRight: "auto" }}
+                            >
+                              <p
+                                className="font-type-menu  "
+                                onClick={() =>
+                                  handle_click_download(
+                                    json_file_info,
+                                    backEndURL
+                                  )
+                                }
+                              >
+                                Download JSON
+                              </p>
+                              <DownloadIconButton className="icon-type1 " />{" "}
+                            </button>
+                          </div>
+
+                          <div
+                            className=""
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            {/* {artifact_logo === "" ? null : (
+                              <>
+                                <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
+                                  By:
+                                </p>{" "}
+                                <img
+                                  src={artifact_logo}
+                                  alt="logo"
+                                  maxwidth="140px"
+                                  height="30"
+                                />
+                              </>
+                            )} */}
+                            <button
+                              className="btn-type2 "
+                              style={{ marginLeft: "auto" }}
+                              onClick={handleClose}
+                            >
+                              <p className="font-type-menu ">{buttonTitle}</p>{" "}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* {json_file_info?.fileSize != "Too big" && (
+                      <PreviewBox_type1_number_no_filters
+                        HeadLine="Object Find"
+                        resource_type_id={null}
+                        BigNumber={123 }
+                        SmallNumberTxt={""}
+                        SmallNumber={``}
+                        StatusColor=""
+                        date={"NA"}
+                        is_popup={true}
+                        txt_color={""}
+                        display_this={display_data_type}
+                        set_display_this={set_display_data_type}
+                        display_this_value={"prime_data"}
+                      />
+                    )} */}
+                  </>
+                )}
+              </div>
+
+
+            </div>
+
+            <div
+              style={{
+                height: "auto",
+                maxHeight: "300px",
+                overflowY: "auto",
+                margin: 0,
+                padding: 0,
+              }}
+            >
+       
+                <>
+                  {aggregate_macro_data &&
+                    aggregate_macro_data["List of computers with High"] &&
+                    display_data_type === "High" && (
+                      <>
+                        <div
+                          className="mb-b"
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <div
+                            className={`Bg-Orange-Red  light-bulb-type1 mr-a `}
+                          />
+                          <p className="font-type-menu Color-White">
+                            List of computers with High (
+                            {
+                              aggregate_macro_data[
+                                "List of computers with High"
+                              ]?.length
+                            }
+                            )
+                          </p>
+                        </div>
+                        {aggregate_macro_data[
+                          "List of computers with High"
+                        ]?.map((item, index) => (
+                          <>
+                            <div key={index} className="List_of_computers_line">
+                              <p className="font-type-txt  Color-Grey1">
+                                {item}
+                              </p>
+                            </div>
+                          </>
+                        ))}
+                        {aggregate_macro_data["List of computers with High"]
+                          ?.length === 0 && (
+                          <p className="font-type-txt  Color-Grey1">
+                            No High record
+                          </p>
+                        )}
+                      </>
+                    )}
+
+                  {aggregate_macro_data &&
+                    aggregate_macro_data["List of computers with Critical"] &&
+                    display_data_type === "Critical" && (
+                      <>
+                        {/* <div
+                          className="mb-b"
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <div className={`Bg-Red  light-bulb-type1 mr-a `} />
+                          <p className="font-type-menu Color-White">
+                            List of computers with Critical (
+                            {
+                              aggregate_macro_data[
+                                "List of computers with Critical"
+                              ]?.length
+                            }
+                            )
+                          </p>
+                        </div> */}
+                        {/* {aggregate_macro_data[
+                          "List of computers with Critical"
+                        ]?.map((item, index) => (
+                          <>
+                            <div key={index} className="List_of_computers_line">
+                              <p className="font-type-txt  Color-Grey1">
+                                {item}
+                              </p>
+                            </div>
+                          </>
+                        ))} */}
+
+
+                        {/* {aggregate_macro_data["List of computers with Critical"]
+                          ?.length === 0 && (
+                          <p className="font-type-txt  Color-Grey1">
+                            No Critical record
+                          </p>
+                        )} */}
+                      </>
+                    )}
+
+                  {/* //// the big list */}
+                  {display_data_type === "prime_data" && (
+                    <>
+                      {json_file_info?.table?.length !== 0 ? (
+                        <>
+                          <div className="table_smart">
+                            {/* {Object.keys(json_file_info?.table[0]).map(
+                              (key) => (
+                                <div
+                                  className="parent-container"
+                                  onClick={() => set_cell_width("500px")}
+                                  key={key}
+                                  style={{ width: cell_width }}
+                                >
+                                  <p className="table_smart_col font-type-menu Color-White">
+                                    {key}
+                                  </p>
+                                </div>
+                              )
+                            )} */}
+                          </div>
+
+                          {/* {json_file_info?.table.map((item, index) => (
+                            <div key={index} className="table_smart">
+                              {Object.keys(item).map((key, idx) => {
+                                const value = item[key];
+                                return (
+                                  <div
+                                    className="parent-container"
+                                    key={idx}
+                                    style={{ width: cell_width }}
+                                  >
+                                    <div className="table_smart_col">
+
+
+                                      {typeof value != "object" && (
+                                        <span
+                                          className="cell-content font-type-txt  "
+                                          style={{
+                                            color: (() => {
+                                              if (typeof value === "string") {
+                                                const lowerValue =
+                                                  value.toLowerCase();
+                                                if (lowerValue === "critical")
+                                                  return "var(--color-Red)";
+                                                if (lowerValue === "high")
+                                                  return "var(--color-Orange-Red)";
+                                              }
+                                              return "var(--color-Grey1)";  
+                                            })(),
+                                          }}
+                                        >
+                                          {typeof value === "object"
+                                            ? JSON.stringify(value)
+                                            : value}
+                                        </span>
+                                      )}
+
+                               
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ))} */}
+
+
+                        </>
+                      ) : null}
+                    </>
+                  )}
+                </>
+         
+            </div>
+
+            {json_file_info?.fileSize != "Too big" && (
+              <div className="display-flex  mt-a" style={{}}>
+                {/* {artifact_logo === "" ? null : (
+                  <>
+                    <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
+                      By:
+                    </p>{" "}
+                    <img
+                      src={artifact_logo}
+                      alt="logo"
+                      maxwidth="140px"
+                      height="30"
+                    />
+                  </>
+                )}  */}
+                <div />
+                <div
+                  className="mt-c"
+                  style={{
+                    display: "flex",
+                    justifyContent: "end",
+                    gap: "10px",
+                    marginLeft: "auto",
+                  }}
+                >
+                  <button
+                    className="btn-type3"
+                    onClick={() =>
+                      handle_click_download(json_file_info, backEndURL)
+                    }
+                  >
+                    <p className="font-type-menu ">Download Data</p>
+                    <DownloadIconButton className="icon-type1 " />{" "}
+                  </button>
+                  <button className="btn-type2   " onClick={handleClose}>
+                    <p className="font-type-menu ">{buttonTitle}</p>{" "}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            
           </div>
         </div>
       )}
