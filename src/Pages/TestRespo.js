@@ -4,7 +4,7 @@ import React ,{useEffect, useState} from 'react'
 import axios from 'axios';
 import lottie from 'lottie-web';
 import {
-  PreviewBox_respo_pie,
+  PreviewBox_respo_chart,
  
 } from "../Components/PreviewBoxes";
 import animationData from '../Components/Logos/Risx-mssp-logo-anim.json';
@@ -20,8 +20,8 @@ function TestRespo() {
 
 
  
-<PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
+<PreviewBox_respo_chart 
+HeadLine={`PreviewBox_respo_chart2`}
 description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow hackers to bypass authentication.'}
 bar_numbers = {        [ "33", "31", '21']                        }
 bar_headlines = {['Failed','Pass','None'] }
@@ -36,8 +36,8 @@ box_height="600px"
 
 
  
-{/* <PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
+{/* <PreviewBox_respo_chart 
+HeadLine={`PreviewBox_respo_chart2`}
 description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
 
 bar_numbers = {        [ "33", "31", '21',"33", "0", '21', "333", "31", '21',"33", "31", '21']                        }
@@ -53,8 +53,8 @@ box_height="400px"
 
  
 
-<PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
+<PreviewBox_respo_chart 
+HeadLine={`PreviewBox_respo_chart2`}
 description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
 
 bar_numbers = {        [ "33", "31", '21',"33", "0", '21', "333", "31", '21',"33", "31", '21']                        }
@@ -69,8 +69,8 @@ box_height="300px"
 /> */}
 
 <div style={{width:"300px"}}>
-<PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
+<PreviewBox_respo_chart 
+HeadLine={`PreviewBox_respo_chart2`}
 description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
 
 bar_numbers = {        [ "33", "31", '21',"33", "4444", '21', "12", "31", '21',"33", "31", '21']                        }
@@ -86,8 +86,8 @@ box_height="400px"
 </div>
 
  
-<PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
+<PreviewBox_respo_chart 
+HeadLine={`PreviewBox_respo_chart2`}
 description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
 
 bar_numbers = {        [ "1", "1", '6', "5"]                        }
@@ -103,8 +103,8 @@ box_height="500px"
  
  
 <div style={{width:"650px"}}>
-<PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
+<PreviewBox_respo_chart 
+HeadLine={`PreviewBox_respo_chart2`}
 description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
 
 bar_numbers = {        [ "1", "1", '6', "5"]                        }

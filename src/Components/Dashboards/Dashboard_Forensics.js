@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  PreviewBox_type3_bar,
-  PreviewBox_type1_number_no_filters,
-  PreviewBox_type6_list_box,
-  PreviewBox_type2_pie,
-  PreviewBox_respo_pie
+  // PreviewBox_type3_bar,
+  // PreviewBox_type1_number_no_filters,
+  // PreviewBox_type6_list_box,
+  // PreviewBox_type2_pie,
+  // PreviewBox_type7_wide_bar,
+  // PreviewBox_respo_widebar_type7,
+  PreviewBox_respo_list_type6,
+  PreviewBox_respo_chart,
 } from "../PreviewBoxes.js";
 
 import axios from "axios";
@@ -23,6 +26,19 @@ function Dashboard_Forensics({
   const [display_data_type, set_display_data_type] = useState("");
   const [DashBoardData, setDashBoardData] = useState({});
   const [TimeOfHostCheck, setTimeOfHostCheck] = useState("N/A");
+
+  const [forensics_list_no_tag, set_forensics_list_no_tag] = useState([]);
+  const [forensics_list_tag, set_forensics_list_tag] = useState([]);
+
+  const gap = getComputedStyle(document.documentElement).getPropertyValue('--space-b')
+  const box_height = 800;
+  const box_height_2of3 = box_height * (3/5);
+  const box_height_1of3 = box_height * (2/5)   ;
+
+
+
+
+
   const get_config = async () => {
     if (backEndURL === undefined) {
       return;
@@ -85,12 +101,78 @@ function Dashboard_Forensics({
       GetData();
     }
   }, [backEndURL]);
-  // console.log("DashBoardData",DashBoardData);
-  // console.log("DashBoardData?.Velociraptor",DashBoardData?.Velociraptor);
-  // console.log("DashBoardData?.Velociraptor?.FinishedHunts",DashBoardData?.TimeSketch?.tag_counts);
-  console.log("UnfinishedHunts", DashBoardData?.Velociraptor?.UnfinishedHunts);
 
-  console.log("FinishedHunts", DashBoardData?.Velociraptor?.FinishedHunts);
+
+  useEffect(() => {
+
+
+set_forensics_list_no_tag([
+{
+mainKey:"Overall Clients",
+module:"Velociraptor",
+mainValue: DashBoardData?.Velociraptor?.NumberOfClients !== undefined ? DashBoardData?.Velociraptor?.NumberOfClients : "NA",
+}
+,
+{
+mainKey:"Connected Clients",
+module:"Velociraptor",
+mainValue:DashBoardData?.Velociraptor?.NumberOfConnectedClients !== undefined? DashBoardData?.Velociraptor?.NumberOfConnectedClients: "NA",
+} 
+,
+{
+mainKey:"Completed Hunts",
+module:"Velociraptor",
+mainValue: DashBoardData?.Velociraptor?.FinishedHunts !== undefined? DashBoardData.Velociraptor.FinishedHunts:"NA",
+}  
+,
+{
+mainKey:"Uncompleted Hunts",
+module:"Velociraptor",
+mainValue:  DashBoardData?.Velociraptor?.UnfinishedHunts!== undefined ?  DashBoardData?.Velociraptor?.UnfinishedHunts : "NA",
+}  
+,
+{
+mainKey:"Number of Sketches",
+module:"Timesketch",
+mainValue:  DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBoardData?.TimeSketch?.number_of_sketches: "NA",
+}  
+    ]);
+
+
+ set_forensics_list_tag([
+      {
+      mainKey:"Tag: Persistence",
+      module:"Timesketch",
+      mainValue: DashBoardData?.TimeSketch?.tag_counts?.Persistence !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.Persistence: "NA",
+      }  
+      ,
+      {
+      mainKey:"Tag: Phishy-Domain",
+      module:"Timesketch",
+      mainValue:   DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] : "NA"
+      }  
+      ,
+      {
+      mainKey:"Tag: High",
+      module:"Timesketch",
+      mainValue: DashBoardData?.TimeSketch?.tag_counts?.high !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.high : "NA",
+      }  
+      ,
+      {
+      mainKey:"Tag: command and control",
+      module:"Timesketch",
+      mainValue:  DashBoardData?.TimeSketch?.tag_counts?.["command and control"] !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.["command and control"] : "NA"
+      }  
+      
+          ]);
+      
+    
+
+  }, [DashBoardData ]);
+
+
+  console.log("UnfinishedHunts", DashBoardData?.Velociraptor?.UnfinishedHunts);
+ 
 
   return (
     <>
@@ -107,41 +189,149 @@ function Dashboard_Forensics({
 
         <div className="resource-group-top-boxes mb-c">
 
+ 
 
-
-
-<div style={{display:"inline-flex", gap:"var(--space-c)"  , flexWrap:"wrap"}}>
-<PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
-description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
-bar_numbers = {        [ "1", "1", '6', "5"]                        }
-bar_headlines = {['critical','high','medium','low'] }
+<div  className="PreviewBox-respo-container" >
+<PreviewBox_respo_chart 
+display_type={'pie'}  // pie , bar
+display_y_axis={false} // for the bar
+HeadLine={`Hunts Distribution`}
+read_more_icon={''}
+description_short={'Streamlined logistics and inventory management for efficient distribution solutions...'}
+description_max_length={166}
+read_more={'Hunts Distribution specializes in optimizing logistics and inventory management, providing comprehensive solutions for efficient product distribution. With a focus on streamlining operations, Hunts Distribution ensures timely deliveries and accurate inventory tracking. Their innovative approach integrates advanced technology to manage and distribute products effectively, enhancing supply chain performance. By leveraging cutting-edge tools and data-driven strategies, Hunts Distribution aims to meet the unique needs of each client, delivering reliable and cost-effective distribution services to improve overall operational efficiency.'}
+bar_numbers={[
+  DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
+  DashBoardData?.Velociraptor?.FinishedHunts !== null
+    ? DashBoardData?.Velociraptor?.FinishedHunts
+    : "NA",
+  DashBoardData?.Velociraptor?.UnfinishedHunts !== undefined &&
+  DashBoardData?.Velociraptor?.UnfinishedHunts !== null
+    ? DashBoardData?.Velociraptor?.UnfinishedHunts
+    : "NA",
+]}
+bar_headlines={["Completed", "Uncompleted"]}
 is_popup = {false}
 enable_hover={false}
- 
 display_this_value={"prime_data"}
-colors={"Alert"} // Basic , Alert
-box_height="700px"
+colors={"Basic"} // Basic , Alert
+date={"Near Real-Time"} // "NA"
+box_height={box_height}
 />
 
-<PreviewBox_respo_pie 
-HeadLine={`PreviewBox_respo_pie2`}
-description_short={'Multiple SMTP servers are vulnerable to spoofing attacks that allow...'}
-bar_numbers = {        [ "1", "1", '6', "5"]                        }
-bar_headlines = {['critical','high','medium','low'] }
-is_popup = {false}
+<PreviewBox_respo_chart 
+display_type={'pie'}  // pie , bar
+display_y_axis={false} // for the bar
+HeadLine={`Connected from Overall Clients`}
+read_more_icon={''}
+description_short={'Centralized hub for integrating client data and insights seamlessly...'}
+description_max_length={166}
+read_more={'Connected from Overall Clients offers a centralized platform for integrating and analyzing client data across various touchpoints. This system facilitates seamless communication and data sharing, providing a holistic view of client interactions and feedback. By centralizing client information, businesses can gain actionable insights, enhance customer relationships, and improve decision-making processes. The platform is designed to streamline data management, making it easier to track client engagement, address issues proactively, and tailor strategies to meet client needs effectively, ultimately fostering stronger, more productive client relationships.'}
+bar_numbers={[
+  DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
+  DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
+  DashBoardData?.Velociraptor?.FinishedHunts !== null &&
+  DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
+  DashBoardData?.Velociraptor?.NumberOfClients !== null
+    ? `${
+        DashBoardData?.Velociraptor?.NumberOfClients -
+        DashBoardData?.Velociraptor?.NumberOfConnectedClients
+      }`
+    : "NA",
+]}
+bar_headlines={["Connected", "UnConnected"]}
 enable_hover={false}
- 
 display_this_value={"prime_data"}
-colors={"Alert"} // Basic , Alert
-box_height="700px"
+is_popup={false}
+colors={"Basic"} // Basic , Alert
+date={"Near Real-Time"} // "NA"
+box_height={box_height}
 />
 
 
+ 
+<PreviewBox_respo_list_type6
+   HeadLine="Tag list"
+   read_more_icon={''}
+    description_max_length={122}
+   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+   list_array_column1={{ key: "mainKey", previewName: "Category" }}
+   list_array_column2={{ key: "mainValue", previewName: "#" }}
+   list_array={forensics_list_tag}
+   is_popup={false}
+   is_tags={true}
+   click_on_field={false}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height}
+ 
+/>
+
+
+<PreviewBox_respo_list_type6
+   HeadLine="CTI list"
+   read_more_icon={''}
+   description_short={'Aggregates all CTI data sourced from Velociraptor for analysis...'}
+   description_max_length={144}
+   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
+   list_array_column1={{ key: "mainKey", previewName: "Category" }}
+   list_array_column2={{ key: "mainValue", previewName: "#" }}
+   list_array={forensics_list_no_tag}
+   is_popup={false}
+   is_tags={false}
+   click_on_field={true}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height }
+/>
+
+
+<div className="PreviewBox_for_2_tools" style={{ }} >
+
+<PreviewBox_respo_list_type6
+   HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
+   read_more_icon={''}
+  //  description_short={'Tracks and lists hosts that were online in the past 24 hours...'}
+   description_max_length={122}
+   read_more={'The "Recent Online Hosts last 24 Hr" feature provides a detailed overview of all hosts that have been active within the past 24 hours. This tool helps in monitoring and analyzing network activity by listing hosts that have recently connected or been online. By offering insights into the recent activity of these hosts, it enables administrators to track and respond to changes in network dynamics, identify potential security issues, and ensure that systems are functioning as expected. This information is crucial for maintaining network integrity and performance.'}
+   list_array_column1={{ key: "Hostname", previewName: "Name" }}
+   list_array_column2={{ key: "FirstSeen", previewName: "Date" }}
+   list_array={DashBoardData?.Velociraptor?.NewUsers  ? DashBoardData?.Velociraptor?.NewUsers : "NA"}
+   is_popup={false}
+   is_tags={false}
+   click_on_field={false}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height_1of3 -20}
+/>
+
+
+<PreviewBox_respo_list_type6
+   HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
+   read_more_icon={''}
+  //  description_short={'Tracks and lists hosts that were online in the past 24 hours...'}
+  description_max_length={144}
+   read_more={'The "Recent Online Hosts last 24 Hr" feature provides a detailed overview of all hosts that have been active within the past 24 hours. This tool helps in monitoring and analyzing network activity by listing hosts that have recently connected or been online. By offering insights into the recent activity of these hosts, it enables administrators to track and respond to changes in network dynamics, identify potential security issues, and ensure that systems are functioning as expected. This information is crucial for maintaining network integrity and performance.'}
+   list_array_column1={{ key: "Hostname", previewName: "Name" }}
+   list_array_column2={{ key: "LastSeen", previewName: "Date" }}
+   list_array={DashBoardData?.Velociraptor?.RecentHosts ? DashBoardData?.Velociraptor?.RecentHosts : "NA"}
+   is_popup={false}
+   is_tags={false}
+   click_on_field={false}
+   date={"Near Real-Time"} // "NA"
+   box_height={box_height_2of3}
+/>
 
 
 
 </div>
+
+
+</div>
+
+
+
+
+
+{/* 
+
 
 <PreviewBox_type1_number_no_filters
 HeadLine="Overall Clients "
@@ -262,24 +452,8 @@ txt_color={""}
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
+ 
 
-          {/* <PreviewBox_type3_bar
-            HeadLine="Hunts Distribution"
-            // bar_numbers = { counts?.map(item => Object.values(item) ) }
-            // bar_headlines = {  counts?.map(item => Object.keys(item) )  }
-            bar_numbers={[
-              DashBoardData?.Velociraptor?.FinishedHunts,
-              DashBoardData?.Velociraptor?.UnfinishedHunts,
-            ]}
-            bar_headlines={["Completed", "Uncompleted"]}
-            // bar_title_legend = {"Velociraptor"}
-            is_popup={false}
-            display_y_axis={true}
-            colors={"Basic"}
-          /> */}
-
-          {/* all = 10
-connected =3 */}
 
           <PreviewBox_type2_pie
             HeadLine="Connected from Overall Clients"
@@ -303,9 +477,6 @@ connected =3 */}
             colors={"Basic"} // Basic , Alert
           />
 
-          {/* DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA", */}
-
-  
 
           <PreviewBox_type6_list_box
             HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
@@ -314,6 +485,7 @@ connected =3 */}
             list_array={DashBoardData?.Velociraptor?.NewUsers || []}
             is_popup={false}
           />
+
           <PreviewBox_type6_list_box
             HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
             list_array_column1={{ key: "Hostname", previewName: "Name" }}
@@ -341,7 +513,6 @@ connected =3 */}
             txt_color={""}
           />
 
-
           <PreviewBox_type1_number_no_filters
             HeadLine="Tag: Persistence "
             resource_type_id={null}
@@ -360,6 +531,7 @@ connected =3 */}
             display_this_value={"Overall Clients"}
             txt_color={""}
           />
+
           <PreviewBox_type1_number_no_filters
             HeadLine="Tag: Phishy-Domain "
             resource_type_id={null}
@@ -398,7 +570,7 @@ connected =3 */}
             set_display_this={set_display_data_type}
             display_this_value={"Overall Clients"}
             txt_color={""}
-          />
+          /> */}
         </div>
         <div></div>
         <div className="resource-group-all-the-Lists"></div>

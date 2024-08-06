@@ -712,25 +712,7 @@ export const PopUp_For_Read_More = (props) => {
     popUp_iconSize,
   } = props;
   const [active, setActive] = useState(false);
-  // useEffect(() => {
-  //   set_popUp_show(popUp_show)
-  // }, [popUp_show]);
 
-  // function handleClickOutside(e) {
-
-  //   console.log("e.target.className" , e.target.className);
-
-  //   if (e.target.className === 'PopUp-background') {
-
-  //     set_popUp_show(false);
-
-  //   }
-  // }
-
-  // function handleClose() {
-  //   set_popUp_show(false);
-
-  // }
 
   useEffect(() => {
     set_popUp_show(popUp_show);
@@ -794,23 +776,25 @@ export const PopUp_For_Read_More = (props) => {
             </p>
 
             <div className="display-flex mt-c" style={{}}>
+              { logoAddress_1_ForSrc !== ""   &&   <>
+            
               <p className="font-type-very-sml-txt   Color-Grey1 mr-a">By:</p>
               <img
                 src={logoAddress_1_ForSrc}
                 alt="logo"
                 maxwidth="140px"
                 height="30"
-                style={{ marginRight: "auto" }}
+             
               />
-
+  </>}
               {buttonTitle === "Close" ? (
-                <button className="btn-type2" onClick={handleClose}>
+                <button className="btn-type2" onClick={handleClose}    style={{ marginLeft: "auto" }}>
                   <p className="font-type-menu ">{buttonTitle}</p>{" "}
                 </button>
               ) : (
-                <a href={toolURL} target="_blank">
+                <a href={toolURL} target="_blank"   style={{ marginLeft: "auto" }}>
                   {" "}
-                  <button className="btn-type2">
+                  <button className="btn-type2"  >
                     <p className="font-type-menu ">{buttonTitle}</p>{" "}
                   </button>
                 </a>
