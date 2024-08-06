@@ -8,7 +8,6 @@ import {
   // PreviewBox_respo_widebar_type7,
   PreviewBox_respo_list_type6,
   PreviewBox_respo_chart,
-
 } from "../PreviewBoxes.js";
 
 import axios from "axios";
