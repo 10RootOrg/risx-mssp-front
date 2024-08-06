@@ -237,12 +237,30 @@ break;
 
 
 case "Shodan": ////////////////////////// Shodan //////////////////////////
-set_PopUp_Under_Construction__txt({
-  HeadLine: "Coming Soon!",
-  paragraph: `We are working on creating Shodan feature. Stay tuned for updates as we finalize the details.`,
-  buttonTitle: "Close",
-});
-set_PopUp_Under_Construction__show(true);
+
+
+
+if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
+  set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
+  set_PopUp_Request_info__show(true)
+  return}
+
+
+else{
+  console.log("-------handle_click_Shodan-result-",Info);
+  // get_Json_single_response(Info);   
+
+  set_PopUp_Under_Construction__txt({
+    HeadLine: "Coming Soon!",
+    paragraph: `We are working on creating Shodan feature. Stay tuned for updates as we finalize the details.`,
+    buttonTitle: "Close",
+  });
+  set_PopUp_Under_Construction__show(true);
+}
+
+
+
+
 break;
 
 case "LeakCheck": ////////////////////////// LeakCheck //////////////////////////
