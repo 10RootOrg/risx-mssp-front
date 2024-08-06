@@ -104,13 +104,7 @@ function SideBar({
     }
   }, [backEndURL]);
 
-  useEffect(() => {
-    console.log(
-      DownloadProgressBar,
-      "eeeeeee9999999999999999999999999eeeeeeeeeeeeeeeeeeeeee",
-      DownloadList
-    );
-  }, [DownloadProgressBar]);
+
 
   const handleClick = (page_name) => {
     set_visblePage(page_name);
@@ -147,7 +141,8 @@ function SideBar({
       });
       // set_PopUp_All_Good__show(true);
       const fileName = object?.General?.AgentLinks[os]?.split("/")?.pop();
-      const fileName2 = object?.General?.AgentLinks[os]?.split("/")?.pop()+Math.random();
+      const fileName2 =
+        object?.General?.AgentLinks[os]?.split("/")?.pop() + Math.random();
 
       const res = await axios.post(
         `${backEndURL}/config/DownloadAgent`,
@@ -357,7 +352,8 @@ function SideBar({
                         .split(" ")
                         .map(
                           (subWord) =>
-                            subWord?.charAt(0)?.toUpperCase() + subWord?.slice(1)
+                            subWord?.charAt(0)?.toUpperCase() +
+                            subWord?.slice(1)
                         )
                         .join(" ");
                     })
@@ -374,10 +370,6 @@ function SideBar({
           <div
             className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
           >
-
-
-
-            
             <button
               className="btn-menu"
               onClick={() => handleClick("dashboard-general")}
@@ -778,33 +770,30 @@ function SideBar({
             </div>
           </button>
         </div>
-
-
-
-        
       </div>
 
- 
-      {Object.keys(DownloadProgressBar).length >0  && (
-<div style={{
-            paddingRight: 'calc(var(--space-c) + var(--space-b))',
-            paddingLeft: 'calc(var(--space-c) + var(--space-b))',
+      {Object.keys(DownloadProgressBar).length > 0 && (
+        <div
+          style={{
+            paddingRight: "calc(var(--space-c) + var(--space-b))",
+            paddingLeft: "calc(var(--space-c) + var(--space-b))",
             // width: '100%',
-            position: 'fixed', // Use fixed positioning
-            bottom: 'var(--space-d)', // Position it at the bottom of the viewport
-       width:"-webkit-fill-available"
-
-     }}>
-
-<p className="font-type-menu  Color-Grey1  mb-a">Downloads Progress:</p>
-<div  className=" " style={{ width: "100% "  }}>
-  {Object.values(DownloadProgressBar).map((item) => ( <DownloadProgressBarItem item={item} />  ))}
-</div>
-</div>
-        )}
-
-</div>
- 
+            position: "fixed", // Use fixed positioning
+            bottom: "var(--space-d)", // Position it at the bottom of the viewport
+            width: "-webkit-fill-available",
+          }}
+        >
+          <p className="font-type-menu  Color-Grey1  mb-a">
+            Downloads Progress:
+          </p>
+          <div className=" " style={{ width: "100% " }}>
+            {Object.values(DownloadProgressBar).map((item) => (
+              <DownloadProgressBarItem item={item} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
