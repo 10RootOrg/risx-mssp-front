@@ -90,12 +90,23 @@ align-items: center;
  background-color: var(--color-DB-Blue-Hover);
  border-radius: var(--elemtns-round-corner-medium);
  cursor: pointer;
-
 }
  
+.resource-group-list-line-not-hoverd:hover {
+  background-color: transparent;
+ 
+  cursor:auto;
+}
+
+
 .resource-group-list-line:hover > .resource-group-list-item{
 color: var(--color-DB-Blue-Glow);
  }
+ .resource-group-list-line:hover > .resource-group-list-item-not-hoverd{
+  color: var(--color-Grey1);
+   }
+  
+
 
 
    .resource-group-list-line:hover > .resource-group-list-item .tagit_type1{

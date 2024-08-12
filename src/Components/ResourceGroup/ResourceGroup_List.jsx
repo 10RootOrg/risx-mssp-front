@@ -396,12 +396,12 @@ Info?.resource_status
   <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'>{Info?.description}</p> 
 
 <div className='resource-group-list-item display-flex list-item-big' >
-<button className="btn-type1"><IconSettings className="icon-type1 " />  </button>
+{/* <button className="btn-type1"><IconSettings className="icon-type1 " />  </button> */}
  
 {Info?.tools?.length === 1
   &&  Info?.tools[0]?.Toolid === null ||  Info?.tools[0]?.Toolid === "" ||  Info?.tools[0]?.Toolid === undefined
-  ? (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  }
-
+  ? (<p className='ml-a    font-type-txt   Color-Grey1   '></p> ) : null  }
+  {/* ? (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  } */}
 
 {Info?.tools?.length === 1
   &&  Info?.tools[0]?.Toolid !== null &&  Info?.tools[0]?.Toolid !== "" &&  Info?.tools[0]?.Toolid !== undefined

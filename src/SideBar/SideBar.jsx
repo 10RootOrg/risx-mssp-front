@@ -90,7 +90,7 @@ function SideBar({
       const res = await axios.get(`${backEndURL}/config`);
 
       if (res) {
-        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa", res.data);
+        console.log("get_config", res.data);
       }
       setObject(res.data);
     } catch (err) {
@@ -185,12 +185,12 @@ function SideBar({
       );
 
       if (res) {
-        console.log("ssssssssssssssssssssssss", fileName);
+        // console.log("ssssssssssssssssssssssss", fileName);
         const url = window.URL.createObjectURL(res.data);
         console.log(url);
 
         // window.open(url)
-        console.log(fileName, "zzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+        // console.log(fileName, "zzzzzzzzzzzzzzzzzzzzzzzzzzzz");
         var link = document.createElement("a");
         link.href = url;
         link.download = fileName;
@@ -223,17 +223,18 @@ function SideBar({
       if (res.data) {
         console.log("handle_active_manual_process - data", res?.data);
         console.log("handle_active_manual_process - status", res?.status);
-        console.log("handle_active_manual_process - message", res?.data?.message);
-        console.log("handle_active_manual_process - success", res?.data?.success);
+        // console.log("handle_active_manual_process - message", res?.data?.message);
+        // console.log("handle_active_manual_process - success", res?.data?.success);
         
         if (res?.data?.success === true) {
+          console.log("A Manual Process has Started to run"  , "message;" , res?.data?.message);
           set_PopUp_All_Good__txt({
             HeadLine: "Activated",
-            // paragraph: "A Manual Process has Started to run",
-            paragraph: res?.data?.message,
-
-            
+            paragraph: "A Manual Process has Started to run",
+            // paragraph: res?.data?.message,
             buttonTitle: "Close",
+
+
           });
           set_PopUp_All_Good__show(true);
 
@@ -258,9 +259,9 @@ function SideBar({
 
       // The Manual process could not be started. Error Message: 
       console.log("catch handle_active_manual_process - data", err?.response?.data);
-      console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
-      console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
-      console.log("catch handle_active_manual_process - success", err?.response?.data?.success);
+      // console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
+      // console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
+      // console.log("catch handle_active_manual_process - success", err?.response?.data?.success);
       console.log(err);
     }
   };

@@ -1,0 +1,91 @@
+ 
+
+.all-tools-main{
+  background:var(--color-Grey5);
+  border-radius: var(--boxes-round-corner);
+  padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
+  height: "auto";
+  min-height: "500px";
+  /* max-height: "500px"; */
+  min-width: 200px;
+  display: flex;
+  justify-content:space-between;
+  transition: var(--transition-fast);
+  /* width: 8%;  */
+  /* box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.185); */
+  }
+
+
+  
+  .all-tools-left-side {
+    display: flex;
+    flex-direction: column;
+    /* background-color: blue; */
+    justify-content: space-between;
+    height: "auto";
+    width: 440px;
+    margin-right: var(--space-b);
+    }
+
+
+    .all-tools-right-side{
+      /* background-color: yellow; */
+     width: 100%;
+    
+      display: flex;
+      justify-content: stretch;
+      flex-direction: column;
+      margin-top: var(--space-b);
+      margin-bottom: calc(var(--space-b) + var(--space-b));
+      padding: 0;
+      border: 0;
+ 
+    }
+
+
+    .all-tools-line{
+      /* padding-top:   var(--space-a);
+      padding-bottom:var(--space-a); */
+   
+    
+        height: 50px;
+        /* background-color: brown; */
+        padding: 0;
+        border: 0;
+        margin: 0;
+        /* border:1px solid rebeccapurple; */
+      }
+
+
+
+      .logo-cell{
+ 
+        width: 90px;
+    
+        
+      }
+
+      .all-tools-table{
+        /* border-spacing: var(--space-b)  var(--space-a);
+        border-collapse:separate;
+        width: 100%; */
+      }
+
+
+      .all-tools-table td{
+padding-left:var(--space-a)  ;
+padding-right: var(--space-a) ;
+vertical-align: middle; /* Center content vertically if not using flex */
+
+      }
+
+      .all-tools-table td:last-child{
+   
+        padding-right: 0;
+ 
+ 
+ 
+              }
+              .all-tools-table td:first-child{
+                padding-left: 0 ;
+                      }

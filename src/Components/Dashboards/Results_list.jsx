@@ -12,7 +12,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
  import { Make_url_from_id ,fix_path} from "../../Components/Dashboards/functions_for_dashboards.js"
  import '../StatusDisplay.css'; 
-import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction } from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction  ,PopUp_Error} from '../PopUp_Smart.js'
 
 import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response ,PopUp_For_Shodan_response} from '../PopUp_response_modules.js'
  import LMloader from "../Features/LMloader.svg";
@@ -23,6 +23,8 @@ function Results_list({
   loader
   }) {
 const {  backEndURL ,all_Tools ,front_IP,front_URL} = useContext(GeneralContext);
+
+const [checked_items, set_checked_items] = useState([]);
 const [is_search, set_is_search] = useState(false);
 
 const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
@@ -31,19 +33,19 @@ const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show]
 
 const [UniqueID_to_expand, set_UniqueID_to_expand] = useState("");
 
+const [PopUp_Error__show, set_PopUp_Error__show] = useState(false);
+const [PopUp_Error__txt, set_PopUp_Error__txt] = useState({ HeadLine:"Error",paragraph:"Error",buttonTitle:"Close"});
+
+
+
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
 
+const [PopUp_Request_info__show, set_PopUp_Request_info__show] = useState(false);
+const [PopUp_Request_info__txt, set_PopUp_Request_info__txt] = useState({HeadLine:"In process",paragraph:"The request has been sent", buttonTitle:"Close"});
 
-  const [PopUp_Request_info__show, set_PopUp_Request_info__show] = useState(false);
-  const [PopUp_Request_info__txt, set_PopUp_Request_info__txt] = useState({
-    HeadLine:"In process",
-    paragraph:"The request has been sent",
-    buttonTitle:"Close"
-  });
-
-  const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
-  const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
+const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
+const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
 // const status_bar_width = "140px"
 const status_bar_width = "200px"
  
@@ -64,10 +66,6 @@ const status_bar_width = "200px"
 
     set_PopUp_loader__show(true);
      const res = await axios.get(`${backEndURL}/results/velociraptor-single-result`,{ params: params});
-     
-
-    //  if (res) {console.log("get_Json_single_response3"   ,res);}
-
      if (typeof res.data === "string") {
       set_PopUp_loader__show(false);
      if(res.data === 'No data collected.'){ console.log(res.data ,Info);
@@ -85,8 +83,6 @@ const status_bar_width = "200px"
       set_PopUp_Request_info__show(true)
      }
 
-
-
     else{
       set_PopUp_Request_info__txt({ HeadLine:"No results", paragraph: "Looks like no results file been created yet"   , buttonTitle:"Close" })
       set_PopUp_loader__show(false);
@@ -101,44 +97,89 @@ const status_bar_width = "200px"
        console.log("got res Info    ",Info);
        console.log("got res.data   ",res.data);
 
-     if (Info?.ModuleName === "Velociraptor") {
-      if (res?.data?.fileSize != 'Too big') {   set_json_file_info(res.data) }
-      if (res?.data?.fileSize == 'Too big') {   set_json_file_info({huntid:Info.UniqueID , status:Info?.Status ,fileSize:"Too big" , ResponsePath:Info?.ResponsePath,  table:[]      }) }
-      set_json_file_data(Info)
-      set_PopUp_loader__show(false);
-      set_PopUp_velociraptor_response__show(true)
-     }
+//      if (Info?.ModuleName === "Velociraptor") {
+//       if (res?.data?.fileSize != 'Too big') {   set_json_file_info(res.data) }
+//       if (res?.data?.fileSize == 'Too big') {   set_json_file_info({huntid:Info.UniqueID , status:Info?.Status ,fileSize:"Too big" , ResponsePath:Info?.ResponsePath,  table:[]      }) }
+//       set_json_file_data(Info)
+//       set_PopUp_loader__show(false);
+//       set_PopUp_velociraptor_response__show(true)
+//      }
 
-    else if (Info?.ModuleName === "Nuclei") {
-         const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
-         console.log("tool" ,tool);
-        let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
-        console.log("updatedInfo" ,updatedInfo);
-        set_json_file_data(updatedInfo);
-        set_json_file_info(res.data);
-        set_PopUp_loader__show(false);
-        set_PopUp_For__Nuclei__response__show(true);
-    }
+//     else if (Info?.ModuleName === "Nuclei") {
+//          const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
+//          console.log("tool" ,tool);
+//         let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
+//         console.log("updatedInfo" ,updatedInfo);
+//         set_json_file_data(updatedInfo);
+//         set_json_file_info(res.data);
+//         set_PopUp_loader__show(false);
+//         set_PopUp_For__Nuclei__response__show(true);
+//     }
 
-    else if (Info?.ModuleName === "Shodan") {
+//     else if (Info?.ModuleName === "Shodan") {
 
-      console.log("else if (Info?.ModuleName === Shodan");
+//       console.log("else if (Info?.ModuleName === Shodan");
 
-      const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
-      console.log("tool" ,tool);
-     let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
-     console.log("Shodan updatedInfo" ,updatedInfo);
-     console.log("Shodan    res.data" , res.data);
+//       const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
+//       console.log("tool" ,tool);
+//      let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
+//      console.log("Shodan updatedInfo" ,updatedInfo);
+//      console.log("Shodan    res.data" , res.data);
     
-     set_json_file_data(updatedInfo);
-     set_json_file_info(res.data);
-      set_PopUp_loader__show(false);
-      set_PopUp_For_Shodan_response__show(true);
- }
+//      set_json_file_data(updatedInfo);
+//      set_json_file_info(res.data);
+//       set_PopUp_loader__show(false);
+//       set_PopUp_For_Shodan_response__show(true);
+//  }
 
-else{ console.log("Info?.ModuleName not developed", Info?.ModuleName);  }
+// else{ console.log("Info?.ModuleName not developed", Info?.ModuleName);  }
      
+switch (Info?.ModuleName) {
+  case "Velociraptor":
+    if (res?.data?.fileSize !== 'Too big') {
+      set_json_file_info(res.data);
+    } else {
+      set_json_file_info({
+        huntid: Info.UniqueID,
+        status: Info?.Status,
+        fileSize: "Too big",
+        ResponsePath: Info?.ResponsePath,
+        table: []
+      });
+    }
+    set_json_file_data(Info);
+    set_PopUp_loader__show(false);
+    set_PopUp_velociraptor_response__show(true);
+    break;
 
+  case "Nuclei":
+    const nucleiTool = all_Tools?.find(tool => tool?.Tool_name === Info?.ModuleName);
+    console.log("tool", nucleiTool);
+    let updatedNucleiInfo = { ...Info, logoAddress_1: nucleiTool?.logoAddress_1 };
+    console.log("updatedInfo", updatedNucleiInfo);
+    set_json_file_data(updatedNucleiInfo);
+    set_json_file_info(res.data);
+    set_PopUp_loader__show(false);
+    set_PopUp_For__Nuclei__response__show(true);
+    break;
+
+  case "Shodan":
+    console.log("else if (Info?.ModuleName === Shodan");
+    const shodanTool = all_Tools?.find(tool => tool?.Tool_name === Info?.ModuleName);
+    console.log("tool", shodanTool);
+    let updatedShodanInfo = { ...Info, logoAddress_1: shodanTool?.logoAddress_1 };
+    console.log("Shodan updatedInfo", updatedShodanInfo);
+    console.log("Shodan res.data", res.data);
+    set_json_file_data(updatedShodanInfo);
+    set_json_file_info(res.data);
+    set_PopUp_loader__show(false);
+    set_PopUp_For_Shodan_response__show(true);
+    break;
+
+  default:
+    console.log("Unknown ModuleName:", Info?.ModuleName);
+    break;
+}
 
       ;}
     }
@@ -148,6 +189,9 @@ else{ console.log("Info?.ModuleName not developed", Info?.ModuleName);  }
     }
 
     const handleClickComingSoon = () => {
+
+     
+
       set_PopUp_Under_Construction__txt({
         HeadLine: "Coming Soon!",
         paragraph: `We are working on creating this feature. Stay tuned for updates as we finalize the details.`,
@@ -155,6 +199,58 @@ else{ console.log("Info?.ModuleName not developed", Info?.ModuleName);  }
       });
       set_PopUp_Under_Construction__show(true);
     };
+
+
+
+const handleDelete = async () => {
+
+try{
+  console.log("handleDelete 1111111111111", checked_items);
+// const res = await axios.delete(`${backEndURL}/results/delete-results-by-ids`,{ params: checked_items});
+const res = await axios.delete(`${backEndURL}/results/delete-results-by-ids`, {
+  params: {
+    checked_items: checked_items // Key-value pairs in the query string
+  }
+});
+
+
+// const res = await axios.get(`${backEndURL}/results/get_all_requests_table`);
+
+
+if(res){console.log("handleDelete ",res.data);}
+
+
+}
+
+catch(err){
+
+  console.log("handleDelete 33333333333333");
+
+
+  if (err.response.status === 400){
+    // console.log(err.response.data.message);
+  set_PopUp_Error__show(true);
+  set_PopUp_Error__txt({ HeadLine:"Error", paragraph:err?.response?.data?.message, buttonTitle:"Close"});
+    return
+  }
+
+  else{
+    console.log("handleDelete error" ,err);
+    set_PopUp_Error__show(true);
+    set_PopUp_Error__txt({ HeadLine:"Error", paragraph:err?.response?.data, buttonTitle:"Close"});
+    return
+    }
+
+  
+;}
+
+
+ 
+};
+
+
+
+
 
 
 const handle_click_result = (Info) =>{
@@ -226,23 +322,26 @@ break;
 
 case "Shodan": ////////////////////////// Shodan //////////////////////////
 
+
+
+
+
 if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
-  return}
-
-
-else{
-  console.log("-------handle_click_Shodan-result-",Info);
-  get_Json_single_response(Info);   
-
-  // set_PopUp_Under_Construction__txt({
-  //   HeadLine: "Coming Soon!",
-  //   paragraph: `We are working on creating Shodan feature. Stay tuned for updates as we finalize the details.`,
-  //   buttonTitle: "Close",
-  // });
-  // set_PopUp_Under_Construction__show(true);
+return
 }
+
+else{ console.log("-------handle_click_Shodan-result-",Info); get_Json_single_response(Info);   }
+
+// set_PopUp_Under_Construction__txt({
+//   HeadLine: "Coming Soon!",
+//   paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
+//   buttonTitle: "Close",
+// });
+// set_PopUp_Under_Construction__show(true);
+
+
 
 
 
@@ -271,7 +370,44 @@ default:
 }
 
  
+const handle_check_box = (UniqueID,ResponsePath,ModuleName,SubModuleName) => {
 
+if (!UniqueID)    {console.log("handle_check_box error UniqueID is " ,UniqueID); return }
+if (!ResponsePath){console.log("handle_check_box error ResponsePath is " ,ResponsePath); return }
+
+if(checked_items.length === 0){
+   console.log("checked_items is empty ");
+   set_checked_items([{"UniqueID":UniqueID , "ResponsePath":ResponsePath ,"ModuleName":ModuleName ,"SubModuleName":SubModuleName                } ]);
+  }
+
+
+else{
+console.log("not empty ");
+   const position = checked_items.findIndex(item => item.UniqueID === UniqueID);
+    console.log("position", position);
+
+
+    if (position === -1) {
+      // If the item is not found, add it to the checked_items array
+      set_checked_items([...checked_items, { "UniqueID": UniqueID, "ResponsePath": ResponsePath ,"ModuleName":ModuleName ,"SubModuleName":SubModuleName    }]);
+    } else {
+      // If the item is found, remove it from the checked_items array
+      const newCheckedItems = checked_items.filter(item => item.UniqueID !== UniqueID);
+      set_checked_items(newCheckedItems);
+    }
+
+ 
+}
+
+
+
+
+
+
+
+};
+
+console.log("checked_items",checked_items);
 
 
 const do_sort = (column) => {
@@ -321,10 +457,32 @@ if (Preview_this_Results?.length >=2&&firstTimeData ) {
  
  <div className='ResourceGroup-All' style={{  display: "flex", flexDirection: "column" ,height:"100%" }}>
   
-
-
 {PopUp_loader__show && <PopUp_loader popUp_show={PopUp_loader__show} /> }
  
+
+
+{PopUp_All_Good__show &&
+ <PopUp_All_Good
+ popUp_show={PopUp_All_Good__show}
+ set_popUp_show={set_PopUp_All_Good__show}
+ HeadLine={PopUp_All_Good__txt.HeadLine}
+ paragraph={PopUp_All_Good__txt.paragraph} 
+buttonTitle={PopUp_All_Good__txt.buttonTitle}
+ /> 
+ }
+
+{PopUp_Error__show &&
+ <PopUp_Error
+ popUp_show={PopUp_Error__show}
+ set_popUp_show={set_PopUp_Error__show}
+ HeadLine={PopUp_Error__txt.HeadLine}
+ paragraph={PopUp_Error__txt.paragraph} 
+buttonTitle={PopUp_Error__txt.buttonTitle}
+ /> 
+ }
+
+
+
 {PopUp_Under_Construction__show && (
 <PopUp_Under_Construction
 popUp_show={PopUp_Under_Construction__show}
@@ -348,9 +506,6 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
   set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
   /> 
   }
-
-
-
 
 {PopUp_velociraptor_response__show&&
 <PopUp_For_velociraptor_response
@@ -381,15 +536,6 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
 />
 }
 
-
-
-
-
-
-
-
-{/* PopUp_Request_info__show */}
-
 {PopUp_Request_info__show &&
  <PopUp_Request_info
  popUp_show={PopUp_Request_info__show}
@@ -401,20 +547,7 @@ buttonTitle={PopUp_Request_info__txt.buttonTitle}
  }
 
 
-{PopUp_All_Good__show &&
- <PopUp_All_Good
- popUp_show={PopUp_All_Good__show}
- set_popUp_show={set_PopUp_All_Good__show}
- HeadLine={PopUp_All_Good__txt.HeadLine}
- paragraph={PopUp_All_Good__txt.paragraph} 
-buttonTitle={PopUp_All_Good__txt.buttonTitle}
- /> 
- }
  
-
-
-
-
 <div className='resource-group-list-headline mb-c ' >
 
 <div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Results list</p></div>
@@ -423,7 +556,6 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
   items_for_search={Preview_this_Results}
   set_items_for_search={set_Preview_this_Results}
   set_is_search={set_is_search}
-
   btn_add_single_show={false}
   // btn_add_single_action={add_resource_item}
   // btn_add_single_value={"add"}
@@ -432,9 +564,8 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 
   btn_trash_show={true} 
-  btn_trash_action={handleClickComingSoon}
+  btn_trash_action={handleDelete}
   btn_trash_id={"tmp"}
-  
   btn_gear_show={true} 
   btn_gear_action={handleClickComingSoon}
   btn_gear_id={""}
@@ -457,8 +588,21 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 
   <>
-<div className='resource-group-list-keyNames mb-a  '  >
-             <div className='resource-group-list-item list-item-biggest ml-a' onClick={() => do_sort("SubModuleName")}>         <p className='font-type-menu  make-underline Color-Grey1 ml-a '>Module + Artifact</p></div>
+<div className='resource-group-list-keyNames mb-a     '  >
+
+<div  className=' mr-a' style={{visibility:"hidden"}} >
+<label className="container"  style={{  marginTop:"5px"}} > 
+<input type="checkbox"   
+// checked={true}
+disabled={false}
+value={""}
+ onChange={()=>console.log("Info")}
+     />
+<span className="checkmark"   ></span>
+</label>
+</div>
+
+             <div className='resource-group-list-item list-item-biggest  ' onClick={() => do_sort("SubModuleName")}>         <p className='font-type-menu  make-underline Color-Grey1  pl-b  '>Module + Artifact</p></div>
              <div className='resource-group-list-item   list-item-big'>                                                         <p className='font-type-menu  no-underline Color-Grey1 '>Arguments</p></div>
              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div>
              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("LastIntervalDate")}>             <p className='font-type-menu  make-underline Color-Grey1 '>Last Interval</p></div>
@@ -477,22 +621,49 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
     //   SubModuleName = "BP - " + SubModuleName.slice("BestPractice@".length); // Replace with "momo"
     // }
     return (
-      <div>
+      <div  >
 
 
  {/* .......  all lists ........... */}
-<div className='resource-group-list-line' key={index} onClick={()=>handle_click_result(Info)}>
+
+
  
-<div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >
 
-{Info?.ModuleName  === ""   &&   SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }
+ 
+<div className=''
+ style={{
 
-{Info?.ModuleName && SubModuleName &&  (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p><p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleName}</p> </>)}
-
-{Info?.ModuleName && !SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
-
+  display: "flex",
+  justifyContent: "space-between",
+  gap: "var(--space-b)",  
+  width: "100%",
+ }}
+  >
+ 
+<div  className='velociraptor-EndpointModules-checkbox  mr-b'   >
+<label className={ `container   ${Info?.UniqueID === "" && !Info?.UniqueID && "containeroff" } `} style={{ marginTop: "5px" }}>
+  <input
+    type="checkbox"
+    disabled={!Info?.UniqueID} // Disable the checkbox if UniqueID is not present
+    value={""}
+    onChange={() => handle_check_box(Info?.UniqueID,  Info?.ResponsePath  ,Info?.ModuleName  ,Info?.SubModuleName )}
+  />
+  <span
+    className="checkmark"
+    // style={{
+    //   borderColor: Info?.UniqueID === "" ? "blue" : undefined, // Set borderColor to blue if UniqueID is empty
+    //   color: "yellow" // Always apply yellow color
+    // }}
+  >
+    {/* Content or style modifications for checkmark */}
+  </span>
+</label>
 </div>
 
+
+<div className='resource-group-list-line' key={index} onClick={()=>handle_click_result(Info)}>
+
+<div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >{Info?.ModuleName  === ""   &&   SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }{Info?.ModuleName && SubModuleName &&  (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p><p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleName}</p> </>)}{Info?.ModuleName && !SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}</div>
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-big'>{ JSON.stringify(Info?.Arguments) }</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.StartDate)}</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.LastIntervalDate)}</p> 
@@ -500,16 +671,20 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.Status}</p> 
 <div className="status-bar-and-time " style={{width:status_bar_width}}> <div className="status-bar"><div className={`status-bar-fill ${Info?.Status}`}/></div>
 <div className={`font-type-txt   time-general  ${Info?.TimeNote != "In Time" ?  'not-in-time' : 'in-time'}  `}>{Info?.TimeNote === "In Time" ? null : Info?.TimeNote}</div>
+
 </div>
+</div>
+
 </div>
  
-
  {/* .......  nasted best practice ........... */}
   {SubModuleName === "BestPractice" &&   UniqueID_to_expand === Info?.UniqueID && 
 <>
 { Info?.Arguments?.Modules?.map((SubModuleINFO, index) => {
   return(
-  <div className='resource-group-list-line' key={index} onClick={()=>handle_click_result({...SubModuleINFO , ModuleName:"Velociraptor" , SubModulesCollection: Info?.SubModuleName })}>
+  <div className='resource-group-list-line' 
+   
+  key={index} onClick={()=>handle_click_result({...SubModuleINFO , ModuleName:"Velociraptor" , SubModulesCollection: Info?.SubModuleName })}>
  <div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >
    <div className="ml-a " style={{marginTop:'5px'}}> <IconNasted/></div>
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleINFO?.SubModuleName}</p>
@@ -530,18 +705,8 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 )})}
 </>
-
 }
  
-
-
-
-
-
-
-
-
-
   </div>
 
 

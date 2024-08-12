@@ -194,12 +194,13 @@ mainValue:  DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBo
 <div  className="PreviewBox-respo-container" >
 <PreviewBox_respo_chart 
 display_type={'pie'}  // pie , bar
+allow_wide={false}
 display_y_axis={false} // for the bar
 HeadLine={`Hunts Distribution`}
 read_more_icon={''}
 description_short={'Streamlined logistics and inventory management for efficient distribution solutions...'}
 description_max_length={166}
-read_more={'Hunts Distribution specializes in optimizing logistics and inventory management, providing comprehensive solutions for efficient product distribution. With a focus on streamlining operations, Hunts Distribution ensures timely deliveries and accurate inventory tracking. Their innovative approach integrates advanced technology to manage and distribute products effectively, enhancing supply chain performance. By leveraging cutting-edge tools and data-driven strategies, Hunts Distribution aims to meet the unique needs of each client, delivering reliable and cost-effective distribution services to improve overall operational efficiency.'}
+read_more={'The "Hunts Distribution" section outlines the status of threat-hunting queries or operations executed within Velociraptor. Completed hunts are those that have successfully finished their analysis, providing results and insights into potential threats or vulnerabilities. In contrast, uncompleted hunts are still in progress or have encountered issues that need resolution. By reviewing this distribution, security teams can assess the effectiveness and progress of their threat-hunting efforts, prioritize investigations based on urgency, and ensure that all potential threats are thoroughly examined and addressed.'}
 bar_numbers={[
   DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
   DashBoardData?.Velociraptor?.FinishedHunts !== null
@@ -221,12 +222,13 @@ box_height={box_height}
 
 <PreviewBox_respo_chart 
 display_type={'pie'}  // pie , bar
+allow_wide={false}
 display_y_axis={false} // for the bar
 HeadLine={`Connected from Overall Clients`}
 read_more_icon={''}
 description_short={'Centralized hub for integrating client data and insights seamlessly...'}
 description_max_length={166}
-read_more={'Connected from Overall Clients offers a centralized platform for integrating and analyzing client data across various touchpoints. This system facilitates seamless communication and data sharing, providing a holistic view of client interactions and feedback. By centralizing client information, businesses can gain actionable insights, enhance customer relationships, and improve decision-making processes. The platform is designed to streamline data management, making it easier to track client engagement, address issues proactively, and tailor strategies to meet client needs effectively, ultimately fostering stronger, more productive client relationships.'}
+read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
 bar_numbers={[
   DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
   DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
@@ -254,6 +256,7 @@ box_height={box_height}
    HeadLine="Tag list"
    read_more_icon={''}
     description_max_length={122}
+    read_more_view= {true}
    read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
    list_array_column1={{ key: "mainKey", previewName: "Category" }}
    list_array_column2={{ key: "mainValue", previewName: "#" }}
@@ -270,8 +273,9 @@ box_height={box_height}
 <PreviewBox_respo_list_type6
    HeadLine="CTI list"
    read_more_icon={''}
-   description_short={'Aggregates all CTI data sourced from Velociraptor for analysis...'}
+  //  description_short={'Aggregates all CTI data sourced from Velociraptor for analysis...'}
    description_max_length={144}
+   read_more_view= {true}
    read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
    list_array_column1={{ key: "mainKey", previewName: "Category" }}
    list_array_column2={{ key: "mainValue", previewName: "#" }}
@@ -287,11 +291,13 @@ box_height={box_height}
 <div className="PreviewBox_for_2_tools" style={{ }} >
 
 <PreviewBox_respo_list_type6
-   HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
    read_more_icon={''}
+   HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
   //  description_short={'Tracks and lists hosts that were online in the past 24 hours...'}
+  read_more_view= {true}
    description_max_length={122}
-   read_more={'The "Recent Online Hosts last 24 Hr" feature provides a detailed overview of all hosts that have been active within the past 24 hours. This tool helps in monitoring and analyzing network activity by listing hosts that have recently connected or been online. By offering insights into the recent activity of these hosts, it enables administrators to track and respond to changes in network dynamics, identify potential security issues, and ensure that systems are functioning as expected. This information is crucial for maintaining network integrity and performance.'}
+    read_more={`This section in Velociraptor's dashboard provides a dynamic view of devices that have recently connected to the network within the past ${TimeOfHostCheck} hours. This metric is crucial for identifying and monitoring newly introduced systems, which could potentially be sources of security vulnerabilities or unauthorized access. By tracking these new hosts, administrators can ensure that all incoming devices are properly vetted and compliant with security policies. The real-time data allows for immediate action if any suspicious or unrecognized hosts are detected, thereby enhancing the organization's ability to respond to emerging threats swiftly and effectively.`}
+
    list_array_column1={{ key: "Hostname", previewName: "Name" }}
    list_array_column2={{ key: "FirstSeen", previewName: "Date" }}
    list_array={DashBoardData?.Velociraptor?.NewUsers  ? DashBoardData?.Velociraptor?.NewUsers : "NA"}
@@ -306,9 +312,9 @@ box_height={box_height}
 <PreviewBox_respo_list_type6
    HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
    read_more_icon={''}
-  //  description_short={'Tracks and lists hosts that were online in the past 24 hours...'}
+   read_more_view= {true}
   description_max_length={144}
-   read_more={'The "Recent Online Hosts last 24 Hr" feature provides a detailed overview of all hosts that have been active within the past 24 hours. This tool helps in monitoring and analyzing network activity by listing hosts that have recently connected or been online. By offering insights into the recent activity of these hosts, it enables administrators to track and respond to changes in network dynamics, identify potential security issues, and ensure that systems are functioning as expected. This information is crucial for maintaining network integrity and performance.'}
+   read_more={'a list of all hosts that have been actively connected to the network over the past 24 hours. This information is vital for maintaining an up-to-date view of active devices and their activity patterns. By analyzing this data, security teams can monitor network usage, identify potential anomalies, and ensure that only authorized hosts are interacting with the system. This overview helps in detecting unauthorized access attempts or compromised devices early, allowing for prompt remediation actions to safeguard network integrity and prevent potential breaches.'}
    list_array_column1={{ key: "Hostname", previewName: "Name" }}
    list_array_column2={{ key: "LastSeen", previewName: "Date" }}
    list_array={DashBoardData?.Velociraptor?.RecentHosts ? DashBoardData?.Velociraptor?.RecentHosts : "NA"}
