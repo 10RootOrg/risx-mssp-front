@@ -8,7 +8,7 @@ padding: var( --space-b)   calc(var( --space-b) + var( --space-a));
 height: 220px; 
 min-width: 200px;
 /* max-width: 500px;  */
-flex-shrink: 1;/*   default 1 */
+flex-shrink: 1;
 flex-grow: 1;
 display: flex;
 flex-direction: column;
@@ -31,7 +31,8 @@ transition: var(--transition-fast);
   border-radius: var(--boxes-round-corner);
   flex: 1; /* Ensures all boxes have equal size */
   min-width: 200px;
-  width: calc(33.33% ); /* Adjust width according to the gap */
+  /* width: calc(33.33% );   */
+  width: "100%";  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -53,9 +54,9 @@ transition: var(--transition-fast);
 .PreviewBox_for_2_tools{
   display: flex;
   gap: var(--space-c);
-  flex-wrap: wrap;
- 
-  flex: 1; /* Ensures all boxes have equal size */
+  /* flex-wrap: wrap; */
+ flex-direction: column;
+  flex: 1;  
  
   /* min-width: 200px;
   width: 100%; */
@@ -76,7 +77,8 @@ transition: var(--transition-fast);
 
   .PreviewBox_respo_middle{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust minmax as needed */
+ 
+    /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));   */
 
     gap: var( --space-a) ;
     width: 100%;
@@ -85,6 +87,10 @@ transition: var(--transition-fast);
  
   }
  
+.PreviewBox_respo_middle_wide{
+   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));   
+}
+
 
   .PreviewBox_respo_buttom{
     /* padding-top: var( --space-a) ;
@@ -114,9 +120,10 @@ transition: var(--transition-fast);
 .PreviewBox-of-tools{
   min-height: 340px; 
    min-width: 220px;
-   width: 22%;
+ 
 }
 
+ 
 
 /* .PreviewBox-of-tools:nth-last-child(-n+4) {
   max-width: 22.5%;
@@ -249,11 +256,15 @@ Color-Grey1 */
 
   .velociraptor-all{
     flex-direction: row;
-    min-width:64%;
+    /* min-width:64%;
     max-width: 100%;
-    /* min-width:60%;
-    max-width: 60%; */
-    flex-grow: 5;
+    flex-grow: 5; */
+
+    min-width: 400px;
+    max-width: 538px;
+    flex-grow: 2;
+
+
     }
     
 

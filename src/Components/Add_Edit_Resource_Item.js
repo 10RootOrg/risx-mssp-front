@@ -269,7 +269,30 @@ set_PopUp_All_Good__show(true)
 
     }, [ popUp_Add_or_Edit__status]); // Re-initialize state if `resourceItem` changes
   
+    console.log("resource_type ssssssssss" ,resource_type);
  
+    const DisplayText = () => {
+             if (resource_type?.resource_type_name === "Computer") { return "Computer Name";
+      } else if (resource_type?.resource_type_name === "Full Name") {  return "Full Name";
+      } else if (resource_type?.resource_type_name === "Company Name") {  return "Company Name";
+      } else if (resource_type?.resource_type_name === "Domain") {  return "Domain Name";
+      } else if (resource_type?.resource_type_name === "Email Address") {  return "Email Address";
+      } else if (resource_type?.resource_type_name === "Email Domain") {  return "Email Domain";
+      } else if (resource_type?.resource_type_name === "IP Address") {  return "IP Address Number"; 
+      } else if (resource_type?.resource_type_name === "Phone Number") {  return "Phone Number"; 
+      } else if (resource_type?.resource_type_name === "Username (Social)") {  return "Username"; 
+        
+
+      } else {
+        return "Name";
+      }
+    };
+
+
+
+
+
+
     return (
       <>
    
@@ -296,8 +319,8 @@ set_PopUp_All_Good__show(true)
 <div className="items_left">
   
 <div className="item_info_left">
-<p className='font-type-menu   Color-Grey1 pb-b'>Name</p>
-<input className="input-type2 mb-a " type="text" value={resource_string}      placeholder={resourceItem?.Name || 'Name'} onChange={handleInputChange(set_resource_string)}/>
+<p className='font-type-menu   Color-Grey1 pb-b'>{DisplayText()}</p>
+<input className="input-type2 mb-a " type="text" value={resource_string}      placeholder={resourceItem?.Name || `${DisplayText()}..` } onChange={handleInputChange(set_resource_string)}/>
 </div>
 
 <div className="item_info_left">

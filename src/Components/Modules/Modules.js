@@ -1,7 +1,7 @@
 import React , {useState , useEffect ,useContext} from 'react';
 import { PreviewBox_type_module} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
-import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
+import { PreviewBox_velociraptor2} from '../PreviewBox_main_velociraptor2.js'
 import Search_comp from '../Features/Search_comp.jsx'
  
 // import jsonData from '../../tmpjsons/previewBoxesTools.json';  
@@ -98,11 +98,20 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
 <div className="display-flex"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules</p></div>
 </div> */}
 
+<div className=' mb-c' style={{}}>
+<PreviewBox_velociraptor2 />
+</div>
 
-<div className='resource-group-top-boxes mb-c' >
+<div className=' mb-c' style={{
+display: "inline-flex",
+gap: "var(--space-c)",
+flexWrap:"wrap",
 
 
-<PreviewBox_velociraptor />
+}}>
+
+
+{/* <PreviewBox_velociraptor /> */}
  
   {/* modules */}
 {show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
@@ -129,25 +138,13 @@ all_Tools={all_Tools}
  
  backEndURL={backEndURL}
  unseen_alert_number={unseen_alert_number}
+ width={"10%"}
             />   }
  
      </>   ))}
 </>)}
 
- 
 
-
-
-
-
-
-
-
-
-
-
-
- 
 </div>
 
 
@@ -184,6 +181,7 @@ buttonTitle={Info?.buttonTitle}
 toolURL={Info?.toolURL}
 all_Tools={all_Tools}
  backEndURL={backEndURL}
+ width={"15%"}
             />   }
  
      </>   ))}
@@ -219,6 +217,7 @@ all_Tools={all_Tools}
  
  backEndURL={backEndURL}
  unseen_alert_number={unseen_alert_number}
+ width={"15%"}
             />   }
 
      </>      

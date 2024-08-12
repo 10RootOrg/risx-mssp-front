@@ -317,6 +317,12 @@ p{color: var(--color-White);
 .mt-e{ margin-top: 60px;}
 
 
+.pl-a{ padding-left:5px;}
+.pl-b{ padding-left:10px;}
+
+.pr-a{ padding-right:5px;}
+.pr-b{ padding-right:10px;}
+
 .app-out {
   background-color:var(--color-Black);
   min-height: 100vh; 
@@ -706,7 +712,11 @@ width: 28px;
         transition: var(--transition-fast)
       } */
       
-
+      .icon-type1-disable   path{
+ 
+        stroke: var(--color-Grey2)
+       
+      }
 
 .cutLongParagraph{
 

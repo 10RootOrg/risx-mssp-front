@@ -31,7 +31,10 @@ import { Doughnut , Bar } from 'react-chartjs-2';
 const time = new Date()
 const format_date = format_date_type_a(time);
  
-
+const getNestedValue = (obj, keyPath) => {
+  if (!keyPath) return undefined;
+  return keyPath.split('.').reduce((acc, key) => acc && acc[key], obj);
+};
 
 // function openInNewTab (toolURL) {
 //   const newWindow = window.open(toolURL, '_blank', 'noopener,noreferrer')
@@ -312,7 +315,7 @@ function PreviewBox_type1_number_no_filters({
     const [is_Filtering, set_is_Filtering] = useState(false);
 
 
-    console.log( HeadLine,BigNumber,);
+  
     
 const  handle_click = () => {
   if(display_this === display_this_value){ set_display_this("prime_data")}
@@ -348,7 +351,7 @@ const  handle_click = () => {
 
    
 
-    console.log("fffffffffffffffffffff",HeadLine, BigNumber);
+ 
      return (
       <div className={`PreviewBox PreviewBox_for_type_count ${is_Filtering   ? 'PreviewBox_Filtering' : ''}  ${is_popup ? "PreviewBox-of-pop-up" : ""}`}
         onClick={handle_click}
@@ -726,9 +729,9 @@ if (set_display_this === undefined) {return}
 
 
             {display_data &&
- <div className='display-flex justify-content-space-between' style={{ height: "100%", paddingRight: "20px", paddingLeft: "20px", gap: "20px" }}>
+ <div className='display-flex justify-content-space-between' style={{ height: "100%", paddingRight: "20px", paddingLeft: "20px", gap: "20px" ,overflowX:"hidden"  ,maxWidth:"100%"}}>
   
-  <div className='display-flex' style={{ height: "170px", maxHeight: "170px", flexGrow: 1, overflow: "hidden" }}>
+  <div className='display-flex' style={{ height: "170px", maxHeight: "170px", flexGrow: 1, overflow: "hidden"  ,minWidth:"50%"    }}>
   <Bar data={data} options={options} style={{ width: "100%", height: "100%" }} />
 </div>
 
@@ -1409,7 +1412,7 @@ function PreviewBox_Not_active_tools({      show_only_this_tools, set_show_only_
           }
           
  
-function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,logoAddress_2,  readMoreText,buttonTitle,iconAddress,toolURL , tool_id ,all_Tools , backEndURL }) {    
+function PreviewBox_type_module({ Info,  HeadLine,description,  logoAddress_1,logoAddress_2,  readMoreText,buttonTitle,iconAddress,toolURL , tool_id ,all_Tools , backEndURL ,width}) {    
   const {  set_all_Tools  ,front_IP , front_URL} = useContext(GeneralContext);
  
   const [logoAddress_1_ForSrc, set_logoAddress_1_ForSrc] = useState("")
@@ -1539,7 +1542,8 @@ async function  ShowInUi (Info){
 {/* ////////////////////////////////////////////////////////////////////////////////////////// */}
     <div className='PreviewBox PreviewBox-of-tools  '
     style={{
-      flexGrow:1
+      flexGrow:1,
+      width:width,
      }}
     > 
 
@@ -1696,7 +1700,7 @@ disabled={disabled}
 
 
 function PreviewBox_respo_chart({colors, HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
-  ,box_height ,read_more,read_more_icon ,description_max_length ,display_type ,display_y_axis,date}) {
+  ,box_height ,read_more,read_more_icon ,description_max_length ,display_type ,display_y_axis,date ,allow_wide}) {
  
 const [display_data, set_display_data] = useState(false);
 const [has_data, set_has_data]= useState(false)
@@ -1837,13 +1841,17 @@ useEffect(() => {
 
   const bar_data ={
     // labels: ['Yes', 'No'],
-    labels:   bar_headlines,
+    labels:       display_data === false ? ["","","","",""] : (has_data ? bar_headlines : ["","","","",""]),
     // labels:   all_Resource_Types.map(item => item.resource_type_name),
     datasets:[{
       label:bar_title_legend,
-      data:   bar_numbers,
-      backgroundColor: display_data === false ? "grey" : (() => {
-        if (colors === "Basic") {
+      // data:   bar_numbers,
+        data: display_data === false ? [1,2,3,4,2] : (has_data ? bar_numbers : [1,2,3,4,2]),
+      
+      backgroundColor: (() => {
+        if (display_data === false || has_data === false) {
+          return dont_display_color;
+        } else if (colors === "Basic") {
           return BasicColors;
         } else if (colors === "Alert") {
           return AlertColors;
@@ -1852,6 +1860,19 @@ useEffect(() => {
         }
       })(),
 
+
+      // data: display_data === false ? [1] : (has_data ? bar_numbers : [1]),
+      // backgroundColor: (() => {
+      //   if (display_data === false || has_data === false) {
+      //     return dont_display_color;
+      //   } else if (colors === "Basic") {
+      //     return BasicColors;
+      //   } else if (colors === "Alert") {
+      //     return AlertColors;
+      //   } else {
+      //     return BasicColors; // default case
+      //   }
+      // })(),
 
       borderWidth: 0,
       borderRadius: 100,
@@ -1924,7 +1945,7 @@ const midHight =  box_height/2.6
       />
 
 
-    <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height }} onClick={handle_click}>
+    <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height , maxHeight:box_height  }} onClick={handle_click}>
       <div className='PreviewBox_respo_top'>
         <p className="font-type-menu Color-White">{HeadLine}</p>
         <p className="font-type-txt Color-Grey1 mt-a">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}</p>
@@ -1940,14 +1961,16 @@ const midHight =  box_height/2.6
         {/* <p className="font-type-txt Color-Blue-Glow t-a">Read More</p> */}
       </div>
   
-      <div className='PreviewBox_respo_middle'    
+      <div className={`PreviewBox_respo_middle   ${allow_wide && "PreviewBox_respo_middle_wide"}`}   
       style={{
         maxHeight: `calc(${box_height} / 1.4)`,
         boxSizing: "border-box",
-        overflow: "hidden",     flexDirection: "column",
-        // backgroundColor:"green"
+        overflow: "hidden",    
+   
+        // backgroundColor:"green",
+        // flexDirection:"column"
       }}
-      
+      // allow_wide
       >
 
 
@@ -1991,8 +2014,10 @@ const midHight =  box_height/2.6
           style={{
             width: "100%", gap: "2px", backgroundColor: "", height: "auto",
             maxHeight: "auto", overflowX: "hidden", overflowY: "auto" , 
-            alignItems:"flex-start",
+            alignItems: allow_wide ? "center"  : "flex-start" ,
             
+            // backgroundColor:"blue"
+              //  alignItems:`{  ${allow_wide ? "flex-start"  : "flex-end"}`    
        
           }}>
  
@@ -2018,7 +2043,10 @@ const midHight =  box_height/2.6
             </div>
   
             <div className='display-flex flex-direction-column'
-              style={{ gap: "2px", width: "auto"   , alignItems:"flex-end"}}>
+              style={{ gap: "2px", width: "auto"   ,
+              //  alignItems:`{  ${allow_wide ? "flex-start"  : "flex-end"}`    
+               
+               }}>
               {Array.isArray(bar_numbers) && bar_numbers?.map((Info, index) => {
                 return (
                   <div className='display-flex' key={index}      style={{}}  >
@@ -2107,7 +2135,7 @@ const midHight =  box_height/2.6
         />
   
   
-      <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height }} onClick={handle_click}>
+      <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height , maxHeight:box_height}} onClick={handle_click}>
         <div className='PreviewBox_respo_top' >
           <p className="font-type-menu Color-White">{HeadLine}</p>
           <p className="font-type-txt Color-Grey1 mt-a ">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}</p>
@@ -2197,19 +2225,15 @@ function PreviewBox_respo_list_type6({ HeadLine , is_popup ,enable_hover, displa
       list_array_column2,
       list_array_column1,
       list_array,
-  click_on_field
+  click_on_field,
+  read_more_view, box_width
   
     }) {
-     
-    // const maxRightValue = Math.max(...list_array.map(item => item[list_array_column2?.key]));
-  
+ 
     const [popUp_readMore_show, set_popUp_readMore_show] = useState(false);
-  
-  
  
   console.log("NA"  ,list_array );
-  
-  
+ 
       const  handle_click = () => {
         if (set_display_this === undefined) {return}
         if(display_this === display_this_value){ set_display_this("prime_data")}
@@ -2240,15 +2264,17 @@ function PreviewBox_respo_list_type6({ HeadLine , is_popup ,enable_hover, displa
           />
     
     
-        <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height }} onClick={handle_click}>
+        <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height , maxHeight:box_height ,   }} onClick={handle_click}>
           <div className='PreviewBox_respo_top' >
-            <p className="font-type-menu Color-White">{HeadLine}</p>
-            <p className="font-type-txt Color-Grey1 mt-a">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}</p>
+            <p   className="font-type-menu Color-White" style={{   overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{HeadLine}</p>
 
-            <button className="btn-type3 mt-b" style={{ height:"12px",   padding:0}}
-           onClick={()=>handleReadMore("vovo")}
-            ><p className=' font-type-txt' >Read More</p><IconReadMore className="icon-type1 "   style={{height:"22px"}} />  </button>
-    
+
+            {read_more_view && <>
+              <p className="font-type-txt Color-Grey1 mt-a">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}</p>
+              <button className="btn-type3 mt-b" style={{ height:"12px",   padding:0}}   onClick={()=>handleReadMore("vovo")}   ><p className=' font-type-txt' >Read More</p><IconReadMore className="icon-type1 "   style={{height:"22px"}} />  </button>
+            
+            </>}
+ 
           </div>
       
           <div className='PreviewBox_respo_middle mt-c'   style={{  overflowY: "auto",  flexDirection: "column",  }} >
@@ -2265,18 +2291,24 @@ function PreviewBox_respo_list_type6({ HeadLine , is_popup ,enable_hover, displa
                  //  overflowY: 'auto'
                   }}>
                 <table style={{ width: '100%',
+
                   //  borderCollapse: 'collapse' 
                    }}>
-                  <thead style={{ position: 'sticky', top: 0, backgroundColor: 'var(--color-Grey5)', zIndex: 1  }}>
+                  <thead style={{ position: 'sticky', top: 0, backgroundColor: is_popup? 'var(--color-Grey4)'  :'var(--color-Grey5)'   , zIndex: 1  }}>
                     <tr  style={{ textAlign: 'left' ,height:"28px"}}>
                       <th className='font-type-menu Color-Grey1' style={{}}>{list_array_column1?.previewName}</th>
-                      <th className='font-type-menu Color-Grey1'  style={{textAlign:"right" ,paddingRight:"5px"}}>{list_array_column2?.previewName}</th>
+                      <th className='font-type-menu Color-Grey1'  style={{textAlign:"right" ,paddingRight:"5px"  }}>
+                       
+                        {list_array_column2?.previewName}
+                        </th>
                     </tr>
                   </thead>
-                  <tbody style={{
-                      //  overflowY: 'auto',
-                    //  maxHeight: 'calc(100% - 40px)'
-                      }}>
+
+
+
+                  <tbody style={{ }}>
+
+                    
                     {  list_array != "NA"  &&    list_array != undefined         &&    list_array.length >0  &&      list_array?.map((item, index) => (
                       <tr key={index} style={{height:is_tags ? "30px"  : "24px"}}   className={`  ${click_on_field && "clickable_list"}    `} >
 
@@ -2285,14 +2317,31 @@ function PreviewBox_respo_list_type6({ HeadLine , is_popup ,enable_hover, displa
                         ):(
                           
 
-                       <td className={`font-type-txt Color-Grey1`} style={{ }}>{item[list_array_column1?.key]}</td>
+                       <td className={`font-type-txt Color-Grey1`} style={{ 
+                        
+                        
+ 
+whiteSpace: 'normal',
+wordWrap: 'break-word',
+overflow: 'hidden',
+ 
+                     
+
+                       }}>{item[list_array_column1?.key]}</td>
                        ) }
-                        <td className='font-type-txt Color-White ' style={{textAlign:"right" ,paddingRight:"5px"}}>{item[list_array_column2?.key]}</td>
+                        <td className='font-type-txt Color-White ' style={{textAlign:"right" ,paddingRight:"5px"}}>
+                          {/* {item[list_array_column2?.key]} */}
+                          
+                          {getNestedValue(item, list_array_column2?.key)}
+                          </td>
                       </tr>
                     ))}
  
 
                   </tbody>
+
+
+                  
                 </table>
 
 
@@ -2310,12 +2359,12 @@ function PreviewBox_respo_list_type6({ HeadLine , is_popup ,enable_hover, displa
   
               {list_array === undefined    && <>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <p className='font-type-h3 Color-Grey2 mb-c'>NA</p>
+                <p className='font-type-h2 Color-Grey2 mb-c'>NA</p>
               </div>    </>}
   
               {   list_array == "NA"  && <>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                <p className='font-type-h3 Color-Grey2 mb-c'>NA</p>
+                <p className='font-type-h2 Color-Grey2 mb-c'>NA</p>
               </div>    </>}
 
 
@@ -2346,8 +2395,124 @@ function PreviewBox_respo_list_type6({ HeadLine , is_popup ,enable_hover, displa
       }
 
  
+function PreviewBox_respo_list_type6_test({
+  HeadLine,
+  is_popup,
+  enable_hover,
+  display_this,
+  set_display_this,
+  display_this_value,
+  is_tags,
+  box_height,
+  date,
+  read_more,
+  read_more_icon,
+  description_max_length,
+  list_array_column2,
+  list_array_column1,
+  list_array,
+  click_on_field,
+  read_more_view
+}) {
+  const [popUp_readMore_show, set_popUp_readMore_show] = useState(false);
 
+  console.log("list_array:", list_array);
 
+  const handle_click = () => {
+    if (set_display_this === undefined) return;
+    set_display_this(display_this === display_this_value ? "prime_data" : display_this_value);
+  };
+
+  const handleReadMore = () => {
+    console.log("handleReadMore");
+    set_popUp_readMore_show(true);
+  };
+
+  return (
+    <>
+      <PopUp_For_Read_More
+        HeadLine={HeadLine}
+        readMoreText={read_more}
+        logoAddress_1_ForSrc={""}
+        toolURL={""}
+        buttonTitle={"Close"}
+        set_popUp_show={set_popUp_readMore_show}
+        popUp_show={popUp_readMore_show}
+        IconAddressForSrc={read_more_icon}
+      />
+
+      <div
+        className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`}
+        style={{ height: box_height, maxHeight: box_height }}
+        onClick={handle_click}
+      >
+        <div className='PreviewBox_respo_top'>
+          <p className="font-type-menu Color-White" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {HeadLine}
+          </p>
+
+          {read_more_view && (
+            <>
+              <p className="font-type-txt Color-Grey1 mt-a">
+                {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}
+              </p>
+              <button
+                className="btn-type3 mt-b"
+                style={{ height: "12px", padding: 0 }}
+                onClick={handleReadMore}
+              >
+                <p className='font-type-txt'>Read More</p>
+                <IconReadMore className="icon-type1" style={{ height: "22px" }} />
+              </button>
+            </>
+          )}
+        </div>
+
+        <div className='PreviewBox_respo_middle mt-c' style={{ overflowY: "auto", flexDirection: "column" }}>
+          <div className='table-container' style={{ boxSizing: "border-box", height: '100%', flexDirection: "column" }}>
+            {list_array && list_array.length > 0 && list_array !== "NA" ? (
+              <div className='table-container' style={{ height: 'calc(100% - 20px)' }}>
+                <table style={{ width: '100%' }}>
+                  <thead style={{ position: 'sticky', top: 0, backgroundColor: is_popup ? 'var(--color-Grey4)' : 'var(--color-Grey5)', zIndex: 1 }}>
+                    <tr style={{ textAlign: 'left', height: "28px" }}>
+                      <th className='font-type-menu Color-Grey1'>{list_array_column1?.previewName}</th>
+                      <th className='font-type-menu Color-Grey1' style={{ textAlign: "right", paddingRight: "5px" }}>
+                        {list_array_column2?.previewName}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {list_array.map((item, index) => (
+                      <tr key={index} style={{ height: is_tags ? "30px" : "24px" }} className={`${click_on_field && "clickable_list"}`}>
+                        <td className={`font-type-txt ${is_tags ? "Color-Blue-Glow tagit_type1" : "Color-Grey1"}`}>
+                          {item[list_array_column1?.key]}
+                        </td>
+                        <td className='font-type-txt Color-White' style={{ textAlign: "right", paddingRight: "5px" }}>
+                          {getNestedValue(item, list_array_column2?.key)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                <p className='font-type-h2 Color-Grey2 mb-c'>{list_array === "NA" ? "NA" : "No Records"}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className='PreviewBox_ButtomLine mt-b' style={{ visibility: date === "NA" ? 'hidden' : 'visible' }}>
+          <IconLastRun />
+          <div className='font-type-very-sml-txt Color-Grey1'>{date}</div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+ 
         function PreviewBox_respo_type1_number_no_filters({
           HeadLine,BigNumber,
           SmallNumber,StatusColor,
@@ -2443,7 +2608,7 @@ popUp_show={popUp_readMore_show}
                 onClick={handle_click}
                 onMouseEnter={handleHover}
                 onMouseLeave={handleLeave}
-                style={{ height: box_height }}
+                style={{ height: box_height , maxHeight:box_height}}
                 > 
          <div className='PreviewBox_respo_top' >
           {/* <p className="font-type-menu Color-White">{HeadLine}</p> */}
