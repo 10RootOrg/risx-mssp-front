@@ -11,7 +11,7 @@ import { format_date_type_a,format_date_type_c } from '../Features/DateFormat.js
 function Dashboard_ASM({show_SideBar,set_show_SideBar,set_unseen_alert_number,set_visblePage}) {
   set_visblePage("dashboard-asm");
   
-    const {   backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
+    const { backEndURL  ,all_Resource_Types ,all_artifacts,user_id} = useContext(GeneralContext);
     const [Preview_this_Results, set_Preview_this_Results] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
     const [loader , set_loader] = useState(false)
@@ -45,45 +45,8 @@ function Dashboard_ASM({show_SideBar,set_show_SideBar,set_unseen_alert_number,se
 <div className='resource-group-top-boxes mb-c' >
 
 
-<PreviewBox_type2_pie
-HeadLine="Nuclei Last Run Distribution (work in progress)"
-bar_numbers={["4","32","261","113" ]}
-bar_headlines = { ['Critical', 'High', 'Medium', 'Low'] }
-bar_title_legend = {["total"]}
-is_popup = {false}
-colors={"Alert"} // Basic , Alert
-/>
-
-
-{/* <PreviewBox_type3_bar
-            HeadLine="Hunts Distribution"
-            // bar_numbers = { counts?.map(item => Object.values(item) ) }
-            // bar_headlines = {  counts?.map(item => Object.keys(item) )  }
-            bar_numbers={["2","32","261","113" ]}
-            bar_headlines = { ['Critical', 'High', 'Medium', 'Low'] }
-            // bar_title_legend = {"Velociraptor"}
-            is_popup={false}
-            display_y_axis={true}
-            colors={"Alert"} // Basic , Alert
-          /> */}
-  
- <PreviewBox_type1_number_no_filters
-HeadLine="Last Run High (work in progress)"
-resource_type_id={null}
-BigNumber={8342}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-// SmallNumber={9}
-SmallNumberTxt={"Nuclei"}
-StatusColor={"high"}
-  date={"NA"}// date={format_date_type_a(last_updated?.Total) || "NA"}
-is_popup={false}
-display_this={display_this}
-set_display_this={set_display_this}
-display_this_value={""}
-txt_color={""}
-/>
-
 <PreviewBox_type1_number_no_filters
-HeadLine="Last Run Critical (work in progress)"
+HeadLine="Nuclei Insights Tagged: Critical(*)"
 resource_type_id={null}
 BigNumber={37773113}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 // SmallNumber={9}
@@ -97,7 +60,36 @@ display_this_value={""}
 txt_color={""}
 />
 
-<PreviewBox_type1_number_no_filters
+
+
+<PreviewBox_type2_pie
+HeadLine="Nuclei Insights by Severity(*)"
+bar_numbers={["4","32","261","113" ]}
+bar_headlines = { ['Critical', 'High', 'Medium', 'Low'] }
+bar_title_legend = {["total"]}
+is_popup = {false}
+colors={"Alert"} // Basic , Alert
+/>
+
+
+ <PreviewBox_type1_number_no_filters
+HeadLine="Nuclei Insights Tagged: High(*)"
+resource_type_id={null}
+BigNumber={8342}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
+// SmallNumber={9}
+SmallNumberTxt={"Nuclei"}
+StatusColor={"high"}
+  date={"NA"}// date={format_date_type_a(last_updated?.Total) || "NA"}
+is_popup={false}
+display_this={display_this}
+set_display_this={set_display_this}
+display_this_value={""}
+txt_color={""}
+/>
+
+
+
+{/* <PreviewBox_type1_number_no_filters
 HeadLine="Last Run - Object Found (work in progress)"
 resource_type_id={null}
 BigNumber={44}// BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
@@ -110,7 +102,7 @@ display_this={display_this}
 set_display_this={set_display_this}
 display_this_value={""}
 txt_color={""}
-/>
+/> */}
 
  
 

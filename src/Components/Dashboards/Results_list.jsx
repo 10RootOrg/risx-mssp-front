@@ -1,4 +1,4 @@
-import React, { useState , useContext ,useEffect} from 'react'
+import React, { useState , useContext ,useEffect, useRef } from 'react'
  
 import { ReactComponent as IconBIG } from '../icons/ico-Results.svg';
 import { ReactComponent as IconNasted } from '../icons/nasted.svg';
@@ -12,7 +12,7 @@ import { ReactComponent as Loader } from '../icons/loader_typea.svg';
  import { format_date_type_a ,format_date_type_c} from '../Features/DateFormat.js';
  import { Make_url_from_id ,fix_path} from "../../Components/Dashboards/functions_for_dashboards.js"
  import '../StatusDisplay.css'; 
-import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction  ,PopUp_Error} from '../PopUp_Smart.js'
+import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction  ,PopUp_Error ,PopUp_Result_Line_info} from '../PopUp_Smart.js'
 
 import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response ,PopUp_For_Shodan_response} from '../PopUp_response_modules.js'
  import LMloader from "../Features/LMloader.svg";
@@ -36,8 +36,6 @@ const [UniqueID_to_expand, set_UniqueID_to_expand] = useState("");
 const [PopUp_Error__show, set_PopUp_Error__show] = useState(false);
 const [PopUp_Error__txt, set_PopUp_Error__txt] = useState({ HeadLine:"Error",paragraph:"Error",buttonTitle:"Close"});
 
-
-
 const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
 const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
 
@@ -46,6 +44,10 @@ const [PopUp_Request_info__txt, set_PopUp_Request_info__txt] = useState({HeadLin
 
 const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
 const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
+
+const [PopUp_Result_Line_info__show, set_PopUp_Result_Line_info__show] = useState(false);
+const [PopUp_Result_Line_info__txt, set_PopUp_Result_Line_info__txt] = useState({});
+
 // const status_bar_width = "140px"
 const status_bar_width = "200px"
  
@@ -57,11 +59,11 @@ const status_bar_width = "200px"
   const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
 
   const  get_Json_single_response = async(Info)=>{
-  console.log("get_Json_single_response", Info);
+  // console.log("get_Json_single_response", Info);
     try{
      if (Info?.ResponsePath === undefined ){ console.log("Info?.ResponsePath" ,  Info?.ResponsePath );return;}
     const params = {file_name : Info?.ResponsePath }
-    console.log("get_Json_single_response", params);
+ 
  
 
     set_PopUp_loader__show(true);
@@ -332,7 +334,7 @@ if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" |
 return
 }
 
-else{ console.log("-------handle_click_Shodan-result-",Info); get_Json_single_response(Info);   }
+else{ get_Json_single_response(Info);   }
 
 // set_PopUp_Under_Construction__txt({
 //   HeadLine: "Coming Soon!",
@@ -369,6 +371,31 @@ default:
 
 }
 
+const timerRef = useRef(null);
+
+const handle_hover_result = (info) => {
+ set_PopUp_Result_Line_info__txt(info);
+ set_PopUp_Result_Line_info__show(true);
+};
+
+const handle_Mouse_Enter = (info) => {
+  // Clear any existing timer
+  if (timerRef.current) {
+    clearTimeout(timerRef.current);
+  }
+
+  // Set a new timer
+  timerRef.current = setTimeout(() => {
+    handle_hover_result(info);
+  }, 1200); // 1.2 seconds
+};
+
+const handle_Mouse_Leave = () => {
+  // Clear the timer if hover ends before delay
+  if (timerRef.current) {
+    clearTimeout(timerRef.current);
+  }
+};
  
 const handle_check_box = (UniqueID,ResponsePath,ModuleName,SubModuleName) => {
 
@@ -407,7 +434,7 @@ console.log("not empty ");
 
 };
 
-console.log("checked_items",checked_items);
+ 
 
 
 const do_sort = (column) => {
@@ -459,6 +486,19 @@ if (Preview_this_Results?.length >=2&&firstTimeData ) {
   
 {PopUp_loader__show && <PopUp_loader popUp_show={PopUp_loader__show} /> }
  
+
+
+
+{PopUp_Result_Line_info__show && (
+  <PopUp_Result_Line_info
+    popUp_show={PopUp_Result_Line_info__show}
+    set_popUp_show={set_PopUp_Result_Line_info__show}
+    Info={PopUp_Result_Line_info__txt}
+
+  />
+)}
+
+
 
 
 {PopUp_All_Good__show &&
@@ -529,6 +569,7 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
  HeadLine={"Response"}
  logoAddress_1_ForSrc={""}
  buttonTitle={"Close"}
+ set_json_file_info={set_json_file_info}
  json_file_info={json_file_info}
  json_file_data={json_file_data}
  set_PopUp_All_Good__show={set_PopUp_All_Good__show}
@@ -590,7 +631,7 @@ buttonTitle={PopUp_Request_info__txt.buttonTitle}
   <>
 <div className='resource-group-list-keyNames mb-a     '  >
 
-<div  className=' mr-a' style={{visibility:"hidden"}} >
+<div  className=' mr-b ml-a' style={{visibility:"hidden"}} >
 <label className="container"  style={{  marginTop:"5px"}} > 
 <input type="checkbox"   
 // checked={true}
@@ -616,20 +657,13 @@ value={""}
   {Array.isArray(Preview_this_Results) && Preview_this_Results?.map((Info, index) => {
   
     let SubModuleName = Info?.SubModuleName; // Get the SubModuleName
-    // Check if it starts with "BestPractice@"
-    // if (SubModuleName && SubModuleName.startsWith("BestPractice@")) {
-    //   SubModuleName = "BP - " + SubModuleName.slice("BestPractice@".length); // Replace with "momo"
-    // }
+
     return (
       <div  >
 
 
  {/* .......  all lists ........... */}
 
-
- 
-
- 
 <div className=''
  style={{
 
@@ -661,7 +695,12 @@ value={""}
 </div>
 
 
-<div className='resource-group-list-line' key={index} onClick={()=>handle_click_result(Info)}>
+<div className='resource-group-list-line' key={index}
+ onClick={()=>handle_click_result(Info)} 
+  onMouseEnter={() => handle_Mouse_Enter(Info)}
+  onMouseLeave={handle_Mouse_Leave}
+  
+    >
 
 <div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >{Info?.ModuleName  === ""   &&   SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }{Info?.ModuleName && SubModuleName &&  (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p><p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleName}</p> </>)}{Info?.ModuleName && !SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}</div>
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-big'>{ JSON.stringify(Info?.Arguments) }</p> 

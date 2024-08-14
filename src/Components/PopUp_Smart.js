@@ -13,13 +13,13 @@ import { ReactComponent as IconReadMore } from '../Components/icons/ico-readmore
 import { ReactComponent as IconCloseReadMore } from '../Components/icons/ico-close-readmore.svg';
 import { ReactComponent as IconOpenReadMore } from '../Components/icons/ico-open-readmore.svg';
 import { ReactComponent as IcoModules } from "../Components/icons/ico-menu-modules.svg";
-
+ 
 import { ReactComponent as IcoEdit } from "../Components/icons/ico-edit.svg";
 
 
 // import jsonData from '../tmpjsons/Nuclei.json'
 import axios from "axios";
-import { format_date_type_a } from "./Features/DateFormat.js";
+import { format_date_type_a,format_date_type_c } from "./Features/DateFormat.js";
 
 
  
@@ -1287,6 +1287,234 @@ export const PopUp_Under_Construction = (props) => {
                 onClick={handleClose}
               >
                 <p className="font-type-menu ">{buttonTitle}</p>{" "}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+
+
+export const PopUp_Result_Line_info = (props) => {
+  const {
+    Info,
+    popUp_show,
+    set_popUp_show,
+    
+  } = props;
+
+  const [active, setActive] = useState(false);
+ 
+  useEffect(() => {
+    set_popUp_show(popUp_show);
+  }, [popUp_show]);
+
+  useEffect(() => {
+    if (popUp_show) {
+      setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+    }
+  }, [popUp_show]);
+
+  function handleClickOutside(e) {
+    if (e.target.className === "PopUp-background") {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+    }
+  }
+
+  function handleClose() {
+    setActive(false); // Trigger exit animation
+    setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+  }
+
+ 
+ 
+
+
+  const keyStyle ={width:"150px" ,minWidth:"150px"   };
+
+  const LineStyle ={
+    // maxHeight: "20px",
+     display:"flex" ,
+     transition: "height 0.3s ease",
+  marginTop:'calc(var(--space-a)/1 )'
+} ;
+
+ 
+ 
+  const firstValueStayle  = {
+  // width:"100%",
+  // maxHeight:"150px" ,
+  overflowY:"auto" ,
+  // whiteSpace: "pre-wrap",
+
+  wordBreak: "break-word",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",  
+  overflow: "hidden",  
+  textOverflow: "ellipsis",
+  }
+  
+ 
+  const renderArguments = () => {
+    if (!Info?.Arguments || Object.keys(Info.Arguments).length === 0) return null;
+
+    return (
+      <>
+     
+        {Object.entries(Info.Arguments).map(([key, value]) => (
+          <div key={key} style={{...LineStyle , marginTop:'' ,gap:"5px"   ,display:"flex", flexDirection:"column"}}>
+            <p className="font-type-menu reading-height Color-White"
+             style={{...keyStyle }}
+             >{key}:</p>
+            <p className="font-type-txt reading-height Color-Grey1 mb-a" 
+            // style={firstValueStayle}
+            >
+              {typeof value === 'object' && value !== null ? JSON.stringify(value, null, 2) : value}
+            </p>
+          </div>
+        ))}
+      </>
+    );
+  };
+
+
+
+
+
+  return (
+
+
+
+
+
+    
+    <>
+      {popUp_show && (
+        <div
+          className={`PopUp-background`}
+          style={{}}
+          onClick={handleClickOutside}
+        >
+          <div
+            className={`PopUp-content  ${
+              active ? "popup-enter-active" : "popup-enter"
+            }`}
+            style={{
+              width: "auto",
+              maxWidth:"80%",
+              maxHeight: "85%",
+              paddingBottom: " ",
+              overflowY: "auto",
+              overflowX:"auto"
+            }}
+          >
+
+ 
+<InfofulIcon
+              className="mb-a mt-c"
+              alt="Icon"
+              width="100px"
+              height="70px"
+              style={{ marginLeft: "-15px" }}
+            />
+ 
+          
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > ModuleName:</p>
+                  <p className="font-type-txt   Color-Blue-Glow tagit_type1" style={{...firstValueStayle , marginLeft:"-5px"}}>{Info?.ModuleName}</p>
+                  </div>
+     
+     {Info?.SubModuleName && <>
+      <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > SubModuleName:</p>
+                  <p className="font-type-txt   Color-Blue-Glow tagit_type1" style={{...firstValueStayle , marginLeft:"-5px"}}>{Info?.SubModuleName}</p>
+                  </div>
+     </>}
+                
+
+     <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Status:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Status}</p>
+                  </div>
+
+     {Info?.Error && <>
+      <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Error:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Error}</p>
+                  </div>
+     
+     </>}
+
+ 
+      <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Population:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Population &&  Info?.Population}</p>
+                  </div>
+     
+   
+                  {Info?.ResponsePath && <>
+      <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > ResponsePath:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.ResponsePath}</p>
+                  </div>
+     
+     </>}
+                  
+      
+   
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Arguments:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " 
+                  style={{...firstValueStayle  , whiteSpace:"none"}}
+                  >   {renderArguments()}</p>
+                  </div>
+ 
+ 
+
+                   {Info?.TimeInterval && <>  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Interval in Minute:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.TimeInterval}</p>
+                  </div>
+                  </>}
+
+
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Start Date:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.StartDate && format_date_type_c(Info?.StartDate)}</p>
+                  </div>
+
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Expire Date:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.ExpireDate &&  format_date_type_c(Info?.ExpireDate)}</p>
+                  </div>
+
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Last Interval:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.LastIntervalDate &&   format_date_type_c(Info?.LastIntervalDate)}</p>
+                  </div>
+
+                  <div style={LineStyle} >
+                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > UniqueID:</p>
+                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>
+                    {typeof Info?.UniqueID  === "string" && Info?.UniqueID}
+                    
+                    </p>
+                  </div>
+               
+
+
+
+            <div className="display-flex mt-c" style={{}}>
+              <button
+                className="btn-type2   '"
+                style={{ marginLeft: "auto" }}
+                onClick={handleClose}
+              >
+                <p className="font-type-menu ">Close</p> 
               </button>
             </div>
           </div>

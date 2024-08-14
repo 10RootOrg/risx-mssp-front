@@ -274,8 +274,12 @@ const handleLeave = () => {
 
     <div> 
     <div className='PreviewBox_BigNumber     font-type-h1 Color-White' > <Counter target={BigNumber} isHovered={isHovered}  txt_color={txt_color}/> </div>
-    <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),
-}} >{SmallNumberTxt}: {SmallNumber}</div>
+ {   SmallNumberTxt !== ""  &&
+     <div className='PreviewBox_SmallNumber   font-type-txt Color-White' style={{  color: isHovered ? "#00DBFF" : (txt_color || ""),}} >{SmallNumberTxt}: {SmallNumber}</div>
+
+ 
+ } 
+    
     </div>
 
      <div className='PreviewBox_ButtomLine'
@@ -357,6 +361,7 @@ const  handle_click = () => {
         onClick={handle_click}
         onMouseEnter={handleHover}
         onMouseLeave={handleLeave}
+        style={{ width:"12%" ,minWidth:"180px"}}
         > 
       <div className='PreviewBox_HeadLine' >
         <p  className="font-type-menu" >{HeadLine}</p>
@@ -373,25 +378,15 @@ const  handle_click = () => {
       <Counter target={BigNumber} isHovered={isHovered} txt_color={txt_color} />
 
 
-      {/* {BigNumber <= 999999 && (
-        <Counter target={BigNumber} isHovered={isHovered} txt_color={txt_color} is_big_number={is_big_number} big_number_type={big_number_type}/>
-      )}
-      {BigNumber >= 1000000 && BigNumber <= 999999999 && (
-        <div style={{display:"flex" ,justifyContent:"center" }}>
-        <Counter target={parseFloat((BigNumber / 1000000).toFixed(1))} isHovered={isHovered} txt_color={txt_color} is_big_number={is_big_number} big_number_type={big_number_type}/>
-        <p  style={{display:"flex" ,alignSelf:"end" ,marginBottom:"5px"}} className='font-type-h3'>m</p>
-        </div>
-
-
- 
-      )} */}
-
-
 
           </div>
-      <div className='PreviewBox_SmallNumber   font-type-txt Color-White'
-       style={{    color:   (isHovered ? "#00DBFF" : ( BigNumber === "NA"  ?  dont_display_color : txt_color || "")) ,}} >{SmallNumberTxt}{SmallNumber && ": "}{SmallNumber}</div>
-      </div>
+
+        {SmallNumberTxt =! "" && 
+              <div className='PreviewBox_SmallNumber   font-type-txt Color-White'  style={{    color:   (isHovered ? "#00DBFF" : ( BigNumber === "NA"  ?  dont_display_color : txt_color || "")) ,}} >{SmallNumberTxt}{SmallNumber && ": "}{SmallNumber}</div>
+
+        }  
+
+ </div>
   
        <div className='PreviewBox_ButtomLine' style={{  visibility: date === "NA" &&  'hidden' }} >
   
@@ -835,9 +830,9 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             return (
                 <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
                     <div className='PreviewBox_HeadLine'>
-                        <p className="font-type-menu">{HeadLine}</p>
+                        <p className="font-type-menu  mb-c">{HeadLine}</p>
                     </div>
-                    <div className='display-flex justify-content-space-between' style={{ height: "100%" }}>
+                    <div className=' ' style={{ display:"flex",height: "100%"  , marginBottom:"auto" }}>
 
                         <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys mr-b' style={{  gap: "6px"  }}>
                             <p className='font-type-menu Color-White' style={{height: height_key_value}}>{artifact_or_module}</p>
@@ -848,11 +843,11 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
                         </div>
 
                         <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-values' style={{ gap: "6px" }}>
-                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{Artifact}</p>
-                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{ StartDate}</p>
-                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{HuntID}</p>
-                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{Status}</p>
-                            <p className='font-type-txt Color-White' style={{height: height_key_value}}>{Error}</p>
+                            <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{Artifact}</p>
+                            <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{ StartDate}</p>
+                            <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{HuntID}</p>
+                            <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{Status}</p>
+                            <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{Error}</p>
                         </div>
 
                     </div>
@@ -860,12 +855,68 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             );
         }
         
+        function PreviewBox_type9_arguments({ HeadLine, is_popup, Arguments, }) {
+
+console.log("Arguments",Arguments);
+
+          const keyStyle ={width:"150px" ,minWidth:"150px"   };
+
+          const LineStyle ={
+            // maxHeight: "20px",
+             display:"flex" ,
+             transition: "height 0.3s ease",
+          marginTop:'calc(var(--space-a)/1 )'
+        } ;
+        
+ 
+          const renderArguments = () => {
+            if (!Arguments || Object.keys(Arguments).length === 0) return null;
+        
+            return (
+              <>
+             
+                {Object.entries(Arguments).map(([key, value]) => (
+
+                  <div key={key} style={{...LineStyle , marginTop:'' ,gap:"5px"   ,display:"flex", flexDirection:"column"}}>
+                    <p className="font-type-menu reading-height Color-Grey1"
+                     style={{...keyStyle }}
+                     >{key}:</p>
+                    <p className="font-type-txt reading-height Color-Grey1 mb-a" 
+                    // style={firstValueStayle}
+                    >
+                      {typeof value === 'object' && value !== null ? JSON.stringify(value, null, 2) : value}
+                    </p>
+                  </div>
+                ))}
+              </>
+            );
+          };
+        
 
 
+          const height_key_value = "18px"
+                  return (
+                      <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
+                          <div className='PreviewBox_HeadLine'>
+                              <p className="font-type-menu mb-c">{HeadLine}</p>
+                          </div>
+                          <div className=' ' style={{ height: "100%",overflowX:"hidden"  }}>
+                          {renderArguments()}
+
+                              {/* <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-keys mr-b' style={{  gap: "6px"  }}>
+                                  <p className='font-type-menu Color-White' style={{height: height_key_value}}>Hunt ID</p>
+                              </div>
+      
+                              <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-values' style={{ gap: "6px" }}>
+                                  <p className='font-type-txt Color-White' style={{height: height_key_value}}>{renderArguments()}</p>
+                              </div> */}
+      
+                          </div>
+                      </div>
+                  );
+              }
 
 
-
-          
         function PreviewBox_type6_list_box({ HeadLine, is_popup, enable_hover,
           list_array_column2,
           list_array_column1,
@@ -1054,8 +1105,6 @@ style={{
           );
       
         }
-
-
 
 
         function PreviewBox_type7_wide_bar({ HeadLine, is_popup, enable_hover, list_array_column2, list_array_column1, list_array }) {
@@ -1700,7 +1749,7 @@ disabled={disabled}
 
 
 function PreviewBox_respo_chart({colors, HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
-  ,box_height ,read_more,read_more_icon ,description_max_length ,display_type ,display_y_axis,date ,allow_wide}) {
+  ,box_height ,read_more,read_more_icon ,description_max_length ,display_type ,display_y_axis,date ,allow_wide   ,description_show ,allow_wide_min_wide}) {
  
 const [display_data, set_display_data] = useState(false);
 const [has_data, set_has_data]= useState(false)
@@ -1732,6 +1781,8 @@ getComputedStyle(document.documentElement).getPropertyValue('--alert-color-low')
 ];  
 
  const dont_display_color  = getComputedStyle(document.documentElement).getPropertyValue('--color-Grey2');
+ const space_c  = getComputedStyle(document.documentElement).getPropertyValue('--space-c');
+ 
 
 // const bar_numbers_zero = [1]
 
@@ -1945,20 +1996,16 @@ const midHight =  box_height/2.6
       />
 
 
-    <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height , maxHeight:box_height  }} onClick={handle_click}>
-      <div className='PreviewBox_respo_top'>
+    <div className={`PreviewBox_respo ${is_popup ? "PreviewBox-of-pop-up" : ""} ${enable_hover ? "PreviewBox_for_type_count" : ""}`} style={{ height: box_height , maxHeight:box_height,  minWidth:allow_wide_min_wide && allow_wide_min_wide }} onClick={handle_click}>
+      <div className='PreviewBox_respo_top'> 
         <p className="font-type-menu Color-White">{HeadLine}</p>
-        <p className="font-type-txt Color-Grey1 mt-a">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}</p>
 
-        
+{ description_show &&
+         <>
+         <p className="font-type-txt Color-Grey1 mt-a">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}</p>
+        <button className="btn-type3 mt-b" style={{ height:"12px",   padding:0}} onClick={()=>handleReadMore("vovo")}><p className=' font-type-txt' >Read More</p><IconReadMore className="icon-type1 "   style={{height:"22px"}} />  </button>
+        </>}
 
- 
-  
-        <button className="btn-type3 mt-b" style={{ height:"12px",   padding:0}}
-       onClick={()=>handleReadMore("vovo")}
-        ><p className=' font-type-txt' >Read More</p><IconReadMore className="icon-type1 "   style={{height:"22px"}} />  </button>
-
-        {/* <p className="font-type-txt Color-Blue-Glow t-a">Read More</p> */}
       </div>
   
       <div className={`PreviewBox_respo_middle   ${allow_wide && "PreviewBox_respo_middle_wide"}`}   
@@ -1991,7 +2038,7 @@ const midHight =  box_height/2.6
 
             {display_type === "pie"  &&  
                   
-                   <Doughnut data={doughnut_data} options={doughnut_options}   style={{ width: "auto"  ,height:"auto" }}></Doughnut>
+                   <Doughnut data={doughnut_data} options={doughnut_options}   style={{ width: "auto"  ,height:"auto"  , maxHeight:`calc(${box_height} - 76px` }}></Doughnut>
                 
        
         
@@ -2068,8 +2115,14 @@ const midHight =  box_height/2.6
       </div> */}
 
       <div className='PreviewBox_ButtomLine mt-b' style={{  visibility: date === "NA" &&  'hidden' }} >
-               <IconLastRun />
+{  date != "NA"   &&  <>
+
+ <IconLastRun />
                <div className='font-type-very-sml-txt  Color-Grey1'>{date}</div>
+
+</>}
+              
+
                </div> 
 
 
@@ -2663,4 +2716,4 @@ export {
   PreviewBox_respo_chart,PreviewBox_respo_widebar_type7,PreviewBox_respo_list_type6,PreviewBox_respo_type1_number_no_filters,
   
   
-  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_hunt_data_tabla,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time};
+  PreviewBox_type0_static ,PreviewBox_type1_number, PreviewBox_type3_bar, PreviewBox_type5_hunt_data_tabla,  PreviewBox_Not_active_tools,PreviewBox_type2_pie ,PreviewBox_type4_legend2, PreviewBox_type_module, PreviewBox_type1_number_no_filters,PreviewBox_type6_list_box ,PreviewBox_type7_wide_bar,PreviewBox_type8_time,PreviewBox_type9_arguments};

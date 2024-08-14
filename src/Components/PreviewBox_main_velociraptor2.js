@@ -108,7 +108,7 @@ const handle_click_velociraptor= async()=>{
  
 if(Info.parent_id === "2000000"  ||  Info.parent_id === 2000000 ){
 
- set_popUp_all_good____txt({ HeadLine:"Stays on",paragraph:"Velociraptor artifacts are now configured to always be visible." ,buttonTitle:"Close"})
+ set_popUp_all_good____txt({ HeadLine:"Stays on",paragraph:"Velociraptor artifacts configured to always be visible." ,buttonTitle:"Close"})
  set_popUp_all_good____show (true);
  }
 
@@ -337,12 +337,32 @@ disabled={disabled}
 <td className='' ><div style={{display:"flex", alignItems:"center " }}><p className='font-type-very-sml-txt   Color-Grey1 mr-a'>By:</p><img className='logo-cell  ' style={{ }} src={Info?.logoAddress_1 ? require(`${Info.logoAddress_1}`) : undefined}></img></div></td>
 <td><button  className="btn-type3"   onClick={() => handleReadMore( Info?.headline,  Info?.readMoreText,   Info?.logoAddress_1,  "Close",  null,   "Small" )} ><p className='font-type-txt' style={{   whiteSpace: 'nowrap' }}>Read More</p><IconReadMore className="icon-type1" style={{ width: 20, height: 20    }} /></button></td> 
 <td className='' ><div style={{display:"flex", alignItems:"center", }}><IconLastRun /><p className='font-type-very-sml-txt Color-Grey1' >{lastrun}</p></div></td>
-<td className='' >
-<button className="btn-type4"   tool_id={Info?.tool_id}  style={{marginRight:0 ,paddingRight:0}}    onClick={() => ShowInUi(Info)} > <IcoKey className="icon-type1" style={{marginRight:0 ,paddingRight:0}}  /></button>
+<td
+  className=''
+  onClick={() => ShowInUi(Info)}
+  style={{ position: 'relative' }} // Optional: Ensures proper positioning
+>
+  <button
+    className="btn-type4"
+    tool_id={Info?.tool_id}
+    style={{
+      marginRight: 0,
+      paddingRight: 0,
+      backgroundColor: 'transparent', // Optional: Make button background transparent
+      border: 'none', // Optional: Remove button border
+      cursor: 'default', // Optional: Change cursor to default
+      position: 'absolute', // Optional: Position it absolutely within <td>
+      top: 0, // Adjust as needed
+      left: 0, // Adjust as needed
+      pointerEvents: 'none' // Ensure button does not handle pointer events
+    }}
+  >
+    {/* <IcoKey className="icon-type1" style={{ marginRight: 0, paddingRight: 0 }} /> */}
+  </button>
 
-  
-  {/* <IcoKey className="icon-type1 icon-type1-disable"  /> */}
-  </td>
+  {/* Other content in <td> can go here */}
+  <IcoKey className="icon-type1 icon-type1-disable" />
+</td>
 
 
 

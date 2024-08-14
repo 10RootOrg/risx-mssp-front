@@ -7,3 +7,28 @@
     /* width:  calc(100% - var(--space-b)*2 - var(--line-width-small)*2); */
 
     
+
+
+
+
+
+
+
+
+
+
+    .kibana-iframe {
+        background-color: rgb(0, 247, 255);
+        border: none; /* Remove border if present */
+    }
+
+
+    .kibana-iframe #document html{
+        background-color: rgb(12, 64, 99);
+        border: none; /* Remove border if present */
+    }
+
+
+    .kibana-iframe >  .css-wil1od-euiFlexGroup-s-flexStart-stretch-row {
+        background-color: blueviolet;
+    }

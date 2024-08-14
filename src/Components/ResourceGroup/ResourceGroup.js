@@ -27,59 +27,6 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
         }, []);
 
 
-// useEffect(() => { 
- 
-//     const get_all_resources = async()=>{ 
-      
- 
-// if (backEndURL === undefined){return};
-// if( filter_Resource?.type_ids.length === 0 &&  filter_Resource?.tool_ids.length ===0 ){
- 
-//     try{
-
-//         set_loader(true)
-//         const res = await axios.get(`${backEndURL}/Resources`);
-
-     
-//         if (res){
-//             console.log("get_all_resources" , res.data);
-//             // set_Preview_this_Resource(res.data)
-//             // set_All_Resource_count(res.data.length)
-//             set_loader(false)
-//     }}
-//     catch(err){
-//         set_loader(false)
-//         console.log(err);}
-//                 }
-
-
-// else{
-
-   
-//     try{
-//         console.log("lets filtered", filter_Resource);
-
-//         set_loader(true)
-//         const res = await axios.get(`${backEndURL}/Resources/all-resource-filtered`,{ params: filter_Resource});
-//         if (res){
-//             console.log("fffff", res.data);
-//             set_Preview_this_Resource(res.data)
-//             // set_All_Resource_count(res.data.length)
-//             set_loader(false)
-//     }}
-//     catch(err){
-//         set_loader(false)
-//         console.log(err);}
-             
-
-// }
-
-
-
-// }
- 
-//     get_all_resources();  }, [filter_Resource,backEndURL]);
-
  
     useEffect(() => { 
  
@@ -119,7 +66,7 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
  
 <PreviewBox_type2_pie
-HeadLine="Result Distribution"
+HeadLine="Assets types"
 bar_numbers = {all_Resource_Types.map(item => item.count)}
 bar_headlines = {all_Resource_Types.map(item => item.resource_type_name)}
 bar_title_legend = {["total"]}
@@ -137,8 +84,10 @@ HeadLine={all_Resource_Types[0]?.resource_type_name}
 resource_type_id={all_Resource_Types[0]?.resource_type_id}
 description_short={all_Resource_Types[0]?.description_short}
 BigNumber={all_Resource_Types[0]?.count} 
-SmallNumber={total_resource_count} 
-SmallNumberTxt={"Total"}
+// SmallNumber={total_resource_count} 
+SmallNumber={""} 
+SmallNumberTxt={""}
+
 StatusColor={"blue"}
 date={"16/6/2024"}
 filter_Resource={filter_Resource}
@@ -155,7 +104,7 @@ resource_type_id={all_Resource_Types[1]?.resource_type_id}
 description_short={all_Resource_Types[1]?.description_short}
 BigNumber={all_Resource_Types[1]?.count} 
 SmallNumber={total_resource_count} 
-SmallNumberTxt={"Total"}
+SmallNumberTxt={""}
 StatusColor={"blue"}
 date={"17/6/2024"}
 filter_Resource={filter_Resource}
@@ -169,7 +118,7 @@ resource_type_id={all_Resource_Types[2]?.resource_type_id}
 description_short={all_Resource_Types[2]?.description_short}
 BigNumber={all_Resource_Types[2]?.count} 
 SmallNumber={total_resource_count} 
-SmallNumberTxt={"Total"}
+SmallNumberTxt={""}
 StatusColor={"blue"}
 date={"16/6/2024"}
 filter_Resource={filter_Resource}
@@ -183,7 +132,7 @@ resource_type_id={all_Resource_Types[3]?.resource_type_id}
 description_short={all_Resource_Types[3]?.description_short}
 BigNumber={all_Resource_Types[3]?.count} 
 SmallNumber={total_resource_count} 
-SmallNumberTxt={"Total"}
+SmallNumberTxt={""}
 StatusColor={"blue"}
 date={"16/6/2024"}
 filter_Resource={filter_Resource}
@@ -191,19 +140,19 @@ set_filter_Resource={set_filter_Resource}
 txt_color={""}
 />
 {/* All Resource */}
-<PreviewBox_type1_number
+{/* <PreviewBox_type1_number
 HeadLine="All Assets"
 resource_type_id={null}
 description_short="All Assets"
 BigNumber={total_resource_count} 
 SmallNumber={total_resource_count} 
-SmallNumberTxt={"Total"}
+SmallNumberTxt={""}
 StatusColor={"blue"}
 date={"14/6/2024"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
-/>
+/> */}
 
  </div>
      <div>

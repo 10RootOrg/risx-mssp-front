@@ -105,7 +105,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
         </div>
         <div className="resource-group-top-boxes mb-c">
           <PreviewBox_type2_pie
-            HeadLine="Alert Distribution"
+            HeadLine="Alert Summary"
             bar_numbers={Object.values(PieObjectStatus)}
             bar_headlines={Object.keys(PieObjectStatus)}
             bar_title_legend={["total"]}
@@ -114,7 +114,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="Last Hour"
+            HeadLine="New Alerts Last Hour"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
               if (cur?.["_ts"] > TimeObject?.hour) {
@@ -135,7 +135,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="This Day"
+            HeadLine="New Alerts Today"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
               if (cur?.["_ts"] > TimeObject?.day) {
@@ -156,7 +156,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           />
 
           <PreviewBox_type1_number_no_filters
-            HeadLine="This Week"
+            HeadLine="New Alerts This Week"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
               if (cur?.["_ts"] > TimeObject?.week) {
