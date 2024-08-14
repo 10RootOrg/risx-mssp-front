@@ -196,8 +196,9 @@ mainValue:  DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBo
 display_type={'pie'}  // pie , bar
 allow_wide={false}
 display_y_axis={false} // for the bar
-HeadLine={`Hunts Distribution`}
+HeadLine={`Velociraptor Completed / Uncompleted Hunts`}
 read_more_icon={''}
+description_show={true}
 description_short={'Streamlined logistics and inventory management for efficient distribution solutions...'}
 description_max_length={166}
 read_more={'The "Hunts Distribution" section outlines the status of threat-hunting queries or operations executed within Velociraptor. Completed hunts are those that have successfully finished their analysis, providing results and insights into potential threats or vulnerabilities. In contrast, uncompleted hunts are still in progress or have encountered issues that need resolution. By reviewing this distribution, security teams can assess the effectiveness and progress of their threat-hunting efforts, prioritize investigations based on urgency, and ensure that all potential threats are thoroughly examined and addressed.'}
@@ -224,8 +225,9 @@ box_height={box_height}
 display_type={'pie'}  // pie , bar
 allow_wide={false}
 display_y_axis={false} // for the bar
-HeadLine={`Connected from Overall Clients`}
+HeadLine={`Velociraptor Connected Clients`}
 read_more_icon={''}
+description_show={true}
 description_short={'Centralized hub for integrating client data and insights seamlessly...'}
 description_max_length={166}
 read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
@@ -253,7 +255,7 @@ box_height={box_height}
 
  
 <PreviewBox_respo_list_type6
-   HeadLine="Tag list"
+   HeadLine="Timeline Insights by Category"
    read_more_icon={''}
     description_max_length={122}
     read_more_view= {true}
@@ -292,7 +294,7 @@ box_height={box_height}
 
 <PreviewBox_respo_list_type6
    read_more_icon={''}
-   HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
+   HeadLine={`Velociraptor New Hosts last ${TimeOfHostCheck} Hr`}
   //  description_short={'Tracks and lists hosts that were online in the past 24 hours...'}
   read_more_view= {true}
    description_max_length={122}
@@ -332,251 +334,7 @@ box_height={box_height}
 
 </div>
 
-
-
-
-
-{/* 
-
-
-<PreviewBox_type1_number_no_filters
-HeadLine="Overall Clients "
-resource_type_id={null}
-BigNumber={
-DashBoardData?.Velociraptor?.NumberOfClients !== undefined
-  ? DashBoardData?.Velociraptor?.NumberOfClients
-  : "NA"
-}
-// SmallNumber={682 }
-SmallNumberTxt={"Velociraptor"}
-StatusColor={"blue"}
-date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-is_popup={false}
-display_this={display_data_type}
-set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
-txt_color={""}
-/>
-
-<PreviewBox_type1_number_no_filters
-HeadLine="Connected Clients "
-resource_type_id={null}
-BigNumber={
-DashBoardData?.Velociraptor?.NumberOfConnectedClients !==
-undefined
-  ? DashBoardData?.Velociraptor?.NumberOfConnectedClients
-  : "NA"
-}
-SmallNumberTxt={"Velociraptor"}
-StatusColor={"blue"}
-date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-is_popup={false}
-display_this={display_data_type}
-set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
-txt_color={""}
-/>
-
-<PreviewBox_type1_number_no_filters
-HeadLine="Tag: High "
-resource_type_id={null}
-BigNumber={
-DashBoardData?.TimeSketch?.tag_counts?.high !== undefined
-  ? DashBoardData?.TimeSketch?.tag_counts?.high
-  : "NA"
-}
-// SmallNumber={9}
-SmallNumberTxt={"Timesketch"}
-StatusColor={"High"}
-date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-is_popup={false}
-display_this={display_data_type}
-set_display_this={set_display_data_type}
-display_this_value={"Overall Clients"}
-txt_color={""}
-/>
-
-
-
-          <PreviewBox_type2_pie
-            HeadLine="Hunts Distribution"
-            // bar_numbers={["4","32","261","113" ]}
-            bar_numbers={[
-              DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
-              DashBoardData?.Velociraptor?.FinishedHunts !== null
-                ? DashBoardData?.Velociraptor?.FinishedHunts
-                : "NA",
-              DashBoardData?.Velociraptor?.UnfinishedHunts !== undefined &&
-              DashBoardData?.Velociraptor?.UnfinishedHunts !== null
-                ? DashBoardData?.Velociraptor?.UnfinishedHunts
-                : "NA",
-            ]}
-            // {DashBoardData?.Velociraptor?.FinishedHunts  !== undefined &&  DashBoardData?.Velociraptor?.FinishedHunts  !== null  ?  DashBoardData?.Velociraptor?.FinishedHunts : "NA"}
-
-            // bar_numbers={[
-            //   DashBoardData?.Velociraptor?.FinishedHunts,
-            //   DashBoardData?.Velociraptor?.UnfinishedHunts,
-            //   ]}
-
-            bar_headlines={["Completed", "Uncompleted"]}
-            // bar_headlines = { misp_names?.slice(0, 5).map(item => item?.name ) }
-            // bar_title_legend = {["total"]}
-            is_popup={false}
-            colors={"Basic"} // Basic , Alert
-          />
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Uncompleted Hunts "
-            resource_type_id={null}
-            BigNumber={DashBoardData?.Velociraptor?.UnfinishedHunts || "NA"} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={21}
-            SmallNumberTxt={"Velociraptor"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
-
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Completed Hunts "
-            resource_type_id={null}
-            const
-            BigNumber={
-              DashBoardData?.Velociraptor?.FinishedHunts !== undefined
-                ? DashBoardData.Velociraptor.FinishedHunts
-                : "NA"
-            }
-            // SmallNumber={2}
-            SmallNumberTxt={"Velociraptor"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
  
-
-
-          <PreviewBox_type2_pie
-            HeadLine="Connected from Overall Clients"
-            // bar_numbers={["4","32","261","113" ]}
-            bar_numbers={[
-              DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
-              DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
-              DashBoardData?.Velociraptor?.FinishedHunts !== null &&
-              DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
-              DashBoardData?.Velociraptor?.NumberOfClients !== null
-                ? `${
-                    DashBoardData?.Velociraptor?.NumberOfClients -
-                    DashBoardData?.Velociraptor?.NumberOfConnectedClients
-                  }`
-                : "NA",
-            ]}
-            bar_headlines={["Connected", "UnConnected"]}
-            // bar_headlines = { misp_names?.slice(0, 5).map(item => item?.name ) }
-            // bar_title_legend = {["total"]}
-            is_popup={false}
-            colors={"Basic"} // Basic , Alert
-          />
-
-
-          <PreviewBox_type6_list_box
-            HeadLine={`New Hosts last ${TimeOfHostCheck} Hr`}
-            list_array_column1={{ key: "Hostname", previewName: "Name" }}
-            list_array_column2={{ key: "FirstSeen", previewName: "Date" }}
-            list_array={DashBoardData?.Velociraptor?.NewUsers || []}
-            is_popup={false}
-          />
-
-          <PreviewBox_type6_list_box
-            HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
-            list_array_column1={{ key: "Hostname", previewName: "Name" }}
-            list_array_column2={{ key: "LastSeen", previewName: "Date" }}
-            list_array={DashBoardData?.Velociraptor?.RecentHosts || []}
-            is_popup={false}
-          />
-
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Number of Sketches "
-            resource_type_id={null}
-            BigNumber={
-              DashBoardData?.TimeSketch?.number_of_sketches !== undefined
-                ? DashBoardData?.TimeSketch?.number_of_sketches
-                : "NA"
-            }
-            // SmallNumber={9}
-            SmallNumberTxt={"Timesketch"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
-
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Tag: Persistence "
-            resource_type_id={null}
-            BigNumber={
-              DashBoardData?.TimeSketch?.tag_counts?.Persistence !== undefined
-                ? DashBoardData?.TimeSketch?.tag_counts?.Persistence
-                : "NA"
-            }
-            // SmallNumber={9}
-            SmallNumberTxt={"Timesketch"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
-
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Tag: Phishy-Domain "
-            resource_type_id={null}
-            BigNumber={
-              DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] !==
-              undefined
-                ? DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"]
-                : "NA"
-            }
-            // SmallNumber={9}
-            SmallNumberTxt={"Timesketch"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          />
-
-          <PreviewBox_type1_number_no_filters
-            HeadLine="Tag: command and control "
-            resource_type_id={null}
-            BigNumber={
-              DashBoardData?.TimeSketch?.tag_counts?.["command and control"] !==
-              undefined
-                ? DashBoardData?.TimeSketch?.tag_counts?.["command and control"]
-                : "NA"
-            }
-            // SmallNumber={9}
-            SmallNumberTxt={"Timesketch"}
-            StatusColor={"blue"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_data_type}
-            set_display_this={set_display_data_type}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          /> */}
         </div>
         <div></div>
         <div className="resource-group-all-the-Lists"></div>

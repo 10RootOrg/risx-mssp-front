@@ -702,15 +702,10 @@ width: 28px;
   color: var(--color-Orange)
 }
 
-      /* .btn-type1 .icon-type1  path{
-        stroke: var(--color-Grey2);
-        transition: var(--transition-fast)
-      } */
-
-      /* .btn-type1:hover .icon-type1  path{
-        stroke: var(--color-DB-Blue-Glow);
-        transition: var(--transition-fast)
-      } */
+.btn-disabled {
+  pointer-events: none;  
+  cursor: default; /* Optional: Change cursor to indicate non-interactive element */
+}
       
       .icon-type1-disable   path{
  

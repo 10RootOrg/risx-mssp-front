@@ -2,22 +2,22 @@ import React, { useEffect, useState, useContext } from "react";
 import GeneralContext from "../Context.js";
 import "./PopUp.css"; // import CSS file for modal styling
 import {
-  PreviewBox_type0_static,
+  PreviewBox_respo_chart,
   PreviewBox_type3_bar,
   PreviewBox_type2_pie,
   PreviewBox_type5_hunt_data_tabla,
   PreviewBox_type1_number_no_filters,
-  PreviewBox_respo_list_type6,
+  PreviewBox_type9_arguments
 } from "./PreviewBoxes.js";
 import { ReactComponent as CloseButton } from "../Components/icons/ico-Close_type1.svg";
 import { ReactComponent as DownloadIconButton } from "../Components/icons/ico-menu-download.svg";
-import { ReactComponent as SuccessIcon } from "../Components/icons/General-icons-success.svg";
 import { format_date_type_c ,format_date_type_a } from "./Features/DateFormat";
 
  
 import axios from "axios";
 
-import { PopUp_All_Good } from "../Components/PopUp_Smart.js";
+
+
 
 async function download_Json(
   ResponsePath,
@@ -161,10 +161,35 @@ export const PopUp_For_velociraptor_response = (props) => {
   const [artifact_logo, set_artifact_logo] = useState("");
   const [aggregate_macro_data, set_aggregate_macro_data] = useState({});
   const [display_data_type, set_display_data_type] = useState("prime_data");
+  const [expandedColumn, setExpandedColumn] = useState(null);
 
-  // const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+  const [headers, set_headers] = useState([]);
+  const [isWidthLimited, setIsWidthLimited] = useState(true); // State to toggle width
   // const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
+// Get the keys from the first object (assuming all objects have the same keys)
+ 
+useEffect(() => {
+  if (!json_file_info   || json_file_info?.table.length === 0) return 
+  const allHeaders = Object.keys(json_file_info?.table[0] );
 
+  const filterd = allHeaders.filter(header => !['FlowId', 'ClientId', '_OrgId'].includes(header));
+  console.log("filterd" , filterd);
+  
+  set_headers(filterd);
+}, [json_file_info]);
+
+
+const LIMIT_MAX_CELL_WIDTH = '220px';
+
+ 
+const handleHeaderClick = () => {
+  setIsWidthLimited(!isWidthLimited); // Toggle the width limit
+};
+
+
+const handleColumnClick = (key) => {
+  setExpandedColumn(expandedColumn === key ? null : key);
+};
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
     if (file?.fileSize === "Too big") {
@@ -344,25 +369,27 @@ export const PopUp_For_velociraptor_response = (props) => {
   // console.log("json_file_data 1111111111111" , json_file_data);
   // console.log("aggregate_macro_data" , aggregate_macro_data["List of computers with High"]);
 
+
+
+  const pop_up_Width =
+     json_file_info?.fileSize === "Too big" ? "auto"
+    : json_file_data?.SubModuleName === "HardeningKitty"
+    ? "90%"
+    : "80%";
+
+
   return (
     <>
-      {/* {PopUp_All_Good__show &&
- <PopUp_All_Good
- popUp_show={PopUp_All_Good__show}
- set_popUp_show={set_PopUp_All_Good__show}
- HeadLine={PopUp_All_Good__txt.HeadLine}
- paragraph={PopUp_All_Good__txt.paragraph} 
-buttonTitle={PopUp_All_Good__txt.buttonTitle}
- /> 
- }
-  */}
+
 
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
             className={`PopUp-content`}
             style={{
-              width: json_file_info?.fileSize == "Too big" ? "auto" : "80%",
+              // width: json_file_info?.fileSize == "Too big" ? "auto" : "80%",
+              width: pop_up_Width,
+
             }}
           >
             <div
@@ -373,11 +400,6 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                 <CloseButton className="PopUp-Close-btn-img" />{" "}
               </button>
             </div>
-
-            {/* <div>
-    <p className="font-type-h4 Color-White mb-a">{HeadLine} </p>
-    <p  className="font-type-txt  reading-height Color-Grey1  mb-b"  >Response Results</p> 
-    </div> */}
 
             <div className="velociraptor_response_all_top mb-c">
               <div className="velociraptor_response_top_texts  "> </div>
@@ -406,6 +428,12 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                         )
                       }
                     />
+
+<PreviewBox_type9_arguments
+HeadLine="Arguments"
+Arguments={json_file_data?.Arguments}
+is_popup={true}
+/>
 
                     <PreviewBox_type2_pie
                       HeadLine={`Tests (${aggregate_macro_data?.Failed_Test_Number_of_tests[1]})`}
@@ -495,7 +523,8 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                   </>
                 ) : (
                   <>
-                    <div style={{ marginRight: "auto" }}>
+               
+                      
                       <PreviewBox_type5_hunt_data_tabla
                         HeadLine="Hunt Data"
                         artifact_or_module={"Artifact"}
@@ -517,9 +546,8 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                           )
                         }
                       />
-
-                      {/* too big file note */}
-                      {json_file_info?.fileSize === "Too big" && (
+ 
+                    {json_file_info?.fileSize === "Too big" && (
                         <div
                           className="mt-c "
                           style={{
@@ -579,27 +607,51 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                           </div>
                         </div>
                       )}
-                    </div>
 
                     {json_file_info?.fileSize != "Too big" && (
-                      <PreviewBox_type1_number_no_filters
-                        HeadLine="Object Find"
-                        resource_type_id={null}
-                        BigNumber={
-                          json_file_info?.table?.length === undefined
-                            ? 0
-                            : json_file_info?.table?.length
-                        }
-                        SmallNumberTxt={""}
-                        SmallNumber={``}
-                        StatusColor=""
-                        date={"NA"}
-                        is_popup={true}
-                        txt_color={""}
-                        display_this={display_data_type}
-                        set_display_this={set_display_data_type}
-                        display_this_value={"prime_data"}
-                      />
+<>
+ 
+
+
+
+
+ 
+{json_file_data?.Arguments  &&  <>  
+<PreviewBox_type9_arguments
+HeadLine="Arguments"
+Arguments={json_file_data?.Arguments}
+is_popup={true}
+/>        
+</>}
+
+
+<PreviewBox_type1_number_no_filters
+HeadLine="Object Find"
+resource_type_id={null}
+BigNumber={
+json_file_info?.table?.length === undefined
+? 0
+: json_file_info?.table?.length
+}
+SmallNumberTxt={""}
+SmallNumber={``}
+StatusColor=""
+date={"NA"}
+is_popup={true}
+txt_color={""}
+display_this={display_data_type}
+set_display_this={set_display_data_type}
+display_this_value={"prime_data"}
+/>
+
+
+ 
+ 
+
+
+
+</>
+                      
                     )}
                   </>
                 )}
@@ -630,7 +682,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                       </p>
                     </div>
 
-                    <div
+                    {/* <div
                       className="parent-container"
                       onClick={() => set_cell_width("500px")}
                     >
@@ -640,7 +692,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                       >
                         FlowId
                       </p>
-                    </div>
+                    </div> */}
 
                     <div
                       className="parent-container"
@@ -664,14 +716,14 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                         {json_file_info?.table[0]?.ClientId}
                       </p>
                     </div>
-                    <div className="parent-container">
+                    {/* <div className="parent-container">
                       <p
                         className="table_smart_col font-type-txt  Color-Grey1"
                         style={{ width: cell_width }}
                       >
                         {json_file_info?.table[0]?.FlowId}
                       </p>
-                    </div>
+                    </div> */}
                     <div className="parent-container">
                       <p
                         className="table_smart_col font-type-txt  Color-Grey1"
@@ -767,16 +819,136 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                   {/* //// the big list */}
                   {display_data_type === "prime_data" && (
                     <>
-                      {json_file_info?.table?.length !== 0 ? (
+
+
+
+
+
+{/* <table border="1">
+      <thead>
+        <tr>
+          {headers.map((header) => (
+            <th key={header}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {json_file_info?.table.map((item, index) => (
+          <tr key={index}>
+            {headers.map((header) => {
+              const value = item[header];
+              const renderValue = typeof value === 'object' ? JSON.stringify(value) : value;
+
+              const cellColor = (() => {
+                if (typeof value === 'string') {
+                  const lowerValue = value.toLowerCase();
+                  if (lowerValue === 'critical') return 'var(--color-Red)';
+                  if (lowerValue === 'high') return 'var(--color-Orange-Red)';
+                }
+                return 'var(--color-Grey1)'; // Default color
+              })();
+
+              return (
+                <td key={header}>
+                  <span
+                    className="cell-content font-type-txt"
+                    style={{ color: cellColor }}
+                  >
+                    {renderValue}
+                  </span>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table> */}
+
+{json_file_info?.table?.length !== 0 &&
+<table border="1" style={{ } }   className="table_smart2" >
+      <thead   >
+        <tr>
+          {headers.map((header) => (
+            <th key={header} onClick={handleHeaderClick}     className="  font-type-menu Color-White"    style={{ cursor: 'pointer' , textAlign:"left"}}>
+              {header}
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody  >
+        {json_file_info?.table.map((item, index) => (
+          <tr key={index}>
+            {headers.map((header) => {
+              const value = item[header];
+              const renderValue = typeof value === 'object' ? JSON.stringify(value) : value;
+
+              const cellColor = (() => {
+                if (typeof value === 'string') {
+                  const lowerValue = value.toLowerCase();
+                  if (lowerValue === 'critical') return 'var(--color-Red)';
+                  if (lowerValue === 'high') return 'var(--color-Orange-Red)';
+                }
+                return 'var(--color-Grey1)'; // Default color
+              })();
+
+              return (
+                <td
+                  key={header}
+                  style={{
+                    maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : 'none', // Apply width limit conditionally
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    backgroundColor:""
+                  }}
+                >
+                  <span
+                    className="cell-content font-type-txt"
+                    style={{ color: cellColor }}
+                  >
+                    {renderValue}
+                  </span>
+                </td>
+              );
+            })}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+}
+
+
+                      {/* {json_file_info?.table?.length !== 0 ? (
                         <>
+
+
+ 
+
                           <div className="table_smart">
-                            {Object.keys(json_file_info?.table[0]).map(
-                              (key) => (
+                            {Object.keys(json_file_info?.table[0])
+                             .filter(key => key !== 'FlowId' && key !== 'ClientId' && key !== '_OrgId' )  
+                            .map((key) => (
                                 <div
                                   className="parent-container"
                                   onClick={() => set_cell_width("500px")}
                                   key={key}
-                                  style={{ width: cell_width }}
+                                  style={{ 
+                                    width:
+                                    key === 'Name' ? '500px' :
+                                    key === 'Title' ? '300px' :
+                                    key === 'Details' ? '4500px' :
+                                    
+                                    key === 'ID' ? '70px' :
+                                    key === 'TestResult' ? '70px' :
+                                    key === 'VTEntries' ? '70px' :
+                                    key === 'IsLolbin' ? '70px' :
+                                    key === 'IsBuiltinBinary' ? '70px' :
+                                    key === 'Severity' ? '70px' :     
+                                    key === 'EID' ? '70px' :     
+                                    key === 'Level' ? '70px' :    
+                                    key === 'RecordID' ? '70px' :    
+                                    
+                                           cell_width
+                                  }}
                                 >
                                   <p className="table_smart_col font-type-menu Color-White">
                                     {key}
@@ -788,21 +960,35 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
                           {json_file_info?.table.map((item, index) => (
                             <div key={index} className="table_smart">
-                              {Object.keys(item).map((key, idx) => {
+                              {Object.keys(item)
+                               .filter(key => key !== 'FlowId' && key !== 'ClientId' && key !== '_OrgId' )  
+                              .map((key, idx) => {
                                 const value = item[key];
                                 return (
                                   <div
                                     className="parent-container"
                                     key={idx}
-                                    style={{ width: cell_width }}
+                                    style={{ 
+                                      width:
+                                      key === 'Name' ? '500px' :
+                                      key === 'Title' ? '300px' :
+                                      key === 'Details' ? '4500px' :
+                                      
+                                      key === 'ID' ? '70px' :
+                                      key === 'TestResult' ? '70px' :
+                                      key === 'VTEntries' ? '70px' :
+                                      key === 'IsLolbin' ? '70px' :
+                                      key === 'IsBuiltinBinary' ? '70px' :
+                                      key === 'Severity' ? '70px' :     
+                                      key === 'EID' ? '70px' :     
+                                      key === 'Level' ? '70px' :    
+                                      key === 'RecordID' ? '70px' :    
+
+                                             cell_width
+                                    }}
                                   >
                                     <div className="table_smart_col">
-                                      {/* {
-                typeof value === 'string' && value.toLowerCase() === 'high' ? (
-                  <span className="tagit_type1">
-                    {value}
-                  </span>
-                ) : ( */}
+ 
 
                                       {typeof value != "object" && (
                                         <span
@@ -827,15 +1013,17 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                                         </span>
                                       )}
 
-                                      {/*      )}*/}
+                                    /}
                                     </div>
                                   </div>
                                 );
                               })}
                             </div>
                           ))}
+
+
                         </>
-                      ) : null}
+                      ) : null} */}
                     </>
                   )}
                 </>
@@ -847,7 +1035,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
                 {artifact_logo === "" ? null : (
                   <>
                     <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
-                      By:
+                      By:s
                     </p>{" "}
                     <img
                       src={artifact_logo}
@@ -997,20 +1185,19 @@ export const PopUp_For__Nuclei__response = (props) => {
               </button>
             </div>
 
+
+
+            {/* <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}> */}
             <div className="velociraptor_response_all_top mb-d">
               <div
-                className="velociraptor_response_top_texts mb-c"
-                style={{
-                  display: "flex",
-                  justifyContent: "stretch",
-                  alignItems: "stretch",
-                }}
+                className="  mb-c"
+                style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}
               >
-                <div>
-                  {/* <div>
-        <p className="font-type-h4 Color-White mb-a">{HeadLine} </p>
-        <p  className="font-type-txt  reading-height Color-Grey1  mb-b"  >Response Results</p> 
-        </div> */}
+
+
+
+                 
+ 
 
                   <PreviewBox_type5_hunt_data_tabla
                     HeadLine="Hunt Data"
@@ -1035,11 +1222,17 @@ export const PopUp_For__Nuclei__response = (props) => {
                       )
                     }
                   />
-                </div>
-              </div>
 
-              <div style={{ marginLeft: "var(--space-c)" }}>
-                <PreviewBox_type1_number_no_filters
+
+{json_file_data?.Arguments  &&  <>  
+<PreviewBox_type9_arguments
+HeadLine="Arguments"
+Arguments={json_file_data?.Arguments}
+is_popup={true}
+/>        
+</>}
+
+<PreviewBox_type1_number_no_filters
                   HeadLine="Object Find"
                   resource_type_id={null}
                   BigNumber={json_file_info?.length}
@@ -1053,7 +1246,28 @@ export const PopUp_For__Nuclei__response = (props) => {
                   set_display_this={set_display_data_type}
                   display_this_value={"prime_data"}
                 />
+
+
+
+                
               </div>
+
+              {/* <div style={{ marginLeft: "var(--space-c)" }}>
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+              </div> */}
 
               <div></div>
             </div>
@@ -1205,7 +1419,6 @@ export const PopUp_For__Nuclei__response = (props) => {
   );
 };
 
-
 export const PopUp_For_Shodan_response = (props) => {
   const {
     popUp_show,
@@ -1214,36 +1427,35 @@ export const PopUp_For_Shodan_response = (props) => {
     set_PopUp_All_Good__txt,
     buttonTitle,
     json_file_info,
+    set_json_file_info,
     json_file_data,
   } = props;
   const {
-    all_artifacts,
+    all_Tools,
     backEndURL,
     DownloadProgressBar,
     setDownloadProgressBar,
     setDownloadList,
   } = useContext(GeneralContext);
   
-  const [artifact_logo, set_artifact_logo] = useState("");
+  const [module_logo, set_module_logo] = useState("");
   const [aggregate_macro_data, set_aggregate_macro_data] = useState({});
   const [display_this_domain, set_display_this_domain] = useState("prime_data");
   const [display_this_data, set_display_this_data] = useState({});
-
- 
+  const [all_matches, set_all_matches] = useState(0);
+  const [sort_by, set_sort_by] = useState("Domain");
+  const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
 
   console.log("PopUp_For_Shodan_response  json_file_info", json_file_info);
   console.log("PopUp_For_Shodan_response  json_file_data", json_file_data);
-  console.log("PopUp_For_Shodan_response artifact_logo " , artifact_logo);
+ 
   
 
   const handle_click_display_data= (Domain) => {
- console.log("Domain" , Domain);
-
 
 if(!Domain   || Domain  === ""){ set_display_this_domain({});console.log("no domain value"); return}
 if(display_this_domain ===  Domain){set_display_this_domain("prime_data"); return}
 else{
-  
   // set_display_this_data(json_file_info)
   set_display_this_domain(Domain)
   const [filter] = json_file_info.filter(data => data.Domain === Domain);
@@ -1263,10 +1475,6 @@ else{
    
      };
     
-
-
-
-  
 
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
@@ -1299,91 +1507,47 @@ else{
   };
 
 
-
-
-
-
-
-
-
+///// combine all maches
   useEffect(() => {
-
-
-  }, [json_file_data]);
-
-
-
-  useEffect(() => {
-    if (
-      json_file_data === undefined ||
-      json_file_data === "" ||
-      json_file_data === null
-    ) {
-
-      console.log("find icon path - json_file_data problem");
-      return;
-    }
-    if (
-      all_artifacts === undefined ||
-      all_artifacts === "" ||
-      all_artifacts === null
-    ) {
-      console.log("find icon path - all_artifacts problem");
-      return;
-    }
-    if (json_file_data.length == 0 || all_artifacts.length == 0) {
-
-      console.log("find icon path - json_file_data.length == 0 || all_artifacts.length == 0 problem");
-      return;
+    if (!json_file_info){return}
+    let totalMatches = 0;
+    for (let i = 0; i < json_file_info.length; i++) {
+      const matches = json_file_info[i]?.Response?.matches?.length || 0;
+      totalMatches += matches;
     }
 
 
-    console.log("find icon path , got all_artifacts : "   , all_artifacts);
-
-    // if (
-    //   json_file_data?.SubModulesCollection != "" &&
-    //   typeof json_file_data?.SubModulesCollection === "string"
-    // ) 
-    
-    
-    // {
-    //   const pathTOPic = all_artifacts?.filter(
-    //     (word) => word?.Toolname === json_file_data?.SubModulesCollection
-    //   );
-    //   if (
-    //     pathTOPic === undefined ||
-    //     pathTOPic === "" ||
-    //     pathTOPic.length === 0
-    //   ) {
-    //     console.log("find icon path - pathTOPic problem");
-    //     return;
-    //   }
-
-    //   const logoAddress_1 = pathTOPic[0]?.logoAddress_1;
-    //   const bbb = require(`${logoAddress_1}`);
-    //   console.log("aaaaaa" ,bbb);
-    //   set_artifact_logo(bbb);
-    // } else {
+set_all_matches(totalMatches);
+  }, [json_file_info]);
 
 
-      const pathTOPic = all_artifacts?.filter(
-        (word) => word?.Toolname === json_file_data?.SubModuleName
+/// logo preview
+useEffect(() => {
+  if (
+    json_file_data === undefined ||
+    json_file_data === "" ||
+    json_file_data === null
+  ) {
+    return;
+  }
+  if (all_Tools === undefined || all_Tools === "" || all_Tools === null) {
+    return;
+  }
+  if (json_file_data.length == 0 || all_Tools.length == 0) {
+    return;
+  }
 
-      );
-      if (
-        pathTOPic === undefined ||
-        pathTOPic === "" ||
-        pathTOPic.length === 0
-      ) {
-        console.log("artifact id problem");
-        return;
-      }
-      const logoAddress_1 = pathTOPic[0]?.logoAddress_1;
-      const bbb = require(`${logoAddress_1}`);
-      console.log("bbbbbbbbb" ,bbb);
-      set_artifact_logo(bbb);
-    // }
-  }, [json_file_data]);
+  const [tool_info] = all_Tools?.filter(
+    (word) => word?.Tool_name === json_file_data?.ModuleName
+  );
+
+  const logoAddress_1 = tool_info?.logoAddress_1;
+  if (logoAddress_1 === undefined) {
+    return;
+  }
+  const bbb = require(`${logoAddress_1}`);
+  set_module_logo(bbb);
+}, [json_file_data]);
 
 
   useEffect(() => {
@@ -1400,26 +1564,52 @@ else{
     set_popUp_show(false);
   }
 
+  const do_sort = (column) => {
+    // json_file_info,
+    // set_json_file_info,
+    console.log("sort this column: " , column);
+    
+      if (!column) {
+        console.log("Can't sort ", column);
+        return;
+      }
+    
+      if (column === sort_by) {
+        console.log("It's already sorted like this, reversing the order");
+        const sorted = [...json_file_info].sort((a, b) => {;
+          if (b[column] < a[column]) return -1;
+          if (b[column] > a[column]) return 1;
+          return 0;
+        });
+        console.log("Sorted descending:", sorted);
+        set_json_file_info(sorted);
+        set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+    
+      } else {
+        set_sort_by(column);
+        const sorted = [...json_file_info].sort((a, b) => {
+          if (a[column] < b[column]) return -1;
+          if (a[column] > b[column]) return 1;
+          return 0;
+        });
+        console.log("Sorted ascending:", sorted);
+        set_json_file_info(sorted);
+      }
+    };
+    
  
- 
-
-
-
-
-
+// for first load  =>  sorting the list
+useEffect(() => {
+  if (json_file_info?.length >=2 && firstTimeData ) {
+    do_sort("Domain");
+    setfirstTimeData(false)
+  }
+    
+  }, [json_file_info])
 
   return (
     <>
-      {/* {PopUp_All_Good__show &&
- <PopUp_All_Good
- popUp_show={PopUp_All_Good__show}
- set_popUp_show={set_PopUp_All_Good__show}
- HeadLine={PopUp_All_Good__txt.HeadLine}
- paragraph={PopUp_All_Good__txt.paragraph} 
-buttonTitle={PopUp_All_Good__txt.buttonTitle}
- /> 
- }
-  */}
+ 
 
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
@@ -1447,7 +1637,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
  
 
-<div  style={ {display:"flex" ,    gap:"var(--space-c)"   , flexDirection:"row"      , width:"100%"}}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}>
  
 <PreviewBox_type5_hunt_data_tabla
 HeadLine="Hunt Data"
@@ -1461,48 +1651,45 @@ Error={   json_file_data?.Error === "" ? (  <>None</>   ) : (   <>{json_file_dat
 />
  
 
-<PreviewBox_type3_bar
-                      HeadLine="Domain total found"
-                      bar_numbers={
-                        json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.matches?.length  ) ||   [0,0,0,0]
-                      }
-                      bar_headlines={
-                      json_file_info?.map(   (aaaa ) =>  aaaa?.Domain  ) || []}
-                  //  ["Critical", "High", "Medium", "Low"]
-                     
-                      bar_title_legend={"Vulnerabilities"}
-                      is_popup={true}
-                      display_y_axis={false}
-                      colors={"Basic"}
-                      enable_hover={false}
-                      display_this={ display_this_domain}
-                      set_display_this={set_display_this_domain}
-                      display_this_value={"prime_data"}
-                    />
+{json_file_data?.Arguments  &&  <>  
+<PreviewBox_type9_arguments
+HeadLine="Arguments"
+Arguments={json_file_data?.Arguments}
+is_popup={true}
+/>        
+</>}
 
 
-{/* <PreviewBox_respo_list_type6
-  HeadLine="Domain total found"
-  read_more_view= {false}
-   read_more_icon={''}
-   description_max_length={22}
-   read_more={'The list outlines the ten most prevalent attribute types within the MISP platform. Attribute types encompass various forms of data such as file hashes, domain names, and IP addresses, each providing crucial information for threat analysis. By examining the top ten types, analysts can better understand the focus of recent threat intelligence, tailor their detection mechanisms to address the most common attribute types, and enhance their overall security posture through targeted analysis and response strategies.'}
-   list_array_column1={{ key: "Domain", previewName: "Domain" }}
-   list_array_column2={{ key: "Response.total", previewName: "#" }}
-   list_array={ json_file_info?.sort(   (a, b) => b.Domain - a.Domain  ) || []}
-   is_popup={true}
-   is_tags={false}
-   click_on_field={true}
-   date={"NA"} // "NA"
-   box_height={"240px"}
-   box_width={"500px"}
-/> */}
+<PreviewBox_respo_chart 
+display_type={'pie'}  // pie , bar
+allow_wide={true}
+allow_wide_min_wide={"480px"}
+display_y_axis={false} // for the bar
+HeadLine={`Domains found`}
+read_more_icon={''}
+description_show={false}
+description_short={'Centralized hub for integrating client data and insights seamlessly...'}
+description_max_length={12}
+read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
+bar_numbers={json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.matches?.length  ) ||   [0,0,0,0]}
+bar_headlines={ json_file_info?.map(   (aaaa ) =>  aaaa?.Domain  ) || []}
+enable_hover={false}
+display_this_value={"prime_data"}
+is_popup={true}
+colors={"Basic"} // Basic , Alert
+date={"NA"} // "NA"
+box_height={"240px"}
+
+/>
+
+
+ 
 
 <PreviewBox_type1_number_no_filters
 HeadLine="Tested"
 resource_type_id={null}
 BigNumber={  json_file_info?.length ? json_file_info?.length : "NA"  }
-SmallNumberTxt={"Total"}
+SmallNumberTxt={"Domains"}
 SmallNumber={``}
 StatusColor="blue"
 date={"NA"}
@@ -1512,6 +1699,28 @@ display_this={ display_this_domain}
 set_display_this={set_display_this_domain}
 display_this_value={"High"}
 />
+
+
+<PreviewBox_type1_number_no_filters
+HeadLine="Matches"
+resource_type_id={null}
+BigNumber={  all_matches  ?  all_matches : "NA"  }
+SmallNumberTxt={"From all Domains"}
+SmallNumber={``}
+StatusColor="blue"
+date={"NA"}
+is_popup={true}
+txt_color={""}
+display_this={ display_this_domain}
+set_display_this={set_display_this_domain}
+display_this_value={"High"}
+/>
+ 
+
+
+
+
+
 
                       {/* too big file note */}
                       {json_file_info?.fileSize === "Too big" && (
@@ -1552,13 +1761,13 @@ display_this_value={"High"}
                             className=""
                             style={{ display: "flex", alignItems: "center" }}
                           >
-                            {artifact_logo === "" ? null : (
+                            {module_logo === "" ? null : (
                               <>
                                 <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
                                   By:
                                 </p>{" "}
                                 <img
-                                  src={artifact_logo}
+                                  src={module_logo}
                                   alt="logo"
                                   maxwidth="140px"
                                   height="30"
@@ -1600,13 +1809,10 @@ display_this_value={"High"}
 
 {  display_this_domain === "prime_data"  &&
 <div className='resource-group-list-keyNames mb-a  '  >
-<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White'>Domain</p></div>
+<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White' onClick={() => do_sort("Domain")}>Domain</p></div>
 <div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White mr-b'>Matches</p></div>
 </div>
 }
-
-
-
 
 
   { display_this_data?.Response?.matches.length > 0  &&
@@ -1641,8 +1847,6 @@ display_this_value={"High"}
   {       display_this_domain === "prime_data"    &&
 <div className=" resource-group-list-line   mr-b  mt-a mb-a" style={{display:"flex" ,justifyContent:"space-between" , width:"auto"}}  onClick={()=>handle_click_display_data(Site?.Domain)}>
 <p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"60%", minWidth:"60%"}}>{ Site?.Domain}</p> 
- 
-  
 <p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"35%", minWidth:"35%" , textAlign:"right"  }}>{Site?.Response?.matches?.length }</p> 
  
 
@@ -1650,39 +1854,9 @@ display_this_value={"High"}
 </div>
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </div> );   })}
 
 
-
-
-
-
-
-
-
-
-
-
- 
 
  
 {display_this_data && display_this_data?.Response?.matches?.map((Info, index) => {
@@ -1701,40 +1875,28 @@ display_this_value={"High"}
     );
   })}
 
-
-
-
-
-</div>
-
-
-</div>
-
-
-
  
 
+
+
+</div>
+</div>
 </div>
 
-              
-                   
-             
+  
               </div>
-
 
             </div>
 
-    
-
             {json_file_info?.fileSize != "Too big" && (
               <div className="display-flex  mt-a" style={{}}>
-                {artifact_logo === "" ? null : (
+                {module_logo === "" ? null : (
                   <>
                     <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
                       By:
                     </p>{" "}
                     <img
-                      src={artifact_logo}
+                      src={module_logo}
                       alt="logo"
                       maxwidth="140px"
                       height="30"

@@ -238,7 +238,7 @@ console.log("last_updated",last_updated);
 
 
 <PreviewBox_type3_bar
-HeadLine="Result Distribution"
+HeadLine="Results Summary"
 bar_numbers = { counts?.map(item => Object.values(item) ) }
 bar_headlines = {  counts?.map(item => Object.keys(item) )  }
 // bar_numbers = {[ "11","22","41","5"]}
@@ -252,7 +252,7 @@ colors={"Basic"}
  
 
  <PreviewBox_type1_number
-HeadLine="Hunting"
+HeadLine="Active Hunts"
 resource_type_id={null}
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Hunting").length ? (Preview_this_Results?.filter(item => item?.Status == "Hunting").length):(0) }
 SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
@@ -268,7 +268,7 @@ txt_color={""}
 
 
 <PreviewBox_type1_number
-HeadLine="ALL Requests"
+HeadLine="Hunts Count"
 resource_type_id={null}
 BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
@@ -281,7 +281,7 @@ txt_color={""}
 />
 
 <PreviewBox_type1_number
-HeadLine="Complete"
+HeadLine="Complete Hunts"
 resource_type_id={null}
 BigNumber={Preview_this_Results?.filter(item => item?.Status == "Complete").length? (Preview_this_Results?.filter(item => item?.Status == "Complete").length):(0) }
 SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
@@ -296,7 +296,7 @@ txt_color={""}
  
 
 <PreviewBox_type4_legend2
-HeadLine="Status Legend "
+HeadLine="Status Legend"
  
 // Count_Failed={Preview_this_Results?.filter(item => item?.Status == "Failed").length? (Preview_this_Results?.filter(item => item?.Status == "Failed").length):(0) }
 Status_Legend={Status_Legend}

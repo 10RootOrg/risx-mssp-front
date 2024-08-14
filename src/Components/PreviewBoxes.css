@@ -343,6 +343,38 @@ Color-Grey1 */
   width: 100%;
 }
 
+
+
+
+
+.table_smart2 {
+  border-collapse: collapse; /* Ensures borders do not appear around the table */
+  border: none; /* Remove border from table headers and cells */
+
+ }
+ 
+ 
+ .table_smart2 th{
+  padding-right: var(--space-b);
+ 
+  margin-right: var(--space-b);
+ 
+ 
+ }
+.table_smart2 td {
+ padding: var(--space-b);
+ padding-left: 0;
+ margin-right: var(--space-b);
+ color:var(--color-Grey1);
+}
+
+ 
+.table_smart2 td, .table_smart2 th{
+  border: none; /* Remove border from table headers and cells */
+ }
+ 
+
+
 .table_smart {
   display: flex;
   gap: 15px;

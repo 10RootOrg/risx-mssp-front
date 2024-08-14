@@ -13,6 +13,7 @@ import { ReactComponent as IcoAccount } from "../Components/icons/ico-menu-accou
 import { ReactComponent as IcoSettings } from "../Components/icons/ico-settings.svg";
 import { ReactComponent as IcoDownload } from "../Components/icons/ico-menu-download.svg";
 import { ReactComponent as IcoACtive } from "../Components/icons/ico-menu-active.svg";
+import { ReactComponent as IcoACtiveBlue } from "../Components/icons/ico-menu-active-blue.svg";
 import { ReactComponent as IconUsers } from "../Components/icons/ico-menu-users.svg";
 import { ReactComponent as IconAlert } from "../Components/icons/ico-menu-alert.svg";
 
@@ -473,7 +474,8 @@ function SideBar({
                 <IcoResults />
               </div>
             </button>
-
+            {/* Cyber Threat Intelligence
+        ASM     Attack Surface Management */}
             <button
               className="btn-menu"
               onClick={() => handleClick("dashboard-asm")}
@@ -697,26 +699,12 @@ function SideBar({
           </div>
           <div className="btn-menu-icon-placeholder  "> </div>
         </button>
-      </div>
-      <div
-        className="Bg-Grey2"
-        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
-      />
 
-      <button className="btn-menu" onClick={handle_active_manual_process}>
-        <div className="display-flex">
-          {" "}
-          <IcoACtive className="btn-menu-icon-placeholder  mr-a " />{" "}
-          <p className="font-type-menu ">Run Selected</p>{" "}
-        </div>
-        <div className="btn-menu-icon-placeholder  "> </div>
-      </button>
-      <div
-        className="Bg-Grey2"
-        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
-      />
 
-      <div
+
+
+
+        <div
         className="btn-menu-list"
         onMouseLeave={() => set_download_drop_down(false)}
         //  onMouseEnter={()=>set_download_drop_down(true)}
@@ -794,6 +782,69 @@ function SideBar({
           </button>
         </div>
       </div>
+
+
+
+
+
+      </div>
+      <div
+        className="Bg-Grey2"
+        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+      />
+
+
+
+<button className="btn-type2" onClick={handle_active_manual_process}
+  
+    style={{
+      width:"100%",
+ paddingLeft:"var(--space-a) "
+    //  paddingRight: Info?.toolType !== undefined && 
+    //  Info?.toolType !== "" && 
+    //  Info?.toolType !== null 
+    //    ? "calc(var(--space-d) - 5px)"
+    //  : undefined 
+    }}
+    
+    
+    >
+   <div style={{display:"flex", alignItems:"center"   }}>
+   <IcoACtiveBlue     style={{
+  // height:"var(--space-c)" ,width:"var(--space-c)" ,
+  marginRight:"var(--space-a)"  }}/>
+
+   <p className='font-type-menu'>Run Selected Jobs</p>
+
+
+
+
+
+
+ 
+
+   </div>  
+   </button> 
+
+
+
+
+
+
+      {/* <button className="btn-menu" onClick={handle_active_manual_process}>
+        <div className="display-flex">
+          {" "}
+          <IcoACtive className="btn-menu-icon-placeholder  mr-a " />{" "}
+          <p className="font-type-menu ">Run Selected</p>{" "}
+        </div>
+        <div className="btn-menu-icon-placeholder  "> </div>
+      </button>
+       */}
+
+       
+      {/* <div    className="Bg-Grey2"  style={{ width: "100%", height: "2px", borderRadius: "5px" }} /> */}
+
+    
 
       {Object.keys(DownloadProgressBar).length > 0 && (
         <div
