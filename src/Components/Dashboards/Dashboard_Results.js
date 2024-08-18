@@ -51,48 +51,6 @@ if (backEndURL === undefined){return}
           // set_unseen_alert_number(0);
           set_last_updated(res.data?.latest_dates);
            set_Preview_this_Results(res.data?.results_list);
-
-
-          //  const tmp = [
-          //   {
-          //     ModuleName:"Velociraptor",
-          //     SubModuleName:"Hayabusa",
-          //     Arguments:"its temp res",
-          //     Status: "Complete"
-          //   },    
-
-          //   {
-          //     ModuleName:"Velociraptor",
-          //     SubModuleName:"BestPractice",
-          //     Arguments:"its temp res",
-          //     Status: "Complete"
-          //   }, 
-
-
-
-            
-          //   {
-          //     ModuleName:"Nuc",
-          //     SubModuleName:"",
-          //     Arguments:"its temp res",
-          //     Status: "Complete"
-          //   },   
-            
-
-          // ]
-          // set_Preview_this_Results(tmp);
-
-
-
-    // const sortedResults = [...Results].sort((a, b) => {
-          //   const dateA = new Date(a.response);
-          //   const dateB = new Date(b.response);
-          //   return dateB - dateA;  
-          // });
-    
-            // format_date_type_a
-     
-            // set_All_Resource_count(res.data.length)
             set_loader(false)
     }}
     catch(err){

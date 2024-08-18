@@ -31,14 +31,14 @@ const Counter = ({ target, isHovered, txt_color }) => {
         set_is_big_number_type(true);
         set_count_this_number(target/ 1000000);  
         set_big_number_type("M");
-        console.log(target ,"its milions")
+        // console.log(target ,"its milions")
       }
 
       else if(target >= 1000000000 && target <= 999999999999 ){
         set_is_big_number_type(true);
         set_count_this_number(target / 1000000000); 
         set_big_number_type("B");
-        console.log(target ,"its bilions")
+        // console.log(target ,"its bilions")
       }
       
 
@@ -46,7 +46,8 @@ const Counter = ({ target, isHovered, txt_color }) => {
           set_is_big_number_type(true);
           set_count_this_number(target / 1000000000000); 
           set_big_number_type("Trillion");
-          console.log(target ,"its Trillion")}
+          // console.log(target ,"its Trillion")
+        }
         // trillion
 
   }, [target]);
@@ -62,7 +63,7 @@ const Counter = ({ target, isHovered, txt_color }) => {
     let fast___set = 40;
 
 if (count_this_number > 1 && count_this_number < 10) {
-console.log("count_this_number aa" , count_this_number);
+ 
   fast___set = 22
 duration = 1200; // 1.5 seconds in milliseconds
 
@@ -70,14 +71,14 @@ duration = 1200; // 1.5 seconds in milliseconds
 
 
 else if (11 < count_this_number   && count_this_number  <19 ) {
-  console.log("count_this_number bb" , count_this_number);
+ 
   fast___set = 20
 duration = 2200; // 1.5 seconds in milliseconds
 
 }
 
   else if (20 < count_this_number  &&  count_this_number< 200 ) {
-    console.log("count_this_number cc" , count_this_number);
+  
     fast___set = 90
   duration = 2500; // 1.5 seconds in milliseconds
 
@@ -86,7 +87,7 @@ duration = 2200; // 1.5 seconds in milliseconds
 
 
    else if (count_this_number > 1000) {
-    console.log("count_this_number dd" , count_this_number);
+ 
     fast___set = 30
       duration = 1500; // 1.5 seconds in milliseconds
 
@@ -94,17 +95,17 @@ duration = 2200; // 1.5 seconds in milliseconds
     
     else {
       
-      console.log("count_this_number ee" , count_this_number);
+ 
 
       if (count_this_number > 200 && count_this_number < 999) {
 
-        console.log("count_this_number" , count_this_number);
+   
         fast___set = 5;
         duration = 1000;
       }
 
       if (201 > count_this_number > 0) {
-        console.log("count_this_number", count_this_number);
+   
         fast___set = 0.2;
       }
 

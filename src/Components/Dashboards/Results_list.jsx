@@ -99,43 +99,7 @@ const status_bar_width = "200px"
        console.log("got res Info    ",Info);
        console.log("got res.data   ",res.data);
 
-//      if (Info?.ModuleName === "Velociraptor") {
-//       if (res?.data?.fileSize != 'Too big') {   set_json_file_info(res.data) }
-//       if (res?.data?.fileSize == 'Too big') {   set_json_file_info({huntid:Info.UniqueID , status:Info?.Status ,fileSize:"Too big" , ResponsePath:Info?.ResponsePath,  table:[]      }) }
-//       set_json_file_data(Info)
-//       set_PopUp_loader__show(false);
-//       set_PopUp_velociraptor_response__show(true)
-//      }
-
-//     else if (Info?.ModuleName === "Nuclei") {
-//          const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
-//          console.log("tool" ,tool);
-//         let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
-//         console.log("updatedInfo" ,updatedInfo);
-//         set_json_file_data(updatedInfo);
-//         set_json_file_info(res.data);
-//         set_PopUp_loader__show(false);
-//         set_PopUp_For__Nuclei__response__show(true);
-//     }
-
-//     else if (Info?.ModuleName === "Shodan") {
-
-//       console.log("else if (Info?.ModuleName === Shodan");
-
-//       const tool = all_Tools?.filter((tool) =>  tool?.Tool_name === Info?.ModuleName)
-//       console.log("tool" ,tool);
-//      let updatedInfo = { ...Info, logoAddress_1: tool[0]?.logoAddress_1};
-//      console.log("Shodan updatedInfo" ,updatedInfo);
-//      console.log("Shodan    res.data" , res.data);
-    
-//      set_json_file_data(updatedInfo);
-//      set_json_file_info(res.data);
-//       set_PopUp_loader__show(false);
-//       set_PopUp_For_Shodan_response__show(true);
-//  }
-
-// else{ console.log("Info?.ModuleName not developed", Info?.ModuleName);  }
-     
+ 
 switch (Info?.ModuleName) {
   case "Velociraptor":
     if (res?.data?.fileSize !== 'Too big') {
@@ -166,14 +130,31 @@ switch (Info?.ModuleName) {
     break;
 
   case "Shodan":
-    console.log("else if (Info?.ModuleName === Shodan");
-    const shodanTool = all_Tools?.find(tool => tool?.Tool_name === Info?.ModuleName);
-    console.log("tool", shodanTool);
-    let updatedShodanInfo = { ...Info, logoAddress_1: shodanTool?.logoAddress_1 };
-    console.log("Shodan updatedInfo", updatedShodanInfo);
-    console.log("Shodan res.data", res.data);
-    set_json_file_data(updatedShodanInfo);
+
+  if (res?.data?.fileSize !== 'Too big') {
+    console.log("111111111111-----------------------  Shodan !== 'Too big  " );
     set_json_file_info(res.data);
+  } else {
+
+    console.log("222222222222-----------------------  Shodan  'Too big  " ,Info );
+    set_json_file_info({
+      huntid: Info.UniqueID,
+      status: Info?.Status,
+      fileSize: "Too big",
+      ResponsePath: Info?.ResponsePath,
+      table: [],
+      ModuleName:Info?.ModuleName,
+      roni:"roni"
+  
+    });}
+
+ 
+    const shodanTool = all_Tools?.find(tool => tool?.Tool_name === Info?.ModuleName);
+
+    let updatedShodanInfo = { ...Info, logoAddress_1: shodanTool?.logoAddress_1 };
+ 
+    set_json_file_data(updatedShodanInfo);
+    // set_json_file_info(res.data);
     set_PopUp_loader__show(false);
     set_PopUp_For_Shodan_response__show(true);
     break;
@@ -227,10 +208,10 @@ if(res){console.log("handleDelete ",res.data);}
 catch(err){
 
   console.log("handleDelete 33333333333333");
-
-
+ console.log(err.response.data.message);
+ console.log(err.response.data.catch_error_message);
+ console.log(err.response.status);
   if (err.response.status === 400){
-    // console.log(err.response.data.message);
   set_PopUp_Error__show(true);
   set_PopUp_Error__txt({ HeadLine:"Error", paragraph:err?.response?.data?.message, buttonTitle:"Close"});
     return
@@ -239,7 +220,7 @@ catch(err){
   else{
     console.log("handleDelete error" ,err);
     set_PopUp_Error__show(true);
-    set_PopUp_Error__txt({ HeadLine:"Error", paragraph:err?.response?.data, buttonTitle:"Close"});
+    set_PopUp_Error__txt({ HeadLine:"Failed to Delete Items", paragraph:`We encountered an issue while trying to delete the requested items. Please check the details and try again. Tecnical: ${err.response.data.catch_error_message}`, buttonTitle:"Close"});
     return
     }
 
@@ -336,17 +317,7 @@ return
 
 else{ get_Json_single_response(Info);   }
 
-// set_PopUp_Under_Construction__txt({
-//   HeadLine: "Coming Soon!",
-//   paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
-//   buttonTitle: "Close",
-// });
-// set_PopUp_Under_Construction__show(true);
-
-
-
-
-
+ 
 
 break;
 
@@ -387,7 +358,7 @@ const handle_Mouse_Enter = (info) => {
   // Set a new timer
   timerRef.current = setTimeout(() => {
     handle_hover_result(info);
-  }, 1200); // 1.2 seconds
+  }, 2000); //  2 seconds
 };
 
 const handle_Mouse_Leave = () => {
@@ -448,7 +419,7 @@ console.log("sort this column: " , column);
 
   if (column === sort_by) {
     console.log("It's already sorted like this, reversing the order");
-    const sorted = [...Preview_this_Results].sort((a, b) => {console.log("b[column]", b[column]);
+    const sorted = [...Preview_this_Results].sort((a, b) => { 
       if (b[column] < a[column]) return -1;
       if (b[column] > a[column]) return 1;
       return 0;
@@ -629,7 +600,102 @@ buttonTitle={PopUp_Request_info__txt.buttonTitle}
 
 
   <>
-<div className='resource-group-list-keyNames mb-a     '  >
+
+{false && 
+<table style={{  textAlign:"left"   }}>
+  {/* <caption>
+    Front-end web developer course 2021
+  </caption> */}
+  <thead  style={{  }} >
+
+{/* <div style={{width:"40px"}} />    */}
+    <tr  className='   ' >
+      <th scope="col" className='font-type-menu    Color-Grey1 '  onClick={() => do_sort("SubModuleName")} style={{ paddingLeft:"34px"  }} >Module + Artifact</th>
+      <th scope="col" className='font-type-menu   Color-Grey1   ' onClick={() => do_sort("StartDate")} >Start Date</th>
+      <th scope="col" className='font-type-menu    Color-Grey1   ' onClick={() => do_sort("ExpireDate")} >Expire Date</th>
+      <th scope="col" className='font-type-menu    Color-Grey1    ' onClick={() => do_sort("Status")} >Status</th>
+      <th scope="col" className='font-type-menu    Color-Grey1    '   onClick={() => do_sort("ExpireDate")} style={{  width: status_bar_width ,textAlign:"center"}}>Status Display</th>
+    </tr>
+
+  </thead>
+  
+  <tbody className='  mb-c' style={{  }}>
+
+  {Array.isArray(Preview_this_Results) && Preview_this_Results?.map((Info, index) =>  ( 
+<>
+
+
+<div  className='   '   >
+<label className={ `container   ${Info?.UniqueID === "" && !Info?.UniqueID && "containeroff" } `} >
+<input
+  type="checkbox"
+  disabled={!Info?.UniqueID} // Disable the checkbox if UniqueID is not present
+  value={""}
+  onChange={() => handle_check_box(Info?.UniqueID,  Info?.ResponsePath  ,Info?.ModuleName  ,Info?.SubModuleName )}
+/>
+<span
+  className="checkmark"
+ 
+>
+ 
+</span>
+</label>
+</div>     
+
+
+<tr className=' ' key={index}
+onClick={()=>handle_click_result(Info)} 
+onMouseEnter={() => handle_Mouse_Enter(Info)}
+onMouseLeave={handle_Mouse_Leave}
+
+ >
+ 
+
+<td className='   display-flex   ' style={{ marginLeft:"30px" }}  > 
+  {Info?.ModuleName  === ""   &&   Info?.SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }{Info?.ModuleName && Info?.SubModuleName &&  (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p><p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModuleName}</p> </>)}{Info?.ModuleName && !Info?.SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
+  </td>
+
+ 
+ <td className='  font-type-txt  Color-Grey1   '>{ Info?.StartDate &&  format_date_type_c(Info?.StartDate)}</td> 
+ <td className='  font-type-txt  Color-Grey1  '>{ Info?.ExpireDate &&  format_date_type_c(Info?.StartDate)}</td> 
+<td className='  font-type-txt  Color-Grey1  '>{ Info?.Status}</td> 
+
+<td className="status-bar-and-time " style={{width:status_bar_width , justifyContent:"end"}}  >
+   <div className="status-bar">
+    <div className={`status-bar-fill ${Info?.Status}`}/>
+    </div>
+<p className={`font-type-txt   time-general  ${Info?.TimeNote != "In Time" ?  'not-in-time' : 'in-time'}  `}>{Info?.TimeNote === "In Time" ? null : Info?.TimeNote}</p>
+
+</td>
+
+</tr>
+
+
+
+ 
+</>
+
+ 
+ ))}
+
+ 
+ 
+
+
+
+  </tbody>
+  {/* <tfoot>
+    <tr>
+      <th scope="row" colspan="2">Average age</th>
+      <td>33</td>
+    </tr>
+  </tfoot> */}
+</table>
+  }
+
+
+{true &&  <>
+<div className='resource-group-list-keyNames mb-a'  >
 
 <div  className=' mr-b ml-a' style={{visibility:"hidden"}} >
 <label className="container"  style={{  marginTop:"5px"}} > 
@@ -644,10 +710,8 @@ value={""}
 </div>
 
              <div className='resource-group-list-item list-item-biggest  ' onClick={() => do_sort("SubModuleName")}>         <p className='font-type-menu  make-underline Color-Grey1  pl-b  '>Module + Artifact</p></div>
-             <div className='resource-group-list-item   list-item-big'>                                                         <p className='font-type-menu  no-underline Color-Grey1 '>Arguments</p></div>
-             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div>
-             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("LastIntervalDate")}>             <p className='font-type-menu  make-underline Color-Grey1 '>Last Interval</p></div>
-             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
+              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div>
+              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("Status")}>                       <p className='font-type-menu  make-underline Color-Grey1 '>Status</p></div>
              <div className='resource-group-list-item list-item-big  ' style={{ marginRight: "18px", width: status_bar_width }}><p className='font-type-menu  no-underline Color-Grey1  '>Status Display</p></div>
 </div>
@@ -684,12 +748,9 @@ value={""}
   />
   <span
     className="checkmark"
-    // style={{
-    //   borderColor: Info?.UniqueID === "" ? "blue" : undefined, // Set borderColor to blue if UniqueID is empty
-    //   color: "yellow" // Always apply yellow color
-    // }}
+ 
   >
-    {/* Content or style modifications for checkmark */}
+ 
   </span>
 </label>
 </div>
@@ -703,9 +764,9 @@ value={""}
     >
 
 <div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >{Info?.ModuleName  === ""   &&   SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }{Info?.ModuleName && SubModuleName &&  (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p><p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleName}</p> </>)}{Info?.ModuleName && !SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}</div>
-<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-big'>{ JSON.stringify(Info?.Arguments) }</p> 
+{/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-big'>{ JSON.stringify(Info?.Arguments) }</p>  */}
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.StartDate)}</p> 
-<p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.LastIntervalDate)}</p> 
+{/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.StartDate &&  format_date_type_c(Info?.LastIntervalDate)}</p>  */}
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.ExpireDate &&  format_date_type_c(Info?.StartDate)}</p> 
 <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ Info?.Status}</p> 
 <div className="status-bar-and-time " style={{width:status_bar_width}}> <div className="status-bar"><div className={`status-bar-fill ${Info?.Status}`}/></div>
@@ -728,8 +789,8 @@ value={""}
    <div className="ml-a " style={{marginTop:'5px'}}> <IconNasted/></div>
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleINFO?.SubModuleName}</p>
  </div>
-<p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'> </p> 
- <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p> 
+{/* <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'> </p>  */}
+ {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p>  */}
  <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p> 
  <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p> 
  <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{ SubModuleINFO?.Status}</p> 
@@ -753,7 +814,7 @@ value={""}
   })}
 
 </div>
-
+</>}
 
 {Preview_this_Results?.length === 0 &&   is_search === true &&
 <div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>

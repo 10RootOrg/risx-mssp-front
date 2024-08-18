@@ -3,8 +3,8 @@
 
  .side-bar-desktop-out{
     background: var(--color-Grey5);
-    max-width: 200px;
-    min-width: 190px;
+    max-width: 240px;
+    min-width: 220px;
 
     display: flex;
     flex-direction: column;
@@ -180,3 +180,8 @@
  gap: var(--space-a); */
 }
  
+
+.dropdown-menu-btn {
+padding-left: var(--space-c);
+padding-right: var(--space-b);
+}
