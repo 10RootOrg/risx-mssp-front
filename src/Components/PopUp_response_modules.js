@@ -12,12 +12,7 @@ import {
 import { ReactComponent as CloseButton } from "../Components/icons/ico-Close_type1.svg";
 import { ReactComponent as DownloadIconButton } from "../Components/icons/ico-menu-download.svg";
 import { format_date_type_c ,format_date_type_a } from "./Features/DateFormat";
-
- 
 import axios from "axios";
-
-
-
 
 async function download_Json(
   ResponsePath,
@@ -1446,8 +1441,8 @@ export const PopUp_For_Shodan_response = (props) => {
   const [sort_by, set_sort_by] = useState("Domain");
   const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
 
-  console.log("PopUp_For_Shodan_response  json_file_info", json_file_info);
-  console.log("PopUp_For_Shodan_response  json_file_data", json_file_data);
+  console.log("----------------- json_file_info", json_file_info);
+  console.log("-------------------  json_file_data", json_file_data);
  
   
 
@@ -1638,7 +1633,7 @@ useEffect(() => {
  
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}>
- 
+        
 <PreviewBox_type5_hunt_data_tabla
 HeadLine="Hunt Data"
 artifact_or_module={"Module"}
@@ -1650,16 +1645,18 @@ Status={json_file_data?.Status || "NA"}
 Error={   json_file_data?.Error === "" ? (  <>None</>   ) : (   <>{json_file_data?.Error}</>  )  }
 />
  
+{ json_file_data?.Arguments   && <>
 
-{json_file_data?.Arguments  &&  <>  
-<PreviewBox_type9_arguments
+ <PreviewBox_type9_arguments
 HeadLine="Arguments"
 Arguments={json_file_data?.Arguments}
 is_popup={true}
-/>        
+/>  
 </>}
+      
+ 
 
-
+{json_file_info &&  json_file_info.fileSize  != "Too big"  &&  
 <PreviewBox_respo_chart 
 display_type={'pie'}  // pie , bar
 allow_wide={true}
@@ -1671,20 +1668,17 @@ description_show={false}
 description_short={'Centralized hub for integrating client data and insights seamlessly...'}
 description_max_length={12}
 read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
-bar_numbers={json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.matches?.length  ) ||   [0,0,0,0]}
-bar_headlines={ json_file_info?.map(   (aaaa ) =>  aaaa?.Domain  ) || []}
+bar_numbers={  json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.matches?.length  ) ||   [0,0,0,0]}
+bar_headlines={  json_file_info?.map(   (aaaa ) =>  aaaa?.Domain  ) || []}
 enable_hover={false}
 display_this_value={"prime_data"}
 is_popup={true}
 colors={"Basic"} // Basic , Alert
 date={"NA"} // "NA"
 box_height={"240px"}
-
 />
-
-
- 
-
+}
+{json_file_info?.fileSize != "Too big" && 
 <PreviewBox_type1_number_no_filters
 HeadLine="Tested"
 resource_type_id={null}
@@ -1699,8 +1693,8 @@ display_this={ display_this_domain}
 set_display_this={set_display_this_domain}
 display_this_value={"High"}
 />
-
-
+}
+{json_file_info?.fileSize != "Too big" && 
 <PreviewBox_type1_number_no_filters
 HeadLine="Matches"
 resource_type_id={null}
@@ -1715,15 +1709,14 @@ display_this={ display_this_domain}
 set_display_this={set_display_this_domain}
 display_this_value={"High"}
 />
- 
-
+}
 
 
 
 
 
                       {/* too big file note */}
-                      {json_file_info?.fileSize === "Too big" && (
+                      {/* {json_file_info?.fileSize === "Too big" && (
                         <div
                           className="mt-c "
                           style={{
@@ -1783,7 +1776,7 @@ display_this_value={"High"}
                             </button>
                           </div>
                         </div>
-                      )}
+                      )} */}
                     </div>
 
 
@@ -1807,7 +1800,7 @@ display_this_value={"High"}
 
 
 
-{  display_this_domain === "prime_data"  &&
+{  display_this_domain === "prime_data"  && json_file_info?.fileSize != "Too big" &&
 <div className='resource-group-list-keyNames mb-a  '  >
 <div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White' onClick={() => do_sort("Domain")}>Domain</p></div>
 <div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White mr-b'>Matches</p></div>
@@ -1887,7 +1880,66 @@ display_this_value={"High"}
               </div>
 
             </div>
+            {json_file_info?.fileSize === "Too big" && (
+                        <div
+                          className="mt-c "
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            flexDirection: "column",
+                          }}
+                        >
+                          <div>
+                            <p className="  font-type-txt   Color-Grey1 mt-c ">
+                              Data file is too big. <br />
+                              You can download it as a JSON file.
+                            </p>
+                            <button
+                              className="btn-type3 mb-d"
+                              style={{ marginRight: "auto" }}
+                            >
+                              <p
+                                className="font-type-menu  "
+                                onClick={() =>
+                                  handle_click_download(
+                                    json_file_info,
+                                    backEndURL
+                                  )
+                                }
+                              >
+                                Download JSON
+                              </p>
+                              <DownloadIconButton className="icon-type1 " />{" "}
+                            </button>
+                          </div>
 
+                          <div
+                            className=""
+                            style={{ display: "flex", alignItems: "center" }}
+                          >
+                            {module_logo === "" ? null : (
+                              <>
+                                <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
+                                  By:
+                                </p>{" "}
+                                <img
+                                  src={module_logo}
+                                  alt="logo"
+                                  maxwidth="140px"
+                                  height="30"
+                                />
+                              </>
+                            )}
+                            <button
+                              className="btn-type2 "
+                              style={{ marginLeft: "auto" }}
+                              onClick={handleClose}
+                            >
+                              <p className="font-type-menu ">{buttonTitle}</p>{" "}
+                            </button>
+                          </div>
+                        </div>
+                      )}
             {json_file_info?.fileSize != "Too big" && (
               <div className="display-flex  mt-a" style={{}}>
                 {module_logo === "" ? null : (

@@ -54,10 +54,10 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 
-<div className='top-of-page-right'>
+{/* <div className='top-of-page-right'>
 <input className="input-type1 mr-a" placeholder="Search" />
 <button className="btn-type1 "><IconSearch className="icon-type1" />  </button>
-</div>
+</div> */}
 
 
 </div>

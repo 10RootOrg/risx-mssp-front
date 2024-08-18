@@ -1,7 +1,7 @@
 import React , {useState , useEffect ,useContext} from 'react';
 import { PreviewBox_type_module} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
-import { PreviewBox_velociraptor2} from '../PreviewBox_main_velociraptor2.js'
+import { PreviewBox_velociraptor2,PreviewBoxes_main_modules2} from '../PreviewBox_main_velociraptor2.js'
  
 
 
@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePage}) {
     set_visblePage("Modules");
-    const { all_Tools ,  backEndURL ,all_artifacts, set_all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
+    const { all_Tools ,  backEndURL , set_all_artifacts   ,all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
     const [show_only_this_tools, set_show_only_this_tools] = useState([]) 
     const navigate = useNavigate();
 
@@ -89,7 +89,7 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
 
 
 <div className="display-flex mb-b mt-b"><IcoModule style={{  }}/>
-<p  className="font-type-menu Color-White ml-a " style={{marginRight:"auto"}} >Artifact collectors</p>
+<p  className="font-type-menu Color-White ml-a " style={{marginRight:"auto"}} >Artifact Collectors & Modules</p>
  
 <Search_comp set_items_for_search={set_show_only_this_tools}    items_for_search={show_only_this_tools} />
  
@@ -99,16 +99,16 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
 <div className="display-flex"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules</p></div>
 </div> */}
 
-<div className=' mb-c' style={{}}>
-
+<div className=' mb-c' style={{ display:"flex" , flexDirection:"column" , gap:"var(--space-c)"}}>
 
 { all_artifacts   && all_artifacts.length != undefined   &&  typeof all_artifacts != "string" && Array.isArray(all_artifacts) && 
 
-<PreviewBox_velociraptor2 
+<PreviewBoxes_main_modules2 
 artifacts_modules_list={all_artifacts}
 
  box_type={"velociraptor"}
  main_headline= "Endpoints Modules"
+ main_subtitle="Select tools from the list and execute artifacts on endpoints"
 main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 logoAddress="./Logos/Velociraptor.svg"
 iconAddress="./icons/General-icons-g.svg"
@@ -116,23 +116,45 @@ lastrun="17/03/2024"
  />
 }
 
+{ show_only_this_tools   && show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && Array.isArray(show_only_this_tools) && 
+<>
+ 
+<PreviewBoxes_main_modules2
+artifacts_modules_list={show_only_this_tools.filter(tool => (tool.tool_id != "2000000"  && tool?.toolType === "module"  && tool?.ShowInUi === 1  )) }
+box_type={"modules"}
+main_headline= "Additional Artifacts"
+main_subtitle="Provides forensic timelines, vulnerability scans, device mapping, and credential management"
+main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
+logoAddress="./Logos/Velociraptor.svg"
+iconAddress="./icons/General-icons-j.svg"
+lastrun="17/03/2024"
+/>
+ 
+{/* {show_only_this_tools?.map((Info) => (Info.toolType === "link"))?.length != 0 && 
+<div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Modules</p></div>
+} */}
 
+<PreviewBoxes_main_modules2
+artifacts_modules_list={show_only_this_tools.filter(tool => (tool.tool_id != "2000000"  && tool?.toolType === "link"  && tool?.ShowInUi === 1  )) }
+box_type={"modules"} 
+main_headline= "Additional Modules"
+main_subtitle="This suite offers AD security, artifact analysis, threat intelligence, OSINT, sandboxing, hash management, darknet monitoring, credential leak detection, and incident response capabilities"
+main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
+logoAddress="./Logos/Velociraptor.svg"
+iconAddress="./icons/General-icons-k.svg"
+lastrun="17/03/2024"
+/>
+ 
 
-
-
-
-{/* <PreviewBox_velociraptor2 
- box_type={"velociraptor"}
-HeadLine= "Endpoints Modules"
-ReadMore= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
-
- /> */}
+</>
+}
+ 
 
 </div>
 
 
 
- 
+
 
  
  
@@ -161,8 +183,9 @@ flexWrap:"wrap",
 
 {/* <PreviewBox_velociraptor /> */}
  
-  {/* modules */}
-{show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
+
+
+{/* {show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
 {Info?.toolType === "module"   &&  Info?.tool_id != "2000000" &&  Info?.ShowInUi === 1 &&     
@@ -181,33 +204,27 @@ logoAddress_2={Info?.logoAddress_2}
 readMoreText={Info?.description_long}
 buttonTitle={Info?.buttonTitle}
 toolURL={Info?.toolURL}
-
 all_Tools={all_Tools}
- 
  backEndURL={backEndURL}
  unseen_alert_number={unseen_alert_number}
  width={"10%"}
             />   }
  
      </>   ))}
-</>)}
+</>)} */}
 
 
 </div>
 
-
+{/* 
 {show_only_this_tools?.map((Info) => (Info.toolType === "link"))?.length != 0 && 
 <div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Modules</p></div>
-}
-
+} */}
+{/* 
 <div className='resource-group-top-boxes mb-c' >
 
 
  
-
-
-
- {/* Tools_a */}
 {show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
@@ -236,23 +253,20 @@ all_Tools={all_Tools}
 </>)}
 
 
-{/* Tools_b */}
+ 
 {show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
     {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
 <>
 {Info?.toolType === "link" && Info?.BoxType === "Tools_b"  &&  Info?.ShowInUi === 1 &&        
   
 <PreviewBox_type_module
-// show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
 tool_id={Info?.tool_id}
 Info={Info}
- 
 HeadLine={Info?.headline}
 description={Info?.description_short}
 Toolname={Info?.Tool_name}
 StatusColor={Info?.Status}
 date={ "12/04/24"}
- 
 logoAddress_1={Info?.logoAddress_1}
 logoAddress_2={Info?.logoAddress_2}
  
@@ -287,7 +301,7 @@ all_Tools={all_Tools}
 
 
  
-</div>
+</div> */}
 
 
  {show_only_this_tools?.length > 4    &&   

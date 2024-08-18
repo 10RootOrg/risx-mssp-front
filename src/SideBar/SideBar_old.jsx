@@ -393,109 +393,107 @@ function SideBar({
 
           <div
             className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
-         
           >
             <button
-              className="btn-menu dropdown-menu-btn"
+              className="btn-menu"
               onClick={() => handleClick("dashboard-general")}
               disabled={visblePage === "dashboard-general"}
             >
               <div className="display-flex">
-                {/* <IcoDownload
+                <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
-                /> */}
+                />
                 <p className="font-type-menu ">General</p>
               </div>
-              {/* <div
+              <div
                 className="btn-menu-icon-placeholder"
                 style={{ scale: "0.95" }}
               >
-             
+                {" "}
                 <IcoResults />
-              </div> */}
+              </div>
             </button>
 
             <button
-              className="btn-menu dropdown-menu-btn"
+              className="btn-menu"
               onClick={() => handleClick("dashboard-forensics")}
               disabled={visblePage === "dashboard-forensics"}
             >
               <div className="display-flex">
-                {/* <IcoDownload
+                <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
-                /> */}
+                />
                 <p className="font-type-menu ">Forensics</p>
               </div>
-              {/* <div
+              <div
                 className="btn-menu-icon-placeholder"
                 style={{ scale: "0.95" }}
               >
                 <IcoResults />
-              </div> */}
+              </div>
             </button>
 
             <button
-              className="btn-menu dropdown-menu-btn"
+              className="btn-menu"
               onClick={() => handleClick("dashboard-threat-hunting")}
               disabled={visblePage === "dashboard-threat-hunting"}
             >
               <div className="display-flex">
-                {/* <IcoDownload
+                <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
-                /> */}
+                />
                 <p className="font-type-menu ">Threat Hunting</p>
               </div>
-              {/* <div
+              <div
                 className="btn-menu-icon-placeholder"
                 style={{ scale: "0.95" }}
               >
                 <IcoResults />
-              </div> */}
+              </div>
             </button>
 
             <button
-              className="btn-menu dropdown-menu-btn"
+              className="btn-menu"
               onClick={() => handleClick("dashboard-cti")}
               disabled={visblePage === "dashboard-cti"}
             >
               <div className="display-flex">
-                {/* <IcoDownload
+                <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
-                /> */}
-                <p className="font-type-menu ">Cyber Threat Intelligence</p>
+                />
+                <p className="font-type-menu ">CTI</p>
               </div>
-              {/* <div
+              <div
                 className="btn-menu-icon-placeholder"
                 style={{ scale: "0.95" }}
               >
                 <IcoResults />
-              </div> */}
+              </div>
             </button>
             {/* Cyber Threat Intelligence
         ASM     Attack Surface Management */}
             <button
-              className="btn-menu dropdown-menu-btn"
+              className="btn-menu"
               onClick={() => handleClick("dashboard-asm")}
               disabled={visblePage === "dashboard-asm"}
-             
             >
               <div className="display-flex">
-                {/* <IcoDownload
+                <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
-                /> */}
-                <p className="font-type-menu ">Attack Surface Management</p>
+                />
+                <p className="font-type-menu ">ASM</p>
               </div>
-              {/* <div
+              <div
                 className="btn-menu-icon-placeholder"
                 style={{ scale: "0.95" }}
               >
                 <IcoResults />
-              </div> */}
+              </div>
             </button>
 
             {/* <div
@@ -512,25 +510,25 @@ function SideBar({
             /> */}
 
             <button
-              className="btn-menu dropdown-menu-btn"
+              className="btn-menu"
               // onClick={() => handleClick("dashboard-risx")}
               onClick={() => handleNewWindow("2001000")}
               disabled={visblePage === "dashboard-risx"}
             >
               <div className="display-flex">
-                {/* <IcoDownload
+                <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
-                /> */}
+                />
                 <p className="font-type-menu ">Active Directory</p>
               </div>
-              {/* <div
+              <div
                 className="btn-menu-icon-placeholder"
                 style={{ scale: "0.95" }}
               >
-         
+                {" "}
                 <IcoLink />
-              </div> */}
+              </div>
             </button>
 
             {/* <button

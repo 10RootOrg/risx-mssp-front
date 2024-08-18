@@ -75,9 +75,9 @@
   --color-DB-Blue-Hover: rgb(0, 221, 255,0.15);
   --color-DB-Blue-Hover-Real: rgb(0, 221, 255,0.45);
   --color-Red: rgb(255, 0, 0); 
-  --color-Orange-Red: rgb(255, 80, 0); 
-  --color-Orange: rgb(255, 170, 0); 
-  --color-Yellow: rgb(255, 255, 0); 
+  --color-Orange-Red: #ff5000; 
+  --color-Orange: #ffaa00; 
+  --color-Yellow: #ffff00; 
   --color-Green: #00FF00; 
 
 

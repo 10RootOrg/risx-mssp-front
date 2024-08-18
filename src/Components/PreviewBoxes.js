@@ -2323,7 +2323,7 @@ function PreviewBox_respo_list_type6({ HeadLine , is_popup ,enable_hover, displa
 
 
             {read_more_view && <>
-              <p className="font-type-txt Color-Grey1 mt-a">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}..` : read_more}</p>
+              <p className="font-type-txt Color-Grey1 mt-a">  {read_more.length > description_max_length ? `${read_more.substring(0, description_max_length)}${description_max_length !=  0 ? ".." : ""}` : read_more}</p>
               <button className="btn-type3 mt-b" style={{ height:"12px",   padding:0}}   onClick={()=>handleReadMore("vovo")}   ><p className=' font-type-txt' >Read More</p><IconReadMore className="icon-type1 "   style={{height:"22px"}} />  </button>
             
             </>}

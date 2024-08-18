@@ -378,21 +378,7 @@ const LineStyleOpen ={
 </div>
 
             </div>
-                      {/* <p className="font-type-txt  reading-height Color-Grey1  " style={{ ...firstValueStayle,  marginLeft:'-9px',    }}> */}
-
-
-{/* <button className= {`btn-menu           ${isDropdownOpen && "btn-menu-is-active"}     `}      onClick={() => { setIsDropdownOpen(!isDropdownOpen)}} style={{     }} >
-<div className="display-flex" >
-<p className=    {`font-type-menu ml-a    mr-a    `}      style={{color: isDropdownOpen && "var(--color-DB-Blue-Glow)"} }        >{Info.UserInput?.Status}      </p>
-</div>
-<div  className="btn-menu-icon-placeholder"   style={{ scale: "0.95" }} >  <IcoModules />  </div>
-</button> */}
-    
-   {/* 
-     marginBottom:"var(--space-e)",
-     ...LineStyle ,  // ...firstValueStayle,  
-                   //  marginTop:"auto", marginBottom:"auto"
-      */}
+ 
  
 
 
@@ -471,24 +457,7 @@ const LineStyleOpen ={
       </div>
 </div>
 
-
-                {/* {isDropdownOpen &&
-                 ( <div style={{backgroundColor:"var(--color-Grey4)" ,
-                  marginBottom:"var(--space-a)"  ,
-                   borderRadius:"var(--elemtns-round-corner-medium)",
-                   position: "absolute", // Ensure the element is positioned
-                   zIndex: 1000 // Set a high z-index to ensure it's on top
-                   
-                   
-                   }}>  
-
-                    {StatusTags.map((y) => { if (y == Info.UserInput?.Status) return;
-                     return <button className="btn-menu"   onClick={() => SelectDropHandle(y)}>
-                    <p className="font-type-menu ml-a " >{y}</p>
-                    </button>;  })} 
-                     </div>     )} */}
-
-                  {/* </p> */}
+ 
                   </div>
                   </div>
 
@@ -554,7 +523,7 @@ const paragraph = typeof Info[key] !== "object" ? String(Info[key]) : JSON.strin
 <div className="mb-b">
 <button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ 
   // height:"12px", 
-     marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Close</p><IconCloseReadMore className="icon-type1 " style={{height:"24px"}} />  </button>  
+     marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Collapse</p><IconCloseReadMore className="icon-type1 " style={{height:"24px"}} />  </button>  
 
 <p className="font-type-txt  reading-height Color-Grey1 mb-b " style={fullValueStayle  }  >  {paragraph }     </p>
 
@@ -568,7 +537,7 @@ const paragraph = typeof Info[key] !== "object" ? String(Info[key]) : JSON.strin
 
               <>
               <p className="font-type-txt  reading-height Color-Grey1 " style={firstValueStayle  }  >  {paragraph.slice(0, maxCharacters)}      {paragraph?.length >  maxCharacters && "..." }   </p>
-              {paragraph?.length >  maxCharacters &&  <button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ height:"12px",    marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Open</p><IconOpenReadMore className="icon-type1 " style={{height:"24px"}} />  </button> }
+              {paragraph?.length >  maxCharacters &&  <button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ height:"12px",    marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Expand</p><IconOpenReadMore className="icon-type1 " style={{height:"24px"}} />  </button> }
               </>
 
               }
