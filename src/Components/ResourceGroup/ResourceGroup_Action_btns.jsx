@@ -7,6 +7,9 @@ import { ReactComponent as IconTrash } from '../icons/ico-trash.svg';
 import { ReactComponent as IconSettings } from '../icons/ico-settings.svg';
 import { ReactComponent as IconExpend } from '../icons/ico-expend.svg';
 import { ReactComponent as IconLine } from '../icons/ico-line.svg';
+import { ReactComponent as IconImport } from '../icons/ico-import.svg';
+import { ReactComponent as IconExport } from '../icons/ico-export.svg';
+
 
 function ResourceGroup_Action_btns({
   items_for_search,  
@@ -34,6 +37,14 @@ function ResourceGroup_Action_btns({
   btn_gear_show,
   btn_gear_action,
   btn_gear_id,
+
+  btn_import_show,
+  btn_import_action,
+   
+  btn_export_show,
+  btn_export_action,
+
+
 }) {
 
 
@@ -99,6 +110,15 @@ const filteredItems = all_items.filter(item => {
       {btn_add_many_show    &&   <button className="btn-type1" onClick={()=>btn_add_many_action(btn_add_many_id)}><IconPlusMany className="icon-type1" /></button>}
 
       {btn_add_single_show  && <button className="btn-type1" onClick={()=>btn_add_single_action(btn_add_single_value,btn_add_single_id)}><IconPlus className="icon-type1" /></button>}
+
+      {btn_import_show  && <button className="btn-type1" onClick={()=>btn_import_action()}><IconImport className="icon-type1" /></button>}
+
+      {btn_export_show  && <button className="btn-type1" onClick={()=>btn_export_action()}><IconExport className="icon-type1" /></button>}
+ 
+ 
+
+
+
 
      {btn_trash_show && <button className="btn-type1"><IconTrash className="icon-type1" onClick={()=>btn_trash_action(btn_trash_id)} />  </button>}
 

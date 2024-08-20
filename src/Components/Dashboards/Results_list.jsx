@@ -3,7 +3,7 @@ import React, { useState , useContext ,useEffect, useRef } from 'react'
 import { ReactComponent as IconBIG } from '../icons/ico-Results.svg';
 import { ReactComponent as IconNasted } from '../icons/nasted.svg';
 import { ReactComponent as Loader } from '../icons/loader_typea.svg';
-
+import { ReactComponent as IconInfo } from '../icons/ico-info.svg';
 
  import ResourceGroup_Action_btns from '../ResourceGroup/ResourceGroup_Action_btns.jsx';
  import ResourceGroup_buttomLine from '../ResourceGroup/ResourceGroup_buttomLine.jsx';
@@ -344,6 +344,13 @@ default:
 
 const timerRef = useRef(null);
 
+
+const handle_click_info = (info) => {
+  set_PopUp_Result_Line_info__txt(info);
+  set_PopUp_Result_Line_info__show(true);
+ };
+
+
 const handle_hover_result = (info) => {
  set_PopUp_Result_Line_info__txt(info);
  set_PopUp_Result_Line_info__show(true);
@@ -610,12 +617,13 @@ buttonTitle={PopUp_Request_info__txt.buttonTitle}
 
 {/* <div style={{width:"40px"}} />    */}
     <tr  className='   ' >
-      <th scope="col" className='font-type-menu    Color-Grey1 '  onClick={() => do_sort("SubModuleName")} style={{ paddingLeft:"34px"  }} >Module + Artifact</th>
-      <th scope="col" className='font-type-menu   Color-Grey1   ' onClick={() => do_sort("StartDate")} >Start Date</th>
-      <th scope="col" className='font-type-menu    Color-Grey1   ' onClick={() => do_sort("ExpireDate")} >Expire Date</th>
-      <th scope="col" className='font-type-menu    Color-Grey1    ' onClick={() => do_sort("Status")} >Status</th>
-      <th scope="col" className='font-type-menu    Color-Grey1    '   onClick={() => do_sort("ExpireDate")} style={{  width: status_bar_width ,textAlign:"center"}}>Status Display</th>
+      <th scope="col" className=''  onClick={() => do_sort("SubModuleName")} style={{ paddingLeft:"34px"  }} ><p className='font-type-menu  make-underline Color-Grey1'>Module + Artifact</p></th>
+      <th scope="col" className='' onClick={() => do_sort("StartDate")} ><p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></th>
+      <th scope="col" className='' onClick={() => do_sort("ExpireDate")} ><p className='font-type-menu  make-underline Color-Grey1'>Expire Date</p></th>
+      <th scope="col" className='' onClick={() => do_sort("Status")} ><p className='font-type-menu  make-underline Color-Grey1'>Status</p></th>
+      <th scope="col" className=''  style={{  width: status_bar_width ,textAlign:"center"}}><p className='font-type-menu  make-underline Color-Grey1'>Status Display</p></th>
     </tr>
+     {/* no-underline  */}
 
   </thead>
   
@@ -643,7 +651,8 @@ buttonTitle={PopUp_Request_info__txt.buttonTitle}
 </div>     
 
 
-<tr className=' ' key={index}
+<tr className=' list-general-line '  key={index}
+ 
 onClick={()=>handle_click_result(Info)} 
 onMouseEnter={() => handle_Mouse_Enter(Info)}
 onMouseLeave={handle_Mouse_Leave}
@@ -651,22 +660,24 @@ onMouseLeave={handle_Mouse_Leave}
  >
  
 
-<td className='   display-flex   ' style={{ marginLeft:"30px" }}  > 
+<td className='   display-flex  ' style={{ marginLeft:"30px" }}  > 
   {Info?.ModuleName  === ""   &&   Info?.SubModuleName  === ""  &&<p className='ml-b   font-type-txt   Color-Red   '> Undefined  </p> }{Info?.ModuleName && Info?.SubModuleName &&  (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">Velociraptor</p><p className="ml-a font-type-very-sml-txt   Color-Grey1  ">+</p><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.SubModuleName}</p> </>)}{Info?.ModuleName && !Info?.SubModuleName && (<><p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{Info?.ModuleName}</p></>)}
   </td>
 
- 
- <td className='  font-type-txt  Color-Grey1   '>{ Info?.StartDate &&  format_date_type_c(Info?.StartDate)}</td> 
- <td className='  font-type-txt  Color-Grey1  '>{ Info?.ExpireDate &&  format_date_type_c(Info?.StartDate)}</td> 
-<td className='  font-type-txt  Color-Grey1  '>{ Info?.Status}</td> 
 
-<td className="status-bar-and-time " style={{width:status_bar_width , justifyContent:"end"}}  >
+ 
+ <td className='  font-type-txt  Color-Grey1    list-general-value'>{ Info?.StartDate &&  format_date_type_c(Info?.StartDate)}</td> 
+ <td className='  font-type-txt  Color-Grey1   list-general-value'>{ Info?.ExpireDate &&  format_date_type_c(Info?.StartDate)}</td> 
+<td className='  font-type-txt  Color-Grey1   list-general-value'>{ Info?.Status}</td> 
+<td className="status-bar-and-time  list-general-value" style={{width:status_bar_width , justifyContent:"end"}}  >
    <div className="status-bar">
     <div className={`status-bar-fill ${Info?.Status}`}/>
     </div>
 <p className={`font-type-txt   time-general  ${Info?.TimeNote != "In Time" ?  'not-in-time' : 'in-time'}  `}>{Info?.TimeNote === "In Time" ? null : Info?.TimeNote}</p>
 
 </td>
+
+
 
 </tr>
 
@@ -695,25 +706,13 @@ onMouseLeave={handle_Mouse_Leave}
 
 
 {true &&  <>
-<div className='resource-group-list-keyNames mb-a'  >
+<div className='resource-group-list-keyNames mb-a'   >
 
-<div  className=' mr-b ml-a' style={{visibility:"hidden"}} >
-<label className="container"  style={{  marginTop:"5px"}} > 
-<input type="checkbox"   
-// checked={true}
-disabled={false}
-value={""}
- onChange={()=>console.log("Info")}
-     />
-<span className="checkmark"   ></span>
-</label>
-</div>
-
-             <div className='resource-group-list-item list-item-biggest  ' onClick={() => do_sort("SubModuleName")}>         <p className='font-type-menu  make-underline Color-Grey1  pl-b  '>Module + Artifact</p></div>
-              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div>
-              <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
-             <div className='resource-group-list-item list-item-small' onClick={() => do_sort("Status")}>                       <p className='font-type-menu  make-underline Color-Grey1 '>Status</p></div>
-             <div className='resource-group-list-item list-item-big  ' style={{ marginRight: "18px", width: status_bar_width }}><p className='font-type-menu  no-underline Color-Grey1  '>Status Display</p></div>
+<div className='resource-group-list-item list-item-biggest  ' style={{marginLeft:"43px"}}  onClick={() => do_sort("SubModuleName")}>         <p className='font-type-menu  make-underline Color-Grey1  pl-b  '>Module + Artifact</p></div>
+<div className='resource-group-list-item list-item-small' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  make-underline Color-Grey1'>Start Date</p></div>
+<div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Expire Date</p></div>
+<div className='resource-group-list-item list-item-small' onClick={() => do_sort("Status")}>                       <p className='font-type-menu  make-underline Color-Grey1 '>Status</p></div>
+<div className='resource-group-list-item list-item-big  ' style={{ marginRight: "60px", width: status_bar_width }}><p className='font-type-menu  no-underline Color-Grey1  '>Status Display</p></div>
 </div>
 
 <div className='resource-group-list-box mb-c' >
@@ -757,9 +756,12 @@ value={""}
 
 
 <div className='resource-group-list-line' key={index}
- onClick={()=>handle_click_result(Info)} 
-  onMouseEnter={() => handle_Mouse_Enter(Info)}
-  onMouseLeave={handle_Mouse_Leave}
+ onClick={()=>handle_click_result(Info)
+
+  
+ } 
+
+
   
     >
 
@@ -775,6 +777,12 @@ value={""}
 </div>
 </div>
 
+
+
+
+<div className="  mr-a" style={{ }}> <button className="btn-type1 "  onClick={()=>handle_click_info(Info)} ><IconInfo className="icon-type1" /></button> </div>
+
+
 </div>
  
  {/* .......  nasted best practice ........... */}
@@ -782,13 +790,19 @@ value={""}
 <>
 { Info?.Arguments?.Modules?.map((SubModuleINFO, index) => {
   return(
-  <div className='resource-group-list-line' 
+
+
+    <div style={{display:"flex"}}>
+  <div className="ml-a " style={{marginTop:'5px', marginRight:"12px"} }> <IconNasted/></div>
+
+  <div className='resource-group-list-line ' 
    
   key={index} onClick={()=>handle_click_result({...SubModuleINFO , ModuleName:"Velociraptor" , SubModulesCollection: Info?.SubModuleName })}>
  <div className='ml-a  resource-group-list-item display-flex  list-item-biggest' >
-   <div className="ml-a " style={{marginTop:'5px'}}> <IconNasted/></div>
+ 
   <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">{SubModuleINFO?.SubModuleName}</p>
  </div>
+
 {/* <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big'> </p>  */}
  {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p>  */}
  <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'></p> 
@@ -803,6 +817,9 @@ value={""}
  </div>
 
 
+ <div className="  mr-a ml-b" style={{ }}> <button className="btn-type1 "  onClick={()=>handle_click_info(Info)} ><IconInfo className="icon-type1" /></button> </div>
+
+</div>
 )})}
 </>
 }

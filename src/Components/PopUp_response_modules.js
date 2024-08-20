@@ -410,6 +410,8 @@ const handleColumnClick = (key) => {
                       Artifact={json_file_data?.SubModuleName}
                       HuntID={json_file_info?.huntid}
                       Status={json_file_info?.status}
+                      BaseLine={json_file_data?.Arguments?.ArtifactParameters?.Baseline}
+
                       StartDate={
                         json_file_data?.StartDate
                           ? format_date_type_c(json_file_data?.StartDate)
@@ -533,6 +535,9 @@ is_popup={true}
                         Artifact={json_file_data?.SubModuleName}
                         HuntID={json_file_info?.huntid}
                         Status={json_file_info?.status}
+
+
+                        BaseLine={json_file_data?.Arguments?.ArtifactParameters?.Baseline}
                         Error={
                           json_file_data?.Error === "" ? (
                             <>None</>

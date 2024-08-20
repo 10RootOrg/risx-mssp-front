@@ -3,12 +3,17 @@ import React, { useState,useEffect } from 'react'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import { ReactComponent as IconTrash } from '../icons/ico-trash.svg';
 import './Search_comp.css'
-function Search_comp({items_for_search,  set_items_for_search,}) {
+function Search_comp({items_for_search,  set_items_for_search, filter_string, set_filter_string }) {
  
-const [filter_string , set_filter_string] = useState("");
+// const [filter_string , set_filter_string] = useState("");
 const [all_items , set_all_items] = useState([]);
 
 useEffect(() => {
+
+
+ 
+
+
 if(items_for_search?.length  === undefined){return}
 if(all_items?.length  === undefined){return}
 
@@ -81,7 +86,7 @@ const handleClearFilter = () => {
 
 
       {/* marginLeft:"-35px" , */}
-      <div className='search_filter-btns' style={{ position: "absolute", right: "25px" , display: "flex", alignItems: "center", height: "100%"}}>
+      <div className='search_filter-btns' style={{ position: "absolute", right: "25px" , display: "flex", alignItems: "center", height: "auto"}}>
   
     {document?.querySelector('.search_filter')?.value === "" ? (
       <IconSearch className=" icon-type1 icon-type1-smaller" />

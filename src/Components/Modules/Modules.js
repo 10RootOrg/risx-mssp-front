@@ -1,8 +1,8 @@
 import React , {useState , useEffect ,useContext} from 'react';
 import { PreviewBox_type_module} from '../PreviewBoxes.js'
 import { PreviewBox_velociraptor} from '../PreviewBox_main_velociraptor.js'
-import { PreviewBox_velociraptor2} from '../PreviewBox_main_velociraptor2.js'
- 
+import { PreviewBox_velociraptor2,PreviewBoxes_main_modules2} from '../PreviewBox_main_velociraptor2.js'
+import { ReactComponent as IcoACtiveBlue } from "../icons/ico-menu-active-blue.svg";
 
 
 
@@ -20,8 +20,17 @@ import { useNavigate } from 'react-router-dom';
 
 function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePage}) {
     set_visblePage("Modules");
-    const { all_Tools ,  backEndURL ,all_artifacts, set_all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
-    const [show_only_this_tools, set_show_only_this_tools] = useState([]) 
+    const { all_Tools ,set_all_Tools,  backEndURL , set_all_artifacts   ,all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
+    const [all_artifacts_and_modules, set_all_artifacts_and_modules] = useState([]) 
+    const [filter_string , set_filter_string] = useState("");
+ 
+
+
+
+ 
+
+
+
     const navigate = useNavigate();
 
 
@@ -37,7 +46,7 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
             const res = await axios.get(`${backEndURL}/tools/all-velociraptor_artifacts`);
             if (res){
                
-                console.log("get_all_artifacts res.data:" , res.data);
+                // console.log("get_all_artifacts res.data:" , res.data);
           
          set_all_artifacts(res.data)
         }}
@@ -52,16 +61,26 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
 
   useEffect(() => { if (show_SideBar === false) {set_show_SideBar(true)}}, []);
 
-  useEffect(() => {
-    if(all_Tools.length === undefined   &&  typeof all_Tools === "string"){return}
-
-    set_show_only_this_tools(all_Tools)}, [all_Tools]);
 
 
-//      useEffect(() => {
+
+//   useEffect(() => {
+//     if(all_Tools.length === undefined   &&  typeof all_Tools === "string"){return}
+
+//     set_all_artifacts_and_modules(all_Tools)}, [all_Tools]);
+
+
+useEffect(() => {
+    // Check if all_Tools is a valid array and all_artifacts is also valid
+    if (Array.isArray(all_Tools) && all_Tools.length > 0 && Array.isArray(all_artifacts)  && all_artifacts.length > 0) {
+// console.log("all_artifacts sssssssssssssssssssss",all_artifacts,all_Tools);
+
+      set_all_artifacts_and_modules([...all_Tools, ...all_artifacts]);
+    }
+  }, [all_Tools, all_artifacts]);  // Include both as dependencies
 
  
-//  console.log(typeof all_Tools , "all_Tools  " , all_Tools) 
+//  console.log( "preview_list={all_artifacts_and_modules}" , all_artifacts_and_modules) 
 
 
       
@@ -79,7 +98,7 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
  
 
  {/* <div className='top-of-page-right'>
-<Search_comp set_items_for_search={set_show_only_this_tools}    items_for_search={show_only_this_tools} />
+<Search_comp set_items_for_search={set_all_artifacts_and_modules}    items_for_search={all_artifacts_and_modules} />
  </div> */}
 
 
@@ -89,9 +108,9 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
 
 
 <div className="display-flex mb-b mt-b"><IcoModule style={{  }}/>
-<p  className="font-type-menu Color-White ml-a " style={{marginRight:"auto"}} >Artifact collectors</p>
+<p  className="font-type-menu Color-White ml-a " style={{marginRight:"auto"}} >Artifact Collectors & Modules</p>
  
-<Search_comp set_items_for_search={set_show_only_this_tools}    items_for_search={show_only_this_tools} />
+<Search_comp set_items_for_search={set_all_artifacts_and_modules}    items_for_search={all_artifacts_and_modules}  filter_string={filter_string}  set_filter_string={set_filter_string} />
  
 </div>
 
@@ -99,200 +118,93 @@ function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePa
 <div className="display-flex"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules</p></div>
 </div> */}
 
-<div className=' mb-c' style={{}}>
-
+<div className=' mb-c' style={{ display:"flex" , flexDirection:"column" , gap:"var(--space-c)"}}>
 
 { all_artifacts   && all_artifacts.length != undefined   &&  typeof all_artifacts != "string" && Array.isArray(all_artifacts) && 
 
-<PreviewBox_velociraptor2 
-artifacts_modules_list={all_artifacts}
+<PreviewBoxes_main_modules2 
+// preview_list={all_artifacts}
+preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&   tool?.parent_id  === "2000000"   && tool?.ShowInUi === 1  )) }
 
  box_type={"velociraptor"}
  main_headline= "Endpoints Modules"
+ main_subtitle="Select tools from the list and execute artifacts on endpoints"
 main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 logoAddress="./Logos/Velociraptor.svg"
 iconAddress="./icons/General-icons-g.svg"
 lastrun="17/03/2024"
+is_filtering={filter_string != ""}
+all_artifacts_and_modules={all_artifacts_and_modules}
+set_all_artifacts_and_modules={set_all_artifacts_and_modules}
  />
 }
 
-
-
-
-
-
-{/* <PreviewBox_velociraptor2 
- box_type={"velociraptor"}
-HeadLine= "Endpoints Modules"
-ReadMore= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
-
- /> */}
-
-</div>
-
-
-
- 
-
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div className=' mb-c' style={{
-display: "inline-flex",
-gap: "var(--space-c)",
-flexWrap:"wrap",
-
-
-}}>
-
-
-{/* <PreviewBox_velociraptor /> */}
- 
-  {/* modules */}
-{show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
-    {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
+{ all_artifacts_and_modules   && all_artifacts_and_modules.length != undefined   &&  typeof all_artifacts_and_modules != "string" && Array.isArray(all_artifacts_and_modules) && 
 <>
-{Info?.toolType === "module"   &&  Info?.tool_id != "2000000" &&  Info?.ShowInUi === 1 &&     
  
-<PreviewBox_type_module
- Info={Info}
-iconAddress={Info?.iconAddress}
-tool_id={Info?.tool_id}
-HeadLine={Info?.headline}
-description={Info?.description_short}
-Toolname={Info?.Tool_name}
-StatusColor={Info?.Status}
-date={"14-04-2024"}
-logoAddress_1={Info?.logoAddress_1}
-logoAddress_2={Info?.logoAddress_2}
-readMoreText={Info?.description_long}
-buttonTitle={Info?.buttonTitle}
-toolURL={Info?.toolURL}
-
-all_Tools={all_Tools}
+<PreviewBoxes_main_modules2
+preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&    tool?.parent_id  != "2000000"  && tool?.toolType === "module"  && tool?.ShowInUi === 1  )) }
+box_type={"modules"}
+main_headline= "Additional Artifacts"
+main_subtitle="Forensic timelines, vulnerability scans, device mapping & credential management"
+main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
+logoAddress="./Logos/Velociraptor.svg"
+iconAddress="./icons/General-icons-k.svg"
+lastrun="17/03/2024"
+is_filtering={filter_string != ""}
+all_artifacts_and_modules={all_artifacts_and_modules}
+set_all_artifacts_and_modules={set_all_artifacts_and_modules}
+/>
  
- backEndURL={backEndURL}
- unseen_alert_number={unseen_alert_number}
- width={"10%"}
-            />   }
- 
-     </>   ))}
-</>)}
-
-
-</div>
-
-
-{show_only_this_tools?.map((Info) => (Info.toolType === "link"))?.length != 0 && 
+{/* {all_artifacts_and_modules?.map((Info) => (Info.toolType === "link"))?.length != 0 && 
 <div className="display-flex mb-b  "><IcoLink style={{ }}/><p  className="font-type-menu ml-a" >Modules</p></div>
+} */}
+ 
+<PreviewBoxes_main_modules2
+preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&    tool?.parent_id  != "2000000"   &&    tool?.toolType === "link"  && tool?.ShowInUi === 1  )) }
+box_type={"modules"} 
+main_headline= "Additional Modules"
+main_subtitle="This suite offers AD security, artifact analysis, threat intelligence, OSINT, sandboxing, hash management, darknet monitoring, credential leak detection, and incident response capabilities"
+main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
+logoAddress="./Logos/Velociraptor.svg"
+iconAddress="./icons/General-icons-j.svg"
+lastrun="17/03/2024"
+is_filtering={filter_string != ""}
+all_artifacts_and_modules={all_artifacts_and_modules}
+set_all_artifacts_and_modules={set_all_artifacts_and_modules}
+
+/>
+ 
+</>
 }
-
-<div className='resource-group-top-boxes mb-c' >
-
-
  
 
-
-
- {/* Tools_a */}
-{show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
-    {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
-<>
-{Info?.toolType === "link" && Info?.BoxType === "Tools_a"  &&  Info?.ShowInUi === 1 &&     
-  
-<PreviewBox_type_module
- Info={Info}
-iconAddress={Info?.iconAddress}
-tool_id={Info?.tool_id}
-HeadLine={Info?.headline}
-description={Info?.description_short}
-Toolname={Info?.Tool_name}
-StatusColor={Info?.Status}
-date={"14-04-2024"}
-logoAddress_1={Info?.logoAddress_1}
-logoAddress_2={Info?.logoAddress_2}
-readMoreText={Info?.description_long}
-buttonTitle={Info?.buttonTitle}
-toolURL={Info?.toolURL}
-all_Tools={all_Tools}
- backEndURL={backEndURL}
- width={"15%"}
-            />   }
- 
-     </>   ))}
-</>)}
-
-
-{/* Tools_b */}
-{show_only_this_tools.length != undefined   &&  typeof show_only_this_tools != "string" && ( <>
-    {Array.isArray(show_only_this_tools) && show_only_this_tools?.map((Info, index) =>(
-<>
-{Info?.toolType === "link" && Info?.BoxType === "Tools_b"  &&  Info?.ShowInUi === 1 &&        
-  
-<PreviewBox_type_module
-// show_tool_PreviewBoxs_type_a_b={show_tool_PreviewBoxs_type_a_b}
-tool_id={Info?.tool_id}
-Info={Info}
- 
-HeadLine={Info?.headline}
-description={Info?.description_short}
-Toolname={Info?.Tool_name}
-StatusColor={Info?.Status}
-date={ "12/04/24"}
- 
-logoAddress_1={Info?.logoAddress_1}
-logoAddress_2={Info?.logoAddress_2}
- 
-readMoreText={Info?.description_long}
-buttonTitle={Info?.buttonTitle}
-toolURL={Info?.toolURL}
-
-all_Tools={all_Tools}
-
- 
- backEndURL={backEndURL}
- unseen_alert_number={unseen_alert_number}
- width={"15%"}
-            />   }
-
-     </>      
-
-           
-           ))}   
-</>)}
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 </div>
 
+ 
+ 
 
- {show_only_this_tools?.length > 4    &&   
+
+
+{/* <button className="btn-type2 "
+//  onClick={handle_active_manual_process}
+    style={{
+        marginLeft:"auto",
+        marginBottom:"var(--space-a)"
+
+    }}
+    
+    
+    >
+   <div style={{display:"flex", alignItems:"center"   }}> <IcoACtiveBlue     style={{}}/>
+   <p className='font-type-menu'>Run Selected Jobs</p>
+   </div>  
+   </button>  */}
+
+
+ {/* {all_artifacts_and_modules?.length > 4    &&   
 <button className="btn-type4 mb-a"  onClick={()=>  navigate(`/${"dashboard-general"}`)}><p className='font-type-menu ' >Watch Results</p><IcoResults className="icon-type1 " />  </button>
- }
+ } */}
 </div>
 
  

@@ -616,6 +616,9 @@ width: 28px;
 }
 
 
+
+
+
   /* /////////////////////// */
 .btn-type2{
   height:36px;
@@ -642,6 +645,19 @@ width: 28px;
   color:var(--color-Grey1);
   
 }
+
+.btn-type2-no_btn , .btn-type2-no_btn:hover{
+background-color:var(--color-Grey4);
+cursor:auto;
+} 
+
+.btn-type2-no_btn p  , .btn-type2-no_btn   svg  path{
+  color: var(--color-Grey2);
+  stroke: var(--color-Grey2);
+  } 
+
+ 
+
 
 
 .btn-type3{
@@ -673,13 +689,48 @@ width: 28px;
     transition: var(--transition-fast);
   }
   
-  .btn-type4 p{color: var(--color-Grey2);  transition: var(--transition-fast);}
-  .btn-type4:hover p{color: var(--color-Grey1);}
-  .btn-type4 .icon-type1 path{
+
+
+  .btn-type5 p{color: var(--color-Grey1);  transition: var(--transition-fast);}
+  .btn-type5:hover p{color: var(--color-DB-Blue-Glow);}
+  .btn-type5 .icon-type1 path{
     transition: var(--transition-fast);
-    stroke: var(--color-Grey2)}
-  .btn-type4:hover .icon-type1  path{
     stroke: var(--color-Grey1)}
+  .btn-type5:hover .icon-type1  path{
+    stroke: var(--color-DB-Blue-Glow)}
+
+    .btn-type5{
+      display: flex;
+      background-color:transparent;
+      border:0;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+    
+    .btn-type5 p{color: var(--color-Grey1);  transition: var(--transition-fast);}
+    .btn-type5:hover p{color: var(--color-DB-Blue-Glow);}
+    .btn-type5 .icon-type1 path{
+      transition: var(--transition-fast);
+      stroke: var(--color-Grey1)}
+    .btn-type5:hover .icon-type1  path{
+      stroke: var(--color-DB-Blue-Glow)}
+  
+
+      .btn-type5-no-hover .icon-type1  path{
+        stroke: var(--color-Grey2);
+      }
+
+      .btn-type5-no-hover:hover{
+        background-color: transparent;
+        cursor: default;
+      }
+      .btn-type5-no-hover:hover .icon-type1  path{
+        stroke: var(--color-Grey2);
+       
+      }
+      
 
     .btn-type1-smaller{
       height:26px;
@@ -712,6 +763,13 @@ width: 28px;
         stroke: var(--color-Grey2)
        
       }
+
+
+
+
+
+
+
 
 .cutLongParagraph{
 

@@ -117,6 +117,32 @@ color: var(--color-DB-Blue-Glow);
           }
 
 
+
+          
+
+         .list-general-line{
+        /* display: flex;
+            justify-content: space-between;
+            gap: var(--space-b);
+          width: 100%;   */
+          /* padding-top: 1px;
+          padding-bottom: 1px;
+          height:calc((var(--space-d) - var(--space-a /2))  );
+         height:28px ;
+          align-items: center; */
+          transition: var(--transition-fast)
+         }
+
+         .list-general-line:hover{
+          background-color: var(--color-DB-Blue-Hover);
+          border-radius: var(--elemtns-round-corner-medium);
+          cursor: pointer;
+         }
+
+
+
+
+
   .resource-group-list-item{
  
  margin-right: var( --space-b);

@@ -825,8 +825,11 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             )
           }
    
-          function PreviewBox_type5_hunt_data_tabla({ HeadLine, is_popup, Artifact, HuntID, Status, Error,StartDate ,artifact_or_module}) {
+          function PreviewBox_type5_hunt_data_tabla({BaseLine, HeadLine, is_popup, Artifact, HuntID, Status, Error,StartDate ,artifact_or_module}) {
     const height_key_value = "18px"
+
+
+    // BaseLine
             return (
                 <div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}`}>
                     <div className='PreviewBox_HeadLine'>
@@ -839,15 +842,35 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
                             <p className='font-type-menu Color-White' style={{height: height_key_value}}>Start Date</p>
                             <p className='font-type-menu Color-White' style={{height: height_key_value}}>Hunt ID</p>
                             <p className='font-type-menu Color-White' style={{height: height_key_value}}>Status</p>
-                            <p className='font-type-menu Color-White' style={{height: height_key_value}}>Error</p>
+                             <p className='font-type-menu Color-White' style={{height: height_key_value}}>Error</p>
+                             {BaseLine  &&    <p className='font-type-menu Color-White' style={{height: height_key_value}}>BaseLine</p>  }
+
+
+   
+
                         </div>
 
                         <div className='display-flex flex-direction-column pop-up-basic-data pop-up-basic-data-values' style={{ gap: "6px" }}>
                             <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{Artifact}</p>
                             <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{ StartDate}</p>
                             <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{HuntID}</p>
-                            <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{Status}</p>
+        
+                             <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{Status}</p>
                             <p className='font-type-txt Color-Grey1' style={{height: height_key_value}}>{Error}</p>
+                            {BaseLine  &&  <p className='font-type-txt Color-Grey1'
+                            
+                            
+                       
+                            style={{
+                              height: "auto", // If you need a specific height, you can keep this; otherwise, remove it
+                              whiteSpace: 'normal', // Allows the text to wrap to the next line
+                              overflowWrap: 'break-word', // Ensures long words break and wrap within the container
+                              wordBreak: 'break-word', // Breaks long words that exceed the container width
+                              margin: 0, // Optional: Removes default margin if needed
+                              padding: 0, // Optional: Removes default padding if needed
+                            }}
+                            
+                            >{BaseLine}</p>}
                         </div>
 
                     </div>

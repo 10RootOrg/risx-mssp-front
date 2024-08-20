@@ -3,7 +3,7 @@ import { PreviewBox_type1_number, PreviewBox_type3_bar ,PreviewBox_type4_legend2
 import Results_list from './Results_list.jsx'
 
 
-import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
+ 
 import axios from 'axios';
 import './../ResourceGroup/ResourceGroup.css';
 import GeneralContext from '../../Context.js';
