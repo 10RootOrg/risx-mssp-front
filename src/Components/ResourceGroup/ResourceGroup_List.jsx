@@ -312,9 +312,6 @@ btn_gear_id={""}
 
 btn_collapse_show={true}
 btn_collapse_action={handle_back}
-
-
-
  />
 
 </div>

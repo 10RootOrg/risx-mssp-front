@@ -22,17 +22,7 @@ function Dashboard_Threat_Hunting({
 }) {
   set_visblePage("dashboard-threat-hunting");
 
-
-  // אז צריך להיות רשום בכותרת
-
-  // Eventlog Insights Tagged: High
   
-  // Windows Hardening Insights Tagged: High
-  
-  // Persistence Insights Tagged: High
-
-
-
   const {
     backEndURL,
     all_Resource_Types,
@@ -41,7 +31,7 @@ function Dashboard_Threat_Hunting({
     mssp_config_json,
   } = useContext(GeneralContext);
   const [display_this, set_display_this] = useState("");
-
+  const [dashboard_URL, set_dashboard_URL] = useState("");
   const [Preview_this_Results, set_Preview_this_Results] = useState([]);
 
 
@@ -50,15 +40,17 @@ function Dashboard_Threat_Hunting({
     if (show_SideBar === false) {
       set_show_SideBar(true);
     }
-    console.log(
-      "11111",
-      mssp_config_json?.moduleLinks?.[13]?.toolURL,
-
-      "22222",
-      mssp_config_json?.moduleLinks,
-
-    );
   }, []);
+
+
+  useEffect(() => {
+if (!mssp_config_json){return}
+const dashboardLinks = Array.isArray(mssp_config_json?.dashboardLinks) ? mssp_config_json.dashboardLinks : [];
+const threatHuntingURL = dashboardLinks.find(link => link.dashboardName === "threatHunting")?.dashboardURL;
+set_dashboard_URL(threatHuntingURL);
+  }, [mssp_config_json]);
+
+
 
   return (
     <>
@@ -74,7 +66,7 @@ function Dashboard_Threat_Hunting({
 
  
         </div>
-
+{/* 
         <div className="resource-group-top-boxes mb-c">
           <PreviewBox_type1_number_no_filters
             HeadLine="Eventlog Insights Tagged: High(*)"
@@ -151,28 +143,14 @@ function Dashboard_Threat_Hunting({
             txt_color={""}
           />
 
-{/* <PreviewBox_type1_number_no_filters
-            HeadLine="Persistence Insights Tagged: Сritical"
-            resource_type_id={null}
-            BigNumber={37} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
-            // SmallNumber={9}
-            SmallNumberTxt={"Persistence"}
-            StatusColor={"critical"}
-            date={"NA"} // date={format_date_type_a(last_updated?.Total) || "NA"}
-            is_popup={false}
-            display_this={display_this}
-            set_display_this={set_display_this}
-            display_this_value={"Overall Clients"}
-            txt_color={""}
-          /> */}
+        </div> */}
 
 
-
-
-        </div>
         <iframe
           // src="http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15h%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"
-          src={mssp_config_json?.moduleLinks?.[13]?.toolURL}
+          // src={mssp_config_json?.moduleLinks?.[13]?.toolURL}
+          src={dashboard_URL}
+
           height="1200"
           width="100%"
           className="kibana-iframe"

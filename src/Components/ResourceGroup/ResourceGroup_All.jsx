@@ -12,7 +12,7 @@ import { ReactComponent as IconFullName } from './asset-icons/ico-fullname.svg';
 import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
 import { ReactComponent as IconEmailDomain } from './asset-icons/ico-email-domain.svg';
 
-
+import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
 
  
 
@@ -86,6 +86,22 @@ function ResourceGroup_All({
   const [assets_list_from_db, set_assets_list_from_db] = useState([]);
 // console.log("all_Resource_Types ",all_Resource_Types);
 //  console.log("use_this_resource_type",use_this_resource_type);
+
+const [is_search, set_is_search] = useState(false);
+
+
+const import_assets_json = () =>{
+console.log("import assets json");
+}
+
+
+const export_assets_json = () =>{
+console.log("export assets json");
+}
+         
+
+
+
 
 const EditTools = (Info) =>{
 
@@ -370,32 +386,86 @@ set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
 
 
 {!Preview_List && <>
-  <div style={{display:"flex", flexDirection:"" , justifyContent:"center" , alignItems:"center" , padding:"0 var(--space-b)"}} className='mb-d'>
+
+  <div style={{display:"flex", flexDirection:"" , justifyContent:"center" , alignItems:"center" , padding:"0 var(--space-b)"}} className='mb-c'>
  
-    <IconBIG/>
+  <div 
+      // style={{visibility:"hidden"}}
+    ><IconBIG/></div>
   
-  <p className={`font-type-h4   Color-White ml-b`} style={{ width: "25%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
-  Asset type
+  <p className={`font-type-h4   Color-White ml-b`} style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+  Asset List
+  </p>
+  
+  <ResourceGroup_Action_btns
+//  set_item_types_list={set_item_types_list}
+//  set_item_tool_list={set_item_tool_list}
+// set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
+// popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
+
+set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
+
+items_for_search={assets_list_from_db}
+set_items_for_search={set_assets_list_from_db}
+set_is_search={set_is_search}
+
+btn_add_single_show={false}
+btn_add_single_action={""}
+btn_add_single_value={"add"}
+btn_add_single_id={""}
+
+btn_add_many_show={false} 
+btn_add_many_action={""}
+btn_add_many_id={""}
+
+btn_trash_show={false} 
+btn_trash_action={""}
+btn_trash_id={"tmp"}
+
+btn_gear_show={false} 
+btn_gear_action={""}
+btn_gear_id={""}
+
+btn_import_show={true} 
+btn_import_action={import_assets_json}
+ 
+btn_export_show={true} 
+btn_export_action={export_assets_json}
+
+btn_collapse_show={false}
+btn_collapse_action={""}
+ />
+    
+ 
+         
+
+
+
+    
+    </div>
+
+
+  <div style={{display:"flex", flexDirection:"" , justifyContent:"center" , alignItems:"center" , padding:"0 var(--space-b)"}} className='mb-b '>
+ 
+    <div 
+     style={{visibility:"hidden"}}
+    ><IconBIG/></div>
+  
+  <p className={`font-type-menu Color-Grey1 ml-b`} style={{ width: "25%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
+  Type  
   </p>
   
   <p className={`font-type-txt Color-Grey1 ml-b`} style={{ width: "60%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
     {/* Description */}
   </p>
   
-  <p className={`font-type-menu Color-Grey1 ml-b`} style={{ width: "5%",textAlign:"center" }}>
+  <p className={`font-type-menu Color-Grey1  ml-b`} style={{ width: "5%",textAlign:"center" }}>
     Count
   </p>
   
-  <p className={`font-type-menu  Color-White`} style={{ width: "10%",overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" ,textAlign:"right" }}>
+  <p className={`font-type-menu  Color-Grey1`} style={{ width: "10%",overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" ,textAlign:"right" }}>
   Last Update
   </p>
-    
-    
-    
-    
-    
-    
-    
     
     
     </div>

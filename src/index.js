@@ -8,6 +8,9 @@ import { ContextProvider}from './Context'
 // import GeneralContext from './Context';
 import SideBar from './SideBar/SideBar'
 import Modules from './Components/Modules/Modules'
+// import Modules2 from './Components/Modules/Modules2'
+
+
 import ResourceGroup from './Components/ResourceGroup/ResourceGroup'
 import Alerts from './Components/Alerts/Alerts_main'
 
@@ -60,7 +63,10 @@ export default function App() {
            <Route path="/" element={<Navigate replace to="/login" />} />
           <Route path="login"               element={<Login              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}/>} />
           <Route path="assets"              element={<ResourceGroup      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
+
           <Route path="Modules"             element={<Modules            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} />
+          {/* <Route path="Modules2"             element={<Modules2           show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} /> */}
+
           <Route path="alerts"              element={<Alerts             show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} />
           <Route path="users"               element={<Users              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
 
