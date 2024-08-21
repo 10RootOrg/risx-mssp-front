@@ -937,9 +937,9 @@ onClick={() => {
 
 
 <td >
-  <div style={{display:"flex" , flexDirection:"column"  , alignItems:"center" , justifyContent:"center"}}>
-  <button  className="btn-type5" onClick={()=>change_order(Info,-1)}><p className='font-type-menu'  style={{ }}>+</p> </button>
-  <button  className="btn-type5" onClick={()=>change_order(Info,+1)}><p className='font-type-menu'  style={{ }}>-</p> </button>
+  <div style={{display:"flex" , flexDirection:"column"  , alignItems:"center" , justifyContent:"center"  }}>
+  <button  className="btn-type5" onClick={()=>change_order(Info,-1)}><p className='font-type-menu'  style={{height:"15px" }}>+</p> </button>
+  <button  className="btn-type5" onClick={()=>change_order(Info,+1)}><p className='font-type-menu'  style={{ height:"15px"}}>-</p> </button>
   </div>
   </td> 
 

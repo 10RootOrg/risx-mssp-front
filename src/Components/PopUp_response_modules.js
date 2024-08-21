@@ -886,12 +886,17 @@ display_this_value={"prime_data"}
               const cellColor = (() => {
                 if (typeof value === 'string') {
                   const lowerValue = value.toLowerCase();
-                  if (lowerValue === 'critical') return 'var(--color-Red)';
-                  if (lowerValue === 'high') return 'var(--color-Orange-Red)';
+                  if (lowerValue === 'critical') return 'var(--alert-color-critical)';
+                  if (lowerValue === 'high') return 'var(--alert-color-high)';
+                  if (lowerValue === 'medium') return 'var(--alert-color-medium)';
+                  if (lowerValue === 'low') return 'var(--alert-color-low)';
+                  if (lowerValue === 'failed') return 'var(--color-Orange-Red)';
+                  if (lowerValue === 'passed') return 'var(--alert-color-no-alert)';
+                
                 }
                 return 'var(--color-Grey1)'; // Default color
               })();
-
+        
               return (
                 <td
                   key={header}
@@ -904,7 +909,7 @@ display_this_value={"prime_data"}
                 >
                   <span
                     className="cell-content font-type-txt"
-                    style={{ color: cellColor }}
+                    style={{ color:header === "Severity" ? cellColor : 'var(--color-Grey1)' }}
                   >
                     {renderValue}
                   </span>

@@ -80,13 +80,7 @@ function SideBar({
     });
 
     const [PopUp_Confirm_Run_selected__show, set_PopUp_Confirm_Run_selected__show] = useState(false);
-    const [PopUp_Confirm_Run_selected__txt, set_PopUp_Confirm_Run_selected__txt] = useState({
-      HeadLine:"Check and Confirm",
-      paragraph:"the activation of the selected modules",
-      buttonTrue:"Run",
-      buttonFalse:"Cancel"
-    });
-
+ 
 
  
   const [download_drop_down, set_download_drop_down] = useState(false);
@@ -310,10 +304,6 @@ function SideBar({
       <PopUp_Confirm_Run_selected
       popUp_show={PopUp_Confirm_Run_selected__show}
       set_popUp_show={set_PopUp_Confirm_Run_selected__show}
-      HeadLine={PopUp_Confirm_Run_selected__txt.HeadLine}
-      paragraph={PopUp_Confirm_Run_selected__txt.paragraph} 
-      button_True_text={PopUp_Confirm_Run_selected__txt.buttonTrue}
-      button_False_text={PopUp_Confirm_Run_selected__txt.buttonFalse}
      True_action={handle_active_manual_process}
      False_action={handle_cancel_active_manual_process}
       /> }
