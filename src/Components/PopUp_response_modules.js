@@ -185,6 +185,7 @@ const handleHeaderClick = () => {
 const handleColumnClick = (key) => {
   setExpandedColumn(expandedColumn === key ? null : key);
 };
+
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
     if (file?.fileSize === "Too big") {
@@ -472,15 +473,15 @@ is_popup={true}
                     />
 
                     <PreviewBox_type1_number_no_filters
-                      HeadLine="High"
+                      HeadLine="Severity High"
                       resource_type_id={null}
                       BigNumber={
                         aggregate_macro_data?.["Count of High"] !== undefined
                           ? aggregate_macro_data["Count of High"]
                           : "NA"
                       }
-                      SmallNumberTxt={"Total"}
-                      SmallNumber={`${aggregate_macro_data?.Failed_Test_Number_of_tests[1]}`}
+                      SmallNumberTxt={"TestResult Failed"}
+                      // SmallNumber={`${aggregate_macro_data?.Failed_Test_Number_of_tests[1]}`}
                       // SmallNumber={ aggregate_macro_data?.severity_Counts  &&  aggregate_macro_data?.severity_Counts.length > 0 &&  aggregate_macro_data?.severity_Counts.reduce((a, b) => a + b, 0) || "NA"     }
                       StatusColor="High"
                       date={"NA"}
@@ -495,7 +496,7 @@ is_popup={true}
                     />
 
                     <PreviewBox_type1_number_no_filters
-                      HeadLine="Critical"
+                      HeadLine="Severity Critical"
                       resource_type_id={null}
                       BigNumber={
                         aggregate_macro_data?.["Count of Critical"] !==
@@ -503,8 +504,8 @@ is_popup={true}
                           ? aggregate_macro_data["Count of Critical"]
                           : "NA"
                       }
-                      SmallNumberTxt={"Total"}
-                      SmallNumber={`${aggregate_macro_data?.Failed_Test_Number_of_tests[1]}`}
+                      SmallNumberTxt={"TestResult Failed"}
+                      // SmallNumber={`${aggregate_macro_data?.Failed_Test_Number_of_tests[1]}`}
                       // SmallNumber={ aggregate_macro_data?.severity_Counts  &&  aggregate_macro_data?.severity_Counts.length > 0 &&  aggregate_macro_data?.severity_Counts.reduce((a, b) => a + b, 0) || "NA"     }
                       StatusColor="Critical"
                       date={"NA"}
@@ -885,12 +886,17 @@ display_this_value={"prime_data"}
               const cellColor = (() => {
                 if (typeof value === 'string') {
                   const lowerValue = value.toLowerCase();
-                  if (lowerValue === 'critical') return 'var(--color-Red)';
-                  if (lowerValue === 'high') return 'var(--color-Orange-Red)';
+                  if (lowerValue === 'critical') return 'var(--alert-color-critical)';
+                  if (lowerValue === 'high') return 'var(--alert-color-high)';
+                  if (lowerValue === 'medium') return 'var(--alert-color-medium)';
+                  if (lowerValue === 'low') return 'var(--alert-color-low)';
+                  if (lowerValue === 'failed') return 'var(--color-Orange-Red)';
+                  if (lowerValue === 'passed') return 'var(--alert-color-no-alert)';
+                
                 }
                 return 'var(--color-Grey1)'; // Default color
               })();
-
+        
               return (
                 <td
                   key={header}
@@ -903,7 +909,7 @@ display_this_value={"prime_data"}
                 >
                   <span
                     className="cell-content font-type-txt"
-                    style={{ color: cellColor }}
+                    style={{ color:header === "Severity" ? cellColor : 'var(--color-Grey1)' }}
                   >
                     {renderValue}
                   </span>

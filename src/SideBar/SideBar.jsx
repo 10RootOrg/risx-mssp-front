@@ -21,6 +21,7 @@ import {
   PopUp_Error,
   PopUp_All_Good,
   PopUp_Under_Construction,
+  PopUp_Confirm_Run_selected
 } from "../Components/PopUp_Smart";
 
 import GeneralContext from "../Context";
@@ -31,10 +32,10 @@ import DownloadProgressBarItem from "./DownloadProgressBarItem";
 function SideBar({
   visblePage,
   set_visblePage,
-  unseen_alert_number,
-  set_unseen_alert_number,
-  isMainProcessWork,
-  set_isMainProcessWork,
+  // unseen_alert_number,
+  // set_unseen_alert_number,
+  // isMainProcessWork,
+  // set_isMainProcessWork,
 }) {
   // const [isHovered, setIsHovered] = useState(false);
   // const [unseen_alert_number, set_unseen_alert_number] = useState(0)
@@ -43,15 +44,15 @@ function SideBar({
   const [user_name, set_user_name] = useState("user");
   const {
     backEndURL,
-    user_id,
     moduleLinks,
     front_IP,
-    front_URL,
-    mssp_config_json,
     DownloadProgressBar,
     setDownloadProgressBar,
-    DownloadList,
     setDownloadList,
+    // DownloadList,
+    // front_URL,
+    // mssp_config_json,
+    // user_id,
   } = useContext(GeneralContext);
 
   const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
@@ -78,6 +79,10 @@ function SideBar({
       buttonTitle: "Close",
     });
 
+    const [PopUp_Confirm_Run_selected__show, set_PopUp_Confirm_Run_selected__show] = useState(false);
+ 
+
+ 
   const [download_drop_down, set_download_drop_down] = useState(false);
   const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
 
@@ -212,7 +217,11 @@ function SideBar({
     set_PopUp_Error____show(true);
   };
 
+
+
+
   const handle_active_manual_process = async () => {
+    set_PopUp_Confirm_Run_selected__show(false)
     console.log("handle_active_manual_process");
     try {
       const res = await axios.get(
@@ -224,9 +233,6 @@ function SideBar({
       if (res.data) {
         console.log("handle_active_manual_process - data", res?.data);
         console.log("handle_active_manual_process - status", res?.status);
-        // console.log("handle_active_manual_process - message", res?.data?.message);
-        // console.log("handle_active_manual_process - success", res?.data?.success);
-        
         if (res?.data?.success === true) {
           console.log("A Manual Process has Started to run"  , "message;" , res?.data?.message);
           set_PopUp_All_Good__txt({
@@ -234,8 +240,6 @@ function SideBar({
             paragraph: "A Manual Process has Started to run",
             // paragraph: res?.data?.message,
             buttonTitle: "Close",
-
-
           });
           set_PopUp_All_Good__show(true);
 
@@ -257,8 +261,6 @@ function SideBar({
         buttonTitle: "Close",
       });
       set_PopUp_Error____show(true);
-
-      // The Manual process could not be started. Error Message: 
       console.log("catch handle_active_manual_process - data", err?.response?.data);
       // console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
       // console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
@@ -266,6 +268,12 @@ function SideBar({
       console.log(err);
     }
   };
+
+  const handle_cancel_active_manual_process = () => {
+    console.log('handle_cancel_active_manual_process item...');
+     set_PopUp_Confirm_Run_selected__show(false)
+  };
+
 
   useEffect(() => {
     const name = localStorage.getItem("username");
@@ -288,6 +296,22 @@ function SideBar({
 
   return (
     <div className="side-bar-desktop-out">
+
+
+
+
+{PopUp_Confirm_Run_selected__show &&
+      <PopUp_Confirm_Run_selected
+      popUp_show={PopUp_Confirm_Run_selected__show}
+      set_popUp_show={set_PopUp_Confirm_Run_selected__show}
+     True_action={handle_active_manual_process}
+     False_action={handle_cancel_active_manual_process}
+      /> }
+
+
+
+
+
       {PopUp_Under_Construction__show && (
         <PopUp_Under_Construction
           popUp_show={PopUp_Under_Construction__show}
@@ -797,8 +821,10 @@ function SideBar({
 
 
 
-<button className="btn-type2" onClick={handle_active_manual_process}
-  
+{/* <button className="btn-type2" onClick={handle_active_manual_process} */}
+<button className="btn-type2" onClick={()=>set_PopUp_Confirm_Run_selected__show(true)}
+
+
     style={{
       width:"100%",
  paddingLeft:"var(--space-a) "
@@ -808,23 +834,12 @@ function SideBar({
     //    ? "calc(var(--space-d) - 5px)"
     //  : undefined 
     }}
-    
-    
     >
    <div style={{display:"flex", alignItems:"center"   }}>
    <IcoACtiveBlue     style={{
   // height:"var(--space-c)" ,width:"var(--space-c)" ,
   marginRight:"var(--space-a)"  }}/>
-
-   <p className='font-type-menu'>Run Selected Jobs</p>
-
-
-
-
-
-
- 
-
+ <p className='font-type-menu'>Run Selected Jobs</p>
    </div>  
    </button> 
 

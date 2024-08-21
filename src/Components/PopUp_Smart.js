@@ -1265,8 +1265,6 @@ export const PopUp_Under_Construction = (props) => {
   );
 };
 
-
-
 export const PopUp_Result_Line_info = (props) => {
   const {
     Info,
@@ -1485,6 +1483,281 @@ export const PopUp_Result_Line_info = (props) => {
               >
                 <p className="font-type-menu ">Close</p> 
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export const PopUp_Confirm_Run_selected = (props) => {
+  const {
+ 
+    popUp_show,
+    set_popUp_show,
+ 
+    True_action,
+    False_action,
+  } = props;
+  const [active, setActive] = useState(false);
+  const [disable_buttons, set_disable_buttons] = useState(false);
+  const {   all_artifacts,all_Tools, } = useContext(GeneralContext);
+  const [allow_continue, set_allow_continue] = useState(false);
+
+
+  useEffect(() => {
+    if (popUp_show) {
+      setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+    }
+  }, [popUp_show]);
+
+
+  useEffect(() => {
+
+
+    if(!all_artifacts) {return}
+    if(!all_Tools) {return}
+
+
+    if(
+    all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" && 
+    all_Tools     && Array.isArray(all_Tools)      &&  all_Tools.length > 0 &&       typeof all_Tools !== "string"     && 
+    
+    all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  )).length === 0   &&   
+    all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)    )).length === 0  
+  ){console.log("dont go to python")  ;
+  }
+  else{set_allow_continue(true)}
+
+  }, [popUp_show,all_artifacts,all_Tools]);
+
+
+  function handleClickOutside(e) {
+    if (e.target.className === "PopUp-background") {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => False_action()); // Wait for animation to finish before removing
+    }
+  }
+
+  function handleClose() {
+    setActive(false); // Trigger exit animation
+    setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+  }
+
+ 
+const cell_height = "38px" 
+
+  
+  // useEffect(() => {
+
+  //   console.log(all_artifacts);
+    
+  //   const logotest = all_artifacts[0].logoAddress_1
+  //   console.log("logotest 11" ,logotest    );
+
+  //   const  Src = require( `${logotest}`)
+ 
+ 
+  //   set_logo_path(Src)
+  
+    
+  // }, [ ]);
+
+  return (
+    <>
+      {popUp_show && (
+        <div className={`PopUp-background`} onClick={handleClickOutside}>
+          <div
+            className={`PopUp-content  ${
+              active ? "popup-enter-active" : "popup-enter"
+            }`}
+            style={{ width: "auto"   ,minWidth:allow_continue ? "300px" : "auto", paddingBottom: " " }}
+          >
+            <div
+              className="display-flex justify-content-end  "
+              style={{ marginRight: "-40px" }}
+            >
+              <button className="PopUp-Close-btn" onClick={handleClose}>
+                <CloseButton className="PopUp-Close-btn-img" />{" "}
+              </button>
+            </div>
+
+
+    
+              {/* { logo_path  &&   <>
+                  
+            <p className="font-type-very-sml-txt   Color-Grey1 mr-a">By:</p>
+            <img
+              src={logo_path}
+              alt="logo"
+              maxwidth="140px"
+              height="30"
+           
+            />
+</>} */}
+
+{allow_continue ? 
+<SuccessIcon
+className="mb-a "
+alt="Icon"
+width="100px"
+height="70px"
+style={{ marginLeft: "-15px" }}
+/>
+            :
+<InfofulIcon
+className="mb-a "
+alt="Icon"
+width="100px"
+height="70px"
+style={{ marginLeft: "-15px" }}
+/> }
+    
+
+
+            <p className="font-type-h4 Color-White mb-a">{allow_continue ? "Confirm Selection"   : "Selection Required" }</p>
+            <p className="font-type-txt  reading-height Color-Grey1 mb-c">{allow_continue ?  "Please review and confirm your choices before activating them:"   : "Please select at least one module and artifact." }</p>
+
+
+            {/* <img src={ iconAddress ? require(`${ iconAddress}`) : undefined} alt="Icon" width="100%" height="80" className='mb-a'   />  */}
+
+          {allow_continue &&   
+            <div className="display-flex" style={{gap:"24px"  , alignItems:"flex-start"  ,flexDirection:"column"}}>
+{all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" && <>
+  <div style={{display:"flex"}}>
+  {all_artifacts.filter(tool => tool?.isActive === 1 || tool?.isActive === true).length > 0 && (
+  <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
+  <p className="font-type-txt reading-height Color-Grey1   mr-c"  >Artifacts:</p>
+   </div>)}
+
+<table className=' '  style={{ margin:0 , padding:0, border:0}}       >
+<tbody style={{ margin:0 , padding:0, border:0}}>
+
+
+{
+all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)    )).map((info, index) => (
+<>
+<tr key={index} className='font-type-menu Color-White' style={{ height: cell_height }}>
+<td className='pr-b' style={{marginLeft:"0", paddingLeft:0   }}>
+<img 
+src={info?.logoAddress_1 ? require(`${info?.logoAddress_1}`) : undefined} 
+alt="Icon" 
+style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px', marginTop:"4px" ,marginLeft:"0", paddingLeft:0  }} 
+/>
+</td>
+<td  className='pl-b'>{info?.headline}</td>
+</tr>
+</>
+))
+}
+
+</tbody>
+</table>
+
+</div>
+
+</>}
+
+
+{all_Tools && Array.isArray(all_Tools) &&  all_Tools.length > 0 &&   typeof all_Tools !== "string" && <>
+
+<div style={{display:"flex"}}>
+
+
+
+
+
+{/* {all_Tools.filter(tool => tool?.isActive === 1 || tool?.isActive === true).length > 0 && (
+
+  <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
+    <p className="font-type-txt reading-height Color-Grey1  mr-c"  >Modules:</p>
+
+     </div>
+)} */}
+
+{all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  )).length > 0   &&     (
+  <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
+  <p className="font-type-txt reading-height Color-Grey1   mr-c"  >Modules:</p>
+   </div>)}
+
+
+
+
+
+<table className=' '  style={{ margin:0 , padding:0, border:0}}       >
+<tbody style={{ margin:0 , padding:0, border:0}}>
+
+
+{
+all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  )).map((info, index) => (
+<>
+<tr key={index} className='font-type-menu Color-White' style={{ height:cell_height }}>
+<td className='pr-b' style={{marginLeft:"0", paddingLeft:0   }}>
+<img 
+src={info?.logoAddress_1 ? require(`${info?.logoAddress_1}`) : undefined} 
+alt="Icon" 
+style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px'  ,marginLeft:"0", paddingLeft:0  }} 
+/>
+</td>
+<td  className='pl-b'>{info?.headline}</td>
+</tr>
+</>
+))
+}
+
+</tbody>
+</table>
+
+</div>
+
+
+</>}
+
+</div>
+  }
+
+            <div className="display-flex mt-c" style={{}}>
+
+            <button
+                className="btn-type2"
+                disabled={disable_buttons}
+                style={{ marginLeft: "auto" }}
+                onClick={() => {
+                  False_action();
+                  set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
+                }}
+              >
+                <p className="font-type-menu ">{allow_continue ? "Cancel" : "Continue"}</p>{" "}
+              </button>
+{allow_continue && 
+
+<button
+className="btn-type2"
+disabled={disable_buttons}
+style={{ marginLeft: "10px" }}
+onClick={() => {
+  True_action();
+  set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
+}}
+>
+<p className="font-type-menu ">Run</p>{" "}
+</button>
+
+}
+              {/* <button
+                className="btn-type2"
+                disabled={disable_buttons}
+                style={{ marginLeft: "10px" }}
+
+                onClick={() => {
+                  True_action();
+                  set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
+                }}
+              >
+                <p className="font-type-menu ">Run</p>{" "}
+              </button> */}
+         
             </div>
           </div>
         </div>
