@@ -1,11 +1,10 @@
 {
-  "backendUrl": "http://40.69.58.105:5555",
+  "backendUrl": "http://localhost:5555",
   "old": "http://localhost:5555_http://40.69.58.105:5555",
   "expiryDate": "28-08-2024",
   "clientApi": "https://api.example.com/user",
   "examInnterval_minutes": 15,
   "moduleLinks": [
-
     {
       "toolName": "Velociraptor",
       "toolID": "2000000",
@@ -71,32 +70,25 @@
       "toolName": "MISP",
       "toolID": "2001012",
       "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com/"
-    },{
-      "toolName": "HayabusaDashboardUrl",
-      "toolID": "0",
-      "tmp_toolURL":     "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from:now-30d%2Fd,to:now))&show-time-filter=true&hide-filter-bar=true",
-      "toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15h%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"
-
     },
     {
-
+      "toolName": "HayabusaDashboardUrl",
+      "toolID": "0",
+      "tmp_toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from:now-30d%2Fd,to:now))&show-time-filter=true&hide-filter-bar=true",
+      "toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15h%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"
+    },
+    {
       "toolName": "LeakCheck",
       "toolID": "2001013",
       "toolURL": "https://leakcheck.io"
     }
   ],
 
-
   "dashboardLinks": [
     {
       "dashboardName": "threatHunting",
-      "dashboardURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/b118d331-2334-4da1-85d0-626610073555?embed=true&_g=(time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true&hide-filter-bar=true"
-      ,
+      "dashboardURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/b118d331-2334-4da1-85d0-626610073555?embed=true&_g=(time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true&hide-filter-bar=true",
       "dashboardURL_56": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15h%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"
-
-
-
-     }
-    
+    }
   ]
 }
