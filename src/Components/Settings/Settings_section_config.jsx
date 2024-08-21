@@ -82,7 +82,7 @@ function Settings_section_config({
       buttonTrue: "Yes",
       buttonFalse: "No",
     });
-    setPopUpYesFunc(false);
+    setPopUpYesFunc("config");
 
     set_PopUp_Are_You_Sure__show(true);
   };
@@ -100,6 +100,17 @@ function Settings_section_config({
     } catch (error) {
       console.log("Error in Reset Config", error);
     }
+  };
+
+  const DeleteResultHistory = async () => {
+    console.log("Delete History");
+    const res = await axios.get(`${backEndURL}/config/DeleteResultHistory`);
+    console.log("DeleteResultHistory res", res);
+    if (res.data == "Updated successfully") {
+      console.log("Updated successfully The Config");
+      get_config();
+    }
+    handleClose();
   };
 
   const handle_Save_config = () => {
@@ -241,7 +252,13 @@ function Settings_section_config({
           paragraph={PopUp_Are_You_Sure__txt.paragraph}
           button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
           button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
-          True_action={PopUpYesFunc ? HandleResetConfig : handle_Save_config}
+          True_action={
+            PopUpYesFunc == "Reset"
+              ? HandleResetConfig
+              : PopUpYesFunc == "History"
+              ? DeleteResultHistory
+              : handle_Save_config
+          }
           False_action={handle_Cancel_Save_config}
         />
       )}
@@ -266,7 +283,7 @@ function Settings_section_config({
                   className="btn-type4  btn-type4_careful  mt-b"
                   style={{ padding: 0 }}
                   onClick={() => {
-                    setPopUpYesFunc(true);
+                    setPopUpYesFunc("Reset");
                     set_PopUp_Are_You_Sure__txt({
                       HeadLine: "Reset config?",
                       paragraph:
@@ -283,7 +300,27 @@ function Settings_section_config({
                   </div>
                   <p className="font-type-menu mr-a">Reset</p>{" "}
                 </button>
+                <button
+                  className="btn-type4  btn-type4_careful  mt-b"
+                  style={{ padding: 0 }}
+                  onClick={() => {
+                    setPopUpYesFunc("History");
+                    set_PopUp_Are_You_Sure__txt({
+                      HeadLine: "Delete Request History?",
+                      paragraph:
+                        "Are you sure you want to Delete Request History if you do the history will not be recoverable?",
+                      buttonTrue: "Yes",
+                      buttonFalse: "No",
+                    });
 
+                    set_PopUp_Are_You_Sure__show(true);
+                  }}
+                >
+                  {/* <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
+                    <IconReverse className="icon-type1 " />
+                  </div> */}
+                  <p className="font-type-menu mr-a">Delete History</p>{" "}
+                </button>
                 {/* <button
                    className="btn-type4  btn-type4_careful  mt-b"
                   style={{ marginTop: 10 }}
