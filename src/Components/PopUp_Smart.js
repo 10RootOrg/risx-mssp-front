@@ -1492,3 +1492,104 @@ export const PopUp_Result_Line_info = (props) => {
     </>
   );
 };
+
+export const PopUp_Confirm_Run_selected = (props) => {
+  const {
+    HeadLine,
+    paragraph,
+    popUp_show,
+    set_popUp_show,
+    button_True_text,
+    button_False_text,
+    True_action,
+    False_action,
+  } = props;
+  const [active, setActive] = useState(false);
+  const [disable_buttons, set_disable_buttons] = useState(false);
+
+  useEffect(() => {
+    if (popUp_show) {
+      setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+    }
+  }, [popUp_show]);
+
+  function handleClickOutside(e) {
+    if (e.target.className === "PopUp-background") {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => False_action()); // Wait for animation to finish before removing
+    }
+  }
+
+  function handleClose() {
+    setActive(false); // Trigger exit animation
+    setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+  }
+
+  // function handleClose() {
+  //   // False_action();
+  //   setActive(false); // Trigger exit animation
+  //   setTimeout(() => False_action(), 100); // Wait for animation to finish before removing
+  // }
+
+  return (
+    <>
+      {popUp_show && (
+        <div className={`PopUp-background`} onClick={handleClickOutside}>
+          <div
+            className={`PopUp-content  ${
+              active ? "popup-enter-active" : "popup-enter"
+            }`}
+            style={{ width: "250px", paddingBottom: " " }}
+          >
+            <div
+              className="display-flex justify-content-end  "
+              style={{ marginRight: "-40px" }}
+            >
+              <button className="PopUp-Close-btn" onClick={handleClose}>
+                <CloseButton className="PopUp-Close-btn-img" />{" "}
+              </button>
+            </div>
+
+            <CarefulIcon
+              className="mb-a "
+              alt="Icon"
+              width="100px"
+              height="70px"
+              style={{ marginLeft: "-15px" }}
+            />
+
+            <p className="font-type-h4 Color-White mb-a">{HeadLine}</p>
+            <p className="font-type-txt  reading-height Color-White">
+              {paragraph}
+            </p>
+
+            <div className="display-flex mt-c" style={{}}>
+              <button
+                className="btn-type2"
+                disabled={disable_buttons}
+                style={{ marginLeft: "auto" }}
+                onClick={() => {
+                  True_action();
+                  set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
+                }}
+              >
+                <p className="font-type-menu ">{button_True_text}</p>{" "}
+              </button>
+              <button
+                className="btn-type2"
+                disabled={disable_buttons}
+                style={{ marginLeft: "10px" }}
+                onClick={() => {
+                  False_action();
+                  set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
+                }}
+              >
+                <p className="font-type-menu ">{button_False_text}</p>{" "}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
