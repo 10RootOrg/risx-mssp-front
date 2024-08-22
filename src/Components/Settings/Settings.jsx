@@ -7,7 +7,11 @@ import "./../Settings/Settings.css";
 import Settings_section_config from "./Settings_section_config.jsx";
 import Settings_section_ShowInUi from "./Settings_section_ShowInUi.jsx";
 import Settings_section_process from "./Settings_section_process.jsx";
-import Settings_section_edit_mssp_config_json from "./Settings_section_edit_mssp_config_json.jsx";
+import Settings_section_edit_mssp_config_json_paths  from "./Settings_section_edit_mssp_config_json_paths.jsx";
+// import Settings_section_edit_mssp_config_json_dashboards_paths from "./Settings_section_edit_mssp_config_json_dashboards_paths.jsx";
+
+
+
 import Settings_section_logs from "./Settings_section_logs.jsx";
 import Users from "../Users/Users.js"
 import { PopUp_Under_Construction} from '../PopUp_Smart.js'
@@ -188,8 +192,10 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
             <Settings_section_ShowInUi all_Tools={all_Tools} />
           )}
 
-          {Preview_This_comp == "Module paths" && (
-            <Settings_section_edit_mssp_config_json all_Tools={all_Tools} />
+          {Preview_This_comp == "Paths" && (<>
+            <Settings_section_edit_mssp_config_json_paths all_Tools={all_Tools} />
+             </>
+
           )}
 
           {Preview_This_comp == "Output Sample" && (

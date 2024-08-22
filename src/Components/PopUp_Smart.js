@@ -1524,8 +1524,8 @@ export const PopUp_Confirm_Run_selected = (props) => {
     all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" && 
     all_Tools     && Array.isArray(all_Tools)      &&  all_Tools.length > 0 &&       typeof all_Tools !== "string"     && 
     
-    all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  )).length === 0   &&   
-    all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)    )).length === 0  
+    all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  && tool?.tool_id != "2000000"  )).length === 0   &&   
+    all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.tool_id != "2000000"   )).length === 0  
   ){console.log("dont go to python")  ;
   }
   else{set_allow_continue(true)}
@@ -1624,9 +1624,9 @@ style={{ marginLeft: "-15px" }}
 
           {allow_continue &&   
             <div className="display-flex" style={{gap:"24px"  , alignItems:"flex-start"  ,flexDirection:"column"}}>
-{all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" && <>
+{all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" &&  <>
   <div style={{display:"flex"}}>
-  {all_artifacts.filter(tool => tool?.isActive === 1 || tool?.isActive === true).length > 0 && (
+  {all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.tool_id != "2000000"   )).length > 0 && (
   <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
   <p className="font-type-txt reading-height Color-Grey1   mr-c"  >Artifacts:</p>
    </div>)}
@@ -1636,7 +1636,7 @@ style={{ marginLeft: "-15px" }}
 
 
 {
-all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)    )).map((info, index) => (
+all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.tool_id != "2000000"   )).map((info, index) => (
 <>
 <tr key={index} className='font-type-menu Color-White' style={{ height: cell_height }}>
 <td className='pr-b' style={{marginLeft:"0", paddingLeft:0   }}>
@@ -1676,7 +1676,7 @@ style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px', marginTop:"4px"
      </div>
 )} */}
 
-{all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  )).length > 0   &&     (
+{all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"   && tool?.tool_id != "2000000" )).length > 0   &&     (
   <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
   <p className="font-type-txt reading-height Color-Grey1   mr-c"  >Modules:</p>
    </div>)}
@@ -1690,7 +1690,7 @@ style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px', marginTop:"4px"
 
 
 {
-all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  )).map((info, index) => (
+all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  && tool?.tool_id != "2000000"  )).map((info, index) => (
 <>
 <tr key={index} className='font-type-menu Color-White' style={{ height:cell_height }}>
 <td className='pr-b' style={{marginLeft:"0", paddingLeft:0   }}>

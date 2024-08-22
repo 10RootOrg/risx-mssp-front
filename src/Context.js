@@ -9,6 +9,7 @@ export function ContextProvider({ children }) {
   const [front_URL, set_front_URL] = useState("");
 
   const [moduleLinks, set_moduleLinks] = useState();
+  const [dashboardLinks, set_dashboardLinks] = useState();
   const [expiryDate, set_expiryDate] = useState("");
 
   const [examInnterval_minutes, set_examInnterval_minutes] = useState(2);
@@ -28,6 +29,7 @@ export function ContextProvider({ children }) {
         set_mssp_config_json(config);
         set_examInnterval_minutes(config.examInnterval_minutes);
         set_moduleLinks(config.moduleLinks);
+        set_dashboardLinks(config.dashboardLinks);
         set_expiryDate(config.expiryDate);
         set_backEndURL(config.backendUrl);
 
@@ -144,6 +146,7 @@ export function ContextProvider({ children }) {
         user_id,
         get_all_resource_types,
         moduleLinks,
+        dashboardLinks,
         examInnterval_minutes,
         expiryDate,
         front_IP,
