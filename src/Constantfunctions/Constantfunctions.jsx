@@ -83,7 +83,8 @@ const check_main_process_status = async () =>{
 console.log( "check_main_process_status22" , res.data);
 
 if(res.data === false)
-  { console.log("process ===" ,  res.data);
+  {
+     console.log("Ineraval is off" ,  res.data);
 
   set_PopUp_Are_You_Sure__txt({
     HeadLine:"Ineraval is off",

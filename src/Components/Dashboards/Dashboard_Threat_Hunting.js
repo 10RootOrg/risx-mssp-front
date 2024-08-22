@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import "./../ResourceGroup/ResourceGroup.css";
 import "./Dashboard_iframes.css";
-
+import { fix_path} from "../Dashboards/functions_for_dashboards.js";
 
 
 import GeneralContext from "../../Context.js";
@@ -29,13 +29,13 @@ function Dashboard_Threat_Hunting({
     all_artifacts,
     user_id,
     mssp_config_json,
+    front_IP,
+    front_URL
   } = useContext(GeneralContext);
-  const [display_this, set_display_this] = useState("");
+
   const [dashboard_URL, set_dashboard_URL] = useState("");
-  const [Preview_this_Results, set_Preview_this_Results] = useState([]);
 
 
- 
   useEffect(() => {
     if (show_SideBar === false) {
       set_show_SideBar(true);
@@ -43,14 +43,25 @@ function Dashboard_Threat_Hunting({
   }, []);
 
 
+//   useEffect(() => {
+// if (!mssp_config_json){return}
+// const dashboardLinks = Array.isArray(mssp_config_json?.dashboardLinks) ? mssp_config_json.dashboardLinks : [];
+// const threatHuntingURL = dashboardLinks.find(link => link.dashboardName === "Threat Hunting")?.dashboardURL;
+// set_dashboard_URL(threatHuntingURL);
+//   }, [mssp_config_json]);
+
   useEffect(() => {
-if (!mssp_config_json){return}
-const dashboardLinks = Array.isArray(mssp_config_json?.dashboardLinks) ? mssp_config_json.dashboardLinks : [];
-const threatHuntingURL = dashboardLinks.find(link => link.dashboardName === "threatHunting")?.dashboardURL;
-set_dashboard_URL(threatHuntingURL);
-  }, [mssp_config_json]);
+    if (!mssp_config_json){return}
+    const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks) ? mssp_config_json.moduleLinks : [];
+    // console.log("moduleLinks" , moduleLinks);
+    
+    const threatHuntingURL = moduleLinks.find(link => link.toolName === "Threat Hunting Dashboard")?.toolURL;
+    // console.log("threatHuntingURL" , threatHuntingURL);
 
-
+    const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);  
+    set_dashboard_URL(fixed_path);
+      }, [mssp_config_json]);
+    
 
   return (
     <>
@@ -144,17 +155,15 @@ set_dashboard_URL(threatHuntingURL);
           />
 
         </div> */}
-
-
-        <iframe
-          // src="http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15h%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"
-          // src={mssp_config_json?.moduleLinks?.[13]?.toolURL}
+ 
+       <iframe
+ 
           src={dashboard_URL}
 
           height="1200"
           width="100%"
           className="kibana-iframe"
-        ></iframe>
+        ></iframe>  
         {/*   <div className="resource-group-all-the-Lists">
          <Results_list Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} /> 
         </div>*/}

@@ -18,8 +18,8 @@ function Settings_Menu({Preview_This_in_menu,  Preview_This_comp ,handle_Click_B
       is_nasted: false,
     },
     {
-      preview_name: "Module paths",
-      value: "Module paths",
+      preview_name: "Paths",
+      value: "Paths",
       is_nasted: false,
       father_comp:''
     },

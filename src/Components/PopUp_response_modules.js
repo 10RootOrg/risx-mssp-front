@@ -132,6 +132,29 @@ const handle_download_Json_File = (
   }
 };
 
+
+const cellColor =  (value)=>   {
+  if (typeof value === 'string') {
+    const lowerValue = value.toLowerCase();
+        if (lowerValue === 'critical') return 'var(--alert-color-critical)';
+    else if (lowerValue === 'high') return 'var(--alert-color-high)';
+    else if (lowerValue === 'medium') return 'var(--alert-color-medium)';
+    else if (lowerValue === 'low') return 'var(--alert-color-low)';
+    else if (lowerValue === 'info') return 'var(--alert-color-no-alert)';
+    else   return 'var(--color-Grey1)'; // Default color
+  }
+  return 'var(--color-Grey1)'; // Default color
+} 
+// --alert-color-critical:var(--color-Red);
+// --alert-color-high:var(--color-Orange-Red);
+// --alert-color-medium:var(--color-Orange);
+// --alert-color-low:var(--color-Yellow);
+// --alert-color-no-alert:var(--color-Green);
+// --alert-color-none:var(--color-Grey2);
+
+
+
+
 export const PopUp_For_velociraptor_response = (props) => {
   const {
     HeadLine,
@@ -1102,7 +1125,8 @@ export const PopUp_For__Nuclei__response = (props) => {
   } = useContext(GeneralContext);
   const [module_logo, set_module_logo] = useState("");
   const [display_data_type, set_display_data_type] = useState("prime_data");
-
+  const [severityNames, setSeverityNames] = useState(["Critical", "High", "Medium", "Low"]);
+  const [severityCount, setSeverityCount] = useState([0, 0, 0, 0]);
   console.log("json_file_info", json_file_info);
   console.log("json_file_data", json_file_data);
 
@@ -1129,6 +1153,52 @@ export const PopUp_For__Nuclei__response = (props) => {
       handle_download_Json_File(file, backEndURL);
     }
   };
+
+
+
+  useEffect(() => {
+    // Return early if json_file_info is not a non-empty array
+    if (!Array.isArray(json_file_info) || json_file_info.length === 0) {
+      return;
+    }
+
+    // Initialize counts for each severity level
+    const severityCounts = {
+      Critical: 0,
+      High: 0,
+      Medium: 0,
+      Low: 0
+    };
+
+    // Loop through the array and update severityCounts
+    json_file_info.forEach(item => {
+      if (item && item?.info?.severity) {
+        const severity = item?.info?.severity.toLowerCase(); // Normalize to lower case
+        if (severity === "critical") {
+          severityCounts.Critical++;
+        } else if (severity === "high") {
+          severityCounts.High++;
+        } else if (severity === "medium") {
+          severityCounts.Medium++;
+        } else if (severity === "low") {
+          severityCounts.Low++;
+        }
+      }
+    });
+
+    // Convert severityCounts to arrays for state
+    const counts = severityNames.map(name => severityCounts[name]);
+
+    // Update state with the new severity names and counts
+    setSeverityCount(counts);
+  }, [json_file_info]);
+
+
+
+
+console.log("severityNames",severityNames);
+console.log("severityCount",severityCount);
+
 
   useEffect(() => {
     if (
@@ -1179,7 +1249,7 @@ export const PopUp_For__Nuclei__response = (props) => {
           <div
             className={`PopUp-content`}
             style={{
-              width: json_file_info?.fileSize == "Too big" ? "auto" : "auto",
+              width: json_file_info?.fileSize == "Too big" ? "auto" : "70%",
             }}
           >
             <div
@@ -1237,6 +1307,63 @@ Arguments={json_file_data?.Arguments}
 is_popup={true}
 />        
 </>}
+
+
+{/* const [severityNames, setSeverityNames] = useState([]);
+const [severityCount, setSeverityCount] = useState([]); */}
+
+{/* <PreviewBox_type3_bar
+                      HeadLine="Vulnerabilities"
+                      bar_numbers={
+                        severityCount ? severityCount
+                      
+                          : [0, 0, 0, 0]
+                      }
+                      bar_headlines={
+                        severityNames
+                          ? severityNames
+                          : ["Critical", "High", "Medium", "Low"]
+                      }
+                      bar_title_legend={"Vulnerabilities"}
+                      is_popup={true}
+                      display_y_axis={false}
+                      colors={"Alert"}
+                      enable_hover={true}
+                      display_this={display_data_type}
+                      set_display_this={set_display_data_type}
+                      display_this_value={"prime_data"}
+                    /> */}
+
+{json_file_info &&  json_file_info.fileSize  != "Too big"  &&  
+<PreviewBox_respo_chart 
+display_type={'pie'}  // pie , bar
+allow_wide={true}
+allow_wide_min_wide={"480px"}
+display_y_axis={false} // for the bar
+HeadLine={`Severity`}
+read_more_icon={''}
+description_show={false}
+description_short={'Centralized hub for integrating client data and insights seamlessly...'}
+description_max_length={12}
+read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
+bar_numbers={         severityCount ? severityCount
+                      
+  : [0, 0, 0, 0]}
+
+
+bar_headlines={     severityNames
+                          ? severityNames
+                          : ["Critical", "High", "Medium", "Low"]}
+enable_hover={false}
+display_this_value={"prime_data"}
+is_popup={true}
+colors={"Alert"} // Basic , Alert
+date={"NA"} // "NA"
+box_height={"240px"}
+/>
+}
+
+
 
 <PreviewBox_type1_number_no_filters
                   HeadLine="Object Find"
@@ -1310,7 +1437,8 @@ is_popup={true}
                             </p>
                           </th>
                           <th className="response_table_long_row">
-                            <p className=" font-type-txt  Color-Grey1">
+                            <p className=" font-type-txt  Color-Grey1" style={{color:cellColor(Info?.info?.severity)}}>
+                            {/* {cellColor(Info?.info?.severity)} */}
                               {Info?.info?.severity}
                             </p>
                           </th>
@@ -1358,12 +1486,12 @@ is_popup={true}
                         <tr>
                           <th className="response_table_short_row">
                             <p className="  font-type-menu   Color-Grey1">
-                              type
+                            severity
                             </p>
                           </th>
                           <th className="response_table_long_row">
                             <p className=" font-type-txt  Color-Grey1">
-                              {Info?.type}
+                              {Info?.info?.severity}
                             </p>
                           </th>
                         </tr>
