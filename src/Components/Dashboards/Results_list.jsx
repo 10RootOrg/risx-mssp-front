@@ -14,7 +14,7 @@ import { ReactComponent as IconInfo } from '../icons/ico-info.svg';
  import '../StatusDisplay.css'; 
 import {PopUp_All_Good ,PopUp_Request_info,PopUp_loader,PopUp_Under_Construction  ,PopUp_Error ,PopUp_Result_Line_info} from '../PopUp_Smart.js'
 
-import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response ,PopUp_For_Shodan_response} from '../PopUp_response_modules.js'
+import {PopUp_For_velociraptor_response  , PopUp_For__Nuclei__response ,PopUp_For_Shodan_response , PopUp_For_LeakCheck_response} from '../PopUp_response_modules.js'
  import LMloader from "../Features/LMloader.svg";
  import './Dashboard_Results_all.css'
 function Results_list({
@@ -27,8 +27,12 @@ const {  backEndURL ,all_Tools ,front_IP,front_URL} = useContext(GeneralContext)
 const [checked_items, set_checked_items] = useState([]);
 const [is_search, set_is_search] = useState(false);
 
-const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
-const [PopUp_For_Shodan_response__show,     set_PopUp_For_Shodan_response__show] = useState(false);
+const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show]   = useState(false);
+const [PopUp_For_Shodan_response__show,    set_PopUp_For_Shodan_response__show]    = useState(false);
+const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__show] = useState(false);
+
+
+
 const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show] = useState(false);
 
 const [UniqueID_to_expand, set_UniqueID_to_expand] = useState("");
@@ -130,12 +134,10 @@ switch (Info?.ModuleName) {
     break;
 
   case "Shodan":
-
   if (res?.data?.fileSize !== 'Too big') {
     console.log("111111111111-----------------------  Shodan !== 'Too big  " );
     set_json_file_info(res.data);
   } else {
-
     console.log("222222222222-----------------------  Shodan  'Too big  " ,Info );
     set_json_file_info({
       huntid: Info.UniqueID,
@@ -144,21 +146,49 @@ switch (Info?.ModuleName) {
       ResponsePath: Info?.ResponsePath,
       table: [],
       ModuleName:Info?.ModuleName,
-      roni:"roni"
+ 
   
     });}
 
- 
     const shodanTool = all_Tools?.find(tool => tool?.Tool_name === Info?.ModuleName);
-
     let updatedShodanInfo = { ...Info, logoAddress_1: shodanTool?.logoAddress_1 };
- 
     set_json_file_data(updatedShodanInfo);
     // set_json_file_info(res.data);
     set_PopUp_loader__show(false);
     set_PopUp_For_Shodan_response__show(true);
     break;
 
+    case "LeakCheck":
+      if (res?.data?.fileSize !== 'Too big') {
+        console.log(" LeakChecK IN NOT Too big" );
+        set_json_file_info(res.data);
+      } else {
+        console.log("  LeakCheck  'Too big  " ,Info );
+        set_json_file_info({
+          huntid: Info.UniqueID,
+          status: Info?.Status,
+          fileSize: "Too big",
+          ResponsePath: Info?.ResponsePath,
+          table: [],
+          ModuleName:Info?.ModuleName,
+      
+      
+        });
+      }
+    
+        const LeakCheckTool = all_Tools?.find(tool => tool?.Tool_name === Info?.ModuleName);
+        console.log("LeakCheckTool2",LeakCheckTool);
+        
+        let updatedLeakCheckInfo = { ...Info, logoAddress_1: LeakCheckTool?.logoAddress_1 };
+        console.log("updatedLeakCheckInfo",updatedLeakCheckInfo);
+
+        set_json_file_data(updatedLeakCheckInfo);
+        set_PopUp_loader__show(false);
+        set_PopUp_For_LeakCheck_response__show(true);
+        break;
+    
+    
+    
   default:
     console.log("Unknown ModuleName:", Info?.ModuleName);
     break;
@@ -305,10 +335,6 @@ break;
 
 case "Shodan": ////////////////////////// Shodan //////////////////////////
 
-
-
-
-
 if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
   set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
   set_PopUp_Request_info__show(true)
@@ -322,12 +348,24 @@ else{ get_Json_single_response(Info);   }
 break;
 
 case "LeakCheck": ////////////////////////// LeakCheck //////////////////////////
- set_PopUp_Under_Construction__txt({
-  HeadLine: "Coming Soon!",
-  paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
-  buttonTitle: "Close",
-});
-set_PopUp_Under_Construction__show(true);
+ 
+if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
+  set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
+  set_PopUp_Request_info__show(true)
+return
+}
+else{
+  
+   get_Json_single_response(Info);   }
+
+
+
+//  set_PopUp_Under_Construction__txt({
+//   HeadLine: "Coming Soon!",
+//   paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
+//   buttonTitle: "Close",
+// });
+// set_PopUp_Under_Construction__show(true);
 break;
 
 
@@ -554,6 +592,34 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
  set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
 />
 }
+
+{PopUp_For_LeakCheck_response__show&&
+<PopUp_For_LeakCheck_response
+ popUp_show={PopUp_For_LeakCheck_response__show}
+ set_popUp_show={set_PopUp_For_LeakCheck_response__show}
+ HeadLine={"Response"}
+ logoAddress_1_ForSrc={""}
+ buttonTitle={"Close"}
+ set_json_file_info={set_json_file_info}
+ json_file_info={json_file_info}
+ json_file_data={json_file_data}
+ set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+ set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
+/>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 {PopUp_Request_info__show &&
  <PopUp_Request_info
