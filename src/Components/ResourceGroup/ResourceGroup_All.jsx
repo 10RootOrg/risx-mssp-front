@@ -39,7 +39,8 @@ function ResourceGroup_All({
   // filter_Resource,
   set_filter_Resource,
 }) {
-  const { backEndURL, all_Resource_Types } = useContext(GeneralContext);
+  const { backEndURL, all_Resource_Types, get_all_resource_types } =
+    useContext(GeneralContext);
 
   const [
     popUp_Add_Many_Resource_Items__show,
@@ -87,6 +88,7 @@ function ResourceGroup_All({
   //  console.log("use_this_resource_type",use_this_resource_type);
 
   const [is_search, set_is_search] = useState(false);
+  const [PreviewJsonFile, setPreviewJsonFile] = useState({});
 
   const import_assets_json = async (file) => {
     try {
@@ -94,14 +96,20 @@ function ResourceGroup_All({
       console.log("import assets json ss", file);
       let jj;
       red.onload = async (e) => {
-        jj = JSON.parse(e.target.result);
-
-        const res = await axios.post(
-          `${backEndURL}/config/ImportAllAssets`,
-          jj,
-          {}
-        );
-        console.log("uuuuuuuuuuuuuu", res);
+        try {
+          jj = JSON.parse(e.target.result);
+          setPreviewJsonFile(jj);
+          // Update Funcion Of Import
+          const res = await axios.post(
+            `${backEndURL}/config/ImportAllAssets`,
+            jj,
+            {}
+          );
+          get_all_resource_types();
+          console.log("uuuuuuuuuuuuuu", res);
+        } catch (error) {
+          console.log("import error", error);
+        }
       };
       await red.readAsText(file);
     } catch (error) {}
@@ -112,11 +120,6 @@ function ResourceGroup_All({
     try {
       const res = await axios.get(`${backEndURL}/config/ExportAllAssets`);
       const file = res.data;
-      console.log(
-        file,
-        "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"
-      );
-
       const dataStr =
         "data:text/json;charset=utf-8," +
         encodeURIComponent(JSON.stringify(file));

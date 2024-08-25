@@ -123,13 +123,14 @@ function ResourceGroup_Action_btns({
       {btn_import_show && (
         <button className="btn-type1" onClick={() => console.log()}>
           <label htmlFor="FileImportAssets">
-            <IconImport className="icon-type1" />
+            <IconExport className="icon-type1" />
           </label>
           <input
             onChange={(e) => {
               btn_import_action(e.target.files[0]);
             }}
             type="file"
+            accept="application/json"
             id="FileImportAssets"
             name="FileImportAssets"
             style={{ opacity: 0, height: 0, width: 0 }}
@@ -138,7 +139,7 @@ function ResourceGroup_Action_btns({
       )}
       {btn_export_show && (
         <button className="btn-type1" onClick={() => btn_export_action()}>
-          <IconExport className="icon-type1" />
+          <IconImport className="icon-type1" />
         </button>
       )}
 
