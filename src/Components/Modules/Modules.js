@@ -62,27 +62,30 @@ useEffect(() => {
 <div className='app-main' >
 <div className='top-of-page'> 
 
-{/* <div className='top-of-page-left mb-b'>
+<div className='top-of-page-left mb-b'>
 <p  className="font-type-menu" >Mssp:</p>
 <p  className="font-type-h3" >Modules</p>
-</div> */}
+</div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
  
- {/* <div className='top-of-page-right'>
-<Search_comp set_items_for_search={set_all_artifacts_and_modules}    items_for_search={all_artifacts_and_modules} />
- </div> */}
+ <div className='top-of-page-right'>
+{/* <Search_comp set_items_for_search={set_all_artifacts_and_modules}    items_for_search={all_artifacts_and_modules} /> */}
+
+<Search_comp set_items_for_search={set_all_artifacts_and_modules}    items_for_search={all_artifacts_and_modules}  filter_string={filter_string}  set_filter_string={set_filter_string} />
+
+ </div>  
 
 </div>
 
  
 
 
-<div className="display-flex mb-b mt-b"><IcoModule style={{  }}/>
+{/* <div className="display-flex mb-b mt-b"><IcoModule style={{  }}/>
 <p  className="font-type-menu Color-White ml-a " style={{marginRight:"auto"}} >Artifact Collectors & Modules</p>
  
 <Search_comp set_items_for_search={set_all_artifacts_and_modules}    items_for_search={all_artifacts_and_modules}  filter_string={filter_string}  set_filter_string={set_filter_string} />
  
-</div>
+</div> */}
 
 {/* <div className='PreviewBox PreviewBoxLine   ' style={{marginBottom:"var(--space-c)"}} > 
 <div className="display-flex"><IcoModule style={{  }}/><p  className="font-type-menu Color-White ml-a " >Modules</p></div>
@@ -96,7 +99,7 @@ useEffect(() => {
 // preview_list={all_artifacts}
 preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&   tool?.parent_id  === "2000000"   && tool?.ShowInUi   )) }
  box_type={"velociraptor"}
- main_headline= "Endpoints Modules"
+ main_headline= "Velociraptor Artifacts"
  main_subtitle="Select tools from the list and execute artifacts on endpoints"
 main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 logoAddress="./Logos/Velociraptor.svg"
@@ -114,7 +117,7 @@ set_all_artifacts_and_modules={set_all_artifacts_and_modules}
 <PreviewBoxes_main_modules
 preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&    tool?.parent_id  != "2000000"  && tool?.toolType === "module"  && tool?.ShowInUi  )) }
 box_type={"modules"}
-main_headline= "Additional Artifacts"
+main_headline= "Endpoints Modules"
 main_subtitle="Forensic timelines, vulnerability scans, device mapping & credential management"
 main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 logoAddress=""
