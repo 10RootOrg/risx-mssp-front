@@ -7,11 +7,11 @@ import {
   PreviewBox_type2_pie,
   PreviewBox_type5_hunt_data_tabla,
   PreviewBox_type1_number_no_filters,
-  PreviewBox_type9_arguments
+  PreviewBox_type9_arguments,
 } from "./PreviewBoxes.js";
 import { ReactComponent as CloseButton } from "../Components/icons/ico-Close_type1.svg";
 import { ReactComponent as DownloadIconButton } from "../Components/icons/ico-menu-download.svg";
-import { format_date_type_c ,format_date_type_a } from "./Features/DateFormat";
+import { format_date_type_c, format_date_type_a } from "./Features/DateFormat";
 import axios from "axios";
 
 async function download_Json(
@@ -19,7 +19,8 @@ async function download_Json(
   backEndURL,
   DownloadProgressBar,
   setDownloadProgressBar,
-  setDownloadList
+  setDownloadList,
+  mbSize
 ) {
   try {
     console.log("downloadJson(file)", ResponsePath);
@@ -31,7 +32,9 @@ async function download_Json(
         params: { ResponsePath: ResponsePath },
         responseType: "blob", // Specify responseType as 'blob' for binary data
         onDownloadProgress: (prog) => {
-          const value = Math.round((prog.loaded / (prog.total || 1)) * 100);
+          const value = Math.round(
+            (prog.loaded / (prog.total || mbSize * 1048576)) * 100
+          );
           try {
             if (!DownloadProgressBar[fileName2]) {
               // console.log("empty");
@@ -108,7 +111,6 @@ const handle_download_Json_File = (
   setDownloadList
 ) => {
   if (file?.fileSize === "Too big") {
-
     console.log("Too big  going to download from server", file);
     const ResponsePath = file?.ResponsePath;
     download_Json(
@@ -116,7 +118,8 @@ const handle_download_Json_File = (
       backEndURL,
       DownloadProgressBar,
       setDownloadProgressBar,
-      setDownloadList
+      setDownloadList,
+      file.mbSize
     );
   } else {
     // download the preview file
@@ -132,28 +135,24 @@ const handle_download_Json_File = (
   }
 };
 
-
-const cellColor =  (value)=>   {
-  if (typeof value === 'string') {
+const cellColor = (value) => {
+  if (typeof value === "string") {
     const lowerValue = value.toLowerCase();
-        if (lowerValue === 'critical') return 'var(--alert-color-critical)';
-    else if (lowerValue === 'high') return 'var(--alert-color-high)';
-    else if (lowerValue === 'medium') return 'var(--alert-color-medium)';
-    else if (lowerValue === 'low') return 'var(--alert-color-low)';
-    else if (lowerValue === 'info') return 'var(--alert-color-no-alert)';
-    else   return 'var(--color-Grey1)'; // Default color
+    if (lowerValue === "critical") return "var(--alert-color-critical)";
+    else if (lowerValue === "high") return "var(--alert-color-high)";
+    else if (lowerValue === "medium") return "var(--alert-color-medium)";
+    else if (lowerValue === "low") return "var(--alert-color-low)";
+    else if (lowerValue === "info") return "var(--alert-color-no-alert)";
+    else return "var(--color-Grey1)"; // Default color
   }
-  return 'var(--color-Grey1)'; // Default color
-} 
+  return "var(--color-Grey1)"; // Default color
+};
 // --alert-color-critical:var(--color-Red);
 // --alert-color-high:var(--color-Orange-Red);
 // --alert-color-medium:var(--color-Orange);
 // --alert-color-low:var(--color-Yellow);
 // --alert-color-no-alert:var(--color-Green);
 // --alert-color-none:var(--color-Grey2);
-
-
-
 
 export const PopUp_For_velociraptor_response = (props) => {
   const {
@@ -184,30 +183,29 @@ export const PopUp_For_velociraptor_response = (props) => {
   const [headers, set_headers] = useState([]);
   const [isWidthLimited, setIsWidthLimited] = useState(true); // State to toggle width
   // const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
-// Get the keys from the first object (assuming all objects have the same keys)
- 
-useEffect(() => {
-  if (!json_file_info   || json_file_info?.table.length === 0) return 
-  const allHeaders = Object.keys(json_file_info?.table[0] );
+  // Get the keys from the first object (assuming all objects have the same keys)
 
-  const filterd = allHeaders.filter(header => !['FlowId', 'ClientId', '_OrgId'].includes(header));
-  console.log("filterd" , filterd);
-  
-  set_headers(filterd);
-}, [json_file_info]);
+  useEffect(() => {
+    if (!json_file_info || json_file_info?.table.length === 0) return;
+    const allHeaders = Object.keys(json_file_info?.table[0]);
 
+    const filterd = allHeaders.filter(
+      (header) => !["FlowId", "ClientId", "_OrgId"].includes(header)
+    );
+    console.log("filterd", filterd);
 
-const LIMIT_MAX_CELL_WIDTH = '220px';
+    set_headers(filterd);
+  }, [json_file_info]);
 
- 
-const handleHeaderClick = () => {
-  setIsWidthLimited(!isWidthLimited); // Toggle the width limit
-};
+  const LIMIT_MAX_CELL_WIDTH = "220px";
 
+  const handleHeaderClick = () => {
+    setIsWidthLimited(!isWidthLimited); // Toggle the width limit
+  };
 
-const handleColumnClick = (key) => {
-  setExpandedColumn(expandedColumn === key ? null : key);
-};
+  const handleColumnClick = (key) => {
+    setExpandedColumn(expandedColumn === key ? null : key);
+  };
 
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
@@ -388,19 +386,15 @@ const handleColumnClick = (key) => {
   // console.log("json_file_data 1111111111111" , json_file_data);
   // console.log("aggregate_macro_data" , aggregate_macro_data["List of computers with High"]);
 
-
-
   const pop_up_Width =
-     json_file_info?.fileSize === "Too big" ? "auto"
-    : json_file_data?.SubModuleName === "HardeningKitty"
-    ? "90%"
-    : "80%";
-
+    json_file_info?.fileSize === "Too big"
+      ? "auto"
+      : json_file_data?.SubModuleName === "HardeningKitty"
+      ? "90%"
+      : "80%";
 
   return (
     <>
-
-
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
@@ -408,7 +402,6 @@ const handleColumnClick = (key) => {
             style={{
               // width: json_file_info?.fileSize == "Too big" ? "auto" : "80%",
               width: pop_up_Width,
-
             }}
           >
             <div
@@ -434,8 +427,9 @@ const handleColumnClick = (key) => {
                       Artifact={json_file_data?.SubModuleName}
                       HuntID={json_file_info?.huntid}
                       Status={json_file_info?.status}
-                      BaseLine={json_file_data?.Arguments?.ArtifactParameters?.Baseline}
-
+                      BaseLine={
+                        json_file_data?.Arguments?.ArtifactParameters?.Baseline
+                      }
                       StartDate={
                         json_file_data?.StartDate
                           ? format_date_type_c(json_file_data?.StartDate)
@@ -450,11 +444,11 @@ const handleColumnClick = (key) => {
                       }
                     />
 
-<PreviewBox_type9_arguments
-HeadLine="Arguments"
-Arguments={json_file_data?.Arguments}
-is_popup={true}
-/>
+                    <PreviewBox_type9_arguments
+                      HeadLine="Arguments"
+                      Arguments={json_file_data?.Arguments}
+                      is_popup={true}
+                    />
 
                     <PreviewBox_type2_pie
                       HeadLine={`Tests (${aggregate_macro_data?.Failed_Test_Number_of_tests[1]})`}
@@ -544,138 +538,123 @@ is_popup={true}
                   </>
                 ) : (
                   <>
-               
-                      
-                      <PreviewBox_type5_hunt_data_tabla
-                        HeadLine="Hunt Data"
-                        artifact_or_module={"Artifact"}
-                        is_popup={true}
-                        StartDate={
-                          json_file_data?.StartDate
-                            ? format_date_type_c(json_file_data?.StartDate)
-                            : "NA"
-                        }
-                        display_y_axis={false}
-                        Artifact={json_file_data?.SubModuleName}
-                        HuntID={json_file_info?.huntid}
-                        Status={json_file_info?.status}
+                    <PreviewBox_type5_hunt_data_tabla
+                      HeadLine="Hunt Data"
+                      artifact_or_module={"Artifact"}
+                      is_popup={true}
+                      StartDate={
+                        json_file_data?.StartDate
+                          ? format_date_type_c(json_file_data?.StartDate)
+                          : "NA"
+                      }
+                      display_y_axis={false}
+                      Artifact={json_file_data?.SubModuleName}
+                      HuntID={json_file_info?.huntid}
+                      Status={json_file_info?.status}
+                      BaseLine={
+                        json_file_data?.Arguments?.ArtifactParameters?.Baseline
+                      }
+                      Error={
+                        json_file_data?.Error === "" ? (
+                          <>None</>
+                        ) : (
+                          <>{json_file_data?.Error}</>
+                        )
+                      }
+                    />
 
-
-                        BaseLine={json_file_data?.Arguments?.ArtifactParameters?.Baseline}
-                        Error={
-                          json_file_data?.Error === "" ? (
-                            <>None</>
-                          ) : (
-                            <>{json_file_data?.Error}</>
-                          )
-                        }
-                      />
- 
                     {json_file_info?.fileSize === "Too big" && (
-                        <div
-                          className="mt-c "
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexDirection: "column",
-                          }}
-                        >
-                          <div>
-                            <p className="  font-type-txt   Color-Grey1 mt-c ">
-                              Data file is too big. <br />
-                              You can download it as a JSON file.
-                            </p>
-                            <button
-                              className="btn-type3 mb-d"
-                              style={{ marginRight: "auto" }}
-                            >
-                              <p
-                                className="font-type-menu  "
-                                onClick={() =>
-                                  handle_click_download(
-                                    json_file_info,
-                                    backEndURL
-                                  )
-                                }
-                              >
-                                Download JSON
-                              </p>
-                              <DownloadIconButton className="icon-type1 " />{" "}
-                            </button>
-                          </div>
-
-                          <div
-                            className=""
-                            style={{ display: "flex", alignItems: "center" }}
+                      <div
+                        className="mt-c "
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <div>
+                          <p className="  font-type-txt   Color-Grey1 mt-c ">
+                            Data file is too big. <br />
+                            You can download it as a JSON file.
+                          </p>
+                          <button
+                            className="btn-type3 mb-d"
+                            style={{ marginRight: "auto" }}
                           >
-                            {artifact_logo === "" ? null : (
-                              <>
-                                <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
-                                  By:
-                                </p>{" "}
-                                <img
-                                  src={artifact_logo}
-                                  alt="logo"
-                                  maxwidth="140px"
-                                  height="30"
-                                />
-                              </>
-                            )}
-                            <button
-                              className="btn-type2 "
-                              style={{ marginLeft: "auto" }}
-                              onClick={handleClose}
+                            <p
+                              className="font-type-menu  "
+                              onClick={() =>
+                                handle_click_download(
+                                  json_file_info,
+                                  backEndURL
+                                )
+                              }
                             >
-                              <p className="font-type-menu ">{buttonTitle}</p>{" "}
-                            </button>
-                          </div>
+                              Download JSON
+                            </p>
+                            <DownloadIconButton className="icon-type1 " />{" "}
+                          </button>
                         </div>
-                      )}
+
+                        <div
+                          className=""
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          {artifact_logo === "" ? null : (
+                            <>
+                              <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
+                                By:
+                              </p>{" "}
+                              <img
+                                src={artifact_logo}
+                                alt="logo"
+                                maxwidth="140px"
+                                height="30"
+                              />
+                            </>
+                          )}
+                          <button
+                            className="btn-type2 "
+                            style={{ marginLeft: "auto" }}
+                            onClick={handleClose}
+                          >
+                            <p className="font-type-menu ">{buttonTitle}</p>{" "}
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
                     {json_file_info?.fileSize != "Too big" && (
-<>
- 
+                      <>
+                        {json_file_data?.Arguments && (
+                          <>
+                            <PreviewBox_type9_arguments
+                              HeadLine="Arguments"
+                              Arguments={json_file_data?.Arguments}
+                              is_popup={true}
+                            />
+                          </>
+                        )}
 
-
-
-
- 
-{json_file_data?.Arguments  &&  <>  
-<PreviewBox_type9_arguments
-HeadLine="Arguments"
-Arguments={json_file_data?.Arguments}
-is_popup={true}
-/>        
-</>}
-
-
-<PreviewBox_type1_number_no_filters
-HeadLine="Object Find"
-resource_type_id={null}
-BigNumber={
-json_file_info?.table?.length === undefined
-? 0
-: json_file_info?.table?.length
-}
-SmallNumberTxt={""}
-SmallNumber={``}
-StatusColor=""
-date={"NA"}
-is_popup={true}
-txt_color={""}
-display_this={display_data_type}
-set_display_this={set_display_data_type}
-display_this_value={"prime_data"}
-/>
-
-
- 
- 
-
-
-
-</>
-                      
+                        <PreviewBox_type1_number_no_filters
+                          HeadLine="Object Find"
+                          resource_type_id={null}
+                          BigNumber={
+                            json_file_info?.table?.length === undefined
+                              ? 0
+                              : json_file_info?.table?.length
+                          }
+                          SmallNumberTxt={""}
+                          SmallNumber={``}
+                          StatusColor=""
+                          date={"NA"}
+                          is_popup={true}
+                          txt_color={""}
+                          display_this={display_data_type}
+                          set_display_this={set_display_data_type}
+                          display_this_value={"prime_data"}
+                        />
+                      </>
                     )}
                   </>
                 )}
@@ -843,12 +822,7 @@ display_this_value={"prime_data"}
                   {/* //// the big list */}
                   {display_data_type === "prime_data" && (
                     <>
-
-
-
-
-
-{/* <table border="1">
+                      {/* <table border="1">
       <thead>
         <tr>
           {headers.map((header) => (
@@ -888,63 +862,85 @@ display_this_value={"prime_data"}
       </tbody>
     </table> */}
 
-{json_file_info?.table?.length !== 0 &&
-<table border="1" style={{ } }   className="table_smart2" >
-      <thead   >
-        <tr>
-          {headers.map((header) => (
-            <th key={header} onClick={handleHeaderClick}     className="  font-type-menu Color-White"    style={{ cursor: 'pointer' , textAlign:"left"}}>
-              {header}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody  >
-        {json_file_info?.table.map((item, index) => (
-          <tr key={index}>
-            {headers.map((header) => {
-              const value = item[header];
-              const renderValue = typeof value === 'object' ? JSON.stringify(value) : value;
+                      {json_file_info?.table?.length !== 0 && (
+                        <table border="1" style={{}} className="table_smart2">
+                          <thead>
+                            <tr>
+                              {headers.map((header) => (
+                                <th
+                                  key={header}
+                                  onClick={handleHeaderClick}
+                                  className="  font-type-menu Color-White"
+                                  style={{
+                                    cursor: "pointer",
+                                    textAlign: "left",
+                                  }}
+                                >
+                                  {header}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {json_file_info?.table.map((item, index) => (
+                              <tr key={index}>
+                                {headers.map((header) => {
+                                  const value = item[header];
+                                  const renderValue =
+                                    typeof value === "object"
+                                      ? JSON.stringify(value)
+                                      : value;
 
-              const cellColor = (() => {
-                if (typeof value === 'string') {
-                  const lowerValue = value.toLowerCase();
-                  if (lowerValue === 'critical') return 'var(--alert-color-critical)';
-                  if (lowerValue === 'high') return 'var(--alert-color-high)';
-                  if (lowerValue === 'medium') return 'var(--alert-color-medium)';
-                  if (lowerValue === 'low') return 'var(--alert-color-low)';
-                  if (lowerValue === 'failed') return 'var(--color-Orange-Red)';
-                  if (lowerValue === 'passed') return 'var(--alert-color-no-alert)';
-                
-                }
-                return 'var(--color-Grey1)'; // Default color
-              })();
-        
-              return (
-                <td
-                  key={header}
-                  style={{
-                    maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : 'none', // Apply width limit conditionally
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    backgroundColor:""
-                  }}
-                >
-                  <span
-                    className="cell-content font-type-txt"
-                    style={{ color:header === "Severity" ? cellColor : 'var(--color-Grey1)' }}
-                  >
-                    {renderValue}
-                  </span>
-                </td>
-              );
-            })}
-          </tr>
-        ))}
-      </tbody>
-    </table>
-}
+                                  const cellColor = (() => {
+                                    if (typeof value === "string") {
+                                      const lowerValue = value.toLowerCase();
+                                      if (lowerValue === "critical")
+                                        return "var(--alert-color-critical)";
+                                      if (lowerValue === "high")
+                                        return "var(--alert-color-high)";
+                                      if (lowerValue === "medium")
+                                        return "var(--alert-color-medium)";
+                                      if (lowerValue === "low")
+                                        return "var(--alert-color-low)";
+                                      if (lowerValue === "failed")
+                                        return "var(--color-Orange-Red)";
+                                      if (lowerValue === "passed")
+                                        return "var(--alert-color-no-alert)";
+                                    }
+                                    return "var(--color-Grey1)"; // Default color
+                                  })();
 
+                                  return (
+                                    <td
+                                      key={header}
+                                      style={{
+                                        maxWidth: isWidthLimited
+                                          ? LIMIT_MAX_CELL_WIDTH
+                                          : "none", // Apply width limit conditionally
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        backgroundColor: "",
+                                      }}
+                                    >
+                                      <span
+                                        className="cell-content font-type-txt"
+                                        style={{
+                                          color:
+                                            header === "Severity"
+                                              ? cellColor
+                                              : "var(--color-Grey1)",
+                                        }}
+                                      >
+                                        {renderValue}
+                                      </span>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      )}
 
                       {/* {json_file_info?.table?.length !== 0 ? (
                         <>
@@ -1125,7 +1121,12 @@ export const PopUp_For__Nuclei__response = (props) => {
   } = useContext(GeneralContext);
   const [module_logo, set_module_logo] = useState("");
   const [display_data_type, set_display_data_type] = useState("prime_data");
-  const [severityNames, setSeverityNames] = useState(["Critical", "High", "Medium", "Low"]);
+  const [severityNames, setSeverityNames] = useState([
+    "Critical",
+    "High",
+    "Medium",
+    "Low",
+  ]);
   const [severityCount, setSeverityCount] = useState([0, 0, 0, 0]);
   console.log("json_file_info", json_file_info);
   console.log("json_file_data", json_file_data);
@@ -1154,8 +1155,6 @@ export const PopUp_For__Nuclei__response = (props) => {
     }
   };
 
-
-
   useEffect(() => {
     // Return early if json_file_info is not a non-empty array
     if (!Array.isArray(json_file_info) || json_file_info.length === 0) {
@@ -1167,11 +1166,11 @@ export const PopUp_For__Nuclei__response = (props) => {
       Critical: 0,
       High: 0,
       Medium: 0,
-      Low: 0
+      Low: 0,
     };
 
     // Loop through the array and update severityCounts
-    json_file_info.forEach(item => {
+    json_file_info.forEach((item) => {
       if (item && item?.info?.severity) {
         const severity = item?.info?.severity.toLowerCase(); // Normalize to lower case
         if (severity === "critical") {
@@ -1187,18 +1186,14 @@ export const PopUp_For__Nuclei__response = (props) => {
     });
 
     // Convert severityCounts to arrays for state
-    const counts = severityNames.map(name => severityCounts[name]);
+    const counts = severityNames.map((name) => severityCounts[name]);
 
     // Update state with the new severity names and counts
     setSeverityCount(counts);
   }, [json_file_info]);
 
-
-
-
-console.log("severityNames",severityNames);
-console.log("severityCount",severityCount);
-
+  console.log("severityNames", severityNames);
+  console.log("severityCount", severityCount);
 
   useEffect(() => {
     if (
@@ -1261,58 +1256,55 @@ console.log("severityCount",severityCount);
               </button>
             </div>
 
-
-
             {/* <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}> */}
             <div className="velociraptor_response_all_top mb-d">
               <div
                 className="  mb-c"
-                style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "var(--space-c)",
+                  width: "100%",
+                }}
               >
+                <PreviewBox_type5_hunt_data_tabla
+                  HeadLine="Hunt Data"
+                  is_popup={true}
+                  artifact_or_module={"Module"}
+                  display_y_axis={false}
+                  Artifact={json_file_data?.ModuleName}
+                  StartDate={
+                    json_file_data?.StartDate
+                      ? format_date_type_c(json_file_data?.StartDate)
+                      : "NA"
+                  }
+                  HuntID={
+                    json_file_info?.UniqueID ? json_file_info?.UniqueID : "NA"
+                  }
+                  Status={json_file_data?.Status}
+                  Error={
+                    json_file_data?.Error === "" ? (
+                      <>None</>
+                    ) : (
+                      <>{json_file_data?.Error}</>
+                    )
+                  }
+                />
 
+                {json_file_data?.Arguments && (
+                  <>
+                    <PreviewBox_type9_arguments
+                      HeadLine="Arguments"
+                      Arguments={json_file_data?.Arguments}
+                      is_popup={true}
+                    />
+                  </>
+                )}
 
-
-                 
- 
-
-                  <PreviewBox_type5_hunt_data_tabla
-                    HeadLine="Hunt Data"
-                    is_popup={true}
-                    artifact_or_module={"Module"}
-                    display_y_axis={false}
-                    Artifact={json_file_data?.ModuleName}
-                    StartDate={
-                      json_file_data?.StartDate
-                        ? format_date_type_c(json_file_data?.StartDate)
-                        : "NA"
-                    }
-                    HuntID={
-                      json_file_info?.UniqueID ? json_file_info?.UniqueID : "NA"
-                    }
-                    Status={json_file_data?.Status}
-                    Error={
-                      json_file_data?.Error === "" ? (
-                        <>None</>
-                      ) : (
-                        <>{json_file_data?.Error}</>
-                      )
-                    }
-                  />
-
-
-{json_file_data?.Arguments  &&  <>  
-<PreviewBox_type9_arguments
-HeadLine="Arguments"
-Arguments={json_file_data?.Arguments}
-is_popup={true}
-/>        
-</>}
-
-
-{/* const [severityNames, setSeverityNames] = useState([]);
+                {/* const [severityNames, setSeverityNames] = useState([]);
 const [severityCount, setSeverityCount] = useState([]); */}
 
-{/* <PreviewBox_type3_bar
+                {/* <PreviewBox_type3_bar
                       HeadLine="Vulnerabilities"
                       bar_numbers={
                         severityCount ? severityCount
@@ -1334,38 +1326,38 @@ const [severityCount, setSeverityCount] = useState([]); */}
                       display_this_value={"prime_data"}
                     /> */}
 
-{json_file_info &&  json_file_info.fileSize  != "Too big"  &&  
-<PreviewBox_respo_chart 
-display_type={'pie'}  // pie , bar
-allow_wide={true}
-allow_wide_min_wide={"480px"}
-display_y_axis={false} // for the bar
-HeadLine={`Severity`}
-read_more_icon={''}
-description_show={false}
-description_short={'Centralized hub for integrating client data and insights seamlessly...'}
-description_max_length={12}
-read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
-bar_numbers={         severityCount ? severityCount
-                      
-  : [0, 0, 0, 0]}
+                {json_file_info && json_file_info.fileSize != "Too big" && (
+                  <PreviewBox_respo_chart
+                    display_type={"pie"} // pie , bar
+                    allow_wide={true}
+                    allow_wide_min_wide={"480px"}
+                    display_y_axis={false} // for the bar
+                    HeadLine={`Severity`}
+                    read_more_icon={""}
+                    description_show={false}
+                    description_short={
+                      "Centralized hub for integrating client data and insights seamlessly..."
+                    }
+                    description_max_length={12}
+                    read_more={
+                      "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
+                    }
+                    bar_numbers={severityCount ? severityCount : [0, 0, 0, 0]}
+                    bar_headlines={
+                      severityNames
+                        ? severityNames
+                        : ["Critical", "High", "Medium", "Low"]
+                    }
+                    enable_hover={false}
+                    display_this_value={"prime_data"}
+                    is_popup={true}
+                    colors={"Alert"} // Basic , Alert
+                    date={"NA"} // "NA"
+                    box_height={"240px"}
+                  />
+                )}
 
-
-bar_headlines={     severityNames
-                          ? severityNames
-                          : ["Critical", "High", "Medium", "Low"]}
-enable_hover={false}
-display_this_value={"prime_data"}
-is_popup={true}
-colors={"Alert"} // Basic , Alert
-date={"NA"} // "NA"
-box_height={"240px"}
-/>
-}
-
-
-
-<PreviewBox_type1_number_no_filters
+                <PreviewBox_type1_number_no_filters
                   HeadLine="Object Find"
                   resource_type_id={null}
                   BigNumber={json_file_info?.length}
@@ -1379,10 +1371,6 @@ box_height={"240px"}
                   set_display_this={set_display_data_type}
                   display_this_value={"prime_data"}
                 />
-
-
-
-                
               </div>
 
               {/* <div style={{ marginLeft: "var(--space-c)" }}>
@@ -1437,8 +1425,11 @@ box_height={"240px"}
                             </p>
                           </th>
                           <th className="response_table_long_row">
-                            <p className=" font-type-txt  Color-Grey1" style={{color:cellColor(Info?.info?.severity)}}>
-                            {/* {cellColor(Info?.info?.severity)} */}
+                            <p
+                              className=" font-type-txt  Color-Grey1"
+                              style={{ color: cellColor(Info?.info?.severity) }}
+                            >
+                              {/* {cellColor(Info?.info?.severity)} */}
                               {Info?.info?.severity}
                             </p>
                           </th>
@@ -1486,7 +1477,7 @@ box_height={"240px"}
                         <tr>
                           <th className="response_table_short_row">
                             <p className="  font-type-menu   Color-Grey1">
-                            severity
+                              severity
                             </p>
                           </th>
                           <th className="response_table_long_row">
@@ -1571,44 +1562,40 @@ export const PopUp_For_Shodan_response = (props) => {
     setDownloadProgressBar,
     setDownloadList,
   } = useContext(GeneralContext);
-  
+
   const [module_logo, set_module_logo] = useState("");
   const [aggregate_macro_data, set_aggregate_macro_data] = useState({});
   const [display_this_domain, set_display_this_domain] = useState("prime_data");
   const [display_this_data, set_display_this_data] = useState({});
   const [all_matches, set_all_matches] = useState(0);
   const [sort_by, set_sort_by] = useState("Domain");
-  const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
+  const [firstTimeData, setfirstTimeData] = useState(true); // usewith useeffect to now the first load and to sort
 
   console.log("----------------- json_file_info", json_file_info);
   console.log("-------------------  json_file_data", json_file_data);
- 
-  
 
-  const handle_click_display_data= (Domain) => {
-
-if(!Domain   || Domain  === ""){ set_display_this_domain({});console.log("no domain value"); return}
-if(display_this_domain ===  Domain){set_display_this_domain("prime_data"); return}
-else{
-  // set_display_this_data(json_file_info)
-  set_display_this_domain(Domain)
-  const [filter] = json_file_info.filter(data => data.Domain === Domain);
-  set_display_this_data(filter)
- 
-}
-
+  const handle_click_display_data = (Domain) => {
+    if (!Domain || Domain === "") {
+      set_display_this_domain({});
+      console.log("no domain value");
+      return;
+    }
+    if (display_this_domain === Domain) {
+      set_display_this_domain("prime_data");
+      return;
+    } else {
+      // set_display_this_data(json_file_info)
+      set_display_this_domain(Domain);
+      const [filter] = json_file_info.filter((data) => data.Domain === Domain);
+      set_display_this_data(filter);
+    }
   };
- 
 
-  const handle_close_list= () => {
-    console.log("handle_close_list" );
+  const handle_close_list = () => {
+    console.log("handle_close_list");
     set_display_this_domain("prime_data");
     set_display_this_data({});
-
- 
-   
-     };
-    
+  };
 
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
@@ -1640,49 +1627,47 @@ else{
     }
   };
 
-
-///// combine all maches
+  ///// combine all maches
   useEffect(() => {
-    if (!json_file_info){return}
+    if (!json_file_info) {
+      return;
+    }
     let totalMatches = 0;
     for (let i = 0; i < json_file_info.length; i++) {
       const matches = json_file_info[i]?.Response?.matches?.length || 0;
       totalMatches += matches;
     }
 
-
-set_all_matches(totalMatches);
+    set_all_matches(totalMatches);
   }, [json_file_info]);
 
+  /// logo preview
+  useEffect(() => {
+    if (
+      json_file_data === undefined ||
+      json_file_data === "" ||
+      json_file_data === null
+    ) {
+      return;
+    }
+    if (all_Tools === undefined || all_Tools === "" || all_Tools === null) {
+      return;
+    }
+    if (json_file_data.length == 0 || all_Tools.length == 0) {
+      return;
+    }
 
-/// logo preview
-useEffect(() => {
-  if (
-    json_file_data === undefined ||
-    json_file_data === "" ||
-    json_file_data === null
-  ) {
-    return;
-  }
-  if (all_Tools === undefined || all_Tools === "" || all_Tools === null) {
-    return;
-  }
-  if (json_file_data.length == 0 || all_Tools.length == 0) {
-    return;
-  }
+    const [tool_info] = all_Tools?.filter(
+      (word) => word?.Tool_name === json_file_data?.ModuleName
+    );
 
-  const [tool_info] = all_Tools?.filter(
-    (word) => word?.Tool_name === json_file_data?.ModuleName
-  );
-
-  const logoAddress_1 = tool_info?.logoAddress_1;
-  if (logoAddress_1 === undefined) {
-    return;
-  }
-  const bbb = require(`${logoAddress_1}`);
-  set_module_logo(bbb);
-}, [json_file_data]);
-
+    const logoAddress_1 = tool_info?.logoAddress_1;
+    if (logoAddress_1 === undefined) {
+      return;
+    }
+    const bbb = require(`${logoAddress_1}`);
+    set_module_logo(bbb);
+  }, [json_file_data]);
 
   useEffect(() => {
     set_popUp_show(popUp_show);
@@ -1701,50 +1686,45 @@ useEffect(() => {
   const do_sort = (column) => {
     // json_file_info,
     // set_json_file_info,
-    console.log("sort this column: " , column);
-    
-      if (!column) {
-        console.log("Can't sort ", column);
-        return;
-      }
-    
-      if (column === sort_by) {
-        console.log("It's already sorted like this, reversing the order");
-        const sorted = [...json_file_info].sort((a, b) => {;
-          if (b[column] < a[column]) return -1;
-          if (b[column] > a[column]) return 1;
-          return 0;
-        });
-        console.log("Sorted descending:", sorted);
-        set_json_file_info(sorted);
-        set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
-    
-      } else {
-        set_sort_by(column);
-        const sorted = [...json_file_info].sort((a, b) => {
-          if (a[column] < b[column]) return -1;
-          if (a[column] > b[column]) return 1;
-          return 0;
-        });
-        console.log("Sorted ascending:", sorted);
-        set_json_file_info(sorted);
-      }
-    };
-    
- 
-// for first load  =>  sorting the list
-useEffect(() => {
-  if (json_file_info?.length >=2 && firstTimeData ) {
-    do_sort("Domain");
-    setfirstTimeData(false)
-  }
-    
-  }, [json_file_info])
+    console.log("sort this column: ", column);
+
+    if (!column) {
+      console.log("Can't sort ", column);
+      return;
+    }
+
+    if (column === sort_by) {
+      console.log("It's already sorted like this, reversing the order");
+      const sorted = [...json_file_info].sort((a, b) => {
+        if (b[column] < a[column]) return -1;
+        if (b[column] > a[column]) return 1;
+        return 0;
+      });
+      console.log("Sorted descending:", sorted);
+      set_json_file_info(sorted);
+      set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+    } else {
+      set_sort_by(column);
+      const sorted = [...json_file_info].sort((a, b) => {
+        if (a[column] < b[column]) return -1;
+        if (a[column] > b[column]) return 1;
+        return 0;
+      });
+      console.log("Sorted ascending:", sorted);
+      set_json_file_info(sorted);
+    }
+  };
+
+  // for first load  =>  sorting the list
+  useEffect(() => {
+    if (json_file_info?.length >= 2 && firstTimeData) {
+      do_sort("Domain");
+      setfirstTimeData(false);
+    }
+  }, [json_file_info]);
 
   return (
     <>
- 
-
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
@@ -1762,100 +1742,118 @@ useEffect(() => {
               </button>
             </div>
 
- 
-
             <div className="velociraptor_response_all_top ">
               <div className="velociraptor_response_top_texts  "> </div>
 
               <div className="pop-up-top-boxes-macro PreviewBox-of-pop-up-all">
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "var(--space-c)",
+                    width: "100%",
+                  }}
+                >
+                  <PreviewBox_type5_hunt_data_tabla
+                    HeadLine="Hunt Data"
+                    artifact_or_module={"Module"}
+                    is_popup={true}
+                    StartDate={
+                      json_file_data?.StartDate
+                        ? format_date_type_c(json_file_data?.StartDate)
+                        : "NA"
+                    }
+                    Artifact={json_file_data?.ModuleName}
+                    HuntID={json_file_info?.huntid || "NA"}
+                    Status={json_file_data?.Status || "NA"}
+                    Error={
+                      json_file_data?.Error === "" ? (
+                        <>None</>
+                      ) : (
+                        <>{json_file_data?.Error}</>
+                      )
+                    }
+                  />
 
- 
+                  {json_file_data?.Arguments && (
+                    <>
+                      <PreviewBox_type9_arguments
+                        HeadLine="Arguments"
+                        Arguments={json_file_data?.Arguments}
+                        is_popup={true}
+                      />
+                    </>
+                  )}
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}>
-        
-<PreviewBox_type5_hunt_data_tabla
-HeadLine="Hunt Data"
-artifact_or_module={"Module"}
-is_popup={true}
-StartDate={  json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) : "NA"    }
-Artifact={json_file_data?.ModuleName}
-HuntID={json_file_info?.huntid || "NA"}
-Status={json_file_data?.Status || "NA"}
-Error={   json_file_data?.Error === "" ? (  <>None</>   ) : (   <>{json_file_data?.Error}</>  )  }
-/>
- 
-{ json_file_data?.Arguments   && <>
+                  {json_file_info && json_file_info.fileSize != "Too big" && (
+                    <PreviewBox_respo_chart
+                      display_type={"pie"} // pie , bar
+                      allow_wide={true}
+                      allow_wide_min_wide={"480px"}
+                      display_y_axis={false} // for the bar
+                      HeadLine={`Domains found`}
+                      read_more_icon={""}
+                      description_show={false}
+                      description_short={
+                        "Centralized hub for integrating client data and insights seamlessly..."
+                      }
+                      description_max_length={12}
+                      read_more={
+                        "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
+                      }
+                      bar_numbers={
+                        json_file_info?.map(
+                          (aaaa) => aaaa?.Response?.matches?.length
+                        ) || [0, 0, 0, 0]
+                      }
+                      bar_headlines={
+                        json_file_info?.map((aaaa) => aaaa?.Domain) || []
+                      }
+                      enable_hover={false}
+                      display_this_value={"prime_data"}
+                      is_popup={true}
+                      colors={"Basic"} // Basic , Alert
+                      date={"NA"} // "NA"
+                      box_height={"240px"}
+                    />
+                  )}
+                  {json_file_info?.fileSize != "Too big" && (
+                    <PreviewBox_type1_number_no_filters
+                      HeadLine="Tested"
+                      resource_type_id={null}
+                      BigNumber={
+                        json_file_info?.length ? json_file_info?.length : "NA"
+                      }
+                      SmallNumberTxt={"Domains"}
+                      SmallNumber={``}
+                      StatusColor="blue"
+                      date={"NA"}
+                      is_popup={true}
+                      txt_color={""}
+                      display_this={display_this_domain}
+                      set_display_this={set_display_this_domain}
+                      display_this_value={"High"}
+                    />
+                  )}
+                  {json_file_info?.fileSize != "Too big" && (
+                    <PreviewBox_type1_number_no_filters
+                      HeadLine="Matches"
+                      resource_type_id={null}
+                      BigNumber={all_matches ? all_matches : "NA"}
+                      SmallNumberTxt={"From all Domains"}
+                      SmallNumber={``}
+                      StatusColor="blue"
+                      date={"NA"}
+                      is_popup={true}
+                      txt_color={""}
+                      display_this={display_this_domain}
+                      set_display_this={set_display_this_domain}
+                      display_this_value={"High"}
+                    />
+                  )}
 
- <PreviewBox_type9_arguments
-HeadLine="Arguments"
-Arguments={json_file_data?.Arguments}
-is_popup={true}
-/>  
-</>}
-      
- 
-
-{json_file_info &&  json_file_info.fileSize  != "Too big"  &&  
-<PreviewBox_respo_chart 
-display_type={'pie'}  // pie , bar
-allow_wide={true}
-allow_wide_min_wide={"480px"}
-display_y_axis={false} // for the bar
-HeadLine={`Domains found`}
-read_more_icon={''}
-description_show={false}
-description_short={'Centralized hub for integrating client data and insights seamlessly...'}
-description_max_length={12}
-read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
-bar_numbers={  json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.matches?.length  ) ||   [0,0,0,0]}
-bar_headlines={  json_file_info?.map(   (aaaa ) =>  aaaa?.Domain  ) || []}
-enable_hover={false}
-display_this_value={"prime_data"}
-is_popup={true}
-colors={"Basic"} // Basic , Alert
-date={"NA"} // "NA"
-box_height={"240px"}
-/>
-}
-{json_file_info?.fileSize != "Too big" && 
-<PreviewBox_type1_number_no_filters
-HeadLine="Tested"
-resource_type_id={null}
-BigNumber={  json_file_info?.length ? json_file_info?.length : "NA"  }
-SmallNumberTxt={"Domains"}
-SmallNumber={``}
-StatusColor="blue"
-date={"NA"}
-is_popup={true}
-txt_color={""}
-display_this={ display_this_domain}
-set_display_this={set_display_this_domain}
-display_this_value={"High"}
-/>
-}
-{json_file_info?.fileSize != "Too big" && 
-<PreviewBox_type1_number_no_filters
-HeadLine="Matches"
-resource_type_id={null}
-BigNumber={  all_matches  ?  all_matches : "NA"  }
-SmallNumberTxt={"From all Domains"}
-SmallNumber={``}
-StatusColor="blue"
-date={"NA"}
-is_popup={true}
-txt_color={""}
-display_this={ display_this_domain}
-set_display_this={set_display_this_domain}
-display_this_value={"High"}
-/>
-}
-
-
-
-
-
-                      {/* too big file note */}
-                      {/* {json_file_info?.fileSize === "Too big" && (
+                  {/* too big file note */}
+                  {/* {json_file_info?.fileSize === "Too big" && (
                         <div
                           className="mt-c "
                           style={{
@@ -1916,169 +1914,299 @@ display_this_value={"High"}
                           </div>
                         </div>
                       )} */}
-                    </div>
+                </div>
 
-
-
- <div style={{width:"100%"  }}>
- 
-
-<div style={{  }}  >
-
-{ display_this_domain != "prime_data"  &&
-<div style={{display:"flex" , justifyContent:"space-between" , alignItems:"center" }} className="mb-b">
-<p className='resource-group-list-item   font-type-h4  Color-White ml-b  ' style={{width:"60%", minWidth:"60%"}}>{  display_this_domain}</p> 
-        <div  className="display-flex justify-content-end  "  style={{ marginRight: " " }} >
-        <button className="PopUp-Close-btn"  onClick={handle_close_list } >
-          <CloseButton className="PopUp-Close-btn-img" />{" "}
-        </button>
-      </div>
-
-      </div>
-}
-
-
-
-{  display_this_domain === "prime_data"  && json_file_info?.fileSize != "Too big" &&
-<div className='resource-group-list-keyNames mb-a  '  >
-<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White' onClick={() => do_sort("Domain")}>Domain</p></div>
-<div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White mr-b'>Matches</p></div>
-</div>
-}
-
-
-  { display_this_data?.Response?.matches.length > 0  &&
-<div className='resource-group-list-keyNames mb-a  '  >
-<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White'>ISP</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu make-underline  Color-White '>Org</p></div>
-<div className='resource-group-list-item list-item-big'><p className='font-type-menu  make-underline   Color-White ml-a'>Tags</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>IP Str</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Product</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Asn</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Transport</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Country</p></div>
-<div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White '>Timestamp</p></div>
-</div>
-}
-
-
-{ display_this_data?.Response?.matches.length === 0  &&
-<div  style={{     display:"flex" , alignItems:"center", justifyContent:"center",    height:"100px",      }}>
-  <p className='   font-type-txt  Color-Grey1 mr-b '  style={ {} }>No matches found for this domain</p> 
-  </div>
-}
-
-
-
-
-<div className=''   style={{height:"auto",    maxHeight:"300px",  overflowY:"scroll"   }}>
-{Array.isArray(json_file_info) && json_file_info?.map((Site, index) => { return (          
-<div className='resource-group-list-box   '   style={{height:"auto",  overflowY:"hidden"}}>
-
-
-  {       display_this_domain === "prime_data"    &&
-<div className=" resource-group-list-line   mr-b  mt-a mb-a" style={{display:"flex" ,justifyContent:"space-between" , width:"auto"}}  onClick={()=>handle_click_display_data(Site?.Domain)}>
-<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"60%", minWidth:"60%"}}>{ Site?.Domain}</p> 
-<p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"35%", minWidth:"35%" , textAlign:"right"  }}>{Site?.Response?.matches?.length }</p> 
- 
-
-
-</div>
-}
-
-</div> );   })}
-
-
-
- 
-{display_this_data && display_this_data?.Response?.matches?.map((Info, index) => {
-    return (
-<div className='resource-group-list-line resource-group-list-line-not-hoverd'     style={{backgroundColor:"", height:""}}    key={index} >
- <p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big  ml-b'>{ Info?.isp }</p> 
- <p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.org }</p>
- <div className=' resource-group-list-item resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big ' style={{display:"flex"}}>{Info?.tags &&  Info?.tags.length > 0 &&    Info?.tags?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div>
- <p className='resource-group-list-item resource-group-list-item-not-hoverd    font-type-txt  Color-Grey1  list-item-small'>{ Info?.ip_str }</p> 
-<p className='resource-group-list-item  resource-group-list-item-not-hoverd   font-type-txt  Color-Grey1  list-item-small'>{ Info?.product }</p> 
-<p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.asn }</p> 
-<p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.transport }</p> 
-<p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.location?.country_name }</p> 
-<p className='resource-group-list-item resource-group-list-item-not-hoverd font-type-txt  Color-Grey1  list-item-small ' style={{ textAlign:"right"}}>{ Info?.timestamp &&   format_date_type_a( Info?.timestamp)     }</p> 
-</div>
-    );
-  })}
-
- 
-
-
-
-</div>
-</div>
-</div>
-
-  
-              </div>
-
-            </div>
-            {json_file_info?.fileSize === "Too big" && (
-                        <div
-                          className="mt-c "
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexDirection: "column",
-                          }}
+                <div style={{ width: "100%" }}>
+                  <div style={{}}>
+                    {display_this_domain != "prime_data" && (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                        className="mb-b"
+                      >
+                        <p
+                          className="resource-group-list-item   font-type-h4  Color-White ml-b  "
+                          style={{ width: "60%", minWidth: "60%" }}
                         >
-                          <div>
-                            <p className="  font-type-txt   Color-Grey1 mt-c ">
-                              Data file is too big. <br />
-                              You can download it as a JSON file.
-                            </p>
-                            <button
-                              className="btn-type3 mb-d"
-                              style={{ marginRight: "auto" }}
-                            >
-                              <p
-                                className="font-type-menu  "
-                                onClick={() =>
-                                  handle_click_download(
-                                    json_file_info,
-                                    backEndURL
-                                  )
-                                }
-                              >
-                                Download JSON
-                              </p>
-                              <DownloadIconButton className="icon-type1 " />{" "}
-                            </button>
-                          </div>
-
-                          <div
-                            className=""
-                            style={{ display: "flex", alignItems: "center" }}
+                          {display_this_domain}
+                        </p>
+                        <div
+                          className="display-flex justify-content-end  "
+                          style={{ marginRight: " " }}
+                        >
+                          <button
+                            className="PopUp-Close-btn"
+                            onClick={handle_close_list}
                           >
-                            {module_logo === "" ? null : (
-                              <>
-                                <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
-                                  By:
-                                </p>{" "}
-                                <img
-                                  src={module_logo}
-                                  alt="logo"
-                                  maxwidth="140px"
-                                  height="30"
-                                />
-                              </>
-                            )}
-                            <button
-                              className="btn-type2 "
-                              style={{ marginLeft: "auto" }}
-                              onClick={handleClose}
+                            <CloseButton className="PopUp-Close-btn-img" />{" "}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {display_this_domain === "prime_data" &&
+                      json_file_info?.fileSize != "Too big" && (
+                        <div className="resource-group-list-keyNames mb-a  ">
+                          <div className="resource-group-list-item list-item-big  ml-b ">
+                            <p
+                              className="font-type-menu  make-underline Color-White"
+                              onClick={() => do_sort("Domain")}
                             >
-                              <p className="font-type-menu ">{buttonTitle}</p>{" "}
-                            </button>
+                              Domain
+                            </p>
+                          </div>
+                          <div
+                            className="resource-group-list-item list-item-small"
+                            style={{ marginRight: "26px", textAlign: "right" }}
+                          >
+                            <p className="font-type-menu  make-underline Color-White mr-b">
+                              Matches
+                            </p>
                           </div>
                         </div>
                       )}
+
+                    {display_this_data?.Response?.matches.length > 0 && (
+                      <div className="resource-group-list-keyNames mb-a  ">
+                        <div className="resource-group-list-item list-item-big  ml-b ">
+                          <p className="font-type-menu  make-underline Color-White">
+                            ISP
+                          </p>
+                        </div>
+                        <div className="resource-group-list-item list-item-small">
+                          <p className="font-type-menu make-underline  Color-White ">
+                            Org
+                          </p>
+                        </div>
+                        <div className="resource-group-list-item list-item-big">
+                          <p className="font-type-menu  make-underline   Color-White ml-a">
+                            Tags
+                          </p>
+                        </div>
+                        <div className="resource-group-list-item list-item-small">
+                          <p className="font-type-menu  make-underline Color-White ">
+                            IP Str
+                          </p>
+                        </div>
+                        <div className="resource-group-list-item list-item-small">
+                          <p className="font-type-menu  make-underline Color-White ">
+                            Product
+                          </p>
+                        </div>
+                        <div className="resource-group-list-item list-item-small">
+                          <p className="font-type-menu  make-underline Color-White ">
+                            Asn
+                          </p>
+                        </div>
+                        <div className="resource-group-list-item list-item-small">
+                          <p className="font-type-menu  make-underline Color-White ">
+                            Transport
+                          </p>
+                        </div>
+                        <div className="resource-group-list-item list-item-small">
+                          <p className="font-type-menu  make-underline Color-White ">
+                            Country
+                          </p>
+                        </div>
+                        <div
+                          className="resource-group-list-item list-item-small"
+                          style={{ marginRight: "26px", textAlign: "right" }}
+                        >
+                          <p className="font-type-menu  make-underline Color-White ">
+                            Timestamp
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {display_this_data?.Response?.matches.length === 0 && (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: "100px",
+                        }}
+                      >
+                        <p
+                          className="   font-type-txt  Color-Grey1 mr-b "
+                          style={{}}
+                        >
+                          No matches found for this domain
+                        </p>
+                      </div>
+                    )}
+
+                    <div
+                      className=""
+                      style={{
+                        height: "auto",
+                        maxHeight: "300px",
+                        overflowY: "scroll",
+                      }}
+                    >
+                      {Array.isArray(json_file_info) &&
+                        json_file_info?.map((Site, index) => {
+                          return (
+                            <div
+                              className="resource-group-list-box   "
+                              style={{ height: "auto", overflowY: "hidden" }}
+                            >
+                              {display_this_domain === "prime_data" && (
+                                <div
+                                  className=" resource-group-list-line   mr-b  mt-a mb-a"
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    width: "auto",
+                                  }}
+                                  onClick={() =>
+                                    handle_click_display_data(Site?.Domain)
+                                  }
+                                >
+                                  <p
+                                    className="resource-group-list-item   font-type-txt  Color-Grey1 ml-b "
+                                    style={{ width: "60%", minWidth: "60%" }}
+                                  >
+                                    {Site?.Domain}
+                                  </p>
+                                  <p
+                                    className=" resource-group-list-item  font-type-txt  Color-Grey1 pl-a "
+                                    style={{
+                                      width: "35%",
+                                      minWidth: "35%",
+                                      textAlign: "right",
+                                    }}
+                                  >
+                                    {Site?.Response?.matches?.length}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+
+                      {display_this_data &&
+                        display_this_data?.Response?.matches?.map(
+                          (Info, index) => {
+                            return (
+                              <div
+                                className="resource-group-list-line resource-group-list-line-not-hoverd"
+                                style={{ backgroundColor: "", height: "" }}
+                                key={index}
+                              >
+                                <p className="resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big  ml-b">
+                                  {Info?.isp}
+                                </p>
+                                <p className="resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small">
+                                  {Info?.org}
+                                </p>
+                                <div
+                                  className=" resource-group-list-item resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big "
+                                  style={{ display: "flex" }}
+                                >
+                                  {Info?.tags &&
+                                    Info?.tags.length > 0 &&
+                                    Info?.tags?.map((tag, index) => (
+                                      <p
+                                        className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
+                                        key={index}
+                                      >
+                                        {tag}
+                                      </p>
+                                    ))}
+                                </div>
+                                <p className="resource-group-list-item resource-group-list-item-not-hoverd    font-type-txt  Color-Grey1  list-item-small">
+                                  {Info?.ip_str}
+                                </p>
+                                <p className="resource-group-list-item  resource-group-list-item-not-hoverd   font-type-txt  Color-Grey1  list-item-small">
+                                  {Info?.product}
+                                </p>
+                                <p className="resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small">
+                                  {Info?.asn}
+                                </p>
+                                <p className="resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small">
+                                  {Info?.transport}
+                                </p>
+                                <p className="resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small">
+                                  {Info?.location?.country_name}
+                                </p>
+                                <p
+                                  className="resource-group-list-item resource-group-list-item-not-hoverd font-type-txt  Color-Grey1  list-item-small "
+                                  style={{ textAlign: "right" }}
+                                >
+                                  {Info?.timestamp &&
+                                    format_date_type_a(Info?.timestamp)}
+                                </p>
+                              </div>
+                            );
+                          }
+                        )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {json_file_info?.fileSize === "Too big" && (
+              <div
+                className="mt-c "
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                }}
+              >
+                <div>
+                  <p className="  font-type-txt   Color-Grey1 mt-c ">
+                    Data file is too big. <br />
+                    You can download it as a JSON file.
+                  </p>
+                  <button
+                    className="btn-type3 mb-d"
+                    style={{ marginRight: "auto" }}
+                  >
+                    <p
+                      className="font-type-menu  "
+                      onClick={() =>
+                        handle_click_download(json_file_info, backEndURL)
+                      }
+                    >
+                      Download JSON
+                    </p>
+                    <DownloadIconButton className="icon-type1 " />{" "}
+                  </button>
+                </div>
+
+                <div
+                  className=""
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  {module_logo === "" ? null : (
+                    <>
+                      <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
+                        By:
+                      </p>{" "}
+                      <img
+                        src={module_logo}
+                        alt="logo"
+                        maxwidth="140px"
+                        height="30"
+                      />
+                    </>
+                  )}
+                  <button
+                    className="btn-type2 "
+                    style={{ marginLeft: "auto" }}
+                    onClick={handleClose}
+                  >
+                    <p className="font-type-menu ">{buttonTitle}</p>{" "}
+                  </button>
+                </div>
+              </div>
+            )}
             {json_file_info?.fileSize != "Too big" && (
               <div className="display-flex  mt-a" style={{}}>
                 {module_logo === "" ? null : (
@@ -2093,7 +2221,7 @@ display_this_value={"High"}
                       height="30"
                     />
                   </>
-                )} 
+                )}
                 <div />
                 <div
                   className="mt-c"
@@ -2119,14 +2247,9 @@ display_this_value={"High"}
                 </div>
               </div>
             )}
-
-            
           </div>
         </div>
       )}
     </>
   );
 };
-
-
- 
