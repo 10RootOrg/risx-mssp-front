@@ -2160,22 +2160,24 @@ export const PopUp_For_LeakCheck_response = (props) => {
   console.log("-------------------  json_file_data", json_file_data);
  
   
-
-  const handle_click_display_data= (Domain) => {
+  const handle_click_display_leck_data= (Domain) => {
+console.log("handle_click_display_data",Domain);
 
 if(!Domain   || Domain  === ""){ set_display_this_domain({});console.log("no domain value"); return}
 if(display_this_domain ===  Domain){set_display_this_domain("prime_data"); return}
 else{
   // set_display_this_data(json_file_info)
   set_display_this_domain(Domain)
-  const [filter] = json_file_info.filter(data => data.Domain === Domain);
+  const [filter] = json_file_info.filter(data => data.Name === Domain);
+
+  console.log("filter",filter);
+  
   set_display_this_data(filter)
  
 }
 
   };
  
-
   const handle_close_list= () => {
     console.log("handle_close_list" );
     set_display_this_domain("prime_data");
@@ -2185,7 +2187,6 @@ else{
    
      };
     
-
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
     if (file?.fileSize === "Too big") {
@@ -2216,7 +2217,6 @@ else{
     }
   };
 
-
 ///// combine all maches
   useEffect(() => {
     if (!json_file_info){return}
@@ -2229,7 +2229,6 @@ else{
 
 set_all_matches(totalMatches);
   }, [json_file_info]);
-
 
 /// logo preview
 useEffect(() => {
@@ -2307,7 +2306,7 @@ useEffect(() => {
       }
     };
     
- 
+
 // for first load  =>  sorting the list
 useEffect(() => {
   if (json_file_info?.length >=2 && firstTimeData ) {
@@ -2517,35 +2516,36 @@ display_this_value={"High"}
 
 {  display_this_domain === "prime_data"  && json_file_info?.fileSize != "Too big" &&
 <div className='resource-group-list-keyNames mb-a  '  >
-<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White' onClick={() => do_sort("Domain")}>Name</p></div>
+<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White' onClick={() => do_sort("Name")}>Name123</p></div>
 <div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White mr-b'>Matches</p></div>
 </div>
 }
 
 
-  { display_this_data?.Response?.matches.length > 0  &&
+  { display_this_data?.Response?.result?.length > 0  &&
 <div className='resource-group-list-keyNames mb-a  '  >
-<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White'>ISP</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu make-underline  Color-White '>Org</p></div>
-<div className='resource-group-list-item list-item-big'><p className='font-type-menu  make-underline   Color-White ml-a'>Tags</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>IP Str</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Product</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Asn</p></div>
-<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Transport</p></div>
+<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White'>Email</p></div>
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu make-underline  Color-White '>Username</p></div>
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu make-underline  Color-White '>Password</p></div>
+<div className='resource-group-list-item list-item-big'><p className='font-type-menu  make-underline   Color-White ml-a'>Fields</p></div>
+<div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Source Name</p></div>
 <div className='resource-group-list-item list-item-small'><p className='font-type-menu  make-underline Color-White '>Country</p></div>
-<div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White '>Timestamp</p></div>
+<div className='resource-group-list-item list-item-big'><p className='font-type-menu  make-underline   Color-White ml-a'>Tags</p></div>
+<div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White '>Breach</p></div>
 </div>
 }
 
-
-{ display_this_data?.Response?.matches.length === 0  &&
-<div  style={{     display:"flex" , alignItems:"center", justifyContent:"center",    height:"100px",      }}>
-  <p className='   font-type-txt  Color-Grey1 mr-b '  style={ {} }>No matches found for this domain</p> 
+{ display_this_data?.Response?.found === 0  &&
+<div  style={{ display:"flex" , alignItems:"center", justifyContent:"center", height:"100px"}}>
+  <p className='   font-type-txt  Color-Grey1 mr-b '  style={ {} }>No matches found for this item</p> 
   </div>
 }
 
-
-
+{ display_this_data?.Response === ""  && display_this_data?.Error &&
+<div  style={{display:"flex", alignItems:"center", justifyContent:"center", height:"100px"}}>
+  <p className='font-type-txt Color-Grey1 mr-b' style={{}}>Error: {display_this_data?.Error}</p> 
+  </div>
+}
 
 <div className=''   style={{height:"auto",    maxHeight:"300px",  overflowY:"scroll"   }}>
 {Array.isArray(json_file_info) && json_file_info?.map((Site, index) => { return (          
@@ -2553,9 +2553,9 @@ display_this_value={"High"}
 
 
   {       display_this_domain === "prime_data"    &&
-<div className=" resource-group-list-line   mr-b  mt-a mb-a" style={{display:"flex" ,justifyContent:"space-between" , width:"auto"}}  onClick={()=>handle_click_display_data(Site?.Name)}>
-<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"60%", minWidth:"60%"}}>{ Site?.Name}</p> 
-<p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"35%", minWidth:"35%" , textAlign:"right"  }}>{Site?.Response?.found }</p> 
+<div className=" resource-group-list-line   mr-b  mt-a mb-a" style={{display:"flex" ,justifyContent:"space-between" , width:"auto"}}  onClick={()=>handle_click_display_leck_data(Site?.Name)}>
+<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"60%", minWidth:"60%"}}>{Site?.Name}</p> 
+<p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"35%", minWidth:"35%" , textAlign:"right"  }}>{(Site?.Response?.found  || Site?.Response?.found  === 0 ) ?  Site?.Response?.found   : "NA"     }</p> 
  
 
 
@@ -2565,20 +2565,18 @@ display_this_value={"High"}
 </div> );   })}
 
 
-
- 
-{display_this_data && display_this_data?.Response?.matches?.map((Info, index) => {
+{display_this_data && display_this_data?.Response?.result?.map((Info, index) => {
     return (
 <div className='resource-group-list-line resource-group-list-line-not-hoverd'     style={{backgroundColor:"", height:""}}    key={index} >
- <p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big  ml-b'>{ Info?.isp }</p> 
- <p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.org }</p>
- <div className=' resource-group-list-item resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big ' style={{display:"flex"}}>{Info?.tags &&  Info?.tags.length > 0 &&    Info?.tags?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div>
- <p className='resource-group-list-item resource-group-list-item-not-hoverd    font-type-txt  Color-Grey1  list-item-small'>{ Info?.ip_str }</p> 
-<p className='resource-group-list-item  resource-group-list-item-not-hoverd   font-type-txt  Color-Grey1  list-item-small'>{ Info?.product }</p> 
-<p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.asn }</p> 
-<p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.transport }</p> 
-<p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.location?.country_name }</p> 
-<p className='resource-group-list-item resource-group-list-item-not-hoverd font-type-txt  Color-Grey1  list-item-small ' style={{ textAlign:"right"}}>{ Info?.timestamp &&   format_date_type_a( Info?.timestamp)     }</p> 
+<p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big  ml-b'>{ Info?.email }</p> 
+<p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.username }</p>
+<p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.password }</p>
+<div className=' resource-group-list-item resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big ' style={{display:"flex"}}>{Info?.fields &&  Info?.fields.length > 0 &&    Info?.fields?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div>
+<p className='resource-group-list-item resource-group-list-item-not-hoverd    font-type-txt  Color-Grey1  list-item-small'>{ Info?.source?.name }</p> 
+<p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.country }</p>
+<div className=' resource-group-list-item resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big ' style={{display:"flex"}}>{Info?.origin &&  Info?.origin.length > 0 &&    Info?.origin?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div>
+<p className='resource-group-list-item  resource-group-list-item-not-hoverd   font-type-txt  Color-Grey1  list-item-small'  style={{ textAlign:"right"}}>{ Info?.source?.breach_date }</p> 
+{/* <p className='resource-group-list-item resource-group-list-item-not-hoverd font-type-txt  Color-Grey1  list-item-small ' style={{ textAlign:"right"}}>{ Info?.timestamp &&   format_date_type_a( Info?.timestamp)     }</p>  */}
 </div>
     );
   })}
