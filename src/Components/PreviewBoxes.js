@@ -2119,8 +2119,8 @@ const midHight =  box_height/2.6
                }}>
               {Array.isArray(bar_numbers) && bar_numbers?.map((Info, index) => {
                 return (
-                  <div className='display-flex' key={index}      style={{}}  >
-                    <p className='font-type-txt Color-White mr-a ml-c'     style={{}}> {Info}</p>
+                  <div className='display-flex' key={index}      style={{       marginLeft:"auto"}}  >
+                    <p className='font-type-txt Color-White mr-a ml-c'     style={{  }}> {Info}</p>
                   </div>
                 )
               })}

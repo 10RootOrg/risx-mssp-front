@@ -8,7 +8,7 @@
     {
       "toolName": "Velociraptor",
       "toolID": "2000000",
-      "toolURL": "https://${FRONT_IP}/velociraptor/"
+      "toolURL": "${FRONT_URL}/velociraptor/"
     },
     {
       "toolName": "Risx",
@@ -75,7 +75,6 @@
       "toolName": "LeakCheck",
       "toolID": "2001013",
       "toolURL": "https://leakcheck.io"
-      
     },
     {
       "toolName": "Threat Hunting Dashboard",
