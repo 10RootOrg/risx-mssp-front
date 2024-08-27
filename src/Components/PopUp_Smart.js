@@ -1548,21 +1548,6 @@ export const PopUp_Confirm_Run_selected = (props) => {
  
 const cell_height = "38px" 
 
-  
-  // useEffect(() => {
-
-  //   console.log(all_artifacts);
-    
-  //   const logotest = all_artifacts[0].logoAddress_1
-  //   console.log("logotest 11" ,logotest    );
-
-  //   const  Src = require( `${logotest}`)
- 
- 
-  //   set_logo_path(Src)
-  
-    
-  // }, [ ]);
 
   return (
     <>
@@ -1583,19 +1568,6 @@ const cell_height = "38px"
               </button>
             </div>
 
-
-    
-              {/* { logo_path  &&   <>
-                  
-            <p className="font-type-very-sml-txt   Color-Grey1 mr-a">By:</p>
-            <img
-              src={logo_path}
-              alt="logo"
-              maxwidth="140px"
-              height="30"
-           
-            />
-</>} */}
 
 {allow_continue ? 
 <SuccessIcon
@@ -1618,10 +1590,6 @@ style={{ marginLeft: "-15px" }}
 
             <p className="font-type-h4 Color-White mb-a">{allow_continue ? "Confirm Selection"   : "Selection Required" }</p>
             <p className="font-type-txt  reading-height Color-Grey1 mb-c">{allow_continue ?  "Please review and confirm your choices before activating them:"   : "Please select at least one module and artifact." }</p>
-
-
-            {/* <img src={ iconAddress ? require(`${ iconAddress}`) : undefined} alt="Icon" width="100%" height="80" className='mb-a'   />  */}
-
           {allow_continue &&   
             <div className="display-flex" style={{gap:"24px"  , alignItems:"flex-start"  ,flexDirection:"column"}}>
 {all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" &&  <>
@@ -1663,9 +1631,6 @@ style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px', marginTop:"4px"
 {all_Tools && Array.isArray(all_Tools) &&  all_Tools.length > 0 &&   typeof all_Tools !== "string" && <>
 
 <div style={{display:"flex"}}>
-
-
-
 
 
 {/* {all_Tools.filter(tool => tool?.isActive === 1 || tool?.isActive === true).length > 0 && (
@@ -1717,25 +1682,15 @@ style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px'  ,marginLeft:"0"
 </div>
   }
 
-            <div className="display-flex mt-c" style={{}}>
+            <div className="display-flex mt-c" style={{ justifyContent:"flex-end" , gap:"var(--space-b)"}}>
 
-            <button
-                className="btn-type2"
-                disabled={disable_buttons}
-                style={{ marginLeft: "auto" }}
-                onClick={() => {
-                  False_action();
-                  set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
-                }}
-              >
-                <p className="font-type-menu ">{allow_continue ? "Cancel" : "Continue"}</p>{" "}
-              </button>
+        
 {allow_continue && 
 
 <button
 className="btn-type2"
 disabled={disable_buttons}
-style={{ marginLeft: "10px" }}
+style={{  }}
 onClick={() => {
   True_action();
   set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
@@ -1745,18 +1700,23 @@ onClick={() => {
 </button>
 
 }
-              {/* <button
+
+<button
                 className="btn-type2"
                 disabled={disable_buttons}
-                style={{ marginLeft: "10px" }}
-
+                style={{  }}
                 onClick={() => {
-                  True_action();
+                  False_action();
                   set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
                 }}
+
+                
               >
-                <p className="font-type-menu ">Run</p>{" "}
-              </button> */}
+                <p className="font-type-menu ">{allow_continue ? "Cancel" : "Continue"}</p>{" "}
+              </button>
+
+
+
          
             </div>
           </div>

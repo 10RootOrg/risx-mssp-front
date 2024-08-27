@@ -623,11 +623,16 @@ async function  ShowInUi (Info){
     if(res.data){
       // set_disable_ShowInUi_btn(false);
     const index = all_Tools.findIndex(tool => tool.tool_id === Info?.tool_id );
+
+
+   
     if (index !== -1) {
       // Create a new copy of the all_Tools array
       const updatedTools = [...all_Tools];
+      console.log("updatedTools",updatedTools);
+      
       // Update the specific tool
-      updatedTools[index] = { ...updatedTools[index], tool_id: Info?.tool_id, ShowInUi: !Info?.ShowInUi };
+      updatedTools[index] = { ...updatedTools[index], tool_id: Info?.tool_id, ShowInUi: !Info?.ShowInUi   ,isActive:!Info?.ShowInUi};
       // Set the state with the updated array
       set_all_Tools(updatedTools);
    
