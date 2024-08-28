@@ -791,7 +791,6 @@ cursor:auto;
   -webkit-line-clamp: 1; /* Number of lines you want to display */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis; /* This will not work in multi-line truncation without the above properties */
-  
   white-space: normal; /* Allow wrapping */
 }
 

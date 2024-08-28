@@ -560,7 +560,7 @@ export const PopUp_For_velociraptor_response = (props) => {
 
                     {json_file_info?.fileSize === "Too big" && (
                       <div
-                        className="mt-c "
+                        className="  "
                         style={{
                           display: "flex",
                           justifyContent: "space-between",
@@ -568,15 +568,15 @@ export const PopUp_For_velociraptor_response = (props) => {
                         }}
                       >
                         <div>
-                          <p className="  font-type-txt   Color-Grey1 mt-c ">
+                          <p className="  font-type-txt   Color-Grey1  ">
                             Data file is too big.
-                             {/* {json_file_info?.mbSize && <>({Math.round(json_file_info?.mbSize)} Mb)</> }  */}
+                             {json_file_info?.mbSize && <> ({Math.round(json_file_info?.mbSize)}Mb)</> } 
                              <br />
                             You can download it as a JSON file.
                           </p>
                           <button
-                            className="btn-type3 mb-d"
-                            style={{ marginRight: "auto" }}
+                            className="btn-type3   mt-a"
+                            style={{ marginRight: "auto" , marginLeft:"-5px"}}
                           >
                             <p
                               className="font-type-menu  "
@@ -2156,15 +2156,17 @@ export const PopUp_For_Shodan_response = (props) => {
                   flexDirection: "column",
                 }}
               >
-                <div>
-                  <p className="  font-type-txt   Color-Grey1 mt-c ">
-                    Data file is too big. <br />
-                    You can download it as a JSON file.
-                  </p>
-                  <button
-                    className="btn-type3 mb-d"
-                    style={{ marginRight: "auto" }}
-                  >
+                 <div>
+                          <p className="  font-type-txt   Color-Grey1  ">
+                            Data file is too big.
+                             {json_file_info?.mbSize && <> ({Math.round(json_file_info?.mbSize)}Mb)</> } 
+                             <br />
+                            You can download it as a JSON file.
+                          </p>
+                          <button
+                            className="btn-type3   mt-a"
+                            style={{ marginRight: "auto" , marginLeft:"-5px"}}
+                          >
                     <p
                       className="font-type-menu  "
                       onClick={() =>
@@ -2842,14 +2844,16 @@ display_this_value={"High"}
                           }}
                         >
                           <div>
-                            <p className="  font-type-txt   Color-Grey1 mt-c ">
-                              Data file is too big. <br />
-                              You can download it as a JSON file.
-                            </p>
-                            <button
-                              className="btn-type3 mb-d"
-                              style={{ marginRight: "auto" }}
-                            >
+                          <p className="  font-type-txt   Color-Grey1  ">
+                            Data file is too big.
+                             {json_file_info?.mbSize && <> ({Math.round(json_file_info?.mbSize)}Mb)</> } 
+                             <br />
+                            You can download it as a JSON file.
+                          </p>
+                          <button
+                            className="btn-type3   mt-a"
+                            style={{ marginRight: "auto" , marginLeft:"-5px"}}
+                          >
                               <p
                                 className="font-type-menu  "
                                 onClick={() =>

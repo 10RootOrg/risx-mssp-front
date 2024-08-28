@@ -24,10 +24,10 @@ function Dashboard_Threat_Hunting({
 
   
   const {
-    backEndURL,
-    all_Resource_Types,
-    all_artifacts,
-    user_id,
+    // backEndURL,
+    // all_Resource_Types,
+    // all_artifacts,
+    // user_id,
     mssp_config_json,
     front_IP,
     front_URL
@@ -43,21 +43,11 @@ function Dashboard_Threat_Hunting({
   }, []);
 
 
-//   useEffect(() => {
-// if (!mssp_config_json){return}
-// const dashboardLinks = Array.isArray(mssp_config_json?.dashboardLinks) ? mssp_config_json.dashboardLinks : [];
-// const threatHuntingURL = dashboardLinks.find(link => link.dashboardName === "Threat Hunting")?.dashboardURL;
-// set_dashboard_URL(threatHuntingURL);
-//   }, [mssp_config_json]);
-
+ 
   useEffect(() => {
     if (!mssp_config_json){return}
     const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks) ? mssp_config_json.moduleLinks : [];
-    // console.log("moduleLinks" , moduleLinks);
-    
     const threatHuntingURL = moduleLinks.find(link => link.toolName === "Threat Hunting Dashboard")?.toolURL;
-    // console.log("threatHuntingURL" , threatHuntingURL);
-
     const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);  
     set_dashboard_URL(fixed_path);
       }, [mssp_config_json]);
@@ -157,9 +147,7 @@ function Dashboard_Threat_Hunting({
         </div> */}
  
        <iframe
- 
           src={dashboard_URL}
-
           height="1200"
           width="100%"
           className="kibana-iframe"

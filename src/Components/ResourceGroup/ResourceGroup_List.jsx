@@ -476,7 +476,9 @@ No Records of {title}s for this search.
 
 {/* </>} */}
 </div>
-<button className="btn-type4 mb-a"  onClick={handle_back}><p className='font-type-menu mr-a' >Back to Assets Type</p><div style={{ transform: "scale(0.9)" }}><IconMain className="icon-type1 "/></div>  </button>
+<div style={{marginLeft:"auto" , marginRight:"auto"}}>
+<button className="btn-type5    mb-a"  onClick={handle_back}><p className=' font-type-menu  Color-Grey2  mr-a' >Back to Assets Type</p><div style={{ transform: "scale(0.9)" }}><IconMain className="icon-type1"/></div>  </button>
+</div>
 
 
 </>

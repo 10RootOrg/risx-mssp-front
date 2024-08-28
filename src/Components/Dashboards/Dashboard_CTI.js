@@ -15,14 +15,15 @@ import {
 import axios from "axios";
 import GeneralContext from "../../Context.js";
 import CTI_list from "./CTI_list.jsx";
+import { fix_path } from "./functions_for_dashboards.js";
 
 function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
   set_visblePage("dashboard-cti");
   // const {   backEndURL  } = useContext(GeneralContext);
   // const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
-  const { backEndURL } = useContext(GeneralContext);
+  const { backEndURL, mssp_config_json,front_IP, front_URL  } = useContext(GeneralContext);
   const [MISPData, setMISPData] = useState({});
-
+  const [dashboard_URL, set_dashboard_URL] = useState("");
   const [display_data_type, set_display_data_type] = useState("");
   const [loader, set_loader] = useState(false);
   const [LeakData, set_LeakData] = useState([]);
@@ -47,9 +48,18 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
   ];
 
   console.log("LeakData" , LeakData);
-// console.log("rrrrrrrrrrrrrr",LeakData?.reduce( (accumulator, x) => accumulator + x?.Response?.found, 0 ));
 
-  // Don't show sidebar in this page
+
+  useEffect(() => {
+    if (!mssp_config_json){return}
+    const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks) ? mssp_config_json.moduleLinks : [];
+    const CTIDashboardURL = moduleLinks.find(link => link.toolName === "CTI Dashboard")?.toolURL;
+    const fixed_path = fix_path(CTIDashboardURL, front_IP, front_URL);  
+    set_dashboard_URL(fixed_path);
+      }, [mssp_config_json]);
+
+
+
 
   async function GetData() {
     try {
@@ -85,11 +95,18 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
           </div>
           {/* <div className='top-of-page-center'>"""placeholder for dropDown"""</div> */}
         </div>
+        {/* <iframe src="http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/7f780b64-042d-4ddc-ae94-00c0d4c493ec?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))&_a=()&show-time-filter=true" height="600" width="800"></iframe> */}
+ 
+         <iframe
+          src={dashboard_URL}
+          height="1350px"
+          width="100%"
+          className="kibana-iframe"
+        ></iframe>  
 
 
 
-
-        <div  className="PreviewBox-respo-container   mb-c" >
+        <div  className="PreviewBox-respo-container mt-c  mb-c" >
 
         <div className="PreviewBox_for_2_tools" style={{ }} >
 
@@ -134,26 +151,7 @@ box_height={box_height_1of3 -20 }
    box_height={box_height_2of3 }
 />
 
-{/* <PreviewBox_respo_list_type6
-  HeadLine="MISP Indicators Top10 Types"
-   read_more_icon={''}
-    description_max_length={88}
-    read_more_view= {true}
-   read_more={'The list outlines the ten most prevalent indicators types within the MISP platform. Indicator types encompass various forms of data such as file hashes, domain names, and IP addresses, each providing crucial information for threat analysis. By examining the top ten types, analysts can better understand the focus of recent threat intelligence, tailor their detection mechanisms to address the most common indicator types, and enhance their overall security posture through targeted analysis and response strategies.'}
-   list_array_column1={{ key: "Name", previewName: "Name" }}
-   list_array_column2={{ key: "Count", previewName: "#" }}
-   list_array={
-     MISPData?.Response?.top_10_attribute_types?.sort(
-       (a, b) => b.Count - a.Count
-     ) || []
-   }
  
-   is_popup={false}
-   is_tags={false}
-   click_on_field={true}
-   date={"Near Real-Time"} // "NA"
-   box_height={box_height_2of3}
-/> */}
 
 </div>
 
@@ -201,37 +199,7 @@ box_height={box_height_1of3 -20 }
 
 
 </div>
-
-
-{/* <PreviewBox_respo_list_type6
-  HeadLine="LeakCheck list"
-   read_more_icon={''}
  
-    read_more_view= {true}
-    description_max_length={55}
-    read_more={'Metric tracks the total count of credentials exposed in data breaches or leaks, as reported by platforms like DeHashed and LeakCheck. This figure encompasses compromised usernames, passwords, and other authentication details that have been publicly or semi-publicly disclosed. Monitoring the number of leaked credentials is critical for assessing the scale of credential-based attacks and understanding the potential impact on security posture. High numbers of leaked credentials often indicate significant breaches that require immediate action, such as initiating password resets and enhancing authentication mechanisms. By keeping track of this metric, organizations can proactively mitigate risks associated with credential theft, fortify their security defenses, and prevent unauthorized access stemming from compromised credentials.'}
-       list_array_column1={{ key: "Name", previewName: "Name" }}
-   list_array_column2={{ key: "Response.found", previewName: "#" }}
-   list_array={
- 
-
-
-    LeakData !== undefined && LeakData.length !== 0   ?  LeakData : "NA"
-
-   }
- 
-   is_popup={false}
-   is_tags={false}
-   click_on_field={true}
-   date={"Near Real-Time"} // "NA"
-   box_height={box_height}
-/>
- */}
-
-
-
-
-
 <PreviewBox_respo_chart 
 allow_wide={false}
 display_type={'bar'}  // pie , bar
@@ -314,14 +282,19 @@ box_height={box_height}
  
 
      
-        <div className="resource-group-all-the-Lists">
+        <div className=" ">
           <CTI_list
             Preview_this_Results={LeakData}
             set_Preview_this_Results={set_LeakData}
             loader={loader}
             set_loader={set_loader}
           />
+
+
         </div>
+
+
+        
       </div>
     </>
   );
