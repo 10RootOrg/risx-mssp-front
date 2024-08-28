@@ -13,7 +13,7 @@ import { ReactComponent as IconUserNameSocial } from './asset-icons/ico-username
 import { ReactComponent as IconFullName } from './asset-icons/ico-fullname.svg';
 import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
 import { ReactComponent as IconEmailDomain } from './asset-icons/ico-email-domain.svg';
-// import { ReactComponent as IconEmailDomain } from "./asset-icons/ico-reverse.svg";
+ 
 
 
 
@@ -26,8 +26,11 @@ import axios from 'axios'
 
 //  import { Add_Edit_Resource_Item } from "../Add_Edit_Resource_Item";
  import { PopUp_Under_Construction ,PopUp_All_Good} from '../PopUp_Smart'
-
+ 
+ 
  import LMloader from "../Features/LMloader.svg";
+import { format_date_type_a } from '../Features/DateFormat.js';
+
 function ResourceGroup_List({
 
    loader ,
@@ -341,7 +344,7 @@ btn_collapse_action={handle_back}
 <div className='resource-group-list-item list-item-small' onClick={() => normal_sort("monitoring")}>
 <p className='font-type-menu  make-underline Color-Grey1' >Monitor</p>
 </div>
-<div className='resource-group-list-item'                 onClick={() => normal_sort("checked")}>
+<div className='resource-group-list-item list-item-small'                 onClick={() => normal_sort("checked")}>
 <p className='font-type-menu  make-underline Color-Grey1 '>Checked</p>
 </div>
 <div className='resource-group-list-item   list-item-status-color  mr-a' onClick={() => normal_sort("resource_status")}
@@ -428,7 +431,7 @@ Info?.resource_status
 
  
 
-  <p className='resource-group-list-item    font-type-txt   Color-Grey1  '>{formattedDate}</p> 
+  <p className='resource-group-list-item   list-item-small font-type-txt   Color-Grey1  '>{Info?.checked &&   format_date_type_a(Info?.checked)}</p> 
   <div className='resource-group-list-item    list-item-last   list-item-status-color   '>
   <div className={`    ${StatusColorClass}  light-bulb-type1`}/>
   </div>

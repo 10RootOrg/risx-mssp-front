@@ -16,13 +16,14 @@ import { ReactComponent as IcoModule } from '../icons/ico-module.svg';
 // import { useNavigate } from 'react-router-dom';
 
 
+
 function Modules({show_SideBar,set_show_SideBar,unseen_alert_number,set_visblePage}) {
     set_visblePage("Modules");
     const { all_Tools ,set_all_Tools,  backEndURL , set_all_artifacts   ,all_artifacts,moduleLinks,set_moduleLinks} = useContext(GeneralContext);
     const [all_artifacts_and_modules, set_all_artifacts_and_modules] = useState([]) 
     const [filter_string , set_filter_string] = useState("");
      // const navigate = useNavigate();
-
+     console.log("all_artifacts_and_modules", all_artifacts_and_modules);
     useEffect(() => { 
         if (backEndURL == null || backEndURL == undefined || backEndURL == ""){return}
         const get_all_artifacts = async()=>{ 

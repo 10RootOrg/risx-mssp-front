@@ -39,8 +39,9 @@ function ResourceGroup_All({
   // filter_Resource,
   set_filter_Resource,
 }) {
-  const { backEndURL, all_Resource_Types, get_all_resource_types } =
+  const { backEndURL, all_Resource_Types, get_all_resource_types,       Assets_Preview_List, set_Assets_Preview_List } =
     useContext(GeneralContext);
+
 
   const [
     popUp_Add_Many_Resource_Items__show,
@@ -79,14 +80,14 @@ function ResourceGroup_All({
   const [show_this_list, set_show_this_list] = useState("");
 
   const [use_this_resource_type, set_use_this_resource_type] = useState({});
-  const [Preview_List, set_Preview_List] = useState(false);
+  // const [Assets_Preview_List, set_Assets_Preview_List] = useState(false);
 
   const time = new Date();
   const format_date = format_date_type_a(time);
   const [assets_list_from_db, set_assets_list_from_db] = useState([]);
   // console.log("all_Resource_Types ",all_Resource_Types);
   //  console.log("use_this_resource_type",use_this_resource_type);
-
+  console.log("Assets_Preview_List",Assets_Preview_List);
   const [is_search, set_is_search] = useState(false);
   const [PreviewJsonFile, setPreviewJsonFile] = useState({});
 
@@ -245,16 +246,16 @@ function ResourceGroup_All({
     set_use_this_resource_type(resource_type_filtered);
 
     if (resource_type_id === show_this_list) {
-      set_Preview_List(false);
+      set_Assets_Preview_List(false);
       return;
     } else {
-      set_Preview_List(true);
+      set_Assets_Preview_List(true);
     }
   };
 
   const handle_show_all_assets_type_list = () => {
     console.log("handle_show_all_assets_type_list");
-    set_Preview_List(false);
+    set_Assets_Preview_List(false);
     set_assets_list_from_db([]);
   };
 
@@ -371,7 +372,7 @@ function ResourceGroup_All({
         </>
       ) : (
         <>
-          {!Preview_List && (
+          {!Assets_Preview_List && (
             <>
               <div
                 style={{
@@ -567,7 +568,7 @@ function ResourceGroup_All({
             </>
           )}
 
-          {Preview_List && (
+          {Assets_Preview_List && (
             <>
               <ResourceGroup_List
                 title={use_this_resource_type?.resource_type_name}
