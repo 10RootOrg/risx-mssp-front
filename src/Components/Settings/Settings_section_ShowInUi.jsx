@@ -76,7 +76,7 @@ async function  edit_checked (tool_id ,ShowInUi){
       // Create a new copy of the all_Tools array
       const updatedTools = [...all_Tools];
       // Update the specific tool
-      updatedTools[index] = { ...updatedTools[index], tool_id: tool_id, ShowInUi: !ShowInUi};
+      updatedTools[index] = { ...updatedTools[index], tool_id: tool_id, ShowInUi: !ShowInUi  ,isActive:!ShowInUi };
       // Set the state with the updated array
       set_all_Tools(updatedTools);
    
@@ -137,11 +137,12 @@ False_action={handle_Cancel_Save_config}
                  <table  className="ShowInUi-table" >
         <thead>
           <tr className=''>
-            <th className='font-type-menu Color-White'>Display</th>
+            <th className='font-type-menu Color-White'>UI Display</th>
             {/* <th className='font-type-menu Color-White'>Developer</th> */}
             <th className='font-type-menu Color-White'>Module</th>
             <th className='font-type-menu Color-White'>Description</th>
-            <th className='font-type-menu Color-White'>Is Active</th>
+            <th className='font-type-menu Color-White'>Status
+            </th>
         
           </tr>
         </thead>
@@ -193,7 +194,7 @@ False_action={handle_Cancel_Save_config}
               
               
               <td className='font-type-txt Color-Grey1'>{tool?.description_short}</td>
-              <td className='font-type-txt Color-Grey1'>{tool?.isActive ? ("Active"):("Disabled")}</td>
+              <td className={`font-type-txt ${tool?.isActive ? "Color-Blue-Glow" : "Color-Grey1"}`}>{tool?.isActive ? ("Active"):("Disabled")}</td>
           
               <td className=''> 
               {/* {tool.logoAddress_1 && <img className='velociraptor-EndpointModules-logo' src={`./.${tool.logoAddress_1}`} alt="Logo" />} */}

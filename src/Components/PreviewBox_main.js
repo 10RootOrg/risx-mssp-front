@@ -14,6 +14,7 @@ import React , {useState , useEffect, useContext} from 'react';
 
 import './PreviewBoxes.css';
 import './all_tools.css';
+import { format_date_type_a } from './Features/DateFormat.js';
  
 
 // function PreviewBox_velociraptor2({ box_type, main_headline,main_read_more, artifacts_modules_list }) {
@@ -871,15 +872,6 @@ disabled={disabled || Info?.toolType === "link"}
 
 
 
-
-
-
-
-
-
-
-
-
 <td className='' ><div style={{display:"flex", alignItems:"center" }}>{/* <p className='font-type-very-sml-txt   Color-Grey1 mr-a'>By:</p> */}<img className='logo-cell  ' style={{ width:"108px"   , height:"100%" , maxHeight:"40px" ,marginRight:"20px",marginLeft:"8px"}} src={Info?.logoAddress_1 ? require(`${Info.logoAddress_1}`) : undefined}></img></div></td>
 
 <td  style={{width:"24%"}} ><p className='font-type-menu  Color-White  cutLongLine' >{Info?.headline}</p></td>
@@ -928,10 +920,7 @@ onClick={() => {
 </td>
 
 
-<td className='' ><div style={{display:"flex", alignItems:"center", }}>{/* <IconLastRun /> */}<p className='font-type-very-sml-txt Color-Grey1' >{lastrun}</p></div></td>
-
-
-
+<td className='' ><div style={{display:"flex", alignItems:"center", width:"auto", minWidth:"95px"  }}>{/* <IconLastRun /> */}<p className='font-type-very-sml-txt Color-Grey1 cutLongLine' >{Info?.LastRun  &&  format_date_type_a(Info?.LastRun)}</p></div></td>
 
 
 <td><button  className= { `${ box_type ===     "velociraptor"  ?   "btn-type5 btn-type5-no-hover"   :  'btn-type5'}`} 

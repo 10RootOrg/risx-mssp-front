@@ -49,7 +49,7 @@ function SideBar({
     DownloadProgressBar,
     setDownloadProgressBar,
     setDownloadList,
-    // DownloadList,
+   set_Assets_Preview_List,Assets_Preview_List
     // front_URL,
     // mssp_config_json,
     // user_id,
@@ -648,7 +648,7 @@ function SideBar({
         {/* ..........Dashboards..........end. */}
 
         <button
-          className="btn-menu  "
+          className="btn-menu"
           onClick={() => handleClick("Modules")}
           disabled={visblePage === "Modules"}
         >
@@ -663,10 +663,13 @@ function SideBar({
         </button>
 
         <button
-          className="btn-menu  "
-          onClick={() => handleClick("assets")}
-          disabled={visblePage === "assets"}
+          className={`btn-menu  ${visblePage === "assets" && "btn_look_hover"}`}
+        //  className="btn-menu"
+          onClick={() =>{  handleClick("assets");  set_Assets_Preview_List(false)}}
+       disabled={visblePage === "assets"  && Assets_Preview_List === false}
         >
+ {/* className="btn-type2" */}
+
           <div className="display-flex">
             <IcoResourceGroup className="btn-menu-icon-placeholder  mr-a " />
             <p className="font-type-menu ">Assets</p>

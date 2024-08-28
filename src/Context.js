@@ -11,7 +11,7 @@ export function ContextProvider({ children }) {
   const [moduleLinks, set_moduleLinks] = useState();
   const [dashboardLinks, set_dashboardLinks] = useState();
   const [expiryDate, set_expiryDate] = useState("");
-
+  const [Assets_Preview_List, set_Assets_Preview_List] = useState(false);
   const [examInnterval_minutes, set_examInnterval_minutes] = useState(2);
 
   const [DownloadProgressBar, setDownloadProgressBar] = useState({});
@@ -153,6 +153,8 @@ export function ContextProvider({ children }) {
         front_URL,
         mssp_config_json,
         set_mssp_config_json,
+
+        Assets_Preview_List, set_Assets_Preview_List
       }}
     >
       {children}

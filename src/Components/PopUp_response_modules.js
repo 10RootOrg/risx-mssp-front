@@ -147,12 +147,8 @@ const cellColor = (value) => {
   }
   return "var(--color-Grey1)"; // Default color
 };
-// --alert-color-critical:var(--color-Red);
-// --alert-color-high:var(--color-Orange-Red);
-// --alert-color-medium:var(--color-Orange);
-// --alert-color-low:var(--color-Yellow);
-// --alert-color-no-alert:var(--color-Green);
-// --alert-color-none:var(--color-Grey2);
+
+const LIMIT_MAX_CELL_WIDTH = "220px";
 
 export const PopUp_For_velociraptor_response = (props) => {
   const {
@@ -182,8 +178,7 @@ export const PopUp_For_velociraptor_response = (props) => {
 
   const [headers, set_headers] = useState([]);
   const [isWidthLimited, setIsWidthLimited] = useState(true); // State to toggle width
-  // const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success",paragraph:"successfully",buttonTitle:"Close"});
-  // Get the keys from the first object (assuming all objects have the same keys)
+   // Get the keys from the first object (assuming all objects have the same keys)
 
   useEffect(() => {
     if (!json_file_info || json_file_info?.table.length === 0) return;
@@ -197,7 +192,7 @@ export const PopUp_For_velociraptor_response = (props) => {
     set_headers(filterd);
   }, [json_file_info]);
 
-  const LIMIT_MAX_CELL_WIDTH = "220px";
+
 
   const handleHeaderClick = () => {
     setIsWidthLimited(!isWidthLimited); // Toggle the width limit
@@ -574,7 +569,9 @@ export const PopUp_For_velociraptor_response = (props) => {
                       >
                         <div>
                           <p className="  font-type-txt   Color-Grey1 mt-c ">
-                            Data file is too big. <br />
+                            Data file is too big.
+                             {/* {json_file_info?.mbSize && <>({Math.round(json_file_info?.mbSize)} Mb)</> }  */}
+                             <br />
                             You can download it as a JSON file.
                           </p>
                           <button
@@ -2281,10 +2278,13 @@ export const PopUp_For_LeakCheck_response = (props) => {
   const [all_matches, set_all_matches] = useState(0);
   const [sort_by, set_sort_by] = useState("Domain");
   const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
+  const [isWidthLimited, setIsWidthLimited] = useState(true); // State to toggle width
 
   console.log("----------------- json_file_info", json_file_info);
   console.log("-------------------  json_file_data", json_file_data);
- 
+  const handleHeaderClick = () => {
+    setIsWidthLimited(!isWidthLimited); // Toggle the width limit
+  };
   
   const handle_click_display_leck_data= (Domain) => {
 console.log("handle_click_display_data",Domain);
@@ -2399,39 +2399,54 @@ useEffect(() => {
     set_popUp_show(false);
   }
 
-  const do_sort = (column) => {
-    // json_file_info,
-    // set_json_file_info,
-    console.log("sort this column: " , column);
-    
+ 
+    const do_sort = (column) => {
+      console.log("sort this column: ", column);
+  
       if (!column) {
-        console.log("Can't sort ", column);
-        return;
+          console.log("Can't sort ", column);
+          return;
       }
-    
+  
+      // Utility function to get nested property
+      const getNestedValue = (obj, path) => {
+          return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+      };
+  
+      // Function to normalize values, treating empty strings and undefined as "0"
+      const normalizeValue = (value) => {
+          return value === "" || value === undefined ? "0" : value;
+      };
+  
       if (column === sort_by) {
-        console.log("It's already sorted like this, reversing the order");
-        const sorted = [...json_file_info].sort((a, b) => {;
-          if (b[column] < a[column]) return -1;
-          if (b[column] > a[column]) return 1;
-          return 0;
-        });
-        console.log("Sorted descending:", sorted);
-        set_json_file_info(sorted);
-        set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
-    
+          console.log("It's already sorted like this, reversing the order");
+          const sorted = [...json_file_info].sort((a, b) => {
+              const valA = normalizeValue(getNestedValue(a, column));
+              const valB = normalizeValue(getNestedValue(b, column));
+  
+              if (valB < valA) return -1;
+              if (valB > valA) return 1;
+              return 0;
+          });
+          console.log("Sorted descending:", sorted);
+          set_json_file_info(sorted);
+          set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+  
       } else {
-        set_sort_by(column);
-        const sorted = [...json_file_info].sort((a, b) => {
-          if (a[column] < b[column]) return -1;
-          if (a[column] > b[column]) return 1;
-          return 0;
-        });
-        console.log("Sorted ascending:", sorted);
-        set_json_file_info(sorted);
+          set_sort_by(column);
+          const sorted = [...json_file_info].sort((a, b) => {
+              const valA = normalizeValue(getNestedValue(a, column));
+              const valB = normalizeValue(getNestedValue(b, column));
+  
+              if (valA < valB) return -1;
+              if (valA > valB) return 1;
+              return 0;
+          });
+          console.log("Sorted ascending:", sorted);
+          set_json_file_info(sorted);
       }
-    };
-    
+  };
+  
 
 // for first load  =>  sorting the list
 useEffect(() => {
@@ -2508,7 +2523,7 @@ description_show={false}
 description_short={'Centralized hub for integrating client data and insights seamlessly...'}
 description_max_length={12}
 read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
-bar_numbers={  json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.found  ) ||   [0,0,0,0]}
+bar_numbers={  json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.found !== undefined && aaaa?.Response?.found !== null?   aaaa?.Response?.found  : "NA") ||   [0,0,0,0]}
 bar_headlines={  json_file_info?.map(   (aaaa ) =>  aaaa?.Name  ) || []}
 enable_hover={false}
 display_this_value={"prime_data"}
@@ -2642,13 +2657,13 @@ display_this_value={"High"}
 
 {  display_this_domain === "prime_data"  && json_file_info?.fileSize != "Too big" &&
 <div className='resource-group-list-keyNames mb-a  '  >
-<div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White' onClick={() => do_sort("Name")}>Name123</p></div>
-<div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White mr-b'>Matches</p></div>
+<div className='resource-group-list-item list-item-big ml-b' onClick={() => do_sort("Name")}><p className='font-type-menu  make-underline Color-White'>Name</p></div>
+<div className='resource-group-list-item list-item-small'    onClick={() => do_sort("Response.found")} style={{marginRight:"26px" ,textAlign:"right"}} ><p className='font-type-menu  make-underline Color-White mr-b'>Matches</p></div>
 </div>
 }
+ 
 
-
-  { display_this_data?.Response?.result?.length > 0  &&
+  {/* { display_this_data?.Response?.result?.length > 0  &&
 <div className='resource-group-list-keyNames mb-a  '  >
 <div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White'>Email</p></div>
 <div className='resource-group-list-item list-item-small'><p className='font-type-menu make-underline  Color-White '>Username</p></div>
@@ -2659,7 +2674,7 @@ display_this_value={"High"}
 <div className='resource-group-list-item list-item-big'><p className='font-type-menu  make-underline   Color-White ml-a'>Tags</p></div>
 <div className='resource-group-list-item list-item-small' style={{marginRight:"26px" ,textAlign:"right"}}><p className='font-type-menu  make-underline Color-White '>Breach</p></div>
 </div>
-}
+} */}
 
 { display_this_data?.Response?.found === 0  &&
 <div  style={{ display:"flex" , alignItems:"center", justifyContent:"center", height:"100px"}}>
@@ -2673,7 +2688,7 @@ display_this_value={"High"}
   </div>
 }
 
-<div className=''   style={{height:"auto",    maxHeight:"300px",  overflowY:"scroll"   }}>
+<div className=''   style={{height:"auto",    maxHeight:"300px",  overflowY:"scroll" }}>
 {Array.isArray(json_file_info) && json_file_info?.map((Site, index) => { return (          
 <div className='resource-group-list-box   '   style={{height:"auto",  overflowY:"hidden"}}>
 
@@ -2682,16 +2697,13 @@ display_this_value={"High"}
 <div className=" resource-group-list-line   mr-b  mt-a mb-a" style={{display:"flex" ,justifyContent:"space-between" , width:"auto"}}  onClick={()=>handle_click_display_leck_data(Site?.Name)}>
 <p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"60%", minWidth:"60%"}}>{Site?.Name}</p> 
 <p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"35%", minWidth:"35%" , textAlign:"right"  }}>{(Site?.Response?.found  || Site?.Response?.found  === 0 ) ?  Site?.Response?.found   : "NA"     }</p> 
- 
-
-
 </div>
 }
 
 </div> );   })}
 
 
-{display_this_data && display_this_data?.Response?.result?.map((Info, index) => {
+{/* {display_this_data && display_this_data?.Response?.result?.map((Info, index) => {
     return (
 <div className='resource-group-list-line resource-group-list-line-not-hoverd'     style={{backgroundColor:"", height:""}}    key={index} >
 <p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big  ml-b'>{ Info?.email }</p> 
@@ -2702,16 +2714,117 @@ display_this_value={"High"}
 <p className='resource-group-list-item   resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-small'>{ Info?.country }</p>
 <div className=' resource-group-list-item resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big ' style={{display:"flex"}}>{Info?.origin &&  Info?.origin.length > 0 &&    Info?.origin?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div>
 <p className='resource-group-list-item  resource-group-list-item-not-hoverd   font-type-txt  Color-Grey1  list-item-small'  style={{ textAlign:"right"}}>{ Info?.source?.breach_date }</p> 
-{/* <p className='resource-group-list-item resource-group-list-item-not-hoverd font-type-txt  Color-Grey1  list-item-small ' style={{ textAlign:"right"}}>{ Info?.timestamp &&   format_date_type_a( Info?.timestamp)     }</p>  */}
-</div>
+ </div>
     );
-  })}
+  })} */}
+
+</div>
+
+
+{display_this_data?.Response?.result?.length > 0 && (
+  <div style={{ maxHeight: "300px", overflowY: "auto"   , margin:0 , padding:0 , border:0 }}>
+    <table border="0" className="table_smart2" style={{ width: "100%", borderCollapse: "collapse" ,border:0  }}>
+      <thead style={{ position: "sticky", top: -1, backgroundColor: "var(--color-Grey5)", zIndex: 1   , margin:"0"  , height:"42px" , textAlign:"left"} }>
+        <tr
+        //  onClick={handleHeaderClick}
+           >
+          <th className="font-type-menu Color-White pl-b">Email</th>
+          <th className="font-type-menu Color-White">Username</th>
+          <th className="font-type-menu Color-White"   onClick={() => do_sort("password")}>Password</th>
+          <th className="font-type-menu Color-White pl-a">Fields</th>
+          <th className="font-type-menu Color-White">Source Name</th>
+          <th className="font-type-menu Color-White">Country</th>
+          <th className="font-type-menu Color-White">Origin</th>
+          <th className="font-type-menu Color-White"  style={{textAlign:"right"}} >Breach Date </th>
+        </tr>
+      </thead>
+      <tbody>
+        {display_this_data?.Response?.result?.map((Info, index) => (
+          <tr key={index}>
+            <td
+         
+              style={{
+                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                paddingLeft:"var(--space-b)"
+              }}
+            >
+              {Info?.email}
+            </td>
+            <td
+              style={{
+                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {Info?.username}
+            </td>
+            <td
+              style={{
+                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            
+            >
+              {Info?.password}
+            </td>
+            <td
+       
+            >
+        <div className='   font-type-txt  Color-Grey1   ' style={{display:"flex"}}>{Info?.fields &&  Info?.fields.length > 0 &&    Info?.fields?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div>
+            </td>
+            <td
+              style={{
+                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {Info?.source?.name 
+ }
+            </td>
+            <td
+              style={{
+                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {Info?.country }
+            </td>
+            <td   > <div className='   font-type-txt  Color-Grey1   ' style={{display:"flex"}}>{Info?.origin &&  Info?.origin.length > 0 &&    Info?.origin?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div></td>
+       
+            <td
+              style={{
+                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                textAlign:"right"
+              }} 
+            >
+              {Info?.source?.breach_date}
+            </td>
 
  
 
+ 
+            </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
 
 
-</div>
+
+
+
+
+
+
 </div>
 </div>
 

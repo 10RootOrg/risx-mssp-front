@@ -12,6 +12,10 @@ import { tags as t } from "@lezer/highlight";
 import { createTheme } from "@uiw/codemirror-themes";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { ReactComponent as IconReverse } from "../icons/ico-reverse.svg";
+import { ReactComponent as IconTrash } from "../icons/ico-trash.svg";
+
+
+
 
 function Settings_section_config({
   show_SideBar,
@@ -271,7 +275,7 @@ function Settings_section_config({
                 <p className="font-type-h4 Color-White mb-c">Main Config</p>
                 <p className="font-type-menu Color-White mb-a">config.json</p>
                 <p className="font-type-txt Color-Grey1 mb-b">
-                  This is the place to update the general config file.
+                To view and edit the general configuration, click 'EDIT' to modify tool options, assets, and more.
                 </p>
                 <p className="font-type-txt Color-Orange">
                   {" "}
@@ -298,10 +302,11 @@ function Settings_section_config({
                   <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
                     <IconReverse className="icon-type1 " />
                   </div>
-                  <p className="font-type-menu mr-a">Reset</p>{" "}
+                  <p className="font-type-menu  Color-Grey2  mr-a">Reset</p>{" "}
                 </button>
+
                 <button
-                  className="btn-type4  btn-type4_careful  mt-b"
+                  className="btn-type4  btn-type4_careful  mt-a"
                   style={{ padding: 0 }}
                   onClick={() => {
                     setPopUpYesFunc("History");
@@ -316,10 +321,10 @@ function Settings_section_config({
                     set_PopUp_Are_You_Sure__show(true);
                   }}
                 >
-                  {/* <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
-                    <IconReverse className="icon-type1 " />
-                  </div> */}
-                  <p className="font-type-menu mr-a">Delete History</p>{" "}
+                  <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
+                    <IconTrash className="icon-type1 " />
+                  </div>
+                  <p className="font-type-menu  Color-Grey2  mr-a">Delete History</p>{" "}
                 </button>
                 {/* <button
                    className="btn-type4  btn-type4_careful  mt-b"
