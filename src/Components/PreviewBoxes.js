@@ -401,10 +401,10 @@ const  handle_click = () => {
 
 
 
-function PreviewBox_type2_pie({colors, HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value
+function PreviewBox_type2_pie({colors, HeadLine , bar_numbers, bar_headlines, bar_title_legend, is_popup ,enable_hover, display_this , set_display_this, display_this_value, minWidth
 }) {
  
-  const [display_data, set_display_data] = useState(false);
+const [display_data, set_display_data] = useState(false);
 const [has_data, set_has_data]= useState(false)
 
   const  handle_click = () => {
@@ -448,16 +448,6 @@ useEffect(() => {
 
 useEffect(() => {
 
-  // console.log(HeadLine,"Array.isArray(bar_numbers) ",Array.isArray(bar_numbers) );
-  // console.log(HeadLine,"bar_numbers.length) ",bar_numbers.length === 1 );
-  // console.log(HeadLine,"bar_numbers[0] === NA",bar_numbers[0] === "NA"  );
-  // console.log(HeadLine,"Array.isArray(bar_headlines)",Array.isArray(bar_headlines)  );
-  // console.log(HeadLine," bar_headlines.length === 1", bar_headlines.length === 1  );
-  // console.log(HeadLine,"bar_headlines[0] === NA",bar_headlines[0] === "NA" );
-  // console.log(HeadLine," bar_numbers", bar_numbers);
-
-
- 
       if (
         Array.isArray(bar_numbers) &&
         bar_numbers.length === 1 &&
@@ -525,12 +515,12 @@ useEffect(() => {
   
   };
     return (
-<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}      onClick={handle_click}>
+<div className={`PreviewBox PreviewBox-twice-size ${is_popup ? "PreviewBox-of-pop-up" : ""}  ${enable_hover ? "PreviewBox_for_type_count" : ""}`}  style={{minWidth:minWidth && minWidth}}    onClick={handle_click}>
             <div className='PreviewBox_HeadLine' > <p  className="font-type-menu" >{HeadLine}</p> </div>
    
         <div className='display-flex   justify-content-space-between' style={{ height:"100%"}}>
   
-        <div className='display-flex  ' style={{   width:"100%" ,height:"158px", justifyContent:"center" , }}>
+        <div className='display-flex  ' style={{ width:"100%" ,height:"158px", justifyContent:"center" , }}>
         <Doughnut  data={data}  options={options}  ></Doughnut>
            {/* <Doughnut  data={has_data ? data : data}  options={options}  ></Doughnut> */}
            </div>
@@ -825,7 +815,7 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             )
           }
    
-          function PreviewBox_type5_hunt_data_tabla({BaseLine, HeadLine, is_popup, Artifact, HuntID, Status, Error,StartDate ,artifact_or_module}) {
+ function PreviewBox_type5_hunt_data_tabla({BaseLine, HeadLine, is_popup, Artifact, HuntID, Status, Error,StartDate ,artifact_or_module}) {
     const height_key_value = "18px"
 
 
@@ -878,7 +868,7 @@ const inProgress_combined = Status_Legend?.inProgress_InTime_Count + Status_Lege
             );
         }
         
-        function PreviewBox_type9_arguments({ HeadLine, is_popup, Arguments, }) {
+function PreviewBox_type9_arguments({ HeadLine, is_popup, Arguments, }) {
 
 console.log("Arguments",Arguments);
 
@@ -940,7 +930,7 @@ console.log("Arguments",Arguments);
               }
 
 
-        function PreviewBox_type6_list_box({ HeadLine, is_popup, enable_hover,
+function PreviewBox_type6_list_box({ HeadLine, is_popup, enable_hover,
           list_array_column2,
           list_array_column1,
           list_array,

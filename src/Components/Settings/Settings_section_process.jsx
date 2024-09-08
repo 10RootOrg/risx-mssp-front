@@ -77,17 +77,16 @@ const enable_disable_MainProcess =() =>{
                      
    <tbody  className="tbody_setting">  
               <tr >
+
+
                   <td className="setting_descriptions " >
-                  <p className='font-type-menu Color-White  '  >Output sample</p>
+                  <p className='font-type-menu Color-White  '  >Automation Status</p>
                    </td>
 
-                   {/* <td className="setting_descriptions setting_descriptions_one_line" >
-                  <p className='font-type-menu Color-White  '  >Output sample</p>
-                   </td> */}
+      
 
                    <td className="" style={{}}>
-                     {/* {!isMainProcessWork &&    <p className='font-type-menu Color-Orange ml-a'>off</p>} {isMainProcessWork && <p className='font-type-menu Color-Blue-Glow ml-a'>on</p>} */}
-                     
+                      
                      <div className="display-flex  ">
 <label className="switch">  
 <input type="checkbox" 
@@ -102,35 +101,10 @@ onClick={enable_disable_MainProcess}
                      
                      </td>
  
-                  <td className="" style={{}}><p className='font-type-txt Color-Grey1  '>Activation and deactivation of Interval.py</p>
-                  
+                  <td className="" style={{}}><p className='font-type-txt Color-Grey1  '>{false && "Activation and deactivation of Interval.py"}</p>
               
-                  {/* <label className="switch"><input type="checkbox" 
-checked={isMainProcessWork}
-// disabled={disabled}
-//  onClick={() => enable_disable_module(Info)} 
- /> <span className="slider round"></span></label>  */}
-
- 
-                  
                    </td>
-  {/* 
-                  <td style={{ width: "1%", whiteSpace: "nowrap", textAlign: "right" }}>
-
-                  <div className="display-flex  ">
-<label className="switch">  
-<input type="checkbox" 
-checked={isMainProcessWork}
-//  onChange={()=>set_monitoring(!monitoring)}
-/>
-  <span className="slider round"></span> 
-</label>
-</div>
-        <button className="btn-type2">
-            <p className='font-type-menu'>{isMainProcessWork ? "turn off" : "turn on"}</p>
-          </button> 
-        </td>
-*/}
+ 
 
 
 

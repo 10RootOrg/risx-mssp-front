@@ -113,7 +113,32 @@ export function ContextProvider({ children }) {
       console.log("config_mssp.json -backEndURL-", backEndURL);
       const res = await axios.get(`${backEndURL}/Resources/count-same-type`);
       if (res) {
-        set_all_Resource_Types(res.data);
+
+     const unSorted = res.data
+
+
+console.log("unSorted" , unSorted);
+
+const FilterOut = ["2007","2001","2009","2002","2008","2006","2005","2004" ,"2003" ];
+const filtered_resource_type = unSorted.filter(resource_type => !FilterOut.includes(resource_type?.resource_type_id));
+ 
+const place1 = unSorted.find(resource_type => resource_type?.resource_type_id === "2007"); // "Company Name"
+const place2 = unSorted.find(resource_type => resource_type?.resource_type_id === "2001"); // "Domain"
+const place3 = unSorted.find(resource_type => resource_type?.resource_type_id === "2009"); // "Email Domain"
+const place4 = unSorted.find(resource_type => resource_type?.resource_type_id === "2002"); // "IP Address"
+const place5 = unSorted.find(resource_type => resource_type?.resource_type_id === "2008"); // "Computer"
+const place6 = unSorted.find(resource_type => resource_type?.resource_type_id === "2006"); // "Email Address"
+const place7 = unSorted.find(resource_type => resource_type?.resource_type_id === "2005"); // "Full Name"
+const place8 = unSorted.find(resource_type => resource_type?.resource_type_id === "2004"); // "Phone Number"
+const place9 = unSorted.find(resource_type => resource_type?.resource_type_id === "2003"); // "Username (Social)"
+
+// Create manual_sort array, filtering out undefined or null values
+const manual_sort = [place1, place2, place3,place4,place5,place6,place7,place8,place9].filter(item => item != null);
+ 
+        set_all_Resource_Types(   [...manual_sort,...filtered_resource_type] );
+
+// console.log("all_Resource_Types", all_Resource_Types);
+
       }
     } catch (err) {
       console.log(err);

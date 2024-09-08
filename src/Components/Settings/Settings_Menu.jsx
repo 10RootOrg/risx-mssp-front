@@ -24,8 +24,8 @@ function Settings_Menu({Preview_This_in_menu,  Preview_This_comp ,handle_Click_B
       father_comp:''
     },
     {
-      preview_name: "Output Sample",
-      value: "Output Sample",
+      preview_name: "Automation",
+      value: "Automation",
       is_nasted: false,
     },
     {
@@ -71,8 +71,38 @@ function Settings_Menu({Preview_This_in_menu,  Preview_This_comp ,handle_Click_B
           father_comp:'Logs',
         },
         {
-          preview_name: "Python Interval",
+          preview_name: "Automation",
           value: "Python Interval Log",
+          is_nasted: false,
+          father_comp:'Logs',
+        },
+        {
+          preview_name: "Alerts",
+          value: "Alerts Interval Log",
+          is_nasted: false,
+          father_comp:'Logs',
+        },
+        {
+          preview_name: "Crash",
+          value: "Crash Log",
+          is_nasted: false,
+          father_comp:'Logs',
+        },
+        {
+          preview_name: "Daily Update Interval",
+          value: "Daily Update Interval Log",
+          is_nasted: false,
+          father_comp:'Logs',
+        },
+        {
+          preview_name: "Dashboard",
+          value: "Dashboard Log",
+          is_nasted: false,
+          father_comp:'Logs',
+        },
+        {
+          preview_name: "Resource Usage",
+          value: "Resource Usage Log",
           is_nasted: false,
           father_comp:'Logs',
         },
@@ -81,6 +111,30 @@ function Settings_Menu({Preview_This_in_menu,  Preview_This_comp ,handle_Click_B
 
     
   ];
+
+
+ 
+ 
+
+// {Preview_This_comp == "Resource Usage Log" && (
+//     <Settings_section_logs
+//       usethis={"log_resource_usage"}
+//       fileName={"resource_usage.log"}
+//       headline={"Resource Usage"}
+//       subline={""}
+//     />
+//   )}
+
+
+
+
+
+
+
+
+
+
+
 
   return (
 <div className="SubMenu-all">

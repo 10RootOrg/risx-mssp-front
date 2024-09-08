@@ -192,7 +192,7 @@ mainValue:  DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBo
  
 
 <div  className="PreviewBox-respo-container" >
-<PreviewBox_respo_chart 
+{/* <PreviewBox_respo_chart 
 display_type={'pie'}  // pie , bar
 allow_wide={false}
 display_y_axis={false} // for the bar
@@ -219,7 +219,7 @@ display_this_value={"prime_data"}
 colors={"Basic"} // Basic , Alert
 date={"Near Real-Time"} // "NA"
 box_height={box_height}
-/>
+/> */}
 
 <PreviewBox_respo_chart 
 display_type={'pie'}  // pie , bar

@@ -176,7 +176,7 @@ buttonTitle={PopUp_All_Good__txt.buttonTitle}
 
 
 <div className='resource-group-list-headline mb-c ' >
-<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Users list</p></div>
+<div className='resource-group-list-headline-left ' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>Users List</p></div>
 
  <ResourceGroup_Action_btns
   items_for_search={Preview_this_Results}

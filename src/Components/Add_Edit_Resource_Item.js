@@ -308,7 +308,7 @@ set_PopUp_All_Good__show(true)
             </div>
 
 <div className='display-flex mb-d' ><IconBIG/> <p className='font-type-h4   Color-White ml-b'>
-  {popUp_Add_or_Edit__status === "add" ? (<>Add {resource_type?.resource_type_name}</>):(<>Edit {resource_type?.resource_type_name}</> )}
+  {popUp_Add_or_Edit__status === "add" ? (<>Add {resource_type?.preview_name}</>):(<>Edit {resource_type?.preview_name}</> )}
  
   </p></div>
 

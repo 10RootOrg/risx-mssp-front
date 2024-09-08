@@ -78,7 +78,7 @@ transition: var(--transition-fast);
   margin: 0;
   padding: 0;
   border: 0;
-
+  border-radius: var(--boxes-round-corner)  ;
 }
 
 .SubMenu-btn p {
@@ -89,7 +89,7 @@ transition: var(--transition-fast);
 }
 
 .SubMenu-unit:first-child           .SubMenu-btn{
-  border-radius: var(--boxes-round-corner) 0 0 var(--boxes-round-corner);
+  /* border-radius: var(--boxes-round-corner) 0 0 var(--boxes-round-corner); */
 }
 
 .SubMenu-gap {
@@ -115,6 +115,7 @@ transition: var(--transition-fast);
   color: var(--color-DB-Blue-Glow);
  
   transition: var(--transition-fast);
+
 }
 
 .SubMenu-btn:hover .SubMenu-gap ,.SubMenu-btn-active  .SubMenu-gap {

@@ -198,7 +198,7 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
 
           )}
 
-          {Preview_This_comp == "Output Sample" && (
+          {Preview_This_comp == "Automation" && (
             <Settings_section_process
               isMainProcessWork={isMainProcessWork}
               set_isMainProcessWork={set_isMainProcessWork}
@@ -225,19 +225,56 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
             <Settings_section_logs
               usethis={"log_python_interval"}
               fileName={"interval.log"}
-              headline={"Python Interval"}
+              headline={"Automation"}
               subline={"Active Now"}
             />
           )}
 
-{/* {Preview_This_comp == "Python Interval Log" && (
-            <Users_list
-              usethis={"log_python_interval"}
-              fileName={"interval.log"}
-              headline={"Python Interval"}
-              subline={"Active Now"}
+         {Preview_This_comp == "Alerts Interval Log" && (
+            <Settings_section_logs
+              usethis={"log_alerts_interval"}
+              fileName={"alerts_interval.log"}
+              headline={"Alerts"}
+              subline={""}
             />
-          )} */}
+          )}
+       {Preview_This_comp == "Crash Log" && (
+            <Settings_section_logs
+              usethis={"log_crash"}
+              fileName={"Crash.log"}
+              headline={"Crash"}
+              subline={""}
+            />
+          )}
+ {Preview_This_comp == "Daily Update Interval Log" && (
+            <Settings_section_logs
+              usethis={"log_daily_update_interval"}
+              fileName={"daily_update_interval.log"}
+              headline={"Daily Update"}
+              subline={""}
+            />
+          )}
+  {Preview_This_comp == "Dashboard Log" && (
+            <Settings_section_logs
+              usethis={"log_dashboard"}
+              fileName={"dashboard.log"}
+              headline={"Dashboard"}
+              subline={""}
+            />
+          )}
+{Preview_This_comp == "Resource Usage Log" && (
+            <Settings_section_logs
+              usethis={"log_resource_usage"}
+              fileName={"resource_usage.log"}
+              headline={"Resource Usage"}
+              subline={""}
+            />
+          )}
+
+
+
+
+
      {Preview_This_comp == "Users" && ( <Users />)}
 
 

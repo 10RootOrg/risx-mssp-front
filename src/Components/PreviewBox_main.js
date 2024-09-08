@@ -1,5 +1,5 @@
 import React , {useState , useEffect, useContext} from 'react';
- import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
+//  import { ReactComponent as IconLastRun } from './icons/ico-lastrun.svg';
 //  import { ReactComponent as RisxMssp_logo_wide_small} from './Logos/RisxMssp_logo_wide_small.svg';
  import { ReactComponent as IconReadMore } from './icons/ico-readmore.svg';
  import { ReactComponent as IcoKey } from './icons/ico-eye.svg';
@@ -763,7 +763,7 @@ try{
 
  <div className=' all-tools-main' > 
 {/* ---------------------left-box----------------------------- */}
-<div className='all-tools-left-side  ' style={{width:"440px"}}  >
+<div className='all-tools-left-side  ' style={{width:"420px"}}  >
 
 
 {/* top left / */}
@@ -788,7 +788,9 @@ try{
     </div>
 
 {/* /////////////// button //////////// */}
-<div className='PreviewBox_ButtomLine' ><IconLastRun /><div className='font-type-very-sml-txt Color-Grey1' >{lastrun}</div></div>
+<div className='PreviewBox_ButtomLine' >
+  {/* <IconLastRun /><div className='font-type-very-sml-txt Color-Grey1' >{lastrun}</div> */}
+  </div>
  
     </div>
 
@@ -874,7 +876,7 @@ disabled={disabled || Info?.toolType === "link"}
 
 <td className='' ><div style={{display:"flex", alignItems:"center" }}>{/* <p className='font-type-very-sml-txt   Color-Grey1 mr-a'>By:</p> */}<img className='logo-cell  ' style={{ width:"108px"   , height:"100%" , maxHeight:"40px" ,marginRight:"20px",marginLeft:"8px"}} src={Info?.logoAddress_1 ? require(`${Info.logoAddress_1}`) : undefined}></img></div></td>
 
-<td  style={{width:"24%"}} ><p className='font-type-menu  Color-White  cutLongLine' >{Info?.headline}</p></td>
+<td  style={{width:"22%"}} ><p className='font-type-menu  Color-White  cutLongLine' >{Info?.headline}</p></td>
 <td style={{width:"auto"}} > <p className='font-type-txt   Color-Grey1   cutLongLine'  >{box_type === "modules" && Info?.description_short}{box_type === "velociraptor" && Info?.description}</p></td>
 
 <td>
