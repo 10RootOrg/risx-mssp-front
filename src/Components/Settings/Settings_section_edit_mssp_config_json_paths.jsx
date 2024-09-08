@@ -58,11 +58,11 @@ const keyWidth ="160px"
           <tbody className="tbody_setting">
             <tr>
               <td className="setting_descriptions setting_descriptions">
-              <p className="font-type-h4 Color-White mb-b">Module paths</p>
-         
-                <p className="font-type-txt Color-Grey1 mb-b">Configure the paths for each module according to your specific requirements.</p>
+              <p className="font-type-h4 Color-White mb-a">Module Paths</p>
+              <p className="font-type-menu Color-White  mb-b"> mssp_config.json </p>
+                <p className="font-type-txt Color-Grey1 mb-b">Set up URL paths for each module.</p>
                 <p className="font-type-txt Color-Grey1 mb-b ">the page will automatically refresh to apply the changes.</p>
-                <p className="font-type-menu Color-Grey1  mb-b"> mssp_config.json </p>
+              
 
               </td>
               {/* moduleLinks */}

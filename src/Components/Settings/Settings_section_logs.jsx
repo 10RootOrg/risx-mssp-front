@@ -57,7 +57,7 @@ function Settings_section_logs({
   }, [backEndURL]);
 
   return (
-    <div style={{ maxWidth: "100%", overflowX: "hidden" }}>
+    <div style={{ maxWidth: "100%", overflowX: "hidden",height:"auto"}}>
       {/* <p className="font-type-h4 Color-White mb-a">{headline}</p> */}
       <p className="font-type-menu Color-White mb-a">{headline}</p>
       <p className="font-type-txt Color-Grey1 mb-b">{fileName}</p>
@@ -65,21 +65,21 @@ function Settings_section_logs({
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "var(--space-c)",
+          gap: "var(--space-c)", maxHeight:"600px" 
         }}
       >
         <table
           className="setting_table  "
-          style={{ width: "100%", tableLayout: "fixed" }}
+          style={{ width: "100%", tableLayout: "fixed" ,}}
         >
-          <tbody className="tbody_setting   ">
+          <tbody className="tbody_setting"  >
             <tr>
               {/* <td className="setting_descriptions  ">
                 <p className="font-type-menu Color-White mb-a">Backend</p>
                 <p className="font-type-txt Color-Grey1 mb-b">msspBack.log</p>
               </td> */}
               <td
-                className="PreviewBox  "
+                className="  "
                 style={{
                   height: "auto",
                   maxHeight: maxHeight,
@@ -105,39 +105,3 @@ function Settings_section_logs({
 }
 
 export default Settings_section_logs;
-
-// <div style={{ maxWidth: '100%', overflowX: 'hidden' }}
-//     >
-//     <p className="font-type-h4 Color-White mb-a">Logs</p>
-//     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-c)" }} >
-//       <table className="setting_table PreviewBox_for_cut_right" style={{ width: '100%', tableLayout: 'fixed' }}>
-//         <tbody className="tbody_setting  PreviewBox_for_cut_right">
-//           <tr >
-//             <td className="setting_descriptions PreviewBox_for_cut_right">
-//               <p className="font-type-menu Color-White mb-a">Backend</p>
-//               <p className="font-type-txt Color-Grey1 mb-b">msspBack.log</p>
-//             </td>
-//             <td
-//               className="PreviewBox  "
-//               style={{
-//                 height: "auto",
-//                 maxHeight: maxHeight,
-//                 overflowY: "auto",
-//                 overflowX: "auto",
-//                 whiteSpace: "pre",
-//                 width: '100%',
-//               }}
-//             >
-//               <pre
-//                 className="font-type-txt Color-White log-text"
-//                 style={{ lineHeight: lineHeight, margin: 0 }}
-//               >
-//                 {log_data}
-//               </pre>
-//             </td>
-//           </tr>
-//         </tbody>
-//       </table>
-//     </div>
-
-//   </div>

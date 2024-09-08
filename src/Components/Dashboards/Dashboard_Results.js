@@ -48,8 +48,7 @@ if (backEndURL === undefined){return}
             if (res.data.length == 0) { console.log("no files ..............,"  ); }
       
           localStorage.setItem(user_id + '_seeResults', res.data?.results_list?.length);
-          // set_unseen_alert_number(0);
-          set_last_updated(res.data?.latest_dates);
+           set_last_updated(res.data?.latest_dates);
            set_Preview_this_Results(res.data?.results_list);
             set_loader(false)
     }}
@@ -217,7 +216,7 @@ SmallNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
 SmallNumberTxt={"Total"}
 StatusColor={"blue"}
 
-date={format_date_type_a(last_updated?.Hunting) || "NA"}
+date={format_date_type_a(last_updated?.Velociraptor) || "NA"}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}

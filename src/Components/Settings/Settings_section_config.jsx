@@ -275,7 +275,7 @@ function Settings_section_config({
                 <p className="font-type-h4 Color-White mb-c">Main Config</p>
                 <p className="font-type-menu Color-White mb-a">config.json</p>
                 <p className="font-type-txt Color-Grey1 mb-b">
-                To view and edit the general configuration, click 'EDIT' to modify tool options, assets, and more.
+                View and edit general configuration, click 'EDIT' to modify tool options.
                 </p>
                 <p className="font-type-txt Color-Orange">
                   {" "}

@@ -1624,19 +1624,23 @@ export const PopUp_For_Shodan_response = (props) => {
     }
   };
 
-  ///// combine all maches
-  useEffect(() => {
-    if (!json_file_info) {
-      return;
-    }
-    let totalMatches = 0;
-    for (let i = 0; i < json_file_info.length; i++) {
-      const matches = json_file_info[i]?.Response?.matches?.length || 0;
-      totalMatches += matches;
-    }
+///// combine all maches
+useEffect(() => {
+  if (!json_file_info){return}
+  let totalMatches = 0;
+  for (let i = 0; i < json_file_info.length; i++) {
+    const response = json_file_info[i]?.Response;
+    const matches = (response === "" || response === undefined || response?.found === undefined) 
+      ? 0 
+      : response.found;
+    
+    totalMatches += matches;
+  }
+console.log("totalMatches" , totalMatches);
 
-    set_all_matches(totalMatches);
-  }, [json_file_info]);
+set_all_matches(totalMatches);
+}, [json_file_info]);
+
 
   /// logo preview
   useEffect(() => {
@@ -1798,14 +1802,8 @@ export const PopUp_For_Shodan_response = (props) => {
                       read_more={
                         "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
                       }
-                      bar_numbers={
-                        json_file_info?.map(
-                          (aaaa) => aaaa?.Response?.matches?.length
-                        ) || [0, 0, 0, 0]
-                      }
-                      bar_headlines={
-                        json_file_info?.map((aaaa) => aaaa?.Domain) || []
-                      }
+                      bar_numbers={  json_file_info?.map(    (aaaa) =>   aaaa?.Response === ""  ? 0: aaaa?.Response?.matches?.length   ) ?? [0, 0, 0, 0] }
+                      bar_headlines={  json_file_info?.map((aaaa) => aaaa?.Domain) || []   }
                       enable_hover={false}
                       display_this_value={"prime_data"}
                       is_popup={true}
@@ -1836,7 +1834,7 @@ export const PopUp_For_Shodan_response = (props) => {
                     <PreviewBox_type1_number_no_filters
                       HeadLine="Matches"
                       resource_type_id={null}
-                      BigNumber={all_matches ? all_matches : "NA"}
+                      BigNumber={all_matches ??   "NA"}
                       SmallNumberTxt={"From all Domains"}
                       SmallNumber={``}
                       StatusColor="blue"
@@ -1849,68 +1847,7 @@ export const PopUp_For_Shodan_response = (props) => {
                     />
                   )}
 
-                  {/* too big file note */}
-                  {/* {json_file_info?.fileSize === "Too big" && (
-                        <div
-                          className="mt-c "
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexDirection: "column",
-                          
-                          }}
-                        >
-                          <div >
-                            <p className="  font-type-txt   Color-Grey1 mt-c ">
-                              Data file is too big. <br />
-                              You can download it as a JSON file.
-                            </p>
-                            <button
-                              className="btn-type3 mb-d"
-                              style={{ marginRight: "auto" }}
-                            >
-                              <p
-                                className="font-type-menu  "
-                                onClick={() =>
-                                  handle_click_download(
-                                    json_file_info,
-                                    backEndURL
-                                  )
-                                }
-                              >
-                                Download JSON
-                              </p>
-                              <DownloadIconButton className="icon-type1 " />{" "}
-                            </button>
-                          </div>
-                       
-                          <div
-                            className=""
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            {module_logo === "" ? null : (
-                              <>
-                                <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
-                                  By:
-                                </p>{" "}
-                                <img
-                                  src={module_logo}
-                                  alt="logo"
-                                  maxwidth="140px"
-                                  height="30"
-                                />
-                              </>
-                            )}
-                            <button
-                              className="btn-type2 "
-                              style={{ marginLeft: "auto" }}
-                              onClick={handleClose}
-                            >
-                              <p className="font-type-menu ">{buttonTitle}</p>{" "}
-                            </button>
-                          </div>
-                        </div>
-                      )} */}
+        
                 </div>
 
                 <div style={{ width: "100%" }}>
@@ -1966,7 +1903,7 @@ export const PopUp_For_Shodan_response = (props) => {
                         </div>
                       )}
 
-                    {display_this_data?.Response?.matches.length > 0 && (
+                    {display_this_data?.Response?.matches?.length > 0 && (
                       <div className="resource-group-list-keyNames mb-a  ">
                         <div className="resource-group-list-item list-item-big  ml-b ">
                           <p className="font-type-menu  make-underline Color-White">
@@ -2019,7 +1956,7 @@ export const PopUp_For_Shodan_response = (props) => {
                       </div>
                     )}
 
-                    {display_this_data?.Response?.matches.length === 0 && (
+                    {display_this_data?.Response?.matches?.length === 0 && (
                       <div
                         style={{
                           display: "flex",
@@ -2037,6 +1974,23 @@ export const PopUp_For_Shodan_response = (props) => {
                       </div>
                     )}
 
+               {display_this_data?.Response  === "" && (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: "100px",
+                        }}
+                      >
+                        <p
+                          className="   font-type-txt  Color-Grey1 mr-b "
+                          style={{}}
+                        >
+                          No matches found for this domain
+                        </p>
+                      </div>
+                    )}
                     <div
                       className=""
                       style={{
@@ -2078,7 +2032,7 @@ export const PopUp_For_Shodan_response = (props) => {
                                       textAlign: "right",
                                     }}
                                   >
-                                    {Site?.Response?.matches?.length}
+                                    {Site?.Response   === "" ?   "0" : Site?.Response?.matches?.length}
                                   </p>
                                 </div>
                               )}
@@ -2346,17 +2300,22 @@ else{
   };
 
 ///// combine all maches
-  useEffect(() => {
-    if (!json_file_info){return}
-    let totalMatches = 0;
-    for (let i = 0; i < json_file_info.length; i++) {
-      const matches = json_file_info[i]?.Response?.found || 0;
-      totalMatches += matches;
-    }
-
+useEffect(() => {
+  if (!json_file_info){return}
+  let totalMatches = 0;
+  for (let i = 0; i < json_file_info.length; i++) {
+    const response = json_file_info[i]?.Response;
+    const matches = (response === "" || response === undefined || response?.found === undefined) 
+      ? 0 
+      : response.found;
+    
+    totalMatches += matches;
+  }
+console.log("totalMatches" , totalMatches);
 
 set_all_matches(totalMatches);
-  }, [json_file_info]);
+}, [json_file_info]);
+
 
 /// logo preview
 useEffect(() => {

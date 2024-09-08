@@ -360,12 +360,32 @@ function SideBar({
         className="Bg-Grey2"
         style={{ width: "100%", height: "2px", borderRadius: "5px" }}
       />
+    
 
       <div className="btn-menu-list  ">
         {/* ..........Dashboards.......srart.... */}
 
+
+        <button
+          className="btn-menu"
+          onClick={() => handleClick("Modules")}
+          disabled={visblePage === "Modules"}
+        >
+          <div className="display-flex">
+            <IcoModules className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">Modules</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+            {/*  <MenuArrowDown  />*/}
+          </div>
+        </button>
+
+
+
         <div
           className="btn-menu-list"
+ style={{gap:!Dashboards_drop_down && 0}}
           // onMouseLeave={() => set_Dashboards_drop_down(false)}
           //  onMouseEnter={()=>set_download_drop_down(true)}
         >
@@ -375,7 +395,7 @@ function SideBar({
                 ? "btn_look_hover"
                 : ""
             } `}
-            onClick={handle_Dashboards_drop_down}
+             onClick={handle_Dashboards_drop_down}
           >
             <div className="display-flex">
               <IcoMonitor className="btn-menu-icon-placeholder  mr-a " />
@@ -417,14 +437,16 @@ function SideBar({
 
           <div
             className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
-         
+            
+          
           >
             <button
               className="btn-menu dropdown-menu-btn"
               onClick={() => handleClick("dashboard-general")}
               disabled={visblePage === "dashboard-general"}
+              // style={{marginBottom:0 , paddingBottom:0 , backgroundColor:"pink"}}
             >
-              <div className="display-flex">
+              <div className="display-flex"      >
                 {/* <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
@@ -522,19 +544,7 @@ function SideBar({
               </div> */}
             </button>
 
-            {/* <div
-              className="Bg-Grey2"
-              style={{
-                width: "90%",
-                height: "2px",
-                borderRadius: "5px",
-                marginLeft: "auto",
-                marginRight: "auto",
-                marginTop: "5px",
-                marginBottom: "5px",
-              }}
-            /> */}
-
+  
             <button
               className="btn-menu dropdown-menu-btn"
               // onClick={() => handleClick("dashboard-risx")}
@@ -557,110 +567,12 @@ function SideBar({
               </div> */}
             </button>
 
-            {/* <button
 
-              className="btn-menu"
-              onClick={() => handleNewWindow("dashboard-timesketch")}
-              // onClick={() => handleClick("dashboard-timesketch")}
-              disabled={visblePage === "dashboard-timesketch"}
-            >
-              <div className="display-flex">
-                <IcoDownload
-                  className="btn-menu-icon-placeholder  mr-a "
-                  style={{ visibility: "hidden" }}
-                />
-                <p className="font-type-menu ">Timesketch</p>
-              </div>
-              <div
-                className="btn-menu-icon-placeholder"
-                style={{ scale: "0.95" }}
-              >
-                {" "}
-                <IcoLink />
-              </div>
-            </button> */}
-
-            {/* <button
-              className="btn-menu"
-              onClick={() => handleNewWindow("dashboard-misp")}
-              // disabled={visblePage === "dashboard-misp"}
-            >
-              <div className="display-flex">
-                <IcoDownload
-                  className="btn-menu-icon-placeholder  mr-a "
-                  style={{ visibility: "hidden" }}
-                />
-                <p className="font-type-menu ">Misp</p>
-              </div>
-              <div
-                className="btn-menu-icon-placeholder"
-                style={{ scale: "0.95" }}
-              >
-                {" "}
-                <IcoLink />
-              </div>
-            </button> */}
-
-            {/* <button
-              className="btn-menu"
-              onClick={() => handleNewWindow("dashboard-cti")}
-              // disabled={visblePage === "dashboard-cti"}
-            >
-              <div className="display-flex">
-                <IcoDownload
-                  className="btn-menu-icon-placeholder  mr-a "
-                  style={{ visibility: "hidden" }}
-                />
-                <p className="font-type-menu ">CTI</p>
-              </div>
-              <div
-                className="btn-menu-icon-placeholder"
-                style={{ scale: "0.95" }}
-              >
-                {" "}
-                <IcoLink />
-              </div>
-            </button> */}
-
-            {/* <button
-              className="btn-menu"
-              onClick={() => handleNewWindow("dashboard-iris")}
-              // disabled={visblePage === "dashboard-iris"}
-            >
-              <div className="display-flex">
-                <IcoDownload
-                  className="btn-menu-icon-placeholder  mr-a "
-                  style={{ visibility: "hidden" }}
-                />
-                <p className="font-type-menu ">IRIS</p>
-              </div>
-              <div
-                className="btn-menu-icon-placeholder"
-                style={{ scale: "0.95" }}
-              >
-                {" "}
-                <IcoLink />
-              </div>
-            </button> */}
           </div>
         </div>
 
         {/* ..........Dashboards..........end. */}
 
-        <button
-          className="btn-menu"
-          onClick={() => handleClick("Modules")}
-          disabled={visblePage === "Modules"}
-        >
-          <div className="display-flex">
-            <IcoModules className="btn-menu-icon-placeholder  mr-a " />
-            <p className="font-type-menu ">Modules</p>
-          </div>
-          <div className="btn-menu-icon-placeholder  ">
-            {" "}
-            {/*  <MenuArrowDown  />*/}
-          </div>
-        </button>
 
         <button
           className={`btn-menu  ${visblePage === "assets" && "btn_look_hover"}`}
@@ -817,53 +729,26 @@ function SideBar({
 
 
       </div>
-      <div
-        className="Bg-Grey2"
-        style={{ width: "100%", height: "2px", borderRadius: "5px" }}
-      />
 
+{visblePage === "Modules"  &&
 
-
-{/* <button className="btn-type2" onClick={handle_active_manual_process} */}
-<button className="btn-type2" onClick={()=>set_PopUp_Confirm_Run_selected__show(true)}
-
-
-    style={{
-      width:"100%",
- paddingLeft:"var(--space-a) "
-    //  paddingRight: Info?.toolType !== undefined && 
-    //  Info?.toolType !== "" && 
-    //  Info?.toolType !== null 
-    //    ? "calc(var(--space-d) - 5px)"
-    //  : undefined 
-    }}
-    >
-   <div style={{display:"flex", alignItems:"center"   }}>
-   <IcoACtiveBlue     style={{
-  // height:"var(--space-c)" ,width:"var(--space-c)" ,
-  marginRight:"var(--space-a)"  }}/>
- <p className='font-type-menu'>Run Selected Jobs</p>
-   </div>  
-   </button> 
+<>
+<div className="Bg-Grey2"  style={{ width: "100%", height: "2px", borderRadius: "5px" }}  />
+<button className="btn-type2" onClick={()=>set_PopUp_Confirm_Run_selected__show(true)} style={{ width:"100%",paddingLeft:"var(--space-a)"}} >
+<div style={{display:"flex", alignItems:"center" }}>
+<IcoACtiveBlue  style={{marginRight:"var(--space-a)"}}/>
+<p className='font-type-menu'>Run Selected Jobs</p>
+</div>  
+</button> 
+</>
+}
 
 
 
 
 
 
-      {/* <button className="btn-menu" onClick={handle_active_manual_process}>
-        <div className="display-flex">
-          {" "}
-          <IcoACtive className="btn-menu-icon-placeholder  mr-a " />{" "}
-          <p className="font-type-menu ">Run Selected</p>{" "}
-        </div>
-        <div className="btn-menu-icon-placeholder  "> </div>
-      </button>
-       */}
-
-       
-      {/* <div    className="Bg-Grey2"  style={{ width: "100%", height: "2px", borderRadius: "5px" }} /> */}
-
+ 
     
 
       {Object.keys(DownloadProgressBar).length > 0 && (

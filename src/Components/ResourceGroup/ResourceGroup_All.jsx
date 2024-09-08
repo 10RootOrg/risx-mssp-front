@@ -16,7 +16,9 @@ import ResourceGroup_Action_btns from "./ResourceGroup_Action_btns";
 
 import axios from "axios";
 import GeneralContext from "../../Context.js";
+
 import { format_date_type_a } from "../Features/DateFormat.js";
+ 
 
 import ResourceGroup_List from "./ResourceGroup_List.jsx";
 // Adjust the path as needed based on your project structure
@@ -31,6 +33,8 @@ import {
 } from "../PopUp_Smart";
 
 import LMloader from "../Features/LMloader.svg";
+import { SingularToPlural } from "../Features/UsefulFunctions.js";
+
 function ResourceGroup_All({
   // Preview_this_Resource ,
   // set_Preview_this_Resource,
@@ -42,6 +46,7 @@ function ResourceGroup_All({
   const { backEndURL, all_Resource_Types, get_all_resource_types,       Assets_Preview_List, set_Assets_Preview_List } =
     useContext(GeneralContext);
 
+ 
 
   const [
     popUp_Add_Many_Resource_Items__show,
@@ -170,21 +175,6 @@ function ResourceGroup_All({
   };
 
   const Add_Many = (btn_add_many_id) => {
-    //   console.log(Info?.type);
-
-    // set_resourceItem(Info)
-
-    // set_item_types_list( [Info?.type])
-
-    // const item_arrary =[]
-    // if(Info?.tools)
-    // {
-    //   for (let x of Info?.tools) {
-    //     item_arrary.push(x.Toolid)
-    //   }
-    //   set_item_tool_list(item_arrary)
-
-    // }
 
     set_popUp_Add_Many_Resource_Items__group_id(btn_add_many_id);
     set_popUp_Add_Many_Resource_Items__show(true);
@@ -259,13 +249,30 @@ function ResourceGroup_All({
     set_assets_list_from_db([]);
   };
 
-  // useEffect(() => {
+// const Change_Preview_Name = ( name) =>{
 
-  //    const  Src = require('../icons/ico-plus.svg')
-  //    set_icon_path(Src)
+// switch(name) {
 
-  //   }, []);
+// case undefined: return "Undefined Asset Type Name"
+// case null: return "Null Asset Type Name"
 
+// case "Company Name": return "Company Names"
+// case "Computer": return "Internal Endpoints"
+// case "Domain": return "Company Domains"
+// case "Email Address": return "High-Profile Employees Email Addresses"
+// case "Email Domain": return "Email Domains"
+// case "Full Name": return "High-Profile Employees Full Names"
+// case "Phone Number": return "High-Profile Phone Numbers"
+// case "Username (Social)": return "High-Profile Phone Usernames"
+
+//     default:
+//    return name
+//   }
+
+
+
+// }
+ 
   const renderIcon = (resource_type_id) => {
     if (resource_type_id === "2001") {
       return <IconDns />;
@@ -527,8 +534,12 @@ function ResourceGroup_All({
                               textOverflow: "ellipsis",
                             }}
                           >
-                            {Info?.resource_type_name}
-                          </p>
+
+ 
+{ Info?.preview_name && SingularToPlural(Info?.preview_name)}
+
+ 
+                            </p>
 
                           <p
                             className={`font-type-txt Color-Grey1 ml-b`}
@@ -571,7 +582,7 @@ function ResourceGroup_All({
           {Assets_Preview_List && (
             <>
               <ResourceGroup_List
-                title={use_this_resource_type?.resource_type_name}
+                title={use_this_resource_type?.preview_name}
                 asset_type_id={use_this_resource_type?.resource_type_id}
                 set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
                 set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}

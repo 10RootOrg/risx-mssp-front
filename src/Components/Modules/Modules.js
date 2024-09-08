@@ -100,12 +100,12 @@ useEffect(() => {
 // preview_list={all_artifacts}
 preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&   tool?.parent_id  === "2000000"   && tool?.ShowInUi   )) }
  box_type={"velociraptor"}
- main_headline= "Velociraptor Artifacts"
- main_subtitle="Select tools from the list and execute artifacts on endpoints"
+ main_headline= "External Checks"
+ main_subtitle="Launching tools and collecting forensic artifacts from the endpoints"
 main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 logoAddress="./Logos/Velociraptor.svg"
 iconAddress="./icons/General-icons-g.svg"
-lastrun="17/03/2024"
+// lastrun="17/03/2024"
 is_filtering={filter_string != ""}
 all_artifacts_and_modules={all_artifacts_and_modules}
 set_all_artifacts_and_modules={set_all_artifacts_and_modules}
@@ -118,12 +118,12 @@ set_all_artifacts_and_modules={set_all_artifacts_and_modules}
 <PreviewBoxes_main_modules
 preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&    tool?.parent_id  != "2000000"  && tool?.toolType === "module"  && tool?.ShowInUi  )) }
 box_type={"modules"}
-main_headline= "Endpoints Modules"
+main_headline= "Internal Checks"
 main_subtitle="Forensic timelines, vulnerability scans, device mapping & credential management"
 main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 logoAddress=""
 iconAddress="./icons/General-icons-k.svg"
-lastrun="17/03/2024"
+// lastrun="17/03/2024"
 is_filtering={filter_string != ""}
 all_artifacts_and_modules={all_artifacts_and_modules}
 set_all_artifacts_and_modules={set_all_artifacts_and_modules}
@@ -141,7 +141,7 @@ main_subtitle="This suite offers AD security, artifact analysis, threat intellig
 main_read_more= "At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
 logoAddress=""
 iconAddress="./icons/General-icons-j.svg"
-lastrun="17/03/2024"
+// lastrun="17/03/2024"
 is_filtering={filter_string != ""}
 all_artifacts_and_modules={all_artifacts_and_modules}
 set_all_artifacts_and_modules={set_all_artifacts_and_modules}

@@ -23,7 +23,12 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
   // const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
   const { backEndURL, mssp_config_json,front_IP, front_URL  } = useContext(GeneralContext);
   const [MISPData, setMISPData] = useState({});
-  const [dashboard_URL, set_dashboard_URL] = useState("");
+
+  const [dashboard_CTI_URL, set_dashboard_CTI_URL] = useState("");
+  const [dashboard_BestPractice_URL, set_dashboard_BestPractice_URL] = useState("");
+ 
+
+
   const [display_data_type, set_display_data_type] = useState("");
   const [loader, set_loader] = useState(false);
   const [LeakData, set_LeakData] = useState([]);
@@ -55,8 +60,17 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
     const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks) ? mssp_config_json.moduleLinks : [];
     const CTIDashboardURL = moduleLinks.find(link => link.toolName === "CTI Dashboard")?.toolURL;
     const fixed_path = fix_path(CTIDashboardURL, front_IP, front_URL);  
-    set_dashboard_URL(fixed_path);
+    set_dashboard_CTI_URL(fixed_path);
       }, [mssp_config_json]);
+
+
+      useEffect(() => {
+        if (!mssp_config_json){return}
+        const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks) ? mssp_config_json.moduleLinks : [];
+        const BPDashboardURL = moduleLinks.find(link => link.toolName === "Best Practice Dashboard")?.toolURL;
+        const fixed_path = fix_path(BPDashboardURL, front_IP, front_URL);  
+        set_dashboard_BestPractice_URL(fixed_path);
+          }, [mssp_config_json]);
 
 
 
@@ -98,11 +112,25 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
         {/* <iframe src="http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/7f780b64-042d-4ddc-ae94-00c0d4c493ec?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-7d%2Fd,to:now))&_a=()&show-time-filter=true" height="600" width="800"></iframe> */}
  
          <iframe
-          src={dashboard_URL}
-          height="1350px"
+          src={dashboard_CTI_URL}
+          height="1150px"
           width="100%"
           className="kibana-iframe"
         ></iframe>  
+
+
+<iframe
+          src={dashboard_BestPractice_URL}
+          height="1150px"
+          width="100%"
+          className="kibana-iframe"
+        ></iframe>  
+
+
+
+
+
+
 
 
 

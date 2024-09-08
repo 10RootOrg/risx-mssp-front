@@ -15,10 +15,8 @@ import { ReactComponent as IconCompany } from './asset-icons/ico-company.svg';
 import { ReactComponent as IconEmailDomain } from './asset-icons/ico-email-domain.svg';
  
 
-
-
- import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
- import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
+import ResourceGroup_Action_btns from './ResourceGroup_Action_btns';
+import ResourceGroup_buttomLine from './ResourceGroup_buttomLine';
 //  import { ReactComponent as IcoResults } from '../icons/ico-menu-Results.svg';
  
 import axios from 'axios'
@@ -30,6 +28,8 @@ import axios from 'axios'
  
  import LMloader from "../Features/LMloader.svg";
 import { format_date_type_a } from '../Features/DateFormat.js';
+ 
+import { SingularToPlural } from '../Features/UsefulFunctions.js';
 
 function ResourceGroup_List({
 
@@ -62,9 +62,9 @@ function ResourceGroup_List({
   const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
   const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({ HeadLine:"Success", paragraph:"successfully", buttonTitle:"Close"});
 
-console.log("sort_by",sort_by);
-console.log("firstTimeData",firstTimeData);
-console.log("asset_type_id",asset_type_id);
+// console.log("sort_by",sort_by);
+// console.log("firstTimeData",firstTimeData);
+// console.log("asset_type_id",asset_type_id);
 
 
   const renderIcon = (resource_type_id) => {
@@ -214,14 +214,7 @@ const complex_sort = (column) => {
   set_assets_list_from_db(sorted);
 };
 
-
-
-
-
-
-
-
-
+ 
 
 // for first load  =>  sorting the list
 useEffect(() => {
@@ -274,7 +267,7 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
 
 <div className='resource-group-list-headline-left '>  
 
-<div className='resource-group-icon'>{renderIcon(asset_type_id)}</div>   <p className={ ` font-type-h4  Color-White ml-b`}>{title}</p>
+<div className='resource-group-icon'>{renderIcon(asset_type_id)}</div>   <p className={ ` font-type-h4  Color-White ml-b`}>{title && SingularToPlural(title)}</p>
  
 </div>
 
@@ -449,7 +442,7 @@ Info?.resource_status
 {assets_list_from_db?.length === 0 &&   is_search === false &&
 <div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
 <p className='  font-type-txt   Color-Grey1 '   >
-No Records of {title}s.  Use the '
+No Records of {title && SingularToPlural(title)}. Use the '
 <span style={{ display: 'inline-flex',  verticalAlign:"middle"}}>
   <IconAdd  style={{    margin:"0" , padding:"0"}} />
 </span>
@@ -461,7 +454,7 @@ No Records of {title}s.  Use the '
 {assets_list_from_db?.length === 0 &&   is_search === true &&
 <div style={{  height:"100%" ,display:"flex",justifyContent:"center", alignItems:"center"}}>
 <p className='  font-type-txt   Color-Grey1 '   >
-No Records of {title}s for this search.
+No Records of {title && SingularToPlural(title)} for this search.
 </p>
 </div>
 }

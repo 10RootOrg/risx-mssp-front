@@ -1,12 +1,13 @@
 import React , {useState , useEffect ,useContext} from 'react';
-import { PreviewBox_type1_number, PreviewBox_type2_pie } from '../PreviewBoxes.js'
+import { PreviewBox_type1_number, PreviewBox_type2_pie ,PreviewBox_respo_chart} from '../PreviewBoxes.js'
 import ResourceGroup_All from './ResourceGroup_All.jsx'
 import { ReactComponent as IconSearch } from '../icons/ico-search.svg';
 import axios from 'axios';
 import './../ResourceGroup/ResourceGroup.css';
-// import jsonData from '../../tmpjsons/ResourceGroup.json'; // Adjust the path as needed based on your project structure
+ 
 import GeneralContext from '../../Context.js';
-
+import { format_date_type_a_only_date } from '../Features/DateFormat.js';
+import { SingularToPlural } from '../Features/UsefulFunctions.js';
 function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
 
@@ -14,12 +15,9 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
     set_visblePage("assets");
 
     const { backEndURL  ,all_Resource_Types} = useContext(GeneralContext);
-    // const [Preview_this_Resource, set_Preview_this_Resource] = useState([]);
     const [filter_Resource, set_filter_Resource] = useState({type_ids:[],tool_ids:[]});
-    // const [loader , set_loader] = useState(true)
-    // const [All_Resource_count , set_All_Resource_count] = useState(0)
-    const [total_resource_count, set_total_resource_count] = useState(0);
- 
+    const time = new Date();
+    const format_date = format_date_type_a_only_date(time);
 
   // dont show sidebar in this page
     useEffect(() => {
@@ -28,18 +26,13 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 
 
  
-    useEffect(() => { 
+    // useEffect(() => { 
+    //     console.log(all_Resource_Types); 
+    //     const totalCount = all_Resource_Types.reduce((total, item) => total + item.count, 0);
+    //       set_total_resource_count(totalCount);
+    //        }, [all_Resource_Types   ]);
+
  
-        console.log(all_Resource_Types); 
-        const totalCount = all_Resource_Types.reduce((total, item) => total + item.count, 0);
-
-          set_total_resource_count(totalCount);
-       
-
-
-           }, [all_Resource_Types   ]);
-
-
 
 
     return (
@@ -54,11 +47,6 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
 
-{/* <div className='top-of-page-right'>
-<input className="input-type1 mr-a" placeholder="Search" />
-<button className="btn-type1 "><IconSearch className="icon-type1" />  </button>
-</div> */}
-
 
 </div>
 
@@ -67,92 +55,82 @@ function ResourceGroup({show_SideBar,set_show_SideBar,set_visblePage}) {
  
 <PreviewBox_type2_pie
 HeadLine="Assets types"
-bar_numbers = {all_Resource_Types.map(item => item.count)}
-bar_headlines = {all_Resource_Types.map(item => item.resource_type_name)}
+bar_numbers = {  (all_Resource_Types && all_Resource_Types.length > 0 ) ? all_Resource_Types.map(item => item?.count)  :[]  }
+bar_headlines = { (all_Resource_Types && all_Resource_Types.length > 0 ) ?  all_Resource_Types.map(item => SingularToPlural(item?.preview_name) ) :[]}
 bar_title_legend = {["total"]}
 is_popup = {false}
 colors={"Basic"} // Basic , Alert
+minWidth={"440px"}
 />
 
  
-
-
-
-{/* domain */}
+ 
 <PreviewBox_type1_number
-HeadLine={all_Resource_Types[0]?.resource_type_name}
-resource_type_id={all_Resource_Types[0]?.resource_type_id}
-description_short={all_Resource_Types[0]?.description_short}
-BigNumber={all_Resource_Types[0]?.count} 
-// SmallNumber={total_resource_count} 
+// HeadLine={"Company Names"}
+HeadLine={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?  SingularToPlural(all_Resource_Types?.filter(item => item?.resource_type_id == "2007")[0]?.preview_name )  : null}
+resource_type_id={"2007"}
+description_short={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2007")[0]?.description_short   : null}
+BigNumber={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2007")[0]?.count   : "NA"}
 SmallNumber={""} 
 SmallNumberTxt={""}
-
 StatusColor={"blue"}
-date={"16/6/2024"}
+date={format_date}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
- 
 
- 
  />
-{/* ip */}
+
+
 <PreviewBox_type1_number
-HeadLine={all_Resource_Types[1]?.resource_type_name}
-resource_type_id={all_Resource_Types[1]?.resource_type_id}
-description_short={all_Resource_Types[1]?.description_short}
-BigNumber={all_Resource_Types[1]?.count} 
-SmallNumber={total_resource_count} 
+// HeadLine={"Internal Endpoints"}
+HeadLine={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?  SingularToPlural(all_Resource_Types?.filter(item => item?.resource_type_id == "2008")[0]?.preview_name )  : null}
+resource_type_id={"2008"}
+description_short={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2008")[0]?.description_short   : null}
+BigNumber={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2008")[0]?.count   : "NA"}
+
+SmallNumber={123} 
 SmallNumberTxt={""}
 StatusColor={"blue"}
-date={"17/6/2024"}
-filter_Resource={filter_Resource}
-set_filter_Resource={set_filter_Resource}
-txt_color={""}
-/>
-{/* social */}
-<PreviewBox_type1_number
-HeadLine={all_Resource_Types[2]?.resource_type_name}
-resource_type_id={all_Resource_Types[2]?.resource_type_id}
-description_short={all_Resource_Types[2]?.description_short}
-BigNumber={all_Resource_Types[2]?.count} 
-SmallNumber={total_resource_count} 
-SmallNumberTxt={""}
-StatusColor={"blue"}
-date={"16/6/2024"}
+date={format_date}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
 />
 
+
 <PreviewBox_type1_number
-HeadLine={all_Resource_Types[3]?.resource_type_name}
-resource_type_id={all_Resource_Types[3]?.resource_type_id}
-description_short={all_Resource_Types[3]?.description_short}
-BigNumber={all_Resource_Types[3]?.count} 
-SmallNumber={total_resource_count} 
+// HeadLine={"Company Domains"}
+HeadLine={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?  SingularToPlural(all_Resource_Types?.filter(item => item?.resource_type_id == "2001")[0]?.preview_name )  : null}
+resource_type_id={"2001"}
+description_short={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2001")[0]?.description_short   : null}
+BigNumber={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2001")[0]?.count   : "NA"}
+
+SmallNumber={123} 
 SmallNumberTxt={""}
 StatusColor={"blue"}
-date={"16/6/2024"}
+date={format_date}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
 />
-{/* All Resource */}
+
 {/* <PreviewBox_type1_number
-HeadLine="All Assets"
-resource_type_id={null}
-description_short="All Assets"
-BigNumber={total_resource_count} 
-SmallNumber={total_resource_count} 
+// HeadLine={"High-Profile Employees Email Addresses"}
+HeadLine={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?  SingularToPlural(all_Resource_Types?.filter(item => item?.resource_type_id == "2006")[0]?.preview_name )  : null}
+resource_type_id={"2006"}
+description_short={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2006")[0]?.description_short   : null}
+BigNumber={ (all_Resource_Types && all_Resource_Types.length > 0 ) ?   all_Resource_Types?.filter(item => item?.resource_type_id == "2006")[0]?.count   : "NA"}
+
+SmallNumber={123} 
 SmallNumberTxt={""}
 StatusColor={"blue"}
-date={"14/6/2024"}
+date={format_date}
 filter_Resource={filter_Resource}
 set_filter_Resource={set_filter_Resource}
 txt_color={""}
 /> */}
+ 
 
  </div>
      <div>
