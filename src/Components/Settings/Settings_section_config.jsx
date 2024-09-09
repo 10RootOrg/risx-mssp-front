@@ -13,9 +13,7 @@ import { createTheme } from "@uiw/codemirror-themes";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { ReactComponent as IconReverse } from "../icons/ico-reverse.svg";
 import { ReactComponent as IconTrash } from "../icons/ico-trash.svg";
-
-
-
+import { ReactComponent as IconImport } from "../icons/ico-import.svg";
 
 function Settings_section_config({
   show_SideBar,
@@ -275,7 +273,8 @@ function Settings_section_config({
                 <p className="font-type-h4 Color-White mb-c">Main Config</p>
                 <p className="font-type-menu Color-White mb-a">config.json</p>
                 <p className="font-type-txt Color-Grey1 mb-b">
-                To view and edit the general configuration, click 'EDIT' to modify tool options, assets, and more.
+                  To view and edit the general configuration, click 'EDIT' to
+                  modify tool options, assets, and more.
                 </p>
                 <p className="font-type-txt Color-Orange">
                   {" "}
@@ -324,7 +323,43 @@ function Settings_section_config({
                   <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
                     <IconTrash className="icon-type1 " />
                   </div>
-                  <p className="font-type-menu  Color-Grey2  mr-a">Delete History</p>{" "}
+                  <p className="font-type-menu  Color-Grey2  mr-a">
+                    Delete History
+                  </p>{" "}
+                </button>
+                <button
+                  className="btn-type4  btn-type4_careful  mt-a"
+                  style={{ padding: 0 }}
+                  onClick={async () => {
+                    console.log("export assets json");
+                    try {
+                      const res = await axios.get(`${backEndURL}/config/`);
+                      const file = res.data;
+                      const dataStr =
+                        "data:text/json;charset=utf-8," +
+                        encodeURIComponent(JSON.stringify(file));
+                      const downloadAnchorNode = document.createElement("a");
+                      downloadAnchorNode.setAttribute("href", dataStr);
+                      downloadAnchorNode.setAttribute(
+                        "download",
+                        `ConfigExport-${new Date().toLocaleDateString(
+                          "en-GB"
+                        )}.json`
+                      );
+                      document.body.appendChild(downloadAnchorNode);
+                      downloadAnchorNode.click();
+                      downloadAnchorNode.remove();
+                    } catch (error) {
+                      console.log("error", error);
+                    }
+                  }}
+                >
+                  <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
+                    <IconImport className="icon-type1 " />
+                  </div>
+                  <p className="font-type-menu  Color-Grey2  mr-a">
+                    Export Config
+                  </p>{" "}
                 </button>
                 {/* <button
                    className="btn-type4  btn-type4_careful  mt-b"
