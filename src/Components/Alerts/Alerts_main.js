@@ -40,7 +40,11 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
     try {
       const res = await axios.get(backEndURL + "/Alerts/GetAlertFileData");
       console.log("GetAlertFileData Data 111111111111", res.data);
-      const TestDate = res.data[1]["_ts"];
+
+      const AlertFileData = res.data
+  
+
+      const TestDate = AlertFileData[1]["_ts"];
       const newDateWeek = new Date();
       const newDateDay = new Date().setUTCHours(0, 0, 0);
       const newDateHour = new Date();
@@ -57,15 +61,15 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
         Reopened: 0,
       };
 
-      res?.data?.forEach((x) => Item[x?.UserInput?.Status]++);
+      AlertFileData.forEach((x) => Item[x?.UserInput?.Status]++);
       console.log("ItemItemItemItemItemItemItem", Item);
       setPieObjectStatus(Item);
-      setAlertsData(res?.data);
+      setAlertsData(AlertFileData);
       setTimeObject({
         week: newDateWeek,
         day: newDateDay,
         hour: newDateHour,
-        lastAlert: res.data?.[0]?.["_ts"],
+        lastAlert: AlertFileData?.[0]?.["_ts"],
       });
     } catch (error) {
       console.log("Error in Get Data OF alerts", error);

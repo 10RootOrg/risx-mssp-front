@@ -2656,8 +2656,10 @@ display_this_value={"High"}
 
   {       display_this_domain === "prime_data"    &&
 <div className=" resource-group-list-line   mr-b  mt-a mb-a" style={{display:"flex" ,justifyContent:"space-between" , width:"auto"}}  onClick={()=>handle_click_display_leck_data(Site?.Name)}>
-<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"60%", minWidth:"60%"}}>{Site?.Name}</p> 
-<p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"35%", minWidth:"35%" , textAlign:"right"  }}>{(Site?.Response?.found  || Site?.Response?.found  === 0 ) ?  Site?.Response?.found   : "NA"     }</p> 
+<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"25%", minWidth:"25%"}}>{Site?.Name}</p> 
+{Site?.Error && Site?.Error  != "" &&<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"50%", minWidth:"50%"}}>{Site?.Error}</p> }
+
+<p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"15%", minWidth:"15%" , textAlign:"right"  }}>{(Site?.Response?.found  || Site?.Response?.found  === 0 ) ?  Site?.Response?.found   : "NA"     }</p> 
 </div>
 }
 

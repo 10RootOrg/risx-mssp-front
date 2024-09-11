@@ -342,7 +342,7 @@ function SideBar({
         />
       )}
 
-      <RisxMsspLogo className="mt-c mb-b" />
+      <RisxMsspLogo className="mt-c mb-b logo-main" />
 
       <button className="btn-menu  " onClick={handle_click_user}>
         <div className="display-flex">
@@ -633,10 +633,10 @@ function SideBar({
             <p className="font-type-menu ">Alerts</p>
 
             {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
-            <div
+            {/* <div
               className={`Bg-Red  light-bulb-type2 `}
               style={{ marginLeft: "2px", marginBottom: "12px" }}
-            />
+            /> */}
           </div>
           <div className="btn-menu-icon-placeholder  "> </div>
         </button>

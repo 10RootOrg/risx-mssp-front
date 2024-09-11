@@ -4,6 +4,7 @@ import axios from "axios";
 import "./../Settings/Settings.css";
 import "./custom-json-view.css";
 import GeneralContext from "../../Context.js";
+import {Search_comp , Search_comp_for_logs} from "../Features/Search_comp.jsx";
 // import JsonView from '@uiw/react-json-view';
 // import {PopUp_All_Good ,PopUp_Are_You_Sure} from '../PopUp_Smart'
 
@@ -20,6 +21,9 @@ function Settings_section_logs({
   const maxHeight = "800px";
   const lineHeight = "160%";
 
+
+
+  const [filter_string , set_filter_string] = useState("");
   //  const [loadig, set_loading] = useState(false);
 
   useEffect(() => {
@@ -57,15 +61,22 @@ function Settings_section_logs({
   }, [backEndURL]);
 
   return (
-    <div style={{ maxWidth: "100%", overflowX: "hidden",height:"auto"}}>
+    <div style={{ maxWidth: "100%", }}>
+ 
+<div>
+<div>
       {/* <p className="font-type-h4 Color-White mb-a">{headline}</p> */}
       <p className="font-type-menu Color-White mb-a">{headline}</p>
       <p className="font-type-txt Color-Grey1 mb-b">{fileName}</p>
+</div>
+{/* <Search_comp set_items_for_search={set_log_data}    items_for_search={log_data}  filter_string={filter_string}  set_filter_string={set_filter_string} /> */}
+
+</div>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "var(--space-c)", maxHeight:"600px" 
+          gap: "var(--space-c)", maxHeight:"450px"  ,overflowX: "hidden",height:"auto"
         }}
       >
         <table
