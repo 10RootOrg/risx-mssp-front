@@ -374,24 +374,45 @@ p{color: var(--color-White);
 
  
   width: 100%;
-}}
+}
+
+
+
+
+}
 
 .top-of-page-right{
   display: flex;
   align-items: center;
- 
- 
- 
 }
+
+
+
 @media only screen and (max-width: 550px) {
   .top-of-page-right {
     width: 100%;
-}}
+}
+
+
+
+}
 
 @media only screen and (max-width: 550px) {
   .top-of-page-right > .input-type1{
   width: 100%;
-}}
+}
+
+
+
+}
+
+
+
+
+
+
+
+
 
 /* .top-of-page-right > .input-type1 {
  

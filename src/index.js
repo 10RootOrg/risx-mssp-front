@@ -43,7 +43,7 @@ export default function App() {
   const [isMainProcessWork, set_isMainProcessWork] = useState(false);
   // const {  backEndURL } = useContext(GeneralContext);
 
-  console.log("visblePage" , visblePage);
+  // console.log("visblePage" , visblePage);
 
   
   return (
@@ -65,15 +65,12 @@ export default function App() {
           <Route path="assets"              element={<ResourceGroup      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
 
           <Route path="Modules"             element={<Modules            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} />
-          {/* <Route path="Modules2"             element={<Modules2           show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} /> */}
 
           <Route path="alerts"              element={<Alerts             show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} unseen_alert_number={unseen_alert_number} />} />
           <Route path="users"               element={<Users              show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage} />} />
 
           
           <Route path="dashboard-general"        element={<DashboardResults         show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    />} />
-          {/* <Route path="dashboard-risx"           element={<DashboardRisx            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} /> */}
-          {/* <Route path="dashboard-timesketch"     element={<DashboardTimesketch      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} /> */}
           <Route path="dashboard-forensics"      element={<Dashboard_Forensics      show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-threat-hunting" element={<Dashboard_Threat_Hunting show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
           <Route path="dashboard-cti"            element={<Dashboard_CTI            show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}   visblePage={visblePage}  />} />
@@ -82,8 +79,8 @@ export default function App() {
 
           <Route path="settings"            element={<Settings           show_SideBar={show_SideBar}    set_show_SideBar={set_show_SideBar} set_visblePage={set_visblePage}    set_unseen_alert_number={set_unseen_alert_number}    isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork}  />} />
       
-          <Route path="TestPage"     element={<TestPage />} />   
-          <Route path="TestRespo"     element={<TestRespo />} />  
+          {/* <Route path="TestPage"     element={<TestPage />} />   
+          <Route path="TestRespo"     element={<TestRespo />} />   */}
           <Route path='*' element={<NoPage404/> }/>
       </Routes>
     

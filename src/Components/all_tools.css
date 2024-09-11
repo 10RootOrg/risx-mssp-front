@@ -11,9 +11,80 @@
   display: flex;
   justify-content:space-between;
   transition: var(--transition-fast);
+  align-items: center;
   /* width: 8%;  */
   /* box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.185); */
   }
+
+
+  @media (max-width: 1200px) {
+    .all-tools-main {
+   flex-direction: column;
+    }
+  }
+
+
+.view-on-small-screen_if_vertical{
+  display: none;
+}
+
+  @media (max-width: 1600px) {
+    .hide-on-small-screen1 {
+      display: none;
+    }
+  }
+  
+  
+  @media (max-width: 1500px) {
+    .hide-on-small-screen2 {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 1300px) {
+    .hide-on-small-screen3 {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 1200px) {
+    .hide-on-small-screen_if_vertical {  display: none; }
+    .view-on-small-screen_if_vertical {  display: table-cell; }
+
+  }
+
+
+
+  @media (max-width: 1200px) {
+    .hide-on-small-screen1, .hide-on-small-screen2 , .hide-on-small-screen3      {
+      display: table-cell; /* Ensure the <td> behaves as a table cell */
+
+    }
+  }
+  @media (max-width: 1000px) {
+    .hide-on-small-screen1{  display: none; }
+ 
+  }
+  @media (max-width: 850px) {
+    .hide-on-small-screen2{  display: none; }
+ 
+  }
+
+  @media (max-width: 640px) {
+    .hide-on-small-screen0{  display: none; }
+  }
+
+  @media (max-width: 540px) {
+    .hide-on-small-screen3{  display: none; }
+  }
+
+
+
+
+
+
+
+
 
 
   

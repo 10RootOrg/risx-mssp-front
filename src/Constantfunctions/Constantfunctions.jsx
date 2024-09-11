@@ -138,9 +138,6 @@ useEffect(() => { const interval = setInterval(() => {check_main_process_status(
 const handle_Close_PopUp_Are_You_Sure = () => {set_PopUp_Are_You_Sure__show(false)};
 
 
-
-
-
   const handle_active_interval_process = async () => {
     set_PopUp_Error____txt({ HeadLine:"Work in Progress..", paragraph: "Final touches underway; anticipate completion shortly. Stay tuned for updates.", buttonTitle:"Close"})
     set_PopUp_Error____show(true)
@@ -148,19 +145,9 @@ const handle_Close_PopUp_Are_You_Sure = () => {set_PopUp_Are_You_Sure__show(fals
 
 
 
-
-
-
-
-
-
     return (
  
 
-
-
-
-      
       <div className=''>
 
 

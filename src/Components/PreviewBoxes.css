@@ -443,3 +443,5 @@ Color-Grey1 */
   text-overflow: ellipsis;  /* Displays an ellipsis (...) to represent clipped text */
   max-width: 100%;          /* Ensure it doesn't overflow horizontally */
 }
+
+
