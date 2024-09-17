@@ -35,16 +35,16 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
     Closed: 0,
     Reopened: 0,
   });
+  const [ArtifactDataPie, setArtifactDataPie] = useState({});
 
   async function GetData() {
     try {
       const res = await axios.get(backEndURL + "/Alerts/GetAlertFileData");
       console.log("GetAlertFileData Data 111111111111", res.data);
 
-      const AlertFileData = res.data
-  
+      const AlertFileData = res.data;
 
-      const TestDate = AlertFileData[1]["_ts"];
+      // const TestDate = AlertFileData[1]["_ts"];
       const newDateWeek = new Date();
       const newDateDay = new Date().setUTCHours(0, 0, 0);
       const newDateHour = new Date();
@@ -60,9 +60,21 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
         Closed: 0,
         Reopened: 0,
       };
+      const Artifact = {};
+      AlertFileData.forEach((x) => {
+        Item[x?.UserInput?.Status]++;
+        if (!Artifact[x?.Artifact]) {
+          Artifact[x?.Artifact] = 0;
+        }
+        Artifact[x?.Artifact]++;
+      });
+      console.log(
+        "ArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifact",
+        Artifact
+      );
 
-      AlertFileData.forEach((x) => Item[x?.UserInput?.Status]++);
       console.log("ItemItemItemItemItemItemItem", Item);
+      setArtifactDataPie(Artifact);
       setPieObjectStatus(Item);
       setAlertsData(AlertFileData);
       setTimeObject({
@@ -95,9 +107,14 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
 
   return (
     <>
-      <div className="app-main" style={{
-        // flexDirection:"row"
-        }}>
+      <div
+        className="app-main"
+        style={
+          {
+            // flexDirection:"row"
+          }
+        }
+      >
         <div className="top-of-page">
           <div className="top-of-page-left mb-b">
             {/* <p  className="font-type-menu" >Dashboards:</p> */}
@@ -116,7 +133,6 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             is_popup={false}
             colors={"Basic"} // Basic , Alert
           />
-
           <PreviewBox_type1_number_no_filters
             HeadLine="New Alerts Last Hour"
             resource_type_id={null}
@@ -137,7 +153,6 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             set_display_this={set_display_this}
             display_this_value={""}
           />
-
           <PreviewBox_type1_number_no_filters
             HeadLine="New Alerts Today"
             resource_type_id={null}
@@ -158,7 +173,6 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             display_this_value={""}
             txt_color={""}
           />
-
           <PreviewBox_type1_number_no_filters
             HeadLine="New Alerts This Week"
             resource_type_id={null}
@@ -179,7 +193,6 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             display_this_value={""}
             txt_color={""}
           />
-
           <PreviewBox_type8_time
             HeadLine="Latest Alert"
             resource_type_id={null}
@@ -192,6 +205,14 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             set_display_this={set_display_this}
             display_this_value={""}
             txt_color={""}
+          />{" "}
+          <PreviewBox_type2_pie
+            HeadLine="Artifact Summary"
+            bar_numbers={Object.values(ArtifactDataPie)}
+            bar_headlines={Object.keys(ArtifactDataPie)}
+            bar_title_legend={["total"]}
+            is_popup={false}
+            colors={"Basic"} // Basic , Alert
           />
         </div>
 

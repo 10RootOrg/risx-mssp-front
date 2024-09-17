@@ -551,21 +551,10 @@ disabled={disabled || Info?.toolType === "link"}
 
 
 
-{/* 
-<td style={{ visibility: Info?.toolType === "link" && "hidden"}}>
-<div style={{display:"flex"}}>
-    <label className="switch"><input type="checkbox" 
-checked={Info?.isActive}
-disabled={disabled || Info?.toolType === "link"}
- onClick={() => edit_checked_artifacts(Info)} 
- /> <span className="slider round"></span></label> 
-</div>
-
- </td> */}
+ 
 
 
-
-<td className='' style={{ width:"108px" }}><div style={{display:"flex", alignItems:"center" }}>{/* <p className='font-type-very-sml-txt   Color-Grey1 mr-a'>By:</p> */}<img className='logo-cell  ' style={{ width:"108px"   , height:"100%" , maxHeight:"40px" ,marginRight:"20px",marginLeft:"8px"}} src={Info?.logoAddress_1 ? require(`${Info.logoAddress_1}`) : undefined}></img></div></td>
+<td className='' style={{ width:"108px" }}><div style={{display:"flex", alignItems:"center" }}><img className='logo-cell  ' style={{ width:"108px"   , height:"100%" , maxHeight:"40px" ,marginRight:"5px",marginLeft:"5px"}} src={Info?.logoAddress_1 ? require(`${Info.logoAddress_1}`) : undefined}></img></div></td>
 
 <td  style={{width:"250px"}} ><p className='font-type-menu  Color-White  cutLongLine   hide-on-small-screen0' >{Info?.headline}</p></td>
 <td className="hide-on-small-screen1 " style={{width:"30%"}} > <p className='font-type-txt   Color-Grey1   cutLongLine'  >{box_type === "modules" && Info?.description_short}{box_type === "velociraptor" && Info?.description}</p></td>
@@ -677,7 +666,7 @@ style={{padding:0}}
           </button>
          <button onClick={()=>change_order_in_db(Info,-1)}
             className="btn-menu ">
-            <div className="display-flex"> <p className="font-type-menu ml-c mr-c">Move</p> </div>
+            <div className="display-flex"> <p className="font-type-menu ml-c mr-c">Move Up</p> </div>
             {/* <div className="btn-menu-icon-placeholder  "> <p className="font-type-menu ml-b mr-b">+</p> */}
             <div className="btn-menu-icon-placeholder  ">  <IcoMenuUp      className="btn-menu-icon-placeholder  mr-a  "  style={{ visibility: "" }}  />
 
@@ -685,7 +674,7 @@ style={{padding:0}}
           </button>
           <button onClick={()=>change_order_in_db(Info,+1)}
             className="btn-menu ">
-            <div className="display-flex"> <p className="font-type-menu ml-c mr-c">Move</p> </div>
+            <div className="display-flex"> <p className="font-type-menu ml-c mr-c">Move Down</p> </div>
             <div className="btn-menu-icon-placeholder  ">  <IcoMenuDown      className="btn-menu-icon-placeholder  mr-a  "  style={{ visibility: "" }}  />
 
             </div>

@@ -70,7 +70,7 @@
     {
       "toolName": "MISP",
       "toolID": "2001012",
-      "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com/"
+      "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com"
     },
     {
       "toolName": "LeakCheck",
@@ -91,21 +91,11 @@
       "toolName": "CTI Dashboard",
       "toolURL": "${FRONT_URL}/kibana/app/dashboards#/view/7f780b64-042d-4ddc-ae94-00c0d4c493ec?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
       "URLtype": "Dashboard"
-    }
-    ,
+    },
     {
       "toolName": "Best Practice Dashboard",
       "toolURL": "${FRONT_URL}/kibana/app/dashboards#/view/ec7b54c7-b91c-4a5a-a113-6099187939ac?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
       "URLtype": "Dashboard"
-    }
-    ],
-   
-  "tmp": [
-    {
-      "toolName": "HayabusaDashboardUrl",
-      "toolID": "0",
-      "tmp_toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from:now-30d%2Fd,to:now))&show-time-filter=true&hide-filter-bar=true",
-      "toolURL": "http://mssp-dev.northeurope.cloudapp.azure.com/kibana/app/dashboards#/view/332ec800-bc67-11ec-b4f7-8347b07fe863?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15h%2Cto%3Anow))&show-time-filter=true&hide-filter-bar=true"
     }
   ]
 }

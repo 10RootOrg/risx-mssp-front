@@ -62,7 +62,7 @@ useEffect(() => {
 <p  className="font-type-menu" >Mssp:</p>
 <p  className="font-type-h3" >Modules</p>
 </div>
-<div className='top-of-page-center'>{/* placeholder for dropDown */}</div>
+{/* <div className='top-of-page-center'> placeholder for dropDown  </div> */}
  
  <div className='top-of-page-right'>
  

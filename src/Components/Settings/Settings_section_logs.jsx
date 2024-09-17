@@ -18,9 +18,12 @@ function Settings_section_logs({
 }) {
   const { backEndURL, fetchConfig } = useContext(GeneralContext);
   const [log_data, set_log_data] = useState("loading..");
+  const [preview_data, set_preview_data] = useState("loading..");
+
   const maxHeight = "800px";
   const lineHeight = "160%";
 
+// console.log("log_data" , log_data);
 
 
   const [filter_string , set_filter_string] = useState("");
@@ -43,12 +46,15 @@ function Settings_section_logs({
         if (res?.data?.status === 200 || res?.data?.content != undefined) {
           console.log(res?.data?.content);
           set_log_data(res?.data?.content);
+          set_preview_data(res?.data?.content);
         }
       }
     } catch (err) {
       console.log(err);
 
       set_log_data(`Error fetchLog ${logName}. message: ${err}`);
+      set_preview_data(`Error fetchLog ${logName}. message: ${err}`);
+
     }
   };
 
@@ -63,13 +69,21 @@ function Settings_section_logs({
   return (
     <div style={{ maxWidth: "100%", }}>
  
-<div>
+<div style={{display:"flex" , justifyContent:"space-between"}}>
 <div>
       {/* <p className="font-type-h4 Color-White mb-a">{headline}</p> */}
-      <p className="font-type-menu Color-White mb-a">{headline}</p>
+      <p className="font-type-h4 Color-White  "     
+      style={{
+                    width: "100%",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    marginRight:"20px"
+                  }}
+                  >{headline}</p>
       <p className="font-type-txt Color-Grey1 mb-b">{fileName}</p>
 </div>
-{/* <Search_comp set_items_for_search={set_log_data}    items_for_search={log_data}  filter_string={filter_string}  set_filter_string={set_filter_string} /> */}
+<Search_comp_for_logs set_log_data={set_log_data}  log_data={log_data} set_preview_data={set_preview_data}  preview_data={preview_data} />
 
 </div>
       <div
@@ -85,10 +99,7 @@ function Settings_section_logs({
         >
           <tbody className="tbody_setting"  >
             <tr>
-              {/* <td className="setting_descriptions  ">
-                <p className="font-type-menu Color-White mb-a">Backend</p>
-                <p className="font-type-txt Color-Grey1 mb-b">msspBack.log</p>
-              </td> */}
+ 
               <td
                 className="  "
                 style={{
@@ -104,7 +115,7 @@ function Settings_section_logs({
                   className="font-type-txt Color-White log-text"
                   style={{ lineHeight: lineHeight, margin: 0 }}
                 >
-                  {log_data}
+                  {preview_data}
                 </pre>
               </td>
             </tr>

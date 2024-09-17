@@ -6,7 +6,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route  , Navigate  } from "react-router-dom";
 import { ContextProvider}from './Context'
 // import GeneralContext from './Context';
-import SideBar from './SideBar/SideBar'
+import {SideBar ,MobileTopBar} from './SideBar/SideBar'
 import Modules from './Components/Modules/Modules'
 // import Modules2 from './Components/Modules/Modules2'
 
@@ -54,6 +54,9 @@ export default function App() {
       <ContextProvider> 
          <BrowserRouter>
 
+         
+
+    {show_SideBar && <MobileTopBar visblePage={visblePage} set_visblePage={set_visblePage}   unseen_alert_number={unseen_alert_number} set_unseen_alert_number={set_unseen_alert_number} isMainProcessWork={isMainProcessWork} />  }
     {show_SideBar && <SideBar visblePage={visblePage} set_visblePage={set_visblePage}   unseen_alert_number={unseen_alert_number} set_unseen_alert_number={set_unseen_alert_number} isMainProcessWork={isMainProcessWork} />  }
 
    {visblePage != "login"  && < Constantfunctions  isMainProcessWork={isMainProcessWork}  set_isMainProcessWork={set_isMainProcessWork} /> } 
