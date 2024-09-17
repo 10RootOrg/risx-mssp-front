@@ -9,6 +9,7 @@ import Settings_section_ShowInUi from "./Settings_section_ShowInUi.jsx";
 import Settings_section_process from "./Settings_section_process.jsx";
 import Settings_section_edit_mssp_config_json_paths  from "./Settings_section_edit_mssp_config_json_paths.jsx";
 // import Settings_section_edit_mssp_config_json_dashboards_paths from "./Settings_section_edit_mssp_config_json_dashboards_paths.jsx";
+import {Search_comp , Search_comp_for_logs} from "../Features/Search_comp.jsx";
 
 
 
@@ -40,7 +41,8 @@ function Settings({
 
   const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =useState(false);
   const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] = useState({ HeadLine: "Coming Soon!", paragraph: "We are working on creating this section. Stay tuned for updates as we finalize the details.", buttonTitle: "Close",});
-  
+  const [filter_string , set_filter_string] = useState("");
+  const [tmp_data, set_tmp_data] = useState("tmp_data");
 
 
 const handle_Click_Btn =(value ,is_nasted , show_nested , fater_value) =>{
@@ -171,11 +173,17 @@ buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
           </div>
 
 
-          <div className="top-of-page-right">
-            <input className="input-type1 mr-a" placeholder="Search"  onClick={()=>set_PopUp_Under_Construction__show(true)}/>
+          <div className="top-of-page-right"   onClick={() => set_PopUp_Under_Construction__show(true)} >
+          <Search_comp set_items_for_search={set_tmp_data}    items_for_search={tmp_data}  filter_string={filter_string}  set_filter_string={set_filter_string} 
+         
+           />
+
+            {/* <input className="input-type1 mr-a" placeholder="Search"  onClick={()=>set_PopUp_Under_Construction__show(true)}/>
             <button className="btn-type1 "  onClick={()=>set_PopUp_Under_Construction__show(true)}>
               <IconSearch className="icon-type1" />{" "}
-            </button>
+            </button> */}
+
+
           </div>
         </div>
 

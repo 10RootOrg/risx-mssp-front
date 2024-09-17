@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./SideBar.css";
 import { ReactComponent as RisxMsspLogo } from "../Components/Logos/RisxMssp_logo_Standart.svg";
+import { ReactComponent as RisxMsspLogoWide } from "../Components/Logos/RisxMssp_logo_wide.svg";
 import { ReactComponent as IcoMonitor } from "../Components/icons/ico-menu-monitor.svg";
 import { ReactComponent as IcoModules } from "../Components/icons/ico-menu-modules.svg";
 import { ReactComponent as IcoLink } from "../Components/icons/ico-menu-link.svg";
@@ -29,17 +30,10 @@ import axios from "axios";
 import { Make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
 import DownloadProgressBarItem from "./DownloadProgressBarItem";
 
-function SideBar({
+const  SideBar =({
   visblePage,
   set_visblePage,
-  // unseen_alert_number,
-  // set_unseen_alert_number,
-  // isMainProcessWork,
-  // set_isMainProcessWork,
-}) {
-  // const [isHovered, setIsHovered] = useState(false);
-  // const [unseen_alert_number, set_unseen_alert_number] = useState(0)
-  // const [openSubMenu, set_openSubMenu] = useState("none")
+}) =>{
   const navigate = useNavigate();
   const [user_name, set_user_name] = useState("user");
   const {
@@ -776,62 +770,312 @@ function SideBar({
   );
 }
 
-export default SideBar;
+const  MobileTopBar =({
+  visblePage,
+  set_visblePage,
+}) =>{
+  const navigate = useNavigate();
+  const [user_name, set_user_name] = useState("user");
+  const {
+    backEndURL,
+    moduleLinks,
+    front_IP,
+    DownloadProgressBar,
+    setDownloadProgressBar,
+    setDownloadList,
+   set_Assets_Preview_List,Assets_Preview_List
+    // front_URL,
+    // mssp_config_json,
+    // user_id,
+  } = useContext(GeneralContext);
 
-{
-  /* 
+  const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
+  const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({
+    HeadLine: "",
+    paragraph: "",
+    buttonTitle: "",
+  });
 
-<div style={{width:"100%"  }} >
-<button className="btn-menu "  style={{marginBottom:"var(--space-a)"}}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-  onClick={handle_active_interval_process}
->  
-        <div className='display-flex'>
-          <IconLastRun className="btn-menu-icon-placeholder  mr-a " />
-          <p className='font-type-menu'>Output:
-            {isMainProcessWork && !isHovered &&   <span className='font-type-menu Color-Blue-Glow ml-a'>on</span>}
-            {isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Orange ml-a'>turn off</span>}
-            {!isMainProcessWork && isHovered &&  <span className='font-type-menu Color-Blue-Glow ml-a'>turn on</span> }
-            {!isMainProcessWork && !isHovered &&  <span className='font-type-menu Color-Orange ml-a'>off</span>}
-         </p>
-        
-            </div> 
-       <div className="btn-menu-icon-placeholder  "> </div> 
-</button>  
+  const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+  const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
+    HeadLine: "Success",
+    paragraph: "successfully",
+    buttonTitle: "Close",
+  });
 
-<button className="btn-menu"  onClick={handle_active_manual_process}>  
-        <div className='display-flex'> <IcoACtive className="btn-menu-icon-placeholder  mr-a " />  <p className='font-type-menu '>Run Selected</p> </div> 
-       <div className="btn-menu-icon-placeholder  "> </div> 
-</button>  
-</div> */
+  const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =
+    useState(false);
+  const [PopUp_Under_Construction__txt, set_PopUp_Under_Construction__txt] =
+    useState({
+      HeadLine: "Coming Soon!",
+      paragraph:
+        "We are working on creating this section. Stay tuned for updates as we finalize the details.",
+      buttonTitle: "Close",
+    });
+
+    const [PopUp_Confirm_Run_selected__show, set_PopUp_Confirm_Run_selected__show] = useState(false);
+ 
+
+ 
+  const [download_drop_down, set_download_drop_down] = useState(false);
+  const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
+
+  const [object, setObject] = useState({});
+
+  const get_config = async () => {
+    if (backEndURL === undefined) {
+      return;
+    }
+    try {
+      const res = await axios.get(`${backEndURL}/config`);
+
+      if (res) {
+        console.log("get_config", res.data);
+      }
+      setObject(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    if (backEndURL) {
+      get_config();
+    }
+  }, [backEndURL]);
+
+
+
+  const handleClick = (page_name) => {
+    set_visblePage(page_name);
+    localStorage.setItem("visiblePage", page_name); // Store current page in localStorage
+    navigate(`/${page_name.toLowerCase()}`); // This navigates to the path specified by page_name\
+  };
+
+  const handleNewWindow = (dashboard_name) => {
+    const url = Make_url_from_id(dashboard_name, moduleLinks, front_IP);
+    console.log("handleNewWindow url - ", url);
+
+    if (url) {
+      window.open(url, "_blank");
+    }
+  };
+
+  const handle_Dashboards_drop_down = () => {
+    set_Dashboards_drop_down(!Dashboards_drop_down);
+  };
+
+  const handle_download_drop_down = () => {
+    set_download_drop_down(!download_drop_down);
+  };
+
+  const handleDownload = async (os) => {
+    console.log("os", os);
+    // window.open(object?.General?.AgentLinks[os]);
+    try {
+      set_PopUp_All_Good__txt({
+        HeadLine: `Download ${os} Agent Start`,
+        paragraph:
+          "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
+        buttonTitle: "Close",
+      });
+      // set_PopUp_All_Good__show(true);
+      const fileName = object?.General?.AgentLinks[os]?.split("/")?.pop();
+      const fileName2 =
+        object?.General?.AgentLinks[os]?.split("/")?.pop() + Math.random();
+
+      const res = await axios.post(
+        `${backEndURL}/config/DownloadAgent`,
+        {
+          PathOs: object?.General?.AgentLinks[os],
+        },
+        {
+          responseType: "blob",
+          onDownloadProgress: (prog) => {
+            const value = Math.round((prog.loaded / prog.total ?? 1) * 100);
+            if (!DownloadProgressBar[fileName2]) {
+              console.log("empty");
+              // const copy = DownloadList.map((x) => x);
+              // copy.push(fileName);
+              // console.log(
+              //   "DownloadListDownloadListDownloadListDownloadListDownloadListDownloadListDownloadListDownloadListDownloadList",
+              //   DownloadList
+              // );
+              // setDownloadList(copy);
+              DownloadProgressBar[fileName2] = {
+                progress: value,
+                fileName: fileName,
+              };
+            }
+
+            if (
+              DownloadProgressBar[fileName2].progress + 5 < value ||
+              (value >= 100 && DownloadProgressBar[fileName2].progress != 100)
+            ) {
+              console.log("Download Prog ", value, DownloadProgressBar);
+              DownloadProgressBar[fileName2] = {
+                progress: value,
+                fileName: fileName,
+              };
+              setDownloadProgressBar(DownloadProgressBar);
+              setDownloadList(Math.random());
+            }
+          },
+        }
+      );
+
+      if (res) {
+        // console.log("ssssssssssssssssssssssss", fileName);
+        const url = window.URL.createObjectURL(res.data);
+        console.log(url);
+
+        // window.open(url)
+        // console.log(fileName, "zzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = fileName;
+        link.click();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handle_click_user = async () => {
+    set_PopUp_Error____txt({
+      HeadLine: "Work in Progress..",
+      paragraph:
+        "Final touches underway; anticipate completion shortly. Stay tuned for updates.",
+      buttonTitle: "Close",
+    });
+    set_PopUp_Error____show(true);
+  };
+
+
+
+
+  const handle_active_manual_process = async () => {
+    set_PopUp_Confirm_Run_selected__show(false)
+    console.log("handle_active_manual_process");
+    try {
+      const res = await axios.get(
+        `${backEndURL}/process/active-manual-process`,
+        { params: { param1: "param1value" } }
+      );
+
+
+      if (res.data) {
+        console.log("handle_active_manual_process - data", res?.data);
+        console.log("handle_active_manual_process - status", res?.status);
+        if (res?.data?.success === true) {
+          console.log("A Manual Process has Started to run"  , "message;" , res?.data?.message);
+          set_PopUp_All_Good__txt({
+            HeadLine: "Activated",
+            paragraph: "A Manual Process has Started to run",
+            // paragraph: res?.data?.message,
+            buttonTitle: "Close",
+          });
+          set_PopUp_All_Good__show(true);
+
+        } else {
+          set_PopUp_Error____txt({
+            HeadLine: "Error",
+            paragraph: `${res?.data?.message}`,
+            buttonTitle: "Close",
+          });
+          set_PopUp_Error____show(true);
+        }
+      }
+    } catch (err) {
+
+      
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: `${err?.response?.data?.message}`,
+        buttonTitle: "Close",
+      });
+      set_PopUp_Error____show(true);
+      console.log("catch handle_active_manual_process - data", err?.response?.data);
+      // console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
+      // console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
+      // console.log("catch handle_active_manual_process - success", err?.response?.data?.success);
+      console.log(err);
+    }
+  };
+
+  const handle_cancel_active_manual_process = () => {
+    console.log('handle_cancel_active_manual_process item...');
+     set_PopUp_Confirm_Run_selected__show(false)
+  };
+
+
+  useEffect(() => {
+    const name = localStorage.getItem("username");
+
+    if (name) {
+      set_user_name(name);
+    } else {
+      console.log("No username found in local storage.");
+    }
+  }, []);
+
+ 
+
+  return (
+    <div className="top-bar-mobile-out">
+
+
+
+{/* 
+{PopUp_Confirm_Run_selected__show &&
+      <PopUp_Confirm_Run_selected
+      popUp_show={PopUp_Confirm_Run_selected__show}
+      set_popUp_show={set_PopUp_Confirm_Run_selected__show}
+     True_action={handle_active_manual_process}
+     False_action={handle_cancel_active_manual_process}
+      /> }
+
+      {PopUp_Under_Construction__show && (
+        <PopUp_Under_Construction
+          popUp_show={PopUp_Under_Construction__show}
+          set_popUp_show={set_PopUp_Under_Construction__show}
+          HeadLine={PopUp_Under_Construction__txt.HeadLine}
+          paragraph={PopUp_Under_Construction__txt.paragraph}
+          buttonTitle={PopUp_Under_Construction__txt.buttonTitle}
+        />
+      )}
+
+      {PopUp_All_Good__show && (
+        <PopUp_All_Good
+          popUp_show={PopUp_All_Good__show}
+          set_popUp_show={set_PopUp_All_Good__show}
+          HeadLine={PopUp_All_Good__txt.HeadLine}
+          paragraph={PopUp_All_Good__txt.paragraph}
+          buttonTitle={PopUp_All_Good__txt.buttonTitle}
+        />
+      )}
+
+      {PopUp_Error____show && (
+        <PopUp_Error
+          popUp_show={PopUp_Error____show}
+          set_popUp_show={set_PopUp_Error____show}
+          HeadLine={PopUp_Error____txt.HeadLine}
+          paragraph={PopUp_Error____txt.paragraph}
+          buttonTitle={PopUp_Error____txt.buttonTitle}
+        />
+      )} */}
+
+
+      <div    style={{display:"flex" , justifyContent:"space-between", alignItems:"center" , height:"52px"}}  >
+      <RisxMsspLogoWide className=" " />
+      {/* <div style={{backgroundColor:"red" , height:"22px", width:"22px"}}></div> */}
+ </div>
+
+ 
+
+    </div>
+  );
 }
 
-// const countVelociraptorResponses = async () => {
-//   try {
 
-//     const res = await axios.get(`${backEndURL}/results/count-responses-files`);
-
-//     if (res) {
-//       const list  = res.data.number
-
-//       const listResults =  list
-//       const seeResults =  localStorage.getItem(user_id + '_seeResults');
-
-//       console.log(parseFloat(seeResults));
-
-//    if(parseFloat(seeResults) != listResults){
-// const note_gap  = listResults - parseFloat(seeResults)
-// set_unseen_alert_number(note_gap)
-//    }
-// else if(parseFloat(seeResults) === listResults){set_unseen_alert_number(0)}
-
-//       // console.log(parseFloat(seeResults) === listResults);
-//       // console.log(parseFloat(seeResults) < listResults);
-
-//       // set_unseen_alert_number
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
+export  {SideBar ,MobileTopBar};

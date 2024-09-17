@@ -52,14 +52,20 @@ align-items: center;
 }
 
 
-
 .resource-group-list-headline-left, .resource-group-Right-Action_btns  {
  display: flex;
 justify-content: space-between;
 align-items: center;
-width: fit-content;
+
+/* width: fit-content; */
 }
 
+
+
+@media only screen and (max-width:600px) {
+  .resource-group-Right-Action_btns{
+    width: 100%;
+  } }
 
 .resource-group-list-keyNames{
   display: flex;

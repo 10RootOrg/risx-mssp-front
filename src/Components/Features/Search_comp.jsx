@@ -83,7 +83,7 @@ const  Search_comp = ({ items_for_search, set_items_for_search, filter_string, s
       <input
         className="input-type1 search_filter "
         placeholder="Search"
-        onChange={(e) => set_filter_string(e.target.value)}
+        onChange={  (e) => set_filter_string(e.target.value)}
       />
       <div
         className='search_filter-btns'
@@ -101,37 +101,71 @@ const  Search_comp = ({ items_for_search, set_items_for_search, filter_string, s
   );
 }
 
-function Search_comp_for_logs({ items_for_search, set_items_for_search, filter_string, set_filter_string }) {
-  const [all_items, set_all_items] = useState([]);
+const  Search_comp_for_logs = ({ log_data, set_log_data,set_preview_data, preview_data }) => {
+  const [filter_string,   set_filter_string] = useState("");
+ 
+    useEffect(() => {
+      if (!filter_string){set_preview_data(log_data); return }
+
+      else{
+        const filterLogLinesString = filterLogLines(log_data, filter_string)
+        if(filterLogLinesString){set_preview_data(filterLogLinesString)}
+       else{set_preview_data("No Results For this Filter..")}
+      }
+    }, [filter_string]);
+ 
+
+  function filterLogLines(log_data, filter_string) {
+    // Split the log text into lines
+    const lines = log_data.split('\n');
+    
+    // Filter lines that contain the substring (case-insensitive)
+    const filteredLines = lines.filter(line => line.toLowerCase().includes(filter_string.toLowerCase()));
+    
+    // Join the filtered lines back into a single string
+    return filteredLines.join('\n');
+  }
+
+
+  const filteredLog = filterLogLines(log_data, "Number");
+  console.log("filteredLog" , filteredLog);
 
   const handleClearFilter = () => {
-    set_filter_string('');
+   set_filter_string('');
     // Clear the input field value
-    const inputField = document.querySelector('.search_filter');
-    if (inputField) {
-      inputField.value = '';
-    }
-  };
-  return (
-    <div className='resource-group-Right-Action_btns' 
-    style={{ position: "relative", backgroundColor:"yellow"}}
+    // const inputField = document.querySelector('.search_filter');
+    // if (inputField) {
+    //   console.log(" inputField " , inputField );
 
-    //  style={{position: "relative", backgroundColor:"yellow"  }}
-     >
+    //   console.log(" inputField.value " , inputField.value );
+
+    //   inputField.value = '';
+    // }
+  };
+
+
+
+  return (
+    <div className='resource-group-Right-Action_btns '
+    style={{ position: "relative",  }}
+    >
       <input
-        className="input-type1 search_filter mr-a"
+        className="input-type1 search_filter "
         placeholder="Search"
         onChange={(e) => set_filter_string(e.target.value)}
-       
-      />
+        value={filter_string}  
+
+       />
       <div
         className='search_filter-btns'
-        style={{ position: "absolute", right: "25px", display: "flex", alignItems: "center", height: "auto"  ,}}
+        style={{ position: "absolute", right: "2px", display: "flex", alignItems: "center", height: "auto" }}
       >
-        {document?.querySelector('.search_filter')?.value === "" ? (
+        {!filter_string ? (
           <IconSearch className="icon-type1 icon-type1-smaller" />
         ) : (
-          <button className="btn-type1 btn-type1-smaller" onClick={handleClearFilter}>
+          <button className="btn-type1 btn-type1-smaller"
+           onClick={()=>handleClearFilter()}
+           >
             <IconTrash className="icon-type1 icon-type1-smaller" />
           </button>
         )}

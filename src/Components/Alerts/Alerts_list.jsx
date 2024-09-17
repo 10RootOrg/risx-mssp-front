@@ -150,8 +150,14 @@ function Alert_list({
 
       <div className="resource-group-list-headline mb-c ">
         <div className="resource-group-list-headline-left ">
-          <IconBIG />{" "}
-          <p className="font-type-h4   Color-White ml-b">Alert list</p>
+          <IconBIG  style={{width:"55px"}}/>{" "}
+          <p className="font-type-h4   Color-White ml-a"      style={{
+                    width: "100%",
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    // textOverflow: "ellipsis",
+                    marginRight:"20px"
+                  }} >Alert list</p>
         </div>
 
         <ResourceGroup_Action_btns

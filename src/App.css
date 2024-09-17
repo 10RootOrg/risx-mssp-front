@@ -429,7 +429,7 @@ p{color: var(--color-White);
   border: var(  --line-width-small) solid var(--color-Grey2);
   border-radius: var(--elemtns-round-corner-medium);
   height: 22px;
-  width: 188px;
+  width:-webkit-fill-available;
   outline:none;
  padding-left: var( --space-a);
 
