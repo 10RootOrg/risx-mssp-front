@@ -36,13 +36,15 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
     Reopened: 0,
   });
   const [ArtifactDataPie, setArtifactDataPie] = useState({});
+  const [IntervalUpdate, setIntervalUpdate] = useState({});
 
   async function GetData() {
     try {
       const res = await axios.get(backEndURL + "/Alerts/GetAlertFileData");
       console.log("GetAlertFileData Data 111111111111", res.data);
 
-      const AlertFileData = res.data;
+      const AlertFileData = res.data.Alerts;
+      const AletDic = res.data.AletDic;
 
       // const TestDate = AlertFileData[1]["_ts"];
       const newDateWeek = new Date();
@@ -61,16 +63,25 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
         Reopened: 0,
       };
       const Artifact = {};
+
       AlertFileData.forEach((x) => {
         Item[x?.UserInput?.Status]++;
-        if (!Artifact[x?.Artifact]) {
-          Artifact[x?.Artifact] = 0;
+        if (!Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact]) {
+          Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact] = 0;
         }
-        Artifact[x?.Artifact]++;
+        Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact]++;
+
+        x.SimpleName = AletDic[x?.Artifact?.trim() ?? x?.Artifact]?.Name;
+        x.Description =
+          AletDic[x?.Artifact?.trim() ?? x?.Artifact]?.Description;
       });
       console.log(
         "ArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifact",
         Artifact
+      );
+      console.log(
+        AlertFileData,
+        "AlertFileDataAlertFileDataAlertFileDataAlertFileDataAlertFileDataAlertFileDataAlertFileDataAlertFileDataAlertFileDataAlertFileData"
       );
 
       console.log("ItemItemItemItemItemItemItem", Item);
@@ -83,15 +94,31 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
         hour: newDateHour,
         lastAlert: AlertFileData?.[0]?.["_ts"],
       });
+      return;
     } catch (error) {
       console.log("Error in Get Data OF alerts", error);
     }
   }
 
   useEffect(() => {
+    let IntervalAlerts;
     if (backEndURL) {
       GetData();
+      IntervalAlerts = setInterval(() => {
+        console.log("inttttttttttttttttttt");
+        const a = async () => {
+          await GetData();
+          setIntervalUpdate(true);
+        };
+        a();
+      }, 1000 * 60);
     }
+    return () => {
+      console.log(IntervalAlerts, "enqkjnrkq");
+
+      clearInterval(IntervalAlerts);
+      console.log("asdasdasdasd");
+    };
   }, [backEndURL]);
 
   const [display_this, set_display_this] = useState("");
@@ -133,7 +160,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             is_popup={false}
             colors={"Basic"} // Basic , Alert
           />
-          <PreviewBox_type1_number_no_filters
+          {/* <PreviewBox_type1_number_no_filters
             HeadLine="New Alerts Last Hour"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
@@ -152,7 +179,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             display_this={display_this}
             set_display_this={set_display_this}
             display_this_value={""}
-          />
+          /> */}
           <PreviewBox_type1_number_no_filters
             HeadLine="New Alerts Today"
             resource_type_id={null}
@@ -193,7 +220,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             display_this_value={""}
             txt_color={""}
           />
-          <PreviewBox_type8_time
+          {/* <PreviewBox_type8_time
             HeadLine="Latest Alert"
             resource_type_id={null}
             BigNumber={format_date_type_a_only_hours(TimeObject?.lastAlert)} // BigNumber={Preview_this_Results?.length ? (Preview_this_Results.length):(0) }
@@ -205,7 +232,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             set_display_this={set_display_this}
             display_this_value={""}
             txt_color={""}
-          />{" "}
+          />{" "} */}
           <PreviewBox_type2_pie
             HeadLine="Artifact Summary"
             bar_numbers={Object.values(ArtifactDataPie)}
@@ -224,6 +251,8 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             Preview_this_Results={AlertsData}
             set_Preview_this_Results={setAlertsData}
             GetData={GetData}
+            IntervalUpdate={IntervalUpdate}
+            setIntervalUpdate={setIntervalUpdate}
           />
         </div>
       </div>

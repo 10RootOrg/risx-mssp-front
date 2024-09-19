@@ -13,9 +13,19 @@ function Settings_section_edit_mssp_config_json_module_paths({
     useContext(GeneralContext);
   const [tmp_moduleLinks, set_tmp_moduleLinks] = useState(moduleLinks);
   const [save_btn, set_save_btn] = useState(false);
-const keyWidth ="160px"
+  const keyWidth = "160px";
   const handleInputChangeGenerator = (index) => (e) => {
+    console.log(
+      "ttttttttttttttttttttttttttttttttttttttt e.target.value",
+      e.target.value
+    );
+
     const newModuleLinks = [...moduleLinks]; // Create a copy of moduleLinks array
+    console.log(
+      newModuleLinks[index].toolURL,
+      "newModuleLinks[index].toolURL newModuleLinks[index].toolURL newModuleLinks[index].toolURL"
+    );
+
     newModuleLinks[index].toolURL = e.target.value; // Update the toolURL of the specific element
     set_tmp_moduleLinks(newModuleLinks); // Update state with the new array
     set_save_btn(true);
@@ -49,161 +59,162 @@ const keyWidth ="160px"
     }
   }, [moduleLinks]);
 
-
   return (
     <>
       <div>
-       
         <table className="setting_table  " style={{ lineHeight: "100%" }}>
           <tbody className="tbody_setting">
             <tr>
               <td className="setting_descriptions setting_descriptions">
-              <p className="font-type-h4 Color-White mb-a">Module Paths</p>
-              <p className="font-type-menu Color-White  mb-b"> mssp_config.json </p>
-                <p className="font-type-txt Color-Grey1 mb-b">Set up URL paths for each module.</p>
-                <p className="font-type-txt Color-Grey1 mb-b ">the page will automatically refresh to apply the changes.</p>
-              
-
+                <p className="font-type-h4 Color-White mb-a">Module Paths</p>
+                <p className="font-type-menu Color-White  mb-b">
+                  {" "}
+                  mssp_config.json{" "}
+                </p>
+                <p className="font-type-txt Color-Grey1 mb-b">
+                  Set up URL paths for each module.
+                </p>
+                <p className="font-type-txt Color-Grey1 mb-b ">
+                  the page will automatically refresh to apply the changes.
+                </p>
               </td>
               {/* moduleLinks */}
               {/* preview_list={all_artifacts_and_modules.filter(tool => (tool?.tool_id != "2000000"  &&    tool?.parent_id  != "2000000"   &&    tool?.toolType === "link"  &&  tool?.ShowInUi  )) } */}
-<div style={{marginTop:"-5px"  ,marginBottom:"45px"}}>
-              {Array.isArray(tmp_moduleLinks) &&
-           tmp_moduleLinks.filter(url => (url?.URLtype != "Dashboard")).map((Info, index) => {
-                  const handleInputChange = handleInputChangeGenerator(index); // Generate handleInputChange function for each index
+              <div style={{ marginTop: "-5px", marginBottom: "45px" }}>
+                {Array.isArray(tmp_moduleLinks) &&
+                  tmp_moduleLinks.map((Info, index) => {
+                    if (Info?.URLtype == "Dashboard") {
+                      return;
+                    }
+                    const handleInputChange = handleInputChangeGenerator(index); // Generate handleInputChange function for each index
 
-                  return (
-                    <tr className="" key={index} style={{ height: "50px" }} >
-                      <td
-                        className=""
-                        style={{
-                          width: "auto",
-                          paddingRight: "16px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        <p className="font-type-txt Color-White" style={{width:keyWidth}}>
-                          {Info?.toolName}
-                        </p>
-                      </td>
-                      <td className="" style={{ width: "100%" }}>
-                        <input
-                          className="input-type4"
-                          placeholder={Info?.toolURL}
-                          value={Info?.toolURL}
-                          onChange={handleInputChange}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-</div>
-
-        
+                    return (
+                      <tr className="" key={index} style={{ height: "50px" }}>
+                        <td
+                          className=""
+                          style={{
+                            width: "auto",
+                            paddingRight: "16px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <p
+                            className="font-type-txt Color-White"
+                            style={{ width: keyWidth }}
+                          >
+                            {Info?.toolName}
+                          </p>
+                        </td>
+                        <td className="" style={{ width: "100%" }}>
+                          <input
+                            className="input-type4"
+                            placeholder={Info?.toolURL}
+                            value={Info?.toolURL}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </div>
             </tr>
 
-
-
-
-            <tr   >
+            <tr>
               <td className="setting_descriptions setting_descriptions">
-              <p className="font-type-h4 Color-White mb-a">Dashboard paths</p>
-         
-                <p className="font-type-txt Color-Grey1 mb-b">Configure the paths for each Dashboard.</p>
+                <p className="font-type-h4 Color-White mb-a">Dashboard paths</p>
+
+                <p className="font-type-txt Color-Grey1 mb-b">
+                  Configure the paths for each Dashboard.
+                </p>
                 {/* <p className="font-type-txt Color-Grey1  ">the page will automatically refresh to apply the changes.</p> */}
-                <p className="font-type-menu Color-Grey1  mb-b"> mssp_config.json </p>
+                <p className="font-type-menu Color-Grey1  mb-b">
+                  {" "}
+                  mssp_config.json{" "}
+                </p>
               </td>
 
-              <div style={{marginTop:"-5px"}}> 
-{Array.isArray(tmp_moduleLinks) &&
-           tmp_moduleLinks.filter(url => (url?.URLtype === "Dashboard")).map((Info, index) => {
-                  const handleInputChange = handleInputChangeGenerator(index); // Generate handleInputChange function for each index
+              <div style={{ marginTop: "-5px" }}>
+                {Array.isArray(tmp_moduleLinks) &&
+                  tmp_moduleLinks.map((Info, index) => {
+                    if (Info?.URLtype != "Dashboard") {
+                      return;
+                    }
+                    const handleInputChange = handleInputChangeGenerator(index); // Generate handleInputChange function for each index
 
-                  return (
-                    <tr className="" key={index} style={{ height: "50px" }}>
-                      <td
-                        className=""
-                        style={{
-                          width: "auto",
-                          paddingRight: "16px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        <p className="font-type-txt Color-White" style={{width:keyWidth}}>
-                          {Info?.toolName}
-                        </p>
-                      </td>
-                      <td className="" style={{ width: "100%" }}>
-                        <input
-                          className="input-type4"
-                          placeholder={Info?.toolURL}
-                          value={Info?.toolURL}
-                          onChange={handleInputChange}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-</div>
-
-
-        
+                    return (
+                      <tr className="" key={index} style={{ height: "50px" }}>
+                        <td
+                          className=""
+                          style={{
+                            width: "auto",
+                            paddingRight: "16px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <p
+                            className="font-type-txt Color-White"
+                            style={{ width: keyWidth }}
+                          >
+                            {Info?.toolName}
+                          </p>
+                        </td>
+                        <td className="" style={{ width: "100%" }}>
+                          <input
+                            className="input-type4"
+                            placeholder={Info?.toolURL}
+                            value={Info?.toolURL}
+                            onChange={handleInputChange}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </div>
             </tr>
 
-
-
-
             <tr className="" style={{}}>
-                <td className=""> </td>
-                <td className="" style={{}}>
-                  <div
-                    style={{
-                      marginBottom: "var(--space-d)",
-                      marginTop: "var(--space-a)",
-                      display: "flex",
-                      justifyContent: "end",
-                      gap: "var(--space-b)",
-                      alignItems: "center",
-                    }}
+              <td className=""> </td>
+              <td className="" style={{}}>
+                <div
+                  style={{
+                    marginBottom: "var(--space-d)",
+                    marginTop: "var(--space-a)",
+                    display: "flex",
+                    justifyContent: "end",
+                    gap: "var(--space-b)",
+                    alignItems: "center",
+                  }}
+                >
+                  <p
+                    className="font-type-txt Color-Grey1"
+                    style={{ marginRight: "auto", marginLeft: keyWidth }}
                   >
-                    <p
-                      className="font-type-txt Color-Grey1"
-                      style={{ marginRight: "auto" , marginLeft:keyWidth }}
-                    >
-                      <span className="mr-c ml-c">{`{FRONT_URL} ${front_URL}`}</span>
-                      |<span className="ml-c">{`{FRONT_IP} ${front_IP}`}</span>
-                    </p>
-                    {save_btn && (
-                      <>
-                        <p className="font-type-txt Color-Grey1 ">
-                          Clicking will refresh the page
-                        </p>
-                        <button
-                          className="btn-type2"
-                          style={{}}
-                          onClick={handle_Save_config}
-                        >
-                          <p className="font-type-menu ">Save</p>
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </td>
-              </tr>
+                    <span className="mr-c ml-c">{`{FRONT_URL} ${front_URL}`}</span>
+                    |<span className="ml-c">{`{FRONT_IP} ${front_IP}`}</span>
+                  </p>
+                  {save_btn && (
+                    <>
+                      <p className="font-type-txt Color-Grey1 ">
+                        Clicking will refresh the page
+                      </p>
+                      <button
+                        className="btn-type2"
+                        style={{}}
+                        onClick={handle_Save_config}
+                      >
+                        <p className="font-type-menu ">Save</p>
+                      </button>
+                    </>
+                  )}
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
-
-
-
-
-
-
-
-        
       </div>
     </>
   );
