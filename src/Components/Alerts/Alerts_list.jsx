@@ -28,6 +28,8 @@ function Alert_list({
   set_Preview_this_Results,
   loader,
   GetData,
+  IntervalUpdate,
+  setIntervalUpdate,
 }) {
   const { backEndURL, all_Tools, front_IP } = useContext(GeneralContext);
   const [is_search, set_is_search] = useState(false);
@@ -40,6 +42,8 @@ function Alert_list({
   const [PopUp_loader__show, set_PopUp_loader__show] = useState(false);
   const [sort_by, set_sort_by] = useState("StartDate");
   const [firstTimeData, setfirstTimeData] = useState(true); // usewith useeffect to now the first load and to sort
+  const [SortObjectField, setSortObjectField] = useState("_ts");
+  const [SortOrderRevered, setSortOrderRevered] = useState(false);
 
   const handle_click_result = (Info) => {
     console.log("-------handle_click_result-------------", Info);
@@ -49,15 +53,17 @@ function Alert_list({
     set_PopUp_Alert_info__show(true);
   };
 
-  const do_sortObject = (column, column2) => {
+  const do_sortObject = (column, column2, bolRefershData = false) => {
     console.log("sort this column: ", column, column2, sort_by);
     try {
       if (!column) {
         console.log("Can't sort ", column);
         return;
       }
-      if (column2 === sort_by) {
+      setSortObjectField([column, column2]);
+      if (bolRefershData ? SortOrderRevered : column2 === sort_by) {
         console.log("It's already sorted like this, reversing the order");
+        setSortOrderRevered(true);
         const sorted = [...Preview_this_Results]?.sort((a, b) => {
           console.log(
             "b[column]222222222222222222222222222222222222222222222222222222222222",
@@ -73,6 +79,7 @@ function Alert_list({
         set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
       } else {
         set_sort_by(column2);
+        setSortOrderRevered(false);
         const sorted = [...Preview_this_Results]?.sort((a, b) => {
           console.log(
             "b[column]1111111111111111111111111111111111111111111111111111111111111",
@@ -91,15 +98,16 @@ function Alert_list({
     }
   };
 
-  const do_sort = (column) => {
+  const do_sort = (column, bolRefershData = false) => {
     console.log("sort this column: ", column);
     if (!column) {
       console.log("Can't sort ", column);
       return;
     }
-
-    if (column === sort_by) {
+    setSortObjectField(column);
+    if (bolRefershData ? SortOrderRevered : column === sort_by) {
       console.log("It's already sorted like this, reversing the order");
+      setSortOrderRevered(true);
       const sorted = [...Preview_this_Results]?.sort((a, b) => {
         console.log("b[column]", b[column]);
         if (b[column] < a[column]) return -1;
@@ -111,6 +119,7 @@ function Alert_list({
       set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
     } else {
       set_sort_by(column);
+      setSortOrderRevered(false);
       const sorted = [...Preview_this_Results]?.sort((a, b) => {
         console.log(a[column], "llllllllllllllllllllllllllll");
         if (a[column] < b[column]) return -1;
@@ -129,6 +138,17 @@ function Alert_list({
       setfirstTimeData(false);
     }
   }, [Preview_this_Results]);
+
+  useEffect(() => {
+    if (IntervalUpdate) {
+      if (Array.isArray(SortObjectField)) {
+        do_sortObject(SortObjectField[0], SortObjectField[1], true);
+      } else {
+        do_sort(SortObjectField, true);
+      }
+      setIntervalUpdate(false);
+    }
+  }, [IntervalUpdate]);
 
   return (
     <div
@@ -150,14 +170,19 @@ function Alert_list({
 
       <div className="resource-group-list-headline mb-c ">
         <div className="resource-group-list-headline-left ">
-          <IconBIG  style={{width:"55px"}}/>{" "}
-          <p className="font-type-h4   Color-White ml-a"      style={{
-                    width: "100%",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    // textOverflow: "ellipsis",
-                    marginRight:"20px"
-                  }} >Alert list</p>
+          <IconBIG style={{ width: "55px" }} />{" "}
+          <p
+            className="font-type-h4   Color-White ml-a"
+            style={{
+              width: "100%",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              // textOverflow: "ellipsis",
+              marginRight: "20px",
+            }}
+          >
+            Alert list
+          </p>
         </div>
 
         <ResourceGroup_Action_btns
@@ -188,7 +213,16 @@ function Alert_list({
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
-                Artifact
+                Name
+              </p>
+            </div>
+            <div
+              className="resource-group-list-item   list-item-big ml-b"
+              onClick={() => do_sort("Artifact")}
+            >
+              {" "}
+              <p className="font-type-menu  make-underline Color-Grey1 ">
+                Description
               </p>
             </div>
             {/* <div className='resource-group-list-item list-item-biggest' onClick={() => do_sort("StartDate")}>                    <p className='font-type-menu  no-underline Color-Grey1'>Start Date</p></div> */}
@@ -198,29 +232,7 @@ function Alert_list({
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
-                Client Name
-              </p>
-            </div>
-            {/* <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Quota</p></div> */}
-
-            <div
-              className="resource-group-list-item list-item-small"
-              onClick={() => do_sortObject("UserInput", "ChangedAt")}
-              // style={{ marginRight: "25px" }}
-            >
-              {" "}
-              <p className="font-type-menu  make-underline Color-Grey1 ">
-                Changed At
-              </p>
-            </div>
-            <div
-              className="resource-group-list-item list-item-small"
-              onClick={() => do_sortObject("UserInput", "UserId")}
-              // style={{ marginRight: "25px" }}
-            >
-              {" "}
-              <p className="font-type-menu  make-underline Color-Grey1 ">
-              Owner
+                Hostname
               </p>
             </div>
             <div
@@ -234,6 +246,28 @@ function Alert_list({
                 Status
               </p>
             </div>
+            {/* <div className='resource-group-list-item list-item-small' onClick={() => do_sort("ExpireDate")} >                  <p className='font-type-menu  make-underline Color-Grey1 '>Quota</p></div> */}
+            <div
+              className="resource-group-list-item list-item-small"
+              onClick={() => do_sortObject("UserInput", "UserId")}
+              // style={{ marginRight: "25px" }}
+            >
+              {" "}
+              <p className="font-type-menu  make-underline Color-Grey1 ">
+                Assigned
+              </p>
+            </div>
+            <div
+              className="resource-group-list-item list-item-small"
+              onClick={() => do_sortObject("UserInput", "ChangedAt")}
+              // style={{ marginRight: "25px" }}
+            >
+              {" "}
+              <p className="font-type-menu  make-underline Color-Grey1 ">
+                Updated
+              </p>
+            </div>
+
             <div
               className="resource-group-list-item list-item-small "
               onClick={() => do_sort("_ts")}
@@ -241,7 +275,7 @@ function Alert_list({
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
-                Date
+                Detect Time
               </p>
             </div>
           </div>
@@ -259,22 +293,34 @@ function Alert_list({
                   >
                     {/* <p className='resource-group-list-item    font-type-txt   Color-Grey1  list-item-big   '>{ JSON.stringify(Info?.Arguments) }</p>  */}
 
+                    <p
+                      // onMouseEnter={() => {
+                      //   console.log("INNNNNNNNNNN");
+                      // }}
+                      // onMouseOut={() => {
+                      //   console.log("Outttttttttt");
+                      // }}
+                      className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-b "
+                    >
+                      {Info?.SimpleName}
+                    </p>
                     <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-b ">
-                      {Info?.Artifact}
+                      {Info?.Description}
                     </p>
                     {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1 list-item-biggest'>{ JSON.stringify(Info?.Response?.result) }</p>  */}
                     <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-b">
                       {Info?.ClientName}
                     </p>
-
-                    <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">
-                      {format_date_type_a(Info?.UserInput?.ChangedAt)}{" "}
+                    <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small ">
+                      {Info?.UserInput?.Status}
                     </p>
                     <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">
                       {Info?.UserInput?.UserId}{" "}
                     </p>
-                    <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small ">
-                      {Info?.UserInput?.Status}
+                    <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">
+                      {format_date_type_a(Info?.UserInput?.ChangedAt) == "NA"
+                        ? ""
+                        : format_date_type_a(Info?.UserInput?.ChangedAt)}
                     </p>
                     {/* <p className='resource-group-list-item  font-type-txt  Color-Grey1  list-item-small'>{Info?.Response?.quota}</p>  */}
                     <p className="resource-group-list-item  font-type-txt  Color-Grey1  list-item-small">

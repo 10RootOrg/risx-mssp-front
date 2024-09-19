@@ -9,7 +9,7 @@
     {
       "toolName": "Velociraptor",
       "toolID": "2000000",
-      "toolURL": "${FRONT_URL}/velociraptor/"
+      "toolURL": "http://${FRONT_URL}/velociraptor/"
     },
     {
       "toolName": "Risx",
@@ -19,12 +19,12 @@
     {
       "toolName": "ELK",
       "toolID": "2001001",
-      "toolURL": "${FRONT_URL}/kibana/"
+      "toolURL": "https://${FRONT_URL}/kibana/"
     },
     {
       "toolName": "Timesketch",
       "toolID": "2001002",
-      "toolURL": "${FRONT_URL}"
+      "toolURL": "http://${FRONT_URL}"
     },
     {
       "toolName": "Open CTI",
@@ -79,22 +79,22 @@
     },
     {
       "toolName": "Threat Hunting Dashboard",
-      "toolURL": "${FRONT_URL}/kibana/app/dashboards#/view/b118d331-2334-4da1-85d0-626610073555?embed=true&_g=(time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
+      "toolURL": "http://${FRONT_URL}/kibana/app/dashboards#/view/b118d331-2334-4da1-85d0-626610073555?embed=true&_g=(time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
       "URLtype": "Dashboard"
     },
     {
       "toolName": "ASM Dashboard",
-      "toolURL": "${FRONT_URL}/kibana/app/dashboards#/view/8de91d2f-fc7b-478b-972a-7e21e12b3ec4?embed=true&_g=(time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
+      "toolURL": "http://${FRONT_URL}/kibana/app/dashboards#/view/8de91d2f-fc7b-478b-972a-7e21e12b3ec4?embed=true&_g=(time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
       "URLtype": "Dashboard"
     },
     {
       "toolName": "CTI Dashboard",
-      "toolURL": "${FRONT_URL}/kibana/app/dashboards#/view/7f780b64-042d-4ddc-ae94-00c0d4c493ec?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
+      "toolURL": "http://${FRONT_URL}/kibana/app/dashboards#/view/7f780b64-042d-4ddc-ae94-00c0d4c493ec?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
       "URLtype": "Dashboard"
     },
     {
       "toolName": "Best Practice Dashboard",
-      "toolURL": "${FRONT_URL}/kibana/app/dashboards#/view/ec7b54c7-b91c-4a5a-a113-6099187939ac?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
+      "toolURL": "http://${FRONT_URL}/kibana/app/dashboards#/view/ec7b54c7-b91c-4a5a-a113-6099187939ac?embed=true&_g=(filters:!(),refreshInterval:(pause:!t,value:60000),time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
       "URLtype": "Dashboard"
     }
   ]
