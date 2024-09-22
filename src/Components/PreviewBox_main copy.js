@@ -539,6 +539,80 @@ function PreviewBoxes_main_modules({
           style={{ marginLeft: "auto" }}
         />
 
+        <div className="all-tools-left-side  " style={{ maxWidth: "420px" }}>
+          {/* top left / */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {/* {box_type === "velociraptor" && (
+              <>
+                <p className="font-type-very-sml-txt   Color-Grey1 mr-a mb-b">
+                  By:
+                </p>
+                <img
+                  src={logoAddress ? require(`${logoAddress}`) : undefined}
+                  alt="velociraptor"
+                  maxwidth="180"
+                  height="28"
+                  position="relative"
+                  className=" mb-b"
+                />
+              </>
+            )} */}
+          </div>
+
+          {/*  center  */}
+          <div className="display-flex flex-direction-column  ">
+            {/*  icon  */}
+            <img
+              src={iconAddress ? require(`${iconAddress}`) : undefined}
+              alt="Icon"
+              width="100%"
+              height="80"
+              className="mb-a"
+            />
+
+            {/*  text  */}
+            <p
+              className="text-center     font-type-h4 Color-White mb-a"
+              style={{ maxWidth: "350px" }}
+            >
+              {main_headline}
+            </p>
+            <p
+              className="text-center   font-type-txt Color-White  mb-a"
+              style={{ maxWidth: "250px" }}
+            >
+              {main_subtitle}
+            </p>
+            <button
+              className="btn-type3 "
+              onClick={() =>
+                handleReadMore(
+                  main_headline,
+                  main_read_more,
+                  logoAddress,
+                  "Close",
+                  iconAddress,
+                  "Big"
+                )
+              }
+            >
+              <p className=" font-type-txt">Read More</p>
+              <IconReadMore className="icon-type1 " />{" "}
+            </button>
+          </div>
+
+          {/* /////////////// button //////////// */}
+          <div className="PreviewBox_ButtomLine">
+            {/* <div className='font-type-very-sml-txt Color-Grey1' >ss</div> */}
+          </div>
+        </div>
+
         {/* -----------------------right-box------------------------ */}
         <div className="velociraptor-right-side display-flex  flex-direction-column">
           <div
