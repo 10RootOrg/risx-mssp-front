@@ -14,16 +14,12 @@ import {
 import axios from "axios";
 import GeneralContext from "../../Context.js";
 import Alert_list from "./Alerts_list.jsx";
-import { ReactComponent as IconBIG } from "../icons/ico-menu-alert.svg";
-import ResourceGroup_Action_btns from "../ResourceGroup/ResourceGroup_Action_btns.jsx";
 
 function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   set_visblePage("alerts");
 
   const { backEndURL } = useContext(GeneralContext);
-  const [is_search, set_is_search] = useState(false);
   const [AlertsData, setAlertsData] = useState([]);
-  const [ShowSubAlert, setShowSubAlert] = useState([]);
   const [TimeObject, setTimeObject] = useState({
     week: "",
     day: "newDateDay",
@@ -74,10 +70,6 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact] = {};
           Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].LastDate =
             x?._ts;
-          Artifact[
-            AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact
-          ].Description = AletDic[x?.Artifact?.trim()]?.Description;
-
           Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num = 0;
         }
         Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num++;
@@ -170,7 +162,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             is_popup={false}
             colors={"Basic"} // Basic , Alert
           />
-          <PreviewBox_type1_number_no_filters
+          {/* <PreviewBox_type1_number_no_filters
             HeadLine="New Alerts Last Hour"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
@@ -189,7 +181,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             display_this={display_this}
             set_display_this={set_display_this}
             display_this_value={""}
-          />
+          /> */}
           <PreviewBox_type1_number_no_filters
             HeadLine="New Alerts Today"
             resource_type_id={null}
@@ -243,156 +235,27 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             display_this_value={""}
             txt_color={""}
           />{" "} */}
-          {/* <PreviewBox_type2_pie
+          <PreviewBox_type2_pie
             HeadLine="Artifact Summary"
             bar_numbers={Object.values(ArtifactDataPie)?.map((x) => x?.Num)}
             bar_headlines={Object.keys(ArtifactDataPie)}
             bar_title_legend={["total"]}
             is_popup={false}
             colors={"Basic"} // Basic , Alert
-          /> */}
+          />
         </div>
 
         <div></div>
-        <div className="resource-group-list-headline mb-c ">
-          <div className="resource-group-list-headline-left ">
-            <IconBIG style={{ width: "55px" }} />{" "}
-            <p
-              className="font-type-h4   Color-White ml-a"
-              style={{
-                width: "100%",
-                overflow: "hidden",
-                whiteSpace: "nowrap",
-                // textOverflow: "ellipsis",
-                marginRight: "20px",
-              }}
-            >
-              Alert list
-            </p>
-          </div>
-
-          <ResourceGroup_Action_btns
-            items_for_search={AlertsData}
-            set_items_for_search={setAlertsData}
-            set_is_search={set_is_search}
-            btn_add_single_show={false}
-            // btn_add_single_action={add_resource_item}
-            // btn_add_single_value={"add"}
-            btn_add_many_show={false}
-            // btn_add_many_action={}
-          />
-        </div>
-        <div
-          className="resource-group-all-the-Lists "
-          style={{ gap: 10, marginLeft: 20 }}
-        >
+        <div className="resource-group-all-the-Lists">
           {/* <p  className="font-type-menu" >this page is under development</p>   */}
 
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingLeft: 10,
-            }}
-          >
-            <div
-              className="font-type-menu  make-underline Color-Grey1 "
-              style={{ width: "23%", minWidth: 220 }}
-            >
-              Alert Type
-            </div>
-            <div
-              className="font-type-menu  make-underline Color-Grey1 "
-              style={{ width: "70%" }}
-            >
-              Description
-            </div>
-            <div
-              className="font-type-menu  make-underline Color-Grey1 "
-              style={{ width: 120 }}
-            >
-              Alert Count
-            </div>
-            <div
-              className="font-type-menu  make-underline Color-Grey1 "
-              style={{ width: 160 }}
-            >
-              Latest Alert{" "}
-            </div>
-          </div>
-
-          {Object.keys(ArtifactDataPie).map((x) => {
-            console.log(x, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-            console.log(
-              AlertsData.filter((y) => y.SimpleName == x),
-              "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-              AlertsData
-            );
-
-            return (
-              <>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginBottom: 10,
-                    paddingBottom: 10,
-                    paddingTop: 10,
-                    borderRadius: 15,
-                    backgroundColor: "var(--color-Grey4)",
-                    paddingLeft: 10,
-                  }}
-                  onClick={() => {
-                    if (ShowSubAlert.includes(x)) {
-                      setShowSubAlert(ShowSubAlert.filter((yy) => yy != x));
-                    } else {
-                      setShowSubAlert([...ShowSubAlert, x]);
-                    }
-                  }}
-                >
-                  <div
-                    className="font-type-txt  Color-Grey1 "
-                    style={{ width: "23%", minWidth: 220 }}
-                  >
-                    {x}
-                  </div>
-                  <div
-                    className="font-type-txt  Color-Grey1 "
-                    style={{ width: "70%" }}
-                  >
-                    {ArtifactDataPie[x]?.Description}
-                  </div>
-                  <div
-                    className="font-type-txt  Color-Grey1 "
-                    style={{ width: 120 }}
-                  >
-                    {ArtifactDataPie[x]?.Num}
-                  </div>
-                  <div
-                    className="font-type-txt  Color-Grey1 "
-                    style={{ width: 160 }}
-                  >
-                    {format_date_type_a(ArtifactDataPie[x]?.LastDate)}
-                  </div>
-                </div>
-                {ShowSubAlert.includes(x) && (
-                  <Alert_list
-                    CategoryAlertArr={AlertsData.filter(
-                      (y) => y.SimpleName == x
-                    )}
-                    setCategoryAlertArr={setAlertsData}
-                    GetData={GetData}
-                    IntervalUpdate={IntervalUpdate}
-                    setIntervalUpdate={setIntervalUpdate}
-                    ArtifactDataPie={ArtifactDataPie}
-                    AlertName={x}
-                  />
-                )}
-              </>
-            );
-          })}
+          <Alert_list
+            Preview_this_Results={AlertsData}
+            set_Preview_this_Results={setAlertsData}
+            GetData={GetData}
+            IntervalUpdate={IntervalUpdate}
+            setIntervalUpdate={setIntervalUpdate}
+          />
         </div>
       </div>
     </>

@@ -18,7 +18,6 @@ import axios from "axios";
 import GeneralContext from "../../Context.js";
 
 import { format_date_type_a } from "../Features/DateFormat.js";
- 
 
 import ResourceGroup_List from "./ResourceGroup_List.jsx";
 // Adjust the path as needed based on your project structure
@@ -43,10 +42,13 @@ function ResourceGroup_All({
   // filter_Resource,
   set_filter_Resource,
 }) {
-  const { backEndURL, all_Resource_Types, get_all_resource_types,       Assets_Preview_List, set_Assets_Preview_List } =
-    useContext(GeneralContext);
-
- 
+  const {
+    backEndURL,
+    all_Resource_Types,
+    get_all_resource_types,
+    Assets_Preview_List,
+    set_Assets_Preview_List,
+  } = useContext(GeneralContext);
 
   const [
     popUp_Add_Many_Resource_Items__show,
@@ -92,7 +94,7 @@ function ResourceGroup_All({
   const [assets_list_from_db, set_assets_list_from_db] = useState([]);
   // console.log("all_Resource_Types ",all_Resource_Types);
   //  console.log("use_this_resource_type",use_this_resource_type);
-  console.log("Assets_Preview_List",Assets_Preview_List);
+  console.log("Assets_Preview_List", Assets_Preview_List);
   const [is_search, set_is_search] = useState(false);
   const [PreviewJsonFile, setPreviewJsonFile] = useState({});
 
@@ -175,7 +177,6 @@ function ResourceGroup_All({
   };
 
   const Add_Many = (btn_add_many_id) => {
-
     set_popUp_Add_Many_Resource_Items__group_id(btn_add_many_id);
     set_popUp_Add_Many_Resource_Items__show(true);
   };
@@ -249,30 +250,28 @@ function ResourceGroup_All({
     set_assets_list_from_db([]);
   };
 
-// const Change_Preview_Name = ( name) =>{
+  // const Change_Preview_Name = ( name) =>{
 
-// switch(name) {
+  // switch(name) {
 
-// case undefined: return "Undefined Asset Type Name"
-// case null: return "Null Asset Type Name"
+  // case undefined: return "Undefined Asset Type Name"
+  // case null: return "Null Asset Type Name"
 
-// case "Company Name": return "Company Names"
-// case "Computer": return "Internal Endpoints"
-// case "Domain": return "Company Domains"
-// case "Email Address": return "High-Profile Employees Email Addresses"
-// case "Email Domain": return "Email Domains"
-// case "Full Name": return "High-Profile Employees Full Names"
-// case "Phone Number": return "High-Profile Phone Numbers"
-// case "Username (Social)": return "High-Profile Phone Usernames"
+  // case "Company Name": return "Company Names"
+  // case "Computer": return "Internal Endpoints"
+  // case "Domain": return "Company Domains"
+  // case "Email Address": return "High-Profile Employees Email Addresses"
+  // case "Email Domain": return "Email Domains"
+  // case "Full Name": return "High-Profile Employees Full Names"
+  // case "Phone Number": return "High-Profile Phone Numbers"
+  // case "Username (Social)": return "High Profile Employees Usernames"
 
-//     default:
-//    return name
-//   }
+  //     default:
+  //    return name
+  //   }
 
+  // }
 
-
-// }
- 
   const renderIcon = (resource_type_id) => {
     if (resource_type_id === "2001") {
       return <IconDns />;
@@ -534,12 +533,9 @@ function ResourceGroup_All({
                               textOverflow: "ellipsis",
                             }}
                           >
-
- 
-{ Info?.preview_name && SingularToPlural(Info?.preview_name)}
-
- 
-                            </p>
+                            {Info?.preview_name &&
+                              SingularToPlural(Info?.preview_name)}
+                          </p>
 
                           <p
                             className={`font-type-txt Color-Grey1 ml-b`}
