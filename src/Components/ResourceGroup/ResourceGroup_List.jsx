@@ -86,6 +86,23 @@ function ResourceGroup_List({
     }
   };
 
+  const HandleMonitorOutsideSwitchMulti = async () => {
+    const StateOfSwitch = assets_list_from_db?.some((x) => x?.monitoring);
+
+    const res = await axios.put(`${backEndURL}/Resources/UpdateMonitorMulti`, {
+      asset_type_id: asset_type_id,
+      value: !StateOfSwitch,
+    });
+
+    if (res.data) {
+      assets_list_from_db.forEach((Info) => {
+        Info.monitoring = !StateOfSwitch;
+      });
+
+      setUpdaterValue(!UpdaterValue);
+    }
+  };
+
   const renderIcon = (resource_type_id) => {
     if (resource_type_id === "2001") {
       return <IconDns />;
@@ -341,12 +358,48 @@ function ResourceGroup_List({
                 </p>
               </div>
               <div
-                className="resource-group-list-item list-item-small"
+                className="resource-group-list-item list-item-small "
                 onClick={() => normal_sort("monitoring")}
+                style={{ display: "flex", flexDirection: "row" }}
               >
-                <p className="font-type-menu  make-underline Color-Grey1">
-                  Monitor
+                <p
+                  className="font-type-menu  make-underline Color-Grey1"
+                  // style={{ width: "100%" }}
+                >
+                  {/* switchess */}
+                  Monitor{" "}
                 </p>
+                <div
+                  className="resource-group-list-item list-item-small display-flex"
+                  style={{ width: 80, marginLeft: 10 }}
+                >
+                  <label
+                    onClick={(e) => {
+                      if (assets_list_from_db?.length == 0) {
+                        return;
+                      }
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log(
+                        assets_list_from_db?.length == 0,
+                        "press",
+                        assets_list_from_db?.length
+                      );
+
+                      HandleMonitorOutsideSwitchMulti();
+                    }}
+                    className="switch"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={assets_list_from_db?.some((x) => x?.monitoring)}
+                      disabled={assets_list_from_db?.length == 0}
+                      // onChange={}
+                      // defaultChecked={Math.random() < 0.7}
+                    />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
               </div>
               <div
                 className="resource-group-list-item list-item-small"

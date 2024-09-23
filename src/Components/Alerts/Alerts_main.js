@@ -310,7 +310,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             </div>
             <div
               className="font-type-menu  make-underline Color-Grey1 "
-              style={{ width: 120 }}
+              style={{ width: 120, textAlign: "center" }}
             >
               Alert Count
             </div>
@@ -366,7 +366,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
                   </div>
                   <div
                     className="font-type-txt  Color-Grey1 "
-                    style={{ width: 120 }}
+                    style={{ width: 120, textAlign: "center" }}
                   >
                     {ArtifactDataPie[x]?.Num}
                   </div>

@@ -383,7 +383,7 @@ function Settings_section_config({
 
               <td
                 className="setting_element PreviewBox"
-                style={{ height: "auto" }}
+                style={{ height: "auto", width: "68.5vw" }}
               >
                 <div className=" ">
                   {preview_or_edit ? (
@@ -405,7 +405,7 @@ function Settings_section_config({
                       {ErrString && (
                         <div
                           style={{
-                            width: "auto",
+                            // width: "auto",
                             backgroundColor: "var(--color-Orange)",
                             color: "#FFFFFF",
                             opacity: 0.7,
@@ -421,7 +421,7 @@ function Settings_section_config({
                       <CodeMirror
                         value={JSON.stringify(object, null, 2)}
                         height="600px"
-                        // width="600px"
+                        // width="100%"
                         // maxWidth="auto"
 
                         onChange={async (x) => {
@@ -453,6 +453,7 @@ function Settings_section_config({
                   display: "flex",
                   justifyContent: "end",
                   gap: "var(--space-b)",
+                  width: "70vw",
                 }}
               >
                 <button
