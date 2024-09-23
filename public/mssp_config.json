@@ -1,7 +1,7 @@
 {
-  "backendUrl": "http://mssp-dev.northeurope.cloudapp.azure.com:5555",
+  "backendUrl": "http://localhost:5555",
   "old1": "http://40.69.58.105:5555",
-  "old2": "http://localhost:5555",
+  "old2": "http://mssp-dev.northeurope.cloudapp.azure.com:5555",
   "expiryDate": "28-09-2024",
   "clientApi": "https://api.example.com/user",
   "examInnterval_minutes": 15,

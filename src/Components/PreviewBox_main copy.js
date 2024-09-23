@@ -7,7 +7,7 @@ import { PopUp_For_Read_More, PopUp_All_Good } from "./PopUp_Smart.js";
 import {
   Make_url_from_id,
   fix_path,
-} from "../Components/Dashboards/functions_for_dashboards";
+} from "./Dashboards/functions_for_dashboards.js";
 import { ReactComponent as IcoModule } from "./icons/ico-module-nonedge-blue.svg";
 import { ReactComponent as IcoLink } from "./icons/ico-link-nonedge-blue.svg";
 import { ReactComponent as IcoSettings } from ".//icons/ico-settings.svg";
