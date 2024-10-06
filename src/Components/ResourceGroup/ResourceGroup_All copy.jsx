@@ -33,7 +33,6 @@ import {
 
 import LMloader from "../Features/LMloader.svg";
 import { SingularToPlural } from "../Features/UsefulFunctions.js";
-import { Add_Edit_Entity } from "../Add_Edit_Entitiy.js";
 
 function ResourceGroup_All({
   // Preview_this_Resource ,
@@ -65,9 +64,6 @@ function ResourceGroup_All({
   const [popUp_Add_or_Edit__status, set_popUp_Add_or_Edit__status] =
     useState("edit");
 
-  const [PopUpEntityShow, setPopUpEntityShow] = useState(false);
-  const [PopUpEntityShowStatus, setPopUpEntityShowStatus] = useState("Add");
-
   const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
   const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
     HeadLine: "Success",
@@ -77,7 +73,6 @@ function ResourceGroup_All({
 
   const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] =
     useState(false);
-  const [PopUp_Are_You_Sure__Type, set_PopUp_Are_You_Sure__Type] = useState("");
   const [PopUp_Are_You_Sure__txt, set_PopUp_Are_You_Sure__txt] = useState({
     HeadLine: "Are You Sure?",
     paragraph: "The record will be deleted from the system",
@@ -87,11 +82,9 @@ function ResourceGroup_All({
 
   const [resourceItem, set_resourceItem] = useState({});
   const [item_types_list, set_item_types_list] = useState([]);
-  const [ChosenEntity, setChosenEntity] = useState({});
 
   const [item_tool_list, set_item_tool_list] = useState([]);
   const [show_this_list, set_show_this_list] = useState("");
-  const [ChosenCategory, setChosenCategory] = useState("");
 
   const [use_this_resource_type, set_use_this_resource_type] = useState({});
   // const [Assets_Preview_List, set_Assets_Preview_List] = useState(false);
@@ -113,10 +106,10 @@ function ResourceGroup_All({
       const res = await axios.get(
         `${backEndURL}/Resources/getFullCategoryAndEntitiesList`
       );
-      // console.log(
-      //   res.data,
-      //   "getFullCategoryAndEntitiesList getFullCategoryAndEntitiesList getFullCategoryAndEntitiesList getFullCategoryAndEntitiesList"
-      // );
+      console.log(
+        res.data,
+        "sssssssssssssssssssssssss22222222222222222222222222222222222222222222222222"
+      );
       setFullCategoryAndEntitiesList(res.data ?? []);
     } catch (error) {
       console.log("error in FullCategoryAndEntitiesList :", error);
@@ -182,6 +175,7 @@ function ResourceGroup_All({
 
   const EditTools = (Info) => {
     console.log(Info?.type);
+
     set_resourceItem(Info);
 
     set_item_types_list([Info?.type]);
@@ -215,53 +209,20 @@ function ResourceGroup_All({
     set_popUp_Add_Many_Resource_Items__show(true);
   };
 
-  const handle_Confirm_Delete_Entity = async () => {
-    console.log("Deleting item... handle_Confirm_Delete_Entity ", ChosenEntity);
-    try {
-      const res = await axios.delete(
-        `${backEndURL}/Resources/Entity/${ChosenEntity.entitiesId}`
-      );
-      if (res) {
-        if (res.data === true) {
-          getFullCategoryAndEntitiesList();
-          set_PopUp_Are_You_Sure__show(false);
-          set_PopUp_All_Good__txt({
-            HeadLine: "Deleted",
-            paragraph: "The resources is deleted",
-            buttonTitle: "Close",
-          });
-          set_PopUp_All_Good__show(true);
-          set_filter_Resource({ type_ids: [], tool_ids: [] }); // for not have mistakealso will pull all list
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handle_Confirm_Delete = () => {
     const delete_item = async () => {
-      console.log(
-        "Deleting item... handle_Confirm_Delete ",
-        resourceItem.resource_id
-      );
+      console.log("Deleting item...", resourceItem.resource_id);
       try {
         const res = await axios.delete(
           `${backEndURL}/Resources/${resourceItem.resource_id}`
         );
         if (res) {
           if (res.data === true) {
-            // const list_without_the_updated_item = assets_list_from_db.filter(
-            //   (item) => item.resource_id !== resourceItem.resource_id
-            // );
-            const ind = ChosenEntity?.properties?.findIndex(
-              (x) => x.resource_id == resourceItem.resource_id
+            const list_without_the_updated_item = assets_list_from_db.filter(
+              (item) => item.resource_id !== resourceItem.resource_id
             );
 
-            if (ind > -1) {
-              ChosenEntity?.properties?.splice(ind, 1);
-            }
-            // set_assets_list_from_db(list_without_the_updated_item);
+            set_assets_list_from_db(list_without_the_updated_item);
 
             set_PopUp_Are_You_Sure__show(false);
             set_PopUp_All_Good__txt({
@@ -297,25 +258,19 @@ function ResourceGroup_All({
     set_popUp_Add_or_Edit__show(true);
   };
 
-  const handle_show_list = (data) => {
-    // console.log(data, "fffffffffffffffffffffffffffffffffffffffffff");
-    // setChosenEntity(data);
-    setChosenCategory(data?.categoryName);
-    set_assets_list_from_db(data);
-
-    set_Assets_Preview_List(true);
-  };
-
-  useEffect(() => {
-    const ind = FullCategoryAndEntitiesList.findIndex(
-      (x) => x?.categoryName == ChosenCategory
+  const handle_show_list = (resource_type_id) => {
+    const [resource_type_filtered] = all_Resource_Types.filter(
+      (type) => type.resource_type_id === resource_type_id
     );
-    // console.log(ind, "ind  of use efffff");
+    set_use_this_resource_type(resource_type_filtered);
 
-    if (ind > -1) {
-      set_assets_list_from_db(FullCategoryAndEntitiesList[ind]);
+    if (resource_type_id === show_this_list) {
+      set_Assets_Preview_List(false);
+      return;
+    } else {
+      set_Assets_Preview_List(true);
     }
-  }, [FullCategoryAndEntitiesList]);
+  };
 
   const handle_show_all_assets_type_list = () => {
     console.log("handle_show_all_assets_type_list");
@@ -324,12 +279,24 @@ function ResourceGroup_All({
   };
 
   const renderIcon = (resource_type_id) => {
-    if (resource_type_id === "Users") {
+    if (resource_type_id === "2001") {
+      return <IconDns />;
+    } else if (resource_type_id === "2002") {
+      return <IconIp />;
+    } else if (resource_type_id === "2003") {
+      return <IconUserNameSocial />;
+    } else if (resource_type_id === "2004") {
+      return <IconPhonenumber />;
+    } else if (resource_type_id === "2005") {
       return <IconFullName />;
-    } else if (resource_type_id === "Organization") {
+    } else if (resource_type_id === "2006") {
+      return <IconEmail />;
+    } else if (resource_type_id === "2007") {
       return <IconCompany />;
-    } else if (resource_type_id === "Endpoints") {
+    } else if (resource_type_id === "2008") {
       return <IconComputer />;
+    } else if (resource_type_id === "2009") {
+      return <IconEmailDomain />;
     } else {
       return <IconNoIcon />;
     }
@@ -340,37 +307,31 @@ function ResourceGroup_All({
       className="ResourceGroup-All"
       style={{ display: "flex", flexDirection: "column", height: "100%" }}
     >
-      {PopUpEntityShow && (
-        <Add_Edit_Entity
-          ChosenEntityRaw={ChosenEntity}
-          popUp_show={PopUpEntityShow}
-          set_popUp_show={setPopUpEntityShow}
-          popUp_Add_or_Edit__status={PopUpEntityShowStatus}
-          IconBIG={IconBIG}
-          resourceItem={resourceItem}
-          set_resourceItem={set_resourceItem}
-          item_types_list={item_types_list}
-          set_item_types_list={set_item_types_list}
-          item_tool_list={item_tool_list}
-          set_item_tool_list={set_item_tool_list}
-          assets_list_from_db={assets_list_from_db}
-          set_assets_list_from_db={set_assets_list_from_db}
-          set_filter_Resource={set_filter_Resource}
-          set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
-          set_PopUp_All_Good__show={set_PopUp_All_Good__show}
-          set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
-          set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
-          EditTools={EditTools}
-          add_resource_item={add_resource_item}
-          getFullCategoryAndEntitiesList={getFullCategoryAndEntitiesList}
-          PopUp_Are_You_Sure__Type={PopUp_Are_You_Sure__Type}
-          set_PopUp_Are_You_Sure__Type={set_PopUp_Are_You_Sure__Type}
+      {PopUp_Are_You_Sure__show && (
+        <PopUp_Are_You_Sure
+          popUp_show={PopUp_Are_You_Sure__show}
+          set_popUp_show={set_PopUp_Are_You_Sure__show}
+          HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
+          paragraph={PopUp_Are_You_Sure__txt.paragraph}
+          button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
+          button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
+          True_action={handle_Confirm_Delete}
+          False_action={handle_Cancel_Delete}
+        />
+      )}
+
+      {PopUp_All_Good__show && (
+        <PopUp_All_Good
+          popUp_show={PopUp_All_Good__show}
+          set_popUp_show={set_PopUp_All_Good__show}
+          HeadLine={PopUp_All_Good__txt.HeadLine}
+          paragraph={PopUp_All_Good__txt.paragraph}
+          buttonTitle={PopUp_All_Good__txt.buttonTitle}
         />
       )}
 
       {popUp_Add_or_Edit__show && (
         <Add_Edit_Resource_Item
-          ChosenEntityRaw={ChosenEntity}
           popUp_show={popUp_Add_or_Edit__show}
           set_popUp_show={set_popUp_Add_or_Edit__show}
           popUp_Add_or_Edit__status={popUp_Add_or_Edit__status}
@@ -388,9 +349,6 @@ function ResourceGroup_All({
           set_PopUp_All_Good__show={set_PopUp_All_Good__show}
           set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
           set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
-          getFullCategoryAndEntitiesList={getFullCategoryAndEntitiesList}
-          PopUp_Are_You_Sure__Type={PopUp_Are_You_Sure__Type}
-          set_PopUp_Are_You_Sure__Type={set_PopUp_Are_You_Sure__Type}
         />
       )}
 
@@ -414,35 +372,9 @@ function ResourceGroup_All({
           set_PopUp_All_Good__show={set_PopUp_All_Good__show}
           set_PopUp_Are_You_Sure__show={set_PopUp_Are_You_Sure__show}
           set_PopUp_Are_You_Sure__txt={set_PopUp_Are_You_Sure__txt}
-          PopUp_Are_You_Sure__Type={PopUp_Are_You_Sure__Type}
-          set_PopUp_Are_You_Sure__Type={set_PopUp_Are_You_Sure__Type}
         />
       )}
-      {PopUp_Are_You_Sure__show && (
-        <PopUp_Are_You_Sure
-          popUp_show={PopUp_Are_You_Sure__show}
-          set_popUp_show={set_PopUp_Are_You_Sure__show}
-          HeadLine={PopUp_Are_You_Sure__txt.HeadLine}
-          paragraph={PopUp_Are_You_Sure__txt.paragraph}
-          button_True_text={PopUp_Are_You_Sure__txt.buttonTrue}
-          button_False_text={PopUp_Are_You_Sure__txt.buttonFalse}
-          True_action={
-            PopUp_Are_You_Sure__Type == "Entity"
-              ? handle_Confirm_Delete_Entity
-              : handle_Confirm_Delete
-          }
-          False_action={handle_Cancel_Delete}
-        />
-      )}
-      {PopUp_All_Good__show && (
-        <PopUp_All_Good
-          popUp_show={PopUp_All_Good__show}
-          set_popUp_show={set_PopUp_All_Good__show}
-          HeadLine={PopUp_All_Good__txt.HeadLine}
-          paragraph={PopUp_All_Good__txt.paragraph}
-          buttonTitle={PopUp_All_Good__txt.buttonTitle}
-        />
-      )}
+
       {loader ? (
         <>
           <div className="  loader-type-a">
@@ -562,12 +494,11 @@ function ResourceGroup_All({
                 <p
                   className={`font-type-menu  Color-Grey1`}
                   style={{
-                    marginLeft: 10,
-                    width: 150,
+                    width: "10%",
                     overflow: "hidden",
                     whiteSpace: "nowrap",
                     textOverflow: "ellipsis",
-                    textAlign: "left",
+                    textAlign: "right",
                   }}
                 >
                   Last Update
@@ -577,76 +508,75 @@ function ResourceGroup_All({
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {/* {Array.isArray(all_Resource_Types) &&  all_Resource_Types?.map((Info, index) => { */}
 
-                {Array.isArray(FullCategoryAndEntitiesList) &&
-                  FullCategoryAndEntitiesList.length > 0 &&
-                  FullCategoryAndEntitiesList.map((Info, index) => {
-                    return (
-                      <div
-                        className="resource_type_list"
-                        style={{
-                          display: "flex",
-                          flexDirection: "",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                        onClick={() => {
-                          // handle_show_list(Info?.categoryName);
-                          handle_show_list(Info);
-                        }}
-                      >
-                        {renderIcon(Info?.categoryName)}
-
-                        <p
-                          className={`font-type-menu Color-Grey1 ml-b`}
+                {Array.isArray(all_Resource_Types) &&
+                  all_Resource_Types.length > 0 &&
+                  all_Resource_Types
+                    .sort((a, b) =>
+                      a.resource_type_name.localeCompare(b.resource_type_name)
+                    )
+                    .map((Info, index) => {
+                      return (
+                        <div
+                          className="resource_type_list"
                           style={{
-                            width: "25%",
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            textOverflow: "ellipsis",
+                            display: "flex",
+                            flexDirection: "",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          onClick={() => {
+                            handle_show_list(Info?.resource_type_id);
                           }}
                         >
-                          {Info?.categoryName == "Organization"
-                            ? "Organizations"
-                            : Info?.categoryName}
-                        </p>
+                          {renderIcon(Info?.resource_type_id)}
 
-                        <p
-                          className={`font-type-txt Color-Grey1 ml-b`}
-                          style={{
-                            width: "60%",
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {/* {Info?.description_short} */}
-                        </p>
+                          <p
+                            className={`font-type-menu Color-Grey1 ml-b`}
+                            style={{
+                              width: "25%",
+                              overflow: "hidden",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {Info?.preview_name &&
+                              SingularToPlural(Info?.preview_name)}
+                          </p>
 
-                        <p
-                          className={`font-type-menu Color-Grey1 ml-b`}
-                          style={{ width: "5%", textAlign: "center" }}
-                        >
-                          {Info?.entities?.length}
-                        </p>
+                          <p
+                            className={`font-type-txt Color-Grey1 ml-b`}
+                            style={{
+                              width: "60%",
+                              overflow: "hidden",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {/* {Info?.description_short} */}
+                          </p>
 
-                        <p
-                          className={`font-type-txt Color-Grey1`}
-                          style={{
-                            marginLeft: 10,
-                            width: 150,
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            textOverflow: "ellipsis",
-                            textAlign: "left",
-                          }}
-                        >
-                          {Info?.lastUpdated
-                            ? format_date_type_a(Info?.lastUpdated)
-                            : ""}
-                        </p>
-                      </div>
-                    );
-                  })}
+                          <p
+                            className={`font-type-menu Color-Grey1 ml-b`}
+                            style={{ width: "5%", textAlign: "center" }}
+                          >
+                            {Info?.count}
+                          </p>
+
+                          <p
+                            className={`font-type-txt Color-Grey1`}
+                            style={{
+                              width: "10%",
+                              overflow: "hidden",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                              textAlign: "right",
+                            }}
+                          >
+                            {format_date}
+                          </p>
+                        </div>
+                      );
+                    })}
               </div>
             </>
           )}
@@ -654,41 +584,19 @@ function ResourceGroup_All({
           {Assets_Preview_List && (
             <>
               <ResourceGroup_List
-                title={assets_list_from_db?.categoryName}
+                title={use_this_resource_type?.preview_name}
                 asset_type_id={use_this_resource_type?.resource_type_id}
                 set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
                 set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
                 popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
-                add_resource_item={() => {
-                  setPopUpEntityShow(true);
-                  setPopUpEntityShowStatus("Add");
-                  console.log(ChosenEntity, "ssdqw");
-
-                  setChosenEntity({
-                    role: "",
-                    department: "",
-                    entitiesId: "",
-                    entityName: "",
-                    properties: [],
-                    description: "",
-                    highProfile: 0,
-                    categoryName: ChosenCategory,
-                    organization: "",
-                    lastUpdated: null,
-                  });
-                }}
-                EditTools={(Info) => {
-                  setPopUpEntityShow(true);
-                  setPopUpEntityShowStatus("Edit");
-                }}
+                add_resource_item={add_resource_item}
+                EditTools={EditTools}
                 Add_Many={Add_Many}
                 //  handle_show_list={handle_show_list}
                 //  show_this_list={show_this_list}
                 assets_list_from_db={assets_list_from_db}
                 set_assets_list_from_db={set_assets_list_from_db}
                 handle_back={handle_show_all_assets_type_list}
-                setChosenEntity={setChosenEntity}
-                ChosenCategory={ChosenCategory}
               />
             </>
           )}

@@ -46,6 +46,22 @@ function Modules({
         if (res) {
           // console.log("get_all_artifacts res.data:" , res.data);
 
+          res?.data?.forEach((x) => {
+            switch (x?.toolURL) {
+              case "Threat Hunting":
+                x.toolURL = moduleLinks?.filter(
+                  (yy) => yy?.toolName == "Threat Hunting Dashboard"
+                )[0]?.toolURL;
+                break;
+              case "All Around":
+                x.toolURL = moduleLinks?.filter(
+                  (yy) => yy?.toolName == "Best Practice Dashboard"
+                )[0]?.toolURL;
+
+                break;
+            }
+          });
+
           set_all_artifacts(res.data);
         }
       } catch (err) {
@@ -102,7 +118,7 @@ function Modules({
             gap: "var(--space-c)",
           }}
         >
-          {all_artifacts &&
+          {/* {all_artifacts &&
             all_artifacts.length != undefined &&
             typeof all_artifacts != "string" &&
             Array.isArray(all_artifacts) && (
@@ -129,7 +145,7 @@ function Modules({
                 all_artifacts_and_modules={all_artifacts_and_modules}
                 set_all_artifacts_and_modules={set_all_artifacts_and_modules}
               />
-            )}
+            )} */}
 
           {all_artifacts_and_modules &&
             all_artifacts_and_modules.length != undefined &&
@@ -142,8 +158,9 @@ function Modules({
                       .filter(
                         (tool) =>
                           tool?.tool_id != "2000000" &&
-                          tool?.parent_id != "2000000" &&
-                          tool?.toolType === "module" &&
+                          // tool?.parent_id != "2000000" &&
+                          (tool?.toolType === "module" ||
+                            tool?.parent_id == "2000000") &&
                           tool?.ShowInUi
                       )
                       .sort((a, b) => a.positionNumber - b.positionNumber) // Sort by positionNumber
@@ -158,6 +175,7 @@ function Modules({
                   is_filtering={filter_string != ""}
                   all_artifacts_and_modules={all_artifacts_and_modules}
                   set_all_artifacts_and_modules={set_all_artifacts_and_modules}
+                  ShowAssets={true}
                 />
 
                 <PreviewBoxes_main_modules

@@ -2,7 +2,7 @@
   "backendUrl": "http://localhost:5555",
   "old1": "http://40.69.58.105:5555",
   "old2": "http://mssp-dev.northeurope.cloudapp.azure.com:5555",
-  "expiryDate": "28-09-2024",
+  "expiryDate": "28-09-2025",
   "clientApi": "https://api.example.com/user",
   "examInnterval_minutes": 15,
   "moduleLinks": [
@@ -79,7 +79,7 @@
     },
     {
       "toolName": "Threat Hunting Dashboard",
-      "toolURL": "http://${FRONT_URL}/kibana/app/dashboards#/view/b118d331-2334-4da1-85d0-626610073555?embed=true&_g=(time:(from:'now-24h',to:'now'))&_a=()&show-time-filter=true",
+      "toolURL": "http://${FRONT_URL}/kibana/app/dashboards#/view/b118d331-2334-4da1-85d0-626610073555?embed=true&_g=(time:(from:'now-1124h',to:'now'))&_a=()&show-time-filter=true",
       "URLtype": "Dashboard"
     },
     {

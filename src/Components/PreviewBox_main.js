@@ -34,6 +34,7 @@ function PreviewBoxes_main_modules({
   is_filtering,
   all_artifacts_and_modules,
   set_all_artifacts_and_modules,
+  ShowAssets = false,
 }) {
   const StatusColor = "blue";
 
@@ -74,6 +75,22 @@ function PreviewBoxes_main_modules({
   const [download_drop_down, set_download_drop_down] = useState(false);
 
   const [openIndex, setOpenIndex] = useState(null); // State to keep track of which dropdown is open
+
+  const getResourceToModuleObj = async () => {
+    try {
+      const obj = await axios.get(
+        `${backEndURL}/Resources/getResourceToModuleObj`
+      );
+      console.log(obj, "ssssssadqwrq3144t457578uhjgnge56464et");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (backEndURL) {
+      getResourceToModuleObj();
+    }
+  }, [backEndURL]);
 
   const handleDropdownToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index); // Toggle dropdown for the clicked row
@@ -541,7 +558,8 @@ function PreviewBoxes_main_modules({
 
         {/* -----------------------right-box------------------------ */}
         <div className="velociraptor-right-side display-flex  flex-direction-column">
-          <div
+          {/* <div
+          // blue point
             className=" display-flex  justify-content-space-between"
             style={{ width: "100%", height: "24px" }}
           >
@@ -549,7 +567,7 @@ function PreviewBoxes_main_modules({
             <div
               className={`${StatusColorClass}  light-bulb-type1 hide-on-small-screen_if_vertical`}
             />
-          </div>
+          </div> */}
 
           {/* <div className='Bg-Grey2' style={{width:"100%", height:"2px" ,borderRadius:"5px"}}/> */}
 
@@ -629,7 +647,6 @@ function PreviewBoxes_main_modules({
                             <span className="checkmark"></span>
                           </label>
                         </td>
-
                         <td className="" style={{ width: "108px" }}>
                           <div
                             style={{ display: "flex", alignItems: "center" }}
@@ -651,7 +668,6 @@ function PreviewBoxes_main_modules({
                             ></img>
                           </div>
                         </td>
-
                         <td style={{ width: "250px" }}>
                           <p className="font-type-menu  Color-White  cutLongLine   hide-on-small-screen0">
                             {Info?.headline}
@@ -663,11 +679,12 @@ function PreviewBoxes_main_modules({
                         >
                           {" "}
                           <p className="font-type-txt   Color-Grey1   cutLongLine">
-                            {box_type === "modules" && Info?.description_short}
-                            {box_type === "velociraptor" && Info?.description}
+                            {Info?.description_short ?? Info?.description}
+
+                            {/* {box_type === "modules" && Info?.description_short}
+                            {box_type === "velociraptor" && Info?.description} */}
                           </p>
                         </td>
-
                         <td
                           className="hide-on-small-screen3  "
                           // style={{ width:"100px",maxWidth:"100px" ,backgroundColor:"yellow" , }}
@@ -682,9 +699,11 @@ function PreviewBoxes_main_modules({
                                 box_type === "module" ||
                                 box_type === "link"
                               ) {
-                                descriptionText = Info?.description_long;
+                                descriptionText =
+                                  Info?.description_long ?? Info?.readMoreText;
                               } else {
-                                descriptionText = Info?.description_long;
+                                descriptionText =
+                                  Info?.description_long ?? Info?.readMoreText;
                               }
                               handleReadMore(
                                 Info?.headline,
@@ -708,7 +727,6 @@ function PreviewBoxes_main_modules({
                             />
                           </button>
                         </td>
-
                         <td
                           style={{
                             visibility: box_type === "velociraptor" && "hidden",
@@ -771,6 +789,53 @@ function PreviewBoxes_main_modules({
                             </div>
                           </button>
                         </td>
+                        {/* Assets btn */}
+                        {/* <td
+                          style={{
+                            visibility: box_type === "velociraptor" && "hidden",
+                            minWidth: "115px",
+                            maxWidth: "122px",
+                          }}
+                          className={`${
+                            box_type === "velociraptor" &&
+                            "spacer-for-non-buttom"
+                          } `}
+                        >
+                          {ShowAssets && (
+                            <button
+                              className={`btn-type2 ${
+                                Info?.toolURL === "" && "btn-type2-no_btn"
+                              }`}
+                              onClick={() => console.log("Assets Btn")}
+                              style={{
+                                width: "100%",
+                                minWidth: "115px",
+                                maxWidth: "122px",
+                                paddingLeft: "var(--space-c)",
+                                paddingRight: "calc(var(--space-c) - 5px)",
+                                disabled: Info?.toolURL === "",
+
+                                // paddingRight: Info?.toolType !== undefined &&
+                                // Info?.toolType !== "" &&
+                                // Info?.toolType !== null
+                                //   ? "calc(var(--space-d) - 5px)"
+                                // : undefined
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
+                                <p className="font-type-menu" style={{}}>
+                                  Assets num
+                                </p>
+                              </div>
+                            </button>
+                          )}
+                        </td> */}
 
                         <td className="hide-on-small-screen2">
                           <div
@@ -789,7 +854,6 @@ function PreviewBoxes_main_modules({
                             </p>
                           </div>
                         </td>
-
                         {/* <td><button  className= { `${ box_type ===     "velociraptor"  ?   "btn-type5 btn-type5-no-hover"   :  'btn-type5'}`} 
 // disabled={ box_type ===     "velociraptor" }
   onClick={() => ShowInUi(Info)}
@@ -803,7 +867,6 @@ function PreviewBoxes_main_modules({
   <button  className="btn-type5" onClick={()=>change_order_in_db(Info,+1)}><p className='font-type-menu'  style={{ height:"15px"}}>-</p> </button>
   </div>
   </td>  */}
-
                         <td>
                           <div
                             className="btn-menu-list"

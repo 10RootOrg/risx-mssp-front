@@ -50,7 +50,7 @@ function ResourceGroup({ show_SideBar, set_show_SideBar, set_visblePage }) {
         </div>
 
         <div className="resource-group-top-boxes mb-c">
-          <PreviewBox_type2_pie
+          {/* <PreviewBox_type2_pie
             HeadLine="Assets types"
             bar_numbers={
               all_Resource_Types && all_Resource_Types.length > 0
@@ -173,7 +173,7 @@ function ResourceGroup({ show_SideBar, set_show_SideBar, set_visblePage }) {
             filter_Resource={filter_Resource}
             set_filter_Resource={set_filter_Resource}
             txt_color={""}
-          />
+          /> */}
 
           {/* <PreviewBox_type1_number
 // HeadLine={"High-Profile Employees Email Addresses"}

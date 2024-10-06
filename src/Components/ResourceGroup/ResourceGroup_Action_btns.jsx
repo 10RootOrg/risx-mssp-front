@@ -10,8 +10,6 @@ import { ReactComponent as IconLine } from "../icons/ico-line.svg";
 import { ReactComponent as IconImport } from "../icons/ico-import.svg";
 import { ReactComponent as IconExport } from "../icons/ico-export.svg";
 
-
-
 import { ReactComponent as IconJsonDown } from "../icons/ico-menu-json-down.svg";
 
 function ResourceGroup_Action_btns({

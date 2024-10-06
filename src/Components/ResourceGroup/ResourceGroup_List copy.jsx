@@ -38,27 +38,18 @@ function ResourceGroup_List({
   title,
   EditTools,
   Add_Many,
-  asset_type_id = "2001",
+  asset_type_id,
   handle_back,
   assets_list_from_db,
   set_assets_list_from_db,
-  setChosenEntity,
-  ChosenCategory,
 }) {
   const { backEndURL } = useContext(GeneralContext);
   const [is_search, set_is_search] = useState(false);
-  const [EntitiesDataArray, setEntitiesDataArray] = useState([]);
 
-  const [firstTimeData, setfirstTimeData] = useState(true); // useWith usEffect to now the first load and to sort
+  const [firstTimeData, setfirstTimeData] = useState(true); // usewith useeffect to now the first load and to sort
   const [sort_by, set_sort_by] = useState("");
   // const [item_types_list, set_item_types_list] = useState([]);
   // const [item_tool_list, set_item_tool_list] = useState([]);
-  useEffect(() => {
-    setEntitiesDataArray(assets_list_from_db?.entities);
-    return () => {
-      setEntitiesDataArray([]);
-    };
-  }, [assets_list_from_db]);
 
   const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =
     useState(false);
@@ -81,40 +72,39 @@ function ResourceGroup_List({
   // console.log("firstTimeData",firstTimeData);
   // console.log("asset_type_id",asset_type_id);
   const [UpdaterValue, setUpdaterValue] = useState(false);
+  const HandleMonitorOutsideSwitch = async (Info) => {
+    // console.log(Info, "iddddddddddddddddd");
 
-  const HandleMonitorOutsideSwitchMulti = async (info, StateOfSwitch) => {
-    const ids = [];
-    if (Array.isArray(info)) {
-      info.forEach((x) => {
-        ids.push(x?.entitiesId);
-      });
-    } else {
-      ids.push(info?.entitiesId);
+    const res = await axios.put(`${backEndURL}/Resources/UpdateMonitorSingle`, {
+      resource_id: Info?.resource_id,
+      value: !Info?.monitoring,
+    });
+
+    if (res.data) {
+      Info.monitoring = !Info?.monitoring;
+      setUpdaterValue(!UpdaterValue);
     }
+  };
+
+  const HandleMonitorOutsideSwitchMulti = async () => {
+    const StateOfSwitch = assets_list_from_db?.some((x) => x?.monitoring);
+
     const res = await axios.put(`${backEndURL}/Resources/UpdateMonitorMulti`, {
-      ids: ids,
+      asset_type_id: asset_type_id,
       value: !StateOfSwitch,
     });
+
     if (res.data) {
-      if (Array.isArray(info)) {
-        info.forEach((y) => {
-          y?.properties?.forEach((o) => (o.monitoring = !StateOfSwitch));
-        });
-      } else {
-        info?.properties?.forEach((o) => (o.monitoring = !StateOfSwitch));
-      }
+      assets_list_from_db.forEach((Info) => {
+        Info.monitoring = !StateOfSwitch;
+      });
+
       setUpdaterValue(!UpdaterValue);
     }
   };
 
   const renderIcon = (resource_type_id) => {
-    if (resource_type_id === "Users") {
-      return <IconFullName />;
-    } else if (resource_type_id === "Organization") {
-      return <IconCompany />;
-    } else if (resource_type_id === "Endpoints") {
-      return <IconComputer />;
-    } else if (resource_type_id === "2001") {
+    if (resource_type_id === "2001") {
       return <IconDns />;
     } else if (resource_type_id === "2002") {
       return <IconIp />;
@@ -138,6 +128,7 @@ function ResourceGroup_List({
   };
 
   const handleClickComingSoon = (x) => {
+    console.log(x);
     set_PopUp_Under_Construction__txt({
       HeadLine: "Coming Soon!",
       paragraph: `We are working on creating this feature. Stay tuned for updates as we finalize the details.`,
@@ -146,34 +137,34 @@ function ResourceGroup_List({
     set_PopUp_Under_Construction__show(true);
   };
 
-  // useEffect(() => {
-  //   const get_resources_from_same_type = async () => {
-  //     if (backEndURL === undefined) {
-  //       return;
-  //     }
+  useEffect(() => {
+    const get_resources_from_same_type = async () => {
+      if (backEndURL === undefined) {
+        return;
+      }
 
-  //     const data = {
-  //       asset_type_id: asset_type_id,
-  //     };
+      const data = {
+        asset_type_id: asset_type_id,
+      };
 
-  //     try {
-  //       //  set_loader(true)
-  //       const res = await axios.get(`${backEndURL}/Resources/same-type`, {
-  //         params: data,
-  //       });
-  //       if (res) {
-  //         console.log("get_resources_from_same_type", res.data);
-  //         set_assets_list_from_db(res.data);
-  //         //  set_loader(false)
-  //       }
-  //     } catch (err) {
-  //       //  set_loader(false)
-  //       console.log(err);
-  //     }
-  //   };
+      try {
+        //  set_loader(true)
+        const res = await axios.get(`${backEndURL}/Resources/same-type`, {
+          params: data,
+        });
+        if (res) {
+          console.log("get_resources_from_same_type", res.data);
+          set_assets_list_from_db(res.data);
+          //  set_loader(false)
+        }
+      } catch (err) {
+        //  set_loader(false)
+        console.log(err);
+      }
+    };
 
-  //   get_resources_from_same_type();
-  // }, [backEndURL]);
+    get_resources_from_same_type();
+  }, [backEndURL]);
 
   const normal_sort = (column) => {
     console.log("start sort on ", asset_type_id);
@@ -186,7 +177,7 @@ function ResourceGroup_List({
 
     if (column === sort_by) {
       console.log("It's already sorted like this, reversing the order");
-      const sorted = [...EntitiesDataArray].sort((a, b) => {
+      const sorted = [...assets_list_from_db].sort((a, b) => {
         console.log("b[column]", b[column]);
         if (b[column] < a[column]) return -1;
         if (b[column] > a[column]) return 1;
@@ -197,17 +188,13 @@ function ResourceGroup_List({
       set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
     } else {
       set_sort_by(column);
-      console.log(EntitiesDataArray, "eeeeeeee");
-
-      const sorted = [...EntitiesDataArray].sort((a, b) => {
-        console.log(a[column], b[column], column);
-
+      const sorted = [...assets_list_from_db].sort((a, b) => {
         if (a[column] < b[column]) return -1;
         if (a[column] > b[column]) return 1;
         return 0;
       });
       console.log("Sorted ascending:", sorted);
-      setEntitiesDataArray(sorted);
+      set_assets_list_from_db(sorted);
     }
   };
 
@@ -233,7 +220,7 @@ function ResourceGroup_List({
     const isSameColumn = column === sort_by;
 
     // If it's the same column, reverse the order; otherwise, sort ascending
-    const sorted = [...EntitiesDataArray].sort((a, b) => {
+    const sorted = [...assets_list_from_db].sort((a, b) => {
       const valA = getValue(a, column);
       const valB = getValue(b, column);
 
@@ -253,7 +240,7 @@ function ResourceGroup_List({
 
     // Update state
     set_sort_by(isSameColumn ? "" : column); // Reset sort_by if reversing
-    setEntitiesDataArray(sorted);
+    set_assets_list_from_db(sorted);
   };
 
   // for first load  =>  sorting the list
@@ -262,13 +249,13 @@ function ResourceGroup_List({
       "make sort form use effect",
       asset_type_id,
       "list",
-      EntitiesDataArray
+      assets_list_from_db
     );
-    if (EntitiesDataArray?.length >= 2 && firstTimeData) {
-      normal_sort("entityName");
+    if (assets_list_from_db?.length >= 2 && firstTimeData) {
+      normal_sort("resource_string");
       setfirstTimeData(false);
     }
-  }, [EntitiesDataArray]);
+  }, [assets_list_from_db]);
 
   return (
     <>
@@ -301,8 +288,12 @@ function ResourceGroup_List({
           //  onClick={()=>{handle_show_list(asset_type_id)}}
         >
           <div className="resource-group-list-headline-left ">
-            <div className="resource-group-icon">{renderIcon(title)}</div>{" "}
-            <p className={` font-type-h4  Color-White ml-b`}>{title}</p>
+            <div className="resource-group-icon">
+              {renderIcon(asset_type_id)}
+            </div>{" "}
+            <p className={` font-type-h4  Color-White ml-b`}>
+              {title && SingularToPlural(title)}
+            </p>
           </div>
 
           <ResourceGroup_Action_btns
@@ -311,14 +302,14 @@ function ResourceGroup_List({
             set_popUp_Add_or_Edit__show={set_popUp_Add_or_Edit__show}
             popUp_Add_or_Edit__show={popUp_Add_or_Edit__show}
             set_popUp_Add_or_Edit__status={set_popUp_Add_or_Edit__status}
-            items_for_search={EntitiesDataArray}
-            set_items_for_search={setEntitiesDataArray}
+            items_for_search={assets_list_from_db}
+            set_items_for_search={set_assets_list_from_db}
             set_is_search={set_is_search}
             btn_add_single_show={true}
             btn_add_single_action={add_resource_item}
             btn_add_single_value={"add"}
             btn_add_single_id={asset_type_id}
-            btn_add_many_show={false}
+            btn_add_many_show={true}
             btn_add_many_action={Add_Many}
             btn_add_many_id={asset_type_id}
             btn_trash_show={true}
@@ -341,143 +332,99 @@ function ResourceGroup_List({
           </>
         ) : (
           <>
-            <div style={{ display: "flex" }}>
-              <div className="resource-group-list-keyNames mb-a  mt-c ">
-                <div
-                  className="resource-group-list-item list-item-small  ml-b"
-                  onClick={() => normal_sort("entityName")}
-                >
-                  <p className="font-type-menu  make-underline Color-Grey1 ">
-                    Name
-                  </p>
-                </div>
-                {title != "Organization" && (
-                  <>
-                    <div
-                      className="resource-group-list-item   list-item-small"
-                      onClick={() => normal_sort("organization")}
-                    >
-                      <p className="font-type-menu  make-underline Color-Grey1 ">
-                        Organization
-                      </p>
-                    </div>
-                    <div
-                      className="resource-group-list-item   list-item-small"
-                      onClick={() => normal_sort("department")}
-                    >
-                      <p className="font-type-menu  make-underline Color-Grey1 ">
-                        Department
-                      </p>
-                    </div>
-                    <div
-                      className="resource-group-list-item   list-item-small"
-                      onClick={() => normal_sort("role")}
-                    >
-                      <p className="font-type-menu  make-underline Color-Grey1 ">
-                        Role
-                      </p>
-                    </div>
-                  </>
-                )}
-
-                <div
-                  className="resource-group-list-item   list-item-big"
-                  onClick={() => normal_sort("description")}
-                >
-                  <p className="font-type-menu  make-underline Color-Grey1  ">
-                    Description
-                  </p>
-                </div>
-
-                {/* <div
+            <div className="resource-group-list-keyNames mb-a  mt-c ">
+              <div
+                className="resource-group-list-item list-item-big  ml-b"
+                onClick={() => normal_sort("resource_string")}
+              >
+                <p className="font-type-menu  make-underline Color-Grey1 ">
+                  Name
+                </p>
+              </div>
+              <div
+                className="resource-group-list-item   list-item-big"
+                onClick={() => normal_sort("description")}
+              >
+                <p className="font-type-menu  make-underline Color-Grey1 ">
+                  Description
+                </p>
+              </div>
+              <div
                 className="resource-group-list-item list-item-big  "
                 onClick={() => complex_sort(`tools[0].Toolid`)}
               >
                 <p className="font-type-menu  make-underline Color-Grey1 ">
                   Active Tools
                 </p>
-              </div> */}
-                <div
-                  className="resource-group-list-item list-item-small "
-                  onClick={() => normal_sort("monitoring")}
-                  style={{ display: "flex", flexDirection: "row" }}
-                >
-                  <p
-                    className="font-type-menu  make-underline Color-Grey1"
-                    // style={{ width: "100%" }}
-                  >
-                    {/* switchess */}
-                    Monitor{" "}
-                  </p>
-                  <div
-                    className="resource-group-list-item list-item-small display-flex"
-                    style={{ width: 80, marginLeft: 10, marginTop: -7 }}
-                  >
-                    <label
-                      onClick={(e) => {
-                        if (EntitiesDataArray?.length == 0) {
-                          return;
-                        }
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log(
-                          EntitiesDataArray?.length == 0,
-                          "press",
-                          EntitiesDataArray?.length
-                        );
-
-                        HandleMonitorOutsideSwitchMulti(
-                          EntitiesDataArray,
-                          EntitiesDataArray?.some((x) =>
-                            x?.properties?.some((o) => o?.monitoring)
-                          )
-                        );
-                      }}
-                      className="switch"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={EntitiesDataArray?.some((x) =>
-                          x?.properties?.some((o) => o?.monitoring)
-                        )}
-                        disabled={EntitiesDataArray?.length == 0}
-                        // onChange={}
-                        // defaultChecked={Math.random() < 0.7}
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                  </div>
-                </div>
-
-                <div
-                  className="resource-group-list-item    list-item-small"
-                  style={{ width: 90 }}
-                >
-                  <p className="font-type-menu  make-underline Color-Grey1 ">
-                    High Profile
-                  </p>
-                </div>
-
-                <div
-                  className="resource-group-list-item list-item-small "
-                  onClick={() => normal_sort("lastUpdated")}
-                >
-                  <p className="font-type-menu  make-underline Color-Grey1 ">
-                    lastUpdated
-                  </p>
-                </div>
-              </div>{" "}
+              </div>
               <div
-                style={{ width: 20 }}
-                className="its-only-space-for-the-scroller    "
-              />
+                className="resource-group-list-item list-item-small "
+                onClick={() => normal_sort("monitoring")}
+                style={{ display: "flex", flexDirection: "row" }}
+              >
+                <p
+                  className="font-type-menu  make-underline Color-Grey1"
+                  // style={{ width: "100%" }}
+                >
+                  {/* switchess */}
+                  Monitor{" "}
+                </p>
+                <div
+                  className="resource-group-list-item list-item-small display-flex"
+                  style={{ width: 80, marginLeft: 10, marginTop: -7 }}
+                >
+                  <label
+                    onClick={(e) => {
+                      if (assets_list_from_db?.length == 0) {
+                        return;
+                      }
+                      e.preventDefault();
+                      e.stopPropagation();
+                      console.log(
+                        assets_list_from_db?.length == 0,
+                        "press",
+                        assets_list_from_db?.length
+                      );
+
+                      HandleMonitorOutsideSwitchMulti();
+                    }}
+                    className="switch"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={assets_list_from_db?.some((x) => x?.monitoring)}
+                      disabled={assets_list_from_db?.length == 0}
+                      // onChange={}
+                      // defaultChecked={Math.random() < 0.7}
+                    />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
+              </div>
+              <div
+                className="resource-group-list-item list-item-small"
+                onClick={() => normal_sort("checked")}
+              >
+                <p className="font-type-menu  make-underline Color-Grey1 ">
+                  Checked
+                </p>
+              </div>
+              <div
+                className="resource-group-list-item   list-item-status-color  mr-a"
+                onClick={() => normal_sort("resource_status")}
+                style={{ textAlign: "center", marginRight: "25px" }}
+              >
+                <p className="font-type-menu  make-underline Color-Grey1  ">
+                  Status
+                </p>
+              </div>
+
+              {/* <div className='its-only-space-for-the-scroller    '/>  */}
             </div>
-            {/* {title != "Organization" && (
-              <div className="its-only-space-for-the-scroller    " />
-            )} */}
+
             <div className="resource-group-list-box  mb-c">
-              {Array.isArray(EntitiesDataArray) &&
-                EntitiesDataArray?.map((Info, index) => {
+              {Array.isArray(assets_list_from_db) &&
+                assets_list_from_db?.map((Info, index) => {
                   const dateString = Info?.checked;
                   let formattedDate = "Never"; // Default value
 
@@ -502,48 +449,76 @@ function ResourceGroup_List({
                     <div
                       className="resource-group-list-line"
                       key={index}
-                      onClick={() => {
-                        setChosenEntity(Info);
-                        EditTools(Info);
-                      }}
+                      onClick={() => EditTools(Info)}
                     >
-                      <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small ml-b">
-                        {Info?.entityName}
+                      <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big ml-b">
+                        {Info?.resource_string}
                       </p>
-                      {title !== "Organization" && (
-                        <>
-                          <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small">
-                            {Info?.organization}
-                          </p>
-                          <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small">
-                            {Info?.department}
-                          </p>
-                          <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small">
-                            {Info?.role}
-                          </p>
-                        </>
-                      )}
-
                       <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big">
                         {Info?.description}
                       </p>
+
+                      <div className="resource-group-list-item display-flex list-item-big">
+                        {/* <button className="btn-type1"><IconSettings className="icon-type1 " />  </button> */}
+
+                        {(Info?.tools?.length === 1 &&
+                          Info?.tools[0]?.Toolid === null) ||
+                        Info?.tools[0]?.Toolid === "" ||
+                        Info?.tools[0]?.Toolid === undefined ? (
+                          <p className="ml-a    font-type-txt   Color-Grey1   "></p>
+                        ) : null}
+                        {/* ? (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  } */}
+
+                        {Info?.tools?.length === 1 &&
+                        Info?.tools[0]?.Toolid !== null &&
+                        Info?.tools[0]?.Toolid !== "" &&
+                        Info?.tools[0]?.Toolid !== undefined ? (
+                          <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">
+                            {Info?.tools[0]?.toolname}
+                          </p>
+                        ) : null}
+
+                        {Info?.tools?.length === 2 &&
+                        Info?.tools[0]?.Toolid !== null &&
+                        Info?.tools[0]?.Toolid !== "" &&
+                        Info?.tools[0]?.Toolid !== undefined ? (
+                          <>
+                            <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">
+                              {Info?.tools[0]?.toolname}
+                            </p>
+                            <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">
+                              {Info?.tools[1]?.toolname}
+                            </p>
+                          </>
+                        ) : null}
+
+                        {Info?.tools?.length > 2 &&
+                        Info?.tools[0]?.Toolid !== null &&
+                        Info?.tools[0]?.Toolid !== "" &&
+                        Info?.tools[0]?.Toolid !== undefined ? (
+                          <>
+                            <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">
+                              {Info?.tools[0]?.toolname}
+                            </p>{" "}
+                            <p className=" ml-a font-type-txt   Color-Grey1  ">
+                              +{Info?.tools?.length - 1} More
+                            </p>
+                          </>
+                        ) : null}
+                      </div>
+
                       <div className="resource-group-list-item list-item-small display-flex">
                         <label
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            HandleMonitorOutsideSwitchMulti(
-                              Info,
-                              Info?.properties?.some((o) => o?.monitoring)
-                            );
+                            HandleMonitorOutsideSwitch(Info);
                           }}
                           className="switch"
                         >
                           <input
                             type="checkbox"
-                            checked={Info?.properties?.some(
-                              (o) => o?.monitoring
-                            )}
+                            checked={Info?.monitoring}
                             // onChange={}
                             // defaultChecked={Math.random() < 0.7}
                           />
@@ -551,35 +526,20 @@ function ResourceGroup_List({
                         </label>
                       </div>
 
-                      <div
-                        className="resource-group-list-item    list-item-small"
-                        style={{ width: 90 }}
-                      >
-                        {Info?.highProfile ? (
-                          <p
-                            style={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: 50,
-                              backgroundColor: "blue",
-                            }}
-                            className=" light-bulb-type2 "
-                          ></p>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-
                       <p className="resource-group-list-item   list-item-small font-type-txt   Color-Grey1  ">
-                        {Info?.lastUpdated &&
-                          format_date_type_a(Info?.lastUpdated)}
+                        {Info?.checked && format_date_type_a(Info?.checked)}
                       </p>
+                      <div className="resource-group-list-item    list-item-last   list-item-status-color   ">
+                        <div
+                          className={`    ${StatusColorClass}  light-bulb-type1`}
+                        />
+                      </div>
                     </div>
                   );
                 })}
             </div>
 
-            {EntitiesDataArray?.length === 0 && is_search === false && (
+            {assets_list_from_db?.length === 0 && is_search === false && (
               <div
                 style={{
                   height: "100%",
@@ -600,7 +560,7 @@ function ResourceGroup_List({
               </div>
             )}
 
-            {EntitiesDataArray?.length === 0 && is_search === true && (
+            {assets_list_from_db?.length === 0 && is_search === true && (
               <div
                 style={{
                   height: "100%",
@@ -616,9 +576,9 @@ function ResourceGroup_List({
               </div>
             )}
 
-            {EntitiesDataArray?.length != 0 && is_search === false && (
+            {assets_list_from_db?.length != 0 && is_search === false && (
               <ResourceGroup_buttomLine
-                records_number={EntitiesDataArray?.length || 0}
+                records_number={assets_list_from_db?.length || 0}
               />
             )}
           </>
