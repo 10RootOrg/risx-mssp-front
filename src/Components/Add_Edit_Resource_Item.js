@@ -10,11 +10,12 @@ import GeneralContext from "../Context.js";
 import { useContext } from "react";
 export const Add_Edit_Resource_Item = (props) => {
   const {
+    ChosenEntityRaw,
     popUp_show,
     set_popUp_show,
     IconBIG,
     resourceItem,
-    //  set_resourceItem,
+    set_resourceItem,
     item_types_list,
     set_item_types_list,
     item_tool_list,
@@ -28,6 +29,8 @@ export const Add_Edit_Resource_Item = (props) => {
 
     assets_list_from_db,
     set_assets_list_from_db,
+    getFullCategoryAndEntitiesList,
+    set_PopUp_Are_You_Sure__Type,
   } = props;
 
   const { all_Resource_Types, all_Tools, backEndURL, get_all_resource_types } =
@@ -58,7 +61,7 @@ export const Add_Edit_Resource_Item = (props) => {
   const Handele_are_you_sure = () => {
     console.log("resource_id", resource_id);
     set_popUp_show(false); /// the add adit popup
-
+    set_PopUp_Are_You_Sure__Type("Resource");
     set_PopUp_Are_You_Sure__txt({
       HeadLine: "Are you sure you want to delete?",
       paragraph: "This record will be permanently deleted from the database",
@@ -138,11 +141,13 @@ export const Add_Edit_Resource_Item = (props) => {
     // console.log("e.target.className" , e.target.className);
     if (e.target.className === "PopUp-background") {
       set_popUp_show(false);
+      set_resourceItem({});
     }
   }
 
   function handleClose() {
     set_popUp_show(false);
+    set_resourceItem({});
   }
 
   function handle_add_or_edit_item() {
@@ -153,6 +158,7 @@ export const Add_Edit_Resource_Item = (props) => {
       description: description,
       item_tool_list: item_tool_list,
       item_types_list: item_types_list,
+      parent_id: ChosenEntityRaw?.entitiesId,
     };
 
     if (popUp_Add_or_Edit__status == "add") {
@@ -180,10 +186,10 @@ export const Add_Edit_Resource_Item = (props) => {
 
             const item = res.data[0];
             const item_and_tools = { ...item, tools: modifiedTools };
+            ChosenEntityRaw?.properties?.push(item_and_tools); // const updatedAssetsList = [...assets_list_from_db, item_and_tools];
+            // set_assets_list_from_db(updatedAssetsList);
 
-            const updatedAssetsList = [...assets_list_from_db, item_and_tools];
-            set_assets_list_from_db(updatedAssetsList);
-
+            getFullCategoryAndEntitiesList();
             // Update the state fo the big numbers
             get_all_resource_types();
 
@@ -197,25 +203,24 @@ export const Add_Edit_Resource_Item = (props) => {
             set_PopUp_All_Good__show(true);
           }
         } catch (err) {
-          console.log(err?.response?.data);
+          console.log(err);
           set_error_message(err?.response?.data);
         }
       };
       add_resource();
     } else if (popUp_Add_or_Edit__status == "edit") {
-      console.log("data to edit =============== ", data);
-
       const edit_Resouce = async () => {
         try {
           set_error_message("");
+
           const res = await axios.put(`${backEndURL}/resources`, data);
           if (res?.status === 200) {
             console.log("res.data1", res.data[0].resource_id);
             console.log("res.data2", res.data);
 
-            const list_without_the_updated_item = assets_list_from_db.filter(
-              (item) => item.resource_id !== resource_id
-            );
+            // const list_without_the_updated_item = assets_list_from_db.filter(
+            //   (item) => item.resource_id !== resource_id
+            // );
 
             const filteredTools = all_Tools.filter((item) =>
               item_tool_list.includes(item.tool_id)
@@ -231,15 +236,37 @@ export const Add_Edit_Resource_Item = (props) => {
             const item = res.data[0];
             const item_and_tools = { ...item, tools: modifiedTools };
 
-            const updatedAssetsList = [
-              ...list_without_the_updated_item,
-              item_and_tools,
-            ];
-            set_assets_list_from_db(updatedAssetsList);
+            // const updatedAssetsList = [
+            //   ...list_without_the_updated_item,
+            //   item_and_tools,
+            // ];
+
+            const tempObj = [...ChosenEntityRaw?.properties];
+            set_resourceItem(item_and_tools);
+            tempObj.forEach((x) => {
+              console.log(x);
+              if (x?.resource_id == resource_id) {
+                console.log("hhhhhhhh", x.tools, item_and_tools);
+                x.checked = item_and_tools.checked;
+                x.createdAt = item_and_tools.createdAt;
+                x.description = item_and_tools.description;
+                x.monitoring = item_and_tools.monitoring;
+                x.resource_status = item_and_tools.resource_status;
+                x.resource_string = item_and_tools.resource_string;
+                x.type = item_and_tools.type;
+                x.updatedAt = item_and_tools.updatedAt;
+                x.tools = item_and_tools.tools;
+              }
+            });
+
+            // resourceItem = item_and_tools;
+            // set_assets_list_from_db(updatedAssetsList);
 
             // update the object
             // set_filter_Resource({type_ids:[],tool_ids:[]})// for not have mistakealso will pull all list
             set_popUp_show(false); // close this popup
+
+            getFullCategoryAndEntitiesList();
             set_PopUp_All_Good__txt({
               HeadLine: "Successfully Updated",
               paragraph:
@@ -249,7 +276,7 @@ export const Add_Edit_Resource_Item = (props) => {
             set_PopUp_All_Good__show(true);
           }
         } catch (err) {
-          console.log(err?.response?.data);
+          console.log(err);
           set_error_message(err?.response?.data);
         }
       };

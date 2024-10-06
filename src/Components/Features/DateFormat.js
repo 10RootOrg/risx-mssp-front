@@ -1,5 +1,6 @@
 function format_date_type_a(response_String) {
   const date = new Date(response_String);
+
   if (isNaN(date.getTime())) {
     return "NA"; // Invalid date
   }
