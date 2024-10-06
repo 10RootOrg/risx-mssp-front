@@ -54,7 +54,7 @@ function ResourceGroup_List({
   // const [item_types_list, set_item_types_list] = useState([]);
   // const [item_tool_list, set_item_tool_list] = useState([]);
   useEffect(() => {
-    setEntitiesDataArray(assets_list_from_db?.entities);
+    setEntitiesDataArray(assets_list_from_db?.entities ?? assets_list_from_db);
     return () => {
       setEntitiesDataArray([]);
     };
@@ -452,6 +452,7 @@ function ResourceGroup_List({
                 <div
                   className="resource-group-list-item    list-item-small"
                   style={{ width: 90 }}
+                  onClick={() => normal_sort("highProfile")}
                 >
                   <p className="font-type-menu  make-underline Color-Grey1 ">
                     High Profile
