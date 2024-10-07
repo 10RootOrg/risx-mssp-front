@@ -656,7 +656,29 @@ export const Add_Edit_Entity = (props) => {
                   {error_message}
                 </p>
               )}
-
+              <div
+                style={{
+                  // marginLeft: 0,
+                  flexGrow: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "22px",
+                }}
+              >
+                {popUp_Add_or_Edit__status === "Edit" ? (
+                  <>
+                    <p className=" font-type-menu   Color-Grey1 mr-a ">ID</p>
+                    <p
+                      style={{ flexGrow: 1 }}
+                      className=" font-type-txt     Color-Grey1"
+                    >
+                      {" "}
+                      {ChosenEntity.entitiesId}
+                    </p>
+                  </>
+                ) : null}
+              </div>
               {popUp_Add_or_Edit__status === "Edit" && (
                 <button
                   className="btn-type1"

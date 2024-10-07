@@ -149,6 +149,7 @@ function ResourceGroup_All({
             {}
           );
           get_all_resource_types();
+          getFullCategoryAndEntitiesList();
           console.log("uuuuuuuuuuuuuu", res);
         } catch (error) {
           console.log("import error", error);
@@ -162,6 +163,8 @@ function ResourceGroup_All({
     console.log("export assets json");
     try {
       const res = await axios.get(`${backEndURL}/config/ExportAllAssets`);
+      console.log(res, "res res res ers rew ");
+
       const file = res.data;
       const dataStr =
         "data:text/json;charset=utf-8," +
