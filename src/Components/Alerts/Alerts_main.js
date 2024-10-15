@@ -69,6 +69,17 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
       const Artifact = {};
 
       AlertFileData.forEach((x) => {
+        if (!AletDic[x?.Artifact?.trim()]?.Show) {
+          console.log(
+            "dont count and show",
+            !AletDic[x?.Artifact?.trim()]?.Show
+          );
+          x.Show = AletDic[x?.Artifact?.trim()]?.Show;
+
+          return;
+        }
+        console.log("jj");
+
         Item[x?.UserInput?.Status]++;
         if (!Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact]) {
           Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact] = {};
@@ -79,11 +90,14 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           ].Description = AletDic[x?.Artifact?.trim()]?.Description;
 
           Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num = 0;
+          Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Show =
+            AletDic[x?.Artifact?.trim()]?.Show;
         }
         Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num++;
 
         x.SimpleName = AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact;
         x.Description = AletDic[x?.Artifact?.trim()]?.Description;
+        x.Show = AletDic[x?.Artifact?.trim()]?.Show;
       });
       console.log(
         "ArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifact",
@@ -174,6 +188,9 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             HeadLine="New Alerts Last Hour"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
+              if (!cur?.Show) {
+                return acc;
+              }
               if (cur?.["_ts"] > TimeObject?.hour) {
                 return acc + 1;
               } else {
@@ -194,6 +211,9 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             HeadLine="New Alerts Today"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
+              if (!cur?.Show) {
+                return acc;
+              }
               if (cur?.["_ts"] > TimeObject?.day) {
                 return acc + 1;
               } else {
@@ -214,6 +234,9 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
             HeadLine="New Alerts This Week"
             resource_type_id={null}
             BigNumber={AlertsData?.reduce((acc, cur) => {
+              if (!cur?.Show) {
+                return acc;
+              }
               if (cur?.["_ts"] > TimeObject?.week) {
                 return acc + 1;
               } else {
@@ -329,7 +352,10 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
               "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
               AlertsData
             );
-
+            if (!ArtifactDataPie[x]?.Show) {
+              console.log("Dont Show", ArtifactDataPie[x]);
+              return;
+            }
             return (
               <>
                 <div
