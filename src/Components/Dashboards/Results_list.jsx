@@ -156,6 +156,7 @@ const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__sho
         switch (Info?.ModuleName) {
           case "Velociraptor":
             if (res?.data?.fileSize !== "Too big") {
+              
               set_json_file_info(res.data);
             } else {
               set_json_file_info({
@@ -191,7 +192,7 @@ const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__sho
           case "Shodan":
             if (res?.data?.fileSize !== "Too big") {
               console.log(
-                "111111111111-----------------------  Shodan !== 'Too big  "
+                "111111111111-----------------------  Shodan !== 'Too big  ",res.data
               );
               set_json_file_info(res.data);
             } else {

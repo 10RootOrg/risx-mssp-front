@@ -3,6 +3,7 @@ import axios from "axios";
 import "./../Settings/Settings.css";
 import "./custom-json-view.css";
 import GeneralContext from "../../Context.js";
+import { PopUp_Error } from "../PopUp_Smart.js";
 
 function Settings_section_edit_mssp_config_json_module_paths({
   show_SideBar,
@@ -13,6 +14,13 @@ function Settings_section_edit_mssp_config_json_module_paths({
     useContext(GeneralContext);
   const [tmp_moduleLinks, set_tmp_moduleLinks] = useState(moduleLinks);
   const [save_btn, set_save_btn] = useState(false);
+
+  const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
+  const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({
+    HeadLine: "",
+    paragraph: "",
+    buttonTitle: "",
+  });
   const keyWidth = "160px";
   const handleInputChangeGenerator = (index) => (e) => {
     console.log(
@@ -39,9 +47,23 @@ function Settings_section_edit_mssp_config_json_module_paths({
       );
       if (res) {
         console.log("handle_Save_config", res.data);
+      } else {
+        console.log("handle_Save_config", res);
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error In Saving Data",
+          paragraph: "Error Happened Check Logs",
+          buttonTitle: "Ok",
+        });
       }
     } catch (err) {
       console.log("handle_Save_config", err);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error In Saving Data",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
   };
 
@@ -61,6 +83,15 @@ function Settings_section_edit_mssp_config_json_module_paths({
 
   return (
     <>
+      {PopUp_Error____show && (
+        <PopUp_Error
+          popUp_show={PopUp_Error____show}
+          set_popUp_show={set_PopUp_Error____show}
+          HeadLine={PopUp_Error____txt.HeadLine}
+          paragraph={PopUp_Error____txt.paragraph}
+          buttonTitle={PopUp_Error____txt.buttonTitle}
+        />
+      )}
       <div>
         <table className="setting_table  " style={{ lineHeight: "100%" }}>
           <tbody className="tbody_setting">

@@ -22,7 +22,7 @@ import {
   PopUp_Error,
   PopUp_All_Good,
   PopUp_Under_Construction,
-  PopUp_Confirm_Run_selected
+  PopUp_Confirm_Run_selected,
 } from "../Components/PopUp_Smart";
 
 import GeneralContext from "../Context";
@@ -30,10 +30,7 @@ import axios from "axios";
 import { Make_url_from_id } from "../Components/Dashboards/functions_for_dashboards";
 import DownloadProgressBarItem from "./DownloadProgressBarItem";
 
-const  SideBar =({
-  visblePage,
-  set_visblePage,
-}) =>{
+const SideBar = ({ visblePage, set_visblePage }) => {
   const navigate = useNavigate();
   const [user_name, set_user_name] = useState("user");
   const {
@@ -43,7 +40,8 @@ const  SideBar =({
     DownloadProgressBar,
     setDownloadProgressBar,
     setDownloadList,
-   set_Assets_Preview_List,Assets_Preview_List
+    set_Assets_Preview_List,
+    Assets_Preview_List,
     // front_URL,
     // mssp_config_json,
     // user_id,
@@ -73,10 +71,11 @@ const  SideBar =({
       buttonTitle: "Close",
     });
 
-    const [PopUp_Confirm_Run_selected__show, set_PopUp_Confirm_Run_selected__show] = useState(false);
- 
+  const [
+    PopUp_Confirm_Run_selected__show,
+    set_PopUp_Confirm_Run_selected__show,
+  ] = useState(false);
 
- 
   const [download_drop_down, set_download_drop_down] = useState(false);
   const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
 
@@ -103,8 +102,6 @@ const  SideBar =({
       get_config();
     }
   }, [backEndURL]);
-
-
 
   const handleClick = (page_name) => {
     set_visblePage(page_name);
@@ -211,11 +208,8 @@ const  SideBar =({
     set_PopUp_Error____show(true);
   };
 
-
-
-
   const handle_active_manual_process = async () => {
-    set_PopUp_Confirm_Run_selected__show(false)
+    set_PopUp_Confirm_Run_selected__show(false);
     console.log("handle_active_manual_process");
     try {
       const res = await axios.get(
@@ -223,12 +217,15 @@ const  SideBar =({
         { params: { param1: "param1value" } }
       );
 
-
       if (res.data) {
         console.log("handle_active_manual_process - data", res?.data);
         console.log("handle_active_manual_process - status", res?.status);
         if (res?.data?.success === true) {
-          console.log("A Manual Process has Started to run"  , "message;" , res?.data?.message);
+          console.log(
+            "A Manual Process has Started to run",
+            "message;",
+            res?.data?.message
+          );
           set_PopUp_All_Good__txt({
             HeadLine: "Activated",
             paragraph: "A Manual Process has Started to run",
@@ -236,7 +233,6 @@ const  SideBar =({
             buttonTitle: "Close",
           });
           set_PopUp_All_Good__show(true);
-
         } else {
           set_PopUp_Error____txt({
             HeadLine: "Error",
@@ -247,15 +243,16 @@ const  SideBar =({
         }
       }
     } catch (err) {
-
-      
       set_PopUp_Error____txt({
         HeadLine: "Error",
         paragraph: `${err?.response?.data?.message}`,
         buttonTitle: "Close",
       });
       set_PopUp_Error____show(true);
-      console.log("catch handle_active_manual_process - data", err?.response?.data);
+      console.log(
+        "catch handle_active_manual_process - data",
+        err?.response?.data
+      );
       // console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
       // console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
       // console.log("catch handle_active_manual_process - success", err?.response?.data?.success);
@@ -264,10 +261,9 @@ const  SideBar =({
   };
 
   const handle_cancel_active_manual_process = () => {
-    console.log('handle_cancel_active_manual_process item...');
-     set_PopUp_Confirm_Run_selected__show(false)
+    console.log("handle_cancel_active_manual_process item...");
+    set_PopUp_Confirm_Run_selected__show(false);
   };
-
 
   useEffect(() => {
     const name = localStorage.getItem("username");
@@ -290,21 +286,14 @@ const  SideBar =({
 
   return (
     <div className="side-bar-desktop-out">
-
-
-
-
-{PopUp_Confirm_Run_selected__show &&
-      <PopUp_Confirm_Run_selected
-      popUp_show={PopUp_Confirm_Run_selected__show}
-      set_popUp_show={set_PopUp_Confirm_Run_selected__show}
-     True_action={handle_active_manual_process}
-     False_action={handle_cancel_active_manual_process}
-      /> }
-
-
-
-
+      {PopUp_Confirm_Run_selected__show && (
+        <PopUp_Confirm_Run_selected
+          popUp_show={PopUp_Confirm_Run_selected__show}
+          set_popUp_show={set_PopUp_Confirm_Run_selected__show}
+          True_action={handle_active_manual_process}
+          False_action={handle_cancel_active_manual_process}
+        />
+      )}
 
       {PopUp_Under_Construction__show && (
         <PopUp_Under_Construction
@@ -354,11 +343,9 @@ const  SideBar =({
         className="Bg-Grey2"
         style={{ width: "100%", height: "2px", borderRadius: "5px" }}
       />
-    
 
       <div className="btn-menu-list  ">
         {/* ..........Dashboards.......srart.... */}
-
 
         <button
           className="btn-menu"
@@ -375,11 +362,9 @@ const  SideBar =({
           </div>
         </button>
 
-
-
         <div
           className="btn-menu-list"
- style={{gap:!Dashboards_drop_down && 0}}
+          style={{ gap: !Dashboards_drop_down && 0 }}
           // onMouseLeave={() => set_Dashboards_drop_down(false)}
           //  onMouseEnter={()=>set_download_drop_down(true)}
         >
@@ -389,7 +374,7 @@ const  SideBar =({
                 ? "btn_look_hover"
                 : ""
             } `}
-             onClick={handle_Dashboards_drop_down}
+            onClick={handle_Dashboards_drop_down}
           >
             <div className="display-flex">
               <IcoMonitor className="btn-menu-icon-placeholder  mr-a " />
@@ -431,8 +416,6 @@ const  SideBar =({
 
           <div
             className={`dropdown-menu ${Dashboards_drop_down ? "open" : ""} `}
-            
-          
           >
             <button
               className="btn-menu dropdown-menu-btn"
@@ -440,7 +423,7 @@ const  SideBar =({
               disabled={visblePage === "dashboard-general"}
               // style={{marginBottom:0 , paddingBottom:0 , backgroundColor:"pink"}}
             >
-              <div className="display-flex"      >
+              <div className="display-flex">
                 {/* <IcoDownload
                   className="btn-menu-icon-placeholder  mr-a "
                   style={{ visibility: "hidden" }}
@@ -521,7 +504,6 @@ const  SideBar =({
               className="btn-menu dropdown-menu-btn"
               onClick={() => handleClick("dashboard-asm")}
               disabled={visblePage === "dashboard-asm"}
-             
             >
               <div className="display-flex">
                 {/* <IcoDownload
@@ -538,7 +520,6 @@ const  SideBar =({
               </div> */}
             </button>
 
-  
             <button
               className="btn-menu dropdown-menu-btn"
               // onClick={() => handleClick("dashboard-risx")}
@@ -560,21 +541,21 @@ const  SideBar =({
                 <IcoLink />
               </div> */}
             </button>
-
-
           </div>
         </div>
 
         {/* ..........Dashboards..........end. */}
 
-
         <button
           className={`btn-menu  ${visblePage === "assets" && "btn_look_hover"}`}
-        //  className="btn-menu"
-          onClick={() =>{  handleClick("assets");  set_Assets_Preview_List(false)}}
-       disabled={visblePage === "assets"  && Assets_Preview_List === false}
+          //  className="btn-menu"
+          onClick={() => {
+            handleClick("assets");
+            set_Assets_Preview_List(false);
+          }}
+          disabled={visblePage === "assets" && Assets_Preview_List === false}
         >
- {/* className="btn-type2" */}
+          {/* className="btn-type2" */}
 
           <div className="display-flex">
             <IcoResourceGroup className="btn-menu-icon-placeholder  mr-a " />
@@ -635,115 +616,106 @@ const  SideBar =({
           <div className="btn-menu-icon-placeholder  "> </div>
         </button>
 
-
-
-
-
         <div
-        className="btn-menu-list"
-        onMouseLeave={() => set_download_drop_down(false)}
-        //  onMouseEnter={()=>set_download_drop_down(true)}
-      >
-        <button
-          className={`btn-menu  ${download_drop_down ? "btn_look_hover" : ""} `}
-          onClick={handle_download_drop_down}
+          className="btn-menu-list"
+          onMouseLeave={() => set_download_drop_down(false)}
+          //  onMouseEnter={()=>set_download_drop_down(true)}
         >
-          <div className="display-flex">
-            <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
-            <p className="font-type-menu ">Download Agent</p>
-          </div>
-          <div className="btn-menu-icon-placeholder  ">
-            {" "}
-            {/*  <MenuArrowDown  />*/}
-          </div>
-        </button>
-        {/* fix */}
-        <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}>
           <button
-            className="btn-menu  "
-            onClick={(e) => {
-              handleDownload("Windows");
-            }}
+            className={`btn-menu  ${
+              download_drop_down ? "btn_look_hover" : ""
+            } `}
+            onClick={handle_download_drop_down}
           >
             <div className="display-flex">
-              <IcoDownload
-                className="btn-menu-icon-placeholder  mr-a "
-                style={{ visibility: "hidden" }}
-              />
-              <p className="font-type-menu ">Windows</p>
+              <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
+              <p className="font-type-menu ">Download Agent</p>
             </div>
             <div className="btn-menu-icon-placeholder  ">
               {" "}
               {/*  <MenuArrowDown  />*/}
             </div>
           </button>
+          {/* fix */}
+          <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}>
+            <button
+              className="btn-menu  "
+              onClick={(e) => {
+                handleDownload("Windows");
+              }}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Windows</p>
+              </div>
+              <div className="btn-menu-icon-placeholder  ">
+                {" "}
+                {/*  <MenuArrowDown  />*/}
+              </div>
+            </button>
 
-          <button
-            className="btn-menu  "
-            onClick={(e) => {
-              handleDownload("Linux");
-            }}
-          >
-            <div className="display-flex">
-              <IcoDownload
-                className="btn-menu-icon-placeholder  mr-a "
-                style={{ visibility: "hidden" }}
-              />
-              <p className="font-type-menu ">linux</p>
-            </div>
-            <div className="btn-menu-icon-placeholder  ">
-              {" "}
-              {/*  <MenuArrowDown  />*/}
-            </div>
-          </button>
+            <button
+              className="btn-menu  "
+              onClick={(e) => {
+                handleDownload("Linux");
+              }}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">linux</p>
+              </div>
+              <div className="btn-menu-icon-placeholder  ">
+                {" "}
+                {/*  <MenuArrowDown  />*/}
+              </div>
+            </button>
 
-          <button
-            className="btn-menu  "
-            onClick={(e) => {
-              handleDownload("Mac");
-            }}
-          >
-            <div className="display-flex">
-              <IcoDownload
-                className="btn-menu-icon-placeholder  mr-a "
-                style={{ visibility: "hidden" }}
-              />
-              <p className="font-type-menu ">Mac</p>
-            </div>
-            <div className="btn-menu-icon-placeholder  ">
-              {" "}
-              {/*  <MenuArrowDown  />*/}
-            </div>
-          </button>
+            <button
+              className="btn-menu  "
+              onClick={(e) => {
+                handleDownload("Mac");
+              }}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Mac</p>
+              </div>
+              <div className="btn-menu-icon-placeholder  ">
+                {" "}
+                {/*  <MenuArrowDown  />*/}
+              </div>
+            </button>
+          </div>
         </div>
       </div>
 
-
-
-
-
-      </div>
-
-{visblePage === "Modules"  &&
-
-<>
-<div className="Bg-Grey2"  style={{ width: "100%", height: "2px", borderRadius: "5px" }}  />
-<button className="btn-type2" onClick={()=>set_PopUp_Confirm_Run_selected__show(true)} style={{ width:"100%",paddingLeft:"var(--space-a)"}} >
-<div style={{display:"flex", alignItems:"center" }}>
-<IcoACtiveBlue  style={{marginRight:"var(--space-a)"}}/>
-<p className='font-type-menu'>Run Selected Jobs</p>
-</div>  
-</button> 
-</>
-}
-
-
-
-
-
-
- 
-    
+      {visblePage === "Modules" && (
+        <>
+          <div
+            className="Bg-Grey2"
+            style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+          />
+          <button
+            className="btn-type2"
+            onClick={() => set_PopUp_Confirm_Run_selected__show(true)}
+            style={{ width: "100%", paddingLeft: "var(--space-a)" }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <IcoACtiveBlue style={{ marginRight: "var(--space-a)" }} />
+              <p className="font-type-menu">Run Selected Jobs</p>
+            </div>
+          </button>
+        </>
+      )}
 
       {Object.keys(DownloadProgressBar).length > 0 && (
         <div
@@ -768,12 +740,9 @@ const  SideBar =({
       )}
     </div>
   );
-}
+};
 
-const  MobileTopBar =({
-  visblePage,
-  set_visblePage,
-}) =>{
+const MobileTopBar = ({ visblePage, set_visblePage }) => {
   const navigate = useNavigate();
   const [user_name, set_user_name] = useState("user");
   const {
@@ -783,7 +752,8 @@ const  MobileTopBar =({
     DownloadProgressBar,
     setDownloadProgressBar,
     setDownloadList,
-   set_Assets_Preview_List,Assets_Preview_List
+    set_Assets_Preview_List,
+    Assets_Preview_List,
     // front_URL,
     // mssp_config_json,
     // user_id,
@@ -813,10 +783,11 @@ const  MobileTopBar =({
       buttonTitle: "Close",
     });
 
-    const [PopUp_Confirm_Run_selected__show, set_PopUp_Confirm_Run_selected__show] = useState(false);
- 
+  const [
+    PopUp_Confirm_Run_selected__show,
+    set_PopUp_Confirm_Run_selected__show,
+  ] = useState(false);
 
- 
   const [download_drop_down, set_download_drop_down] = useState(false);
   const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
 
@@ -843,8 +814,6 @@ const  MobileTopBar =({
       get_config();
     }
   }, [backEndURL]);
-
-
 
   const handleClick = (page_name) => {
     set_visblePage(page_name);
@@ -951,11 +920,8 @@ const  MobileTopBar =({
     set_PopUp_Error____show(true);
   };
 
-
-
-
   const handle_active_manual_process = async () => {
-    set_PopUp_Confirm_Run_selected__show(false)
+    set_PopUp_Confirm_Run_selected__show(false);
     console.log("handle_active_manual_process");
     try {
       const res = await axios.get(
@@ -963,12 +929,15 @@ const  MobileTopBar =({
         { params: { param1: "param1value" } }
       );
 
-
       if (res.data) {
         console.log("handle_active_manual_process - data", res?.data);
         console.log("handle_active_manual_process - status", res?.status);
         if (res?.data?.success === true) {
-          console.log("A Manual Process has Started to run"  , "message;" , res?.data?.message);
+          console.log(
+            "A Manual Process has Started to run",
+            "message;",
+            res?.data?.message
+          );
           set_PopUp_All_Good__txt({
             HeadLine: "Activated",
             paragraph: "A Manual Process has Started to run",
@@ -976,7 +945,6 @@ const  MobileTopBar =({
             buttonTitle: "Close",
           });
           set_PopUp_All_Good__show(true);
-
         } else {
           set_PopUp_Error____txt({
             HeadLine: "Error",
@@ -987,15 +955,16 @@ const  MobileTopBar =({
         }
       }
     } catch (err) {
-
-      
       set_PopUp_Error____txt({
         HeadLine: "Error",
         paragraph: `${err?.response?.data?.message}`,
         buttonTitle: "Close",
       });
       set_PopUp_Error____show(true);
-      console.log("catch handle_active_manual_process - data", err?.response?.data);
+      console.log(
+        "catch handle_active_manual_process - data",
+        err?.response?.data
+      );
       // console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
       // console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
       // console.log("catch handle_active_manual_process - success", err?.response?.data?.success);
@@ -1004,10 +973,9 @@ const  MobileTopBar =({
   };
 
   const handle_cancel_active_manual_process = () => {
-    console.log('handle_cancel_active_manual_process item...');
-     set_PopUp_Confirm_Run_selected__show(false)
+    console.log("handle_cancel_active_manual_process item...");
+    set_PopUp_Confirm_Run_selected__show(false);
   };
-
 
   useEffect(() => {
     const name = localStorage.getItem("username");
@@ -1019,14 +987,9 @@ const  MobileTopBar =({
     }
   }, []);
 
- 
-
   return (
     <div className="top-bar-mobile-out">
-
-
-
-{/* 
+      {/* 
 {PopUp_Confirm_Run_selected__show &&
       <PopUp_Confirm_Run_selected
       popUp_show={PopUp_Confirm_Run_selected__show}
@@ -1065,17 +1028,19 @@ const  MobileTopBar =({
         />
       )} */}
 
-
-      <div    style={{display:"flex" , justifyContent:"space-between", alignItems:"center" , height:"52px"}}  >
-      <RisxMsspLogoWide className=" " />
-      {/* <div style={{backgroundColor:"red" , height:"22px", width:"22px"}}></div> */}
- </div>
-
- 
-
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: "52px",
+        }}
+      >
+        <RisxMsspLogoWide className=" " />
+        {/* <div style={{backgroundColor:"red" , height:"22px", width:"22px"}}></div> */}
+      </div>
     </div>
   );
-}
+};
 
-
-export  {SideBar ,MobileTopBar};
+export { SideBar, MobileTopBar };
