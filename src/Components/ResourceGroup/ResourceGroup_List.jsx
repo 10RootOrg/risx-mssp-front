@@ -13,6 +13,7 @@ import { ReactComponent as IconUserNameSocial } from "./asset-icons/ico-username
 import { ReactComponent as IconFullName } from "./asset-icons/ico-fullname.svg";
 import { ReactComponent as IconCompany } from "./asset-icons/ico-company.svg";
 import { ReactComponent as IconEmailDomain } from "./asset-icons/ico-email-domain.svg";
+import { ReactComponent as GraphIcon } from "./asset-icons/graph-to.svg";
 
 import ResourceGroup_Action_btns from "./ResourceGroup_Action_btns";
 import ResourceGroup_buttomLine from "./ResourceGroup_buttomLine";
@@ -44,6 +45,8 @@ function ResourceGroup_List({
   set_assets_list_from_db,
   setChosenEntity,
   ChosenCategory,
+  HandleDashboardAssetOpenEndPoints,
+  HandleDashboardAssetOpenRest,
 }) {
   const { backEndURL } = useContext(GeneralContext);
   const [is_search, set_is_search] = useState(false);
@@ -302,7 +305,9 @@ function ResourceGroup_List({
         >
           <div className="resource-group-list-headline-left ">
             <div className="resource-group-icon">{renderIcon(title)}</div>{" "}
-            <p className={` font-type-h4  Color-White ml-b`}>{title}</p>
+            <p className={` font-type-h4  Color-White ml-b`}>
+              Entities {title}
+            </p>
           </div>
 
           <ResourceGroup_Action_btns
@@ -449,7 +454,7 @@ function ResourceGroup_List({
                   </div>
                 </div>
 
-                <div
+                {/* <div
                   className="resource-group-list-item    list-item-small"
                   style={{ width: 90 }}
                   onClick={() => normal_sort("highProfile")}
@@ -457,7 +462,7 @@ function ResourceGroup_List({
                   <p className="font-type-menu  make-underline Color-Grey1 ">
                     High Profile
                   </p>
-                </div>
+                </div> */}
 
                 <div
                   className="resource-group-list-item list-item-small "
@@ -467,6 +472,7 @@ function ResourceGroup_List({
                     lastUpdated
                   </p>
                 </div>
+                <div style={{ width: 30 }}></div>
               </div>{" "}
               <div
                 style={{ width: 20 }}
@@ -476,7 +482,10 @@ function ResourceGroup_List({
             {/* {title != "Organization" && (
               <div className="its-only-space-for-the-scroller    " />
             )} */}
-            <div className="resource-group-list-box  mb-c">
+            <div
+              className="resource-group-list-box  mb-c"
+              style={{ height: "65vh" }}
+            >
               {Array.isArray(EntitiesDataArray) &&
                 EntitiesDataArray?.map((Info, index) => {
                   const dateString = Info?.checked;
@@ -508,7 +517,12 @@ function ResourceGroup_List({
                         EditTools(Info);
                       }}
                     >
-                      <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small ml-b">
+                      <p
+                        className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small ml-b"
+                        style={{
+                          color: Info?.properties?.length > 0 ? "" : "red",
+                        }}
+                      >
                         {Info?.entityName}
                       </p>
                       {title !== "Organization" && (
@@ -552,7 +566,7 @@ function ResourceGroup_List({
                         </label>
                       </div>
 
-                      <div
+                      {/* <div
                         className="resource-group-list-item    list-item-small"
                         style={{ width: 90 }}
                       >
@@ -569,12 +583,31 @@ function ResourceGroup_List({
                         ) : (
                           ""
                         )}
-                      </div>
+                      </div> */}
 
                       <p className="resource-group-list-item   list-item-small font-type-txt   Color-Grey1  ">
                         {Info?.lastUpdated &&
                           format_date_type_a(Info?.lastUpdated)}
                       </p>
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          if (Info.categoryName === "Endpoints") {
+                            HandleDashboardAssetOpenEndPoints(Info.entitiesId);
+                          } else {
+                            HandleDashboardAssetOpenRest(Info.entitiesId);
+                          }
+                        }}
+                        style={{ width: 30 }}
+                      >
+                        <img
+                          style={{ width: 30, height: 30 }}
+                          src={require("./asset-icons/graph-to.png")}
+                          alt=""
+                        />
+                        {/* <GraphIcon style={{width:30,height:30,backgroundColor:"transparent"}} /> */}
+                      </div>
                     </div>
                   );
                 })}
@@ -626,6 +659,12 @@ function ResourceGroup_List({
         )}
 
         {/* </>} */}
+      </div>
+      <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+        <p className=" font-type-menu  Color-Grey2  mr-a">
+          If the Entity Name is Red you need to add properties as without them
+          you can't monitor anything{" "}
+        </p>
       </div>
       <div style={{ marginLeft: "auto", marginRight: "auto" }}>
         <button className="btn-type5    mb-a" onClick={handle_back}>

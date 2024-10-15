@@ -28,12 +28,14 @@ import { Add_Many_Resource_Items } from "../Add_Many_Resource_Items";
 import {
   PopUp_All_Good,
   PopUp_Are_You_Sure,
+  PopUp_Error,
   PopUp_Under_Construction,
 } from "../PopUp_Smart";
 
 import LMloader from "../Features/LMloader.svg";
 import { SingularToPlural } from "../Features/UsefulFunctions.js";
 import { Add_Edit_Entity } from "../Add_Edit_Entitiy.js";
+import { fix_path } from "../Dashboards/functions_for_dashboards.js";
 
 function ResourceGroup_All({
   // Preview_this_Resource ,
@@ -49,6 +51,9 @@ function ResourceGroup_All({
     get_all_resource_types,
     Assets_Preview_List,
     set_Assets_Preview_List,
+    mssp_config_json,
+    front_IP,
+    front_URL,
   } = useContext(GeneralContext);
 
   const [
@@ -73,6 +78,13 @@ function ResourceGroup_All({
     HeadLine: "Success",
     paragraph: "successfully",
     buttonTitle: "Close",
+  });
+
+  const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
+  const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({
+    HeadLine: "",
+    paragraph: "",
+    buttonTitle: "",
   });
 
   const [PopUp_Are_You_Sure__show, set_PopUp_Are_You_Sure__show] =
@@ -120,6 +132,12 @@ function ResourceGroup_All({
       setFullCategoryAndEntitiesList(res.data ?? []);
     } catch (error) {
       console.log("error in FullCategoryAndEntitiesList :", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN getting data ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
   };
 
@@ -156,7 +174,15 @@ function ResourceGroup_All({
         }
       };
       await red.readAsText(file);
-    } catch (error) {}
+    } catch (error) {
+      console.log("Import error", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Import ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
+    }
   };
 
   const export_assets_json = async () => {
@@ -180,37 +206,53 @@ function ResourceGroup_All({
       downloadAnchorNode.remove();
     } catch (error) {
       console.log("error", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Export ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
   };
 
   const EditTools = (Info) => {
-    console.log(Info?.type);
-    set_resourceItem(Info);
+    try {
+      console.log(Info?.type);
+      set_resourceItem(Info);
 
-    set_item_types_list([Info?.type]);
+      set_item_types_list([Info?.type]);
 
-    //  make array from item types
-    // const resource_arrary =[]
-    //   if(Info?.types)
-    //   {
-    //     for (let x of Info?.types) {
-    //       resource_arrary.push(x.resource_type_id)
-    //     }
-    //     set_item_types_list(resource_arrary)
+      //  make array from item types
+      // const resource_arrary =[]
+      //   if(Info?.types)
+      //   {
+      //     for (let x of Info?.types) {
+      //       resource_arrary.push(x.resource_type_id)
+      //     }
+      //     set_item_types_list(resource_arrary)
 
-    //   }
+      //   }
 
-    //make array from item tools
+      //make array from item tools
 
-    const item_arrary = [];
-    if (Info?.tools) {
-      for (let x of Info?.tools) {
-        item_arrary.push(x.Toolid);
+      const item_arrary = [];
+      if (Info?.tools) {
+        for (let x of Info?.tools) {
+          item_arrary.push(x.Toolid);
+        }
+        set_item_tool_list(item_arrary);
       }
-      set_item_tool_list(item_arrary);
+      set_popUp_Add_or_Edit__status("edit");
+      set_popUp_Add_or_Edit__show(true);
+    } catch (error) {
+      console.log(error, "Error in edit");
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Edit ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
-    set_popUp_Add_or_Edit__status("edit");
-    set_popUp_Add_or_Edit__show(true);
   };
 
   const Add_Many = (btn_add_many_id) => {
@@ -239,6 +281,12 @@ function ResourceGroup_All({
       }
     } catch (err) {
       console.log(err);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Delete ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
   };
 
@@ -278,6 +326,12 @@ function ResourceGroup_All({
         }
       } catch (err) {
         console.log(err);
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error IN Delete ",
+          paragraph: "Error Happened Check Logs",
+          buttonTitle: "Ok",
+        });
       }
     };
 
@@ -338,6 +392,77 @@ function ResourceGroup_All({
     }
   };
 
+  const HandleDashboardAssetOpenEndPoints = async (id) => {
+    try {
+      console.log("start HandleDashboardAssetOpenEndPoints");
+      const res = await axios.get(
+        `${backEndURL}/dashboard/GetDashBoardClientIdVelo/${id}`
+      );
+      console.log("res res res res 555555555555555555", res);
+      if (res.data) {
+        const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks)
+          ? mssp_config_json.moduleLinks
+          : [];
+        const threatHuntingURL = moduleLinks.find(
+          (link) => link.toolName === "Asset Endpoints Dashboard"
+        )?.toolURL;
+        const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);
+
+        const url2 = fixed_path.replace(
+          "_a=()",
+          `_a=(filters:!((query:(match_phrase:(ClientId:%22${res.data}%22)))))`
+        );
+        console.log(url2, "uuuuuuuuuuuuu");
+
+        window.open(url2, "_blank");
+      } else {
+        console.log("false");
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error No Data",
+          paragraph: "There is no Client ID associated with this Entity",
+          buttonTitle: "Ok",
+        });
+      }
+    } catch (error) {
+      console.log("Error in HandleDashboardAssetOpenEndPoints : ", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN show Data",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
+    }
+  };
+
+  const HandleDashboardAssetOpenRest = async (id) => {
+    try {
+      const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks)
+        ? mssp_config_json.moduleLinks
+        : [];
+      const threatHuntingURL = moduleLinks.find(
+        (link) => link.toolName === "Asset Rest Dashboard"
+      )?.toolURL;
+      const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);
+
+      const url2 = fixed_path.replace(
+        "_a=()",
+        `_a=(filters:!((query:(match_phrase:(asset_parent_id:%22${id}%22)))))`
+      );
+      console.log(url2, "uuuuuuuuuuuuu");
+
+      window.open(url2, "_blank");
+    } catch (error) {
+      console.log("Error in HandleDashboardAssetOpenRest : ", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN show Data",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
+    }
+  };
+
   return (
     <div
       className="ResourceGroup-All"
@@ -368,6 +493,11 @@ function ResourceGroup_All({
           getFullCategoryAndEntitiesList={getFullCategoryAndEntitiesList}
           PopUp_Are_You_Sure__Type={PopUp_Are_You_Sure__Type}
           set_PopUp_Are_You_Sure__Type={set_PopUp_Are_You_Sure__Type}
+          PopUp_Error____show={PopUp_Error____show}
+          set_PopUp_Error____show={set_PopUp_Error____show}
+          set_PopUp_Error____txt={set_PopUp_Error____txt}
+          HandleDashboardAssetOpenEndPoints={HandleDashboardAssetOpenEndPoints}
+          HandleDashboardAssetOpenRest={HandleDashboardAssetOpenRest}
         />
       )}
 
@@ -444,6 +574,15 @@ function ResourceGroup_All({
           HeadLine={PopUp_All_Good__txt.HeadLine}
           paragraph={PopUp_All_Good__txt.paragraph}
           buttonTitle={PopUp_All_Good__txt.buttonTitle}
+        />
+      )}
+      {PopUp_Error____show && (
+        <PopUp_Error
+          popUp_show={PopUp_Error____show}
+          set_popUp_show={set_PopUp_Error____show}
+          HeadLine={PopUp_Error____txt.HeadLine}
+          paragraph={PopUp_Error____txt.paragraph}
+          buttonTitle={PopUp_Error____txt.buttonTitle}
         />
       )}
       {loader ? (
@@ -692,6 +831,10 @@ function ResourceGroup_All({
                 handle_back={handle_show_all_assets_type_list}
                 setChosenEntity={setChosenEntity}
                 ChosenCategory={ChosenCategory}
+                HandleDashboardAssetOpenEndPoints={
+                  HandleDashboardAssetOpenEndPoints
+                }
+                HandleDashboardAssetOpenRest={HandleDashboardAssetOpenRest}
               />
             </>
           )}

@@ -14,6 +14,7 @@ import { ReactComponent as IconComputer } from "./ResourceGroup/asset-icons/ico-
 import { ReactComponent as IconNoIcon } from "./ResourceGroup/asset-icons/ico-no-icon.svg";
 import { format_date_type_a } from "./Features/DateFormat.js";
 import { ReactComponent as IconPlus } from "./icons/ico-plus.svg";
+import { fix_path } from "./Dashboards/functions_for_dashboards.js";
 
 export const Add_Edit_Entity = (props) => {
   const {
@@ -42,12 +43,23 @@ export const Add_Edit_Entity = (props) => {
     getFullCategoryAndEntitiesList,
 
     set_PopUp_Are_You_Sure__Type,
+    set_PopUp_Error____show,
+    set_PopUp_Error____txt,
+    HandleDashboardAssetOpenEndPoints,
+    HandleDashboardAssetOpenRest,
   } = props;
   const [UpdaterValue, setUpdaterValue] = useState(false);
   const [ChooseTypePopUpShow, setChooseTypePopUpShow] = useState(false);
 
-  const { all_Resource_Types, all_Tools, backEndURL, get_all_resource_types } =
-    useContext(GeneralContext);
+  const {
+    all_Resource_Types,
+    all_Tools,
+    backEndURL,
+    get_all_resource_types,
+    mssp_config_json,
+    front_IP,
+    front_URL,
+  } = useContext(GeneralContext);
   const [ChosenEntity, setChosenEntity] = useState(ChosenEntityRaw);
 
   useEffect(() => {
@@ -75,14 +87,27 @@ export const Add_Edit_Entity = (props) => {
   }, [resourceItem]);
 
   const HandleMonitorOutsideSwitch = async (Info) => {
-    const res = await axios.put(`${backEndURL}/Resources/UpdateMonitorSingle`, {
-      resource_id: Info?.resource_id,
-      value: !Info?.monitoring,
-    });
+    try {
+      const res = await axios.put(
+        `${backEndURL}/Resources/UpdateMonitorSingle`,
+        {
+          resource_id: Info?.resource_id,
+          value: !Info?.monitoring,
+        }
+      );
 
-    if (res.data) {
-      Info.monitoring = !Info?.monitoring;
-      setUpdaterValue(!UpdaterValue);
+      if (res.data) {
+        Info.monitoring = !Info?.monitoring;
+        setUpdaterValue(!UpdaterValue);
+      }
+    } catch (error) {
+      console.log("Error in :", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Monitor Switch ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
   };
 
@@ -158,16 +183,60 @@ export const Add_Edit_Entity = (props) => {
     set_popUp_show(false);
   }
 
+  // const HandleDashboardAssetOpenEndPoints = async (id) => {
+  //   try {
+  //     console.log("start HandleDashboardAssetOpenEndPoints");
+  //     const res = await axios.get(
+  //       `${backEndURL}/dashboard/GetDashBoardClientIdVelo/${id}`
+  //     );
+  //     console.log("res res res res 555555555555555555", res);
+  //     if (res.data) {
+  //       const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks)
+  //         ? mssp_config_json.moduleLinks
+  //         : [];
+  //       const threatHuntingURL = moduleLinks.find(
+  //         (link) => link.toolName === "Asset Endpoints Dashboard"
+  //       )?.toolURL;
+  //       const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);
+
+  //       const url2 = fixed_path.replace(
+  //         "_a=()",
+  //         `_a=(filters:!((query:(match_phrase:(ClientId:%22${res.data}%22)))))`
+  //       );
+  //       console.log(url2, "uuuuuuuuuuuuu");
+
+  //       window.open(url2, "_blank");
+  //     } else {
+  //       console.log("false");
+  //       set_PopUp_Error____show(true);
+  //       set_PopUp_Error____txt({
+  //         HeadLine: "Error No Data",
+  //         paragraph: "There is no Client ID associated with this Entity",
+  //         buttonTitle: "Ok",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log("Error in HandleDashboardAssetOpenEndPoints : ", error);
+  //     set_PopUp_Error____show(true);
+  //     set_PopUp_Error____txt({
+  //       HeadLine: "Error IN show Data",
+  //       paragraph: "Error Happened Check Logs",
+  //       buttonTitle: "Ok",
+  //     });
+  //   }
+  // };
+
   const handle_add_or_edit_item = async () => {
     try {
       console.log(ChosenEntity, "chosenEntittyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-      if (
-        !ChosenEntity?.entityName ||
-        (!ChosenEntity?.organization &&
-          ChosenEntity?.categoryName !== "Organization")
-      ) {
+      if (!ChosenEntity?.entityName) {
         console.log("Missing data ", ChosenEntity);
-
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error IN Adding Entity",
+          paragraph: "The Name Field Is empty",
+          buttonTitle: "Ok",
+        });
         return;
       }
       if (popUp_Add_or_Edit__status == "Add") {
@@ -183,6 +252,12 @@ export const Add_Edit_Entity = (props) => {
           handleClose();
         } else {
           console.log("error handle_add_or_edit_item entity add");
+          set_PopUp_Error____show(true);
+          set_PopUp_Error____txt({
+            HeadLine: "Error IN Adding Entity",
+            paragraph: "Error Happened Check Logs",
+            buttonTitle: "Ok",
+          });
         }
       } else if (popUp_Add_or_Edit__status == "Edit") {
         console.log("Edit");
@@ -195,13 +270,31 @@ export const Add_Edit_Entity = (props) => {
           getFullCategoryAndEntitiesList();
           handleClose();
         } else {
-          console.log("error handle_add_or_edit_item entity add");
+          console.log("error handle_add_or_edit_item entity add 2");
+          set_PopUp_Error____show(true);
+          set_PopUp_Error____txt({
+            HeadLine: "Error IN Adding Entity",
+            paragraph: "Error Happened Check Logs",
+            buttonTitle: "Ok",
+          });
         }
       } else {
         console.log("Error");
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error IN Adding Entity",
+          paragraph: "Error Happened Check Logs",
+          buttonTitle: "Ok",
+        });
       }
     } catch (error) {
       console.log("error handle_add_or_edit_item :", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Adding Entity",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
   };
 
@@ -242,27 +335,40 @@ export const Add_Edit_Entity = (props) => {
   };
 
   const HandleMonitorOutsideSwitchMulti = async (info, StateOfSwitch) => {
-    const ids = [];
-    if (Array.isArray(info)) {
-      info.forEach((x) => {
-        ids.push(x?.entitiesId);
-      });
-    } else {
-      ids.push(info?.entitiesId);
-    }
-    const res = await axios.put(`${backEndURL}/Resources/UpdateMonitorMulti`, {
-      ids: ids,
-      value: !StateOfSwitch,
-    });
-    if (res.data) {
+    try {
+      const ids = [];
       if (Array.isArray(info)) {
-        info.forEach((y) => {
-          y?.properties?.forEach((o) => (o.monitoring = !StateOfSwitch));
+        info.forEach((x) => {
+          ids.push(x?.entitiesId);
         });
       } else {
-        info?.properties?.forEach((o) => (o.monitoring = !StateOfSwitch));
+        ids.push(info?.entitiesId);
       }
-      setUpdaterValue(!UpdaterValue);
+      const res = await axios.put(
+        `${backEndURL}/Resources/UpdateMonitorMulti`,
+        {
+          ids: ids,
+          value: !StateOfSwitch,
+        }
+      );
+      if (res.data) {
+        if (Array.isArray(info)) {
+          info.forEach((y) => {
+            y?.properties?.forEach((o) => (o.monitoring = !StateOfSwitch));
+          });
+        } else {
+          info?.properties?.forEach((o) => (o.monitoring = !StateOfSwitch));
+        }
+        setUpdaterValue(!UpdaterValue);
+      }
+    } catch (error) {
+      console.log("Error in HandleMonitorOutsideSwitchMulti :", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Monitor Switch ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
     }
   };
   return (
@@ -286,15 +392,27 @@ export const Add_Edit_Entity = (props) => {
               <p className="font-type-h4   Color-White ml-b">
                 {popUp_Add_or_Edit__status === "Add" ? (
                   <>
-                    Add{" "}
+                    Add Entity{" "}
                     {ChosenEntityRaw?.categoryName == "Organization"
                       ? ChosenEntityRaw?.categoryName
                       : ChosenEntityRaw?.categoryName?.slice(0, -1)}
                   </>
                 ) : (
-                  <>Edit {ChosenEntityRaw?.entityName}</>
+                  <>Edit Entity : {ChosenEntityRaw?.entityName}</>
                 )}
               </p>
+              <button
+                className="btn-type2"
+                style={{ marginLeft: "auto" }}
+                onClick={() => {
+                  if (ChosenEntity.categoryName == "Endpoints") {
+                    HandleDashboardAssetOpenEndPoints(ChosenEntity.entitiesId);
+                  }
+                  HandleDashboardAssetOpenRest(ChosenEntity.entitiesId);
+                }}
+              >
+                <p className="font-type-menu ">Show Data</p>
+              </button>
             </div>
 
             <div className="items_top_center_buttom">

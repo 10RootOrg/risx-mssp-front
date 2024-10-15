@@ -178,7 +178,7 @@ export const PopUp_For_velociraptor_response = (props) => {
 
   const [headers, set_headers] = useState([]);
   const [isWidthLimited, setIsWidthLimited] = useState(true); // State to toggle width
-   // Get the keys from the first object (assuming all objects have the same keys)
+  // Get the keys from the first object (assuming all objects have the same keys)
 
   useEffect(() => {
     if (!json_file_info || json_file_info?.table.length === 0) return;
@@ -191,8 +191,6 @@ export const PopUp_For_velociraptor_response = (props) => {
 
     set_headers(filterd);
   }, [json_file_info]);
-
-
 
   const handleHeaderClick = () => {
     setIsWidthLimited(!isWidthLimited); // Toggle the width limit
@@ -570,13 +568,15 @@ export const PopUp_For_velociraptor_response = (props) => {
                         <div>
                           <p className="  font-type-txt   Color-Grey1  ">
                             Data file is too big.
-                             {json_file_info?.mbSize && <> ({Math.round(json_file_info?.mbSize)}Mb)</> } 
-                             <br />
+                            {json_file_info?.mbSize && (
+                              <> ({Math.round(json_file_info?.mbSize)}Mb)</>
+                            )}
+                            <br />
                             You can download it as a JSON file.
                           </p>
                           <button
                             className="btn-type3   mt-a"
-                            style={{ marginRight: "auto" , marginLeft:"-5px"}}
+                            style={{ marginRight: "auto", marginLeft: "-5px" }}
                           >
                             <p
                               className="font-type-menu  "
@@ -1583,7 +1583,9 @@ export const PopUp_For_Shodan_response = (props) => {
     } else {
       // set_display_this_data(json_file_info)
       set_display_this_domain(Domain);
-      const [filter] = json_file_info.filter((data) => data.Domain === Domain);
+      const [filter] = json_file_info.filter(
+        (data) => data.Domain.asset_string === Domain
+      );
       set_display_this_data(filter);
     }
   };
@@ -1624,23 +1626,27 @@ export const PopUp_For_Shodan_response = (props) => {
     }
   };
 
-///// combine all maches
-useEffect(() => {
-  if (!json_file_info){return}
-  let totalMatches = 0;
-  for (let i = 0; i < json_file_info.length; i++) {
-    const response = json_file_info[i]?.Response;
-    const matches = (response === "" || response === undefined || response?.found === undefined) 
-      ? 0 
-      : response.found;
-    
-    totalMatches += matches;
-  }
-console.log("totalMatches" , totalMatches);
+  ///// combine all maches
+  useEffect(() => {
+    if (!json_file_info) {
+      return;
+    }
+    let totalMatches = 0;
+    for (let i = 0; i < json_file_info.length; i++) {
+      const response = json_file_info[i]?.Response;
+      const matches =
+        response === "" ||
+        response === undefined ||
+        response?.total === undefined
+          ? 0
+          : response.total;
 
-set_all_matches(totalMatches);
-}, [json_file_info]);
+      totalMatches += matches;
+    }
+    console.log("totalMatches", totalMatches);
 
+    set_all_matches(totalMatches);
+  }, [json_file_info]);
 
   /// logo preview
   useEffect(() => {
@@ -1802,8 +1808,18 @@ set_all_matches(totalMatches);
                       read_more={
                         "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
                       }
-                      bar_numbers={  json_file_info?.map(    (aaaa) =>   aaaa?.Response === ""  ? 0: aaaa?.Response?.matches?.length   ) ?? [0, 0, 0, 0] }
-                      bar_headlines={  json_file_info?.map((aaaa) => aaaa?.Domain) || []   }
+                      bar_numbers={
+                        json_file_info?.map((aaaa) =>
+                          aaaa?.Response === ""
+                            ? 0
+                            : aaaa?.Response?.matches?.length
+                        ) ?? [0, 0, 0, 0]
+                      }
+                      bar_headlines={
+                        json_file_info?.map(
+                          (aaaa) => aaaa?.Domain?.asset_string
+                        ) || []
+                      }
                       enable_hover={false}
                       display_this_value={"prime_data"}
                       is_popup={true}
@@ -1834,7 +1850,7 @@ set_all_matches(totalMatches);
                     <PreviewBox_type1_number_no_filters
                       HeadLine="Matches"
                       resource_type_id={null}
-                      BigNumber={all_matches ??   "NA"}
+                      BigNumber={all_matches ?? "NA"}
                       SmallNumberTxt={"From all Domains"}
                       SmallNumber={``}
                       StatusColor="blue"
@@ -1846,8 +1862,6 @@ set_all_matches(totalMatches);
                       display_this_value={"High"}
                     />
                   )}
-
-        
                 </div>
 
                 <div style={{ width: "100%" }}>
@@ -1974,7 +1988,7 @@ set_all_matches(totalMatches);
                       </div>
                     )}
 
-               {display_this_data?.Response  === "" && (
+                    {display_this_data?.Response === "" && (
                       <div
                         style={{
                           display: "flex",
@@ -2015,14 +2029,16 @@ set_all_matches(totalMatches);
                                     width: "auto",
                                   }}
                                   onClick={() =>
-                                    handle_click_display_data(Site?.Domain)
+                                    handle_click_display_data(
+                                      Site?.Domain?.asset_string
+                                    )
                                   }
                                 >
                                   <p
                                     className="resource-group-list-item   font-type-txt  Color-Grey1 ml-b "
                                     style={{ width: "60%", minWidth: "60%" }}
                                   >
-                                    {Site?.Domain}
+                                    {Site?.Domain?.asset_string}
                                   </p>
                                   <p
                                     className=" resource-group-list-item  font-type-txt  Color-Grey1 pl-a "
@@ -2032,7 +2048,9 @@ set_all_matches(totalMatches);
                                       textAlign: "right",
                                     }}
                                   >
-                                    {Site?.Response   === "" ?   "0" : Site?.Response?.matches?.length}
+                                    {Site?.Response === ""
+                                      ? "0"
+                                      : Site?.Response?.matches?.length}
                                   </p>
                                 </div>
                               )}
@@ -2110,17 +2128,19 @@ set_all_matches(totalMatches);
                   flexDirection: "column",
                 }}
               >
-                 <div>
-                          <p className="  font-type-txt   Color-Grey1  ">
-                            Data file is too big.
-                             {json_file_info?.mbSize && <> ({Math.round(json_file_info?.mbSize)}Mb)</> } 
-                             <br />
-                            You can download it as a JSON file.
-                          </p>
-                          <button
-                            className="btn-type3   mt-a"
-                            style={{ marginRight: "auto" , marginLeft:"-5px"}}
-                          >
+                <div>
+                  <p className="  font-type-txt   Color-Grey1  ">
+                    Data file is too big.
+                    {json_file_info?.mbSize && (
+                      <> ({Math.round(json_file_info?.mbSize)}Mb)</>
+                    )}
+                    <br />
+                    You can download it as a JSON file.
+                  </p>
+                  <button
+                    className="btn-type3   mt-a"
+                    style={{ marginRight: "auto", marginLeft: "-5px" }}
+                  >
                     <p
                       className="font-type-menu  "
                       onClick={() =>
@@ -2207,7 +2227,6 @@ set_all_matches(totalMatches);
   );
 };
 
-
 export const PopUp_For_LeakCheck_response = (props) => {
   const {
     popUp_show,
@@ -2226,14 +2245,14 @@ export const PopUp_For_LeakCheck_response = (props) => {
     setDownloadProgressBar,
     setDownloadList,
   } = useContext(GeneralContext);
-  
+
   const [module_logo, set_module_logo] = useState("");
   const [aggregate_macro_data, set_aggregate_macro_data] = useState({});
   const [display_this_domain, set_display_this_domain] = useState("prime_data");
   const [display_this_data, set_display_this_data] = useState({});
   const [all_matches, set_all_matches] = useState(0);
   const [sort_by, set_sort_by] = useState("Domain");
-  const [firstTimeData,setfirstTimeData]=useState(true); // usewith useeffect to now the first load and to sort
+  const [firstTimeData, setfirstTimeData] = useState(true); // usewith useeffect to now the first load and to sort
   const [isWidthLimited, setIsWidthLimited] = useState(true); // State to toggle width
 
   console.log("----------------- json_file_info", json_file_info);
@@ -2241,34 +2260,35 @@ export const PopUp_For_LeakCheck_response = (props) => {
   const handleHeaderClick = () => {
     setIsWidthLimited(!isWidthLimited); // Toggle the width limit
   };
-  
-  const handle_click_display_leck_data= (Domain) => {
-console.log("handle_click_display_data",Domain);
 
-if(!Domain   || Domain  === ""){ set_display_this_domain({});console.log("no domain value"); return}
-if(display_this_domain ===  Domain){set_display_this_domain("prime_data"); return}
-else{
-  // set_display_this_data(json_file_info)
-  set_display_this_domain(Domain)
-  const [filter] = json_file_info.filter(data => data.Name === Domain);
+  const handle_click_display_leck_data = (Domain) => {
+    console.log("handle_click_display_data", Domain);
 
-  console.log("filter",filter);
-  
-  set_display_this_data(filter)
- 
-}
+    if (!Domain || Domain === "") {
+      set_display_this_domain({});
+      console.log("no domain value");
+      return;
+    }
+    if (display_this_domain === Domain) {
+      set_display_this_domain("prime_data");
+      return;
+    } else {
+      // set_display_this_data(json_file_info)
+      set_display_this_domain(Domain);
+      const [filter] = json_file_info.filter((data) => data.Name === Domain);
 
+      console.log("filter", filter);
+
+      set_display_this_data(filter);
+    }
   };
- 
-  const handle_close_list= () => {
-    console.log("handle_close_list" );
+
+  const handle_close_list = () => {
+    console.log("handle_close_list");
     set_display_this_domain("prime_data");
     set_display_this_data({});
+  };
 
- 
-   
-     };
-    
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
     if (file?.fileSize === "Too big") {
@@ -2299,52 +2319,55 @@ else{
     }
   };
 
-///// combine all maches
-useEffect(() => {
-  if (!json_file_info){return}
-  let totalMatches = 0;
-  for (let i = 0; i < json_file_info.length; i++) {
-    const response = json_file_info[i]?.Response;
-    const matches = (response === "" || response === undefined || response?.found === undefined) 
-      ? 0 
-      : response.found;
-    
-    totalMatches += matches;
-  }
-console.log("totalMatches" , totalMatches);
+  ///// combine all maches
+  useEffect(() => {
+    if (!json_file_info) {
+      return;
+    }
+    let totalMatches = 0;
+    for (let i = 0; i < json_file_info.length; i++) {
+      const response = json_file_info[i]?.Response;
+      const matches =
+        response === "" ||
+        response === undefined ||
+        response?.found === undefined
+          ? 0
+          : response.found;
 
-set_all_matches(totalMatches);
-}, [json_file_info]);
+      totalMatches += matches;
+    }
+    console.log("totalMatches", totalMatches);
 
+    set_all_matches(totalMatches);
+  }, [json_file_info]);
 
-/// logo preview
-useEffect(() => {
-  if (
-    json_file_data === undefined ||
-    json_file_data === "" ||
-    json_file_data === null
-  ) {
-    return;
-  }
-  if (all_Tools === undefined || all_Tools === "" || all_Tools === null) {
-    return;
-  }
-  if (json_file_data.length == 0 || all_Tools.length == 0) {
-    return;
-  }
+  /// logo preview
+  useEffect(() => {
+    if (
+      json_file_data === undefined ||
+      json_file_data === "" ||
+      json_file_data === null
+    ) {
+      return;
+    }
+    if (all_Tools === undefined || all_Tools === "" || all_Tools === null) {
+      return;
+    }
+    if (json_file_data.length == 0 || all_Tools.length == 0) {
+      return;
+    }
 
-  const [tool_info] = all_Tools?.filter(
-    (word) => word?.Tool_name === json_file_data?.ModuleName
-  );
+    const [tool_info] = all_Tools?.filter(
+      (word) => word?.Tool_name === json_file_data?.ModuleName
+    );
 
-  const logoAddress_1 = tool_info?.logoAddress_1;
-  if (logoAddress_1 === undefined) {
-    return;
-  }
-  const bbb = require(`${logoAddress_1}`);
-  set_module_logo(bbb);
-}, [json_file_data]);
-
+    const logoAddress_1 = tool_info?.logoAddress_1;
+    if (logoAddress_1 === undefined) {
+      return;
+    }
+    const bbb = require(`${logoAddress_1}`);
+    set_module_logo(bbb);
+  }, [json_file_data]);
 
   useEffect(() => {
     set_popUp_show(popUp_show);
@@ -2360,68 +2383,62 @@ useEffect(() => {
     set_popUp_show(false);
   }
 
- 
-    const do_sort = (column) => {
-      console.log("sort this column: ", column);
-  
-      if (!column) {
-          console.log("Can't sort ", column);
-          return;
-      }
-  
-      // Utility function to get nested property
-      const getNestedValue = (obj, path) => {
-          return path.split('.').reduce((acc, part) => acc && acc[part], obj);
-      };
-  
-      // Function to normalize values, treating empty strings and undefined as "0"
-      const normalizeValue = (value) => {
-          return value === "" || value === undefined ? "0" : value;
-      };
-  
-      if (column === sort_by) {
-          console.log("It's already sorted like this, reversing the order");
-          const sorted = [...json_file_info].sort((a, b) => {
-              const valA = normalizeValue(getNestedValue(a, column));
-              const valB = normalizeValue(getNestedValue(b, column));
-  
-              if (valB < valA) return -1;
-              if (valB > valA) return 1;
-              return 0;
-          });
-          console.log("Sorted descending:", sorted);
-          set_json_file_info(sorted);
-          set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
-  
-      } else {
-          set_sort_by(column);
-          const sorted = [...json_file_info].sort((a, b) => {
-              const valA = normalizeValue(getNestedValue(a, column));
-              const valB = normalizeValue(getNestedValue(b, column));
-  
-              if (valA < valB) return -1;
-              if (valA > valB) return 1;
-              return 0;
-          });
-          console.log("Sorted ascending:", sorted);
-          set_json_file_info(sorted);
-      }
-  };
-  
+  const do_sort = (column) => {
+    console.log("sort this column: ", column);
 
-// for first load  =>  sorting the list
-useEffect(() => {
-  if (json_file_info?.length >=2 && firstTimeData ) {
-    do_sort("Domain");
-    setfirstTimeData(false)
-  }
-    
-  }, [json_file_info])
+    if (!column) {
+      console.log("Can't sort ", column);
+      return;
+    }
+
+    // Utility function to get nested property
+    const getNestedValue = (obj, path) => {
+      return path.split(".").reduce((acc, part) => acc && acc[part], obj);
+    };
+
+    // Function to normalize values, treating empty strings and undefined as "0"
+    const normalizeValue = (value) => {
+      return value === "" || value === undefined ? "0" : value;
+    };
+
+    if (column === sort_by) {
+      console.log("It's already sorted like this, reversing the order");
+      const sorted = [...json_file_info].sort((a, b) => {
+        const valA = normalizeValue(getNestedValue(a, column));
+        const valB = normalizeValue(getNestedValue(b, column));
+
+        if (valB < valA) return -1;
+        if (valB > valA) return 1;
+        return 0;
+      });
+      console.log("Sorted descending:", sorted);
+      set_json_file_info(sorted);
+      set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+    } else {
+      set_sort_by(column);
+      const sorted = [...json_file_info].sort((a, b) => {
+        const valA = normalizeValue(getNestedValue(a, column));
+        const valB = normalizeValue(getNestedValue(b, column));
+
+        if (valA < valB) return -1;
+        if (valA > valB) return 1;
+        return 0;
+      });
+      console.log("Sorted ascending:", sorted);
+      set_json_file_info(sorted);
+    }
+  };
+
+  // for first load  =>  sorting the list
+  useEffect(() => {
+    if (json_file_info?.length >= 2 && firstTimeData) {
+      do_sort("Domain");
+      setfirstTimeData(false);
+    }
+  }, [json_file_info]);
 
   return (
     <>
- 
-
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
@@ -2439,100 +2456,121 @@ useEffect(() => {
               </button>
             </div>
 
- 
-
             <div className="velociraptor_response_all_top ">
               <div className="velociraptor_response_top_texts  "> </div>
 
               <div className="pop-up-top-boxes-macro PreviewBox-of-pop-up-all">
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "var(--space-c)",
+                    width: "100%",
+                  }}
+                >
+                  <PreviewBox_type5_hunt_data_tabla
+                    HeadLine="Hunt Data"
+                    artifact_or_module={"Module"}
+                    is_popup={true}
+                    StartDate={
+                      json_file_data?.StartDate
+                        ? format_date_type_c(json_file_data?.StartDate)
+                        : "NA"
+                    }
+                    Artifact={json_file_data?.ModuleName}
+                    HuntID={json_file_info?.huntid || "NA"}
+                    Status={json_file_data?.Status || "NA"}
+                    Error={
+                      json_file_data?.Error === "" ? (
+                        <>None</>
+                      ) : (
+                        <>{json_file_data?.Error}</>
+                      )
+                    }
+                  />
 
- 
+                  {json_file_data?.Arguments && (
+                    <>
+                      <PreviewBox_type9_arguments
+                        HeadLine="Arguments"
+                        Arguments={json_file_data?.Arguments}
+                        is_popup={true}
+                      />
+                    </>
+                  )}
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-c)', width: '100%' }}>
-        
-<PreviewBox_type5_hunt_data_tabla
-HeadLine="Hunt Data"
-artifact_or_module={"Module"}
-is_popup={true}
-StartDate={  json_file_data?.StartDate ? format_date_type_c(json_file_data?.StartDate) : "NA"    }
-Artifact={json_file_data?.ModuleName}
-HuntID={json_file_info?.huntid || "NA"}
-Status={json_file_data?.Status || "NA"}
-Error={   json_file_data?.Error === "" ? (  <>None</>   ) : (   <>{json_file_data?.Error}</>  )  }
-/>
- 
-{ json_file_data?.Arguments   && <>
+                  {json_file_info && json_file_info.fileSize != "Too big" && (
+                    <PreviewBox_respo_chart
+                      display_type={"pie"} // pie , bar
+                      allow_wide={true}
+                      allow_wide_min_wide={"480px"}
+                      display_y_axis={false} // for the bar
+                      HeadLine={`Name found`}
+                      read_more_icon={""}
+                      description_show={false}
+                      description_short={
+                        "Centralized hub for integrating client data and insights seamlessly..."
+                      }
+                      description_max_length={12}
+                      read_more={
+                        "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
+                      }
+                      bar_numbers={
+                        json_file_info?.map((aaaa) =>
+                          aaaa?.Response?.found !== undefined &&
+                          aaaa?.Response?.found !== null
+                            ? aaaa?.Response?.found
+                            : "NA"
+                        ) || [0, 0, 0, 0]
+                      }
+                      bar_headlines={
+                        json_file_info?.map((aaaa) => aaaa?.Name) || []
+                      }
+                      enable_hover={false}
+                      display_this_value={"prime_data"}
+                      is_popup={true}
+                      colors={"Basic"} // Basic , Alert
+                      date={"NA"} // "NA"
+                      box_height={"240px"}
+                    />
+                  )}
+                  {json_file_info?.fileSize != "Too big" && (
+                    <PreviewBox_type1_number_no_filters
+                      HeadLine="Tested"
+                      resource_type_id={null}
+                      BigNumber={
+                        json_file_info?.length ? json_file_info?.length : "NA"
+                      }
+                      SmallNumberTxt={"Items"}
+                      SmallNumber={``}
+                      StatusColor="blue"
+                      date={"NA"}
+                      is_popup={true}
+                      txt_color={""}
+                      display_this={display_this_domain}
+                      set_display_this={set_display_this_domain}
+                      display_this_value={"High"}
+                    />
+                  )}
+                  {json_file_info?.fileSize != "Too big" && (
+                    <PreviewBox_type1_number_no_filters
+                      HeadLine="Matches"
+                      resource_type_id={null}
+                      BigNumber={all_matches ? all_matches : "NA"}
+                      SmallNumberTxt={"From all items"}
+                      SmallNumber={``}
+                      StatusColor="blue"
+                      date={"NA"}
+                      is_popup={true}
+                      txt_color={""}
+                      display_this={display_this_domain}
+                      set_display_this={set_display_this_domain}
+                      display_this_value={"High"}
+                    />
+                  )}
 
- <PreviewBox_type9_arguments
-HeadLine="Arguments"
-Arguments={json_file_data?.Arguments}
-is_popup={true}
-/>  
-</>}
-      
- 
-
-{json_file_info &&  json_file_info.fileSize  != "Too big"  &&  
-<PreviewBox_respo_chart 
-display_type={'pie'}  // pie , bar
-allow_wide={true}
-allow_wide_min_wide={"480px"}
-display_y_axis={false} // for the bar
-HeadLine={`Name found`}
-read_more_icon={''}
-description_show={false}
-description_short={'Centralized hub for integrating client data and insights seamlessly...'}
-description_max_length={12}
-read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
-bar_numbers={  json_file_info?.map(   (aaaa ) =>  aaaa?.Response?.found !== undefined && aaaa?.Response?.found !== null?   aaaa?.Response?.found  : "NA") ||   [0,0,0,0]}
-bar_headlines={  json_file_info?.map(   (aaaa ) =>  aaaa?.Name  ) || []}
-enable_hover={false}
-display_this_value={"prime_data"}
-is_popup={true}
-colors={"Basic"} // Basic , Alert
-date={"NA"} // "NA"
-box_height={"240px"}
-/>
-}
-{json_file_info?.fileSize != "Too big" && 
-<PreviewBox_type1_number_no_filters
-HeadLine="Tested"
-resource_type_id={null}
-BigNumber={  json_file_info?.length ? json_file_info?.length : "NA"  }
-SmallNumberTxt={"Items"}
-SmallNumber={``}
-StatusColor="blue"
-date={"NA"}
-is_popup={true}
-txt_color={""}
-display_this={ display_this_domain}
-set_display_this={set_display_this_domain}
-display_this_value={"High"}
-/>
-}
-{json_file_info?.fileSize != "Too big" && 
-<PreviewBox_type1_number_no_filters
-HeadLine="Matches"
-resource_type_id={null}
-BigNumber={  all_matches  ?  all_matches : "NA"  }
-SmallNumberTxt={"From all items"}
-SmallNumber={``}
-StatusColor="blue"
-date={"NA"}
-is_popup={true}
-txt_color={""}
-display_this={ display_this_domain}
-set_display_this={set_display_this_domain}
-display_this_value={"High"}
-/>
-}
-
-
-
-
-
-                      {/* too big file note */}
-                      {/* {json_file_info?.fileSize === "Too big" && (
+                  {/* too big file note */}
+                  {/* {json_file_info?.fileSize === "Too big" && (
                         <div
                           className="mt-c "
                           style={{
@@ -2593,38 +2631,63 @@ display_this_value={"High"}
                           </div>
                         </div>
                       )} */}
-                    </div>
+                </div>
 
+                <div style={{ width: "100%" }}>
+                  <div style={{}}>
+                    {display_this_domain != "prime_data" && (
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                        className="mb-b"
+                      >
+                        <p
+                          className="resource-group-list-item   font-type-h4  Color-White ml-b  "
+                          style={{ width: "60%", minWidth: "60%" }}
+                        >
+                          {display_this_domain}
+                        </p>
+                        <div
+                          className="display-flex justify-content-end  "
+                          style={{ marginRight: " " }}
+                        >
+                          <button
+                            className="PopUp-Close-btn"
+                            onClick={handle_close_list}
+                          >
+                            <CloseButton className="PopUp-Close-btn-img" />{" "}
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
+                    {display_this_domain === "prime_data" &&
+                      json_file_info?.fileSize != "Too big" && (
+                        <div className="resource-group-list-keyNames mb-a  ">
+                          <div
+                            className="resource-group-list-item list-item-big ml-b"
+                            onClick={() => do_sort("Name")}
+                          >
+                            <p className="font-type-menu  make-underline Color-White">
+                              Name
+                            </p>
+                          </div>
+                          <div
+                            className="resource-group-list-item list-item-small"
+                            onClick={() => do_sort("Response.found")}
+                            style={{ marginRight: "26px", textAlign: "right" }}
+                          >
+                            <p className="font-type-menu  make-underline Color-White mr-b">
+                              Matches
+                            </p>
+                          </div>
+                        </div>
+                      )}
 
- <div style={{width:"100%"  }}>
- 
-
-<div style={{  }}  >
-
-{ display_this_domain != "prime_data"  &&
-<div style={{display:"flex" , justifyContent:"space-between" , alignItems:"center" }} className="mb-b">
-<p className='resource-group-list-item   font-type-h4  Color-White ml-b  ' style={{width:"60%", minWidth:"60%"}}>{  display_this_domain}</p> 
-        <div  className="display-flex justify-content-end  "  style={{ marginRight: " " }} >
-        <button className="PopUp-Close-btn"  onClick={handle_close_list } >
-          <CloseButton className="PopUp-Close-btn-img" />{" "}
-        </button>
-      </div>
-
-      </div>
-}
-
-
-
-{  display_this_domain === "prime_data"  && json_file_info?.fileSize != "Too big" &&
-<div className='resource-group-list-keyNames mb-a  '  >
-<div className='resource-group-list-item list-item-big ml-b' onClick={() => do_sort("Name")}><p className='font-type-menu  make-underline Color-White'>Name</p></div>
-<div className='resource-group-list-item list-item-small'    onClick={() => do_sort("Response.found")} style={{marginRight:"26px" ,textAlign:"right"}} ><p className='font-type-menu  make-underline Color-White mr-b'>Matches</p></div>
-</div>
-}
- 
-
-  {/* { display_this_data?.Response?.result?.length > 0  &&
+                    {/* { display_this_data?.Response?.result?.length > 0  &&
 <div className='resource-group-list-keyNames mb-a  '  >
 <div className='resource-group-list-item list-item-big  ml-b '><p className='font-type-menu  make-underline Color-White'>Email</p></div>
 <div className='resource-group-list-item list-item-small'><p className='font-type-menu make-underline  Color-White '>Username</p></div>
@@ -2637,36 +2700,105 @@ display_this_value={"High"}
 </div>
 } */}
 
-{ display_this_data?.Response?.found === 0  &&
-<div  style={{ display:"flex" , alignItems:"center", justifyContent:"center", height:"100px"}}>
-  <p className='   font-type-txt  Color-Grey1 mr-b '  style={ {} }>No matches found for this item</p> 
-  </div>
-}
+                    {display_this_data?.Response?.found === 0 && (
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: "100px",
+                        }}
+                      >
+                        <p
+                          className="   font-type-txt  Color-Grey1 mr-b "
+                          style={{}}
+                        >
+                          No matches found for this item
+                        </p>
+                      </div>
+                    )}
 
-{ display_this_data?.Response === ""  && display_this_data?.Error &&
-<div  style={{display:"flex", alignItems:"center", justifyContent:"center", height:"100px"}}>
-  <p className='font-type-txt Color-Grey1 mr-b' style={{}}>Error: {display_this_data?.Error}</p> 
-  </div>
-}
+                    {display_this_data?.Response === "" &&
+                      display_this_data?.Error && (
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            height: "100px",
+                          }}
+                        >
+                          <p
+                            className="font-type-txt Color-Grey1 mr-b"
+                            style={{}}
+                          >
+                            Error: {display_this_data?.Error}
+                          </p>
+                        </div>
+                      )}
 
-<div className=''   style={{height:"auto",    maxHeight:"300px",  overflowY:"scroll" }}>
-{Array.isArray(json_file_info) && json_file_info?.map((Site, index) => { return (          
-<div className='resource-group-list-box   '   style={{height:"auto",  overflowY:"hidden"}}>
+                    <div
+                      className=""
+                      style={{
+                        height: "auto",
+                        maxHeight: "300px",
+                        overflowY: "scroll",
+                      }}
+                    >
+                      {Array.isArray(json_file_info) &&
+                        json_file_info?.map((Site, index) => {
+                          return (
+                            <div
+                              className="resource-group-list-box   "
+                              style={{ height: "auto", overflowY: "hidden" }}
+                            >
+                              {display_this_domain === "prime_data" && (
+                                <div
+                                  className=" resource-group-list-line   mr-b  mt-a mb-a"
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    width: "auto",
+                                  }}
+                                  onClick={() =>
+                                    handle_click_display_leck_data(Site?.Name)
+                                  }
+                                >
+                                  <p
+                                    className="resource-group-list-item   font-type-txt  Color-Grey1 ml-b "
+                                    style={{ width: "25%", minWidth: "25%" }}
+                                  >
+                                    {Site?.Name}
+                                  </p>
+                                  {Site?.Error && Site?.Error != "" && (
+                                    <p
+                                      className="resource-group-list-item   font-type-txt  Color-Grey1 ml-b "
+                                      style={{ width: "50%", minWidth: "50%" }}
+                                    >
+                                      {Site?.Error}
+                                    </p>
+                                  )}
 
+                                  <p
+                                    className=" resource-group-list-item  font-type-txt  Color-Grey1 pl-a "
+                                    style={{
+                                      width: "15%",
+                                      minWidth: "15%",
+                                      textAlign: "right",
+                                    }}
+                                  >
+                                    {Site?.Response?.found ||
+                                    Site?.Response?.found === 0
+                                      ? Site?.Response?.found
+                                      : "NA"}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
 
-  {       display_this_domain === "prime_data"    &&
-<div className=" resource-group-list-line   mr-b  mt-a mb-a" style={{display:"flex" ,justifyContent:"space-between" , width:"auto"}}  onClick={()=>handle_click_display_leck_data(Site?.Name)}>
-<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"25%", minWidth:"25%"}}>{Site?.Name}</p> 
-{Site?.Error && Site?.Error  != "" &&<p className='resource-group-list-item   font-type-txt  Color-Grey1 ml-b ' style={{width:"50%", minWidth:"50%"}}>{Site?.Error}</p> }
-
-<p className=' resource-group-list-item  font-type-txt  Color-Grey1 pl-a '  style={{width:"15%", minWidth:"15%" , textAlign:"right"  }}>{(Site?.Response?.found  || Site?.Response?.found  === 0 ) ?  Site?.Response?.found   : "NA"     }</p> 
-</div>
-}
-
-</div> );   })}
-
-
-{/* {display_this_data && display_this_data?.Response?.result?.map((Info, index) => {
+                      {/* {display_this_data && display_this_data?.Response?.result?.map((Info, index) => {
     return (
 <div className='resource-group-list-line resource-group-list-line-not-hoverd'     style={{backgroundColor:"", height:""}}    key={index} >
 <p className='resource-group-list-item  resource-group-list-item-not-hoverd  font-type-txt  Color-Grey1  list-item-big  ml-b'>{ Info?.email }</p> 
@@ -2680,183 +2812,253 @@ display_this_value={"High"}
  </div>
     );
   })} */}
+                    </div>
 
-</div>
-
-
-{display_this_data?.Response?.result?.length > 0 && (
-  <div style={{ maxHeight: "300px", overflowY: "auto"   , margin:0 , padding:0 , border:0 }}>
-    <table border="0" className="table_smart2" style={{ width: "100%", borderCollapse: "collapse" ,border:0  }}>
-      <thead style={{ position: "sticky", top: -1, backgroundColor: "var(--color-Grey5)", zIndex: 1   , margin:"0"  , height:"42px" , textAlign:"left"} }>
-        <tr
-        //  onClick={handleHeaderClick}
-           >
-          <th className="font-type-menu Color-White pl-b">Email</th>
-          <th className="font-type-menu Color-White">Username</th>
-          <th className="font-type-menu Color-White"   onClick={() => do_sort("password")}>Password</th>
-          <th className="font-type-menu Color-White pl-a">Fields</th>
-          <th className="font-type-menu Color-White">Source Name</th>
-          <th className="font-type-menu Color-White">Country</th>
-          <th className="font-type-menu Color-White">Origin</th>
-          <th className="font-type-menu Color-White"  style={{textAlign:"right"}} >Breach Date </th>
-        </tr>
-      </thead>
-      <tbody>
-        {display_this_data?.Response?.result?.map((Info, index) => (
-          <tr key={index}>
-            <td
-         
-              style={{
-                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                paddingLeft:"var(--space-b)"
-              }}
-            >
-              {Info?.email}
-            </td>
-            <td
-              style={{
-                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {Info?.username}
-            </td>
-            <td
-              style={{
-                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            
-            >
-              {Info?.password}
-            </td>
-            <td
-       
-            >
-        <div className='   font-type-txt  Color-Grey1   ' style={{display:"flex"}}>{Info?.fields &&  Info?.fields.length > 0 &&    Info?.fields?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div>
-            </td>
-            <td
-              style={{
-                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {Info?.source?.name 
- }
-            </td>
-            <td
-              style={{
-                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {Info?.country }
-            </td>
-            <td   > <div className='   font-type-txt  Color-Grey1   ' style={{display:"flex"}}>{Info?.origin &&  Info?.origin.length > 0 &&    Info?.origin?.map((tag, index) => (  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1" key={index}>{tag}</p> ))}</div></td>
-       
-            <td
-              style={{
-                maxWidth: isWidthLimited ? LIMIT_MAX_CELL_WIDTH : "none",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                textAlign:"right"
-              }} 
-            >
-              {Info?.source?.breach_date}
-            </td>
-
- 
-
- 
-            </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-)}
-
-
-
-
-
-
-
-
-</div>
-</div>
-
-  
-              </div>
-
-            </div>
-            {json_file_info?.fileSize === "Too big" && (
-                        <div
-                          className="mt-c "
+                    {display_this_data?.Response?.result?.length > 0 && (
+                      <div
+                        style={{
+                          maxHeight: "300px",
+                          overflowY: "auto",
+                          margin: 0,
+                          padding: 0,
+                          border: 0,
+                        }}
+                      >
+                        <table
+                          border="0"
+                          className="table_smart2"
                           style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            flexDirection: "column",
+                            width: "100%",
+                            borderCollapse: "collapse",
+                            border: 0,
                           }}
                         >
-                          <div>
-                          <p className="  font-type-txt   Color-Grey1  ">
-                            Data file is too big.
-                             {json_file_info?.mbSize && <> ({Math.round(json_file_info?.mbSize)}Mb)</> } 
-                             <br />
-                            You can download it as a JSON file.
-                          </p>
-                          <button
-                            className="btn-type3   mt-a"
-                            style={{ marginRight: "auto" , marginLeft:"-5px"}}
+                          <thead
+                            style={{
+                              position: "sticky",
+                              top: -1,
+                              backgroundColor: "var(--color-Grey5)",
+                              zIndex: 1,
+                              margin: "0",
+                              height: "42px",
+                              textAlign: "left",
+                            }}
                           >
-                              <p
-                                className="font-type-menu  "
-                                onClick={() =>
-                                  handle_click_download(
-                                    json_file_info,
-                                    backEndURL
-                                  )
-                                }
-                              >
-                                Download JSON
-                              </p>
-                              <DownloadIconButton className="icon-type1 " />{" "}
-                            </button>
-                          </div>
-
-                          <div
-                            className=""
-                            style={{ display: "flex", alignItems: "center" }}
-                          >
-                            {module_logo === "" ? null : (
-                              <>
-                                <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
-                                  By:
-                                </p>{" "}
-                                <img
-                                  src={module_logo}
-                                  alt="logo"
-                                  maxwidth="140px"
-                                  height="30"
-                                />
-                              </>
-                            )}
-                            <button
-                              className="btn-type2 "
-                              style={{ marginLeft: "auto" }}
-                              onClick={handleClose}
+                            <tr
+                            //  onClick={handleHeaderClick}
                             >
-                              <p className="font-type-menu ">{buttonTitle}</p>{" "}
-                            </button>
-                          </div>
-                        </div>
-                      )}
+                              <th className="font-type-menu Color-White pl-b">
+                                Email
+                              </th>
+                              <th className="font-type-menu Color-White">
+                                Username
+                              </th>
+                              <th
+                                className="font-type-menu Color-White"
+                                onClick={() => do_sort("password")}
+                              >
+                                Password
+                              </th>
+                              <th className="font-type-menu Color-White pl-a">
+                                Fields
+                              </th>
+                              <th className="font-type-menu Color-White">
+                                Source Name
+                              </th>
+                              <th className="font-type-menu Color-White">
+                                Country
+                              </th>
+                              <th className="font-type-menu Color-White">
+                                Origin
+                              </th>
+                              <th
+                                className="font-type-menu Color-White"
+                                style={{ textAlign: "right" }}
+                              >
+                                Breach Date{" "}
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {display_this_data?.Response?.result?.map(
+                              (Info, index) => (
+                                <tr key={index}>
+                                  <td
+                                    style={{
+                                      maxWidth: isWidthLimited
+                                        ? LIMIT_MAX_CELL_WIDTH
+                                        : "none",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      paddingLeft: "var(--space-b)",
+                                    }}
+                                  >
+                                    {Info?.email}
+                                  </td>
+                                  <td
+                                    style={{
+                                      maxWidth: isWidthLimited
+                                        ? LIMIT_MAX_CELL_WIDTH
+                                        : "none",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                    }}
+                                  >
+                                    {Info?.username}
+                                  </td>
+                                  <td
+                                    style={{
+                                      maxWidth: isWidthLimited
+                                        ? LIMIT_MAX_CELL_WIDTH
+                                        : "none",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                    }}
+                                  >
+                                    {Info?.password}
+                                  </td>
+                                  <td>
+                                    <div
+                                      className="   font-type-txt  Color-Grey1   "
+                                      style={{ display: "flex" }}
+                                    >
+                                      {Info?.fields &&
+                                        Info?.fields.length > 0 &&
+                                        Info?.fields?.map((tag, index) => (
+                                          <p
+                                            className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
+                                            key={index}
+                                          >
+                                            {tag}
+                                          </p>
+                                        ))}
+                                    </div>
+                                  </td>
+                                  <td
+                                    style={{
+                                      maxWidth: isWidthLimited
+                                        ? LIMIT_MAX_CELL_WIDTH
+                                        : "none",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                    }}
+                                  >
+                                    {Info?.source?.name}
+                                  </td>
+                                  <td
+                                    style={{
+                                      maxWidth: isWidthLimited
+                                        ? LIMIT_MAX_CELL_WIDTH
+                                        : "none",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                    }}
+                                  >
+                                    {Info?.country}
+                                  </td>
+                                  <td>
+                                    {" "}
+                                    <div
+                                      className="   font-type-txt  Color-Grey1   "
+                                      style={{ display: "flex" }}
+                                    >
+                                      {Info?.origin &&
+                                        Info?.origin.length > 0 &&
+                                        Info?.origin?.map((tag, index) => (
+                                          <p
+                                            className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
+                                            key={index}
+                                          >
+                                            {tag}
+                                          </p>
+                                        ))}
+                                    </div>
+                                  </td>
+
+                                  <td
+                                    style={{
+                                      maxWidth: isWidthLimited
+                                        ? LIMIT_MAX_CELL_WIDTH
+                                        : "none",
+                                      overflow: "hidden",
+                                      textOverflow: "ellipsis",
+                                      textAlign: "right",
+                                    }}
+                                  >
+                                    {Info?.source?.breach_date}
+                                  </td>
+                                </tr>
+                              )
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {json_file_info?.fileSize === "Too big" && (
+              <div
+                className="mt-c "
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                }}
+              >
+                <div>
+                  <p className="  font-type-txt   Color-Grey1  ">
+                    Data file is too big.
+                    {json_file_info?.mbSize && (
+                      <> ({Math.round(json_file_info?.mbSize)}Mb)</>
+                    )}
+                    <br />
+                    You can download it as a JSON file.
+                  </p>
+                  <button
+                    className="btn-type3   mt-a"
+                    style={{ marginRight: "auto", marginLeft: "-5px" }}
+                  >
+                    <p
+                      className="font-type-menu  "
+                      onClick={() =>
+                        handle_click_download(json_file_info, backEndURL)
+                      }
+                    >
+                      Download JSON
+                    </p>
+                    <DownloadIconButton className="icon-type1 " />{" "}
+                  </button>
+                </div>
+
+                <div
+                  className=""
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  {module_logo === "" ? null : (
+                    <>
+                      <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
+                        By:
+                      </p>{" "}
+                      <img
+                        src={module_logo}
+                        alt="logo"
+                        maxwidth="140px"
+                        height="30"
+                      />
+                    </>
+                  )}
+                  <button
+                    className="btn-type2 "
+                    style={{ marginLeft: "auto" }}
+                    onClick={handleClose}
+                  >
+                    <p className="font-type-menu ">{buttonTitle}</p>{" "}
+                  </button>
+                </div>
+              </div>
+            )}
             {json_file_info?.fileSize != "Too big" && (
               <div className="display-flex  mt-a" style={{}}>
                 {module_logo === "" ? null : (
@@ -2871,7 +3073,7 @@ display_this_value={"High"}
                       height="30"
                     />
                   </>
-                )} 
+                )}
                 <div />
                 <div
                   className="mt-c"
@@ -2897,8 +3099,6 @@ display_this_value={"High"}
                 </div>
               </div>
             )}
-
-            
           </div>
         </div>
       )}
