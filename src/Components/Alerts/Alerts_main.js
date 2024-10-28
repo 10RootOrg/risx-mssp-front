@@ -358,6 +358,20 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
               <Loader />
             </div>
           )}
+          {Object.keys(ArtifactDataPie)?.length <= 0 && (
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <p className="font-type-h4   Color-Grey2 ml-a">
+                No Active Alerts
+              </p>
+            </div>
+          )}
           {!Loading &&
             Object.keys(ArtifactDataPie).map((x) => {
               console.log(x, "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
