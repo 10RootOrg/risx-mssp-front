@@ -45,7 +45,10 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   async function GetData() {
     try {
       const res = await axios.get(backEndURL + "/Alerts/GetAlertFileData");
-      console.log("GetAlertFileData Data 111111111111", res.data);
+      console.log(
+        "GetAlertFileData Data 111116666666666666666666666666666666666666666666666666666666666666666666661111111",
+        res.data
+      );
 
       const AlertFileData = res.data.Alerts;
       const AletDic = res.data.AletDic;
@@ -68,37 +71,37 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
       };
       const Artifact = {};
 
-      AlertFileData.forEach((x) => {
-        if (!AletDic[x?.Artifact?.trim()]?.Show) {
-          console.log(
-            "dont count and show",
-            !AletDic[x?.Artifact?.trim()]?.Show
-          );
-          x.Show = AletDic[x?.Artifact?.trim()]?.Show;
+      // AlertFileData.forEach((x) => {
+      //   if (!AletDic[x?.Artifact?.trim()]?.Show ?? false) {
+      //     console.log(
+      //       "dont count and show",
+      //       !AletDic[x?.Artifact?.trim()]?.Show
+      //     );
+      //     x.Show = AletDic[x?.Artifact?.trim()]?.Show;
 
-          return;
-        }
-        console.log("jj");
+      //     return;
+      //   }
+      //   console.log("jj");
 
-        Item[x?.UserInput?.Status]++;
-        if (!Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact]) {
-          Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact] = {};
-          Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].LastDate =
-            x?._ts;
-          Artifact[
-            AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact
-          ].Description = AletDic[x?.Artifact?.trim()]?.Description;
+      //   Item[x?.UserInput?.Status]++;
+      //   if (!Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact]) {
+      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact] = {};
+      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].LastDate =
+      //       x?._ts;
+      //     Artifact[
+      //       AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact
+      //     ].Description = AletDic[x?.Artifact?.trim()]?.Description;
 
-          Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num = 0;
-          Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Show =
-            AletDic[x?.Artifact?.trim()]?.Show;
-        }
-        Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num++;
+      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num = 0;
+      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Show =
+      //       AletDic[x?.Artifact?.trim()]?.Show;
+      //   }
+      //   Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num++;
 
-        x.SimpleName = AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact;
-        x.Description = AletDic[x?.Artifact?.trim()]?.Description;
-        x.Show = AletDic[x?.Artifact?.trim()]?.Show;
-      });
+      //   x.SimpleName = AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact;
+      //   x.Description = AletDic[x?.Artifact?.trim()]?.Description;
+      //   x.Show = AletDic[x?.Artifact?.trim()]?.Show;
+      // });
       console.log(
         "ArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifact",
         Artifact
@@ -109,8 +112,8 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
       );
 
       console.log("ItemItemItemItemItemItemItem", Item);
-      setArtifactDataPie(Artifact);
-      setPieObjectStatus(Item);
+      setArtifactDataPie(res.data?.Artifact);
+      setPieObjectStatus(res.data?.PieData);
       setAlertsData(AlertFileData);
       setTimeObject({
         week: newDateWeek,
