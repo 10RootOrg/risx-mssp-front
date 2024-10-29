@@ -2275,7 +2275,7 @@ export const PopUp_For_LeakCheck_response = (props) => {
     } else {
       // set_display_this_data(json_file_info)
       set_display_this_domain(Domain);
-      const [filter] = json_file_info.filter((data) => data.Name === Domain);
+      const [filter] = json_file_info.filter((data) => data.Name?.asset_string === Domain);
 
       console.log("filter", filter);
 
@@ -2524,7 +2524,7 @@ export const PopUp_For_LeakCheck_response = (props) => {
                         ) || [0, 0, 0, 0]
                       }
                       bar_headlines={
-                        json_file_info?.map((aaaa) => aaaa?.Name) || []
+                        json_file_info?.map((aaaa) => aaaa?.Name?.asset_string) || []
                       }
                       enable_hover={false}
                       display_this_value={"prime_data"}
@@ -2761,14 +2761,14 @@ export const PopUp_For_LeakCheck_response = (props) => {
                                     width: "auto",
                                   }}
                                   onClick={() =>
-                                    handle_click_display_leck_data(Site?.Name)
+                                    handle_click_display_leck_data(Site?.Name?.asset_string)
                                   }
                                 >
                                   <p
                                     className="resource-group-list-item   font-type-txt  Color-Grey1 ml-b "
                                     style={{ width: "25%", minWidth: "25%" }}
                                   >
-                                    {Site?.Name}
+                                    {Site?.Name?.asset_string}
                                   </p>
                                   {Site?.Error && Site?.Error != "" && (
                                     <p
