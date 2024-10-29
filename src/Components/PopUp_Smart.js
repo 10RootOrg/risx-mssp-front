@@ -9,22 +9,19 @@ import { ReactComponent as CarefulIcon } from "../Components/icons/General-icons
 import { ReactComponent as InfofulIcon } from "../Components/icons/General-icons-info.svg";
 import { ReactComponent as AlertInfo } from "../Components/icons/General-icons-alert.svg";
 import { ReactComponent as Loader } from "../Components/icons/loader_typea.svg";
-import { ReactComponent as IconReadMore } from '../Components/icons/ico-readmore.svg';
-import { ReactComponent as IconCloseReadMore } from '../Components/icons/ico-close-readmore.svg';
-import { ReactComponent as IconOpenReadMore } from '../Components/icons/ico-open-readmore.svg';
+import { ReactComponent as IconReadMore } from "../Components/icons/ico-readmore.svg";
+import { ReactComponent as IconCloseReadMore } from "../Components/icons/ico-close-readmore.svg";
+import { ReactComponent as IconOpenReadMore } from "../Components/icons/ico-open-readmore.svg";
 import { ReactComponent as IcoModules } from "../Components/icons/ico-menu-modules.svg";
- 
-import { ReactComponent as IcoEdit } from "../Components/icons/ico-edit.svg";
 
+import { ReactComponent as IcoEdit } from "../Components/icons/ico-edit.svg";
 
 // import jsonData from '../tmpjsons/Nuclei.json'
 import axios from "axios";
-import { format_date_type_a,format_date_type_c } from "./Features/DateFormat.js";
-
-
- 
-
- 
+import {
+  format_date_type_a,
+  format_date_type_c,
+} from "./Features/DateFormat.js";
 
 const downloadJsonFile = (file) => {
   console.log(file);
@@ -201,7 +198,7 @@ export const PopUp_Alert_info = (props) => {
   const [active, setActive] = useState(false);
   const [AlertColors, set_AlertColors] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [open_long_text_key, set_open_long_text_key] = useState('');
+  const [open_long_text_key, set_open_long_text_key] = useState("");
   const [download_drop_down, set_download_drop_down] = useState(false);
 
   const handle_download_drop_down = () => {
@@ -263,72 +260,64 @@ export const PopUp_Alert_info = (props) => {
     set_popUp_show(false);
   };
 
+  const handle_open_long_text = (key) => {
+    console.log("handle_open_long_text", key);
 
-const handle_open_long_text=(key)=>{
-console.log("handle_open_long_text"  , key);
+    if (!key) {
+      return;
+    }
+    if (open_long_text_key === key) {
+      set_open_long_text_key("");
+    } else {
+      set_open_long_text_key(key);
+    }
+  };
 
-if (!key){return}
-if(open_long_text_key === key){set_open_long_text_key("");}
-else{set_open_long_text_key(key);}
+  const keyStyle = { width: "130px", minWidth: "130px" };
 
-}
-
-
-
-  const keyStyle ={width:"130px" ,minWidth:"130px"   };
-
-  const LineStyle ={
+  const LineStyle = {
     // maxHeight: "20px",
-     display:"flex" ,
-     transition: "height 0.3s ease",
-  marginTop:'calc(var(--space-a)/1 )'
-} ;
+    display: "flex",
+    transition: "height 0.3s ease",
+    marginTop: "calc(var(--space-a)/1 )",
+  };
 
-const LineStyleOpen ={
-  maxHeight: "1110px",
- 
-} ;
-
+  const LineStyleOpen = {
+    maxHeight: "1110px",
+  };
 
   const maxCharacters = 85;
 
-  const firstValueStayle  = {
-  // width:"100%",
-  // maxHeight:"150px" ,
-  overflowY:"auto" ,
-  // whiteSpace: "pre-wrap",
+  const firstValueStayle = {
+    // width:"100%",
+    // maxHeight:"150px" ,
+    overflowY: "auto",
+    // whiteSpace: "pre-wrap",
 
-  wordBreak: "break-word",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",  
-  overflow: "hidden",  
-  textOverflow: "ellipsis",
-  }
-  
-  const fullValueStayle  = {
+    wordBreak: "break-word",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  };
+
+  const fullValueStayle = {
     // width:"100%",
     wordBreak: "break-word",
-    maxHeight:"180px" ,
-    overflowY:"scroll" ,
-    paddingRight:"10px",
- 
+    maxHeight: "180px",
+    overflowY: "scroll",
+    paddingRight: "10px",
+
     // whiteSpace: "pre-wrap",
     // wordWrap: "break-word",
     //  wordBreak: "break-word",
     // textOverflow: "ellipsis",
-    // whiteSpace: "nowrap",  
-    // overflow: "hidden",  
+    // whiteSpace: "nowrap",
+    // overflow: "hidden",
     // textOverflow: "ellipsis",
-    }
-
+  };
 
   return (
-
-
-
-
-
-    
     <>
       {popUp_show && (
         <div
@@ -365,190 +354,276 @@ const LineStyleOpen ={
                   position: "absolute",
                 }}
               />
-              <div style={{display:"flex"  ,alignItems:"center" , gap:"80px"}}>
-              <AlertInfo
-                className="mb-a "
-                alt="Icon"
-                width="48px"
-                height="70px"
-                style={{ marginLeft: " " }}
-              />
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "80px" }}
+              >
+                <AlertInfo
+                  className="mb-a "
+                  alt="Icon"
+                  width="48px"
+                  height="70px"
+                  style={{ marginLeft: " " }}
+                />
 
-        <p className="font-type-h4 Color-White ">{format_date_type_a(Info?._ts)}</p>          
-</div>
-
+                <p className="font-type-h4 Color-White ">
+                  {format_date_type_a(Info?._ts)}
+                </p>
+              </div>
             </div>
- 
- 
 
+            <div
+              style={{
+                height: "36px",
+                marginBottom: "var(--space-c)",
+              }}
+            >
+              <div
+                style={{
+                  // backgroundColor:"yellow",
+                  height: "100%",
+                  display: "flex",
+                }}
+              >
+                <p
+                  className="font-type-menu reading-height  Color-White"
+                  style={{
+                    ...keyStyle,
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                  }}
+                >
+                  {" "}
+                  Status:
+                </p>
 
- <div  style={ { 
-   height:"36px" ,
-   marginBottom:"var(--space-c)"
-   
-   }} >
-            <div style={ { 
-              // backgroundColor:"yellow",
-               height:"100%",display:"flex", }}  >
-           <p className="font-type-menu reading-height  Color-White" style={{ ...keyStyle , marginTop:'auto'  ,marginBottom:'auto'    }} > Status:</p>
+                <div style={{}}>
+                  <div
+                    className="btn-menu-list"
+                    onMouseLeave={() => set_download_drop_down(false)}
+                    //  onMouseEnter={()=>set_download_drop_down(true)}
+                    style={{
+                      marginLeft: "-13px",
+                      width: "auto",
+                      position: "absolute",
+                      zIndex: 1000,
+                      // backgroundColor:"green"
+                    }}
+                  >
+                    <button
+                      className={`btn-menu  ${
+                        download_drop_down ? "btn_look_hover" : ""
+                      } `}
+                      onClick={handle_download_drop_down}
+                    >
+                      <div className="display-flex">
+                        {/* <IcoEdit className="btn-menu-icon-placeholder  mr-a " /> */}
 
+                        <p className="font-type-menu ml-b">
+                          {" "}
+                          {Info.UserInput?.Status}
+                        </p>
+                      </div>
+                      <div
+                        className="btn-menu-icon-placeholder  "
+                        style={{
+                          justifyContent: "flex-start",
+                          backgroundColor: "",
+                          marginLeft: "5px",
+                          marginRight: "auto",
+                        }}
+                      >
+                        <IcoEdit className="btn-menu-icon-placeholder " />
+                      </div>
+                    </button>
 
-        
-<div style={{   }}>
+                    {/* fix */}
+                    <div
+                      className={`dropdown-menu ${
+                        download_drop_down ? "open" : ""
+                      }`}
+                    >
+                      {StatusTags.map((y) => {
+                        if (y == Info.UserInput?.Status) return;
+                        return (
+                          <button
+                            className="btn-menu"
+                            onClick={() => SelectDropHandle(y)}
+                          >
+                            <div className="display-flex">
+                              {/* <IcoEdit  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} /> */}
+                              <p className="font-type-menu ml-b">{y}</p>
+                            </div>
 
-
-<div
-        className="btn-menu-list"
-        onMouseLeave={() => set_download_drop_down(false)}
-        //  onMouseEnter={()=>set_download_drop_down(true)}
-        style={{
-      marginLeft:'-13px',
-      width:"auto",   
-          position: "absolute",  
-          zIndex: 1000,
-          // backgroundColor:"green"
-    
-     
-        }}
-      >
-        <button
-          className={`btn-menu  ${download_drop_down ? "btn_look_hover" : ""} `}
-          onClick={handle_download_drop_down}
-        >
-          <div className="display-flex">
-            {/* <IcoEdit className="btn-menu-icon-placeholder  mr-a " /> */}
-            
-            <p className="font-type-menu ml-b"> {Info.UserInput?.Status}</p>
-          </div>
-          <div className="btn-menu-icon-placeholder  "   style={{justifyContent:"flex-start" , backgroundColor:"" ,marginLeft:"5px", marginRight:"auto"}}>
-          <IcoEdit className="btn-menu-icon-placeholder " />
-        
-          </div>
-        </button>
-
-
-        {/* fix */}
-        <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}
-        
-        >
-
-        {StatusTags.map((y) => { if (y == Info.UserInput?.Status) return;
-                     return <button className="btn-menu"   onClick={() => SelectDropHandle(y)}>
-
-<div className="display-flex">
-              {/* <IcoEdit  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} /> */}
-              <p className="font-type-menu ml-b">{y}</p>
+                            <div className="btn-menu-icon-placeholder  ">
+                              <IcoEdit
+                                className="btn-menu-icon-placeholder  mr-a "
+                                style={{ visibility: "hidden" }}
+                              />
+                              {/*  <MenuArrowDown  />*/}{" "}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <div className="btn-menu-icon-placeholder  " >
-            <IcoEdit  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} />
-                {/*  <MenuArrowDown  />*/} </div>
-              
-                    </button>;  })} 
-    
-         
-     
 
-     
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                Artifact:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {Info?.Artifact}
+              </p>
+            </div>
 
-
-
-        </div>
-      </div>
-</div>
-
- 
-                  </div>
-                  </div>
-
-
-
-
-   
-
-                <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Artifact:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Artifact}</p>
-                  </div>
-
-                  {/* <div style={LineStyle} >
+            {/* <div style={LineStyle} >
                   <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Time:</p>
                   <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{format_date_type_a(Info?._ts)}</p>
                   </div> */}
 
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                User Change:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {Info.UserInput?.UserId}
+              </p>
+            </div>
 
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > User Change:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info.UserInput?.UserId}</p>
-                  </div>
-     
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                Changed At:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {format_date_type_a(Info.UserInput?.ChangedAt)}
+              </p>
+            </div>
 
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Changed At:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{format_date_type_a(Info.UserInput?.ChangedAt)}</p>
-                  </div>
-
-
-
-
-   
-
-       
- 
             {Object.keys(Info).map((key) => {
-              if ( ["UserInput", "_ts", "Artifact", "buttonTitle"].includes(key)  ) {  return; }
+              if (
+                ["UserInput", "_ts", "Artifact", "buttonTitle","Show"].includes(key)
+              ) {
+                return;
+              }
 
-// const paragraph = typeof Info[key] !== "object" ? Info[key] : JSON.stringify(Info[key])
-const paragraph = typeof Info[key] !== "object" ? String(Info[key]) : JSON.stringify(Info[key]);
+              // const paragraph = typeof Info[key] !== "object" ? Info[key] : JSON.stringify(Info[key])
+              const paragraph =
+                typeof Info[key] !== "object"
+                  ? String(Info[key])
+                  : JSON.stringify(Info[key]);
 
               return (
-                <div   style={{...LineStyle   }}   >
- {/* open_long_text_key === key && ...LineStyleOpen */}
-                  <p className="font-type-menu reading-height  Color-White"
-                   style={{...keyStyle,
-                    marginTop:open_long_text_key === key && "23px"
-                    // {open_long_text_key === key  ?
+                <div style={{ ...LineStyle }}>
+                  {/* open_long_text_key === key && ...LineStyleOpen */}
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={{
+                      ...keyStyle,
+                      marginTop: open_long_text_key === key && "23px",
+                      // {open_long_text_key === key  ?
+                    }}
+                  >
+                    {key}:{" "}
+                  </p>
 
+                  <div
+                    style={{
+                      height: " ",
+                      display: "flex",
+                      width: "100%",
+                      flexDirection: "row",
+                    }}
+                  >
+                    {open_long_text_key === key ? (
+                      <>
+                        <div className="mb-b">
+                          <button
+                            className="btn-type3 "
+                            onClick={() => {
+                              handle_open_long_text(key);
+                            }}
+                            style={{
+                              // height:"12px",
+                              marginLeft: "auto",
+                              marginBottom: "auto",
+                              marginTop: "auto",
+                              padding: 0,
+                            }}
+                          >
+                            <p className=" font-type-txt">Collapse</p>
+                            <IconCloseReadMore
+                              className="icon-type1 "
+                              style={{ height: "24px" }}
+                            />{" "}
+                          </button>
 
-                   }}>
-                     {key}: </p>
-                   
-                   <div style={{height:" ", display:"flex"   ,width:"100%"   , flexDirection:"row"}} >
-
-                    
-                {open_long_text_key === key  ? 
-                
-              <>
-
-<div className="mb-b">
-<button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ 
-  // height:"12px", 
-     marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Collapse</p><IconCloseReadMore className="icon-type1 " style={{height:"24px"}} />  </button>  
-
-<p className="font-type-txt  reading-height Color-Grey1 mb-b " style={fullValueStayle  }  >  {paragraph }     </p>
-
-
-</div>
-
-
-
-            </>
-              :
-
-              <>
-              <p className="font-type-txt  reading-height Color-Grey1 " style={firstValueStayle  }  >  {paragraph.slice(0, maxCharacters)}      {paragraph?.length >  maxCharacters && "..." }   </p>
-              {paragraph?.length >  maxCharacters &&  <button className="btn-type3 "  onClick={()=>{handle_open_long_text(key)}}style={{ height:"12px",    marginLeft:"auto",    marginBottom:"auto"  ,marginTop:"auto",padding:0}} ><p className=' font-type-txt' >Expand</p><IconOpenReadMore className="icon-type1 " style={{height:"24px"}} />  </button> }
-              </>
-
-              }
-                
-
-
-
-                     </div>
-
+                          <p
+                            className="font-type-txt  reading-height Color-Grey1 mb-b "
+                            style={fullValueStayle}
+                          >
+                            {" "}
+                            {paragraph}{" "}
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p
+                          className="font-type-txt  reading-height Color-Grey1 "
+                          style={firstValueStayle}
+                        >
+                          {" "}
+                          {paragraph.slice(0, maxCharacters)}{" "}
+                          {paragraph?.length > maxCharacters && "..."}{" "}
+                        </p>
+                        {paragraph?.length > maxCharacters && (
+                          <button
+                            className="btn-type3 "
+                            onClick={() => {
+                              handle_open_long_text(key);
+                            }}
+                            style={{
+                              height: "12px",
+                              marginLeft: "auto",
+                              marginBottom: "auto",
+                              marginTop: "auto",
+                              padding: 0,
+                            }}
+                          >
+                            <p className=" font-type-txt">Expand</p>
+                            <IconOpenReadMore
+                              className="icon-type1 "
+                              style={{ height: "24px" }}
+                            />{" "}
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </div>
                 </div>
-
               );
             })}
             <div className="display-flex mt-c" style={{}}>
@@ -682,7 +757,6 @@ export const PopUp_For_Read_More = (props) => {
   } = props;
   const [active, setActive] = useState(false);
 
-
   useEffect(() => {
     set_popUp_show(popUp_show);
   }, [popUp_show]);
@@ -745,25 +819,35 @@ export const PopUp_For_Read_More = (props) => {
             </p>
 
             <div className="display-flex mt-c" style={{}}>
-              { logoAddress_1_ForSrc !== ""   &&   <>
-            
-              <p className="font-type-very-sml-txt   Color-Grey1 mr-a">By:</p>
-              <img
-                src={logoAddress_1_ForSrc}
-                alt="logo"
-                maxwidth="140px"
-                height="30"
-             
-              />
-  </>}
+              {logoAddress_1_ForSrc !== "" && (
+                <>
+                  <p className="font-type-very-sml-txt   Color-Grey1 mr-a">
+                    By:
+                  </p>
+                  <img
+                    src={logoAddress_1_ForSrc}
+                    alt="logo"
+                    maxwidth="140px"
+                    height="30"
+                  />
+                </>
+              )}
               {buttonTitle === "Close" ? (
-                <button className="btn-type2" onClick={handleClose}    style={{ marginLeft: "auto" }}>
+                <button
+                  className="btn-type2"
+                  onClick={handleClose}
+                  style={{ marginLeft: "auto" }}
+                >
                   <p className="font-type-menu ">{buttonTitle}</p>{" "}
                 </button>
               ) : (
-                <a href={toolURL} target="_blank"   style={{ marginLeft: "auto" }}>
+                <a
+                  href={toolURL}
+                  target="_blank"
+                  style={{ marginLeft: "auto" }}
+                >
                   {" "}
-                  <button className="btn-type2"  >
+                  <button className="btn-type2">
                     <p className="font-type-menu ">{buttonTitle}</p>{" "}
                   </button>
                 </a>
@@ -1124,11 +1208,13 @@ export const PopUp_Error = (props) => {
               active ? "popup-enter-active" : "popup-enter"
             }`}
             style={{
-              width: "auto" ,
-              //  width: "-webkit-fill-available" 
+              width: "auto",
+              //  width: "-webkit-fill-available"
               //   ,
-                
-                minWidth:"250px", paddingBottom: " " }}
+
+              minWidth: "250px",
+              paddingBottom: " ",
+            }}
           >
             <div
               className="display-flex justify-content-end  "
@@ -1266,15 +1352,10 @@ export const PopUp_Under_Construction = (props) => {
 };
 
 export const PopUp_Result_Line_info = (props) => {
-  const {
-    Info,
-    popUp_show,
-    set_popUp_show,
-    
-  } = props;
+  const { Info, popUp_show, set_popUp_show } = props;
 
   const [active, setActive] = useState(false);
- 
+
   useEffect(() => {
     set_popUp_show(popUp_show);
   }, [popUp_show]);
@@ -1297,50 +1378,58 @@ export const PopUp_Result_Line_info = (props) => {
     setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
   }
 
- 
- 
+  const keyStyle = { width: "150px", minWidth: "150px" };
 
-
-  const keyStyle ={width:"150px" ,minWidth:"150px"   };
-
-  const LineStyle ={
+  const LineStyle = {
     // maxHeight: "20px",
-     display:"flex" ,
-     transition: "height 0.3s ease",
-  marginTop:'calc(var(--space-a)/1 )'
-} ;
+    display: "flex",
+    transition: "height 0.3s ease",
+    marginTop: "calc(var(--space-a)/1 )",
+  };
 
- 
- 
-  const firstValueStayle  = {
-  // width:"100%",
-  // maxHeight:"150px" ,
-  overflowY:"auto" ,
-  // whiteSpace: "pre-wrap",
+  const firstValueStayle = {
+    // width:"100%",
+    // maxHeight:"150px" ,
+    overflowY: "auto",
+    // whiteSpace: "pre-wrap",
 
-  wordBreak: "break-word",
-  textOverflow: "ellipsis",
-  whiteSpace: "nowrap",  
-  overflow: "hidden",  
-  textOverflow: "ellipsis",
-  }
-  
- 
+    wordBreak: "break-word",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  };
+
   const renderArguments = () => {
-    if (!Info?.Arguments || Object.keys(Info.Arguments).length === 0) return null;
+    if (!Info?.Arguments || Object.keys(Info.Arguments).length === 0)
+      return null;
 
     return (
       <>
-     
         {Object.entries(Info.Arguments).map(([key, value]) => (
-          <div key={key} style={{...LineStyle , marginTop:'' ,gap:"5px"   ,display:"flex", flexDirection:"column"}}>
-            <p className="font-type-menu reading-height Color-White"
-             style={{...keyStyle }}
-             >{key}:</p>
-            <p className="font-type-txt reading-height Color-Grey1 mb-a" 
-            // style={firstValueStayle}
+          <div
+            key={key}
+            style={{
+              ...LineStyle,
+              marginTop: "",
+              gap: "5px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <p
+              className="font-type-menu reading-height Color-White"
+              style={{ ...keyStyle }}
             >
-              {typeof value === 'object' && value !== null ? JSON.stringify(value, null, 2) : value}
+              {key}:
+            </p>
+            <p
+              className="font-type-txt reading-height Color-Grey1 mb-a"
+              // style={firstValueStayle}
+            >
+              {typeof value === "object" && value !== null
+                ? JSON.stringify(value, null, 2)
+                : value}
             </p>
           </div>
         ))}
@@ -1348,17 +1437,7 @@ export const PopUp_Result_Line_info = (props) => {
     );
   };
 
-
-
-
-
   return (
-
-
-
-
-
-    
     <>
       {popUp_show && (
         <div
@@ -1372,108 +1451,228 @@ export const PopUp_Result_Line_info = (props) => {
             }`}
             style={{
               width: "auto",
-              maxWidth:"80%",
+              maxWidth: "80%",
               maxHeight: "85%",
               paddingBottom: " ",
               overflowY: "auto",
-              overflowX:"auto"
+              overflowX: "auto",
             }}
           >
-
- 
-<InfofulIcon
+            <InfofulIcon
               className="mb-a mt-c"
               alt="Icon"
               width="100px"
               height="70px"
               style={{ marginLeft: "-15px" }}
             />
- 
-          
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > ModuleName:</p>
-                  <p className="font-type-txt   Color-Blue-Glow tagit_type1" style={{...firstValueStayle , marginLeft:"-5px"}}>{Info?.ModuleName}</p>
-                  </div>
-     
-     {Info?.SubModuleName && <>
-      <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > SubModuleName:</p>
-                  <p className="font-type-txt   Color-Blue-Glow tagit_type1" style={{...firstValueStayle , marginLeft:"-5px"}}>{Info?.SubModuleName}</p>
-                  </div>
-     </>}
-                
 
-     <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Status:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Status}</p>
-                  </div>
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                ModuleName:
+              </p>
+              <p
+                className="font-type-txt   Color-Blue-Glow tagit_type1"
+                style={{ ...firstValueStayle, marginLeft: "-5px" }}
+              >
+                {Info?.ModuleName}
+              </p>
+            </div>
 
-     {Info?.Error && <>
-      <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Error:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Error}</p>
-                  </div>
-     
-     </>}
+            {Info?.SubModuleName && (
+              <>
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    {" "}
+                    SubModuleName:
+                  </p>
+                  <p
+                    className="font-type-txt   Color-Blue-Glow tagit_type1"
+                    style={{ ...firstValueStayle, marginLeft: "-5px" }}
+                  >
+                    {Info?.SubModuleName}
+                  </p>
+                </div>
+              </>
+            )}
 
- 
-      <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Population:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.Population &&  Info?.Population}</p>
-                  </div>
-     
-   
-                  {Info?.ResponsePath && <>
-      <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > ResponsePath:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.ResponsePath}</p>
-                  </div>
-     
-     </>}
-                  
-      
-   
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Arguments:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " 
-                  style={{...firstValueStayle  , whiteSpace:"none"}}
-                  >   {renderArguments()}</p>
-                  </div>
- 
- 
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                Status:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {Info?.Status}
+              </p>
+            </div>
 
-                   {Info?.TimeInterval && <>  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Interval in Minute:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.TimeInterval}</p>
-                  </div>
-                  </>}
+            {Info?.Error && (
+              <>
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    {" "}
+                    Error:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info?.Error}
+                  </p>
+                </div>
+              </>
+            )}
 
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                Population:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {Info?.Population && Info?.Population}
+              </p>
+            </div>
 
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Start Date:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.StartDate && format_date_type_c(Info?.StartDate)}</p>
-                  </div>
+            {Info?.ResponsePath && (
+              <>
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    {" "}
+                    ResponsePath:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info?.ResponsePath}
+                  </p>
+                </div>
+              </>
+            )}
 
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Expire Date:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.ExpireDate &&  format_date_type_c(Info?.ExpireDate)}</p>
-                  </div>
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                Arguments:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={{ ...firstValueStayle, whiteSpace: "none" }}
+              >
+                {" "}
+                {renderArguments()}
+              </p>
+            </div>
 
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > Last Interval:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{Info?.LastIntervalDate &&   format_date_type_c(Info?.LastIntervalDate)}</p>
-                  </div>
+            {Info?.TimeInterval && (
+              <>
+                {" "}
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    Interval in Minute:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info?.TimeInterval}
+                  </p>
+                </div>
+              </>
+            )}
 
-                  <div style={LineStyle} >
-                  <p className="font-type-menu reading-height  Color-White" style={keyStyle}         > UniqueID:</p>
-                  <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>
-                    {typeof Info?.UniqueID  === "string" && Info?.UniqueID}
-                    
-                    </p>
-                  </div>
-               
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                Start Date:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {Info?.StartDate && format_date_type_c(Info?.StartDate)}
+              </p>
+            </div>
 
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                Expire Date:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {Info?.ExpireDate && format_date_type_c(Info?.ExpireDate)}
+              </p>
+            </div>
 
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                Last Interval:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {Info?.LastIntervalDate &&
+                  format_date_type_c(Info?.LastIntervalDate)}
+              </p>
+            </div>
+
+            <div style={LineStyle}>
+              <p
+                className="font-type-menu reading-height  Color-White"
+                style={keyStyle}
+              >
+                {" "}
+                UniqueID:
+              </p>
+              <p
+                className="font-type-txt  reading-height Color-Grey1  "
+                style={firstValueStayle}
+              >
+                {typeof Info?.UniqueID === "string" && Info?.UniqueID}
+              </p>
+            </div>
 
             <div className="display-flex mt-c" style={{}}>
               <button
@@ -1481,7 +1680,7 @@ export const PopUp_Result_Line_info = (props) => {
                 style={{ marginLeft: "auto" }}
                 onClick={handleClose}
               >
-                <p className="font-type-menu ">Close</p> 
+                <p className="font-type-menu ">Close</p>
               </button>
             </div>
           </div>
@@ -1493,18 +1692,16 @@ export const PopUp_Result_Line_info = (props) => {
 
 export const PopUp_Confirm_Run_selected = (props) => {
   const {
- 
     popUp_show,
     set_popUp_show,
- 
+
     True_action,
     False_action,
   } = props;
   const [active, setActive] = useState(false);
   const [disable_buttons, set_disable_buttons] = useState(false);
-  const {   all_artifacts,all_Tools, } = useContext(GeneralContext);
+  const { all_artifacts, all_Tools } = useContext(GeneralContext);
   const [allow_continue, set_allow_continue] = useState(false);
-
 
   useEffect(() => {
     if (popUp_show) {
@@ -1512,26 +1709,40 @@ export const PopUp_Confirm_Run_selected = (props) => {
     }
   }, [popUp_show]);
 
-
   useEffect(() => {
+    if (!all_artifacts) {
+      return;
+    }
+    if (!all_Tools) {
+      return;
+    }
 
-
-    if(!all_artifacts) {return}
-    if(!all_Tools) {return}
-
-
-    if(
-    all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" && 
-    all_Tools     && Array.isArray(all_Tools)      &&  all_Tools.length > 0 &&       typeof all_Tools !== "string"     && 
-    
-    all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  && tool?.tool_id != "2000000"  )).length === 0   &&   
-    all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.tool_id != "2000000"   )).length === 0  
-  ){console.log("dont go to python")  ;
-  }
-  else{set_allow_continue(true)}
-
-  }, [popUp_show,all_artifacts,all_Tools]);
-
+    if (
+      all_artifacts &&
+      Array.isArray(all_artifacts) &&
+      all_artifacts.length > 0 &&
+      typeof all_artifacts !== "string" &&
+      all_Tools &&
+      Array.isArray(all_Tools) &&
+      all_Tools.length > 0 &&
+      typeof all_Tools !== "string" &&
+      all_Tools.filter(
+        (tool) =>
+          (tool?.isActive === 1 || tool?.isActive === true) &&
+          tool?.toolType === "module" &&
+          tool?.tool_id != "2000000"
+      ).length === 0 &&
+      all_artifacts.filter(
+        (tool) =>
+          (tool?.isActive === 1 || tool?.isActive === true) &&
+          tool?.tool_id != "2000000"
+      ).length === 0
+    ) {
+      console.log("dont go to python");
+    } else {
+      set_allow_continue(true);
+    }
+  }, [popUp_show, all_artifacts, all_Tools]);
 
   function handleClickOutside(e) {
     if (e.target.className === "PopUp-background") {
@@ -1545,9 +1756,7 @@ export const PopUp_Confirm_Run_selected = (props) => {
     setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
   }
 
- 
-const cell_height = "38px" 
-
+  const cell_height = "38px";
 
   return (
     <>
@@ -1557,7 +1766,11 @@ const cell_height = "38px"
             className={`PopUp-content  ${
               active ? "popup-enter-active" : "popup-enter"
             }`}
-            style={{ width: "auto"   ,minWidth:allow_continue ? "300px" : "auto", paddingBottom: " " }}
+            style={{
+              width: "auto",
+              minWidth: allow_continue ? "300px" : "auto",
+              paddingBottom: " ",
+            }}
           >
             <div
               className="display-flex justify-content-end  "
@@ -1568,72 +1781,125 @@ const cell_height = "38px"
               </button>
             </div>
 
+            {allow_continue ? (
+              <SuccessIcon
+                className="mb-a "
+                alt="Icon"
+                width="100px"
+                height="70px"
+                style={{ marginLeft: "-15px" }}
+              />
+            ) : (
+              <InfofulIcon
+                className="mb-a "
+                alt="Icon"
+                width="100px"
+                height="70px"
+                style={{ marginLeft: "-15px" }}
+              />
+            )}
 
-{allow_continue ? 
-<SuccessIcon
-className="mb-a "
-alt="Icon"
-width="100px"
-height="70px"
-style={{ marginLeft: "-15px" }}
-/>
-            :
-<InfofulIcon
-className="mb-a "
-alt="Icon"
-width="100px"
-height="70px"
-style={{ marginLeft: "-15px" }}
-/> }
-    
+            <p className="font-type-h4 Color-White mb-a">
+              {allow_continue ? "Confirm Selection" : "Selection Required"}
+            </p>
+            <p className="font-type-txt  reading-height Color-Grey1 mb-c">
+              {allow_continue
+                ? "Please review and confirm your choices before activating them:"
+                : "Please select at least one module and artifact."}
+            </p>
+            {allow_continue && (
+              <div
+                className="display-flex"
+                style={{
+                  gap: "24px",
+                  alignItems: "flex-start",
+                  flexDirection: "column",
+                }}
+              >
+                {all_artifacts &&
+                  Array.isArray(all_artifacts) &&
+                  all_artifacts.length > 0 &&
+                  typeof all_artifacts !== "string" && (
+                    <>
+                      <div style={{ display: "flex" }}>
+                        {all_artifacts.filter(
+                          (tool) =>
+                            (tool?.isActive === 1 || tool?.isActive === true) &&
+                            tool?.tool_id != "2000000"
+                        ).length > 0 && (
+                          <div
+                            style={{
+                              height: cell_height,
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <p className="font-type-txt reading-height Color-Grey1   mr-c">
+                              Artifacts:
+                            </p>
+                          </div>
+                        )}
 
+                        <table
+                          className=" "
+                          style={{ margin: 0, padding: 0, border: 0 }}
+                        >
+                          <tbody style={{ margin: 0, padding: 0, border: 0 }}>
+                            {all_artifacts
+                              .filter(
+                                (tool) =>
+                                  (tool?.isActive === 1 ||
+                                    tool?.isActive === true) &&
+                                  tool?.tool_id != "2000000"
+                              )
+                              .map((info, index) => (
+                                <>
+                                  <tr
+                                    key={index}
+                                    className="font-type-menu Color-White"
+                                    style={{ height: cell_height }}
+                                  >
+                                    <td
+                                      className="pr-b"
+                                      style={{
+                                        marginLeft: "0",
+                                        paddingLeft: 0,
+                                      }}
+                                    >
+                                      <img
+                                        src={
+                                          info?.logoAddress_1
+                                            ? require(`${info?.logoAddress_1}`)
+                                            : undefined
+                                        }
+                                        alt="Icon"
+                                        style={{
+                                          maxHeight: "32px",
+                                          width: "auto",
+                                          maxWidth: "100px",
+                                          marginTop: "4px",
+                                          marginLeft: "0",
+                                          paddingLeft: 0,
+                                        }}
+                                      />
+                                    </td>
+                                    <td className="pl-b">{info?.headline}</td>
+                                  </tr>
+                                </>
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
+                  )}
 
-            <p className="font-type-h4 Color-White mb-a">{allow_continue ? "Confirm Selection"   : "Selection Required" }</p>
-            <p className="font-type-txt  reading-height Color-Grey1 mb-c">{allow_continue ?  "Please review and confirm your choices before activating them:"   : "Please select at least one module and artifact." }</p>
-          {allow_continue &&   
-            <div className="display-flex" style={{gap:"24px"  , alignItems:"flex-start"  ,flexDirection:"column"}}>
-{all_artifacts && Array.isArray(all_artifacts) &&  all_artifacts.length > 0 &&   typeof all_artifacts !== "string" &&  <>
-  <div style={{display:"flex"}}>
-  {all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.tool_id != "2000000"   )).length > 0 && (
-  <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
-  <p className="font-type-txt reading-height Color-Grey1   mr-c"  >Artifacts:</p>
-   </div>)}
-
-<table className=' '  style={{ margin:0 , padding:0, border:0}}       >
-<tbody style={{ margin:0 , padding:0, border:0}}>
-
-
-{
-all_artifacts.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.tool_id != "2000000"   )).map((info, index) => (
-<>
-<tr key={index} className='font-type-menu Color-White' style={{ height: cell_height }}>
-<td className='pr-b' style={{marginLeft:"0", paddingLeft:0   }}>
-<img 
-src={info?.logoAddress_1 ? require(`${info?.logoAddress_1}`) : undefined} 
-alt="Icon" 
-style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px', marginTop:"4px" ,marginLeft:"0", paddingLeft:0  }} 
-/>
-</td>
-<td  className='pl-b'>{info?.headline}</td>
-</tr>
-</>
-))
-}
-
-</tbody>
-</table>
-
-</div>
-
-</>}
-
-
-{all_Tools && Array.isArray(all_Tools) &&  all_Tools.length > 0 &&   typeof all_Tools !== "string" && <>
-
-<div style={{display:"flex"}}>
-
-
-{/* {all_Tools.filter(tool => tool?.isActive === 1 || tool?.isActive === true).length > 0 && (
+                {all_Tools &&
+                  Array.isArray(all_Tools) &&
+                  all_Tools.length > 0 &&
+                  typeof all_Tools !== "string" && (
+                    <>
+                      <div style={{ display: "flex" }}>
+                        {/* {all_Tools.filter(tool => tool?.isActive === 1 || tool?.isActive === true).length > 0 && (
 
   <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
     <p className="font-type-txt reading-height Color-Grey1  mr-c"  >Modules:</p>
@@ -1641,83 +1907,111 @@ style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px', marginTop:"4px"
      </div>
 )} */}
 
-{all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"   && tool?.tool_id != "2000000" )).length > 0   &&     (
-  <div  style={{ height: cell_height , display:"flex"  ,  alignItems:"center"}}> 
-  <p className="font-type-txt reading-height Color-Grey1   mr-c"  >Modules:</p>
-   </div>)}
+                        {all_Tools.filter(
+                          (tool) =>
+                            (tool?.isActive === 1 || tool?.isActive === true) &&
+                            tool?.toolType === "module" &&
+                            tool?.tool_id != "2000000"
+                        ).length > 0 && (
+                          <div
+                            style={{
+                              height: cell_height,
+                              display: "flex",
+                              alignItems: "center",
+                            }}
+                          >
+                            <p className="font-type-txt reading-height Color-Grey1   mr-c">
+                              Modules:
+                            </p>
+                          </div>
+                        )}
 
+                        <table
+                          className=" "
+                          style={{ margin: 0, padding: 0, border: 0 }}
+                        >
+                          <tbody style={{ margin: 0, padding: 0, border: 0 }}>
+                            {all_Tools
+                              .filter(
+                                (tool) =>
+                                  (tool?.isActive === 1 ||
+                                    tool?.isActive === true) &&
+                                  tool?.toolType === "module" &&
+                                  tool?.tool_id != "2000000"
+                              )
+                              .map((info, index) => (
+                                <>
+                                  <tr
+                                    key={index}
+                                    className="font-type-menu Color-White"
+                                    style={{ height: cell_height }}
+                                  >
+                                    <td
+                                      className="pr-b"
+                                      style={{
+                                        marginLeft: "0",
+                                        paddingLeft: 0,
+                                      }}
+                                    >
+                                      <img
+                                        src={
+                                          info?.logoAddress_1
+                                            ? require(`${info?.logoAddress_1}`)
+                                            : undefined
+                                        }
+                                        alt="Icon"
+                                        style={{
+                                          maxHeight: "32px",
+                                          width: "auto",
+                                          maxWidth: "100px",
+                                          marginLeft: "0",
+                                          paddingLeft: 0,
+                                        }}
+                                      />
+                                    </td>
+                                    <td className="pl-b">{info?.headline}</td>
+                                  </tr>
+                                </>
+                              ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
+                  )}
+              </div>
+            )}
 
+            <div
+              className="display-flex mt-c"
+              style={{ justifyContent: "flex-end", gap: "var(--space-b)" }}
+            >
+              {allow_continue && (
+                <button
+                  className="btn-type2"
+                  disabled={disable_buttons}
+                  style={{}}
+                  onClick={() => {
+                    True_action();
+                    set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
+                  }}
+                >
+                  <p className="font-type-menu ">Run</p>{" "}
+                </button>
+              )}
 
-
-
-<table className=' '  style={{ margin:0 , padding:0, border:0}}       >
-<tbody style={{ margin:0 , padding:0, border:0}}>
-
-
-{
-all_Tools.filter(tool => (  (tool?.isActive === 1 || tool?.isActive === true)   && tool?.toolType === "module"  && tool?.tool_id != "2000000"  )).map((info, index) => (
-<>
-<tr key={index} className='font-type-menu Color-White' style={{ height:cell_height }}>
-<td className='pr-b' style={{marginLeft:"0", paddingLeft:0   }}>
-<img 
-src={info?.logoAddress_1 ? require(`${info?.logoAddress_1}`) : undefined} 
-alt="Icon" 
-style={{ maxHeight: '32px', width: 'auto'   , maxWidth: '100px'  ,marginLeft:"0", paddingLeft:0  }} 
-/>
-</td>
-<td  className='pl-b'>{info?.headline}</td>
-</tr>
-</>
-))
-}
-
-</tbody>
-</table>
-
-</div>
-
-
-</>}
-
-</div>
-  }
-
-            <div className="display-flex mt-c" style={{ justifyContent:"flex-end" , gap:"var(--space-b)"}}>
-
-        
-{allow_continue && 
-
-<button
-className="btn-type2"
-disabled={disable_buttons}
-style={{  }}
-onClick={() => {
-  True_action();
-  set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
-}}
->
-<p className="font-type-menu ">Run</p>{" "}
-</button>
-
-}
-
-<button
+              <button
                 className="btn-type2"
                 disabled={disable_buttons}
-                style={{  }}
+                style={{}}
                 onClick={() => {
                   False_action();
                   set_disable_buttons(true); // Assuming disable_buttons is a function that accepts a boolean argument
                 }}
-
-                
               >
-                <p className="font-type-menu ">{allow_continue ? "Cancel" : "Continue"}</p>{" "}
+                <p className="font-type-menu ">
+                  {allow_continue ? "Cancel" : "Continue"}
+                </p>{" "}
               </button>
-
-
-
-         
             </div>
           </div>
         </div>
