@@ -73,7 +73,7 @@ function Dashboard_ASM({
       <div className="app-main">
         <div className="top-of-page">
           <div className="top-of-page-left mb-b">
-            <p className="font-type-menu">Dashboards:</p>
+            {/* <p className="font-type-menu">Dashboards:</p> */}
             <p className="font-type-h3">Attack Surface Management</p>
           </div>
           <div className="top-of-page-center">

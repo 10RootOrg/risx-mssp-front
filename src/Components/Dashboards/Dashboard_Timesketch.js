@@ -90,7 +90,7 @@ set_iframe_url(url);
 <div className='top-of-page'> 
 
 <div className='top-of-page-left mb-b'>
-<p  className="font-type-menu" >Dashboards:</p>
+{/* <p  className="font-type-menu" >Dashboards:</p> */}
 <p  className="font-type-h3" >Timesketch</p>
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>

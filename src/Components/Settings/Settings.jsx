@@ -143,7 +143,7 @@ function Settings({
       <div className="app-main">
         <div className="top-of-page">
           <div className="top-of-page-left mb-a">
-            <p className="font-type-menu">Settings:</p>
+            {/* <p className="font-type-menu">Settings:</p> */}
             <p className="font-type-h3">General Settings</p>
           </div>
           <div className="top-of-page-center">

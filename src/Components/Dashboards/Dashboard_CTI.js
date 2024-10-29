@@ -110,7 +110,7 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
       <div className="app-main">
         <div className="top-of-page">
           <div className="top-of-page-left mb-b">
-            <p className="font-type-menu">Dashboards:</p>
+            {/* <p className="font-type-menu">Dashboards:</p> */}
             <p className="font-type-h3">CTI</p>
           </div>
           {/* <div className='top-of-page-center'>"""placeholder for dropDown"""</div> */}

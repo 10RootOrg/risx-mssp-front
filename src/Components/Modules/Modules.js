@@ -95,7 +95,7 @@ function Modules({
       <div className="app-main">
         <div className="top-of-page">
           <div className="top-of-page-left mb-b">
-            <p className="font-type-menu">Mssp:</p>
+            {/* <p className="font-type-menu">Mssp:</p> */}
             <p className="font-type-h3">Modules</p>
           </div>
           {/* <div className='top-of-page-center'> placeholder for dropDown  </div> */}

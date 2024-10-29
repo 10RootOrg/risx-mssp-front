@@ -58,7 +58,7 @@ function Dashboard_Threat_Hunting({
       <div className="app-main">
         <div className="top-of-page">
           <div className="top-of-page-left mb-b">
-            <p className="font-type-menu ">Dashboards:</p>
+            {/* <p className="font-type-menu ">Dashboards:</p> */}
             <p className="font-type-h3">Threat Hunting</p>
           </div>
           <div className="top-of-page-center">

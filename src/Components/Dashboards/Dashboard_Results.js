@@ -177,7 +177,7 @@ console.log("last_updated",last_updated);
 <div className='top-of-page'> 
 
 <div className='top-of-page-left mb-b'>
-<p  className="font-type-menu" >Dashboards:</p>
+{/* <p  className="font-type-menu" >Dashboards:</p> */}
 <p  className="font-type-h3" >General</p>
 </div>
 <div className='top-of-page-center'>{/* placeholder for dropDown */}</div>

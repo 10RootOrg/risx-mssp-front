@@ -179,7 +179,7 @@ mainValue:  DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBo
       <div className="app-main">
         <div className="top-of-page">
           <div className="top-of-page-left mb-b">
-            <p className="font-type-menu">Dashboards:</p>
+            {/* <p className="font-type-menu">Dashboards:</p> */}
             <p className="font-type-h3">Forensics</p>
           </div>
           <div className="top-of-page-center">
