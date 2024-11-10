@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext ,useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import {
   PreviewBox_type1_number_no_filters,
   PreviewBox_type3_bar,
@@ -8,8 +8,7 @@ import {
 import axios from "axios";
 import "./../ResourceGroup/ResourceGroup.css";
 import "./Dashboard_iframes.css";
-import { fix_path} from "../Dashboards/functions_for_dashboards.js";
-
+import { fix_path } from "../Dashboards/functions_for_dashboards.js";
 
 import GeneralContext from "../../Context.js";
 
@@ -22,7 +21,6 @@ function Dashboard_Threat_Hunting({
 }) {
   set_visblePage("dashboard-threat-hunting");
 
-  
   const {
     // backEndURL,
     // all_Resource_Types,
@@ -30,11 +28,10 @@ function Dashboard_Threat_Hunting({
     // user_id,
     mssp_config_json,
     front_IP,
-    front_URL
+    front_URL,
   } = useContext(GeneralContext);
 
   const [dashboard_URL, set_dashboard_URL] = useState("");
-
 
   useEffect(() => {
     if (show_SideBar === false) {
@@ -42,16 +39,19 @@ function Dashboard_Threat_Hunting({
     }
   }, []);
 
-
- 
   useEffect(() => {
-    if (!mssp_config_json){return}
-    const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks) ? mssp_config_json.moduleLinks : [];
-    const threatHuntingURL = moduleLinks.find(link => link.toolName === "Threat Hunting Dashboard")?.toolURL;
-    const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);  
+    if (!mssp_config_json) {
+      return;
+    }
+    const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks)
+      ? mssp_config_json.moduleLinks
+      : [];
+    const threatHuntingURL = moduleLinks.find(
+      (link) => link.toolName === "Threat Hunting Dashboard"
+    )?.toolURL;
+    const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);
     set_dashboard_URL(fixed_path);
-      }, [mssp_config_json]);
-    
+  }, [mssp_config_json]);
 
   return (
     <>
@@ -64,10 +64,8 @@ function Dashboard_Threat_Hunting({
           <div className="top-of-page-center">
             {/* placeholder for dropDown */}
           </div>
-
- 
         </div>
-{/* 
+        {/* 
         <div className="resource-group-top-boxes mb-c">
           <PreviewBox_type1_number_no_filters
             HeadLine="Eventlog Insights Tagged: High(*)"
@@ -145,13 +143,13 @@ function Dashboard_Threat_Hunting({
           />
 
         </div> */}
- 
-       <iframe
+
+        <iframe
           src={dashboard_URL}
           height="1200"
           width="100%"
           className="kibana-iframe"
-        ></iframe>  
+        ></iframe>
         {/*   <div className="resource-group-all-the-Lists">
          <Results_list Preview_this_Results={Preview_this_Results} set_Preview_this_Results={set_Preview_this_Results} filter_Resource={filter_Resource} set_filter_Resource={set_filter_Resource} loader={loader}   set_loader={set_loader} /> 
         </div>*/}
