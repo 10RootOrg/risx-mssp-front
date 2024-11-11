@@ -105,8 +105,6 @@ function SideBar({
     }
   }, [backEndURL]);
 
-
-
   const handleClick = (page_name) => {
     set_visblePage(page_name);
     localStorage.setItem("visiblePage", page_name); // Store current page in localStorage
@@ -220,25 +218,25 @@ function SideBar({
         { params: { param1: "param1value" } }
       );
 
-
       if (res.data) {
         console.log("handle_active_manual_process - data", res?.data);
         console.log("handle_active_manual_process - status", res?.status);
         // console.log("handle_active_manual_process - message", res?.data?.message);
         // console.log("handle_active_manual_process - success", res?.data?.success);
-        
+
         if (res?.data?.success === true) {
-          console.log("A Manual Process has Started to run"  , "message;" , res?.data?.message);
+          console.log(
+            "A Manual Process has Started to run",
+            "message;",
+            res?.data?.message
+          );
           set_PopUp_All_Good__txt({
             HeadLine: "Activated",
             paragraph: "A Manual Process has Started to run",
             // paragraph: res?.data?.message,
             buttonTitle: "Close",
-
-
           });
           set_PopUp_All_Good__show(true);
-
         } else {
           set_PopUp_Error____txt({
             HeadLine: "Error",
@@ -249,8 +247,6 @@ function SideBar({
         }
       }
     } catch (err) {
-
-      
       set_PopUp_Error____txt({
         HeadLine: "Error",
         paragraph: `${err?.response?.data?.message}`,
@@ -258,8 +254,11 @@ function SideBar({
       });
       set_PopUp_Error____show(true);
 
-      // The Manual process could not be started. Error Message: 
-      console.log("catch handle_active_manual_process - data", err?.response?.data);
+      // The Manual process could not be started. Error Message:
+      console.log(
+        "catch handle_active_manual_process - data",
+        err?.response?.data
+      );
       // console.log("catch handle_active_manual_process - error", err?.response?.data?.error);
       // console.log("catch handle_active_manual_process - message", err?.response?.data?.message);
       // console.log("catch handle_active_manual_process - success", err?.response?.data?.success);
@@ -700,136 +699,116 @@ function SideBar({
           <div className="btn-menu-icon-placeholder  "> </div>
         </button>
 
-
-
-
-
         <div
-        className="btn-menu-list"
-        onMouseLeave={() => set_download_drop_down(false)}
-        //  onMouseEnter={()=>set_download_drop_down(true)}
-      >
-        <button
-          className={`btn-menu  ${download_drop_down ? "btn_look_hover" : ""} `}
-          onClick={handle_download_drop_down}
+          className="btn-menu-list"
+          onMouseLeave={() => set_download_drop_down(false)}
+          //  onMouseEnter={()=>set_download_drop_down(true)}
         >
-          <div className="display-flex">
-            <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
-            <p className="font-type-menu ">Download Agent</p>
-          </div>
-          <div className="btn-menu-icon-placeholder  ">
-            {" "}
-            {/*  <MenuArrowDown  />*/}
-          </div>
-        </button>
-        {/* fix */}
-        <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}>
           <button
-            className="btn-menu  "
-            onClick={(e) => {
-              handleDownload("Windows");
-            }}
+            className={`btn-menu  ${
+              download_drop_down ? "btn_look_hover" : ""
+            } `}
+            onClick={handle_download_drop_down}
           >
             <div className="display-flex">
-              <IcoDownload
-                className="btn-menu-icon-placeholder  mr-a "
-                style={{ visibility: "hidden" }}
-              />
-              <p className="font-type-menu ">Windows</p>
+              <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
+              <p className="font-type-menu ">Download Agent</p>
             </div>
             <div className="btn-menu-icon-placeholder  ">
               {" "}
               {/*  <MenuArrowDown  />*/}
             </div>
           </button>
+          {/* fix */}
+          <div className={`dropdown-menu ${download_drop_down ? "open" : ""}`}>
+            <button
+              className="btn-menu  "
+              onClick={(e) => {
+                handleDownload("Windows");
+              }}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Windows</p>
+              </div>
+              <div className="btn-menu-icon-placeholder  ">
+                {" "}
+                {/*  <MenuArrowDown  />*/}
+              </div>
+            </button>
 
-          <button
-            className="btn-menu  "
-            onClick={(e) => {
-              handleDownload("Linux");
-            }}
-          >
-            <div className="display-flex">
-              <IcoDownload
-                className="btn-menu-icon-placeholder  mr-a "
-                style={{ visibility: "hidden" }}
-              />
-              <p className="font-type-menu ">linux</p>
-            </div>
-            <div className="btn-menu-icon-placeholder  ">
-              {" "}
-              {/*  <MenuArrowDown  />*/}
-            </div>
-          </button>
+            <button
+              className="btn-menu  "
+              onClick={(e) => {
+                handleDownload("Linux");
+              }}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">linux</p>
+              </div>
+              <div className="btn-menu-icon-placeholder  ">
+                {" "}
+                {/*  <MenuArrowDown  />*/}
+              </div>
+            </button>
 
-          <button
-            className="btn-menu  "
-            onClick={(e) => {
-              handleDownload("Mac");
-            }}
-          >
-            <div className="display-flex">
-              <IcoDownload
-                className="btn-menu-icon-placeholder  mr-a "
-                style={{ visibility: "hidden" }}
-              />
-              <p className="font-type-menu ">Mac</p>
-            </div>
-            <div className="btn-menu-icon-placeholder  ">
-              {" "}
-              {/*  <MenuArrowDown  />*/}
-            </div>
-          </button>
+            <button
+              className="btn-menu  "
+              onClick={(e) => {
+                handleDownload("Mac");
+              }}
+            >
+              <div className="display-flex">
+                <IcoDownload
+                  className="btn-menu-icon-placeholder  mr-a "
+                  style={{ visibility: "hidden" }}
+                />
+                <p className="font-type-menu ">Mac</p>
+              </div>
+              <div className="btn-menu-icon-placeholder  ">
+                {" "}
+                {/*  <MenuArrowDown  />*/}
+              </div>
+            </button>
+          </div>
         </div>
-      </div>
-
-
-
-
-
       </div>
       <div
         className="Bg-Grey2"
         style={{ width: "100%", height: "2px", borderRadius: "5px" }}
       />
 
+      <button
+        className="btn-type2"
+        onClick={handle_active_manual_process}
+        style={{
+          width: "100%",
+          paddingLeft: "var(--space-a) ",
+          //  paddingRight: Info?.toolType !== undefined &&
+          //  Info?.toolType !== "" &&
+          //  Info?.toolType !== null
+          //    ? "calc(var(--space-d) - 5px)"
+          //  : undefined
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <IcoACtiveBlue
+            style={{
+              // height:"var(--space-c)" ,width:"var(--space-c)" ,
+              marginRight: "var(--space-a)",
+            }}
+          />
 
-
-<button className="btn-type2" onClick={handle_active_manual_process}
-  
-    style={{
-      width:"100%",
- paddingLeft:"var(--space-a) "
-    //  paddingRight: Info?.toolType !== undefined && 
-    //  Info?.toolType !== "" && 
-    //  Info?.toolType !== null 
-    //    ? "calc(var(--space-d) - 5px)"
-    //  : undefined 
-    }}
-    
-    
-    >
-   <div style={{display:"flex", alignItems:"center"   }}>
-   <IcoACtiveBlue     style={{
-  // height:"var(--space-c)" ,width:"var(--space-c)" ,
-  marginRight:"var(--space-a)"  }}/>
-
-   <p className='font-type-menu'>Run Selected Jobs</p>
-
-
-
-
-
-
- 
-
-   </div>  
-   </button> 
-
-
-
-
-
+          <p className="font-type-menu">Run Selected Jobs</p>
+        </div>
+      </button>
 
       {/* <button className="btn-menu" onClick={handle_active_manual_process}>
         <div className="display-flex">
@@ -841,10 +820,7 @@ function SideBar({
       </button>
        */}
 
-       
       {/* <div    className="Bg-Grey2"  style={{ width: "100%", height: "2px", borderRadius: "5px" }} /> */}
-
-    
 
       {Object.keys(DownloadProgressBar).length > 0 && (
         <div

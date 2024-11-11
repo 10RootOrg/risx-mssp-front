@@ -149,9 +149,11 @@ const SideBar = ({ visblePage, set_visblePage }) => {
         {
           responseType: "blob",
           onDownloadProgress: (prog) => {
+            console.log(prog, "prog");
+
             const value = Math.round((prog.loaded / prog.total ?? 1) * 100);
             if (!DownloadProgressBar[fileName2]) {
-              console.log("empty");
+              console.log("empty 1111111111111111111111");
               // const copy = DownloadList.map((x) => x);
               // copy.push(fileName);
               // console.log(
@@ -159,15 +161,21 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               //   DownloadList
               // );
               // setDownloadList(copy);
-              DownloadProgressBar[fileName2] = {
-                progress: value,
-                fileName: fileName,
-              };
+              console.log("iiiuiuiuiu");
+
+              if (value < 100) {
+                DownloadProgressBar[fileName2] = {
+                  progress: value,
+                  fileName: fileName,
+                };
+              }
             }
 
             if (
-              DownloadProgressBar[fileName2].progress + 5 < value ||
-              (value >= 100 && DownloadProgressBar[fileName2].progress != 100)
+              (DownloadProgressBar[fileName2]?.progress + 5 < value ||
+                (value >= 100 &&
+                  DownloadProgressBar[fileName2]?.progress != 100)) &&
+              DownloadProgressBar[fileName2]?.progress !== undefined
             ) {
               console.log("Download Prog ", value, DownloadProgressBar);
               DownloadProgressBar[fileName2] = {
@@ -195,6 +203,12 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       }
     } catch (err) {
       console.log(err);
+      set_PopUp_Error____txt({
+        HeadLine: "Error in Download",
+        paragraph: `there was an error downloading the file : ${err}`,
+        buttonTitle: "Close",
+      });
+      set_PopUp_Error____show(true);
     }
   };
 
@@ -863,7 +877,7 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
           onDownloadProgress: (prog) => {
             const value = Math.round((prog.loaded / prog.total ?? 1) * 100);
             if (!DownloadProgressBar[fileName2]) {
-              console.log("empty");
+              console.log("empty 222222222222222222222222222222");
               // const copy = DownloadList.map((x) => x);
               // copy.push(fileName);
               // console.log(
@@ -871,15 +885,19 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
               //   DownloadList
               // );
               // setDownloadList(copy);
-              DownloadProgressBar[fileName2] = {
-                progress: value,
-                fileName: fileName,
-              };
+              if (value < 100) {
+                DownloadProgressBar[fileName2] = {
+                  progress: value,
+                  fileName: fileName,
+                };
+              }
             }
 
             if (
-              DownloadProgressBar[fileName2].progress + 5 < value ||
-              (value >= 100 && DownloadProgressBar[fileName2].progress != 100)
+              (DownloadProgressBar[fileName2]?.progress + 5 < value ||
+                (value >= 100 &&
+                  DownloadProgressBar[fileName2]?.progress != 100)) &&
+              DownloadProgressBar[fileName2]?.progress !== undefined
             ) {
               console.log("Download Prog ", value, DownloadProgressBar);
               DownloadProgressBar[fileName2] = {
@@ -907,6 +925,12 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
       }
     } catch (err) {
       console.log(err);
+      set_PopUp_Error____txt({
+        HeadLine: "Error in Download",
+        paragraph: `there was an error downloading the file : ${err}`,
+        buttonTitle: "Close",
+      });
+      set_PopUp_Error____show(true);
     }
   };
 

@@ -45,10 +45,12 @@ async function download_Json(
               //   DownloadList
               // );
               // setDownloadList(copy);
-              DownloadProgressBar[fileName2] = {
-                progress: value,
-                fileName: fileName2,
-              };
+              if (value < 100) {
+                DownloadProgressBar[fileName2] = {
+                  progress: value,
+                  fileName: fileName2,
+                };
+              }
             }
             if (value > 101) {
               DownloadProgressBar[fileName2] = {
@@ -62,11 +64,12 @@ async function download_Json(
             }
 
             if (
-              (DownloadProgressBar[fileName2].progress + 5 < value &&
-                value < 101) ||
-              (value == 100 && DownloadProgressBar[fileName2].progress != 100)
+              (DownloadProgressBar[fileName2]?.progress + 5 < value ||
+                (value >= 100 &&
+                  DownloadProgressBar[fileName2]?.progress != 100)) &&
+              DownloadProgressBar[fileName2]?.progress !== undefined
             ) {
-              console.log("Download Prog ", value, DownloadProgressBar);
+              console.log("Download Prog", value, DownloadProgressBar);
               DownloadProgressBar[fileName2] = {
                 progress: value,
                 fileName: fileName2,
@@ -2275,7 +2278,9 @@ export const PopUp_For_LeakCheck_response = (props) => {
     } else {
       // set_display_this_data(json_file_info)
       set_display_this_domain(Domain);
-      const [filter] = json_file_info.filter((data) => data.Name?.asset_string === Domain);
+      const [filter] = json_file_info.filter(
+        (data) => data.Name?.asset_string === Domain
+      );
 
       console.log("filter", filter);
 
@@ -2524,7 +2529,9 @@ export const PopUp_For_LeakCheck_response = (props) => {
                         ) || [0, 0, 0, 0]
                       }
                       bar_headlines={
-                        json_file_info?.map((aaaa) => aaaa?.Name?.asset_string) || []
+                        json_file_info?.map(
+                          (aaaa) => aaaa?.Name?.asset_string
+                        ) || []
                       }
                       enable_hover={false}
                       display_this_value={"prime_data"}
@@ -2761,7 +2768,9 @@ export const PopUp_For_LeakCheck_response = (props) => {
                                     width: "auto",
                                   }}
                                   onClick={() =>
-                                    handle_click_display_leck_data(Site?.Name?.asset_string)
+                                    handle_click_display_leck_data(
+                                      Site?.Name?.asset_string
+                                    )
                                   }
                                 >
                                   <p
