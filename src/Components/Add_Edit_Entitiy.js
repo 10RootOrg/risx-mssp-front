@@ -407,8 +407,9 @@ export const Add_Edit_Entity = (props) => {
                 onClick={() => {
                   if (ChosenEntity.categoryName == "Endpoints") {
                     HandleDashboardAssetOpenEndPoints(ChosenEntity.entitiesId);
+                  } else {
+                    HandleDashboardAssetOpenRest(ChosenEntity.entitiesId);
                   }
-                  HandleDashboardAssetOpenRest(ChosenEntity.entitiesId);
                 }}
               >
                 <p className="font-type-menu ">Show Data</p>

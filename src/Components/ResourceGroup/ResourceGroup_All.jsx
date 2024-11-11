@@ -407,12 +407,20 @@ function ResourceGroup_All({
           (link) => link.toolName === "Asset Endpoints Dashboard"
         )?.toolURL;
         const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);
-
+        // let ParamForIdEla = "";
+        // res.data?.forEach((x) => {
+        //   if (ParamForIdEla) {
+        //     ParamForIdEla += `(match_phrase:(ClientId.keyword:${x}))`;
+        //   } else {
+        //     ParamForIdEla += `,(match_phrase:(ClientId.keyword:${x}))`;
+        //   }
+        // });
         const url2 = fixed_path.replace(
           "_a=()",
           `_a=(filters:!((query:(match_phrase:(ClientId:%22${res.data}%22)))))`
+          // `_a=(filters:!((query:( bool:(minimum_should_match:1,should:!( ${ParamForIdEla})) ))))`
         );
-        console.log(url2, "uuuuuuuuuuuuu");
+        console.log(url2, "uuuuuuuuu555555555uuuu");
 
         window.open(url2, "_blank");
       } else {
