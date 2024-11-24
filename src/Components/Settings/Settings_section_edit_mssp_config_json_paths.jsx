@@ -47,6 +47,13 @@ function Settings_section_edit_mssp_config_json_module_paths({
       );
       if (res) {
         console.log("handle_Save_config", res.data);
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Saved Data successfully",
+          paragraph:
+            "The Changes Where Saved Successfully.\nBut There Was an Error In Page Refresh",
+          buttonTitle: "Ok",
+        });
       } else {
         console.log("handle_Save_config", res);
         set_PopUp_Error____show(true);

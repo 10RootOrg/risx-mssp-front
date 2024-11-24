@@ -17,6 +17,7 @@ import Alert_list from "./Alerts_list.jsx";
 import { ReactComponent as IconBIG } from "../icons/ico-menu-alert.svg";
 import ResourceGroup_Action_btns from "../ResourceGroup/ResourceGroup_Action_btns.jsx";
 import { ReactComponent as Loader } from "../icons/loader_typea.svg";
+import { PopUp_All_Good, PopUp_Error } from "../PopUp_Smart.js";
 
 function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   set_visblePage("alerts");
@@ -43,6 +44,19 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   const [ArtifactDataPie, setArtifactDataPie] = useState({});
   const [IntervalUpdate, setIntervalUpdate] = useState({});
   const [Loading, SetLoading] = useState(false);
+
+  const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+  const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
+    HeadLine: "Success",
+    paragraph: "successfully",
+    buttonTitle: "Close",
+  });
+  const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
+  const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({
+    HeadLine: "",
+    paragraph: "",
+    buttonTitle: "",
+  });
 
   async function GetData() {
     try {
@@ -128,6 +142,12 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
       return;
     } catch (error) {
       console.log("Error in Get Data OF alerts", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Retrieving The Alert Data",
+        buttonTitle: "OK",
+      });
       SetLoading(false);
     }
   }
@@ -166,6 +186,24 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
 
   return (
     <>
+      {PopUp_All_Good__show && (
+        <PopUp_All_Good
+          popUp_show={PopUp_All_Good__show}
+          set_popUp_show={set_PopUp_All_Good__show}
+          HeadLine={PopUp_All_Good__txt.HeadLine}
+          paragraph={PopUp_All_Good__txt.paragraph}
+          buttonTitle={PopUp_All_Good__txt.buttonTitle}
+        />
+      )}
+      {PopUp_Error____show && (
+        <PopUp_Error
+          popUp_show={PopUp_Error____show}
+          set_popUp_show={set_PopUp_Error____show}
+          HeadLine={PopUp_Error____txt.HeadLine}
+          paragraph={PopUp_Error____txt.paragraph}
+          buttonTitle={PopUp_Error____txt.buttonTitle}
+        />
+      )}
       <div
         className="app-main"
         style={
@@ -442,6 +480,10 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
                       setIntervalUpdate={setIntervalUpdate}
                       ArtifactDataPie={ArtifactDataPie}
                       AlertName={x}
+                      set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+                      set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+                      set_PopUp_Error____show={set_PopUp_Error____show}
+                      set_PopUp_Error____txt={set_PopUp_Error____txt}
                     />
                   )}
                 </>

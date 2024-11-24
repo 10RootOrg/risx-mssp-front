@@ -31,6 +31,7 @@ import TestPage from "./Pages/TestPage";
 import TestRespo from "./Pages/TestRespo";
 
 import Constantfunctions from "./Constantfunctions/Constantfunctions";
+import VeloConfigMain from "./Components/VeloConfig/VeloConfigMain";
 
 export default function App() {
   const [visblePage, set_visblePage] = useState(
@@ -199,7 +200,16 @@ export default function App() {
                   />
                 }
               />
-
+              <Route
+                path="OPVelociraptor"
+                element={
+                  <VeloConfigMain
+                    show_SideBar={show_SideBar}
+                    set_show_SideBar={set_show_SideBar}
+                    set_visblePage={set_visblePage}
+                  />
+                }
+              />
               {/* <Route path="TestPage"     element={<TestPage />} />   
           <Route path="TestRespo"     element={<TestRespo />} />   */}
               <Route path="*" element={<NoPage404 />} />
