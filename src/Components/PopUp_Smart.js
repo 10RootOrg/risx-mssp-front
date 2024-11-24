@@ -193,6 +193,10 @@ export const PopUp_Alert_info = (props) => {
     backEndURL,
     set_Preview_this_Results,
     GetData,
+    set_PopUp_All_Good__show,
+    set_PopUp_All_Good__txt,
+    set_PopUp_Error____show,
+    set_PopUp_Error____txt,
   } = props;
 
   const [active, setActive] = useState(false);
@@ -237,27 +241,37 @@ export const PopUp_Alert_info = (props) => {
   }
 
   const SelectDropHandle = async (val) => {
-    console.log(
-      "2222222222222222222222222222eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      val
-    );
-    Info.UserInput.Status = val;
-    Info.UserInput.ChangedAt = new Date();
-    const res = await axios.post(backEndURL + "/Alerts/UpdateAlertFileData", {
-      Info,
-    });
-    console.log(
-      res,
-      "33333333333333333333333333ttttttttttttttttttttttttttttttttttttttt"
-    );
-    if (res.data) {
+    try {
       console.log(
-        "tyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        "2222222222222222222222222222eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        val
       );
-      GetData();
+      Info.UserInput.Status = val;
+      Info.UserInput.ChangedAt = new Date();
+      const res = await axios.post(backEndURL + "/Alerts/UpdateAlertFileData", {
+        Info,
+      });
+      console.log(
+        res,
+        "33333333333333333333333333ttttttttttttttttttttttttttttttttttttttt"
+      );
+      if (res.data) {
+        console.log(
+          "tyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        );
+        GetData();
+      }
+      setIsDropdownOpen(false);
+      set_popUp_show(false);
+    } catch (error) {
+      console.log(error, " Error In Select Status");
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Select Status",
+        buttonTitle: "OK",
+      });
     }
-    setIsDropdownOpen(false);
-    set_popUp_show(false);
   };
 
   const handle_open_long_text = (key) => {
@@ -524,7 +538,13 @@ export const PopUp_Alert_info = (props) => {
 
             {Object.keys(Info).map((key) => {
               if (
-                ["UserInput", "_ts", "Artifact", "buttonTitle","Show"].includes(key)
+                [
+                  "UserInput",
+                  "_ts",
+                  "Artifact",
+                  "buttonTitle",
+                  "Show",
+                ].includes(key)
               ) {
                 return;
               }

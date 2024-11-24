@@ -78,8 +78,13 @@ const SideBar = ({ visblePage, set_visblePage }) => {
 
   const [download_drop_down, set_download_drop_down] = useState(false);
   const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
+  const [VeloDropDownStepOne, setVeloDropDownStepOne] = useState(false);
 
   const [object, setObject] = useState({});
+  const [VelociraptorCollectorsList, setVelociraptorCollectorsList] = useState(
+    []
+  );
+  const [OpenVeloCollectorList, setOpenVeloCollectorList] = useState([]);
 
   const get_config = async () => {
     if (backEndURL === undefined) {
@@ -94,6 +99,12 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       setObject(res.data);
     } catch (err) {
       console.log(err);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Getting Config",
+        buttonTitle: "OK",
+      });
     }
   };
 
@@ -125,7 +136,9 @@ const SideBar = ({ visblePage, set_visblePage }) => {
   const handle_download_drop_down = () => {
     set_download_drop_down(!download_drop_down);
   };
-
+  const HandleVeloDropDownStepOne = () => {
+    setVeloDropDownStepOne(!VeloDropDownStepOne);
+  };
   const handleDownload = async (os) => {
     console.log("os", os);
     // window.open(object?.General?.AgentLinks[os]);
@@ -289,6 +302,24 @@ const SideBar = ({ visblePage, set_visblePage }) => {
     }
   }, []);
 
+  const GetVeloCollectors = async () => {
+    try {
+      console.log("GetVeloCollectors");
+      const res = await axios.get(
+        `${backEndURL}/config/GetAllVeloConfigSideBar`
+      );
+      console.log(res.data);
+      setVelociraptorCollectorsList(res.data);
+    } catch (error) {
+      console.log("Error in GetVeloCollectors", error);
+    }
+  };
+  useEffect(() => {
+    if (backEndURL) {
+      GetVeloCollectors();
+    }
+  }, [backEndURL]);
+
   const handleClickComingSoon = (page_name) => {
     set_PopUp_Under_Construction__txt({
       HeadLine: "Coming Soon!",
@@ -296,6 +327,39 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       buttonTitle: "Close",
     });
     set_PopUp_Under_Construction__show(true);
+  };
+
+  const HandleVeloClickOne = async (id) => {
+    try {
+      const tmpArr = [...OpenVeloCollectorList];
+      if (tmpArr.includes(id)) {
+        tmpArr.splice(
+          tmpArr?.findIndex((x) => x == id),
+          1
+        );
+
+        setOpenVeloCollectorList(tmpArr);
+      } else {
+        tmpArr.push(id);
+
+        setOpenVeloCollectorList(tmpArr);
+      }
+    } catch (error) {
+      console.log("Error in HandleVeloClickOne", error);
+    }
+  };
+
+  const HandleVeloClickTwo = async (id, os) => {
+    try {
+      console.log("HandleVeloClickTwo", id, os);
+      const res = await axios.post(
+        `${backEndURL}/config/GetSpecificCollector`,
+        { id: id, os: os }
+      );
+      console.log(res.data);
+    } catch (error) {
+      console.log("Error in HandleVeloClickTwo", error);
+    }
   };
 
   return (
@@ -583,6 +647,21 @@ const SideBar = ({ visblePage, set_visblePage }) => {
 
         <button
           className="btn-menu  "
+          onClick={() => handleClick("OPVelociraptor")}
+          disabled={visblePage === "OPVelociraptor"}
+        >
+          <div className="display-flex">
+            <IcoSettings className="btn-menu-icon-placeholder  mr-a " />
+            <p className="font-type-menu ">On-Premise Velociraptor</p>
+          </div>
+          <div className="btn-menu-icon-placeholder  ">
+            {" "}
+            {/*  <MenuArrowDown  />*/}
+          </div>
+        </button>
+
+        <button
+          className="btn-menu  "
           onClick={() => handleClick("Settings")}
           disabled={visblePage === "Settings"}
         >
@@ -710,6 +789,120 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             </button>
           </div>
         </div>
+
+        <div
+          className="btn-menu-list"
+          onMouseLeave={() => set_download_drop_down(false)}
+          //  onMouseEnter={()=>set_download_drop_down(true)}
+        >
+          <button
+            className={`btn-menu  ${
+              VeloDropDownStepOne ? "btn_look_hover" : ""
+            } `}
+            onClick={HandleVeloDropDownStepOne}
+          >
+            <div className="display-flex">
+              <IcoDownload className="btn-menu-icon-placeholder  mr-a " />
+              <p className="font-type-menu ">Download Offline Agent</p>
+            </div>
+            <div className="btn-menu-icon-placeholder  ">
+              {" "}
+              {/*  <MenuArrowDown  />*/}
+            </div>
+          </button>
+          {/* fix */}
+          <div className={`dropdown-menu ${VeloDropDownStepOne ? "open" : ""}`}>
+            {VelociraptorCollectorsList?.map((x) => {
+              return (
+                <>
+                  <button
+                    className="btn-menu  "
+                    onClick={() => {
+                      HandleVeloClickOne(x?.config_id);
+                    }}
+                  >
+                    <div className="display-flex">
+                      <IcoDownload
+                        className="btn-menu-icon-placeholder  mr-a "
+                        style={{ visibility: "hidden" }}
+                      />
+                      <p className="font-type-menu ">{x?.config_name}</p>
+                    </div>
+                    <div className="btn-menu-icon-placeholder  ">
+                      {" "}
+                      {/*  <MenuArrowDown  />*/}
+                    </div>
+                  </button>
+                  <div
+                    className={`dropdown-menu-Sub ${
+                      OpenVeloCollectorList.includes(x?.config_id) ? "open" : ""
+                    }`}
+                  >
+                    <button
+                      className="btn-menu  "
+                      onClick={(e) => {
+                        e.preventDefault();
+                        HandleVeloClickTwo(x?.config_id, "Windows");
+                      }}
+                    >
+                      <div className="display-flex">
+                        <IcoDownload
+                          className="btn-menu-icon-placeholder  mr-a "
+                          style={{ visibility: "hidden" }}
+                        />
+                        <p className="font-type-menu ">Windows</p>
+                      </div>
+                      <div className="btn-menu-icon-placeholder  ">
+                        {" "}
+                        {/*  <MenuArrowDown  />*/}
+                      </div>
+                    </button>
+
+                    <button
+                      className="btn-menu  "
+                      onClick={(e) => {
+                        e.preventDefault();
+                        HandleVeloClickTwo(x?.config_id, "Linux");
+                      }}
+                    >
+                      <div className="display-flex">
+                        <IcoDownload
+                          className="btn-menu-icon-placeholder  mr-a "
+                          style={{ visibility: "hidden" }}
+                        />
+                        <p className="font-type-menu ">linux</p>
+                      </div>
+                      <div className="btn-menu-icon-placeholder  ">
+                        {" "}
+                        {/*  <MenuArrowDown  />*/}
+                      </div>
+                    </button>
+
+                    <button
+                      className="btn-menu  "
+                      onClick={(e) => {
+                        e.preventDefault();
+                        HandleVeloClickTwo(x?.config_id, "Mac");
+                      }}
+                    >
+                      <div className="display-flex">
+                        <IcoDownload
+                          className="btn-menu-icon-placeholder  mr-a "
+                          style={{ visibility: "hidden" }}
+                        />
+                        <p className="font-type-menu ">Mac</p>
+                      </div>
+                      <div className="btn-menu-icon-placeholder  ">
+                        {" "}
+                        {/*  <MenuArrowDown  />*/}
+                      </div>
+                    </button>
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
       {visblePage === "Modules" && (
@@ -746,8 +939,13 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             Downloads Progress:
           </p>
           <div className=" " style={{ width: "100% " }}>
-            {Object.values(DownloadProgressBar).map((item) => (
-              <DownloadProgressBarItem item={item} />
+            {Object.keys(DownloadProgressBar).map((item) => (
+              <DownloadProgressBarItem
+                item={DownloadProgressBar[item]}
+                itemKey={item}
+                DownloadProgressBar={DownloadProgressBar}
+                setDownloadProgressBar={setDownloadProgressBar}
+              />
             ))}
           </div>
         </div>

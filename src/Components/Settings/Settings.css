@@ -1,43 +1,36 @@
-
 :root {
-  --setting-hight-a: 600px; 
+  --setting-hight-a: 600px;
   --setting-hight-a-space: calc(var(--setting-hight-a) + 60px);
 }
 
-.tbody_setting{
-
+.tbody_setting {
 }
 .setting_table {
-width: 100%;
-    /* border-spacing: var(  --space-d); */
-    /* height: 600px; */
-  }
-
-
-.setting_descriptions{
- vertical-align: top;
- 
-width: 15%;
-/* width: 200px; */
-min-width: 100px;
-
-padding-right: var(  --space-d);
- 
+  width: 100%;
+  /* border-spacing: var(  --space-d); */
+  /* height: 600px; */
 }
 
+.setting_descriptions {
+  vertical-align: top;
 
-.setting_descriptions_one_line{
-vertical-align:middle;
-/* background-color: aqua; */
+  width: 15%;
+  max-width: 15%;
+  /* width: 200px; */
+  min-width: 100px;
+
+  padding-right: var(--space-d);
 }
 
+.setting_descriptions_one_line {
+  vertical-align: middle;
+  /* background-color: aqua; */
+}
 
-
-.setting_element{
- 
-    width: auto;
-    min-height:  var(--setting-hight-a); 
-    max-height: var(--setting-hight-a); 
+.setting_element {
+  width: auto;
+  min-height: var(--setting-hight-a);
+  max-height: var(--setting-hight-a);
 }
 /* 
 th td {
@@ -46,26 +39,21 @@ th td {
 
  */
 
- 
-  .ShowInUi-table th {
-
- text-align: left;
- padding-bottom: var(--space-c) /* Adjust as needed */
-  }
-  .ShowInUi-table   {
- padding: var(--space-c);
- border-spacing: 0 calc(var(--space-b, 0) + var(--space-a, 0));
+.ShowInUi-table th {
+  text-align: left;
+  padding-bottom: var(--space-c); /* Adjust as needed */
+}
+.ShowInUi-table {
+  padding: var(--space-c);
+  border-spacing: 0 calc(var(--space-b, 0) + var(--space-a, 0));
 }
 
+.log-text {
+  width: auto;
+}
 
- .log-text{
- width:auto;
- 
- }
-
-
- .CodeMirror {
-  font-family: 'Roboto', sans-serif;
+.CodeMirror {
+  font-family: "Roboto", sans-serif;
   font-size: 14px;
   line-height: 1.5; /* Optional: Adjust line height as needed */
 }

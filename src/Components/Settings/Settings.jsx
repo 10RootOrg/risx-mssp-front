@@ -115,6 +115,8 @@ function Settings({
   }, []);
 
   const PortAiner = () => {
+    console.log("Path To Portainer ", `https://${front_URL}/portainer`);
+
     return (
       <div style={{ flexDirection: "column", display: "flex" }}>
         <p className="font-type-h4 Color-White mb-a ">Portainer</p>

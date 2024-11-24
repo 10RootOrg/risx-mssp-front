@@ -32,6 +32,10 @@ function Alert_list({
   IntervalUpdate,
   setIntervalUpdate,
   AlertName,
+  set_PopUp_All_Good__show,
+  set_PopUp_All_Good__txt,
+  set_PopUp_Error____show,
+  set_PopUp_Error____txt,
 }) {
   const { backEndURL, all_Tools, front_IP } = useContext(GeneralContext);
   const [Preview_this_Results, set_Preview_this_Results] =
@@ -62,6 +66,12 @@ function Alert_list({
     try {
       if (!column) {
         console.log("Can't sort ", column);
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error",
+          paragraph: "Error in Sorting Data",
+          buttonTitle: "OK",
+        });
         return;
       }
       setSortObjectField([column, column2]);
@@ -99,6 +109,12 @@ function Alert_list({
       }
     } catch (error) {
       console.log(error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Sorting Data",
+        buttonTitle: "OK",
+      });
     }
   };
 
@@ -106,6 +122,12 @@ function Alert_list({
     console.log("sort this column: ", column);
     if (!column) {
       console.log("Can't sort ", column);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Sorting Data",
+        buttonTitle: "OK",
+      });
       return;
     }
     setSortObjectField(column);
@@ -179,6 +201,10 @@ function Alert_list({
           set_Preview_this_Results={set_Preview_this_Results}
           backEndURL={backEndURL}
           GetData={GetData}
+          set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+          set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+          set_PopUp_Error____show={set_PopUp_Error____show}
+          set_PopUp_Error____txt={set_PopUp_Error____txt}
         />
       )}
 

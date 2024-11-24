@@ -5,7 +5,11 @@ import "./../Settings/Settings.css";
 import "./custom-json-view.css";
 import GeneralContext from "../../Context.js";
 import JsonView from "@uiw/react-json-view";
-import { PopUp_All_Good, PopUp_Are_You_Sure } from "../PopUp_Smart";
+import {
+  PopUp_All_Good,
+  PopUp_Are_You_Sure,
+  PopUp_Error,
+} from "../PopUp_Smart";
 import CodeMirror from "@uiw/react-codemirror";
 import { json, jsonLanguage, jsonParseLinter } from "@codemirror/lang-json";
 import { tags as t } from "@lezer/highlight";
@@ -38,6 +42,18 @@ function Settings_section_config({
   });
 
   const initialObject = { loading: "..." };
+  const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
+  const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
+    HeadLine: "Success",
+    paragraph: "successfully",
+    buttonTitle: "Close",
+  });
+  const [PopUp_Error____show, set_PopUp_Error____show] = useState(false);
+  const [PopUp_Error____txt, set_PopUp_Error____txt] = useState({
+    HeadLine: "",
+    paragraph: "",
+    buttonTitle: "",
+  });
 
   const myTheme = createTheme({
     theme: "dark",
@@ -98,9 +114,21 @@ function Settings_section_config({
       if (res.data == "Updated successfully") {
         console.log("Updated successfully The Config");
         get_config();
+        set_PopUp_All_Good__show(true);
+        set_PopUp_All_Good__txt({
+          HeadLine: "Success",
+          paragraph: "The Config Reset was successful",
+          buttonTitle: "Close",
+        });
       }
     } catch (error) {
       console.log("Error in Reset Config", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Reset Config",
+        buttonTitle: "OK",
+      });
     }
   };
 
@@ -111,6 +139,19 @@ function Settings_section_config({
     if (res.data == "Updated successfully") {
       console.log("Updated successfully The Config");
       get_config();
+      set_PopUp_All_Good__show(true);
+      set_PopUp_All_Good__txt({
+        HeadLine: "Success",
+        paragraph: "The Result History Has Been Deleted Successfully",
+        buttonTitle: "Close",
+      });
+    } else {
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Delete Result History",
+        buttonTitle: "OK",
+      });
     }
     handleClose();
   };
@@ -131,16 +172,40 @@ function Settings_section_config({
         if (res)
           if (res.data?.error === "failed saving config") {
             console.log("error save", res.data?.error);
+            set_PopUp_Error____show(true);
+            set_PopUp_Error____txt({
+              HeadLine: "Error",
+              paragraph: "Error in Saving Changes to Config",
+              buttonTitle: "OK",
+            });
             return;
           } else if (res.status === 500) {
             console.log("error save", res.data?.error);
+            set_PopUp_Error____show(true);
+            set_PopUp_Error____txt({
+              HeadLine: "Error",
+              paragraph: "Error in Saving Changes to Config with error 500",
+              buttonTitle: "OK",
+            });
           } else if (res.status === 200) {
             console.log("back from backend 200:", res.data);
+            set_PopUp_All_Good__show(true);
+            set_PopUp_All_Good__txt({
+              HeadLine: "Success",
+              paragraph: "The Config was Changed successfully",
+              buttonTitle: "Close",
+            });
           }
 
         // setObject(res.data)
       } catch (err) {
         console.log(err);
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error",
+          paragraph: "Error in Saving Changes to Config",
+          buttonTitle: "OK",
+        });
       }
     };
     save_config();
@@ -236,10 +301,16 @@ function Settings_section_config({
       setObject(res.data);
     } catch (err) {
       console.log(err);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error in Getting Config",
+        buttonTitle: "OK",
+      });
     }
   };
   useEffect(() => {
-    {
+    if (backEndURL) {
       get_config();
     }
   }, [backEndURL]);
@@ -264,7 +335,24 @@ function Settings_section_config({
           False_action={handle_Cancel_Save_config}
         />
       )}
-
+      {PopUp_All_Good__show && (
+        <PopUp_All_Good
+          popUp_show={PopUp_All_Good__show}
+          set_popUp_show={set_PopUp_All_Good__show}
+          HeadLine={PopUp_All_Good__txt.HeadLine}
+          paragraph={PopUp_All_Good__txt.paragraph}
+          buttonTitle={PopUp_All_Good__txt.buttonTitle}
+        />
+      )}
+      {PopUp_Error____show && (
+        <PopUp_Error
+          popUp_show={PopUp_Error____show}
+          set_popUp_show={set_PopUp_Error____show}
+          HeadLine={PopUp_Error____txt.HeadLine}
+          paragraph={PopUp_Error____txt.paragraph}
+          buttonTitle={PopUp_Error____txt.buttonTitle}
+        />
+      )}
       <div>
         <table className="setting_table  " style={{ lineHeight: "100%" }}>
           <tbody>
