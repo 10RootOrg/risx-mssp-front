@@ -205,7 +205,11 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
       console.log("save", ChosenConfig);
       if (
         !ChosenConfig.config_name ||
-        SubMenuOptionsList.find((x) => x.value == ChosenConfig.config_name)
+        SubMenuOptionsList.find(
+          (x) =>
+            x?.value == ChosenConfig?.config_name &&
+            x?.id != ChosenConfig?.config_id
+        )
       ) {
         console.log("NO Config name ");
         set_PopUp_Error____show(true);
