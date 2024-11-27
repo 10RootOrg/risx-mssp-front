@@ -728,6 +728,24 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               {/*  <MenuArrowDown  />*/}
             </div>
           </button>
+          <button
+            className="btn-menu  "
+            onClick={() => handleClick("Alerts")}
+            // onClick={() => handleClickComingSoon("Alerts")}
+            disabled={visblePage === "Alerts"}
+          >
+            <div className="display-flex">
+              <IconAlert className="btn-menu-icon-placeholder  mr-a " />
+              <p className="font-type-menu ">Alerts</p>
+
+              {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
+              {/* <div
+              className={`Bg-Red  light-bulb-type2 `}
+              style={{ marginLeft: "2px", marginBottom: "12px" }}
+            /> */}
+            </div>
+            <div className="btn-menu-icon-placeholder  "> </div>
+          </button>
 
           <button
             className="btn-menu  "
@@ -773,25 +791,6 @@ const SideBar = ({ visblePage, set_visblePage }) => {
          
           </div>
         </button> */}
-
-          <button
-            className="btn-menu  "
-            onClick={() => handleClick("Alerts")}
-            // onClick={() => handleClickComingSoon("Alerts")}
-            disabled={visblePage === "Alerts"}
-          >
-            <div className="display-flex">
-              <IconAlert className="btn-menu-icon-placeholder  mr-a " />
-              <p className="font-type-menu ">Alerts</p>
-
-              {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
-              {/* <div
-              className={`Bg-Red  light-bulb-type2 `}
-              style={{ marginLeft: "2px", marginBottom: "12px" }}
-            /> */}
-            </div>
-            <div className="btn-menu-icon-placeholder  "> </div>
-          </button>
 
           <div
             className="btn-menu-list"
