@@ -540,7 +540,9 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
                     width: "70vw",
                   }}
                 >
-                  {!["Lite", "Full"].includes(ChosenConfig.config_name) && (
+                  {!["Lite", "Best-Practice"].includes(
+                    ChosenConfig.config_name
+                  ) && (
                     <>
                       <button
                         className="btn-type2"

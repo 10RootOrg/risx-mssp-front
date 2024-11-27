@@ -312,6 +312,12 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       setVelociraptorCollectorsList(res.data);
     } catch (error) {
       console.log("Error in GetVeloCollectors", error);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error Happened During Fetching of Collector",
+        buttonTitle: "Close",
+      });
+      set_PopUp_Error____show(true);
     }
   };
   useEffect(() => {
@@ -346,15 +352,21 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       }
     } catch (error) {
       console.log("Error in HandleVeloClickOne", error);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error Happened During Click one",
+        buttonTitle: "Close",
+      });
+      set_PopUp_Error____show(true);
     }
   };
 
   const HandleVeloClickTwo = async (id, os, nameZip) => {
     try {
       console.log("HandleVeloClickTwo", id, os);
-      const NameOfFile = `${nameZip}-${os}`
-      const NameOfFile2 = `${nameZip}-${os}`+ Math.random()
-      
+      const NameOfFile = `${nameZip}-${os}`;
+      const NameOfFile2 = `${nameZip}-${os}` + Math.random();
+
       const res = await axios.post(
         `${backEndURL}/config/GetSpecificCollector`,
         { id: id, os: os },
@@ -411,9 +423,23 @@ const SideBar = ({ visblePage, set_visblePage }) => {
         link.href = url;
         link.download = `${NameOfFile}.zip`;
         link.click();
+      } else {
+        set_PopUp_Error____txt({
+          HeadLine: "Error",
+          paragraph:
+            "Error Happened During Download Of Collector As there is no response from server",
+          buttonTitle: "Close",
+        });
+        set_PopUp_Error____show(true);
       }
     } catch (error) {
       console.log("Error in HandleVeloClickTwo", error);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error Happened During Download Of Collector",
+        buttonTitle: "Close",
+      });
+      set_PopUp_Error____show(true);
     }
   };
 
