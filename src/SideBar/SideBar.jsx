@@ -1065,7 +1065,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             style={{ textAlign: "center" }}
             className="font-type-menu  Color-Grey1 "
           >
-            Version : 6.6.6
+            Version : 0.2.0
           </p>
         </div>
       </div>
