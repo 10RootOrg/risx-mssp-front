@@ -1057,8 +1057,11 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             paddingLeft: "calc(var(--space-c) + var(--space-b))",
             // width: '100%',
             position: "fixed", // Use fixed positioning
-            bottom: "var(--space-c)", // Position it at the bottom of the viewport
+            bottom: 0, // Position it at the bottom of the viewport
             width: "-webkit-fill-available",
+            backgroundColor: "var(--color-Grey5)",
+            paddingTop: 10,
+            paddingBottom: 10,
           }}
         >
           <p

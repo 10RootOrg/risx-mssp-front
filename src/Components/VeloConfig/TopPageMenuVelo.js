@@ -4,6 +4,7 @@ function TopPageMenuVelo({
   Preview_This_in_menu,
   handle_Click_Btn,
   sub_menu_options,
+  InputFunction,
 }) {
   return (
     <div className="SubMenu-all">
@@ -50,7 +51,14 @@ function TopPageMenuVelo({
             <label for="myfile">
               <p className="font-type-menu">Import Results</p>
             </label>
-            <input type="file" id="myfile" name="myfile" hidden />
+            <input
+              type="file"
+              id="myfile"
+              name="myfile"
+              hidden
+              onChange={InputFunction}
+              multiple
+            />
             <div className="SubMenu-gap" />
           </div>
         </div>

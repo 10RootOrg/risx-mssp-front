@@ -147,11 +147,14 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
             id: x.config_id,
           });
         });
-        // tmpArrOptions.push({
-        //   preview_name: "Add Collector",
-        //   value: "Add Collector",
-        //   id: "Add",
-        // });
+        // for (let i = 0; i < 10; i++) {
+        //   tmpArrOptions.push({
+        //     preview_name: "Add Collector" +i,
+        //     value: "Add Collector"+i,
+        //     id: "Add"+i,
+        //   });
+        // }
+
         setSubMenuOptionsList(tmpArrOptions);
         setFullConfigList(res.data);
         setChosenConfig(res.data[indexForConfig]);
@@ -300,6 +303,37 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
       });
     }
   };
+
+  const HandleFileImportVelo = async (e) => {
+    try {
+      const FilesToUp = [...e.target.files];
+      console.log("Upload Shit", FilesToUp);
+      FilesToUp.forEach(async (file) => {
+        console.log("The Devil File", file);
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("fileName", file.name);
+        const res = await axios.post(
+          `${backEndURL}/results/ImportVeloResult`,
+          formData,
+          {
+            headers: {
+              "content-type": "multipart/form-data",
+            },
+          }
+        );
+      });
+    } catch (error) {
+      console.log("Error in HandleFileImportVelo ", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Failed To Upload The Results",
+        buttonTitle: "Close",
+      });
+    }
+  };
+
   return (
     <>
       {PopUp_Under_Construction__show && (
@@ -343,6 +377,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
           Preview_This_in_menu={Preview_This_in_menu}
           handle_Click_Btn={HandleMenuSwitch}
           sub_menu_options={SubMenuOptionsList}
+          InputFunction={HandleFileImportVelo}
         />
 
         <div className="mb-d"></div>
