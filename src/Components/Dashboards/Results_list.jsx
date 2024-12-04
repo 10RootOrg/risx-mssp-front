@@ -31,7 +31,8 @@ import {
   PopUp_For_velociraptor_response,
   PopUp_For__Nuclei__response,
   PopUp_For_Shodan_response,
-  PopUp_For_LeakCheck_response} from "../PopUp_response_modules.js";
+  PopUp_For_LeakCheck_response,
+} from "../PopUp_response_modules.js";
 import LMloader from "../Features/LMloader.svg";
 import "./Dashboard_Results_all.css";
 function Results_list({
@@ -45,11 +46,20 @@ function Results_list({
   const [checked_items, set_checked_items] = useState([]);
   const [is_search, set_is_search] = useState(false);
 
-const [PopUp_velociraptor_response__show, set_PopUp_velociraptor_response__show] = useState(false);
-const [PopUp_For_Shodan_response__show,     set_PopUp_For_Shodan_response__show] = useState(false);
-const [PopUp_For__Nuclei__response__show, set_PopUp_For__Nuclei__response__show] = useState(false);
-const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__show] = useState(false);
-
+  const [
+    PopUp_velociraptor_response__show,
+    set_PopUp_velociraptor_response__show,
+  ] = useState(false);
+  const [PopUp_For_Shodan_response__show, set_PopUp_For_Shodan_response__show] =
+    useState(false);
+  const [
+    PopUp_For__Nuclei__response__show,
+    set_PopUp_For__Nuclei__response__show,
+  ] = useState(false);
+  const [
+    PopUp_For_LeakCheck_response__show,
+    set_PopUp_For_LeakCheck_response__show,
+  ] = useState(false);
 
   const [UniqueID_to_expand, set_UniqueID_to_expand] = useState("");
 
@@ -156,7 +166,6 @@ const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__sho
         switch (Info?.ModuleName) {
           case "Velociraptor":
             if (res?.data?.fileSize !== "Too big") {
-              
               set_json_file_info(res.data);
             } else {
               set_json_file_info({
@@ -192,7 +201,8 @@ const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__sho
           case "Shodan":
             if (res?.data?.fileSize !== "Too big") {
               console.log(
-                "111111111111-----------------------  Shodan !== 'Too big  ",res.data
+                "111111111111-----------------------  Shodan !== 'Too big  ",
+                res.data
               );
               set_json_file_info(res.data);
             } else {
@@ -226,34 +236,37 @@ const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__sho
             set_PopUp_loader__show(false);
             set_PopUp_For_Shodan_response__show(true);
             break;
-            case "LeakCheck":
-              if (res?.data?.fileSize !== 'Too big') {
-                console.log(" LeakChecK IN NOT Too big" );
-                set_json_file_info(res.data);
-              } else {
-                console.log("  LeakCheck  'Too big  " ,Info );
-                set_json_file_info({
-                  huntid: Info.UniqueID,
-                  status: Info?.Status,
-                  fileSize: "Too big",
-                  ResponsePath: Info?.ResponsePath,
-                  table: [],
-                  ModuleName:Info?.ModuleName,
-              
-              
-                });
-              }
-            
-                const LeakCheckTool = all_Tools?.find(tool => tool?.Tool_name === Info?.ModuleName);
-                console.log("LeakCheckTool2",LeakCheckTool);
-                
-                let updatedLeakCheckInfo = { ...Info, logoAddress_1: LeakCheckTool?.logoAddress_1 };
-                console.log("updatedLeakCheckInfo",updatedLeakCheckInfo);
-        
-                set_json_file_data(updatedLeakCheckInfo);
-                set_PopUp_loader__show(false);
-                set_PopUp_For_LeakCheck_response__show(true);
-                break;
+          case "LeakCheck":
+            if (res?.data?.fileSize !== "Too big") {
+              console.log(" LeakChecK IN NOT Too big");
+              set_json_file_info(res.data);
+            } else {
+              console.log("  LeakCheck  'Too big  ", Info);
+              set_json_file_info({
+                huntid: Info.UniqueID,
+                status: Info?.Status,
+                fileSize: "Too big",
+                ResponsePath: Info?.ResponsePath,
+                table: [],
+                ModuleName: Info?.ModuleName,
+              });
+            }
+
+            const LeakCheckTool = all_Tools?.find(
+              (tool) => tool?.Tool_name === Info?.ModuleName
+            );
+            console.log("LeakCheckTool2", LeakCheckTool);
+
+            let updatedLeakCheckInfo = {
+              ...Info,
+              logoAddress_1: LeakCheckTool?.logoAddress_1,
+            };
+            console.log("updatedLeakCheckInfo", updatedLeakCheckInfo);
+
+            set_json_file_data(updatedLeakCheckInfo);
+            set_PopUp_loader__show(false);
+            set_PopUp_For_LeakCheck_response__show(true);
+            break;
           default:
             console.log("Unknown ModuleName:", Info?.ModuleName);
             break;
@@ -439,37 +452,37 @@ const [PopUp_For_LeakCheck_response__show, set_PopUp_For_LeakCheck_response__sho
 
         break;
 
+      case "Shodan": ////////////////////////// Shodan //////////////////////////
+        if (
+          Info.Status === "Failed" ||
+          Info.Status == null ||
+          Info.Status == "" ||
+          Info.Status == undefined
+        ) {
+          set_PopUp_Request_info__txt({
+            HeadLine: "Failed",
+            paragraph: `Error Note: ", ${Info?.Error}`,
+            buttonTitle: "Close",
+          });
+          set_PopUp_Request_info__show(true);
+          return;
+        } else {
+          get_Json_single_response(Info);
+        }
 
-case "Shodan": ////////////////////////// Shodan //////////////////////////
+        break;
 
-
-
-
-
-if (Info.Status  === "Failed" || Info.Status   == null || Info.Status    == "" ||    Info.Status   == undefined      ){
-  set_PopUp_Request_info__txt({ HeadLine:"Failed", paragraph:`Error Note: ", ${Info?.Error}`, buttonTitle:"Close" })
-  set_PopUp_Request_info__show(true)
-return
-}
-
-else{ get_Json_single_response(Info);   }
-
- 
-
-break;
-
-case "LeakCheck": ////////////////////////// LeakCheck //////////////////////////
-//  set_PopUp_Under_Construction__txt({
-//   HeadLine: "Coming Soon!",
-//   paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
-//   buttonTitle: "Close",
-// });
-// set_PopUp_Under_Construction__show(true);
-get_Json_single_response(Info); 
-break;
+      case "LeakCheck": ////////////////////////// LeakCheck //////////////////////////
+        //  set_PopUp_Under_Construction__txt({
+        //   HeadLine: "Coming Soon!",
+        //   paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
+        //   buttonTitle: "Close",
+        // });
+        // set_PopUp_Under_Construction__show(true);
+        get_Json_single_response(Info);
+        break;
 
       default:
-        
     }
   };
 
@@ -564,26 +577,97 @@ break;
       console.log("Can't sort ", column);
       return;
     }
+    //
+    if (column == "ExpireDate" || column == "StartDate") {
+      console.log("flip");
 
-    if (column === sort_by) {
-      console.log("It's already sorted like this, reversing the order");
-      const sorted = [...Preview_this_Results].sort((a, b) => {
-        if (b[column] < a[column]) return -1;
-        if (b[column] > a[column]) return 1;
-        return 0;
-      });
-      console.log("Sorted descending:", sorted);
-      set_Preview_this_Results(sorted);
-      set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+      if (column === sort_by) {
+        console.log("It's already sorted like this, reversing the order");
+        const sorted = [...Preview_this_Results].sort((a, b) => {
+          if (b[column] == null) return -1;
+          if (a[column] == null) return 1;
+          const DateSplitA = a[column]?.split("-");
+          const DateSplitB = b[column]?.split("-");
+          const DateA = new Date(
+            Date.UTC(
+              DateSplitA[2],
+              DateSplitA[1] - 1,
+              DateSplitA[0],
+              DateSplitA[3],
+              DateSplitA[4]
+            )
+          );
+          const DateB = new Date(
+            Date.UTC(
+              DateSplitB[2],
+              DateSplitB[1] - 1,
+              DateSplitB[0],
+              DateSplitB[3],
+              DateSplitB[4]
+            )
+          );
+
+          if (DateB < DateA) return -1;
+          if (DateB > DateA) return 1;
+          return 0;
+        });
+        console.log("Sorted descending:", sorted);
+        set_Preview_this_Results(sorted);
+        set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+      } else {
+        set_sort_by(column);
+        const sorted = [...Preview_this_Results].sort((a, b) => {
+          if (b[column] == null) return 1;
+          if (a[column] == null) return -1;
+          const DateSplitA = a[column]?.split("-");
+          const DateSplitB = b[column]?.split("-");
+          const DateA = new Date(
+            Date.UTC(
+              DateSplitA[2],
+              DateSplitA[1] - 1,
+              DateSplitA[0],
+              DateSplitA[3],
+              DateSplitA[4]
+            )
+          );
+          const DateB = new Date(
+            Date.UTC(
+              DateSplitB[2],
+              DateSplitB[1] - 1,
+              DateSplitB[0],
+              DateSplitB[3],
+              DateSplitB[4]
+            )
+          );
+
+          if (DateA < DateB) return -1;
+          if (DateA > DateB) return 1;
+          return 0;
+        });
+        console.log("Sorted ascending:", sorted);
+        set_Preview_this_Results(sorted);
+      }
     } else {
-      set_sort_by(column);
-      const sorted = [...Preview_this_Results].sort((a, b) => {
-        if (a[column] < b[column]) return -1;
-        if (a[column] > b[column]) return 1;
-        return 0;
-      });
-      console.log("Sorted ascending:", sorted);
-      set_Preview_this_Results(sorted);
+      if (column === sort_by) {
+        console.log("It's already sorted like this, reversing the order");
+        const sorted = [...Preview_this_Results].sort((a, b) => {
+          if (b[column] < a[column]) return -1;
+          if (b[column] > a[column]) return 1;
+          return 0;
+        });
+        console.log("Sorted descending:", sorted);
+        set_Preview_this_Results(sorted);
+        set_sort_by(""); // Reset sort_by to allow toggling between asc and desc
+      } else {
+        set_sort_by(column);
+        const sorted = [...Preview_this_Results].sort((a, b) => {
+          if (a[column] < b[column]) return -1;
+          if (a[column] > b[column]) return 1;
+          return 0;
+        });
+        console.log("Sorted ascending:", sorted);
+        set_Preview_this_Results(sorted);
+      }
     }
   };
 
@@ -668,49 +752,35 @@ break;
         />
       )}
 
+      {PopUp_For_Shodan_response__show && (
+        <PopUp_For_Shodan_response
+          popUp_show={PopUp_For_Shodan_response__show}
+          set_popUp_show={set_PopUp_For_Shodan_response__show}
+          HeadLine={"Response"}
+          logoAddress_1_ForSrc={""}
+          buttonTitle={"Close"}
+          set_json_file_info={set_json_file_info}
+          json_file_info={json_file_info}
+          json_file_data={json_file_data}
+          set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+          set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+        />
+      )}
 
-{PopUp_For_Shodan_response__show&&
-<PopUp_For_Shodan_response
- popUp_show={PopUp_For_Shodan_response__show}
- set_popUp_show={set_PopUp_For_Shodan_response__show}
- HeadLine={"Response"}
- logoAddress_1_ForSrc={""}
- buttonTitle={"Close"}
- set_json_file_info={set_json_file_info}
- json_file_info={json_file_info}
- json_file_data={json_file_data}
- set_PopUp_All_Good__show={set_PopUp_All_Good__show}
- set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
-/>
-}
-
-{PopUp_For_LeakCheck_response__show&&
-<PopUp_For_LeakCheck_response
- popUp_show={PopUp_For_LeakCheck_response__show}
- set_popUp_show={set_PopUp_For_LeakCheck_response__show}
- HeadLine={"Response"}
- logoAddress_1_ForSrc={""}
- buttonTitle={"Close"}
- set_json_file_info={set_json_file_info}
- json_file_info={json_file_info}
- json_file_data={json_file_data}
- set_PopUp_All_Good__show={set_PopUp_All_Good__show}
- set_PopUp_All_Good__txt={set_PopUp_All_Good__txt} 
-/>
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
+      {PopUp_For_LeakCheck_response__show && (
+        <PopUp_For_LeakCheck_response
+          popUp_show={PopUp_For_LeakCheck_response__show}
+          set_popUp_show={set_PopUp_For_LeakCheck_response__show}
+          HeadLine={"Response"}
+          logoAddress_1_ForSrc={""}
+          buttonTitle={"Close"}
+          set_json_file_info={set_json_file_info}
+          json_file_info={json_file_info}
+          json_file_data={json_file_data}
+          set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+          set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+        />
+      )}
 
       {PopUp_Request_info__show && (
         <PopUp_Request_info

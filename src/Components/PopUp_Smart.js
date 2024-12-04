@@ -39,7 +39,6 @@ export const PopUp_Request_info = (props) => {
   const { HeadLine, paragraph, popUp_show, set_popUp_show, buttonTitle } =
     props;
   const [active, setActive] = useState(false);
-
   useEffect(() => {
     set_popUp_show(popUp_show);
   }, [popUp_show]);
@@ -1720,8 +1719,25 @@ export const PopUp_Confirm_Run_selected = (props) => {
   } = props;
   const [active, setActive] = useState(false);
   const [disable_buttons, set_disable_buttons] = useState(false);
-  const { all_artifacts, all_Tools } = useContext(GeneralContext);
+  const { all_artifacts, all_Tools, backEndURL } = useContext(GeneralContext);
   const [allow_continue, set_allow_continue] = useState(false);
+  const [object, setObject] = useState({});
+
+  const get_config = async () => {
+    if (backEndURL === undefined) {
+      return;
+    }
+    try {
+      const res = await axios.get(`${backEndURL}/config`);
+
+      if (res.data) {
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa", res.data?.ClientData);
+        setObject(res.data?.ClientData?.API);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     if (popUp_show) {
@@ -1736,7 +1752,7 @@ export const PopUp_Confirm_Run_selected = (props) => {
     if (!all_Tools) {
       return;
     }
-
+    get_config();
     if (
       all_artifacts &&
       Array.isArray(all_artifacts) &&
@@ -1777,6 +1793,16 @@ export const PopUp_Confirm_Run_selected = (props) => {
   }
 
   const cell_height = "38px";
+  const NoApiKeyText = ({ Name }) => {
+    console.log("Name Name 55555555555555", Name, object);
+
+    if (object[Name]?.trim() == "" || object[Name]?.trim() == "APIKey") {
+      set_disable_buttons(true);
+      return "No Api Key";
+    } else {
+      return "";
+    }
+  };
 
   return (
     <>
@@ -1903,7 +1929,7 @@ export const PopUp_Confirm_Run_selected = (props) => {
                                         }}
                                       />
                                     </td>
-                                    <td className="pl-b">{info?.headline}</td>
+                                    <td className="pl-b">{info?.headline} </td>
                                   </tr>
                                 </>
                               ))}
@@ -1990,6 +2016,12 @@ export const PopUp_Confirm_Run_selected = (props) => {
                                       />
                                     </td>
                                     <td className="pl-b">{info?.headline}</td>
+                                    <td
+                                      className="pl-b"
+                                      style={{ color: "red" }}
+                                    >
+                                      <NoApiKeyText Name={info?.Tool_name} />
+                                    </td>
                                   </tr>
                                 </>
                               ))}

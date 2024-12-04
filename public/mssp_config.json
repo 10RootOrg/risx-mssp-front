@@ -9,7 +9,7 @@
     {
       "toolName": "Velociraptor",
       "toolID": "2000000",
-      "toolURL": "http://${FRONT_URL}/velociraptor/"
+      "toolURL": "https://${FRONT_URL}/velociraptor/"
     },
     {
       "toolName": "Risx",

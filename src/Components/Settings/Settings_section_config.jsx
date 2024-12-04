@@ -295,10 +295,10 @@ function Settings_section_config({
     try {
       const res = await axios.get(`${backEndURL}/config`);
 
-      if (res) {
+      if (res.data) {
         console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaa", res.data);
+        setObject(res.data);
       }
-      setObject(res.data);
     } catch (err) {
       console.log(err);
       set_PopUp_Error____show(true);
