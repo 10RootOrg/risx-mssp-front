@@ -42,6 +42,9 @@ const SideBar = ({ visblePage, set_visblePage }) => {
     setDownloadList,
     set_Assets_Preview_List,
     Assets_Preview_List,
+    UploadProgressBar,
+    setUploadProgressBar,
+    UpdateSideBar,
     // front_URL,
     // mssp_config_json,
     // user_id,
@@ -324,7 +327,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
     if (backEndURL) {
       GetVeloCollectors();
     }
-  }, [backEndURL]);
+  }, [backEndURL, UpdateSideBar]);
 
   const handleClickComingSoon = (page_name) => {
     set_PopUp_Under_Construction__txt({
@@ -1051,6 +1054,32 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             </div>
           </div>
         )}
+        {Object.keys(UploadProgressBar).length > 0 && (
+          <div
+            style={{
+              paddingRight: "calc(var(--space-c) + var(--space-b))",
+              paddingLeft: "calc(var(--space-c) + var(--space-b))",
+              // width: '100%',
+              // position: "fixed", // Use fixed positioning
+              bottom: "var(--space-c)", // Position it at the bottom of the viewport
+              width: "-webkit-fill-available",
+            }}
+          >
+            <p className="font-type-menu  Color-Grey1  mb-a">
+              Upload Progress:
+            </p>
+            <div className=" " style={{ width: "100% " }}>
+              {Object.keys(UploadProgressBar).map((item) => (
+                <DownloadProgressBarItem
+                  item={UploadProgressBar[item]}
+                  itemKey={item}
+                  DownloadProgressBar={UploadProgressBar}
+                  setDownloadProgressBar={setUploadProgressBar}
+                />
+              ))}
+            </div>
+          </div>
+        )}
         <div
           style={{
             paddingRight: "calc(var(--space-c) + var(--space-b))",
@@ -1068,7 +1097,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             style={{ textAlign: "center" }}
             className="font-type-menu  Color-Grey1 "
           >
-            Version : 0.2.0
+            Version : 0.2.1
           </p>
         </div>
       </div>

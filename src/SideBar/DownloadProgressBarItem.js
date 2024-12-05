@@ -2,17 +2,30 @@ import { useContext } from "react";
 import GeneralContext from "../Context";
 // import "./SideBar.css";
 
-function DownloadProgressBarItem({ item, itemKey }) {
+function DownloadProgressBarItem({
+  item,
+  itemKey,
+  DownloadProgressBar,
+  setDownloadProgressBar,
+  upload = false,
+}) {
   console.log(item, "DownloadProgressBarItem");
 
-  const { DownloadProgressBar, setDownloadProgressBar } =
-    useContext(GeneralContext);
+  // const { DownloadProgressBar, setDownloadProgressBar } =
+  //   useContext(GeneralContext);
 
   const DeleteDownLoadBar = async () => {
     try {
-      const tmp = { ...DownloadProgressBar };
-      delete tmp[itemKey];
-      setDownloadProgressBar(tmp);
+      if (upload) {
+      } else {
+        console.log(itemKey, "delete this item");
+
+        const tmp = { ...DownloadProgressBar };
+        console.log(tmp);
+
+        delete tmp[itemKey];
+        setDownloadProgressBar(tmp);
+      }
     } catch (error) {
       console.log("error in DeleteDownLoadBar ", error);
     }

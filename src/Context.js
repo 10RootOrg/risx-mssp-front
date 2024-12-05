@@ -16,6 +16,8 @@ export function ContextProvider({ children }) {
 
   const [DownloadProgressBar, setDownloadProgressBar] = useState({});
   const [DownloadList, setDownloadList] = useState([]);
+  const [UploadProgressBar, setUploadProgressBar] = useState({});
+  const [UpdateSideBar, setUpdateSideBar] = useState({});
 
   console.log("backEndURL", backEndURL);
   const fetchConfig = async () => {
@@ -191,10 +193,14 @@ export function ContextProvider({ children }) {
   return (
     <GeneralContext.Provider
       value={{
+        UpdateSideBar,
+        setUpdateSideBar,
         DownloadList,
         setDownloadList,
         DownloadProgressBar,
         setDownloadProgressBar,
+        UploadProgressBar,
+        setUploadProgressBar,
         backEndURL,
         fetchConfig,
         all_Resource_Types,
