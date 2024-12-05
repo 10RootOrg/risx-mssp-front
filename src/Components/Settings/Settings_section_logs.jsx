@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 
 import axios from "axios";
 import "./../Settings/Settings.css";
@@ -7,6 +7,7 @@ import GeneralContext from "../../Context.js";
 import { Search_comp, Search_comp_for_logs } from "../Features/Search_comp.jsx";
 // import JsonView from '@uiw/react-json-view';
 // import {PopUp_All_Good ,PopUp_Are_You_Sure} from '../PopUp_Smart'
+import { ReactComponent as IconReverse } from "../icons/ico-reverse.svg";
 
 function Settings_section_logs({
   show_SideBar,
@@ -25,7 +26,10 @@ function Settings_section_logs({
 
   // console.log("log_data" , log_data);
 
-  const [filter_string, set_filter_string] = useState("");
+  const [WrapOrHScroll, setWrapOrHScroll] = useState(true);
+  const [LogRefresh, setLogRefresh] = useState(true);
+  const [LogRefreshCounter, setLogRefreshCounter] = useState(0);
+  const logRef = useRef();
   //  const [loadig, set_loading] = useState(false);
 
   useEffect(() => {
@@ -58,11 +62,64 @@ function Settings_section_logs({
 
   useEffect(() => {
     // fetchLog("log_mssp_backend",set_log_data);
+
     if (backEndURL) {
       fetchLog(usethis, set_log_data);
     }
     // fetchLog("log_python_main",set_log_data);
   }, [backEndURL]);
+
+  const LogRefreshRec = async () => {
+    console.log(LogRefresh, "LogRefreshLogRefresh1", LogRefreshCounter);
+
+    if (!LogRefresh) {
+      return;
+    }
+    await fetchLog(usethis, set_log_data);
+    console.log(LogRefresh, "LogRefreshLogRefresh222222", logRef);
+    logRef.current.scrollTop = 1111111111111111111111;
+    setTimeout(() => {
+      setLogRefreshCounter((prev) => prev + 1);
+    }, 8000);
+  };
+  useEffect(() => {
+    if (LogRefresh && LogRefreshCounter != 0) {
+      LogRefreshRec();
+    } else {
+      if (LogRefreshCounter == 0) {
+        setLogRefreshCounter(1);
+      }
+      console.log(
+        "ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+      );
+    }
+  }, [LogRefreshCounter, LogRefresh]);
+
+  const DownloadLog = async () => {
+    try {
+      const nameArr = fileName.split(".");
+      nameArr.pop();
+      const NameFile =
+        nameArr?.join(".") +
+        "_" +
+        new Date()
+          .toLocaleString("en-GB")
+          .replace("/", "-")
+          .replace(", ", "--") +
+        ".log";
+      console.log("DownLoad File Start ", NameFile, nameArr, fileName);
+      const dataStr =
+        "data:text/json;charset=utf-8," + encodeURIComponent(log_data);
+      const downloadAnchorNode = document.createElement("a");
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", NameFile);
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+    } catch (error) {
+      console.log("Error in Downloading Log File: " + fileName, error);
+    }
+  };
 
   return (
     <div style={{ maxWidth: "100%" }}>
@@ -83,21 +140,73 @@ function Settings_section_logs({
           </p>
           <p className="font-type-txt Color-Grey1 mb-b">{fileName}</p>
         </div>
-        <Search_comp_for_logs
-          set_log_data={set_log_data}
-          log_data={log_data}
-          set_preview_data={set_preview_data}
-          preview_data={preview_data}
-        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p style={{ paddingLeft: 25, marginRight: 10 }}>Auto Refresh: </p>
+          <label
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log("flip");
+              setLogRefresh(!LogRefresh);
+            }}
+            className="switch"
+          >
+            <input
+              type="checkbox"
+              checked={LogRefresh}
+              // onChange={}
+              // defaultChecked={Math.random() < 0.7}
+            />
+            <span className="slider round"></span>
+          </label>
+          <p style={{ paddingLeft: 25, marginRight: 10 }}>Line Wrap: </p>
+          <label
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log("flip");
+              setWrapOrHScroll(!WrapOrHScroll);
+            }}
+            className="switch"
+          >
+            <input
+              type="checkbox"
+              checked={WrapOrHScroll}
+              // onChange={}
+              // defaultChecked={Math.random() < 0.7}
+            />
+            <span className="slider round"></span>
+          </label>
+          <p onClick={DownloadLog} style={{ marginLeft: 25, marginRight: 25 }}>
+            Download
+          </p>{" "}
+          <Search_comp_for_logs
+            set_log_data={set_log_data}
+            log_data={log_data}
+            set_preview_data={set_preview_data}
+            preview_data={preview_data}
+          />
+        </div>
       </div>
       <div
+        ref={logRef}
+        className={`${
+          WrapOrHScroll ? "log-section-scrollXNo" : "log-section-scrollXYes"
+        }`}
         style={{
           display: "flex",
           flexDirection: "column",
           gap: "var(--space-c)",
           maxHeight: "68vh",
-          overflowX: "hidden",
           height: "auto",
+          overflowY: "auto",
         }}
       >
         <table
@@ -118,8 +227,13 @@ function Settings_section_logs({
                 }}
               >
                 <pre
-                  className="font-type-txt Color-White log-text"
-                  style={{ lineHeight: lineHeight, margin: 0 }}
+                  className={`font-type-txt Color-White log-text ${
+                    WrapOrHScroll ? "text-wrap-logs" : ""
+                  }`}
+                  style={{
+                    lineHeight: lineHeight,
+                    margin: 0,
+                  }}
                 >
                   {preview_data}
                 </pre>

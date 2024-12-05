@@ -16,7 +16,16 @@ import { createTheme } from "@uiw/codemirror-themes";
 import JsonView from "@uiw/react-json-view";
 
 function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
-  const { all_Tools, front_URL, backEndURL } = useContext(GeneralContext);
+  const {
+    all_Tools,
+    front_URL,
+    backEndURL,
+    UploadProgressBar,
+    setUploadProgressBar,
+    setDownloadList,
+    UpdateSideBar,
+    setUpdateSideBar,
+  } = useContext(GeneralContext);
   // Themes For JsonView and editor
   const myTheme = createTheme({
     theme: "dark",
@@ -236,6 +245,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
           buttonTitle: "Ok",
         });
         set_PopUp_All_Good__show(true);
+        setUpdateSideBar(Math.random());
       } else {
         console.log("error in Save");
         set_PopUp_Error____show(true);
@@ -278,6 +288,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
       console.log("res SaveConfigVelo SaveConfigVelo ", res);
       if (res.data) {
         handle_view_or_edit();
+        setUpdateSideBar(Math.random());
         set_PopUp_All_Good__txt({
           HeadLine: "Success",
           paragraph: "The New Velociraptor Config was Successfully Added",
@@ -320,8 +331,57 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
             headers: {
               "content-type": "multipart/form-data",
             },
+            onUploadProgress: (prog) => {
+              try {
+                const value = Math.round(prog.progress * 100);
+                // console.log(
+                //   UploadProgressBar,
+                //   "UploadProgressBarUploadProgressBar",
+                //   value
+                // );
+
+                if (!UploadProgressBar[file.name]) {
+                  console.log("empty 1111111111111111111111");
+
+                  if (value < 100) {
+                    UploadProgressBar[file.name] = {
+                      progress: value,
+                      fileName: file.name,
+                    };
+                    setUploadProgressBar(UploadProgressBar);
+                    setDownloadList(Math.random());
+                  }
+                }
+
+                if (
+                  (UploadProgressBar[file.name]?.progress + 5 < value ||
+                    (value >= 100 &&
+                      UploadProgressBar[file.name]?.progress != 100)) &&
+                  UploadProgressBar[file.name]?.progress !== undefined
+                ) {
+                  console.log("Download Prog ", value, UploadProgressBar);
+                  UploadProgressBar[file.name] = {
+                    progress: value,
+                    fileName: file.name,
+                  };
+                  setUploadProgressBar(UploadProgressBar);
+                  setDownloadList(Math.random());
+                }
+              } catch (error) {
+                console.log("Error in ONPeofressUpload ", error);
+              }
+            },
           }
         );
+        console.log(res.data, "res of import config velo");
+        if (res.data) {
+          set_PopUp_All_Good__txt({
+            HeadLine: "Upload Ended",
+            paragraph: `The File named ${file.name} Has been successfully uploaded to the backend.`,
+            buttonTitle: "Close",
+          });
+          set_PopUp_All_Good__show(true);
+        }
       });
     } catch (error) {
       console.log("Error in HandleFileImportVelo ", error);

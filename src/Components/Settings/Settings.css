@@ -57,3 +57,14 @@ th td {
   font-size: 14px;
   line-height: 1.5; /* Optional: Adjust line height as needed */
 }
+
+
+.text-wrap-logs{
+  text-wrap: pretty;
+}
+.log-section-scrollXYes{
+  overflow-x: auto;
+}
+.log-section-scrollXNo{
+  overflow-x:hidden;
+}
