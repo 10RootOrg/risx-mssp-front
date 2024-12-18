@@ -204,6 +204,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
           },
         }
       );
+      console.log("ssssssssss", res.data);
 
       if (res) {
         // console.log("ssssssssssssssssssssssss", fileName);
@@ -311,8 +312,13 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       const res = await axios.get(
         `${backEndURL}/config/GetAllVeloConfigSideBar`
       );
-      console.log(res.data);
-      setVelociraptorCollectorsList(res.data);
+      console.log(
+        res.data,
+        "sssssssss5555555555555555555555555555555555555555555555"
+      );
+      if (res.data) {
+        setVelociraptorCollectorsList(res.data ?? []);
+      }
     } catch (error) {
       console.log("Error in GetVeloCollectors", error);
       set_PopUp_Error____txt({
@@ -1097,7 +1103,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             style={{ textAlign: "center" }}
             className="font-type-menu  Color-Grey1 "
           >
-            Version : 0.2.1
+            Version : 0.8.1
           </p>
         </div>
       </div>

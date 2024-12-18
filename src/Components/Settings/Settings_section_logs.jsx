@@ -27,7 +27,7 @@ function Settings_section_logs({
   // console.log("log_data" , log_data);
 
   const [WrapOrHScroll, setWrapOrHScroll] = useState(true);
-  const [LogRefresh, setLogRefresh] = useState(true);
+  const [LogRefresh, setLogRefresh] = useState(false);
   const [LogRefreshCounter, setLogRefreshCounter] = useState(0);
   const logRef = useRef();
   //  const [loadig, set_loading] = useState(false);
@@ -184,9 +184,17 @@ function Settings_section_logs({
             />
             <span className="slider round"></span>
           </label>
-          <p onClick={DownloadLog} style={{ marginLeft: 25, marginRight: 25 }}>
+          <div
+            className="log-download"
+            onClick={DownloadLog}
+            style={{
+              marginLeft: 25,
+              marginRight: 25,
+              fontSize: 13,
+            }}
+          >
             Download
-          </p>{" "}
+          </div>{" "}
           <Search_comp_for_logs
             set_log_data={set_log_data}
             log_data={log_data}

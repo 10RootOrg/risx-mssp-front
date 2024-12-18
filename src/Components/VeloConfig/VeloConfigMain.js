@@ -446,45 +446,87 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
             <tbody>
               <tr>
                 <td className="setting_descriptions">
-                  {preview_or_edit ? (
-                    <>
-                      <p className="font-type-h4 Color-White mb-c">
-                        {ChosenConfig.config_name} Config
-                      </p>
-                      <p
-                        className="font-type-menu Color-White mb-a"
-                        style={{
-                          wordBreak: "break-word",
-                          marginBottom: 15,
-                        }}
-                      >
-                        {ChosenConfig.description}
-                      </p>{" "}
-                      <p className="font-type-txt Color-Grey1 mb-b">
-                        To view and edit the general configuration, click 'EDIT'
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          // justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <input
-                          className="font-type-h4 Color-White mb-c"
+                  <div>
+                    {preview_or_edit ? (
+                      <>
+                        <p className="font-type-h4 Color-White mb-c">
+                          {ChosenConfig.config_name} Config
+                        </p>
+                        <p
+                          className="font-type-menu Color-White mb-a"
                           style={{
-                            backgroundColor: "var(--color-Grey5)",
-                            borderRadius: 15,
-                            paddingLeft: 5,
-                            paddingRight: 5,
-                            borderWidth: 0,
-                            width: 80,
+                            wordBreak: "break-word",
+                            marginBottom: 15,
                           }}
-                          value={ChosenConfig.config_name}
+                        >
+                          {ChosenConfig.description}
+                        </p>{" "}
+                        <p className="font-type-txt Color-Grey1 mb-b">
+                          To view and edit the general configuration, click
+                          'EDIT'
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            // justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            className="font-type-h4 Color-White mb-c"
+                            style={{
+                              backgroundColor: "var(--color-Grey5)",
+                              borderRadius: 15,
+                              paddingLeft: 5,
+                              paddingRight: 5,
+                              borderWidth: 0,
+                              width: 80,
+                            }}
+                            value={ChosenConfig.config_name}
+                            onChange={async (e) => {
+                              try {
+                                console.log(e.target.value);
+
+                                set_config_save_btn(true);
+                                setChosenConfig({
+                                  config: ChosenConfig?.config,
+                                  description: ChosenConfig?.description,
+                                  config_name: e.target.value,
+                                  config_id: ChosenConfig?.config_id,
+                                });
+                              } catch (error) {
+                                set_config_save_btn(false);
+                                console.log("Error In name Change ", error);
+                              }
+                            }}
+                          />
+                          <p
+                            className="font-type-h4 Color-White mb-c"
+                            style={{ paddingLeft: 7 }}
+                          >
+                            Config
+                          </p>
+                        </div>
+                        <textarea
+                          className="font-type-menu Color-White mb-a"
+                          style={{
+                            wordBreak: "break-word",
+                            marginBottom: 15,
+                            width: "100%",
+                            maxWidth: "100&",
+                            minWidth: 100,
+                            height: 200,
+                            resize: "none",
+                            backgroundColor: "var(--color-Grey5)",
+                            borderWidth: 0,
+                            paddingTop: 10,
+                          }}
+                          value={ChosenConfig?.description ?? ""}
+                          maxLength={1000}
                           onChange={async (e) => {
                             try {
                               console.log(e.target.value);
@@ -492,63 +534,98 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
                               set_config_save_btn(true);
                               setChosenConfig({
                                 config: ChosenConfig?.config,
-                                description: ChosenConfig?.description,
-                                config_name: e.target.value,
+                                description: e.target.value,
+                                config_name: ChosenConfig?.config_name,
                                 config_id: ChosenConfig?.config_id,
                               });
                             } catch (error) {
                               set_config_save_btn(false);
-                              console.log("Error In name Change ", error);
+                              console.log(
+                                "Error In Description Change ",
+                                error
+                              );
                             }
                           }}
-                        />
-                        <p
-                          className="font-type-h4 Color-White mb-c"
-                          style={{ paddingLeft: 7 }}
-                        >
-                          Config
+                        />{" "}
+                        <p className="font-type-txt Color-Orange">
+                          {" "}
+                          Caution: Incorrect input may damage the functionality
+                          of the software.
                         </p>
-                      </div>
-                      <textarea
-                        className="font-type-menu Color-White mb-a"
-                        style={{
-                          wordBreak: "break-word",
-                          marginBottom: 15,
-                          width: "100%",
-                          maxWidth: "100&",
-                          minWidth: 100,
-                          height: 200,
-                          resize: "none",
-                          backgroundColor: "var(--color-Grey5)",
-                          borderWidth: 0,
-                          paddingTop: 10,
-                        }}
-                        value={ChosenConfig?.description ?? ""}
-                        maxLength={1000}
-                        onChange={async (e) => {
-                          try {
-                            console.log(e.target.value);
-
-                            set_config_save_btn(true);
-                            setChosenConfig({
-                              config: ChosenConfig?.config,
-                              description: e.target.value,
-                              config_name: ChosenConfig?.config_name,
-                              config_id: ChosenConfig?.config_id,
-                            });
-                          } catch (error) {
-                            set_config_save_btn(false);
-                            console.log("Error In Description Change ", error);
-                          }
-                        }}
-                      />{" "}
-                      <p className="font-type-txt Color-Orange">
-                        {" "}
-                        Caution: Incorrect input may damage the functionality of
-                        the software.
+                      </>
+                    )}
+                  </div>
+                  {/* Legend Start */}
+                  <div style={{ position: "relative", bottom: 0 }}>
+                    <p className="font-type-h4 Color-White mb-c">Legend:</p>
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        <p className="font-type-txt Color-White ">
+                          Artifacts:{" "}
+                        </p>
+                        An Array of the artifacts that the Collector will Run
                       </p>
-                    </>
-                  )}
+                    </div>{" "}
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        {" "}
+                        <p className="font-type-txt Color-White ">name: </p>
+                        The Name Of The Artifact In Velociraptor
+                      </p>
+                    </div>{" "}
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        <p className="font-type-txt Color-White ">
+                          Parameters:{" "}
+                        </p>
+                        The Parameters That You Want To Configure For This
+                        Artifact As {"{Name Of Parameter:Value Of Parameter"}
+                      </p>
+                    </div>
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        <p className="font-type-txt Color-White ">CpuLimit: </p>
+                        How Much Cpu Usage In % Will The Artifact be Allowed To
+                        Use
+                      </p>
+                    </div>{" "}
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        {" "}
+                        <p className="font-type-txt Color-White ">
+                          MaxExecutionTimeInSeconds:{" "}
+                        </p>
+                        Max Time The Collector will Run
+                      </p>
+                    </div>
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        <p className="font-type-txt Color-White ">
+                          MaxIdleTimeInSeconds:{" "}
+                        </p>
+                        How Long Will The Collector Be Allowed To Idle
+                      </p>
+                    </div>
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        <p className="font-type-txt Color-White ">
+                          EncryptionScheme:{" "}
+                        </p>
+                        The encryptions of the results Options Are None ,
+                        Password , X509
+                      </p>
+                    </div>
+                    <div className="RowInLegend">
+                      <p className="font-type-txt Color-Grey1 RowInLegendValue">
+                        {" "}
+                        <p className="font-type-txt Color-White ">
+                          EncryptionSchemeValue:{" "}
+                        </p>
+                        The Password For the Encryption if one was chosen
+                      </p>
+                    </div>
+                  </div>
+                  {/* Legend End */}
                 </td>
 
                 <td
