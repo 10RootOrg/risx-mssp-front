@@ -139,7 +139,7 @@ export const PopUp_All_Good = (props) => {
   return (
     <>
       {popUp_show && (
-        <div className={`PopUp-background`} onClick={handleClickOutside}>
+        <div className={`PopUp-background`} onClick={handleClickOutside} style={{wordWrap:"break-word"}}>
           <div
             className={`PopUp-content  ${
               active ? "popup-enter-active" : "popup-enter"
@@ -1807,7 +1807,7 @@ export const PopUp_Confirm_Run_selected = (props) => {
   return (
     <>
       {popUp_show && (
-        <div className={`PopUp-background`} onClick={handleClickOutside}>
+        <div className={`PopUp-background`} onClick={handleClickOutside} >
           <div
             className={`PopUp-content  ${
               active ? "popup-enter-active" : "popup-enter"
