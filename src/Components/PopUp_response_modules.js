@@ -2333,11 +2333,9 @@ export const PopUp_For_LeakCheck_response = (props) => {
     for (let i = 0; i < json_file_info.length; i++) {
       const response = json_file_info[i]?.Response;
       const matches =
-        response === "" ||
-        response === undefined ||
-        response?.found === undefined
+        response === "" || response === undefined
           ? 0
-          : response.found;
+          : response?.found ?? response?.length;
 
       totalMatches += matches;
     }
@@ -2797,8 +2795,10 @@ export const PopUp_For_LeakCheck_response = (props) => {
                                     }}
                                   >
                                     {Site?.Response?.found ||
-                                    Site?.Response?.found === 0
-                                      ? Site?.Response?.found
+                                    Site?.Response?.found === 0 ||
+                                    Site?.Response?.length
+                                      ? Site?.Response?.found ??
+                                        Site?.Response.length
                                       : "NA"}
                                   </p>
                                 </div>
@@ -2823,7 +2823,7 @@ export const PopUp_For_LeakCheck_response = (props) => {
   })} */}
                     </div>
 
-                    {display_this_data?.Response?.result?.length > 0 && (
+                    {display_this_data?.Response?.length > 0 && (
                       <div
                         style={{
                           maxHeight: "300px",
@@ -2889,116 +2889,114 @@ export const PopUp_For_LeakCheck_response = (props) => {
                             </tr>
                           </thead>
                           <tbody>
-                            {display_this_data?.Response?.result?.map(
-                              (Info, index) => (
-                                <tr key={index}>
-                                  <td
-                                    style={{
-                                      maxWidth: isWidthLimited
-                                        ? LIMIT_MAX_CELL_WIDTH
-                                        : "none",
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                      paddingLeft: "var(--space-b)",
-                                    }}
+                            {display_this_data?.Response?.map((Info, index) => (
+                              <tr key={index}>
+                                <td
+                                  style={{
+                                    maxWidth: isWidthLimited
+                                      ? LIMIT_MAX_CELL_WIDTH
+                                      : "none",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    paddingLeft: "var(--space-b)",
+                                  }}
+                                >
+                                  {Info?.email}
+                                </td>
+                                <td
+                                  style={{
+                                    maxWidth: isWidthLimited
+                                      ? LIMIT_MAX_CELL_WIDTH
+                                      : "none",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  {Info?.username}
+                                </td>
+                                <td
+                                  style={{
+                                    maxWidth: isWidthLimited
+                                      ? LIMIT_MAX_CELL_WIDTH
+                                      : "none",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  {Info?.password}
+                                </td>
+                                <td>
+                                  <div
+                                    className="   font-type-txt  Color-Grey1   "
+                                    style={{ display: "flex" }}
                                   >
-                                    {Info?.email}
-                                  </td>
-                                  <td
-                                    style={{
-                                      maxWidth: isWidthLimited
-                                        ? LIMIT_MAX_CELL_WIDTH
-                                        : "none",
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                    }}
+                                    {Info?.fields &&
+                                      Info?.fields.length > 0 &&
+                                      Info?.fields?.map((tag, index) => (
+                                        <p
+                                          className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
+                                          key={index}
+                                        >
+                                          {tag}
+                                        </p>
+                                      ))}
+                                  </div>
+                                </td>
+                                <td
+                                  style={{
+                                    maxWidth: isWidthLimited
+                                      ? LIMIT_MAX_CELL_WIDTH
+                                      : "none",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  {Info?.source?.name}
+                                </td>
+                                <td
+                                  style={{
+                                    maxWidth: isWidthLimited
+                                      ? LIMIT_MAX_CELL_WIDTH
+                                      : "none",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                  }}
+                                >
+                                  {Info?.country}
+                                </td>
+                                <td>
+                                  {" "}
+                                  <div
+                                    className="   font-type-txt  Color-Grey1   "
+                                    style={{ display: "flex" }}
                                   >
-                                    {Info?.username}
-                                  </td>
-                                  <td
-                                    style={{
-                                      maxWidth: isWidthLimited
-                                        ? LIMIT_MAX_CELL_WIDTH
-                                        : "none",
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                    }}
-                                  >
-                                    {Info?.password}
-                                  </td>
-                                  <td>
-                                    <div
-                                      className="   font-type-txt  Color-Grey1   "
-                                      style={{ display: "flex" }}
-                                    >
-                                      {Info?.fields &&
-                                        Info?.fields.length > 0 &&
-                                        Info?.fields?.map((tag, index) => (
-                                          <p
-                                            className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
-                                            key={index}
-                                          >
-                                            {tag}
-                                          </p>
-                                        ))}
-                                    </div>
-                                  </td>
-                                  <td
-                                    style={{
-                                      maxWidth: isWidthLimited
-                                        ? LIMIT_MAX_CELL_WIDTH
-                                        : "none",
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                    }}
-                                  >
-                                    {Info?.source?.name}
-                                  </td>
-                                  <td
-                                    style={{
-                                      maxWidth: isWidthLimited
-                                        ? LIMIT_MAX_CELL_WIDTH
-                                        : "none",
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                    }}
-                                  >
-                                    {Info?.country}
-                                  </td>
-                                  <td>
-                                    {" "}
-                                    <div
-                                      className="   font-type-txt  Color-Grey1   "
-                                      style={{ display: "flex" }}
-                                    >
-                                      {Info?.origin &&
-                                        Info?.origin.length > 0 &&
-                                        Info?.origin?.map((tag, index) => (
-                                          <p
-                                            className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
-                                            key={index}
-                                          >
-                                            {tag}
-                                          </p>
-                                        ))}
-                                    </div>
-                                  </td>
+                                    {Info?.origin &&
+                                      Info?.origin.length > 0 &&
+                                      Info?.origin?.map((tag, index) => (
+                                        <p
+                                          className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
+                                          key={index}
+                                        >
+                                          {tag}
+                                        </p>
+                                      ))}
+                                  </div>
+                                </td>
 
-                                  <td
-                                    style={{
-                                      maxWidth: isWidthLimited
-                                        ? LIMIT_MAX_CELL_WIDTH
-                                        : "none",
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                      textAlign: "right",
-                                    }}
-                                  >
-                                    {Info?.source?.breach_date}
-                                  </td>
-                                </tr>
-                              )
-                            )}
+                                <td
+                                  style={{
+                                    maxWidth: isWidthLimited
+                                      ? LIMIT_MAX_CELL_WIDTH
+                                      : "none",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    textAlign: "right",
+                                  }}
+                                >
+                                  {Info?.source?.breach_date}
+                                </td>
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
                       </div>
