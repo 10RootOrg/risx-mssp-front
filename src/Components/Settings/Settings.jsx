@@ -228,7 +228,16 @@ function Settings({
               subline={"Active Now"}
             />
           )}
-
+          {Preview_This_comp == "Collector Log" && (
+            <Settings_section_logs
+              usethis={"log_collector"}
+              fileName={"Collector.log"}
+              headline={"Collector Log"}
+              subline={
+                "Log for The Creation and Import OF the On premise velociraptor"
+              }
+            />
+          )}
           {Preview_This_comp == "Alerts Interval Log" && (
             <Settings_section_logs
               usethis={"log_alerts_interval"}

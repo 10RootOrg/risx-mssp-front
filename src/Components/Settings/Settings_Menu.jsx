@@ -80,6 +80,12 @@ function Settings_Menu({
           father_comp: "Logs",
         },
         {
+          preview_name: "Collector",
+          value: "Collector Log",
+          is_nasted: false,
+          father_comp: "Logs",
+        },
+        {
           preview_name: "Alerts",
           value: "Alerts Interval Log",
           is_nasted: false,
