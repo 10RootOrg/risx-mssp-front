@@ -322,28 +322,28 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
 
       console.log("Upload Shit", FilesToUpUnOff);
 
-      if (FilesToUpUnOff.some((x) => x.type === "application/json")) {
-        console.log("Verification File Exists");
-        const tmpArr = FilesToUpUnOff?.filter(
-          (x) => x.type === "application/json"
-        );
-        FilesToUp = [
-          ...tmpArr,
-          ...FilesToUpUnOff?.filter((x) => x.type !== "application/json"),
-        ];
-      } else {
-        console.log("No Verification File");
-        set_PopUp_Error____show(true);
-        set_PopUp_Error____txt({
-          HeadLine: "No Verification File",
-          paragraph: "Please add Verification File (zip name-split-hash.json)",
-          buttonTitle: "Close",
-        });
-        return;
-      }
-      console.log("Upload Official Shit", FilesToUp);
+      // if (FilesToUpUnOff.some((x) => x.type === "application/json")) {
+      //   console.log("Verification File Exists");
+      //   const tmpArr = FilesToUpUnOff?.filter(
+      //     (x) => x.type === "application/json"
+      //   );
+      //   FilesToUp = [
+      //     ...tmpArr,
+      //     ...FilesToUpUnOff?.filter((x) => x.type !== "application/json"),
+      //   ];
+      // } else {
+      //   console.log("No Verification File");
+      //   set_PopUp_Error____show(true);
+      //   set_PopUp_Error____txt({
+      //     HeadLine: "No Verification File",
+      //     paragraph: "Please add Verification File (zip name-split-hash.json)",
+      //     buttonTitle: "Close",
+      //   });
+      //   return;
+      // }
+      console.log("Upload Official Shit", FilesToUpUnOff);
 
-      FilesToUp.forEach(async (file) => {
+      FilesToUpUnOff.forEach(async (file) => {
         console.log("The Devil File", file);
         const formData = new FormData();
         formData.append("file", file);
