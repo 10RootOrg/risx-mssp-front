@@ -320,7 +320,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
       let FilesToUp = [];
       let FilesToUpUnOff = [...e.target.files];
 
-      console.log("Upload Shit", FilesToUpUnOff);
+      // console.log("Upload Shit", FilesToUpUnOff);
 
       // if (FilesToUpUnOff.some((x) => x.type === "application/json")) {
       //   console.log("Verification File Exists");
@@ -342,12 +342,16 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
       //   return;
       // }
       console.log("Upload Official Shit", FilesToUpUnOff);
+      let resValue = "";
 
-      FilesToUpUnOff.forEach(async (file) => {
+      for (let index = 0; index < FilesToUpUnOff.length; index++) {
+        const file = FilesToUpUnOff[index];
         console.log("The Devil File", file);
         const formData = new FormData();
         formData.append("file", file);
         formData.append("fileName", file.name);
+        console.log("formData formData ", formData);
+
         const res = await axios.post(
           `${backEndURL}/results/ImportVeloResult`,
           formData,
@@ -378,7 +382,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
                 }
 
                 if (
-                  (UploadProgressBar[file.name]?.progress + 5 < value ||
+                  (UploadProgressBar[file.name]?.progress + 2 < value ||
                     (value >= 100 &&
                       UploadProgressBar[file.name]?.progress != 100)) &&
                   UploadProgressBar[file.name]?.progress !== undefined
@@ -397,16 +401,101 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
             },
           }
         );
+
         console.log(res.data, "res of import config velo");
         if (res.data) {
-          set_PopUp_All_Good__txt({
-            HeadLine: "Upload Ended",
-            paragraph: `The File named ${file.name} Has been successfully uploaded to the backend.`,
-            buttonTitle: "Close",
-          });
-          set_PopUp_All_Good__show(true);
+          resValue = res.data;
         }
-      });
+      }
+      if (resValue) {
+        set_PopUp_All_Good__txt({
+          HeadLine: "Upload Ended",
+          paragraph: `The Files have been successfully uploaded to the backend.`,
+          buttonTitle: "Close",
+        });
+        set_PopUp_All_Good__show(true);
+      } else {
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error",
+          paragraph: "Failed To Upload The Results",
+          buttonTitle: "Close",
+        });
+      }
+
+      // FilesToUpUnOff.forEach(async (file) => {
+      //   console.log("The Devil File", file);
+      //   const formData = new FormData();
+      //   formData.append("file", file);
+      //   formData.append("fileName", file.name);
+      //   console.log("formData formData ", formData);
+
+      //   const res = await axios.post(
+      //     `${backEndURL}/results/ImportVeloResult`,
+      //     formData,
+      //     {
+      //       headers: {
+      //         "content-type": "multipart/form-data",
+      //       },
+      //       onUploadProgress: (prog) => {
+      //         try {
+      //           const value = Math.round(prog.progress * 100);
+      //           // console.log(
+      //           //   UploadProgressBar,
+      //           //   "UploadProgressBarUploadProgressBar",
+      //           //   value
+      //           // );
+
+      //           if (!UploadProgressBar[file.name]) {
+      //             console.log("empty 1111111111111111111111");
+
+      //             if (value < 100) {
+      //               UploadProgressBar[file.name] = {
+      //                 progress: value,
+      //                 fileName: file.name,
+      //               };
+      //               setUploadProgressBar(UploadProgressBar);
+      //               setDownloadList(Math.random());
+      //             }
+      //           }
+
+      //           if (
+      //             (UploadProgressBar[file.name]?.progress + 2 < value ||
+      //               (value >= 100 &&
+      //                 UploadProgressBar[file.name]?.progress != 100)) &&
+      //             UploadProgressBar[file.name]?.progress !== undefined
+      //           ) {
+      //             console.log("Download Prog ", value, UploadProgressBar);
+      //             UploadProgressBar[file.name] = {
+      //               progress: value,
+      //               fileName: file.name,
+      //             };
+      //             setUploadProgressBar(UploadProgressBar);
+      //             setDownloadList(Math.random());
+      //           }
+      //         } catch (error) {
+      //           console.log("Error in ONPeofressUpload ", error);
+      //         }
+      //       },
+      //     }
+      //   );
+      //   console.log(res.data, "res of import config velo");
+      //   if (res.data) {
+      //     set_PopUp_All_Good__txt({
+      //       HeadLine: "Upload Ended",
+      //       paragraph: `The File named ${file.name} Has been successfully uploaded to the backend.`,
+      //       buttonTitle: "Close",
+      //     });
+      //     set_PopUp_All_Good__show(true);
+      //   } else {
+      //     set_PopUp_Error____show(true);
+      //     set_PopUp_Error____txt({
+      //       HeadLine: "Error",
+      //       paragraph: "Failed To Upload The Results",
+      //       buttonTitle: "Close",
+      //     });
+      //   }
+      // });
     } catch (error) {
       console.log("Error in HandleFileImportVelo ", error);
       set_PopUp_Error____show(true);
@@ -737,7 +826,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
                     width: "70vw",
                   }}
                 >
-                  {!["Lite", "Best-Practice"].includes(
+                  {![].includes(
                     ChosenConfig.config_name
                   ) && (
                     <>
