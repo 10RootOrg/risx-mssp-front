@@ -1085,56 +1085,74 @@ const SideBar = ({ visblePage, set_visblePage }) => {
         )}
 
         {Object.keys(DownloadProgressBar).length > 0 && (
-          <div
-            style={{
-              paddingRight: "calc(var(--space-c) + var(--space-b))",
-              paddingLeft: "calc(var(--space-c) + var(--space-b))",
-              // width: '100%',
-              // position: "fixed", // Use fixed positioning
-              bottom: "var(--space-c)", // Position it at the bottom of the viewport
-              width: "-webkit-fill-available",
-            }}
-          >
-            <p className="font-type-menu  Color-Grey1  mb-a">
-              Downloads Progress:
-            </p>
-            <div className=" " style={{ width: "100% " }}>
-              {Object.keys(DownloadProgressBar).map((item) => (
-                <DownloadProgressBarItem
-                  item={DownloadProgressBar[item]}
-                  itemKey={item}
-                  DownloadProgressBar={DownloadProgressBar}
-                  setDownloadProgressBar={setDownloadProgressBar}
-                />
-              ))}
+          <>
+            <div
+              style={{
+                paddingRight: "calc(var(--space-c) + var(--space-b))",
+                paddingLeft: "calc(var(--space-c) + var(--space-b))",
+                // width: '100%',
+                // position: "fixed", // Use fixed positioning
+                bottom: "var(--space-c)", // Position it at the bottom of the viewport
+                width: "-webkit-fill-available",
+              }}
+            >
+              <p className="font-type-menu  Color-Grey1  ">
+                Downloads Progress:
+              </p>{" "}
+              <div
+                style={{
+                  maxHeight: 180,
+                  overflowY: "auto",
+                  scrollbarWidth: "none",
+                }}
+              >
+                <div className=" " style={{ width: "100% " }}>
+                  {Object.keys(DownloadProgressBar).map((item) => (
+                    <DownloadProgressBarItem
+                      item={DownloadProgressBar[item]}
+                      itemKey={item}
+                      DownloadProgressBar={DownloadProgressBar}
+                      setDownloadProgressBar={setDownloadProgressBar}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         )}
         {Object.keys(UploadProgressBar).length > 0 && (
-          <div
-            style={{
-              paddingRight: "calc(var(--space-c) + var(--space-b))",
-              paddingLeft: "calc(var(--space-c) + var(--space-b))",
-              // width: '100%',
-              // position: "fixed", // Use fixed positioning
-              bottom: "var(--space-c)", // Position it at the bottom of the viewport
-              width: "-webkit-fill-available",
-            }}
-          >
-            <p className="font-type-menu  Color-Grey1  mb-a">
-              Upload Progress:
-            </p>
-            <div className=" " style={{ width: "100% " }}>
-              {Object.keys(UploadProgressBar).map((item) => (
-                <DownloadProgressBarItem
-                  item={UploadProgressBar[item]}
-                  itemKey={item}
-                  DownloadProgressBar={UploadProgressBar}
-                  setDownloadProgressBar={setUploadProgressBar}
-                />
-              ))}
+          <>
+            <div
+              style={{
+                paddingRight: "calc(var(--space-c) + var(--space-b))",
+                paddingLeft: "calc(var(--space-c) + var(--space-b))",
+                // width: '100%',
+                // position: "fixed", // Use fixed positioning
+                bottom: "var(--space-c)", // Position it at the bottom of the viewport
+                width: "-webkit-fill-available",
+              }}
+            >
+              <p className="font-type-menu  Color-Grey1  ">Upload Progress:</p>{" "}
+              <div
+                style={{
+                  maxHeight: 180,
+                  overflowY: "auto",
+                  scrollbarWidth: "none",
+                }}
+              >
+                <div className=" " style={{ width: "100% " }}>
+                  {Object.keys(UploadProgressBar).map((item) => (
+                    <DownloadProgressBarItem
+                      item={UploadProgressBar[item]}
+                      itemKey={item}
+                      DownloadProgressBar={UploadProgressBar}
+                      setDownloadProgressBar={setUploadProgressBar}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         )}
         <div
           style={{
@@ -1153,7 +1171,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             style={{ textAlign: "center" }}
             className="font-type-menu  Color-Grey1 "
           >
-            Version : 0.8.2
+            Version : 0.8.3
           </p>
         </div>
       </div>
