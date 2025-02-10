@@ -79,12 +79,12 @@
     {
       "toolName": "Nightingale",
       "toolID": "2001014",
-      "toolURL": "https://${FRONT_URL}/Nightingale"
+      "toolURL": "https://${FRONT_URL}/nightingale"
     },
     {
       "toolName": "CyberChef",
       "toolID": "2001015",
-      "toolURL": "https://${FRONT_URL}/CyberChef"
+      "toolURL": "https://${FRONT_URL}/cyberchef"
     },
     {
       "toolName": "Threat Hunting Dashboard",
