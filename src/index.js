@@ -28,7 +28,6 @@ import Users from "./Components/Users/Users";
 import Login from "./Pages/Login";
 import NoPage404 from "./Pages/NoPage404";
 
-
 import Constantfunctions from "./Constantfunctions/Constantfunctions";
 import VeloConfigMain from "./Components/VeloConfig/VeloConfigMain";
 
@@ -41,7 +40,10 @@ export default function App() {
   const [isMainProcessWork, set_isMainProcessWork] = useState(false);
   // const {  backEndURL } = useContext(GeneralContext);
 
-  // console.log("visblePage" , visblePage);
+  useEffect(() => {
+    console.log("Hello World !!!!!!");
+    console.log("Version Of Site is 0.8.3 ");
+  }, []);
 
   return (
     <>
