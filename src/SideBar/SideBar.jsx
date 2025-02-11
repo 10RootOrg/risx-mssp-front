@@ -376,6 +376,12 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       console.log("HandleVeloClickTwo", id, os);
       const NameOfFile = `${nameZip}-${os}`;
       const NameOfFile2 = `${nameZip}-${os}` + Math.random();
+      set_PopUp_All_Good__show(true);
+      set_PopUp_All_Good__txt({
+        HeadLine: `Start Download for ${nameZip}-${os}`,
+        paragraph: "It may take a a couple of seconds to start the download ",
+        buttonTitle: "Close",
+      });
 
       const res = await axios.post(
         `${backEndURL}/config/GetSpecificCollector`,
