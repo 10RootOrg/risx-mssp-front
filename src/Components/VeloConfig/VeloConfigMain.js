@@ -320,28 +320,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
       let FilesToUp = [];
       let FilesToUpUnOff = [...e.target.files];
 
-      // console.log("Upload Shit", FilesToUpUnOff);
-
-      // if (FilesToUpUnOff.some((x) => x.type === "application/json")) {
-      //   console.log("Verification File Exists");
-      //   const tmpArr = FilesToUpUnOff?.filter(
-      //     (x) => x.type === "application/json"
-      //   );
-      //   FilesToUp = [
-      //     ...tmpArr,
-      //     ...FilesToUpUnOff?.filter((x) => x.type !== "application/json"),
-      //   ];
-      // } else {
-      //   console.log("No Verification File");
-      //   set_PopUp_Error____show(true);
-      //   set_PopUp_Error____txt({
-      //     HeadLine: "No Verification File",
-      //     paragraph: "Please add Verification File (zip name-split-hash.json)",
-      //     buttonTitle: "Close",
-      //   });
-      //   return;
-      // }
-      console.log("Upload Official Shit", FilesToUpUnOff);
+      console.log("Upload Official Things", FilesToUpUnOff);
       let resValue = "";
 
       for (let index = 0; index < FilesToUpUnOff.length; index++) {
@@ -351,6 +330,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
         formData.append("file", file);
         formData.append("fileName", file.name);
         console.log("formData formData ", formData);
+        const IdOfFile = file.name + Math.random();
 
         const res = await axios.post(
           `${backEndURL}/results/ImportVeloResult`,
@@ -368,11 +348,11 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
                 //   value
                 // );
 
-                if (!UploadProgressBar[file.name]) {
+                if (!UploadProgressBar[IdOfFile]) {
                   console.log("empty 1111111111111111111111");
 
                   if (value < 100) {
-                    UploadProgressBar[file.name] = {
+                    UploadProgressBar[IdOfFile] = {
                       progress: value,
                       fileName: file.name,
                     };
@@ -382,13 +362,13 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
                 }
 
                 if (
-                  (UploadProgressBar[file.name]?.progress + 2 < value ||
+                  (UploadProgressBar[IdOfFile]?.progress + 2 < value ||
                     (value >= 100 &&
-                      UploadProgressBar[file.name]?.progress != 100)) &&
-                  UploadProgressBar[file.name]?.progress !== undefined
+                      UploadProgressBar[IdOfFile]?.progress != 100)) &&
+                  UploadProgressBar[IdOfFile]?.progress !== undefined
                 ) {
                   console.log("Download Prog ", value, UploadProgressBar);
-                  UploadProgressBar[file.name] = {
+                  UploadProgressBar[IdOfFile] = {
                     progress: value,
                     fileName: file.name,
                   };
@@ -423,79 +403,6 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
         });
       }
 
-      // FilesToUpUnOff.forEach(async (file) => {
-      //   console.log("The Devil File", file);
-      //   const formData = new FormData();
-      //   formData.append("file", file);
-      //   formData.append("fileName", file.name);
-      //   console.log("formData formData ", formData);
-
-      //   const res = await axios.post(
-      //     `${backEndURL}/results/ImportVeloResult`,
-      //     formData,
-      //     {
-      //       headers: {
-      //         "content-type": "multipart/form-data",
-      //       },
-      //       onUploadProgress: (prog) => {
-      //         try {
-      //           const value = Math.round(prog.progress * 100);
-      //           // console.log(
-      //           //   UploadProgressBar,
-      //           //   "UploadProgressBarUploadProgressBar",
-      //           //   value
-      //           // );
-
-      //           if (!UploadProgressBar[file.name]) {
-      //             console.log("empty 1111111111111111111111");
-
-      //             if (value < 100) {
-      //               UploadProgressBar[file.name] = {
-      //                 progress: value,
-      //                 fileName: file.name,
-      //               };
-      //               setUploadProgressBar(UploadProgressBar);
-      //               setDownloadList(Math.random());
-      //             }
-      //           }
-
-      //           if (
-      //             (UploadProgressBar[file.name]?.progress + 2 < value ||
-      //               (value >= 100 &&
-      //                 UploadProgressBar[file.name]?.progress != 100)) &&
-      //             UploadProgressBar[file.name]?.progress !== undefined
-      //           ) {
-      //             console.log("Download Prog ", value, UploadProgressBar);
-      //             UploadProgressBar[file.name] = {
-      //               progress: value,
-      //               fileName: file.name,
-      //             };
-      //             setUploadProgressBar(UploadProgressBar);
-      //             setDownloadList(Math.random());
-      //           }
-      //         } catch (error) {
-      //           console.log("Error in ONPeofressUpload ", error);
-      //         }
-      //       },
-      //     }
-      //   );
-      //   console.log(res.data, "res of import config velo");
-      //   if (res.data) {
-      //     set_PopUp_All_Good__txt({
-      //       HeadLine: "Upload Ended",
-      //       paragraph: `The File named ${file.name} Has been successfully uploaded to the backend.`,
-      //       buttonTitle: "Close",
-      //     });
-      //     set_PopUp_All_Good__show(true);
-      //   } else {
-      //     set_PopUp_Error____show(true);
-      //     set_PopUp_Error____txt({
-      //       HeadLine: "Error",
-      //       paragraph: "Failed To Upload The Results",
-      //       buttonTitle: "Close",
-      //     });
-      //   }
-      // });
     } catch (error) {
       console.log("Error in HandleFileImportVelo ", error);
       set_PopUp_Error____show(true);
@@ -826,9 +733,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
                     width: "70vw",
                   }}
                 >
-                  {![].includes(
-                    ChosenConfig.config_name
-                  ) && (
+                  {![].includes(ChosenConfig.config_name) && (
                     <>
                       <button
                         className="btn-type2"
