@@ -1,5 +1,5 @@
 {
-  "backendUrl": "http://192.168.1.10:5555",
+  "backendUrl": "http://192.168.1.50:5555",
   "backendUrlPrevious": "http://213.8.178.222:5555",
   "expiryDate": "28-09-2025",
   "clientApi": "https://api.example.com/user",
@@ -85,6 +85,11 @@
       "toolName": "CyberChef",
       "toolID": "2001015",
       "toolURL": "https://${FRONT_URL}/cyberchef"
+    },
+    {
+      "toolName": "Prowler",
+      "toolID": "2001016",
+      "toolURL": "https://${FRONT_URL}:3111"
     },
     {
       "toolName": "Threat Hunting Dashboard",
