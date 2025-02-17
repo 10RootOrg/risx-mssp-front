@@ -188,6 +188,168 @@ export const PopUp_All_Good = (props) => {
   );
 };
 
+export const PopUp_Mod_Tags = (props) => {
+  const { popUp_show, set_popUp_show, ModObj, backEndURL } = props;
+  const [active, setActive] = useState(false);
+  const [NewTagName, setNewTagName] = useState("");
+  const [TagsArray, SetTagsArray] = useState([]);
+  const [UpdaterThing, SetUpdaterThing] = useState(false);
+
+  useEffect(() => {
+    set_popUp_show(popUp_show);
+    SetTagsArray(ModObj?.tags);
+  }, [popUp_show]);
+
+  useEffect(() => {
+    if (popUp_show) {
+      setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+    }
+  }, [popUp_show]);
+
+  function handleClickOutside(e) {
+    if (e.target.className === "PopUp-background") {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+    }
+  }
+
+  function handleClose() {
+    setActive(false); // Trigger exit animation
+    setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+  }
+
+  async function HandleAddTag() {
+    try {
+      console.log("HandleAddTag Start");
+      if (NewTagName.trim() == "") {
+        console.log("Cant add an empty string");
+        return;
+      }
+      if (
+        ModObj?.tags?.some((xArrTem) =>
+          xArrTem?.toLowerCase()?.includes(NewTagName)
+        )
+      ) {
+        console.log("Cant Add Tag Already Exists");
+        return;
+      }
+      const res = await axios.post(`${backEndURL}/Resources/AddTagToResource`, {
+        id: ModObj.id,
+        tag: NewTagName,
+      });
+      ModObj?.tags?.push(NewTagName);
+      setNewTagName("");
+      SetTagsArray(ModObj?.tags);
+    } catch (err) {
+      console.log("Error in HandleAddTag : ", err);
+    }
+  }
+
+  async function HandleDeleteTag(tag) {
+    try {
+      console.log("HandleDeleteTag Start");
+      const res = await axios.post(
+        `${backEndURL}/Resources/DeleteTagToResource`,
+        {
+          id: ModObj?.id,
+          tag: tag,
+        }
+      );
+      console.log("res 44444", res.data?.newTags);
+      const indexo = ModObj?.tags?.indexOf(tag);
+      if (indexo > -1) {
+        console.log("555555555555", indexo);
+
+        ModObj?.tags?.splice(indexo, 1);
+
+        SetTagsArray(ModObj?.tags);
+        SetUpdaterThing(!UpdaterThing);
+      }
+    } catch (err) {
+      console.log("Error in HandleDeleteTag : ", err);
+    }
+  }
+
+  return (
+    <>
+      {popUp_show && (
+        <div
+          className={`PopUp-background`}
+          onClick={handleClickOutside}
+          style={{ wordWrap: "break-word" }}
+        >
+          <div
+            className={`PopUp-content  ${
+              active ? "popup-enter-active" : "popup-enter"
+            }`}
+            style={{ width: "450px", paddingBottom: " " }}
+          >
+            <div
+              className="display-flex justify-content-end  "
+              style={{ marginRight: "-40px" }}
+            >
+              <button className="PopUp-Close-btn" onClick={handleClose}>
+                <CloseButton className="PopUp-Close-btn-img" />{" "}
+              </button>
+            </div>
+
+            <p className="font-type-h4 Color-White mb-a">
+              Existing Tags For {ModObj?.name} {UpdaterThing ? "" : ""}
+            </p>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 3,
+                marginTop: 15,
+                marginBottom: 35,
+                // overflowX: "auto",
+                // width: "95%",
+                flexWrap: "wrap",
+              }}
+            >
+              {TagsArray?.map((yyu) => (
+                <p
+                  onClick={() => HandleDeleteTag(yyu)}
+                  className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1"
+                  style={{ fontSize: 18 }}
+                >
+                  {yyu}
+                </p>
+              ))}
+            </div>
+            <p className="font-type-h4 Color-White mb-a">
+              Add Tag For {ModObj?.name}
+            </p>
+            <input
+              className="input-type1 search_filter "
+              placeholder="Tag Name"
+              value={NewTagName}
+              onChange={(e) => setNewTagName(e.target.value)}
+            />
+            <div className="display-flex mt-c" style={{}}>
+              <button
+                className="btn-type2   '"
+                style={{ marginLeft: "auto" }}
+                onClick={HandleAddTag}
+              >
+                <p className="font-type-menu ">Add</p>{" "}
+              </button>
+              <button
+                className="btn-type2   '"
+                style={{ marginLeft: "auto" }}
+                onClick={handleClose}
+              >
+                <p className="font-type-menu ">Close</p>{" "}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
 export const PopUp_Alert_info = (props) => {
   const {
     Info,
@@ -900,8 +1062,6 @@ export const PopUp_For_Dehashed_data = (props) => {
 
   // get json HashR data
   useEffect(() => {
-
-
     const tmpdata2 = {};
 
     set_Dehashed_data(tmpdata2);

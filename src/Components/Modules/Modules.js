@@ -118,7 +118,7 @@ function Modules({
             gap: "var(--space-c)",
           }}
         >
-          {all_artifacts &&
+          {/* {all_artifacts &&
             all_artifacts.length != undefined &&
             typeof all_artifacts != "string" &&
             Array.isArray(all_artifacts) && (
@@ -145,7 +145,7 @@ function Modules({
                 all_artifacts_and_modules={all_artifacts_and_modules}
                 set_all_artifacts_and_modules={set_all_artifacts_and_modules}
               />
-            )}
+            )} */}
 
           {all_artifacts_and_modules &&
             all_artifacts_and_modules.length != undefined &&
@@ -158,7 +158,7 @@ function Modules({
                       .filter(
                         (tool) =>
                           tool?.tool_id != "2000000" &&
-                          tool?.parent_id != "2000000" &&
+                          // tool?.parent_id != "2000000" &&
                           (tool?.toolType === "module" ||
                             tool?.parent_id == "2000000") &&
                           tool?.ShowInUi
@@ -166,7 +166,7 @@ function Modules({
                       .sort((a, b) => a.positionNumber - b.positionNumber) // Sort by positionNumber
                   }
                   box_type={"modules"}
-                  main_headline="ASM & CTI Modules"
+                  // main_headline="ASM & CTI Modules"
                   main_subtitle="Forensic timelines, vulnerability scans, device mapping & credential management"
                   main_read_more="At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
                   logoAddress=""
@@ -190,7 +190,7 @@ function Modules({
                       .sort((a, b) => a.positionNumber - b.positionNumber) // Sort by positionNumber
                   }
                   box_type={"modules"}
-                  main_headline="Infrastructural Modules"
+                  // main_headline="Infrastructural Modules"
                   main_subtitle="This suite offers AD security, artifact analysis, threat intelligence, OSINT, sandboxing, hash management, darknet monitoring, credential leak detection, and incident response capabilities"
                   main_read_more="At the press of a (few) buttons, perform targeted collection of digital forensic evidence simultaneously across your endpoints, with speed and precision. Continuously collect endpoint events such as event logs, file modifications and process execution. Centrally store events indefinitely for historical review and analysis. Don't wait until an event occurs. Actively search for suspicious activities using our library of forensic artifacts, then customize to your specific threat hunting needs."
                   logoAddress=""
@@ -199,6 +199,8 @@ function Modules({
                   is_filtering={filter_string != ""}
                   all_artifacts_and_modules={all_artifacts_and_modules}
                   set_all_artifacts_and_modules={set_all_artifacts_and_modules}
+                  ShowAssets={true}
+
                 />
               </>
             )}

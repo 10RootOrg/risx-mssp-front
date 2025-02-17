@@ -3,7 +3,11 @@ import React, { useState, useEffect, useContext } from "react";
 //  import { ReactComponent as RisxMssp_logo_wide_small} from './Logos/RisxMssp_logo_wide_small.svg';
 import { ReactComponent as IconReadMore } from "./icons/ico-readmore.svg";
 import { ReactComponent as IcoKey } from "./icons/ico-eye.svg";
-import { PopUp_For_Read_More, PopUp_All_Good } from "./PopUp_Smart.js";
+import {
+  PopUp_For_Read_More,
+  PopUp_All_Good,
+  PopUp_Mod_Tags,
+} from "./PopUp_Smart.js";
 import {
   Make_url_from_id,
   fix_path,
@@ -67,6 +71,9 @@ function PreviewBoxes_main_modules({
     paragraph: "",
     buttonTitle: "",
   });
+  const [popUp_Tags_Show, set_popUp_Tags_Show] = useState(false);
+  const [popUp_Tags_ModObj, set_popUp_Tags_ModObj] = useState({});
+
   const [toolURL, set_toolURL] = useState("https://docs.velociraptor.app");
 
   const [disabled, set_disabled] = useState(false);
@@ -120,6 +127,16 @@ function PreviewBoxes_main_modules({
         operator,
         info
       );
+    }
+  };
+
+  const HandleAddTagPopup = async (id, name, tags) => {
+    try {
+      console.log("HandleAddTagPopup open");
+      set_popUp_Tags_ModObj({ id: id, name: name, tags });
+      set_popUp_Tags_Show(true);
+    } catch (err) {
+      console.log("Error in HandleAddTagPopup : ", err);
     }
   };
 
@@ -536,6 +553,12 @@ function PreviewBoxes_main_modules({
         buttonTitle={popUp_all_good____txt.buttonTitle}
         paragraph={popUp_all_good____txt.paragraph}
       />
+      <PopUp_Mod_Tags
+        set_popUp_show={set_popUp_Tags_Show}
+        popUp_show={popUp_Tags_Show}
+        ModObj={popUp_Tags_ModObj}
+        backEndURL={backEndURL}
+      />
 
       <PopUp_For_Read_More
         HeadLine={popUp_headline}
@@ -576,7 +599,7 @@ function PreviewBoxes_main_modules({
               // width: "100%",
               color: "var(--color-White)",
               fontWeight: 700,
-              fontSize: 20
+              fontSize: 20,
             }}
           >
             {main_headline}
@@ -801,7 +824,7 @@ function PreviewBoxes_main_modules({
                           </button>
                         </td>
                         {/* Assets btn */}
-                        {/* <td
+                        <td
                           style={{
                             visibility: box_type === "velociraptor" && "hidden",
                             minWidth: "115px",
@@ -813,40 +836,49 @@ function PreviewBoxes_main_modules({
                           } `}
                         >
                           {ShowAssets && (
-                            <button
-                              className={`btn-type2 ${
-                                Info?.toolURL === "" && "btn-type2-no_btn"
-                              }`}
-                              onClick={() => console.log("Assets Btn")}
+                            <div
                               style={{
-                                width: "100%",
-                                minWidth: "115px",
-                                maxWidth: "122px",
-                                paddingLeft: "var(--space-c)",
-                                paddingRight: "calc(var(--space-c) - 5px)",
-                                disabled: Info?.toolURL === "",
-
-                                // paddingRight: Info?.toolType !== undefined &&
-                                // Info?.toolType !== "" &&
-                                // Info?.toolType !== null
-                                //   ? "calc(var(--space-d) - 5px)"
-                                // : undefined
+                                minWidth: 150,
+                                maxWidth: 150,
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
                               }}
+                              className="column column-small  "
+                              onClick={() =>
+                                HandleAddTagPopup(
+                                  Info?.artifact_id ?? Info?.tool_id,
+                                  Info?.Toolname ?? Info?.Tool_name,
+                                  Info?.arguments.tags
+                                )
+                              }
                             >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <p className="font-type-menu" style={{}}>
-                                  Assets num
+                              {Info?.arguments?.tags?.length === 1 ? (
+                                <p className="ml-a    font-type-txt   Color-Grey1   "></p>
+                              ) : null}
+                              {/* ? (<p className='ml-a    font-type-txt   Color-Red   '> Undefined  </p> ) : null  } */}
+                              {Info?.arguments?.tags?.length == 0 ? (
+                                <p className="ml-a  font-type-txt    tagit_type1">
+                                  No Tags
                                 </p>
-                              </div>
-                            </button>
+                              ) : null}
+                              {Info?.arguments?.tags?.length === 1 ? (
+                                <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">
+                                  {Info?.arguments?.tags[0]}
+                                </p>
+                              ) : null}
+                              {Info?.arguments?.tags?.length > 1 ? (
+                                <>
+                                  <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">
+                                    {Info?.arguments?.tags[0]}
+                                  </p>{" "}
+                                  <p className=" ml-a font-type-txt   Color-Grey1  ">
+                                    +{Info?.arguments?.tags?.length - 1}
+                                  </p>
+                                </>
+                              ) : null}{" "}
+                            </div>
                           )}
-                        </td> */}
+                        </td>
 
                         <td className="hide-on-small-screen2">
                           <div
@@ -982,6 +1014,23 @@ function PreviewBoxes_main_modules({
                                     className="btn-menu-icon-placeholder  mr-a  "
                                     style={{ visibility: "" }}
                                   />
+                                </div>
+                              </button>
+                              <button
+                                onClick={() =>
+                                  HandleAddTagPopup(
+                                    Info?.artifact_id ?? Info?.tool_id,
+                                    Info?.Toolname ?? Info?.Tool_name,
+                                    Info?.arguments.tags
+                                  )
+                                }
+                                className="btn-menu "
+                              >
+                                <div className="display-flex">
+                                  {" "}
+                                  <p className="font-type-menu ml-c mr-c">
+                                    Add tags
+                                  </p>{" "}
                                 </div>
                               </button>
                             </div>
