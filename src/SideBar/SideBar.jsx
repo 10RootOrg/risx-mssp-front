@@ -89,6 +89,8 @@ const SideBar = ({ visblePage, set_visblePage }) => {
     []
   );
   const [OpenVeloCollectorList, setOpenVeloCollectorList] = useState([]);
+  // This IS Temporary
+  const [TurnOnAlerts, setTurnOnAlerts] = useState(false);
 
   const get_config = async () => {
     if (backEndURL === undefined) {
@@ -100,6 +102,15 @@ const SideBar = ({ visblePage, set_visblePage }) => {
       if (res) {
         console.log("get_config", res.data);
       }
+      console.log(
+        res?.data?.General?.AlertDictionary?.["Python.Suspicious.File.Found"]
+          ?.Log,
+        "88888888888888888888888888888888888888888888888888888888888888888888888888"
+      );
+      setTurnOnAlerts(
+        res?.data?.General?.AlertDictionary?.["Python.Suspicious.File.Found"]
+          ?.Log
+      );
       setObject(res.data);
     } catch (err) {
       console.log(err);
@@ -1075,6 +1086,35 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               <div style={{ display: "flex", alignItems: "center" }}>
                 <IcoACtiveBlue style={{ marginRight: "var(--space-a)" }} />
                 <p className="font-type-menu">Run Selected Jobs</p>
+              </div>
+            </button>
+          </>
+        )}
+        {visblePage === "alerts" && (
+          <>
+            <div
+              className="Bg-Grey2"
+              style={{ width: "100%", height: "2px", borderRadius: "5px" }}
+            />
+            <button
+              className="btn-type2"
+              onClick={async () => {
+                console.log("Turn ON Alerts");
+                const res = await axios.post(
+                  `${backEndURL}/Alerts/UpdateAlertState`,
+                  {
+                    bool: !TurnOnAlerts,
+                  }
+                );
+                setTurnOnAlerts(!TurnOnAlerts);
+              }}
+              style={{ width: "100%", paddingLeft: "var(--space-a)" }}
+            >
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <IcoACtiveBlue style={{ marginRight: "var(--space-a)" }} />
+                <p className="font-type-menu">
+                   {TurnOnAlerts ? "Disable" : "Enable"} Timestomping Alerts
+                </p>
               </div>
             </button>
           </>

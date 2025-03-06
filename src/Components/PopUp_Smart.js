@@ -366,7 +366,7 @@ export const PopUp_Alert_info = (props) => {
 
   const [active, setActive] = useState(false);
   const [AlertColors, set_AlertColors] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [IsCollapseMetaDataOpen, setISCollapseMetaDataOpen] = useState(false);
   const [open_long_text_key, set_open_long_text_key] = useState("");
   const [download_drop_down, set_download_drop_down] = useState(false);
 
@@ -426,7 +426,6 @@ export const PopUp_Alert_info = (props) => {
         );
         GetData();
       }
-      setIsDropdownOpen(false);
       set_popUp_show(false);
     } catch (error) {
       console.log(error, " Error In Select Status");
@@ -452,20 +451,25 @@ export const PopUp_Alert_info = (props) => {
     }
   };
 
-  const keyStyle = { width: "130px", minWidth: "130px" };
+  const keyStyle = {
+    width: "250px",
+    textOverflow: "ellipsis",
+    overflowX: "hidden",
+  };
 
   const LineStyle = {
     // maxHeight: "20px",
     display: "flex",
     transition: "height 0.3s ease",
     marginTop: "calc(var(--space-a)/1 )",
+    textOverflow: "ellipsis",
   };
 
   const LineStyleOpen = {
     maxHeight: "1110px",
   };
 
-  const maxCharacters = 85;
+  const maxCharacters = 69;
 
   const firstValueStayle = {
     // width:"100%",
@@ -550,156 +554,269 @@ export const PopUp_Alert_info = (props) => {
               </div>
             </div>
 
-            <div
-              style={{
-                height: "36px",
-                marginBottom: "var(--space-c)",
-              }}
-            >
-              <div
-                style={{
-                  // backgroundColor:"yellow",
-                  height: "100%",
-                  display: "flex",
-                }}
-              >
-                <p
-                  className="font-type-menu reading-height  Color-White"
-                  style={{
-                    ...keyStyle,
-                    marginTop: "auto",
-                    marginBottom: "auto",
-                  }}
-                >
-                  {" "}
-                  Status:
-                </p>
-
-                <div style={{}}>
-                  <div
-                    className="btn-menu-list"
-                    onMouseLeave={() => set_download_drop_down(false)}
-                    //  onMouseEnter={()=>set_download_drop_down(true)}
+            {IsCollapseMetaDataOpen ? (
+              <div>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
                     style={{
-                      marginLeft: "-13px",
-                      width: "auto",
-                      position: "absolute",
-                      zIndex: 1000,
-                      // backgroundColor:"green"
+                      ...keyStyle,
                     }}
                   >
-                    <button
-                      className={`btn-menu  ${
-                        download_drop_down ? "btn_look_hover" : ""
-                      } `}
-                      onClick={handle_download_drop_down}
-                    >
-                      <div className="display-flex">
-                        {/* <IcoEdit className="btn-menu-icon-placeholder  mr-a " /> */}
+                    Metadata
+                  </p>{" "}
+                  <button
+                    className="btn-type3 "
+                    onClick={() => {
+                      setISCollapseMetaDataOpen(false);
+                    }}
+                    style={{
+                      height: "12px",
+                      // marginLeft: "auto",
+                      // marginBottom: "auto",
+                      // marginTop: "auto",
+                      padding: 0,
+                    }}
+                  >
+                    <p className=" font-type-txt">Collapse</p>
+                    <IconCloseReadMore
+                      className="icon-type1 "
+                      style={{ height: "24px" }}
+                    />{" "}
+                  </button>
+                </div>
 
-                        <p className="font-type-menu ml-b">
-                          {" "}
-                          {Info.UserInput?.Status}
-                        </p>
-                      </div>
+                <div
+                  style={{
+                    height: "36px",
+                    marginBottom: "var(--space-c)",
+                  }}
+                >
+                  <div
+                    style={{
+                      // backgroundColor:"yellow",
+                      height: "100%",
+                      display: "flex",
+                    }}
+                  >
+                    <p
+                      className="font-type-menu reading-height  Color-White"
+                      style={{
+                        ...keyStyle,
+                        marginTop: "auto",
+                        marginBottom: "auto",
+                      }}
+                    >
+                      {" "}
+                      Status:
+                    </p>
+
+                    <div style={{}}>
                       <div
-                        className="btn-menu-icon-placeholder  "
+                        className="btn-menu-list"
+                        onMouseLeave={() => set_download_drop_down(false)}
+                        //  onMouseEnter={()=>set_download_drop_down(true)}
                         style={{
-                          justifyContent: "flex-start",
-                          backgroundColor: "",
-                          marginLeft: "5px",
-                          marginRight: "auto",
+                          marginLeft: "-13px",
+                          width: "auto",
+                          position: "absolute",
+                          zIndex: 1000,
+                          // backgroundColor:"green"
                         }}
                       >
-                        <IcoEdit className="btn-menu-icon-placeholder " />
-                      </div>
-                    </button>
+                        <button
+                          className={`btn-menu  ${
+                            download_drop_down ? "btn_look_hover" : ""
+                          } `}
+                          onClick={handle_download_drop_down}
+                        >
+                          <div className="display-flex">
+                            {/* <IcoEdit className="btn-menu-icon-placeholder  mr-a " /> */}
 
-                    {/* fix */}
-                    <div
-                      className={`dropdown-menu ${
-                        download_drop_down ? "open" : ""
-                      }`}
-                    >
-                      {StatusTags.map((y) => {
-                        if (y == Info.UserInput?.Status) return;
-                        return (
-                          <button
-                            className="btn-menu"
-                            onClick={() => SelectDropHandle(y)}
+                            <p className="font-type-menu ml-b">
+                              {" "}
+                              {Info.UserInput?.Status}
+                            </p>
+                          </div>
+                          <div
+                            className="btn-menu-icon-placeholder  "
+                            style={{
+                              justifyContent: "flex-start",
+                              backgroundColor: "",
+                              marginLeft: "5px",
+                              marginRight: "auto",
+                            }}
                           >
-                            <div className="display-flex">
-                              {/* <IcoEdit  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} /> */}
-                              <p className="font-type-menu ml-b">{y}</p>
-                            </div>
+                            <IcoEdit className="btn-menu-icon-placeholder " />
+                          </div>
+                        </button>
 
-                            <div className="btn-menu-icon-placeholder  ">
-                              <IcoEdit
-                                className="btn-menu-icon-placeholder  mr-a "
-                                style={{ visibility: "hidden" }}
-                              />
-                              {/*  <MenuArrowDown  />*/}{" "}
-                            </div>
-                          </button>
-                        );
-                      })}
+                        {/* fix */}
+                        <div
+                          className={`dropdown-menu ${
+                            download_drop_down ? "open" : ""
+                          }`}
+                        >
+                          {StatusTags.map((y) => {
+                            if (y == Info.UserInput?.Status) return;
+                            return (
+                              <button
+                                className="btn-menu"
+                                onClick={() => SelectDropHandle(y)}
+                              >
+                                <div className="display-flex">
+                                  {/* <IcoEdit  className="btn-menu-icon-placeholder  mr-a "  style={{ visibility: "hidden" }} /> */}
+                                  <p className="font-type-menu ml-b">{y}</p>
+                                </div>
+
+                                <div className="btn-menu-icon-placeholder  ">
+                                  <IcoEdit
+                                    className="btn-menu-icon-placeholder  mr-a "
+                                    style={{ visibility: "hidden" }}
+                                  />
+                                  {/*  <MenuArrowDown  />*/}{" "}
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <div style={LineStyle}>
-              <p
-                className="font-type-menu reading-height  Color-White"
-                style={keyStyle}
-              >
-                Artifact:
-              </p>
-              <p
-                className="font-type-txt  reading-height Color-Grey1  "
-                style={firstValueStayle}
-              >
-                {Info?.Artifact}
-              </p>
-            </div>
+                {/* <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    AlertID:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info?.AlertID}
+                  </p>
+                </div> */}
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    Alert Name:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info?.Artifact}
+                  </p>
+                </div>
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    Simple Name:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info?.SimpleName}
+                  </p>
+                </div>
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    Description:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info?.Description}
+                  </p>
+                </div>
 
-            {/* <div style={LineStyle} >
+                {/* <div style={LineStyle} >
                   <p className="font-type-menu reading-height  Color-White" style={keyStyle}         >Time:</p>
                   <p className="font-type-txt  reading-height Color-Grey1  " style={firstValueStayle}>{format_date_type_a(Info?._ts)}</p>
                   </div> */}
 
-            <div style={LineStyle}>
-              <p
-                className="font-type-menu reading-height  Color-White"
-                style={keyStyle}
-              >
-                {" "}
-                User Change:
-              </p>
-              <p
-                className="font-type-txt  reading-height Color-Grey1  "
-                style={firstValueStayle}
-              >
-                {Info.UserInput?.UserId}
-              </p>
-            </div>
+                <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    {" "}
+                    Owner:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {Info.UserInput?.UserId}
+                  </p>
+                </div>
 
-            <div style={LineStyle}>
-              <p
-                className="font-type-menu reading-height  Color-White"
-                style={keyStyle}
-              >
-                {" "}
-                Changed At:
-              </p>
-              <p
-                className="font-type-txt  reading-height Color-Grey1  "
-                style={firstValueStayle}
-              >
-                {format_date_type_a(Info.UserInput?.ChangedAt)}
-              </p>
-            </div>
+                {/* <div style={LineStyle}>
+                  <p
+                    className="font-type-menu reading-height  Color-White"
+                    style={keyStyle}
+                  >
+                    {" "}
+                    StatusChangedAt:
+                  </p>
+                  <p
+                    className="font-type-txt  reading-height Color-Grey1  "
+                    style={firstValueStayle}
+                  >
+                    {format_date_type_a(Info.UserInput?.ChangedAt)}
+                  </p>
+                </div> */}
+
+                <p
+                  className="font-type-txt  reading-height Color-Grey1  "
+                  style={firstValueStayle}
+                >
+                  ----------------------------------------------------------------------------------------
+                </p>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <p
+                  className="font-type-menu reading-height  Color-White"
+                  style={{
+                    ...keyStyle,
+                  }}
+                >
+                  Meta Data
+                </p>{" "}
+                <button
+                  className="btn-type3 "
+                  onClick={() => {
+                    setISCollapseMetaDataOpen(true);
+                  }}
+                  style={{
+                    height: "12px",
+                    // marginLeft: "auto",
+                    // marginBottom: "auto",
+                    // marginTop: "auto",
+                    padding: 0,
+                  }}
+                >
+                  <p className=" font-type-txt">Expand</p>
+                  <IconOpenReadMore
+                    className="icon-type1 "
+                    style={{ height: "24px" }}
+                  />{" "}
+                </button>
+              </div>
+            )}
 
             {Object.keys(Info).map((key) => {
               if (
@@ -709,6 +826,9 @@ export const PopUp_Alert_info = (props) => {
                   "Artifact",
                   "buttonTitle",
                   "Show",
+                  "AlertID",
+                  "Description",
+                  "SimpleName",
                 ].includes(key)
               ) {
                 return;
@@ -738,7 +858,7 @@ export const PopUp_Alert_info = (props) => {
                     style={{
                       height: " ",
                       display: "flex",
-                      width: "100%",
+                      // width: "100%",
                       flexDirection: "row",
                     }}
                   >

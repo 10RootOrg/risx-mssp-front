@@ -251,7 +251,7 @@ function Alert_list({
             </div>
             <div
               className="resource-group-list-item   list-item-big ml-b"
-              onClick={() => do_sort("ClientName")}
+              onClick={() => do_sort("Client FQDN")}
             >
               {" "}
               <p className="font-type-menu  make-underline Color-Grey1 ">
@@ -319,7 +319,7 @@ function Alert_list({
                       {format_date_type_a(Info?.["_ts"])}
                     </p>
                     <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-big  ml-c">
-                      {Info?.ClientName}
+                      {Info?.["Client FQDN"]}
                     </p>
                     <p className="resource-group-list-item    font-type-txt   Color-Grey1  list-item-small ">
                       {Info?.UserInput?.Status}
