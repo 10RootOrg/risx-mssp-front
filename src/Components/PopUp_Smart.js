@@ -194,6 +194,7 @@ export const PopUp_Mod_Tags = (props) => {
   const [NewTagName, setNewTagName] = useState("");
   const [TagsArray, SetTagsArray] = useState([]);
   const [UpdaterThing, SetUpdaterThing] = useState(false);
+  const [AlreadyExistsError, setAlreadyExistsError] = useState(false);
 
   useEffect(() => {
     set_popUp_show(popUp_show);
@@ -215,6 +216,8 @@ export const PopUp_Mod_Tags = (props) => {
 
   function handleClose() {
     setActive(false); // Trigger exit animation
+    setAlreadyExistsError(false);
+    setNewTagName("");
     setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
   }
 
@@ -222,22 +225,24 @@ export const PopUp_Mod_Tags = (props) => {
     try {
       console.log("HandleAddTag Start");
       if (NewTagName.trim() == "") {
+        setAlreadyExistsError("Empty");
         console.log("Cant add an empty string");
         return;
       }
       if (
         ModObj?.tags?.some((xArrTem) =>
-          xArrTem?.toLowerCase()?.includes(NewTagName)
+          xArrTem?.toLowerCase()?.includes(NewTagName.trim())
         )
       ) {
+        setAlreadyExistsError("Exits");
         console.log("Cant Add Tag Already Exists");
         return;
       }
       const res = await axios.post(`${backEndURL}/Resources/AddTagToResource`, {
         id: ModObj.id,
-        tag: NewTagName,
+        tag: NewTagName.trim(),
       });
-      ModObj?.tags?.push(NewTagName);
+      ModObj?.tags?.push(NewTagName.trim());
       setNewTagName("");
       SetTagsArray(ModObj?.tags);
     } catch (err) {
@@ -318,6 +323,14 @@ export const PopUp_Mod_Tags = (props) => {
                 </p>
               ))}
             </div>
+            {AlreadyExistsError &&
+              (AlreadyExistsError === "Empty" ? (
+                <p style={{ color: "var(--color-Red)" }}>Cant Add Empty Tag</p>
+              ) : (
+                <p style={{ color: "var(--color-Red)" }}>
+                  Tag Already Assigned To This Module
+                </p>
+              ))}
             <p className="font-type-h4 Color-White mb-a">
               Add Tag For {ModObj?.name}
             </p>
@@ -325,7 +338,12 @@ export const PopUp_Mod_Tags = (props) => {
               className="input-type1 search_filter "
               placeholder="Tag Name"
               value={NewTagName}
-              onChange={(e) => setNewTagName(e.target.value)}
+              onChange={(e) => {
+                if (AlreadyExistsError) {
+                  setAlreadyExistsError(false);
+                }
+                setNewTagName(e.target.value);
+              }}
             />
             <div className="display-flex mt-c" style={{}}>
               <button

@@ -83,6 +83,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
   const [Dashboards_drop_down, set_Dashboards_drop_down] = useState(false);
   const [VeloDropDownStepOne, setVeloDropDownStepOne] = useState(false);
   const [DownloadAllAgentsDrop, setDownloadAllAgentsDrop] = useState(false);
+  const [DropDownAlerts, setDropDownAlerts] = useState(false);
 
   const [object, setObject] = useState({});
   const [VelociraptorCollectorsList, setVelociraptorCollectorsList] = useState(
@@ -745,24 +746,80 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               {/*  <MenuArrowDown  />*/}
             </div>
           </button>
-          <button
-            className="btn-menu  "
-            onClick={() => handleClick("Alerts")}
-            // onClick={() => handleClickComingSoon("Alerts")}
-            disabled={visblePage === "Alerts"}
-          >
-            <div className="display-flex">
-              <IconAlert className="btn-menu-icon-placeholder  mr-a " />
-              <p className="font-type-menu ">Alerts</p>
 
-              {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
-              {/* <div
+          <div
+            onMouseLeave={() => {
+              setDropDownAlerts(false);
+            }}
+            onMouseEnter={() => {
+              setDropDownAlerts(true);
+            }}
+          >
+            <button
+              className="btn-menu  "
+              onClick={() => handleClick("Alerts")}
+              // onClick={() => handleClickComingSoon("Alerts")}
+              disabled={visblePage === "Alerts"}
+            >
+              <div className="display-flex">
+                <IconAlert className="btn-menu-icon-placeholder  mr-a " />
+                <p className="font-type-menu ">Alerts</p>
+
+                {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
+                {/* <div
               className={`Bg-Red  light-bulb-type2 `}
               style={{ marginLeft: "2px", marginBottom: "12px" }}
             /> */}
+              </div>
+              <div className="btn-menu-icon-placeholder  "> </div>
+            </button>
+
+            <div className={`dropdown-menu ${DropDownAlerts ? "open" : ""}`}>
+              {" "}
+              <button
+                className="btn-menu  "
+                onClick={() => handleClick("Alerts")}
+                // onClick={() => handleClickComingSoon("Alerts")}
+                disabled={visblePage === "Alerts"}
+              >
+                <div className="display-flex">
+                  <IconAlert
+                    className="btn-menu-icon-placeholder  mr-a "
+                    style={{ visibility: "hidden" }}
+                  />
+                  <p className="font-type-menu ">Dashboard</p>
+
+                  {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
+                  {/* <div
+              className={`Bg-Red  light-bulb-type2 `}
+              style={{ marginLeft: "2px", marginBottom: "12px" }}
+            /> */}
+                </div>
+                <div className="btn-menu-icon-placeholder  "> </div>
+              </button>
+              <button
+                className="btn-menu  "
+                onClick={() => handleClick("alertsSettings")}
+                // onClick={() => handleClickComingSoon("Alerts")}
+                disabled={visblePage === "Alerts"}
+              >
+                <div className="display-flex">
+                  <IconAlert
+                    className="btn-menu-icon-placeholder  mr-a "
+                    style={{ visibility: "hidden" }}
+                  />
+                  <p className="font-type-menu ">Settings</p>
+
+                  {/* <div className="notification"><p className="font-type-very-sml-txt   Color-White">{unseen_alert_number ||  unseen_alert_number != 0 &&   unseen_alert_number}</p></div> */}
+                  {/* <div
+              className={`Bg-Red  light-bulb-type2 `}
+              style={{ marginLeft: "2px", marginBottom: "12px" }}
+            /> */}
+                </div>
+                <div className="btn-menu-icon-placeholder  "> </div>
+              </button>
             </div>
-            <div className="btn-menu-icon-placeholder  "> </div>
-          </button>
+          </div>
 
           {/* <button
             className="btn-menu  "
@@ -1113,7 +1170,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               <div style={{ display: "flex", alignItems: "center" }}>
                 <IcoACtiveBlue style={{ marginRight: "var(--space-a)" }} />
                 <p className="font-type-menu">
-                   {TurnOnAlerts ? "Disable" : "Enable"} Timestomping Alerts
+                  {TurnOnAlerts ? "Disable" : "Enable"} Timestomping Alerts
                 </p>
               </div>
             </button>

@@ -30,6 +30,7 @@ import NoPage404 from "./Pages/NoPage404";
 
 import Constantfunctions from "./Constantfunctions/Constantfunctions";
 import VeloConfigMain from "./Components/VeloConfig/VeloConfigMain";
+import { AlertsSettings } from "./Components/Alerts/Alert_Settings";
 
 export default function App() {
   const [visblePage, set_visblePage] = useState(
@@ -115,6 +116,17 @@ export default function App() {
                 path="alerts"
                 element={
                   <Alerts
+                    show_SideBar={show_SideBar}
+                    set_show_SideBar={set_show_SideBar}
+                    set_visblePage={set_visblePage}
+                    unseen_alert_number={unseen_alert_number}
+                  />
+                }
+              />
+              <Route
+                path="alertsSettings"
+                element={
+                  <AlertsSettings
                     show_SideBar={show_SideBar}
                     set_show_SideBar={set_show_SideBar}
                     set_visblePage={set_visblePage}

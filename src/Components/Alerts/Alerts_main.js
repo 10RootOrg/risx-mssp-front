@@ -156,14 +156,14 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
     let IntervalAlerts;
     if (backEndURL) {
       GetData();
-      IntervalAlerts = setInterval(() => {
-        console.log("inttttttttttttttttttt");
-        const a = async () => {
-          await GetData();
-          setIntervalUpdate(true);
-        };
-        a();
-      }, 1000 * 60);
+      // IntervalAlerts = setInterval(() => {
+      //   console.log("inttttttttttttttttttt");
+      //   const a = async () => {
+      //     await GetData();
+      //     setIntervalUpdate(true);
+      //   };
+      //   a();
+      // }, 1000 * 60);
     }
     return () => {
       console.log(IntervalAlerts, "enqkjnrkq");
