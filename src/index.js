@@ -123,7 +123,7 @@ export default function App() {
                   />
                 }
               />
-              <Route
+              {/* <Route
                 path="alertsSettings"
                 element={
                   <AlertsSettings
@@ -133,7 +133,7 @@ export default function App() {
                     unseen_alert_number={unseen_alert_number}
                   />
                 }
-              />
+              /> */}
               <Route
                 path="users"
                 element={

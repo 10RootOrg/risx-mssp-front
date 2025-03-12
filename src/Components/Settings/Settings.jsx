@@ -19,6 +19,7 @@ import Settings_Menu from "./Settings_Menu.jsx";
 
 import GeneralContext from "../../Context.js";
 import VeloConfigMain from "../VeloConfig/VeloConfigMain";
+import { AlertsSettings } from "../Alerts/Alert_Settings.jsx";
 
 function Settings({
   show_SideBar,
@@ -173,7 +174,7 @@ function Settings({
 
         <div className="resource-group-top-boxes mb-c"></div>
 
-        <div className="mb-d">
+        <div className="mb-c">
           <Settings_Menu
             Preview_This_in_menu={Preview_This_in_menu}
             Preview_This_comp={Preview_This_comp}
@@ -282,6 +283,7 @@ function Settings({
 
           {Preview_This_comp == "Users" && <Users />}
           {Preview_This_comp == "Velociraptor" && <VeloConfigMain />}
+          {Preview_This_comp == "Alerts" && <AlertsSettings />}
         </div>
       </div>
     </>

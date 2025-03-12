@@ -62,6 +62,11 @@ function Settings_Menu({
       is_nasted: false,
     },
     {
+      preview_name: "Alerts",
+      value: "Alerts",
+      is_nasted: false,
+    },
+    {
       preview_name: "Logs",
       value: "Logs",
       is_nasted: true,

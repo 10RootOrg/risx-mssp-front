@@ -26,13 +26,7 @@ import {
 import LMloader from "../Features/LMloader.svg";
 import { AlertsMenu } from "./Alerts_Menu.jsx";
 //  import './Dashboard_Results_all.css'
-export function AlertsSettings({
-  show_SideBar,
-  set_show_SideBar,
-  set_visblePage,
-}) {
-  set_visblePage("alertsSettings");
-
+export function AlertsSettings({}) {
   const { backEndURL, all_Tools, front_IP } = useContext(GeneralContext);
 
   const [Preview_This_in_menu, set_Preview_This_in_menu] = useState("");
@@ -133,11 +127,6 @@ export function AlertsSettings({
   };
 
   useEffect(() => {
-    if (show_SideBar === false) {
-      set_show_SideBar(true);
-    }
-  }, []);
-  useEffect(() => {
     if (backEndURL) {
       GetAlertsConfig("");
     }
@@ -208,6 +197,23 @@ export function AlertsSettings({
     }
   };
 
+  const HandleRefreshAllTags = async (name) => {
+    try {
+      console.log("flip", name);
+      set_config_save_btn(false);
+
+      // GetAlertsConfig(ActiveAlertConfig?.label);
+    } catch (error) {
+      console.log("this is error in HandleMenuSwitch");
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error",
+        paragraph: "Error Happened While Switching Configs",
+        buttonTitle: "Close",
+      });
+    }
+  };
+
   const HandleSaveAlertConfig = async (id) => {
     try {
       if (!ActiveAlertConfig?.label) {
@@ -250,7 +256,7 @@ export function AlertsSettings({
   };
   return (
     <div
-      className="app-main"
+      // className="app-main"
       style={
         {
           // flexDirection:"row"
@@ -275,16 +281,7 @@ export function AlertsSettings({
           buttonTitle={PopUp_Error____txt.buttonTitle}
         />
       )}
-      <div className="top-of-page">
-        <div className="top-of-page-left mb-b">
-          {/* <p  className="font-type-menu" >Dashboards:</p> */}
-          <p className="font-type-h3">Alerts</p>
-        </div>
-        <div className="top-of-page-center">
-          {/* placeholder for dropDown */}
-        </div>
-      </div>{" "}
-      <div className="resource-group-top-boxes mb-c"></div>
+
       <AlertsMenu
         Preview_This_in_menu={Preview_This_in_menu}
         handle_Click_Btn={HandleMenuSwitch}
@@ -315,6 +312,13 @@ export function AlertsSettings({
                   onClick={HandleAllAlerts}
                 >
                   <p className="font-type-menu ">See All Alerts</p>
+                </button>
+                <button
+                  className="btn-type2"
+                  style={{ marginTop: 15 }}
+                  onClick={HandleRefreshAllTags}
+                >
+                  <p className="font-type-menu ">Refresh Tags</p>
                 </button>
               </td>
 
