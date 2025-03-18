@@ -717,8 +717,21 @@ const SideBar = ({ visblePage, set_visblePage }) => {
 
                   <p className="font-type-menu ">Active Directory</p>
                 </div>
-
               </button> */}
+
+              <button
+                className="btn-menu dropdown-menu-btn"
+                onClick={() =>
+                  handleClick("dashboard-vulnerability-management")
+                }
+                disabled={
+                  visblePage === "dashboard-vulnerability-management"
+                }
+              >
+                <div className="display-flex">
+                  <p className="font-type-menu ">Vulnerability Management</p>
+                </div>
+              </button>
             </div>
           </div>
 
@@ -773,8 +786,6 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               </div>
               <div className="btn-menu-icon-placeholder  "> </div>
             </button>
-
- 
           </div>
 
           {/* <button
@@ -1103,7 +1114,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             </button>
           </>
         )}
-        {visblePage === "alerts" && (
+        {/* {visblePage === "alerts" && (
           <>
             <div
               className="Bg-Grey2"
@@ -1131,7 +1142,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               </div>
             </button>
           </>
-        )}
+        )} */}
 
         {Object.keys(DownloadProgressBar).length > 0 && (
           <>

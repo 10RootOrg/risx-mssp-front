@@ -31,6 +31,7 @@ import NoPage404 from "./Pages/NoPage404";
 import Constantfunctions from "./Constantfunctions/Constantfunctions";
 import VeloConfigMain from "./Components/VeloConfig/VeloConfigMain";
 import { AlertsSettings } from "./Components/Alerts/Alert_Settings";
+import Dashboard_AI_Vunre from "./Components/Dashboards/Dashboard_AI_Vunre";
 
 export default function App() {
   const [visblePage, set_visblePage] = useState(
@@ -170,6 +171,17 @@ export default function App() {
                 path="dashboard-threat-hunting"
                 element={
                   <Dashboard_Threat_Hunting
+                    show_SideBar={show_SideBar}
+                    set_show_SideBar={set_show_SideBar}
+                    set_visblePage={set_visblePage}
+                    visblePage={visblePage}
+                  />
+                }
+              />
+              <Route
+                path="dashboard-vulnerability-management"
+                element={
+                  <Dashboard_AI_Vunre
                     show_SideBar={show_SideBar}
                     set_show_SideBar={set_show_SideBar}
                     set_visblePage={set_visblePage}

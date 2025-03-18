@@ -120,6 +120,11 @@
       "toolName": "Asset Rest Dashboard",
       "toolURL": "https://${FRONT_URL}/kibana/app/dashboards#/view/3bdbcc4d-3bfd-4398-9e03-6f849a4916ff?embed=true&_g=(refreshInterval:(pause:!t,value:60000),time:(from:now-15M,to:now))&_a=()",
       "URLtype": "Dashboard"
+    },
+    {
+      "toolName": "AI vulnerability Dashboard",
+      "toolURL": "https://${FRONT_URL}/kibana/app/dashboards#/view/9cfc66ca-7e2a-43ce-a2b3-bd0c92110780?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15y%2Cto%3Anow))&show-time-filter=true",
+      "URLtype": "Dashboard"
     }
   ]
 }

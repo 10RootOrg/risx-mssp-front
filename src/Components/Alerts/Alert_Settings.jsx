@@ -184,6 +184,7 @@ export function AlertsSettings({}) {
     try {
       console.log("flip", name);
       set_config_save_btn(false);
+      set_preview_or_edit(!preview_or_edit);
 
       GetAlertsConfig(name);
     } catch (error) {
@@ -311,14 +312,14 @@ export function AlertsSettings({}) {
                   style={{ marginTop: 15 }}
                   onClick={HandleAllAlerts}
                 >
-                  <p className="font-type-menu ">See All Alerts</p>
+                  <p className="font-type-menu ">Available Rules</p>
                 </button>
                 <button
                   className="btn-type2"
                   style={{ marginTop: 15 }}
                   onClick={HandleRefreshAllTags}
                 >
-                  <p className="font-type-menu ">Refresh Tags</p>
+                  <p className="font-type-menu ">Reload Labels</p>
                 </button>
               </td>
 
@@ -468,3 +469,5 @@ export function AlertsSettings({}) {
     </div>
   );
 }
+
+// "Custom.10Root.Timestomping.Scenario"

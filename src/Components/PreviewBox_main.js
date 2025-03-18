@@ -683,12 +683,14 @@ function PreviewBoxes_main_modules({
                         </td>
                         <td className="" style={{ width: "108px" }}>
                           <div
-                            style={{ display: "flex", alignItems: "center" }}
+                            style={{ display: "flex", alignItems: "center",justifyContent:"center" }}
                           >
                             <img
                               className="logo-cell  "
                               style={{
-                                width: "108px",
+                                width: Info?.logoAddress_1.includes("ChatGpt")
+                                  ? "108px"
+                                  : "108px",
                                 height: "100%",
                                 maxHeight: "40px",
                                 marginRight: "5px",
