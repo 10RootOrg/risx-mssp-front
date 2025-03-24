@@ -1951,7 +1951,8 @@ export const PopUp_Confirm_Run_selected = (props) => {
   } = props;
   const [active, setActive] = useState(false);
   const [disable_buttons, set_disable_buttons] = useState(false);
-  const { all_artifacts, all_Tools, backEndURL } = useContext(GeneralContext);
+  const { all_artifacts, all_Tools, backEndURL, GetAllToolAndArtifactFunc } =
+    useContext(GeneralContext);
   const [allow_continue, set_allow_continue] = useState(false);
   const [object, setObject] = useState({});
 
@@ -1973,6 +1974,8 @@ export const PopUp_Confirm_Run_selected = (props) => {
 
   useEffect(() => {
     if (popUp_show) {
+      GetAllToolAndArtifactFunc();
+
       setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
     }
   }, [popUp_show]);

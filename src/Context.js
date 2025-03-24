@@ -106,6 +106,44 @@ export function ContextProvider({ children }) {
       }
     }
   };
+  const get_all_artifacts = async () => {
+    try {
+      console.log("backEndURL:::", backEndURL);
+      // set_loader(true)
+      const res = await axios.get(
+        `${backEndURL}/tools/all-velociraptor_artifacts`
+      );
+      if (res) {
+        // console.log("get_all_artifacts res.data:" , res.data);
+
+        res?.data?.forEach((x) => {
+          switch (x?.toolURL) {
+            case "Threat Hunting":
+              x.toolURL = moduleLinks?.filter(
+                (yy) => yy?.toolName == "Threat Hunting Dashboard"
+              )[0]?.toolURL;
+              break;
+            case "All Around":
+              x.toolURL = moduleLinks?.filter(
+                (yy) => yy?.toolName == "Best Practice Dashboard"
+              )[0]?.toolURL;
+
+              break;
+          }
+        });
+
+        set_all_artifacts(res.data);
+      }
+    } catch (err) {
+      // set_loader(false)
+      console.log(err);
+    }
+  };
+
+  const GetAllToolAndArtifactFunc = async () => {
+    get_all_tools();
+    get_all_artifacts();
+  };
 
   const get_all_resource_types = async () => {
     if (backEndURL === null || backEndURL === undefined || backEndURL == "") {
@@ -193,6 +231,7 @@ export function ContextProvider({ children }) {
   return (
     <GeneralContext.Provider
       value={{
+        GetAllToolAndArtifactFunc,
         UpdateSideBar,
         setUpdateSideBar,
         DownloadList,

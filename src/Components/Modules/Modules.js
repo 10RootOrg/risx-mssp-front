@@ -200,7 +200,6 @@ function Modules({
                   all_artifacts_and_modules={all_artifacts_and_modules}
                   set_all_artifacts_and_modules={set_all_artifacts_and_modules}
                   ShowAssets={true}
-
                 />
               </>
             )}
