@@ -40,7 +40,7 @@ function Results_list({
   set_Preview_this_Results,
   loader,
 }) {
-  const { backEndURL, all_Tools, front_IP, front_URL } =
+  const { backEndURL, all_Tools, front_IP, front_URL, mssp_config_json } =
     useContext(GeneralContext);
 
   const [checked_items, set_checked_items] = useState([]);
@@ -482,7 +482,49 @@ function Results_list({
         get_Json_single_response(Info);
         break;
 
+      case "Kape":
+        console.log("Kape");
+        const moduleLinks1 = Array.isArray(mssp_config_json?.moduleLinks)
+          ? mssp_config_json.moduleLinks
+          : [];
+        const VeloURL = moduleLinks1.find(
+          (link) => link.toolName === "Velociraptor"
+        )?.toolURL;
+        const fixed_path1 = fix_path(VeloURL, front_IP, front_URL);
+        if (fixed_path1) {
+          console.log("AI Vulnerability Management: ", fixed_path1);
+          window.open(fixed_path1, "_blank");
+        } else {
+          console.log(
+            "problem with AI Vulnerability Management path, it is:",
+            fixed_path1
+          );
+        }
+        break;
+
+      case "AI Vulnerability Management":
+        console.log("AI Vulnerability Management");
+        const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks)
+          ? mssp_config_json.moduleLinks
+          : [];
+        const threatHuntingURL = moduleLinks.find(
+          (link) => link.toolName === "AI vulnerability Dashboard"
+        )?.toolURL;
+        const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);
+        if (fixed_path) {
+          console.log("AI Vulnerability Management: ", fixed_path);
+          window.open(fixed_path, "_blank");
+        } else {
+          console.log(
+            "problem with AI Vulnerability Management path, it is:",
+            fixed_path
+          );
+        }
+
+        break;
+
       default:
+        console.log("Unknown Mod ", Info);
     }
   };
 
