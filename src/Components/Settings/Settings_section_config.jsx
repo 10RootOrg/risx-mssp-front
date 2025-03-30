@@ -91,6 +91,14 @@ function Settings_section_config({
 
   const [object, setObject] = useState(initialObject);
   const [ErrString, setErrString] = useState("");
+  const [editorValue, setEditorValue] = useState("");
+
+  useEffect(() => {
+    if (editorValue) {
+      return;
+    }
+    setEditorValue(JSON.stringify(object, null, 2));
+  }, [object]);
 
   console.log("object", object);
   const Handele_are_you_sure = () => {
@@ -164,6 +172,7 @@ function Settings_section_config({
     // handleTextAreaChange();
     set_config_save_btn(false);
     set_preview_or_edit(true);
+    setEditorValue("");
     const save_config = async () => {
       console.log("save_config..");
       try {
@@ -228,6 +237,8 @@ function Settings_section_config({
   const handle_view_or_edit = () => {
     set_config_save_btn(false);
     set_preview_or_edit(!preview_or_edit);
+    setErrString(false);
+    setEditorValue("");
     get_config();
   };
 
@@ -471,7 +482,11 @@ function Settings_section_config({
 
               <td
                 className="setting_element PreviewBox"
-                style={{ height: "auto", width: "68.5vw" }}
+                style={{
+                  height: "auto",
+                  width: "68.5vw",
+                  paddingBottom: ErrString ? 50 : 5,
+                }}
               >
                 <div className=" ">
                   {preview_or_edit ? (
@@ -497,9 +512,10 @@ function Settings_section_config({
                             backgroundColor: "var(--color-Orange)",
                             color: "#FFFFFF",
                             opacity: 0.7,
-                            position: "absolute",
+                            position: "relative",
                             zIndex: 5555555,
                             padding: 10,
+                            // top: -10,
                           }}
                         >
                           {ErrString}
@@ -507,17 +523,16 @@ function Settings_section_config({
                       )}
 
                       <CodeMirror
-                        value={JSON.stringify(object, null, 2)}
+                        value={editorValue}
                         height="600px"
-                        // width="100%"
-                        // maxWidth="auto"
-
-                        onChange={async (x) => {
+                        onChange={(value) => {
                           try {
-                            console.log("flip", JSON.parse(x));
-                            set_config_save_btn(true);
-                            setObject(JSON.parse(x));
+                            setEditorValue(value);
+                            console.log("flip", JSON.parse(value));
+                            const parsed = JSON.parse(value);
+                            setObject(parsed);
                             setErrString("");
+                            set_config_save_btn(true);
                           } catch (error) {
                             set_config_save_btn(false);
                             setErrString(error.toString());
@@ -525,8 +540,7 @@ function Settings_section_config({
                           }
                         }}
                         extensions={[json()]}
-                        theme={myTheme} // Custom Style For The Editor
-                        // theme={vscodeDark} // Pre made style for the editor
+                        theme={myTheme}
                         highlightActiveLine={true}
                       />
                     </>
@@ -553,6 +567,17 @@ function Settings_section_config({
                     {preview_or_edit ? "Edit" : "View"}
                   </p>
                 </button>
+                {!preview_or_edit && (
+                  <button
+                    className="btn-type2"
+                    style={{}}
+                    onClick={() => {
+                      setEditorValue(JSON.stringify(object, null, 2));
+                    }}
+                  >
+                    <p className="font-type-menu ">Format</p>
+                  </button>
+                )}
                 {config_save_btn && (
                   <button
                     className="btn-type2"

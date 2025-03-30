@@ -186,11 +186,9 @@ function Settings({
 
         <div style={{ display: "flex", flexDirection: "column", gap: "45px" }}>
           {Preview_This_comp == "Main Config" && <Settings_section_config />}
-
           {Preview_This_comp == "UI Settings" && (
             <Settings_section_ShowInUi all_Tools={all_Tools} />
           )}
-
           {Preview_This_comp == "Paths" && (
             <>
               <Settings_section_edit_mssp_config_json_paths
@@ -198,7 +196,6 @@ function Settings({
               />
             </>
           )}
-
           {Preview_This_comp == "Automation" && (
             <Settings_section_process
               isMainProcessWork={isMainProcessWork}
@@ -235,9 +232,15 @@ function Settings({
               usethis={"log_collector"}
               fileName={"Collector.log"}
               headline={"Collector Log"}
-              subline={
-                "Log for The Creation and Import OF the On premise velociraptor"
-              }
+              subline={"Log for The Creation OF the On premise velociraptor"}
+            />
+          )}{" "}
+          {Preview_This_comp == "Collector Import Log" && (
+            <Settings_section_logs
+              usethis={"log_collector_import"}
+              fileName={"CollectorImport.log"}
+              headline={"Collector Import Log"}
+              subline={"Log for The Import OF the On premise velociraptor"}
             />
           )}
           {Preview_This_comp == "Alerts Interval Log" && (
@@ -279,8 +282,15 @@ function Settings({
               headline={"Resource Usage"}
               subline={""}
             />
+          )}{" "}
+          {Preview_This_comp == "AiManagement Log" && (
+            <Settings_section_logs
+              usethis={"log_AiManagement"}
+              fileName={"alerts_vuln_cve_managment_helper.log"}
+              headline={"Ai Management"}
+              subline={""}
+            />
           )}
-
           {Preview_This_comp == "Users" && <Users />}
           {Preview_This_comp == "Velociraptor" && <VeloConfigMain />}
           {Preview_This_comp == "Alerts" && <AlertsSettings />}

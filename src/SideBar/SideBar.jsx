@@ -724,9 +724,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
                 onClick={() =>
                   handleClick("dashboard-vulnerability-management")
                 }
-                disabled={
-                  visblePage === "dashboard-vulnerability-management"
-                }
+                disabled={visblePage === "dashboard-vulnerability-management"}
               >
                 <div className="display-flex">
                   <p className="font-type-menu ">Vulnerability Management</p>
@@ -1231,7 +1229,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             style={{ textAlign: "center" }}
             className="font-type-menu  Color-Grey1 "
           >
-            Version : 0.8.6
+            Version : 0.8.7
           </p>
         </div>
       </div>

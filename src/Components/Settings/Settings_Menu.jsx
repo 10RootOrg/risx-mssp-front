@@ -94,6 +94,11 @@ function Settings_Menu({
           value: "Collector Log",
           is_nasted: false,
           father_comp: "Logs",
+        },        {
+          preview_name: "Collector Import",
+          value: "Collector Import Log",
+          is_nasted: false,
+          father_comp: "Logs",
         },
         {
           preview_name: "Alerts",
@@ -122,6 +127,11 @@ function Settings_Menu({
         {
           preview_name: "Resource Usage",
           value: "Resource Usage Log",
+          is_nasted: false,
+          father_comp: "Logs",
+        },      {
+          preview_name: "Ai Management",
+          value: "AiManagement Log",
           is_nasted: false,
           father_comp: "Logs",
         },
