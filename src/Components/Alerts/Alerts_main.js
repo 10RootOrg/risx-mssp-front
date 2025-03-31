@@ -17,7 +17,7 @@ import Alert_list from "./Alerts_list.jsx";
 import { ReactComponent as IconBIG } from "../icons/ico-menu-alert.svg";
 import ResourceGroup_Action_btns from "../ResourceGroup/ResourceGroup_Action_btns.jsx";
 import { ReactComponent as Loader } from "../icons/loader_typea.svg";
-import { PopUp_All_Good, PopUp_Error } from "../PopUp_Smart.js";
+import { PopUp_Alert_info, PopUp_All_Good, PopUp_Error } from "../PopUp_Smart.js";
 
 function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   set_visblePage("alerts");
@@ -57,6 +57,8 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
     paragraph: "",
     buttonTitle: "",
   });
+  const [PopUp_Alert_info__show, set_PopUp_Alert_info__show] = useState(false);
+  const [PopUp_Alert_info__txt, set_PopUp_Alert_info__txt] = useState({});
 
   async function GetData() {
     try {
@@ -156,14 +158,14 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
     let IntervalAlerts;
     if (backEndURL) {
       GetData();
-      // IntervalAlerts = setInterval(() => {
-      //   console.log("inttttttttttttttttttt");
-      //   const a = async () => {
-      //     await GetData();
-      //     setIntervalUpdate(true);
-      //   };
-      //   a();
-      // }, 1000 * 60);
+      IntervalAlerts = setInterval(() => {
+        console.log("inttttttttttttttttttt");
+        const a = async () => {
+          await GetData();
+          setIntervalUpdate(true);
+        };
+        a();
+      }, 1000 * 60);
     }
     return () => {
       console.log(IntervalAlerts, "enqkjnrkq");
@@ -202,6 +204,19 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
           HeadLine={PopUp_Error____txt.HeadLine}
           paragraph={PopUp_Error____txt.paragraph}
           buttonTitle={PopUp_Error____txt.buttonTitle}
+        />
+      )}
+      {PopUp_Alert_info__show && (
+        <PopUp_Alert_info
+          popUp_show={PopUp_Alert_info__show}
+          set_popUp_show={set_PopUp_Alert_info__show}
+          Info={PopUp_Alert_info__txt}
+          backEndURL={backEndURL}
+          GetData={GetData}
+          set_PopUp_All_Good__show={set_PopUp_All_Good__show}
+          set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+          set_PopUp_Error____show={set_PopUp_Error____show}
+          set_PopUp_Error____txt={set_PopUp_Error____txt}
         />
       )}
       <div
@@ -484,6 +499,10 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
                       set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
                       set_PopUp_Error____show={set_PopUp_Error____show}
                       set_PopUp_Error____txt={set_PopUp_Error____txt}
+                      PopUp_Alert_info__show={PopUp_Alert_info__show}
+                      set_PopUp_Alert_info__show={set_PopUp_Alert_info__show}
+                      PopUp_Alert_info__txt={PopUp_Alert_info__txt}
+                      set_PopUp_Alert_info__txt={set_PopUp_Alert_info__txt}
                     />
                   )}
                 </>

@@ -39,6 +39,7 @@ function PreviewBoxes_main_modules({
   all_artifacts_and_modules,
   set_all_artifacts_and_modules,
   ShowAssets = false,
+  setChosenTag,
 }) {
   const StatusColor = "blue";
 
@@ -57,6 +58,7 @@ function PreviewBoxes_main_modules({
     set_all_Tools,
     front_IP,
     front_URL,
+    GetAllToolAndArtifactFunc,
   } = useContext(GeneralContext);
   const [popUp_show, set_popUp_show] = useState(false);
   const [popUp_headline, set_popUp_headline] = useState("");
@@ -83,21 +85,21 @@ function PreviewBoxes_main_modules({
 
   const [openIndex, setOpenIndex] = useState(null); // State to keep track of which dropdown is open
 
-  const getResourceToModuleObj = async () => {
-    try {
-      const obj = await axios.get(
-        `${backEndURL}/Resources/getResourceToModuleObj`
-      );
-      console.log(obj, "ssssssadqwrq3144t457578uhjgnge56464et");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    if (backEndURL) {
-      getResourceToModuleObj();
-    }
-  }, [backEndURL]);
+  // const getResourceToModuleObj = async () => {
+  //   try {
+  //     const obj = await axios.get(
+  //       `${backEndURL}/Resources/getResourceToModuleObj`
+  //     );
+  //     console.log(obj, "ssssssadqwrq3144t457578uhjgnge56464ssset");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (backEndURL) {
+  //     // getResourceToModuleObj();
+  //   }
+  // }, [backEndURL]);
 
   const handleDropdownToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index); // Toggle dropdown for the clicked row
@@ -482,6 +484,7 @@ function PreviewBoxes_main_modules({
             };
             // Set the state with the updated array
             set_all_artifacts(updatedARTS);
+            setChosenTag("Tags");
             set_disabled(false);
           }
         }
@@ -521,6 +524,7 @@ function PreviewBoxes_main_modules({
             };
             // Set the state with the updated array
             set_all_Tools(updatedTools);
+            setChosenTag("Tags");
             set_disabled(false);
           }
         }
@@ -558,6 +562,7 @@ function PreviewBoxes_main_modules({
         popUp_show={popUp_Tags_Show}
         ModObj={popUp_Tags_ModObj}
         backEndURL={backEndURL}
+        GetAllToolAndArtifactFunc={GetAllToolAndArtifactFunc}
       />
 
       <PopUp_For_Read_More
@@ -683,7 +688,11 @@ function PreviewBoxes_main_modules({
                         </td>
                         <td className="" style={{ width: "108px" }}>
                           <div
-                            style={{ display: "flex", alignItems: "center",justifyContent:"center" }}
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
                           >
                             <img
                               className="logo-cell  "

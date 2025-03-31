@@ -17,7 +17,7 @@ import "../StatusDisplay.css";
 
 import {
   PopUp_All_Good,
-  PopUp_Alert_info,
+  // PopUp_Alert_info,
   PopUp_loader,
 } from "../PopUp_Smart.js";
 
@@ -36,6 +36,10 @@ function Alert_list({
   set_PopUp_All_Good__txt,
   set_PopUp_Error____show,
   set_PopUp_Error____txt,
+  PopUp_Alert_info__show,
+  set_PopUp_Alert_info__show,
+  PopUp_Alert_info__txt,
+  set_PopUp_Alert_info__txt,
 }) {
   const { backEndURL, all_Tools, front_IP } = useContext(GeneralContext);
   const [Preview_this_Results, set_Preview_this_Results] = useState([]);
@@ -44,9 +48,6 @@ function Alert_list({
   }, [CategoryAlertArr]);
 
   console.log("Preview_this_Results", Preview_this_Results);
-
-  const [PopUp_Alert_info__show, set_PopUp_Alert_info__show] = useState(false);
-  const [PopUp_Alert_info__txt, set_PopUp_Alert_info__txt] = useState({});
 
   const [PopUp_loader__show, set_PopUp_loader__show] = useState(false);
   const [sort_by, set_sort_by] = useState("StartDate");
@@ -194,21 +195,6 @@ function Alert_list({
       style={{ display: "flex", flexDirection: "column", height: "100%" }}
     >
       {PopUp_loader__show && <PopUp_loader popUp_show={PopUp_loader__show} />}
-
-      {PopUp_Alert_info__show && (
-        <PopUp_Alert_info
-          popUp_show={PopUp_Alert_info__show}
-          set_popUp_show={set_PopUp_Alert_info__show}
-          Info={PopUp_Alert_info__txt}
-          set_Preview_this_Results={set_Preview_this_Results}
-          backEndURL={backEndURL}
-          GetData={GetData}
-          set_PopUp_All_Good__show={set_PopUp_All_Good__show}
-          set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
-          set_PopUp_Error____show={set_PopUp_Error____show}
-          set_PopUp_Error____txt={set_PopUp_Error____txt}
-        />
-      )}
 
       {loader ? (
         <>

@@ -67,6 +67,7 @@ export function ContextProvider({ children }) {
   const [all_Resource_Types, set_all_Resource_Types] = useState([]);
   const [all_Tools, set_all_Tools] = useState([]);
   const [all_artifacts, set_all_artifacts] = useState([]);
+  const [AllTags, setAllTags] = useState([]);
 
   const [items, set_items] = useState([]);
   const user_id = "mssp-00003d31f6w";
@@ -82,30 +83,36 @@ export function ContextProvider({ children }) {
     if (backEndURL == null || backEndURL == undefined || backEndURL == "") {
       return;
     }
-    if (all_Tools.length === undefined || all_Tools.length === 0) {
-      try {
-        const res = await axios.get(`${backEndURL}/tools`);
-        if (res) {
-          const all_tools_no_links = res.data;
-          // console.log("all_tools_no_links",all_tools_no_links);
+    try {
+      const res = await axios.get(`${backEndURL}/tools`);
+      if (res) {
+        const all_tools_no_links = res.data;
+        // console.log("all_tools_no_links",all_tools_no_links);
 
-          all_tools_no_links.forEach((tool) => {
-            for (let index = 0; index < moduleLinks.length; index++) {
-              if (moduleLinks[index]?.toolID === tool?.tool_id) {
-                tool.toolURL = moduleLinks[index]?.toolURL;
-              }
+        all_tools_no_links.forEach((tool) => {
+          for (let index = 0; index < moduleLinks.length; index++) {
+            if (
+              tool?.tool_id == "2001019" &&
+              moduleLinks[index]?.toolID == "2000000"
+            ) {
+              tool.toolURL = moduleLinks[index]?.toolURL;
             }
-          });
+            if (moduleLinks[index]?.toolID === tool?.tool_id) {
+              tool.toolURL = moduleLinks[index]?.toolURL;
+            }
+          }
+        });
 
-          console.log("set all moduleLinks", moduleLinks);
+        console.log("set all moduleLinks", moduleLinks);
 
-          set_all_Tools(all_tools_no_links);
-        }
-      } catch (err) {
-        console.log(err);
+        set_all_Tools(all_tools_no_links);
+        return all_tools_no_links;
       }
+    } catch (err) {
+      console.log(err);
     }
   };
+
   const get_all_artifacts = async () => {
     try {
       console.log("backEndURL:::", backEndURL);
@@ -133,6 +140,7 @@ export function ContextProvider({ children }) {
         });
 
         set_all_artifacts(res.data);
+        return res.data;
       }
     } catch (err) {
       // set_loader(false)
@@ -141,8 +149,23 @@ export function ContextProvider({ children }) {
   };
 
   const GetAllToolAndArtifactFunc = async () => {
-    get_all_tools();
-    get_all_artifacts();
+    const arrA = await get_all_artifacts();
+    const arrT = await get_all_tools();
+    const tags = [];
+
+    const filteredTags = [];
+    arrT?.forEach((x) => {
+      tags.push(...x?.arguments?.tags);
+    });
+    arrA?.forEach((x) => {
+      tags.push(...x?.arguments?.tags);
+    });
+    tags?.forEach((x) => {
+      if (!filteredTags.includes(x)) {
+        filteredTags.push(x);
+      }
+    });
+    setAllTags(filteredTags);
   };
 
   const get_all_resource_types = async () => {
@@ -231,6 +254,8 @@ export function ContextProvider({ children }) {
   return (
     <GeneralContext.Provider
       value={{
+        AllTags,
+        setAllTags,
         GetAllToolAndArtifactFunc,
         UpdateSideBar,
         setUpdateSideBar,

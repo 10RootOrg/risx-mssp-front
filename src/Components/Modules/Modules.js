@@ -4,6 +4,10 @@ import { Search_comp } from "../Features/Search_comp.jsx";
 import GeneralContext from "../../Context.js";
 import axios from "axios";
 
+// import "../PreviewBoxes.css";
+// import "../all_tools.css";
+// import "../../SideBar/SideBar.css";
+
 // import { ReactComponent as IcoModule } from '../icons/ico-module.svg';
 
 // import { useNavigate } from 'react-router-dom';
@@ -23,54 +27,26 @@ function Modules({
     all_artifacts,
     moduleLinks,
     set_moduleLinks,
+    GetAllToolAndArtifactFunc,
+    AllTags,
   } = useContext(GeneralContext);
   const [all_artifacts_and_modules, set_all_artifacts_and_modules] = useState(
     []
   );
 
   const [filter_string, set_filter_string] = useState("");
+  const [ChosenTag, setChosenTag] = useState("Tags");
+  const [DropdownTagsShow, setDropdownTagsShow] = useState(false);
+  const [Updater, setUpdater] = useState(false);
+
   // const navigate = useNavigate();
-  console.log("all_artifacts_and_modules", all_artifacts_and_modules);
+  // console.log("all_artifacts_and_modules", all_artifacts_and_modules);
 
   useEffect(() => {
     if (backEndURL == null || backEndURL == undefined || backEndURL == "") {
       return;
     }
-    const get_all_artifacts = async () => {
-      try {
-        console.log("backEndURL:::", backEndURL);
-        // set_loader(true)
-        const res = await axios.get(
-          `${backEndURL}/tools/all-velociraptor_artifacts`
-        );
-        if (res) {
-          // console.log("get_all_artifacts res.data:" , res.data);
-
-          res?.data?.forEach((x) => {
-            switch (x?.toolURL) {
-              case "Threat Hunting":
-                x.toolURL = moduleLinks?.filter(
-                  (yy) => yy?.toolName == "Threat Hunting Dashboard"
-                )[0]?.toolURL;
-                break;
-              case "All Around":
-                x.toolURL = moduleLinks?.filter(
-                  (yy) => yy?.toolName == "Best Practice Dashboard"
-                )[0]?.toolURL;
-
-                break;
-            }
-          });
-
-          set_all_artifacts(res.data);
-        }
-      } catch (err) {
-        // set_loader(false)
-        console.log(err);
-      }
-    };
-
-    get_all_artifacts();
+    GetAllToolAndArtifactFunc();
   }, [backEndURL]);
 
   useEffect(() => {
@@ -86,9 +62,46 @@ function Modules({
       Array.isArray(all_artifacts) &&
       all_artifacts.length > 0
     ) {
+      console.log(all_Tools, all_artifacts, "55555555555555555555555555");
+
+      set_all_artifacts_and_modules([...all_Tools, ...all_artifacts]);
+    }
+  }, [all_Tools]);
+
+  useEffect(() => {
+    if (
+      Array.isArray(all_Tools) &&
+      all_Tools.length > 0 &&
+      Array.isArray(all_artifacts) &&
+      all_artifacts.length > 0
+    ) {
+      console.log(
+        all_Tools,
+        all_artifacts,
+        "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+      );
+
       set_all_artifacts_and_modules([...all_Tools, ...all_artifacts]);
     }
   }, [all_Tools, all_artifacts]);
+
+  const HandleTagSelection = async (TagName) => {
+    try {
+      console.log("Turn Tag ON ", TagName);
+      const res = await axios.post(backEndURL + "/tools/TagSelection", {
+        TagName,
+      });
+      if (res.data == "All Good") {
+        console.log(res.data, "All Good");
+        await GetAllToolAndArtifactFunc();
+        console.log("ssssssssssss");
+        setChosenTag(TagName);
+        setDropdownTagsShow(false);
+      }
+    } catch (error) {
+      console.log("Error In Tag Selection : ", error);
+    }
+  };
 
   return (
     <>
@@ -101,6 +114,69 @@ function Modules({
           {/* <div className='top-of-page-center'> placeholder for dropDown  </div> */}
 
           <div className="top-of-page-right">
+            <div
+              style={{
+                width: 150,
+                marginRight: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <button
+                className={`btn-type2 "btn-type2-no_btn"`}
+                onClick={() => setDropdownTagsShow(!DropdownTagsShow)}
+                style={{
+                  width: "100%",
+                  minWidth: "115px",
+                  maxWidth: "122px",
+                  paddingLeft: "var(--space-c)",
+                  paddingRight: "calc(var(--space-c) - 5px)",
+                }}
+              >
+                <p className="font-type-menu" style={{}}>
+                  {ChosenTag}
+                </p>
+              </button>
+              <div
+                className={`dropdown-menu ${DropdownTagsShow ? "open" : ""}`}
+                style={{
+                  top: 80,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "absolute",
+                }}
+              >
+                {AllTags?.map((tt) => {
+                  // console.log(AllTags, "ttttt", tt);
+                  if (tt == ChosenTag) {
+                    return;
+                  }
+                  return (
+                    <button
+                      className={`btn-type2 "btn-type2-no_btn"`}
+                      onClick={() => HandleTagSelection(tt)}
+                      style={{
+                        width: "100%",
+                        minWidth: "115px",
+                        maxWidth: "122px",
+                        paddingLeft: "var(--space-c)",
+                        paddingRight: "calc(var(--space-c) - 5px)",
+                        backgroundColor: "var(--color-Grey2)",
+                      }}
+                    >
+                      <p className="font-type-menu" style={{}}>
+                        {tt}
+                      </p>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <Search_comp
               set_items_for_search={set_all_artifacts_and_modules}
               items_for_search={all_artifacts_and_modules}
@@ -176,6 +252,7 @@ function Modules({
                   all_artifacts_and_modules={all_artifacts_and_modules}
                   set_all_artifacts_and_modules={set_all_artifacts_and_modules}
                   ShowAssets={true}
+                  setChosenTag={setChosenTag}
                 />
 
                 <PreviewBoxes_main_modules
@@ -200,6 +277,7 @@ function Modules({
                   all_artifacts_and_modules={all_artifacts_and_modules}
                   set_all_artifacts_and_modules={set_all_artifacts_and_modules}
                   ShowAssets={true}
+                  setChosenTag={setChosenTag}
                 />
               </>
             )}

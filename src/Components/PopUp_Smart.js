@@ -189,7 +189,7 @@ export const PopUp_All_Good = (props) => {
 };
 
 export const PopUp_Mod_Tags = (props) => {
-  const { popUp_show, set_popUp_show, ModObj, backEndURL } = props;
+  const { popUp_show, set_popUp_show, ModObj, backEndURL ,GetAllToolAndArtifactFunc} = props;
   const [active, setActive] = useState(false);
   const [NewTagName, setNewTagName] = useState("");
   const [TagsArray, SetTagsArray] = useState([]);
@@ -218,6 +218,7 @@ export const PopUp_Mod_Tags = (props) => {
     setActive(false); // Trigger exit animation
     setAlreadyExistsError(false);
     setNewTagName("");
+    GetAllToolAndArtifactFunc()
     setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
   }
 
@@ -238,6 +239,12 @@ export const PopUp_Mod_Tags = (props) => {
         console.log("Cant Add Tag Already Exists");
         return;
       }
+      if (NewTagName.trim() == "Tags") {
+        setAlreadyExistsError("Reserved");
+        console.log("Cant Add Tag as it is a Reserved name");
+        return;
+      }
+
       const res = await axios.post(`${backEndURL}/Resources/AddTagToResource`, {
         id: ModObj.id,
         tag: NewTagName.trim(),
@@ -326,9 +333,13 @@ export const PopUp_Mod_Tags = (props) => {
             {AlreadyExistsError &&
               (AlreadyExistsError === "Empty" ? (
                 <p style={{ color: "var(--color-Red)" }}>Cant Add Empty Tag</p>
-              ) : (
+              ) : AlreadyExistsError === "Exits" ? (
                 <p style={{ color: "var(--color-Red)" }}>
                   Tag Already Assigned To This Module
+                </p>
+              ) : (
+                <p style={{ color: "var(--color-Red)" }}>
+                  Tag Name IS a Reserved Name
                 </p>
               ))}
             <p className="font-type-h4 Color-White mb-a">
@@ -401,9 +412,9 @@ export const PopUp_Alert_info = (props) => {
     "Closed",
     "Reopened",
   ];
-  useEffect(() => {
-    set_popUp_show(popUp_show);
-  }, [popUp_show]);
+  // useEffect(() => {
+  //   set_popUp_show(popUp_show);
+  // }, [popUp_show]);
 
   useEffect(() => {
     if (popUp_show) {
