@@ -438,6 +438,16 @@ export const Add_Edit_Resource_Item = (props) => {
 
                     {Array.isArray(all_Tools) &&
                       all_Tools?.map((Info, index) => {
+                        const bbb = () => {
+                          try {
+                            require(`${Info.logoAddress_1}`);
+                            return true;
+                          } catch (error) {
+                            return false;
+                            console.log("Error In Logo Of ", Info);
+                          }
+                        };
+                        const bbbBool = bbb();
                         return (
                           <div className="toolsData  ">
                             <div className="toolsData-checkbox">
@@ -475,7 +485,7 @@ export const Add_Edit_Resource_Item = (props) => {
                               <img
                                 className="velociraptor-EndpointModules-logo   "
                                 src={
-                                  Info?.logoAddress_1
+                                  Info?.logoAddress_1 && bbbBool
                                     ? require(`${Info.logoAddress_1}`)
                                     : undefined
                                 }
