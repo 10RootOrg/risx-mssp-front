@@ -23,6 +23,11 @@ import {
   format_date_type_c,
 } from "./Features/DateFormat.js";
 
+import CodeMirror from "@uiw/react-codemirror";
+import { json } from "@codemirror/lang-json";
+import { tags as t } from "@lezer/highlight";
+import { createTheme } from "@uiw/codemirror-themes";
+
 const downloadJsonFile = (file) => {
   console.log(file);
   const dataStr =
@@ -189,7 +194,13 @@ export const PopUp_All_Good = (props) => {
 };
 
 export const PopUp_Mod_Tags = (props) => {
-  const { popUp_show, set_popUp_show, ModObj, backEndURL ,GetAllToolAndArtifactFunc} = props;
+  const {
+    popUp_show,
+    set_popUp_show,
+    ModObj,
+    backEndURL,
+    GetAllToolAndArtifactFunc,
+  } = props;
   const [active, setActive] = useState(false);
   const [NewTagName, setNewTagName] = useState("");
   const [TagsArray, SetTagsArray] = useState([]);
@@ -218,7 +229,7 @@ export const PopUp_Mod_Tags = (props) => {
     setActive(false); // Trigger exit animation
     setAlreadyExistsError(false);
     setNewTagName("");
-    GetAllToolAndArtifactFunc()
+    GetAllToolAndArtifactFunc();
     setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
   }
 
@@ -367,6 +378,217 @@ export const PopUp_Mod_Tags = (props) => {
               <button
                 className="btn-type2   '"
                 style={{ marginLeft: "auto" }}
+                onClick={handleClose}
+              >
+                <p className="font-type-menu ">Close</p>{" "}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export const PopUp_Mod_Config_Edit = (props) => {
+  const { popUp_show, set_popUp_show, infoConf, backEndURL } = props;
+  const [active, setActive] = useState(false);
+  const [object, setObject] = useState({ infoConf });
+  const [ErrString, setErrString] = useState("");
+  const [editorValue, setEditorValue] = useState("");
+  const [config_save_btn, set_config_save_btn] = useState(false);
+
+  const myTheme = createTheme({
+    theme: "dark",
+    settings: {
+      background: "transperent",
+      backgroundImage: "",
+      foreground: "var(--color-Grey1)",
+      caret: "var(--color-DB-Blue-Active)",
+      selection: "var(--color-Grey4)",
+      selectionMatch: "var(--color-Grey2)",
+      lineHighlight: "transperent",
+      gutterBackground: "var(--color-Grey5)",
+      gutterForeground: "var(--color-Grey1)",
+    },
+    styles: [
+      { tag: t.comment, color: "var(--color-White)" },
+      { tag: t.variableName, color: "var(--color-White)" },
+      {
+        tag: [t.string, t.special(t.brace)],
+        color: "var(--color-DB-Blue-Active)",
+      },
+      { tag: t.number, color: "var(--color-White)" },
+      { tag: t.bool, color: "var(--color-White)" },
+      { tag: t.null, color: "var(--color-White)" },
+      { tag: t.keyword, color: "var(--color-White)" },
+      { tag: t.operator, color: "var(--color-White)" },
+      { tag: t.className, color: "var(--color-White)" },
+      { tag: t.definition(t.typeName), color: "#5c6166" },
+      { tag: t.typeName, color: "var(--color-White)" },
+      { tag: t.angleBracket, color: "var(--color-White)" },
+      { tag: t.tagName, color: "var(--color-White)" },
+      { tag: t.attributeName, color: "var(--color-White)" },
+    ],
+  });
+
+  function handleClickOutside(e) {
+    if (e.target.className === "PopUp-background") {
+      setActive(false); // Trigger exit animation
+      setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+    }
+  }
+
+  function handleClose() {
+    setActive(false); // Trigger exit animation
+    setEditorValue("");
+    setObject({});
+    set_config_save_btn(false);
+    setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+  }
+
+  async function BringConfig() {
+    try {
+      console.log("Start BringConfig");
+      const res = await axios.post(backEndURL + "/config/BringSpecificConfig", {
+        id: infoConf?.tool_id ?? infoConf?.artifact_id,
+        artifactOrTool: infoConf?.parent_id ? true : false,
+        name: infoConf?.Tool_name ?? infoConf?.Toolname,
+      });
+      console.log("res res res", res);
+
+      setObject(res.data);
+      setEditorValue(JSON.stringify(res.data, null, 2));
+    } catch (error) {
+      console.log("Error in BringConfig : ", error);
+    }
+  }
+
+  useEffect(() => {
+    console.log(infoConf, "infoConf infoConf infoConf infoConf infoConf");
+    if (popUp_show) {
+      BringConfig();
+    }
+  }, [popUp_show]);
+
+  useEffect(() => {
+    if (editorValue) {
+      console.log("asdasdasd");
+
+      return;
+    }
+    setEditorValue(JSON.stringify(object, null, 2));
+  }, [object]);
+
+  useEffect(() => {
+    if (popUp_show) {
+      setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+    }
+  }, [popUp_show]);
+
+  return (
+    <>
+      {popUp_show && (
+        <div
+          className={`PopUp-background`}
+          onClick={handleClickOutside}
+          style={{ wordWrap: "break-word" }}
+        >
+          <div
+            className={`PopUp-content  ${
+              active ? "popup-enter-active" : "popup-enter"
+            }`}
+            style={{ width: "70%", paddingBottom: " " }}
+          >
+            <div
+              className="display-flex justify-content-end  "
+              style={{ marginRight: "-40px" }}
+            >
+              <button className="PopUp-Close-btn" onClick={handleClose}>
+                <CloseButton className="PopUp-Close-btn-img" />{" "}
+              </button>
+            </div>
+
+            <p className="font-type-h4 Color-White mb-a">
+              Edit {infoConf?.Tool_name ?? infoConf?.Toolname} Config
+            </p>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 3,
+                marginTop: 15,
+                marginBottom: 35,
+                // overflowX: "auto",
+                // width: "95%",
+                flexWrap: "wrap",
+              }}
+            ></div>
+            {/* <p className="font-type-h4 Color-White mb-a">Config 2</p> */}
+            {ErrString && (
+              <div
+                style={{
+                  // width: "auto",
+                  backgroundColor: "var(--color-Orange)",
+                  color: "#FFFFFF",
+                  opacity: 0.7,
+                  position: "relative",
+                  zIndex: 5555555,
+                  padding: 10,
+                  // top: -10,
+                }}
+              >
+                {ErrString}
+              </div>
+            )}
+
+            <CodeMirror
+              value={editorValue}
+              height="600px"
+              onChange={(value) => {
+                try {
+                  setEditorValue(value);
+                  console.log("flip", JSON.parse(value));
+                  const parsed = JSON.parse(value);
+                  setObject(parsed);
+                  setErrString("");
+                  set_config_save_btn(true);
+                } catch (error) {
+                  set_config_save_btn(false);
+                  setErrString(error.toString());
+                  console.log("Json Error", error.toString());
+                }
+              }}
+              extensions={[json()]}
+              theme={myTheme}
+              highlightActiveLine={true}
+            />
+
+            <div
+              className="display-flex mt-c"
+              style={{ justifyContent: "flex-end" }}
+            >
+              {config_save_btn && (
+                <button
+                  className="btn-type2   '"
+                  style={{ marginRight: 10 }}
+                  onClick={() => console.log("Save Info", object)}
+                >
+                  <p className="font-type-menu ">Save</p>{" "}
+                </button>
+              )}
+              <button
+                className="btn-type2   '"
+                style={{ marginLeft: 10 }}
+                onClick={() => {
+                  setEditorValue(JSON.stringify(object, null, 2));
+                }}
+              >
+                <p className="font-type-menu ">Format</p>{" "}
+              </button>
+              <button
+                className="btn-type2   '"
+                style={{ marginLeft: 10 }}
                 onClick={handleClose}
               >
                 <p className="font-type-menu ">Close</p>{" "}
@@ -2309,6 +2531,264 @@ export const PopUp_Confirm_Run_selected = (props) => {
                 <p className="font-type-menu ">
                   {allow_continue ? "Cancel" : "Continue"}
                 </p>{" "}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export const PopUpStorageVelociraptor = (props) => {
+  const {
+    popUp_show,
+    set_popUp_show,
+    set_PopUp_Error____txt,
+    set_PopUp_Error____show,
+    set_PopUp_All_Good__txt,
+    set_PopUp_All_Good__show,
+  } = props;
+  const [active, setActive] = useState(false);
+  const [StoragePath, setStoragePath] = useState("");
+  const [Hostname, setHostname] = useState("");
+  const [ChosenOs, setChosenOs] = useState("OS");
+  const [DropdownOsShow, setDropdownOsShow] = useState(false);
+  const { backEndURL } = useContext(GeneralContext);
+  useEffect(() => {
+    set_popUp_show(popUp_show);
+    if (popUp_show) {
+      setTimeout(() => setActive(true), 100); // Wait for animation to finish before removing
+    }
+  }, [popUp_show]);
+
+  const handleClickOutside = (e) => {
+    if (e.target.className === "PopUp-background") {
+      setActive(false); // Trigger exit animation
+      setDropdownOsShow(false);
+      setChosenOs("OS");
+      setHostname("");
+      setStoragePath("");
+      setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+    }
+  };
+
+  const handleClose = () => {
+    setActive(false); // Trigger exit animation
+    setDropdownOsShow(false);
+    setChosenOs("OS");
+    setHostname("");
+    setStoragePath("");
+    setTimeout(() => set_popUp_show(false), 100); // Wait for animation to finish before removing
+  };
+
+  const HandleStorageActivation = async () => {
+    try {
+      console.log("Start HandleStorageActivation");
+      if (
+        StoragePath.trim() == "" ||
+        Hostname.trim() == "" ||
+        !["Windows", "Linux", "MacOs"].includes(ChosenOs)
+      ) {
+        const arrNot = [];
+        const x =
+          StoragePath.trim() == ""
+            ? arrNot.push("StoragePath Cant be Empty")
+            : "";
+        const y =
+          Hostname.trim() == "" ? arrNot.push("Hostname Cant be Empty") : "";
+        const z = !["Windows", "Linux", "MacOs"].includes(ChosenOs)
+          ? arrNot.push("Os Cant be Empty")
+          : "";
+        console.log(arrNot.join(" and "));
+        set_PopUp_Error____txt({
+          HeadLine: "Error",
+          paragraph: arrNot.join(" and "),
+          buttonTitle: "Close",
+        });
+        set_PopUp_Error____show(true);
+        return;
+      }
+
+      const data = {
+        StoragePath,
+        Hostname,
+        ChosenOs,
+      };
+
+      console.log("data sssssssssssssssssssssssssssssssssssssss ", data);
+      // const res = await axios.post(
+      //   `${backEndURL}/config/CreateStorageVeloDiskAgent`,
+      //   data
+      // );
+      // console.log("resssssssssssss", res);
+
+      set_PopUp_All_Good__txt({
+        HeadLine: "Successes",
+        paragraph: "The Virtual disk has Started",
+        buttonTitle: "Close",
+      });
+      set_PopUp_All_Good__show(true);
+      handleClose();
+    } catch (error) {
+      console.log("Error In HandleStorageActivation", error);
+    }
+  };
+
+  return (
+    <>
+      {popUp_show && (
+        <div className={`PopUp-background`} onClick={handleClickOutside}>
+          <div
+            className={`PopUp-content  ${
+              active ? "popup-enter-active" : "popup-enter"
+            }`}
+            style={{ width: "50%", paddingBottom: " " }}
+          >
+            <div
+              className="display-flex justify-content-end  "
+              style={{ marginRight: "-40px" }}
+            >
+              <button className="PopUp-Close-btn" onClick={handleClose}>
+                <CloseButton className="PopUp-Close-btn-img" />{" "}
+              </button>
+            </div>
+
+            <p className="font-type-h4 Color-White mb-a">Attach Offline Disk</p>
+            {/* <p className="font-type-txt  reading-height Color-White">
+              In here we will set up a velociraptor agent in a 
+            </p> */}
+            <div style={{ marginTop: 25 }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  className="font-type-txt  reading-height Color-White"
+                  style={{ width: 170, marginRight: 10 }}
+                >
+                  Mount Point Of Disk{" "}
+                </p>
+                <input
+                  className="input-type1 search_filter "
+                  placeholder="Absolute Path"
+                  onChange={(e) => setStoragePath(e.target.value)}
+                  value={StoragePath}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: 20,
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  className="font-type-txt  reading-height Color-White"
+                  style={{ width: 170, marginRight: 10 }}
+                >
+                  Client Name
+                </p>
+                <input
+                  className="input-type1 search_filter "
+                  placeholder="Hostname"
+                  onChange={(e) => setHostname(e.target.value)}
+                  value={Hostname}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  marginTop: 20,
+                  alignItems: "center",
+                }}
+              >
+                <p
+                  className="font-type-txt  reading-height Color-White"
+                  style={{ width: 133 }}
+                >
+                  Image Os{" "}
+                </p>
+                <div
+                  style={{
+                    width: 150,
+                    // marginRight: 15,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <button
+                    className={`btn-type2 "btn-type2-no_btn"`}
+                    onClick={() => setDropdownOsShow(!DropdownOsShow)}
+                    style={{
+                      width: "100%",
+                      minWidth: "115px",
+                      maxWidth: "122px",
+                      paddingLeft: "var(--space-c)",
+                      paddingRight: "calc(var(--space-c) - 5px)",
+                    }}
+                  >
+                    <p className="font-type-menu" style={{}}>
+                      {ChosenOs}
+                    </p>
+                  </button>
+                  <div
+                    className={`dropdown-menu ${DropdownOsShow ? "open" : ""}`}
+                    style={{
+                      top: 235,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      display: "flex",
+                      flexDirection: "column",
+                      position: "absolute",
+                    }}
+                  >
+                    {["Windows", "Linux", "MacOs"]?.map((tt) => {
+                      // console.log(AllTags, "ttttt", tt);
+                      if (tt == ChosenOs) {
+                        return;
+                      }
+                      return (
+                        <button
+                          className={`btn-type2 "btn-type2-no_btn"`}
+                          onClick={() => {
+                            setChosenOs(tt);
+                            setDropdownOsShow(false);
+                          }}
+                          style={{
+                            width: "100%",
+                            minWidth: "115px",
+                            maxWidth: "122px",
+                            paddingLeft: "var(--space-c)",
+                            paddingRight: "calc(var(--space-c) - 5px)",
+                            backgroundColor: "var(--color-Grey2)",
+                          }}
+                        >
+                          <p className="font-type-menu" style={{}}>
+                            {tt}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="display-flex mt-c" style={{}}>
+              <button
+                className="btn-type2   '"
+                style={{ marginLeft: "auto" }}
+                onClick={HandleStorageActivation}
+              >
+                <p className="font-type-menu ">Run</p>{" "}
               </button>
             </div>
           </div>

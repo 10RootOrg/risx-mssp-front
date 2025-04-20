@@ -30,11 +30,7 @@ export function AlertsSettings({}) {
   const { backEndURL, all_Tools, front_IP } = useContext(GeneralContext);
 
   const [Preview_This_in_menu, set_Preview_This_in_menu] = useState("");
-  const [SubMenuOptionsList, setSubMenuOptionsList] = useState([
-    { value: "One", preview_name: "One" },
-    { value: "Two", preview_name: "Two" },
-    { value: "Three", preview_name: "Three" },
-  ]);
+  const [SubMenuOptionsList, setSubMenuOptionsList] = useState([]);
   const [config_save_btn, set_config_save_btn] = useState(false);
   const [ActiveAlertConfig, setActiveAlertConfig] = useState({});
   const [preview_or_edit, set_preview_or_edit] = useState(true);

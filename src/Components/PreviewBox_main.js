@@ -7,6 +7,7 @@ import {
   PopUp_For_Read_More,
   PopUp_All_Good,
   PopUp_Mod_Tags,
+  PopUp_Mod_Config_Edit,
 } from "./PopUp_Smart.js";
 import {
   Make_url_from_id,
@@ -74,6 +75,8 @@ function PreviewBoxes_main_modules({
     buttonTitle: "",
   });
   const [popUp_Tags_Show, set_popUp_Tags_Show] = useState(false);
+  const [popUp_Config_Show, set_popUp_Config_Show] = useState(false);
+
   const [popUp_Tags_ModObj, set_popUp_Tags_ModObj] = useState({});
 
   const [toolURL, set_toolURL] = useState("https://docs.velociraptor.app");
@@ -82,6 +85,7 @@ function PreviewBoxes_main_modules({
 
   const [checked_artifacts2, set_checked_artifacts2] = useState([]);
   const [download_drop_down, set_download_drop_down] = useState(false);
+  const [ChosenArtifact, setChosenArtifact] = useState({});
 
   const [openIndex, setOpenIndex] = useState(null); // State to keep track of which dropdown is open
 
@@ -103,6 +107,16 @@ function PreviewBoxes_main_modules({
 
   const handleDropdownToggle = (index) => {
     setOpenIndex(openIndex === index ? null : index); // Toggle dropdown for the clicked row
+  };
+
+  const HandleConfigEditOpen = async (info) => {
+    try {
+      console.log("Start HandleConfigEditOpen ", info);
+      setChosenArtifact(info);
+      set_popUp_Config_Show(true);
+    } catch (error) {
+      console.log("Error in HandleConfigEditOpen : ", error);
+    }
   };
 
   const change_order_in_db = (info, operator) => {
@@ -565,6 +579,12 @@ function PreviewBoxes_main_modules({
         GetAllToolAndArtifactFunc={GetAllToolAndArtifactFunc}
       />
 
+      <PopUp_Mod_Config_Edit
+        set_popUp_show={set_popUp_Config_Show}
+        popUp_show={popUp_Config_Show}
+        infoConf={ChosenArtifact}
+        backEndURL={backEndURL}
+      />
       <PopUp_For_Read_More
         HeadLine={popUp_headline}
         readMoreText={popUp_ReadMoreText}
@@ -873,7 +893,10 @@ function PreviewBoxes_main_modules({
                                 </p>
                               ) : null}
                               {Info?.arguments?.tags?.length === 1 ? (
-                                <p className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1">
+                                <p
+                                  className="ml-a  font-type-txt   Color-Blue-Glow tagit_type1 cutLongLine"
+                                  style={{ maxWidth: "60%" }}
+                                >
                                   {Info?.arguments?.tags[0]}
                                 </p>
                               ) : null}
@@ -971,7 +994,25 @@ function PreviewBoxes_main_modules({
                                   borderRadius: "5px",
                                 }}
                               />
-
+                              <button
+                                onClick={() => HandleConfigEditOpen(Info)}
+                                className="btn-menu "
+                              >
+                                <div className="display-flex">
+                                  {" "}
+                                  <p className="font-type-menu ml-c mr-c">
+                                    Config
+                                  </p>{" "}
+                                </div>
+                                {/* <div className="btn-menu-icon-placeholder  "> <p className="font-type-menu ml-b mr-b">+</p> */}
+                                {/* <div className="btn-menu-icon-placeholder  ">
+                                  {" "}
+                                  <IcoMenuUp
+                                    className="btn-menu-icon-placeholder  mr-a  "
+                                    style={{ visibility: "" }}
+                                  />
+                                </div> */}
+                              </button>
                               <button
                                 onClick={() => ShowInUi(Info)}
                                 className="btn-menu "

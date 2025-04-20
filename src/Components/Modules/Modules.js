@@ -133,9 +133,12 @@ function Modules({
                   maxWidth: "122px",
                   paddingLeft: "var(--space-c)",
                   paddingRight: "calc(var(--space-c) - 5px)",
+                  height: 36,
                 }}
               >
-                <p className="font-type-menu" style={{}}>
+                <p
+                  className="font-type-menu cutLongLine"
+                >
                   {ChosenTag}
                 </p>
               </button>

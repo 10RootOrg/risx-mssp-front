@@ -78,6 +78,16 @@ th td {
   color: var(--color-DB-Blue-Glow);
   border-color: var(--color-DB-Blue-Glow);
 }
+.log-delete {
+  color: var(--color-Grey1);
+  border: 2px solid var(--color-Grey2);
+  padding: 5px;
+  border-radius: 15%;
+}
+.log-delete:hover {
+  color: var(--color-DB-Blue-Glow);
+  border-color: var(--color-Red);
+}
 .RowInLegend {
   display: flex;
   flex-direction: row;

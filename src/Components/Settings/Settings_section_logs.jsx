@@ -50,6 +50,11 @@ function Settings_section_logs({
           console.log(res?.data?.content);
           set_log_data(res?.data?.content);
           set_preview_data(res?.data?.content);
+        } else {
+          set_log_data(`Failed To fetchLog ${logName}. As It does not exist`);
+          set_preview_data(
+            `Failed To fetchLog ${logName}. As It does not exist`
+          );
         }
       }
     } catch (err) {
@@ -118,6 +123,24 @@ function Settings_section_logs({
       downloadAnchorNode.remove();
     } catch (error) {
       console.log("Error in Downloading Log File: " + fileName, error);
+    }
+  };
+
+  const DeleteLog = async () => {
+    try {
+      console.log("fileName fileName fileName ", fileName);
+      const res = await axios.post(`${backEndURL}/logs/DeleteLog`, {
+        logName: usethis,
+        fileName: fileName,
+      });
+      console.log(";ksadadnhfojh", res.data);
+      if (res.data) {
+        set_log_data("Deleted");
+        set_preview_data("Deleted");
+      } else {
+      }
+    } catch (error) {
+      console.log("Error in Deleting Log File: " + fileName, error);
     }
   };
 
@@ -194,6 +217,16 @@ function Settings_section_logs({
             }}
           >
             Download
+          </div>{" "}
+          <div
+            className="log-delete"
+            onClick={DeleteLog}
+            style={{
+              marginRight: 15,
+              fontSize: 13,
+            }}
+          >
+            Delete
           </div>{" "}
           <Search_comp_for_logs
             set_log_data={set_log_data}

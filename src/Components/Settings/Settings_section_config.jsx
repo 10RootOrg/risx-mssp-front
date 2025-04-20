@@ -11,7 +11,7 @@ import {
   PopUp_Error,
 } from "../PopUp_Smart";
 import CodeMirror from "@uiw/react-codemirror";
-import { json, jsonLanguage, jsonParseLinter } from "@codemirror/lang-json";
+import { json, } from "@codemirror/lang-json";
 import { tags as t } from "@lezer/highlight";
 import { createTheme } from "@uiw/codemirror-themes";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
