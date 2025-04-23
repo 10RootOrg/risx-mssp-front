@@ -650,25 +650,17 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               </div> */}
               </button>
 
-              <button
+              {/* <button
                 className="btn-menu dropdown-menu-btn"
                 onClick={() => handleClick("dashboard-forensics")}
                 disabled={visblePage === "dashboard-forensics"}
               >
                 <div className="display-flex">
-                  {/* <IcoDownload
-                  className="btn-menu-icon-placeholder  mr-a "
-                  style={{ visibility: "hidden" }}
-                /> */}
+          
                   <p className="font-type-menu ">Forensics</p>
                 </div>
-                {/* <div
-                className="btn-menu-icon-placeholder"
-                style={{ scale: "0.95" }}
-              >
-                <IcoResults />
-              </div> */}
-              </button>
+       
+              </button> */}
 
               <button
                 className="btn-menu dropdown-menu-btn"

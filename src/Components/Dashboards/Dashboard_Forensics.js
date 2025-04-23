@@ -30,14 +30,12 @@ function Dashboard_Forensics({
   const [forensics_list_no_tag, set_forensics_list_no_tag] = useState([]);
   const [forensics_list_tag, set_forensics_list_tag] = useState([]);
 
-  const gap = getComputedStyle(document.documentElement).getPropertyValue('--space-b')
+  const gap = getComputedStyle(document.documentElement).getPropertyValue(
+    "--space-b"
+  );
   const box_height = 800;
-  const box_height_2of3 = box_height * (3/5);
-  const box_height_1of3 = box_height * (2/5)   ;
-
-
-
-
+  const box_height_2of3 = box_height * (3 / 5);
+  const box_height_1of3 = box_height * (2 / 5);
 
   const get_config = async () => {
     if (backEndURL === undefined) {
@@ -102,77 +100,88 @@ function Dashboard_Forensics({
     }
   }, [backEndURL]);
 
-
   useEffect(() => {
-
-
-set_forensics_list_no_tag([
-{
-mainKey:"Overall Clients",
-module:"Velociraptor",
-mainValue: DashBoardData?.Velociraptor?.NumberOfClients !== undefined ? DashBoardData?.Velociraptor?.NumberOfClients : "NA",
-}
-,
-{
-mainKey:"Connected Clients",
-module:"Velociraptor",
-mainValue:DashBoardData?.Velociraptor?.NumberOfConnectedClients !== undefined? DashBoardData?.Velociraptor?.NumberOfConnectedClients: "NA",
-} 
-,
-{
-mainKey:"Completed Hunts",
-module:"Velociraptor",
-mainValue: DashBoardData?.Velociraptor?.FinishedHunts !== undefined? DashBoardData.Velociraptor.FinishedHunts:"NA",
-}  
-,
-{
-mainKey:"Uncompleted Hunts",
-module:"Velociraptor",
-mainValue:  DashBoardData?.Velociraptor?.UnfinishedHunts!== undefined ?  DashBoardData?.Velociraptor?.UnfinishedHunts : "NA",
-}  
-,
-{
-mainKey:"Number of Sketches",
-module:"Timesketch",
-mainValue:  DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBoardData?.TimeSketch?.number_of_sketches: "NA",
-}  
+    set_forensics_list_no_tag([
+      {
+        mainKey: "Overall Clients",
+        module: "Velociraptor",
+        mainValue:
+          DashBoardData?.Velociraptor?.NumberOfClients !== undefined
+            ? DashBoardData?.Velociraptor?.NumberOfClients
+            : "NA",
+      },
+      {
+        mainKey: "Connected Clients",
+        module: "Velociraptor",
+        mainValue:
+          DashBoardData?.Velociraptor?.NumberOfConnectedClients !== undefined
+            ? DashBoardData?.Velociraptor?.NumberOfConnectedClients
+            : "NA",
+      },
+      {
+        mainKey: "Completed Hunts",
+        module: "Velociraptor",
+        mainValue:
+          DashBoardData?.Velociraptor?.FinishedHunts !== undefined
+            ? DashBoardData.Velociraptor.FinishedHunts
+            : "NA",
+      },
+      {
+        mainKey: "Uncompleted Hunts",
+        module: "Velociraptor",
+        mainValue:
+          DashBoardData?.Velociraptor?.UnfinishedHunts !== undefined
+            ? DashBoardData?.Velociraptor?.UnfinishedHunts
+            : "NA",
+      },
+      {
+        mainKey: "Number of Sketches",
+        module: "Timesketch",
+        mainValue:
+          DashBoardData?.TimeSketch?.number_of_sketches !== undefined
+            ? DashBoardData?.TimeSketch?.number_of_sketches
+            : "NA",
+      },
     ]);
 
-
- set_forensics_list_tag([
+    set_forensics_list_tag([
       {
-      mainKey:"Tag: Persistence",
-      module:"Timesketch",
-      mainValue: DashBoardData?.TimeSketch?.tag_counts?.Persistence !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.Persistence: "NA",
-      }  
-      ,
+        mainKey: "Tag: Persistence",
+        module: "Timesketch",
+        mainValue:
+          DashBoardData?.TimeSketch?.tag_counts?.Persistence !== undefined
+            ? DashBoardData?.TimeSketch?.tag_counts?.Persistence
+            : "NA",
+      },
       {
-      mainKey:"Tag: Phishy-Domain",
-      module:"Timesketch",
-      mainValue:   DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] : "NA"
-      }  
-      ,
+        mainKey: "Tag: Phishy-Domain",
+        module: "Timesketch",
+        mainValue:
+          DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] !== undefined
+            ? DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"]
+            : "NA",
+      },
       {
-      mainKey:"Tag: High",
-      module:"Timesketch",
-      mainValue: DashBoardData?.TimeSketch?.tag_counts?.high !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.high : "NA",
-      }  
-      ,
+        mainKey: "Tag: High",
+        module: "Timesketch",
+        mainValue:
+          DashBoardData?.TimeSketch?.tag_counts?.high !== undefined
+            ? DashBoardData?.TimeSketch?.tag_counts?.high
+            : "NA",
+      },
       {
-      mainKey:"Tag: command and control",
-      module:"Timesketch",
-      mainValue:  DashBoardData?.TimeSketch?.tag_counts?.["command and control"] !== undefined ? DashBoardData?.TimeSketch?.tag_counts?.["command and control"] : "NA"
-      }  
-      
-          ]);
-      
-    
-
-  }, [DashBoardData ]);
-
+        mainKey: "Tag: command and control",
+        module: "Timesketch",
+        mainValue:
+          DashBoardData?.TimeSketch?.tag_counts?.["command and control"] !==
+          undefined
+            ? DashBoardData?.TimeSketch?.tag_counts?.["command and control"]
+            : "NA",
+      },
+    ]);
+  }, [DashBoardData]);
 
   console.log("UnfinishedHunts", DashBoardData?.Velociraptor?.UnfinishedHunts);
- 
 
   return (
     <>
@@ -188,11 +197,8 @@ mainValue:  DashBoardData?.TimeSketch?.number_of_sketches !== undefined ? DashBo
         </div>
 
         <div className="resource-group-top-boxes mb-c">
-
- 
-
-<div  className="PreviewBox-respo-container" >
-{/* <PreviewBox_respo_chart 
+          <div className="PreviewBox-respo-container">
+            {/* <PreviewBox_respo_chart 
 display_type={'pie'}  // pie , bar
 allow_wide={false}
 display_y_axis={false} // for the bar
@@ -221,120 +227,123 @@ date={"Near Real-Time"} // "NA"
 box_height={box_height}
 /> */}
 
-<PreviewBox_respo_chart 
-display_type={'pie'}  // pie , bar
-allow_wide={false}
-display_y_axis={false} // for the bar
-HeadLine={`Velociraptor Connected Clients`}
-read_more_icon={''}
-description_show={true}
-description_short={'Centralized hub for integrating client data and insights seamlessly...'}
-description_max_length={86}
-read_more={'Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture.'}
-bar_numbers={[
-  DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
-  DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
-  DashBoardData?.Velociraptor?.FinishedHunts !== null &&
-  DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
-  DashBoardData?.Velociraptor?.NumberOfClients !== null
-    ? `${
-        DashBoardData?.Velociraptor?.NumberOfClients -
-        DashBoardData?.Velociraptor?.NumberOfConnectedClients
-      }`
-    : "NA",
-]}
-bar_headlines={["Connected", "UnConnected"]}
-enable_hover={false}
-display_this_value={"prime_data"}
-is_popup={false}
-colors={"Basic"} // Basic , Alert
-date={"Near Real-Time"} // "NA"
-box_height={box_height}
-/>
+            <PreviewBox_respo_chart
+              display_type={"pie"} // pie , bar
+              allow_wide={false}
+              display_y_axis={false} // for the bar
+              HeadLine={`Velociraptor Connected Clients`}
+              read_more_icon={""}
+              description_show={true}
+              description_short={
+                "Centralized hub for integrating client data and insights seamlessly..."
+              }
+              description_max_length={86}
+              read_more={
+                "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
+              }
+              bar_numbers={[
+                DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
+                DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
+                DashBoardData?.Velociraptor?.FinishedHunts !== null &&
+                DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
+                DashBoardData?.Velociraptor?.NumberOfClients !== null
+                  ? `${
+                      DashBoardData?.Velociraptor?.NumberOfClients -
+                      DashBoardData?.Velociraptor?.NumberOfConnectedClients
+                    }`
+                  : "NA",
+              ]}
+              bar_headlines={["Connected", "UnConnected"]}
+              enable_hover={false}
+              display_this_value={"prime_data"}
+              is_popup={false}
+              colors={"Basic"} // Basic , Alert
+              date={"Near Real-Time"} // "NA"
+              box_height={box_height}
+            />
 
+            <PreviewBox_respo_list_type6
+              HeadLine="Timeline Insights by Category"
+              read_more_icon={""}
+              description_max_length={74}
+              read_more_view={true}
+              read_more={
+                'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'
+              }
+              list_array_column1={{ key: "mainKey", previewName: "Category" }}
+              list_array_column2={{ key: "mainValue", previewName: "#" }}
+              list_array={forensics_list_tag}
+              is_popup={false}
+              is_tags={true}
+              click_on_field={false}
+              date={"Near Real-Time"} // "NA"
+              box_height={box_height}
+            />
 
- 
-<PreviewBox_respo_list_type6
-   HeadLine="Timeline Insights by Category"
-   read_more_icon={''}
-    description_max_length={74}
-    read_more_view= {true}
-   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
-   list_array_column1={{ key: "mainKey", previewName: "Category" }}
-   list_array_column2={{ key: "mainValue", previewName: "#" }}
-   list_array={forensics_list_tag}
-   is_popup={false}
-   is_tags={true}
-   click_on_field={false}
-   date={"Near Real-Time"} // "NA"
-   box_height={box_height}
- 
-/>
+            <PreviewBox_respo_list_type6
+              HeadLine="CTI list"
+              read_more_icon={""}
+              //  description_short={'Aggregates all CTI data sourced from Velociraptor for analysis...'}
+              description_max_length={74}
+              read_more_view={true}
+              read_more={
+                'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'
+              }
+              list_array_column1={{ key: "mainKey", previewName: "Category" }}
+              list_array_column2={{ key: "mainValue", previewName: "#" }}
+              list_array={forensics_list_no_tag}
+              is_popup={false}
+              is_tags={false}
+              click_on_field={true}
+              date={"Near Real-Time"} // "NA"
+              box_height={box_height}
+            />
 
+            <div className="PreviewBox_for_2_tools" style={{}}>
+              <PreviewBox_respo_list_type6
+                read_more_icon={""}
+                HeadLine={`Velociraptor New Hosts last ${TimeOfHostCheck} Hr`}
+                //  description_short={'Tracks and lists hosts that were online in the past 24 hours...'}
+                read_more_view={true}
+                description_max_length={64}
+                read_more={`This section in Velociraptor's dashboard provides a dynamic view of devices that have recently connected to the network within the past ${TimeOfHostCheck} hours. This metric is crucial for identifying and monitoring newly introduced systems, which could potentially be sources of security vulnerabilities or unauthorized access. By tracking these new hosts, administrators can ensure that all incoming devices are properly vetted and compliant with security policies. The real-time data allows for immediate action if any suspicious or unrecognized hosts are detected, thereby enhancing the organization's ability to respond to emerging threats swiftly and effectively.`}
+                list_array_column1={{ key: "Hostname", previewName: "Name" }}
+                list_array_column2={{ key: "FirstSeen", previewName: "Date" }}
+                list_array={
+                  DashBoardData?.Velociraptor?.NewUsers
+                    ? DashBoardData?.Velociraptor?.NewUsers
+                    : "NA"
+                }
+                is_popup={false}
+                is_tags={false}
+                click_on_field={false}
+                date={"Near Real-Time"} // "NA"
+                box_height={box_height_1of3 - 20}
+              />
 
-<PreviewBox_respo_list_type6
-   HeadLine="CTI list"
-   read_more_icon={''}
-  //  description_short={'Aggregates all CTI data sourced from Velociraptor for analysis...'}
-   description_max_length={74}
-   read_more_view= {true}
-   read_more={'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'}
-   list_array_column1={{ key: "mainKey", previewName: "Category" }}
-   list_array_column2={{ key: "mainValue", previewName: "#" }}
-   list_array={forensics_list_no_tag}
-   is_popup={false}
-   is_tags={false}
-   click_on_field={true}
-   date={"Near Real-Time"} // "NA"
-   box_height={box_height }
-/>
-
-
-<div className="PreviewBox_for_2_tools" style={{ }} >
-
-<PreviewBox_respo_list_type6
-   read_more_icon={''}
-   HeadLine={`Velociraptor New Hosts last ${TimeOfHostCheck} Hr`}
-  //  description_short={'Tracks and lists hosts that were online in the past 24 hours...'}
-  read_more_view= {true}
-   description_max_length={64}
-    read_more={`This section in Velociraptor's dashboard provides a dynamic view of devices that have recently connected to the network within the past ${TimeOfHostCheck} hours. This metric is crucial for identifying and monitoring newly introduced systems, which could potentially be sources of security vulnerabilities or unauthorized access. By tracking these new hosts, administrators can ensure that all incoming devices are properly vetted and compliant with security policies. The real-time data allows for immediate action if any suspicious or unrecognized hosts are detected, thereby enhancing the organization's ability to respond to emerging threats swiftly and effectively.`}
-
-   list_array_column1={{ key: "Hostname", previewName: "Name" }}
-   list_array_column2={{ key: "FirstSeen", previewName: "Date" }}
-   list_array={DashBoardData?.Velociraptor?.NewUsers  ? DashBoardData?.Velociraptor?.NewUsers : "NA"}
-   is_popup={false}
-   is_tags={false}
-   click_on_field={false}
-   date={"Near Real-Time"} // "NA"
-   box_height={box_height_1of3 -20}
-/>
-
-
-<PreviewBox_respo_list_type6
-   HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
-   read_more_icon={''}
-   read_more_view= {true}
-  description_max_length={0}
-   read_more={'a list of all hosts that have been actively connected to the network over the past 24 hours. This information is vital for maintaining an up-to-date view of active devices and their activity patterns. By analyzing this data, security teams can monitor network usage, identify potential anomalies, and ensure that only authorized hosts are interacting with the system. This overview helps in detecting unauthorized access attempts or compromised devices early, allowing for prompt remediation actions to safeguard network integrity and prevent potential breaches.'}
-   list_array_column1={{ key: "Hostname", previewName: "Name" }}
-   list_array_column2={{ key: "LastSeen", previewName: "Date" }}
-   list_array={DashBoardData?.Velociraptor?.RecentHosts ? DashBoardData?.Velociraptor?.RecentHosts : "NA"}
-   is_popup={false}
-   is_tags={false}
-   click_on_field={false}
-   date={"Near Real-Time"} // "NA"
-   box_height={box_height_2of3}
-/>
-
-
-
-</div>
-
-
-</div>
-
- 
+              <PreviewBox_respo_list_type6
+                HeadLine={`Recent Online Hosts last ${TimeOfHostCheck} Hr`}
+                read_more_icon={""}
+                read_more_view={true}
+                description_max_length={0}
+                read_more={
+                  "a list of all hosts that have been actively connected to the network over the past 24 hours. This information is vital for maintaining an up-to-date view of active devices and their activity patterns. By analyzing this data, security teams can monitor network usage, identify potential anomalies, and ensure that only authorized hosts are interacting with the system. This overview helps in detecting unauthorized access attempts or compromised devices early, allowing for prompt remediation actions to safeguard network integrity and prevent potential breaches."
+                }
+                list_array_column1={{ key: "Hostname", previewName: "Name" }}
+                list_array_column2={{ key: "LastSeen", previewName: "Date" }}
+                list_array={
+                  DashBoardData?.Velociraptor?.RecentHosts
+                    ? DashBoardData?.Velociraptor?.RecentHosts
+                    : "NA"
+                }
+                is_popup={false}
+                is_tags={false}
+                click_on_field={false}
+                date={"Near Real-Time"} // "NA"
+                box_height={box_height_2of3}
+              />
+            </div>
+          </div>
         </div>
         <div></div>
         <div className="resource-group-all-the-Lists"></div>

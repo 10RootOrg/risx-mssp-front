@@ -458,9 +458,33 @@ export const PopUp_Mod_Config_Edit = (props) => {
       console.log("res res res", res);
 
       setObject(res.data);
+      console.log(
+        "Object.entries()Object.entries()Object.entries()Object.entries()Object.entries()",
+        Object.entries(res.data)
+      );
+
       setEditorValue(JSON.stringify(res.data, null, 2));
     } catch (error) {
       console.log("Error in BringConfig : ", error);
+    }
+  }
+
+  async function SaveSpecificConfig() {
+    try {
+      console.log("Start SaveSpecificConfig");
+      const res = await axios.post(backEndURL + "/config/SaveSpecificConfig", {
+        cho: object,
+        artifactOrTool: infoConf?.parent_id ? true : false,
+        name: infoConf?.Tool_name ?? infoConf?.Toolname,
+      });
+      console.log("res res res", res);
+      if (res.data) {
+        handleClose();
+      } else {
+        setErrString("Error Happened IN Saving");
+      }
+    } catch (error) {
+      console.log("Error in SaveSpecificConfig : ", error);
     }
   }
 
@@ -571,8 +595,8 @@ export const PopUp_Mod_Config_Edit = (props) => {
               {config_save_btn && (
                 <button
                   className="btn-type2   '"
-                  style={{ marginRight: 10 }}
-                  onClick={() => console.log("Save Info", object)}
+                  style={{ marginLeft: 10 }}
+                  onClick={SaveSpecificConfig}
                 >
                   <p className="font-type-menu ">Save</p>{" "}
                 </button>
