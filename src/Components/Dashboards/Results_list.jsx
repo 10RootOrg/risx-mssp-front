@@ -281,6 +281,21 @@ function Results_list({
             set_PopUp_loader__show(false);
             set_PopUp_For_LeakCheck_response__show(true);
             break;
+
+          case "Yara AI":
+            set_json_file_info({
+              huntid: Info.UniqueID,
+              status: Info?.Status,
+              fileSize: "Too big",
+              mbSize: res.data?.mbSize,
+              ResponsePath: Info?.ResponsePath,
+              table: [],
+            });
+
+            set_json_file_data(Info);
+            set_PopUp_loader__show(false);
+            set_PopUp_velociraptor_response__show(true);
+            break;
           default:
             console.log("Unknown ModuleName:", Info?.ModuleName);
             break;
@@ -534,6 +549,18 @@ function Results_list({
         //   buttonTitle: "Close",
         // });
         // set_PopUp_Under_Construction__show(true);
+        get_Json_single_response(Info);
+        break;
+
+      case "Yara AI": ////////////////////////// LeakCheck //////////////////////////
+        //  set_PopUp_Under_Construction__txt({
+        //   HeadLine: "Coming Soon!",
+        //   paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,
+        //   buttonTitle: "Close",
+        // });
+        // set_PopUp_Under_Construction__show(true);
+        console.log(Info, "asdasdasdasdasdasdasd");
+
         get_Json_single_response(Info);
         break;
 

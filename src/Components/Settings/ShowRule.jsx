@@ -23,7 +23,7 @@ import {
   PopUp_Error,
 } from "../PopUp_Smart.js";
 
-export function ShowRuleModal({RuleType}) {
+export function ShowRuleModal({ RuleType }) {
   const { backEndURL, all_Tools, front_IP } = useContext(GeneralContext);
 
   const [Preview_This_in_menu, set_Preview_This_in_menu] = useState("");
@@ -117,7 +117,7 @@ export function ShowRuleModal({RuleType}) {
 
   useEffect(() => {
     if (backEndURL) {
-      GetAlertsConfig("");
+      GetAlertsConfig(RuleType);
     }
   }, [backEndURL]);
 
@@ -125,7 +125,7 @@ export function ShowRuleModal({RuleType}) {
     try {
       console.log("id", id);
 
-      const res = await axios.post(backEndURL + "/Alerts/GetAlertsConfig", {
+      const res = await axios.post(backEndURL + "/results/GetRules", {
         id,
       });
       console.log(
@@ -134,15 +134,7 @@ export function ShowRuleModal({RuleType}) {
         res?.data?.AlertConfig?.label
       );
 
-      set_Preview_This_in_menu(res?.data?.AlertConfig?.label);
-      if (!id || SubMenuOptionsList?.length != res?.data?.Menu?.length) {
-        console.log("change of Length of menu options");
-
-        setSubMenuOptionsList(res?.data?.Menu);
-      }
-
-      setObject(res?.data?.AlertConfig?.config ?? {});
-      setActiveAlertConfig(res?.data?.AlertConfig);
+      setObject(res?.data ?? {});
     } catch (error) {
       console.log("Error In GetAlertsConfig :", error);
     }
@@ -182,6 +174,7 @@ export function ShowRuleModal({RuleType}) {
           <tbody>
             <tr>
               <td className="setting_descriptions">
+                <p className="font-type-h4 Color-White mb-c">{RuleType}</p>
                 <p className="font-type-txt Color-Grey1 mb-b">
                   AI Created {RuleType}
                 </p>

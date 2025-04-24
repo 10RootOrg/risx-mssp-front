@@ -388,6 +388,10 @@ export const PopUp_For_velociraptor_response = (props) => {
       : json_file_data?.SubModuleName === "HardeningKitty"
       ? "90%"
       : "80%";
+  console.log(
+    json_file_info,
+    "json_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_data"
+  );
 
   return (
     <>
@@ -569,14 +573,22 @@ export const PopUp_For_velociraptor_response = (props) => {
                         }}
                       >
                         <div>
-                          <p className="  font-type-txt   Color-Grey1  ">
-                            Data file is too big.
-                            {json_file_info?.mbSize && (
-                              <> ({Math.round(json_file_info?.mbSize)}Mb)</>
-                            )}
-                            <br />
-                            You can download it as a JSON file.
-                          </p>
+                          {json_file_data?.ModuleName != "Yara AI" ? (
+                            <p className="  font-type-txt   Color-Grey1  ">
+                              Data file is too big.
+                              {json_file_info?.mbSize && (
+                                <> ({Math.round(json_file_info?.mbSize)}Mb)</>
+                              )}
+                              <br />
+                              You can download it as a JSON file.
+                            </p>
+                          ) : (
+                            <p className="  font-type-txt   Color-Grey1  ">
+                              The Dashboard Is a Work In Progress
+                              <br />
+                              You can download it as a JSON file.
+                            </p>
+                          )}
                           <button
                             className="btn-type3   mt-a"
                             style={{ marginRight: "auto", marginLeft: "-5px" }}
