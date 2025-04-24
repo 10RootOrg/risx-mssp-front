@@ -20,6 +20,7 @@ import Settings_Menu from "./Settings_Menu.jsx";
 import GeneralContext from "../../Context.js";
 import VeloConfigMain from "../VeloConfig/VeloConfigMain";
 import { AlertsSettings } from "../Alerts/Alert_Settings.jsx";
+import { ShowRuleModal } from "./ShowRule.jsx";
 
 function Settings({
   show_SideBar,
@@ -35,7 +36,7 @@ function Settings({
   const [Preview_This_comp, set_Preview_This_comp] = useState("Main Config");
   const [Preview_This_in_menu, set_Preview_This_in_menu] =
     useState("Main Config");
-  const [show_nested, set_show_nested] = useState(false);
+  const [show_nested, set_show_nested] = useState([]);
 
   const [PopUp_Under_Construction__show, set_PopUp_Under_Construction__show] =
     useState(false);
@@ -63,17 +64,17 @@ function Settings({
         set_Preview_This_in_menu(fater_value);
         return;
       } else {
-        set_show_nested(false);
+        set_show_nested((prev) => [...prev, value]);
         set_Preview_This_comp(value);
         set_Preview_This_in_menu(value);
         return;
       }
     } else {
       console.log("nested");
-      if (show_nested === true) {
-        set_show_nested(false);
+      if (show_nested.includes(value)) {
+        set_show_nested((prev) => [...prev.filter((x) => x != value)]);
       } else {
-        set_show_nested(true);
+        set_show_nested((prev) => [...prev, value]);
       }
     }
   };
@@ -291,9 +292,26 @@ function Settings({
               subline={""}
             />
           )}
+          {Preview_This_comp == "Prompt" && (
+            <Settings_section_logs
+              usethis={"log_Prompt"}
+              fileName={"cve_managment_prompt.log"}
+              headline={"Prompt"}
+              subline={""}
+            />
+          )}
           {Preview_This_comp == "Users" && <Users />}
           {Preview_This_comp == "Velociraptor" && <VeloConfigMain />}
           {Preview_This_comp == "Alerts" && <AlertsSettings />}
+          {Preview_This_comp == "Nuclie AI" && (
+            <ShowRuleModal RuleType={"Nuclei"} />
+          )}
+          {Preview_This_comp == "Yara AI" && (
+            <ShowRuleModal RuleType={"Yara"} />
+          )}
+          {Preview_This_comp == "Sigma AI" && (
+            <ShowRuleModal RuleType={"Sigma"} />
+          )}
         </div>
       </div>
     </>

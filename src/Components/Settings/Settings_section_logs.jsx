@@ -161,7 +161,9 @@ function Settings_section_logs({
           >
             {headline}
           </p>
-          <p className="font-type-txt Color-Grey1 mb-b">{fileName}</p>
+          {headline != "Prompt" && (
+            <p className="font-type-txt Color-Grey1 mb-b">{fileName}</p>
+          )}
         </div>
         <div
           style={{
@@ -171,24 +173,29 @@ function Settings_section_logs({
             justifyContent: "center",
           }}
         >
-          <p style={{ paddingLeft: 25, marginRight: 10 }}>Auto Refresh: </p>
-          <label
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              console.log("flip");
-              setLogRefresh(!LogRefresh);
-            }}
-            className="switch"
-          >
-            <input
-              type="checkbox"
-              checked={LogRefresh}
-              // onChange={}
-              // defaultChecked={Math.random() < 0.7}
-            />
-            <span className="slider round"></span>
-          </label>
+          {headline != "" && (
+            <>
+              {" "}
+              <p style={{ paddingLeft: 25, marginRight: 10 }}>Auto Refresh: </p>
+              <label
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  console.log("flip");
+                  setLogRefresh(!LogRefresh);
+                }}
+                className="switch"
+              >
+                <input
+                  type="checkbox"
+                  checked={LogRefresh}
+                  // onChange={}
+                  // defaultChecked={Math.random() < 0.7}
+                />
+                <span className="slider round"></span>
+              </label>
+            </>
+          )}
           <p style={{ paddingLeft: 25, marginRight: 10 }}>Line Wrap: </p>
           <label
             onClick={(e) => {

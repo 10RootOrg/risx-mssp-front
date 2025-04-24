@@ -67,6 +67,36 @@ function Settings_Menu({
       is_nasted: false,
     },
     {
+      preview_name: "Prompt",
+      value: "Prompt",
+      is_nasted: false,
+    },
+    {
+      preview_name: "AI Rules",
+      value: "AI Rules",
+      is_nasted: true,
+      sub_sub: [
+        {
+          preview_name: "Sigma",
+          value: "Sigma AI",
+          is_nasted: false,
+          father_comp: "AI Rules",
+        },
+        {
+          preview_name: "Yara",
+          value: "Yara AI",
+          is_nasted: false,
+          father_comp: "AI Rules",
+        },
+        {
+          preview_name: "Nuclie",
+          value: "Nuclie AI",
+          is_nasted: false,
+          father_comp: "AI Rules",
+        },
+      ],
+    },
+    {
       preview_name: "Logs",
       value: "Logs",
       is_nasted: true,
@@ -94,7 +124,8 @@ function Settings_Menu({
           value: "Collector Log",
           is_nasted: false,
           father_comp: "Logs",
-        },        {
+        },
+        {
           preview_name: "Collector Import",
           value: "Collector Import Log",
           is_nasted: false,
@@ -129,7 +160,8 @@ function Settings_Menu({
           value: "Resource Usage Log",
           is_nasted: false,
           father_comp: "Logs",
-        },      {
+        },
+        {
           preview_name: "Ai Management",
           value: "AiManagement Log",
           is_nasted: false,
@@ -185,10 +217,10 @@ function Settings_Menu({
                 <div className="SubMenu-gap" />
               </button>
 
-              {item?.is_nasted && show_nested && (
+              {item?.is_nasted && show_nested.includes(item?.value) && (
                 <div
                   className="SubMenu-submenu"
-                  onMouseLeave={() => set_show_nested(false)}
+                  onMouseLeave={() => set_show_nested([])}
                 >
                   {item.sub_sub.map((item, index) => (
                     <div
