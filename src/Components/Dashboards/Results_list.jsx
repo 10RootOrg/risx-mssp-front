@@ -197,7 +197,21 @@ function Results_list({
             set_PopUp_loader__show(false);
             set_PopUp_For__Nuclei__response__show(true);
             break;
-
+          case "Nuclei AI":
+            const nucleiTool1 = all_Tools?.find(
+              (tool) => tool?.Tool_name === Info?.ModuleName
+            );
+            console.log("tool", nucleiTool1);
+            let updatedNucleiInfo1 = {
+              ...Info,
+              logoAddress_1: nucleiTool1?.logoAddress_1,
+            };
+            console.log("updatedInfo", updatedNucleiInfo1);
+            set_json_file_data(updatedNucleiInfo1);
+            set_json_file_info(res.data);
+            set_PopUp_loader__show(false);
+            set_PopUp_For__Nuclei__response__show(true);
+            break;
           case "Shodan":
             if (res?.data?.fileSize !== "Too big") {
               console.log(
@@ -342,6 +356,10 @@ function Results_list({
       set_PopUp_Request_info__show(true);
       return;
     }
+    console.log(
+      "Info?.ModuleName Info?.ModuleName Info?.ModuleName Info?.ModuleName ",
+      Info?.ModuleName
+    );
 
     switch (Info?.ModuleName) {
       case "Nuclei": ////////////////////////// Nuclei //////////////////////////
@@ -382,7 +400,44 @@ function Results_list({
         } else {
           return;
         }
+      case "Nuclei AI": ////////////////////////// Nuclei //////////////////////////
+        if (Info.Status === "Failed") {
+          set_PopUp_Request_info__txt({
+            HeadLine: "Failed",
+            paragraph: "process failed",
+            buttonTitle: "Close",
+          });
+          set_PopUp_Request_info__show(true);
+          return;
+        } else if (
+          Info.Status == null ||
+          Info.Status == "" ||
+          Info.Status == undefined
+        ) {
+          set_PopUp_Request_info__txt({
+            HeadLine: "Status undefined",
+            paragraph:
+              "When the mission status will be clear, we can refer to the results",
+            buttonTitle: "Close",
+          });
+          set_PopUp_Request_info__show(true);
+          return;
+        } else if (Info.Status == "In Progress") {
+          set_PopUp_Request_info__txt({
+            HeadLine: "In Progress",
+            paragraph: "The progress is running, please wait for results",
+            buttonTitle: "Close",
+          });
+          set_PopUp_Request_info__show(true);
+          return;
+        }
 
+        if (Info.Status === "Complete") {
+          get_Json_single_response(Info);
+          return;
+        } else {
+          return;
+        }
       case "Velociraptor": ////////////////////////// Velociraptor //////////////////////////
         if (
           Info.Status === "Failed" ||
