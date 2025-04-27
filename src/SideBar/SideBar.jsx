@@ -7,7 +7,7 @@ import { ReactComponent as RisxMsspLogoWide } from "../Components/Logos/RisxMssp
 import { ReactComponent as IcoMonitor } from "../Components/icons/ico-menu-monitor.svg";
 import { ReactComponent as IcoModules } from "../Components/icons/ico-menu-modules.svg";
 import { ReactComponent as IcoLink } from "../Components/icons/ico-menu-link.svg";
-import { ReactComponent as IcoIframe } from "../Components/icons/ico-menu-iframe.svg";
+import { ReactComponent as IcoAiMenu} from "../Components/icons/General-icons-b.svg";
 import { ReactComponent as IcoResults } from "../Components/icons/ico-menu-Results.svg";
 import { ReactComponent as IcoResourceGroup } from "../Components/icons/ico-menu-Resource-Group.svg";
 import { ReactComponent as IcoAccount } from "../Components/icons/ico-menu-account.svg";
@@ -814,6 +814,21 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               {" "}
             </div>
           </button> */}
+
+          <button
+            className="btn-menu  "
+            onClick={() => handleClick("AI_Vulnerability")}
+            disabled={visblePage === "AI_Vulnerability"}
+          >
+            <div className="display-flex">
+              <IcoAiMenu className="btn-menu-icon-placeholder  mr-a " style={{width:29}}/>
+              <p className="font-type-menu ">AI Vulnerability</p>
+            </div>
+            <div className="btn-menu-icon-placeholder  ">
+              {" "}
+              {/*  <MenuArrowDown  />*/}
+            </div>
+          </button>
 
           <button
             className="btn-menu  "

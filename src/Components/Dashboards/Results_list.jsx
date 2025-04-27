@@ -50,6 +50,10 @@ function Results_list({
     PopUp_velociraptor_response__show,
     set_PopUp_velociraptor_response__show,
   ] = useState(false);
+
+  const [PopUp_Yara_Ai_response__show, set_PopUp_Yara_Ai_response__show] =
+    useState(false);
+
   const [PopUp_For_Shodan_response__show, set_PopUp_For_Shodan_response__show] =
     useState(false);
   const [
@@ -295,6 +299,7 @@ function Results_list({
             set_json_file_data(Info);
             set_PopUp_loader__show(false);
             set_PopUp_velociraptor_response__show(true);
+            set_PopUp_Yara_Ai_response__show(true);
             break;
           default:
             console.log("Unknown ModuleName:", Info?.ModuleName);

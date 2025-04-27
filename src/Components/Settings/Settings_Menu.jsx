@@ -66,36 +66,36 @@ function Settings_Menu({
       value: "Alerts",
       is_nasted: false,
     },
-    {
-      preview_name: "Prompt",
-      value: "Prompt",
-      is_nasted: false,
-    },
-    {
-      preview_name: "AI Rules",
-      value: "AI Rules",
-      is_nasted: true,
-      sub_sub: [
-        {
-          preview_name: "Sigma",
-          value: "Sigma AI",
-          is_nasted: false,
-          father_comp: "AI Rules",
-        },
-        {
-          preview_name: "Yara",
-          value: "Yara AI",
-          is_nasted: false,
-          father_comp: "AI Rules",
-        },
-        {
-          preview_name: "Nuclie",
-          value: "Nuclie AI",
-          is_nasted: false,
-          father_comp: "AI Rules",
-        },
-      ],
-    },
+    // {
+    //   preview_name: "Prompt",
+    //   value: "Prompt",
+    //   is_nasted: false,
+    // },
+    // {
+    //   preview_name: "AI Rules",
+    //   value: "AI Rules",
+    //   is_nasted: true,
+    //   sub_sub: [
+    //     {
+    //       preview_name: "Sigma",
+    //       value: "Sigma AI",
+    //       is_nasted: false,
+    //       father_comp: "AI Rules",
+    //     },
+    //     {
+    //       preview_name: "Yara",
+    //       value: "Yara AI",
+    //       is_nasted: false,
+    //       father_comp: "AI Rules",
+    //     },
+    //     {
+    //       preview_name: "Nuclie",
+    //       value: "Nuclie AI",
+    //       is_nasted: false,
+    //       father_comp: "AI Rules",
+    //     },
+    //   ],
+    // },
     {
       preview_name: "Logs",
       value: "Logs",

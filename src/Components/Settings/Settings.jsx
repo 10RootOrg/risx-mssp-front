@@ -20,7 +20,7 @@ import Settings_Menu from "./Settings_Menu.jsx";
 import GeneralContext from "../../Context.js";
 import VeloConfigMain from "../VeloConfig/VeloConfigMain";
 import { AlertsSettings } from "../Alerts/Alert_Settings.jsx";
-import { ShowRuleModal } from "./ShowRule.jsx";
+import { ShowRuleModal } from "../AI_Vulnerability/ShowRule.jsx";
 
 function Settings({
   show_SideBar,
@@ -292,18 +292,18 @@ function Settings({
               subline={""}
             />
           )}
-          {Preview_This_comp == "Prompt" && (
+          {/* {Preview_This_comp == "Prompt" && (
             <Settings_section_logs
               usethis={"log_Prompt"}
               fileName={"cve_managment_prompt.log"}
               headline={"Prompt"}
               subline={""}
             />
-          )}
+          )} */}
           {Preview_This_comp == "Users" && <Users />}
           {Preview_This_comp == "Velociraptor" && <VeloConfigMain />}
           {Preview_This_comp == "Alerts" && <AlertsSettings />}
-          {Preview_This_comp == "Nuclie AI" && (
+          {/* {Preview_This_comp == "Nuclie AI" && (
             <ShowRuleModal RuleType={"Nuclei"} />
           )}
           {Preview_This_comp == "Yara AI" && (
@@ -311,7 +311,7 @@ function Settings({
           )}
           {Preview_This_comp == "Sigma AI" && (
             <ShowRuleModal RuleType={"Sigma"} />
-          )}
+          )} */}
         </div>
       </div>
     </>

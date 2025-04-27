@@ -32,6 +32,7 @@ import Constantfunctions from "./Constantfunctions/Constantfunctions";
 import VeloConfigMain from "./Components/VeloConfig/VeloConfigMain";
 import { AlertsSettings } from "./Components/Alerts/Alert_Settings";
 import Dashboard_AI_Vunre from "./Components/Dashboards/Dashboard_AI_Vunre";
+import AI_Vulnerability from "./Components/AI_Vulnerability/AI_Vulnerability";
 
 export default function App() {
   const [visblePage, set_visblePage] = useState(
@@ -216,6 +217,19 @@ export default function App() {
                 path="settings"
                 element={
                   <Settings
+                    show_SideBar={show_SideBar}
+                    set_show_SideBar={set_show_SideBar}
+                    set_visblePage={set_visblePage}
+                    set_unseen_alert_number={set_unseen_alert_number}
+                    isMainProcessWork={isMainProcessWork}
+                    set_isMainProcessWork={set_isMainProcessWork}
+                  />
+                }
+              />
+              <Route
+                path="AI_Vulnerability"
+                element={
+                  <AI_Vulnerability
                     show_SideBar={show_SideBar}
                     set_show_SideBar={set_show_SideBar}
                     set_visblePage={set_visblePage}
