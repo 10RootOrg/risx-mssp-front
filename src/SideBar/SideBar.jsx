@@ -822,7 +822,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
           >
             <div className="display-flex">
               <IcoAiMenu className="btn-menu-icon-placeholder  mr-a " style={{width:29}}/>
-              <p className="font-type-menu ">AI Vulnerability</p>
+              <p className="font-type-menu ">AI Vulnerability mgmt</p>
             </div>
             <div className="btn-menu-icon-placeholder  ">
               {" "}

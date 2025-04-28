@@ -534,7 +534,12 @@ export const PopUp_Mod_Config_Edit = (props) => {
             </div>
 
             <p className="font-type-h4 Color-White mb-a">
-              Edit {infoConf?.Tool_name ?? infoConf?.Toolname} Config
+              Edit{" "}
+              {infoConf?.Toolname ??
+                (infoConf?.Tool_name == "AIVulnerability"
+                  ? "AI Vulnerability"
+                  : infoConf?.Tool_name)}{" "}
+              Config
             </p>
             <div
               style={{

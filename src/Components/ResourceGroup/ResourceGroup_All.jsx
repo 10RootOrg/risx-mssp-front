@@ -398,7 +398,7 @@ function ResourceGroup_All({
       const res = await axios.get(
         `${backEndURL}/dashboard/GetDashBoardClientIdVelo/${id}`
       );
-      console.log("res res res res 555555555555555555", res);
+      console.log("res res res res 555555555555555555", res.data);
       if (res.data) {
         const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks)
           ? mssp_config_json.moduleLinks
@@ -428,7 +428,7 @@ function ResourceGroup_All({
         set_PopUp_Error____show(true);
         set_PopUp_Error____txt({
           HeadLine: "Error No Data",
-          paragraph: "There is no Client ID associated with this Entity",
+          paragraph: "The Client ID(velociraptor) associated with this Entity is missing.  Therefore there is no data to show" ,
           buttonTitle: "Ok",
         });
       }

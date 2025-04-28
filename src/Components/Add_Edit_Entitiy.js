@@ -260,7 +260,7 @@ export const Add_Edit_Entity = (props) => {
           });
         }
       } else if (popUp_Add_or_Edit__status == "Edit") {
-        console.log("Edit");
+        console.log("Edit",ChosenEntity);
         const res = await axios.put(
           `${backEndURL}/Resources/UpdateEntity`,
           ChosenEntity
@@ -292,7 +292,7 @@ export const Add_Edit_Entity = (props) => {
       set_PopUp_Error____show(true);
       set_PopUp_Error____txt({
         HeadLine: "Error IN Adding Entity",
-        paragraph: "Error Happened Check Logs",
+        paragraph:error?.response?.data?error?.response?.data: "Error Happened Check Logs",
         buttonTitle: "Ok",
       });
     }
@@ -314,7 +314,7 @@ export const Add_Edit_Entity = (props) => {
     } else if (resource_type_id === "2007") {
       return "Company Name";
     } else if (resource_type_id === "2008") {
-      return "Computer Name";
+      return "Hostname";
     } else if (resource_type_id === "2009") {
       return "Email Domain";
     } else {

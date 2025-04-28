@@ -983,7 +983,10 @@ function PreviewBoxes_main_modules({
                                 className="font-type-menu ml-c pl-a mr-c mt-b mb-b "
                                 style={{ minWidth: "150px" }}
                               >
-                                {Info?.Tool_name && Info?.Tool_name}
+                                {Info?.Tool_name &&
+                                Info?.Tool_name == "AIVulnerability"
+                                  ? "AI Vulnerability"
+                                  : Info?.Tool_name}
                                 {Info?.Toolname && Info?.Toolname} Options
                               </p>
                               <div
