@@ -102,6 +102,12 @@ function Settings_Menu({
       is_nasted: true,
       sub_sub: [
         {
+          preview_name: "Backend Requests",
+          value: "Backend Log Request",
+          is_nasted: false,
+          father_comp: "Logs",
+        },
+        {
           preview_name: "Backend",
           value: "Backend Log",
           is_nasted: false,

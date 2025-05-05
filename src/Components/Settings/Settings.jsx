@@ -204,10 +204,18 @@ function Settings({
             />
           )}
           {Preview_This_comp == "Portainer" && <PortAiner />}
+          {Preview_This_comp == "Backend Log Request" && (
+            <Settings_section_logs
+              usethis={"log_mssp_backend_requests"}
+              fileName={"msspBackRequest.log"}
+              headline={"MSSP Backend Request"}
+              subline={"Node JS backend Request Log"}
+            />
+          )}
           {Preview_This_comp == "Backend Log" && (
             <Settings_section_logs
               usethis={"log_mssp_backend"}
-              fileName={"msspBack.log"}
+              fileName={"BackEndLog.log"}
               headline={"MSSP Backend"}
               subline={"Node JS backend"}
             />
