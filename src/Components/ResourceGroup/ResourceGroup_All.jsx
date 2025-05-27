@@ -392,6 +392,58 @@ function ResourceGroup_All({
     }
   };
 
+    const HandleDashboardAlertsOpenEndPoints = async (id) => {
+    try {
+      console.log("start HandleDashboardAlertsOpenEndPoints");
+      const res = await axios.get(
+        `${backEndURL}/dashboard/GetDashBoardClientIdVelo/${id}`
+      );
+      console.log("res res res res 555555555555555555", res.data);
+      if (res.data) {
+        const moduleLinks = Array.isArray(mssp_config_json?.moduleLinks)
+          ? mssp_config_json.moduleLinks
+          : [];
+        const threatHuntingURL = moduleLinks.find(
+          (link) => link.toolName === "Alerts Dashboard"
+        )?.toolURL;
+        const fixed_path = fix_path(threatHuntingURL, front_IP, front_URL);
+        // let ParamForIdEla = "";
+        // res.data?.forEach((x) => {
+        //   if (ParamForIdEla) {
+        //     ParamForIdEla += `(match_phrase:(ClientId.keyword:${x}))`;
+        //   } else {
+        //     ParamForIdEla += `,(match_phrase:(ClientId.keyword:${x}))`;
+        //   }
+        // });
+        const url2 = fixed_path.replace(
+          "_a=()",
+          `_a=(filters:!((query:(match_phrase:(ClientId:%22${res.data}%22)))))`
+          // `_a=(filters:!((query:( bool:(minimum_should_match:1,should:!( ${ParamForIdEla})) ))))`
+        );
+        console.log(url2, "uuuuuuuuu555555555uuuu");
+
+        window.open(url2, "_blank");
+      } else {
+        console.log("false");
+        set_PopUp_Error____show(true);
+        set_PopUp_Error____txt({
+          HeadLine: "Error No Data",
+          paragraph:
+            "The Client ID(velociraptor) associated with this Entity is missing.  Therefore there is no Alerts to show",
+          buttonTitle: "Ok",
+        });
+      }
+    } catch (error) {
+      console.log("Error in HandleDashboardAlertsOpenEndPoints : ", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN show Alerts",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
+    }
+  };
+
   const HandleDashboardAssetOpenEndPoints = async (id) => {
     try {
       console.log("start HandleDashboardAssetOpenEndPoints");
@@ -506,6 +558,7 @@ function ResourceGroup_All({
           set_PopUp_Error____txt={set_PopUp_Error____txt}
           HandleDashboardAssetOpenEndPoints={HandleDashboardAssetOpenEndPoints}
           HandleDashboardAssetOpenRest={HandleDashboardAssetOpenRest}
+          HandleDashboardAlertsOpenEndPoints={HandleDashboardAlertsOpenEndPoints}
         />
       )}
 
@@ -843,6 +896,7 @@ function ResourceGroup_All({
                   HandleDashboardAssetOpenEndPoints
                 }
                 HandleDashboardAssetOpenRest={HandleDashboardAssetOpenRest}
+                HandleDashboardAlertsOpenEndPoints={HandleDashboardAlertsOpenEndPoints}
               />
             </>
           )}

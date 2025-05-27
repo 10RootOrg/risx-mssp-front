@@ -33,6 +33,7 @@ import VeloConfigMain from "./Components/VeloConfig/VeloConfigMain";
 import { AlertsSettings } from "./Components/Alerts/Alert_Settings";
 import Dashboard_AI_Vunre from "./Components/Dashboards/Dashboard_AI_Vunre";
 import AI_Vulnerability from "./Components/AI_Vulnerability/AI_Vulnerability";
+import Dashboard_Alerts from "./Components/Dashboards/Dashboard_Alerts";
 
 export default function App() {
   const [visblePage, set_visblePage] = useState(
@@ -45,7 +46,7 @@ export default function App() {
 
   useEffect(() => {
     console.log("Hello World !!!!!!");
-    console.log("Version Of Site is 0.8.8 ");
+    console.log("Version Of Site is 0.8.9 ");
   }, []);
 
   return (
@@ -101,7 +102,6 @@ export default function App() {
                   />
                 }
               />
-
               <Route
                 path="Modules"
                 element={
@@ -113,7 +113,6 @@ export default function App() {
                   />
                 }
               />
-
               <Route
                 path="alerts"
                 element={
@@ -146,7 +145,6 @@ export default function App() {
                   />
                 }
               />
-
               <Route
                 path="dashboard-general"
                 element={
@@ -200,6 +198,17 @@ export default function App() {
                     visblePage={visblePage}
                   />
                 }
+              />{" "}
+              <Route
+                path="dashboard-alerts"
+                element={
+                  <Dashboard_Alerts
+                    show_SideBar={show_SideBar}
+                    set_show_SideBar={set_show_SideBar}
+                    set_visblePage={set_visblePage}
+                    visblePage={visblePage}
+                  />
+                }
               />
               <Route
                 path="dashboard-asm"
@@ -212,7 +221,6 @@ export default function App() {
                   />
                 }
               />
-
               <Route
                 path="settings"
                 element={
@@ -249,7 +257,6 @@ export default function App() {
                   />
                 }
               />
-
               <Route path="*" element={<NoPage404 />} />
             </Routes>
           </BrowserRouter>

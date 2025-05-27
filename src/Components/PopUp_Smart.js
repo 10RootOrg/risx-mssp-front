@@ -1866,6 +1866,10 @@ export const PopUp_Under_Construction = (props) => {
 
 export const PopUp_Result_Line_info = (props) => {
   const { Info, popUp_show, set_popUp_show } = props;
+  console.log(
+    props,
+    "sadsadasfadgcvsbgasdfbnfsssfgsnvdnsdfSGFNDFSDFGDSHNGHGGMRHGJEFASDFSFAFGSgdghj"
+  );
 
   const [active, setActive] = useState(false);
 
@@ -1917,9 +1921,14 @@ export const PopUp_Result_Line_info = (props) => {
     if (!Info?.Arguments || Object.keys(Info.Arguments).length === 0)
       return null;
 
+    console.log(
+      Info.Arguments,
+      "Info.ArgumentsInfo.ArgumentsInfo.ArgumentsInfo.Arguments"
+    );
+
     return (
       <>
-        {Object.entries(Info.Arguments).map(([key, value]) => (
+        {Object.entries(Info.Arguments)?.map(([key, value]) => (
           <div
             key={key}
             style={{
@@ -1946,6 +1955,52 @@ export const PopUp_Result_Line_info = (props) => {
             </p>
           </div>
         ))}
+      </>
+    );
+  };
+
+  const renderPop = () => {
+    if (!Info?.Population || Object.keys(Info.Population).length === 0)
+      return null;
+
+    console.log(Info.Population, "Info.Population.Population.Population");
+    let arr = [];
+    if (typeof Info?.Population[0] === "object") {
+      Info?.Population?.map((x) => {
+        arr.push(x?.asset_string);
+      });
+    } else {
+      arr = Info?.Population;
+    }
+    return (
+      <>
+        <p
+          style={{ textWrap: "auto" }}
+          className="font-type-txt reading-height Color-Grey1 mb-a"
+          // style={firstValueStayle}
+        >
+          {arr.join(", ")}
+        </p>
+
+        {/* {Info.Population?.map((x) => (
+          <div
+            key={x?.asset_parent_id ?? Math.random(10000000000)}
+            style={{
+              ...LineStyle,
+              marginTop: "",
+              gap: "5px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <p
+              className="font-type-txt reading-height Color-Grey1 mb-a"
+              // style={firstValueStayle}
+            >
+              {typeof x === "object" ? x?.asset_string : x}
+            </p>
+          </div>
+        ))} */}
       </>
     );
   };
@@ -2062,7 +2117,7 @@ export const PopUp_Result_Line_info = (props) => {
                 className="font-type-txt  reading-height Color-Grey1  "
                 style={firstValueStayle}
               >
-                {Info?.Population && Info?.Population}
+                {renderPop()}
               </p>
             </div>
 

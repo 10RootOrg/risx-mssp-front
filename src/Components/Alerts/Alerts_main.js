@@ -17,7 +17,11 @@ import Alert_list from "./Alerts_list.jsx";
 import { ReactComponent as IconBIG } from "../icons/ico-menu-alert.svg";
 import ResourceGroup_Action_btns from "../ResourceGroup/ResourceGroup_Action_btns.jsx";
 import { ReactComponent as Loader } from "../icons/loader_typea.svg";
-import { PopUp_Alert_info, PopUp_All_Good, PopUp_Error } from "../PopUp_Smart.js";
+import {
+  PopUp_Alert_info,
+  PopUp_All_Good,
+  PopUp_Error,
+} from "../PopUp_Smart.js";
 
 function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   set_visblePage("alerts");
@@ -60,6 +64,17 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   const [PopUp_Alert_info__show, set_PopUp_Alert_info__show] = useState(false);
   const [PopUp_Alert_info__txt, set_PopUp_Alert_info__txt] = useState({});
 
+  async function ClearAlertData() {
+    try {
+      console.log("ClearAlertData");
+      const res = await axios.post(backEndURL + "/Alerts/ClearAlertDataChange");
+      console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", res.data);
+      GetData();
+    } catch (error) {
+      console.log("Error in ClearAlertData");
+    }
+  }
+
   async function GetData() {
     try {
       SetLoading(true);
@@ -90,37 +105,6 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
       };
       const Artifact = {};
 
-      // AlertFileData.forEach((x) => {
-      //   if (!AletDic[x?.Artifact?.trim()]?.Show ?? false) {
-      //     console.log(
-      //       "dont count and show",
-      //       !AletDic[x?.Artifact?.trim()]?.Show
-      //     );
-      //     x.Show = AletDic[x?.Artifact?.trim()]?.Show;
-
-      //     return;
-      //   }
-      //   console.log("jj");
-
-      //   Item[x?.UserInput?.Status]++;
-      //   if (!Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact]) {
-      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact] = {};
-      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].LastDate =
-      //       x?._ts;
-      //     Artifact[
-      //       AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact
-      //     ].Description = AletDic[x?.Artifact?.trim()]?.Description;
-
-      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num = 0;
-      //     Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Show =
-      //       AletDic[x?.Artifact?.trim()]?.Show;
-      //   }
-      //   Artifact[AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact].Num++;
-
-      //   x.SimpleName = AletDic[x?.Artifact?.trim()]?.Name ?? x?.Artifact;
-      //   x.Description = AletDic[x?.Artifact?.trim()]?.Description;
-      //   x.Show = AletDic[x?.Artifact?.trim()]?.Show;
-      // });
       console.log(
         "ArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifactArtifact",
         Artifact
@@ -354,17 +338,36 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
               Alert list
             </p>
           </div>
-
-          <ResourceGroup_Action_btns
-            items_for_search={AlertsData}
-            set_items_for_search={setAlertsData}
-            set_is_search={set_is_search}
-            btn_add_single_show={false}
-            // btn_add_single_action={add_resource_item}
-            // btn_add_single_value={"add"}
-            btn_add_many_show={false}
-            // btn_add_many_action={}
-          />
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {" "}
+            <div
+              className="log-delete"
+              onClick={ClearAlertData}
+              style={{
+                marginRight: 15,
+                fontSize: 13,
+              }}
+            >
+              Clear
+            </div>{" "}
+            <ResourceGroup_Action_btns
+              items_for_search={AlertsData}
+              set_items_for_search={setAlertsData}
+              set_is_search={set_is_search}
+              btn_add_single_show={false}
+              // btn_add_single_action={add_resource_item}
+              // btn_add_single_value={"add"}
+              btn_add_many_show={false}
+              // btn_add_many_action={}
+            />
+          </div>
         </div>
         <div
           className="resource-group-all-the-Lists "

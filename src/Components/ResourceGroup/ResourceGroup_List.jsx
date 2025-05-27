@@ -14,6 +14,7 @@ import { ReactComponent as IconFullName } from "./asset-icons/ico-fullname.svg";
 import { ReactComponent as IconCompany } from "./asset-icons/ico-company.svg";
 import { ReactComponent as IconEmailDomain } from "./asset-icons/ico-email-domain.svg";
 import { ReactComponent as GraphIcon } from "./asset-icons/graph-to.svg";
+import { ReactComponent as AlertsIcon } from "./asset-icons/ico-menu-alert.svg";
 
 import ResourceGroup_Action_btns from "./ResourceGroup_Action_btns";
 import ResourceGroup_buttomLine from "./ResourceGroup_buttomLine";
@@ -47,6 +48,7 @@ function ResourceGroup_List({
   ChosenCategory,
   HandleDashboardAssetOpenEndPoints,
   HandleDashboardAssetOpenRest,
+  HandleDashboardAlertsOpenEndPoints,
 }) {
   const { backEndURL } = useContext(GeneralContext);
   const [is_search, set_is_search] = useState(false);
@@ -566,29 +568,22 @@ function ResourceGroup_List({
                         </label>
                       </div>
 
-                      {/* <div
-                        className="resource-group-list-item    list-item-small"
-                        style={{ width: 90 }}
-                      >
-                        {Info?.highProfile ? (
-                          <p
-                            style={{
-                              width: 10,
-                              height: 10,
-                              borderRadius: 50,
-                              backgroundColor: "blue",
-                            }}
-                            className=" light-bulb-type2 "
-                          ></p>
-                        ) : (
-                          ""
-                        )}
-                      </div> */}
-
                       <p className="resource-group-list-item   list-item-small font-type-txt   Color-Grey1  ">
                         {Info?.lastUpdated &&
                           format_date_type_a(Info?.lastUpdated)}
                       </p>
+                      {Info.categoryName === "Endpoints" && (
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            HandleDashboardAlertsOpenEndPoints(Info.entitiesId);
+                          }}
+                          style={{ width: 30 }}
+                        >
+                          <AlertsIcon style={{ width: 30, height: 30 }} />
+                        </div>
+                      )}
                       <div
                         onClick={(e) => {
                           e.stopPropagation();

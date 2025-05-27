@@ -47,6 +47,7 @@ export const Add_Edit_Entity = (props) => {
     set_PopUp_Error____txt,
     HandleDashboardAssetOpenEndPoints,
     HandleDashboardAssetOpenRest,
+    HandleDashboardAlertsOpenEndPoints,
   } = props;
   const [UpdaterValue, setUpdaterValue] = useState(false);
   const [ChooseTypePopUpShow, setChooseTypePopUpShow] = useState(false);
@@ -260,7 +261,7 @@ export const Add_Edit_Entity = (props) => {
           });
         }
       } else if (popUp_Add_or_Edit__status == "Edit") {
-        console.log("Edit",ChosenEntity);
+        console.log("Edit", ChosenEntity);
         const res = await axios.put(
           `${backEndURL}/Resources/UpdateEntity`,
           ChosenEntity
@@ -292,7 +293,9 @@ export const Add_Edit_Entity = (props) => {
       set_PopUp_Error____show(true);
       set_PopUp_Error____txt({
         HeadLine: "Error IN Adding Entity",
-        paragraph:error?.response?.data?error?.response?.data: "Error Happened Check Logs",
+        paragraph: error?.response?.data
+          ? error?.response?.data
+          : "Error Happened Check Logs",
         buttonTitle: "Ok",
       });
     }
@@ -404,21 +407,36 @@ export const Add_Edit_Entity = (props) => {
               {popUp_Add_or_Edit__status === "Add" ? (
                 ""
               ) : (
-                <button
-                  className="btn-type2"
-                  style={{ marginLeft: "auto" }}
-                  onClick={() => {
-                    if (ChosenEntity.categoryName == "Endpoints") {
-                      HandleDashboardAssetOpenEndPoints(
-                        ChosenEntity.entitiesId
-                      );
-                    } else {
-                      HandleDashboardAssetOpenRest(ChosenEntity.entitiesId);
-                    }
-                  }}
-                >
-                  <p className="font-type-menu ">Security Dashboard</p>
-                </button>
+                <>
+                  <button
+                    className="btn-type2"
+                    style={{ marginLeft: "auto" }}
+                    onClick={() => {
+                      if (ChosenEntity.categoryName == "Endpoints") {
+                        HandleDashboardAssetOpenEndPoints(
+                          ChosenEntity.entitiesId
+                        );
+                      } else {
+                        HandleDashboardAssetOpenRest(ChosenEntity.entitiesId);
+                      }
+                    }}
+                  >
+                    <p className="font-type-menu ">Security Dashboard</p>
+                  </button>
+                  {ChosenEntity.categoryName == "Endpoints" && (
+                    <button
+                      className="btn-type2"
+                      style={{ marginLeft: 15 }}
+                      onClick={() => {
+                        HandleDashboardAlertsOpenEndPoints(
+                          ChosenEntity.entitiesId
+                        );
+                      }}
+                    >
+                      <p className="font-type-menu ">Alerts Dashboard</p>
+                    </button>
+                  )}
+                </>
               )}
             </div>
 

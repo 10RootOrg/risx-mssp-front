@@ -125,6 +125,11 @@
       "toolName": "AI vulnerability Dashboard",
       "toolURL": "https://${FRONT_URL}/kibana/app/dashboards#/view/9cfc66ca-7e2a-43ce-a2b3-bd0c92110780?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15y%2Cto%3Anow))&show-time-filter=true",
       "URLtype": "Dashboard"
+    },
+    {
+      "toolName": "Alerts Dashboard",
+      "toolURL": "https://${FRONT_URL}/kibana/app/dashboards#/view/b70e77fc-07d6-44d2-b1c1-6bae32af525a?embed=true&_g=(refreshInterval%3A(pause%3A!t%2Cvalue%3A60000)%2Ctime%3A(from%3Anow-15m%2Cto%3Anow))&_a=()&show-time-filter=true",
+      "URLtype": "Dashboard"
     }
   ]
 }
