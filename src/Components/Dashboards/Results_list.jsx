@@ -39,12 +39,14 @@ function Results_list({
   Preview_this_Results,
   set_Preview_this_Results,
   loader,
+  get_all_Results,
 }) {
   const { backEndURL, all_Tools, front_IP, front_URL, mssp_config_json } =
     useContext(GeneralContext);
 
   const [checked_items, set_checked_items] = useState([]);
   const [is_search, set_is_search] = useState(false);
+  const [isReset, set_isReset] = useState(false);
 
   const [
     PopUp_velociraptor_response__show,
@@ -808,6 +810,20 @@ function Results_list({
     }
   }, [Preview_this_Results]);
 
+  async function ClearResultsData() {
+    try {
+      console.log("ClearResultsData");
+      const res = await axios.post(
+        backEndURL + "/dashboard/ClearResultsDataDashboard"
+      );
+      set_isReset(true);
+      get_all_Results();
+      console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr", res.data);
+    } catch (error) {
+      console.log("Error in ClearResultsData");
+    }
+  }
+
   return (
     <div
       className="ResourceGroup-All"
@@ -926,24 +942,45 @@ function Results_list({
           <IconBIG />{" "}
           <p className="font-type-h4   Color-White ml-b">Results list</p>
         </div>
-
-        <ResourceGroup_Action_btns
-          items_for_search={Preview_this_Results}
-          set_items_for_search={set_Preview_this_Results}
-          set_is_search={set_is_search}
-          btn_add_single_show={false}
-          // btn_add_single_action={add_resource_item}
-          // btn_add_single_value={"add"}
-          btn_add_many_show={false}
-          // btn_add_many_action={}
-
-          btn_trash_show={true}
-          btn_trash_action={handleDelete}
-          btn_trash_id={"tmp"}
-          btn_gear_show={true}
-          btn_gear_action={handleClickComingSoon}
-          btn_gear_id={""}
-        />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {" "}
+          <div
+            className="log-delete"
+            onClick={ClearResultsData}
+            style={{
+              marginRight: 15,
+              fontSize: 13,
+            }}
+          >
+            Clear
+          </div>{" "}
+          <ResourceGroup_Action_btns
+            items_for_search={Preview_this_Results}
+            set_items_for_search={set_Preview_this_Results}
+            set_is_search={set_is_search}
+            is_search={is_search}
+            btn_add_single_show={false}
+            // btn_add_single_action={add_resource_item}
+            // btn_add_single_value={"add"}
+            btn_add_many_show={false}
+            // btn_add_many_action={}
+            isReset={isReset}
+            set_isReset={set_isReset}
+            btn_trash_show={true}
+            btn_trash_action={handleDelete}
+            btn_trash_id={"tmp"}
+            btn_gear_show={true}
+            btn_gear_action={handleClickComingSoon}
+            btn_gear_id={""}
+          />
+        </div>
       </div>
 
       {loader ? (

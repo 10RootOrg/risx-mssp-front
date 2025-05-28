@@ -128,42 +128,88 @@ const Search_comp = ({
 };
 
 const Search_comp_for_logs = ({
-  log_data,
+  log_data_full,
   set_log_data,
   set_preview_data,
   preview_data,
+  ChosenTagLog,
+  refresh,
+  refLog,
 }) => {
   const [filter_string, set_filter_string] = useState("");
+  const [log_data_FilterTag, set_log_data_FilterTag] = useState("");
+  const [RefreshHappened, setRefreshHappened] = useState(false);
 
   useEffect(() => {
+    // console.log(log_data_FilterTag, "log_data_FilterTag log_data_FilterTag");
+
     if (!filter_string) {
-      set_preview_data(log_data);
-      return;
+      if (log_data_FilterTag.length == 0) {
+        set_preview_data("No Results For this Filter..");
+      } else {
+        set_preview_data(log_data_FilterTag);
+      }
     } else {
-      const filterLogLinesString = filterLogLines(log_data, filter_string);
+      const filterLogLinesString = filterLogLines(
+        log_data_FilterTag,
+        filter_string
+      );
       if (filterLogLinesString) {
         set_preview_data(filterLogLinesString);
       } else {
         set_preview_data("No Results For this Filter..");
       }
     }
-  }, [filter_string]);
+    if (refresh) {
+      setRefreshHappened(!RefreshHappened);
+      // refLog.current.scrollTop = 1111111111111111111111;
+    }
+  }, [filter_string, log_data_FilterTag]);
+
+  useEffect(() => {
+    if (ChosenTagLog === "All") {
+      set_log_data_FilterTag(log_data_full);
+    } else {
+      const filterLogLinesString = filterLogLines(
+        log_data_full,
+        `- ${ChosenTagLog.toUpperCase()} -`
+      );
+      if (filterLogLinesString == log_data_FilterTag) {
+        console.log("trueeeeeeeeeeeeeeeeeeee", true);
+        if (log_data_FilterTag.length == 0) {
+          set_preview_data("No Results For this Filter..");
+        } else {
+          set_preview_data(filterLogLinesString);
+        }
+      }
+      set_log_data_FilterTag(filterLogLinesString);
+    }
+  }, [ChosenTagLog, log_data_full]);
+
+  useEffect(() => {
+    if (refresh) {
+      refLog.current.scrollTop = 11111111111111111111111111111111111;
+    }
+  }, [RefreshHappened]);
 
   function filterLogLines(log_data, filter_string) {
     // Split the log text into lines
-    const lines = log_data.split("\n");
+    // const lines = log_data.split("\n");
 
+    const lines = log_data
+      .split(/(?=\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z - [A-Z]+)/)
+      .filter((line) => line.trim() !== "")
+      .map((line) => line.trim());
     // Filter lines that contain the substring (case-insensitive)
     const filteredLines = lines.filter((line) =>
       line.toLowerCase().includes(filter_string.toLowerCase())
     );
 
-    // Join the filtered lines back into a single string
-    return filteredLines.join("\n");
+    return filteredLines.join("\n").trim();
   }
 
-  const filteredLog = filterLogLines(log_data, "Number");
-  console.log("filteredLog", filteredLog);
+  // const filteredLog = filterLogLines(log_data_full, "Number");
+  // console.log("filteredLog", filteredLog);
 
   const handleClearFilter = () => {
     set_filter_string("");

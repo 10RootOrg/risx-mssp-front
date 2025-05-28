@@ -15,9 +15,10 @@ import { ReactComponent as IconJsonDown } from "../icons/ico-menu-json-down.svg"
 function ResourceGroup_Action_btns({
   items_for_search,
   set_items_for_search,
-
+  is_search,
   set_is_search,
-
+  isReset,
+  set_isReset,
   btn_add_single_show,
   btn_add_single_action,
   btn_add_single_value,
@@ -58,6 +59,10 @@ function ResourceGroup_Action_btns({
 
     if (items_for_search?.length > all_items?.length) {
       set_all_items(items_for_search);
+    }
+    if (isReset) {
+      set_all_items(items_for_search);
+      set_isReset(false);
     }
   }, [items_for_search]);
 

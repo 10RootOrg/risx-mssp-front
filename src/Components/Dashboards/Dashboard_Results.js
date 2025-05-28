@@ -36,44 +36,43 @@ function Results({ show_SideBar, set_show_SideBar, set_visblePage }) {
       set_show_SideBar(true);
     }
   }, []);
+  const get_all_Results = async () => {
+    if (backEndURL === undefined) {
+      return;
+    }
 
-  useEffect(() => {
-    const get_all_Results = async () => {
-      if (backEndURL === undefined) {
-        return;
-      }
+    try {
+      set_loader(true);
+      const res = await axios.get(
+        `${backEndURL}/results/get_all_requests_table`
+      );
+      if (res) {
+        console.log("new_Results --------", res.data);
+        // console.log("typeof",typeof res.data);
 
-      try {
-        set_loader(true);
-        const res = await axios.get(
-          `${backEndURL}/results/get_all_requests_table`
-        );
-        if (res) {
-          console.log("new_Results --------", res.data);
-          // console.log("typeof",typeof res.data);
-
-          if (res.data === undefined) {
-            console.log("no files ..............,");
-            return;
-          }
-          if (res.data.length == 0) {
-            console.log("no files ..............,");
-          }
-
-          localStorage.setItem(
-            user_id + "_seeResults",
-            res.data?.results_list?.length
-          );
-          set_last_updated(res.data?.latest_dates);
-          set_Preview_this_Results(res.data?.results_list);
-          set_loader(false);
+        if (res.data === undefined) {
+          console.log("no files ..............,");
+          return;
         }
-      } catch (err) {
+        if (res.data.length == 0) {
+          console.log("no files ..............,");
+        }
+
+        localStorage.setItem(
+          user_id + "_seeRessults",
+          res.data?.results_list?.length
+        );
+        set_last_updated(res.data?.latest_dates);
+        set_Preview_this_Results(res.data?.results_list);
         set_loader(false);
-        console.log(err);
       }
-      // }
-    };
+    } catch (err) {
+      set_loader(false);
+      console.log(err);
+    }
+    // }
+  };
+  useEffect(() => {
     get_all_Results();
   }, [filter_Resource, backEndURL]);
 
@@ -254,6 +253,7 @@ function Results({ show_SideBar, set_show_SideBar, set_visblePage }) {
             filter_Resource={filter_Resource}
             set_filter_Resource={set_filter_Resource}
             txt_color={""}
+            
           />
 
           <PreviewBox_type1_number
@@ -318,6 +318,7 @@ function Results({ show_SideBar, set_show_SideBar, set_visblePage }) {
             set_filter_Resource={set_filter_Resource}
             loader={loader}
             set_loader={set_loader}
+            get_all_Results={get_all_Results}
           />
         </div>
       </div>

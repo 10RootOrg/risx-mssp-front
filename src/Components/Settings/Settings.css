@@ -88,6 +88,17 @@ th td {
   color: var(--color-DB-Blue-Glow);
   border-color: var(--color-Red);
 }
+
+.log-dropdown {
+  color: var(--color-Grey1);
+  border: 2px solid var(--color-Grey1);
+  border-radius: 15%;
+  margin-right: 10px;
+}
+.log-dropdown:hover {
+  color: var(--color-DB-Blue-Glow);
+  border-color: var(--color-DB-Blue-Glow);
+}
 .RowInLegend {
   display: flex;
   flex-direction: row;

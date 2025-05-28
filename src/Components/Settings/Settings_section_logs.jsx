@@ -20,6 +20,8 @@ function Settings_section_logs({
   const { backEndURL, fetchConfig } = useContext(GeneralContext);
   const [log_data, set_log_data] = useState("loading..");
   const [preview_data, set_preview_data] = useState("loading..");
+  const [OpenLogSelection, setOpenLogSelection] = useState(false);
+  const [ChosenTagLog, setChosenTagLog] = useState("All");
 
   const maxHeight = "800px";
   const lineHeight = "160%";
@@ -47,9 +49,9 @@ function Settings_section_logs({
 
       if (res) {
         if (res?.data?.status === 200 || res?.data?.content != undefined) {
-          console.log(res?.data?.content);
+          // console.log(res?.data?.content);
           set_log_data(res?.data?.content);
-          set_preview_data(res?.data?.content);
+          // set_preview_data(res?.data?.content);
         } else {
           set_log_data(`Failed To fetchLog ${logName}. As It does not exist`);
           set_preview_data(
@@ -235,11 +237,48 @@ function Settings_section_logs({
           >
             Delete
           </div>{" "}
+          <div className="SubMenu-unit log-dropdown">
+            <button
+              className={`SubMenu-btn 
+                "SubMenu-btn-active-and-clickable"
+                       `}
+              onClick={() => {
+                setOpenLogSelection(!OpenLogSelection);
+              }}
+            >
+              <p style={{ padding: 5, width: 40 }} className="font-type-menu">
+                {ChosenTagLog}
+              </p>
+              <div className="SubMenu-gap" />
+            </button>
+
+            {OpenLogSelection && (
+              <div className="SubMenu-submenu">
+                {["All", "Info", "Error", "Warn"]
+                  .filter((x) => x != ChosenTagLog)
+                  .map((item, index) => (
+                    <div
+                      className="SubMenu-submenu-item"
+                      onClick={() => {
+                        setChosenTagLog(item);
+                        setOpenLogSelection(false);
+                      }}
+                    >
+                      {" "}
+                      <p className="font-type-menu">{item}</p>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
           <Search_comp_for_logs
             set_log_data={set_log_data}
-            log_data={log_data}
+            log_data_full={log_data}
             set_preview_data={set_preview_data}
             preview_data={preview_data}
+            ChosenTagLog={ChosenTagLog}
+            refresh={LogRefresh}
+            refLog={logRef}
           />
         </div>
       </div>

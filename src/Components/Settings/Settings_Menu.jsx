@@ -244,12 +244,6 @@ function Settings_Menu({
                       <p className="font-type-menu">{item?.preview_name}</p>
                     </div>
                   ))}
-
-                  {/* <div className="SubMenu-submenu">
-            <div className="SubMenu-submenu-item"> <p className="font-type-menu" >submenu1</p></div>
-            <div className="SubMenu-submenu-item"> <p className="font-type-menu" >sub_sub</p></div>
-            <div className="SubMenu-submenu-item"> <p className="font-type-menu" >submenu3</p></div>
-          </div> */}
                 </div>
               )}
             </div>
