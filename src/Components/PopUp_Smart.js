@@ -2347,6 +2347,27 @@ export const PopUp_Confirm_Run_selected = (props) => {
   const cell_height = "38px";
   const NoApiKeyText = ({ Name }) => {
     console.log("Name Name 55555555555555", Name, object);
+    if (Name == "AIVulnerability") {
+      if (
+        object["NVD"]?.trim() == "" ||
+        object["NVD"]?.trim() == "APIKey" ||
+        object["LLM"]?.trim() == "" ||
+        object["LLM"]?.trim() == "APIKey"
+      ) {
+        set_disable_buttons(true);
+        return `No ${
+          object["NVD"]?.trim() == "" || object["NVD"]?.trim() == "APIKey"
+            ? "NVD "
+            : ""
+        }${
+          object["LLM"]?.trim() == "" || object["LLM"]?.trim() == "APIKey"
+            ? "LLM "
+            : ""
+        }Api Key`;
+      } else {
+        return "";
+      }
+    }
 
     if (object[Name]?.trim() == "" || object[Name]?.trim() == "APIKey") {
       set_disable_buttons(true);
