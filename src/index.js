@@ -30,7 +30,6 @@ import NoPage404 from "./Pages/NoPage404";
 
 import Constantfunctions from "./Constantfunctions/Constantfunctions";
 import VeloConfigMain from "./Components/VeloConfig/VeloConfigMain";
-import { AlertsSettings } from "./Components/Alerts/Alert_Settings";
 import Dashboard_AI_Vunre from "./Components/Dashboards/Dashboard_AI_Vunre";
 import AI_Vulnerability from "./Components/AI_Vulnerability/AI_Vulnerability";
 import Dashboard_Alerts from "./Components/Dashboards/Dashboard_Alerts";
@@ -46,7 +45,7 @@ export default function App() {
 
   useEffect(() => {
     console.log("Hello World !!!!!!");
-    console.log("Version Of Site is 0.8.9 ");
+    console.log("Version Of Site is 0.9.0 ");
   }, []);
 
   return (

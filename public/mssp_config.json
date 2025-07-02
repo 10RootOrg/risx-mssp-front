@@ -69,7 +69,7 @@
     {
       "toolName": "MISP",
       "toolID": "2001012",
-      "toolURL": "https://tenroot-misp.northeurope.cloudapp.azure.com"
+      "toolURL": "https://${FRONT_URL}:9713"
     },
     {
       "toolName": "LeakCheck",

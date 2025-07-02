@@ -1300,7 +1300,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             style={{ textAlign: "center" }}
             className="font-type-menu  Color-Grey1 "
           >
-            Version : 0.8.9
+            Version : 0.9.0
           </p>
         </div>
       </div>
@@ -2618,7 +2618,7 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
                 style={{ textAlign: "center" }}
                 className="font-type-menu  Color-Grey1 "
               >
-                Version : 0.8.9
+                Version : 0.9.0
               </p>
             </div>
           </>
