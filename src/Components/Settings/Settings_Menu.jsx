@@ -65,6 +65,10 @@ function Settings_Menu({
       preview_name: "Alerts",
       value: "Alerts",
       is_nasted: false,
+    },{
+      preview_name: "AI Vulnerability",
+      value: "AI Vulnerability",
+      is_nasted: false,
     },
     // {
     //   preview_name: "Prompt",

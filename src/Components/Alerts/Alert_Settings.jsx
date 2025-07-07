@@ -180,7 +180,7 @@ export function AlertsSettings({}) {
     try {
       console.log("flip", name);
       set_config_save_btn(false);
-      set_preview_or_edit(!preview_or_edit);
+      set_preview_or_edit(true);
 
       GetAlertsConfig(name);
     } catch (error) {

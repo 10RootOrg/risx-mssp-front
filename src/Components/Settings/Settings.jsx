@@ -21,6 +21,7 @@ import GeneralContext from "../../Context.js";
 import VeloConfigMain from "../VeloConfig/VeloConfigMain";
 import { AlertsSettings } from "../Alerts/Alert_Settings.jsx";
 import { ShowRuleModal } from "../AI_Vulnerability/ShowRule.jsx";
+import AI_Vulnerability from "../AI_Vulnerability/AI_Vulnerability.jsx";
 
 function Settings({
   show_SideBar,
@@ -311,6 +312,8 @@ function Settings({
           {Preview_This_comp == "Users" && <Users />}
           {Preview_This_comp == "Velociraptor" && <VeloConfigMain />}
           {Preview_This_comp == "Alerts" && <AlertsSettings />}
+          {Preview_This_comp == "AI Vulnerability" && <AI_Vulnerability />}
+
           {/* {Preview_This_comp == "Nuclie AI" && (
             <ShowRuleModal RuleType={"Nuclei"} />
           )}

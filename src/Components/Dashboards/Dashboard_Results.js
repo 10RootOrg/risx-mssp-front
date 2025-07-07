@@ -253,7 +253,6 @@ function Results({ show_SideBar, set_show_SideBar, set_visblePage }) {
             filter_Resource={filter_Resource}
             set_filter_Resource={set_filter_Resource}
             txt_color={""}
-            
           />
 
           <PreviewBox_type1_number

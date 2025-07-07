@@ -233,7 +233,7 @@ export default function App() {
                   />
                 }
               />
-              <Route
+              {/* <Route
                 path="AI_Vulnerability"
                 element={
                   <AI_Vulnerability
@@ -245,7 +245,7 @@ export default function App() {
                     set_isMainProcessWork={set_isMainProcessWork}
                   />
                 }
-              />
+              /> */}
               <Route
                 path="OPVelociraptor"
                 element={

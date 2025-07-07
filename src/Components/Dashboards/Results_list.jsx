@@ -422,7 +422,7 @@ function Results_list({
         } else {
           return;
         }
-      case "Nuclei AI": ////////////////////////// Nuclei //////////////////////////
+      case "Nuclei AI": ////////////////////////// Nuclei AI //////////////////////////
         if (Info.Status === "Failed") {
           set_PopUp_Request_info__txt({
             HeadLine: "Failed",
@@ -559,7 +559,7 @@ function Results_list({
         get_Json_single_response(Info);
         break;
 
-      case "Yara AI": ////////////////////////// LeakCheck //////////////////////////
+      case "Yara AI": ////////////////////////// Yara AI //////////////////////////
         //  set_PopUp_Under_Construction__txt({
         //   HeadLine: "Coming Soon!",
         //   paragraph: `We are working on creating LeakCheck feature. Stay tuned for updates as we finalize the details.`,

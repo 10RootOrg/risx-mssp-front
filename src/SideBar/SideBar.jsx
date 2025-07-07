@@ -747,7 +747,10 @@ const SideBar = ({ visblePage, set_visblePage }) => {
                 disabled={visblePage === "dashboard-vulnerability-management"}
               >
                 <div className="display-flex">
-                  <p className="font-type-menu ">Vulnerability Management</p>
+                  <p className="font-type-menu ">
+                    {" "}
+                    AI Vulnerability Management
+                  </p>
                 </div>
               </button>
               <button
@@ -829,7 +832,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             </div>
           </button> */}
 
-          <button
+          {/* <button
             className="btn-menu  "
             onClick={() => handleClick("AI_Vulnerability")}
             disabled={visblePage === "AI_Vulnerability"}
@@ -843,9 +846,8 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             </div>
             <div className="btn-menu-icon-placeholder  ">
               {" "}
-              {/*  <MenuArrowDown  />*/}
             </div>
-          </button>
+          </button> */}
 
           <button
             className="btn-menu  "
@@ -2141,7 +2143,7 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
             </div>
           </button> */}
 
-              <button
+              {/* <button
                 className="btn-menu  "
                 onClick={() => handleClick("AI_Vulnerability")}
                 disabled={visblePage === "AI_Vulnerability"}
@@ -2155,9 +2157,8 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
                 </div>
                 <div className="btn-menu-icon-placeholder  ">
                   {" "}
-                  {/*  <MenuArrowDown  />*/}
                 </div>
-              </button>
+              </button> */}
 
               <button
                 className="btn-menu  "

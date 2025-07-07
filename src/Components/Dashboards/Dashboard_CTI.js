@@ -124,12 +124,12 @@ function Dashboard_CTI({ show_SideBar, set_show_SideBar, set_visblePage }) {
           className="kibana-iframe"
         ></iframe>
 
-        <iframe
+        {/* <iframe
           src={dashboard_BestPractice_URL}
           height="1150px"
           width="100%"
           className="kibana-iframe"
-        ></iframe>
+        ></iframe> */}
 
         <div className="PreviewBox-respo-container mt-c  mb-c">
           <div className="PreviewBox_for_2_tools" style={{}}>
