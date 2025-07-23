@@ -92,11 +92,12 @@ function Dashboard_Forensics({
       res?.data?.Velociraptor?.RecentHosts.forEach((x) => {
         console.log(
           "format_date_type_a(x.LastSeen)",
-          format_date_type_a(x.LastSeen),
-          "ssssssssssss",
+          format_date_type_a(x.LastSeen * 1000),
+          "sssssssssssaaaaas",
           x.LastSeen
         );
-        x.LastSeen = format_date_type_a(x.LastSeen);
+        x.LastSeenNum = x.LastSeen
+        x.LastSeen = format_date_type_a(x.LastSeen * 1000);
       });
       res?.data?.Velociraptor?.NewUsers.forEach((x) => {
         console.log(
@@ -248,13 +249,12 @@ box_height={box_height}
                 bar_numbers={[
                   DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
                   DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
-                  DashBoardData?.Velociraptor?.FinishedHunts !== null &&
-                  DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
-                  DashBoardData?.Velociraptor?.NumberOfClients !== null
-                    ? `${
-                        DashBoardData?.Velociraptor?.NumberOfClients -
-                        DashBoardData?.Velociraptor?.NumberOfConnectedClients
-                      }`
+                    DashBoardData?.Velociraptor?.FinishedHunts !== null &&
+                    DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
+                    DashBoardData?.Velociraptor?.NumberOfClients !== null
+                    ? `${DashBoardData?.Velociraptor?.NumberOfClients -
+                    DashBoardData?.Velociraptor?.NumberOfConnectedClients
+                    }`
                     : "NA",
                 ]}
                 bar_headlines={["Connected", "UnConnected"]}
@@ -320,10 +320,11 @@ box_height={box_height}
                 list_array={
                   DashBoardData?.Velociraptor?.RecentHosts
                     ? DashBoardData?.Velociraptor?.RecentHosts.filter(
-                        (xxl) =>
-                          xxl.LastSeen >
+                      (xxl) => {
+                        return xxl.LastSeenNum * 1000 >
                           Date.now() - TimeOfHostCheck * 60 * 60 * 1000
-                      )
+                      }
+                    )
                     : "NA"
                 }
                 is_popup={false}
