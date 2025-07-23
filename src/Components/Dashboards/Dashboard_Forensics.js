@@ -37,6 +37,33 @@ function Dashboard_Forensics({
   const box_height_2of3 = box_height * (3 / 5);
   const box_height_1of3 = box_height * (2 / 5);
 
+  const RemoveTimeSketchTag = async (x) => {
+    try {
+      console.log("RemoveTimeSketchTag ", x);
+      const res = await axios.post(
+        backEndURL + "/dashboard/UpdateTimeSketchTagsInConfig",
+        { tagName: x }
+      );
+      console.log("Res RemoveTimeSketchTag ", res.data);
+      GetData();
+    } catch (error) {
+      console.log("Error in RemoveTimeSketchTag : ", error);
+    }
+  };
+
+  const ClearTimeSketchTag = async (x) => {
+    try {
+      console.log("ClearTimeSketchTag ", x);
+      const res = await axios.get(
+        backEndURL + "/dashboard/ClearTimeSketchTagsInConfig"
+      );
+      console.log("Res ClearTimeSketchTag ", res.data);
+      GetData();
+    } catch (error) {
+      console.log("Error in ClearTimeSketchTag : ", error);
+    }
+  };
+
   const get_config = async () => {
     if (backEndURL === undefined) {
       return;
@@ -144,41 +171,18 @@ function Dashboard_Forensics({
       },
     ]);
 
-    set_forensics_list_tag([
-      {
-        mainKey: "Tag: Persistence",
+    const timeTags = [];
+    for (const [key, value] of Object.entries(
+      DashBoardData?.TimeSketch?.tag_counts ?? {}
+    )) {
+      timeTags.push({
+        rawKey: key,
+        mainKey: `Tag: ${key}`,
         module: "Timesketch",
-        mainValue:
-          DashBoardData?.TimeSketch?.tag_counts?.Persistence !== undefined
-            ? DashBoardData?.TimeSketch?.tag_counts?.Persistence
-            : "NA",
-      },
-      {
-        mainKey: "Tag: Phishy-Domain",
-        module: "Timesketch",
-        mainValue:
-          DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"] !== undefined
-            ? DashBoardData?.TimeSketch?.tag_counts?.["phishy-domain"]
-            : "NA",
-      },
-      {
-        mainKey: "Tag: High",
-        module: "Timesketch",
-        mainValue:
-          DashBoardData?.TimeSketch?.tag_counts?.high !== undefined
-            ? DashBoardData?.TimeSketch?.tag_counts?.high
-            : "NA",
-      },
-      {
-        mainKey: "Tag: command and control",
-        module: "Timesketch",
-        mainValue:
-          DashBoardData?.TimeSketch?.tag_counts?.["command and control"] !==
-          undefined
-            ? DashBoardData?.TimeSketch?.tag_counts?.["command and control"]
-            : "NA",
-      },
-    ]);
+        mainValue: value,
+      });
+    }
+    set_forensics_list_tag(timeTags);
   }, [DashBoardData]);
 
   console.log("UnfinishedHunts", DashBoardData?.Velociraptor?.UnfinishedHunts);
@@ -226,79 +230,61 @@ colors={"Basic"} // Basic , Alert
 date={"Near Real-Time"} // "NA"
 box_height={box_height}
 /> */}
+            <div className="PreviewBox_for_2_tools" style={{}}>
+              <PreviewBox_respo_chart
+                display_type={"pie"} // pie , bar
+                allow_wide={false}
+                display_y_axis={false} // for the bar
+                HeadLine={`Velociraptor Connected Clients`}
+                read_more_icon={""}
+                description_show={true}
+                description_short={
+                  "Centralized hub for integrating client data and insights seamlessly..."
+                }
+                description_max_length={86}
+                read_more={
+                  "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
+                }
+                bar_numbers={[
+                  DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
+                  DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
+                  DashBoardData?.Velociraptor?.FinishedHunts !== null &&
+                  DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
+                  DashBoardData?.Velociraptor?.NumberOfClients !== null
+                    ? `${
+                        DashBoardData?.Velociraptor?.NumberOfClients -
+                        DashBoardData?.Velociraptor?.NumberOfConnectedClients
+                      }`
+                    : "NA",
+                ]}
+                bar_headlines={["Connected", "UnConnected"]}
+                enable_hover={false}
+                display_this_value={"prime_data"}
+                is_popup={false}
+                colors={"Basic"} // Basic , Alert
+                date={"Near Real-Time"} // "NA"
+                box_height={box_height_2of3 - 50}
+              />
 
-            <PreviewBox_respo_chart
-              display_type={"pie"} // pie , bar
-              allow_wide={false}
-              display_y_axis={false} // for the bar
-              HeadLine={`Velociraptor Connected Clients`}
-              read_more_icon={""}
-              description_show={true}
-              description_short={
-                "Centralized hub for integrating client data and insights seamlessly..."
-              }
-              description_max_length={86}
-              read_more={
-                "Report aggregates data on all clients that have established connections to the network, regardless of their status or activity level. This comprehensive view includes information on the total number of clients, connection patterns, and any associated metadata. Understanding this distribution helps in assessing the network’s overall exposure and usage trends. It also aids in identifying any unexpected spikes in connections or unusual client behavior, which could signal potential security issues. By analyzing this data, administrators can ensure proper client management and enhance their network’s security posture."
-              }
-              bar_numbers={[
-                DashBoardData?.Velociraptor?.NumberOfConnectedClients ?? "NA",
-                DashBoardData?.Velociraptor?.FinishedHunts !== undefined &&
-                DashBoardData?.Velociraptor?.FinishedHunts !== null &&
-                DashBoardData?.Velociraptor?.NumberOfClients !== undefined &&
-                DashBoardData?.Velociraptor?.NumberOfClients !== null
-                  ? `${
-                      DashBoardData?.Velociraptor?.NumberOfClients -
-                      DashBoardData?.Velociraptor?.NumberOfConnectedClients
-                    }`
-                  : "NA",
-              ]}
-              bar_headlines={["Connected", "UnConnected"]}
-              enable_hover={false}
-              display_this_value={"prime_data"}
-              is_popup={false}
-              colors={"Basic"} // Basic , Alert
-              date={"Near Real-Time"} // "NA"
-              box_height={box_height}
-            />
-
-            <PreviewBox_respo_list_type6
-              HeadLine="Timeline Insights by Category"
-              read_more_icon={""}
-              description_max_length={74}
-              read_more_view={true}
-              read_more={
-                'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'
-              }
-              list_array_column1={{ key: "mainKey", previewName: "Category" }}
-              list_array_column2={{ key: "mainValue", previewName: "#" }}
-              list_array={forensics_list_tag}
-              is_popup={false}
-              is_tags={true}
-              click_on_field={false}
-              date={"Near Real-Time"} // "NA"
-              box_height={box_height}
-            />
-
-            <PreviewBox_respo_list_type6
-              HeadLine="CTI list"
-              read_more_icon={""}
-              //  description_short={'Aggregates all CTI data sourced from Velociraptor for analysis...'}
-              description_max_length={74}
-              read_more_view={true}
-              read_more={
-                'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'
-              }
-              list_array_column1={{ key: "mainKey", previewName: "Category" }}
-              list_array_column2={{ key: "mainValue", previewName: "#" }}
-              list_array={forensics_list_no_tag}
-              is_popup={false}
-              is_tags={false}
-              click_on_field={true}
-              date={"Near Real-Time"} // "NA"
-              box_height={box_height}
-            />
-
+              <PreviewBox_respo_list_type6
+                HeadLine="Velociraptor list"
+                read_more_icon={""}
+                //  description_short={'Aggregates all data sourced from Velociraptor for analysis...'}
+                description_max_length={74}
+                read_more_view={true}
+                read_more={
+                  "provides a centralized view of all Velociraptor digital forensics and incident response operations, consolidating critical operational metrics and system status information in real-time."
+                }
+                list_array_column1={{ key: "mainKey", previewName: "Category" }}
+                list_array_column2={{ key: "mainValue", previewName: "#" }}
+                list_array={forensics_list_no_tag}
+                is_popup={false}
+                is_tags={false}
+                click_on_field={true}
+                date={"Near Real-Time"} // "NA"
+                box_height={box_height_1of3 + 30}
+              />
+            </div>
             <div className="PreviewBox_for_2_tools" style={{}}>
               <PreviewBox_respo_list_type6
                 read_more_icon={""}
@@ -333,7 +319,11 @@ box_height={box_height}
                 list_array_column2={{ key: "LastSeen", previewName: "Date" }}
                 list_array={
                   DashBoardData?.Velociraptor?.RecentHosts
-                    ? DashBoardData?.Velociraptor?.RecentHosts
+                    ? DashBoardData?.Velociraptor?.RecentHosts.filter(
+                        (xxl) =>
+                          xxl.LastSeen >
+                          Date.now() - TimeOfHostCheck * 60 * 60 * 1000
+                      )
                     : "NA"
                 }
                 is_popup={false}
@@ -342,7 +332,27 @@ box_height={box_height}
                 date={"Near Real-Time"} // "NA"
                 box_height={box_height_2of3}
               />
-            </div>
+            </div>{" "}
+            <PreviewBox_respo_list_type6
+              HeadLine="Timeline Insights by Category"
+              read_more_icon={""}
+              description_max_length={74}
+              read_more_view={true}
+              read_more={
+                'CTI all data from Velociraptor" consolidates all Cyber Threat Intelligence (CTI) data gathered from Velociraptor, providing a comprehensive repository of threat information. This aggregated data includes details on various cyber threats, vulnerabilities, and attack patterns collected by Velociraptors advanced monitoring tools. By centralizing this information, the feature enables security teams to analyze and correlate threat data more effectively, enhancing their ability to detect, respond to, and mitigate security risks. Access to complete and organized CTI data supports informed decision-making and strengthens overall cybersecurity posture..'
+              }
+              list_array_column1={{ key: "mainKey", previewName: "Category" }}
+              list_array_column2={{ key: "mainValue", previewName: "#" }}
+              list_array={forensics_list_tag}
+              is_popup={false}
+              is_tags={true}
+              click_on_field={false}
+              date={"Near Real-Time"} // "NA"
+              box_height={box_height}
+              removeBtn={true}
+              removeBtnFunc={RemoveTimeSketchTag}
+              clearBtnFunc={ClearTimeSketchTag}
+            />
           </div>
         </div>
         <div></div>

@@ -655,7 +655,9 @@ export const PopUp_Alert_info = (props) => {
   };
 
   const StatusTags = [
-    "New",
+    // "New",
+    "Unreviewed",
+
     "InProgress",
     "False Positive",
     "True Positive",

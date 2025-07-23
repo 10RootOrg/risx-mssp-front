@@ -5,8 +5,8 @@ function TopPageMenuVelo({
   handle_Click_Btn,
   sub_menu_options,
   InputFunction,
+  DelFunc,
 }) {
-  
   return (
     <div className="SubMenu-all">
       <div className="SubMenu-in">
@@ -38,16 +38,17 @@ function TopPageMenuVelo({
             </div>
           );
         })}
-        <div className="SubMenu-unit" style={{ marginLeft: "auto" }}>
-          {/* <button
+        <div
+          className="SubMenu-unit"
+          style={{ marginLeft: "auto", display: "flex" }}
+        >
+          <button
             className={`SubMenu-btn  `}
-            onClick={() => {
-              console.log("Import Shit");
-            }}
+            onClick={DelFunc}
           >
-            <p className="font-type-menu">Import Results</p>
-            <div className="SubMenu-gap" />
-          </button> */}
+            <p className="font-type-menu">Cleanup Collectors</p>
+          </button>
+
           <div className={`SubMenu-btn  `}>
             <label for="myfile">
               <p className="font-type-menu">Import Results</p>

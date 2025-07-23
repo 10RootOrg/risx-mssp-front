@@ -97,7 +97,7 @@
   background-color: var(--color-DB-Blue-Hover);
 
   cursor: pointer;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .SubMenu-btn:hover p,

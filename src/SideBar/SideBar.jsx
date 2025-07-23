@@ -655,7 +655,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
               </div> */}
               </button>
 
-              {/* <button
+              <button
                 className="btn-menu dropdown-menu-btn"
                 onClick={() => handleClick("dashboard-forensics")}
                 disabled={visblePage === "dashboard-forensics"}
@@ -665,7 +665,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
                   <p className="font-type-menu ">Forensics</p>
                 </div>
        
-              </button> */}
+              </button>
 
               <button
                 className="btn-menu dropdown-menu-btn"
@@ -1959,16 +1959,14 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
                   </button>
 
                   {/* <button
-                className="btn-menu dropdown-menu-btn"
-                onClick={() => handleClick("dashboard-forensics")}
-                disabled={visblePage === "dashboard-forensics"}
-              >
-                <div className="display-flex">
-          
-                  <p className="font-type-menu ">Forensics</p>
-                </div>
-       
-              </button> */}
+                    className="btn-menu dropdown-menu-btn"
+                    onClick={() => handleClick("dashboard-forensics")}
+                    disabled={visblePage === "dashboard-forensics"}
+                  >
+                    <div className="display-flex">
+                      <p className="font-type-menu ">Forensics</p>
+                    </div>
+                  </button> */}
 
                   <button
                     className="btn-menu dropdown-menu-btn"

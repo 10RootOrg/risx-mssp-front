@@ -315,6 +315,19 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
     }
   };
 
+  const DeleteFuncCollectorsAll = async () => {
+    try {
+      console.log("DelFunc DeleteFuncCollectorsAll");
+
+      const res = await axios.delete(
+        `${backEndURL}/config/DeleteCollectorFolders`
+      );
+      console.log("Res sssssssssssssssssssssss", res.data);
+    } catch (error) {
+      console.log("This Is Error DeleteFuncCollectorsAll", error);
+    }
+  };
+
   const HandleFileImportVelo = async (e) => {
     try {
       let FilesToUp = [];
@@ -402,7 +415,6 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
           buttonTitle: "Close",
         });
       }
-
     } catch (error) {
       console.log("Error in HandleFileImportVelo ", error);
       set_PopUp_Error____show(true);
@@ -459,6 +471,7 @@ function VeloConfigMain({ show_SideBar, set_show_SideBar, set_visblePage }) {
           handle_Click_Btn={HandleMenuSwitch}
           sub_menu_options={SubMenuOptionsList}
           InputFunction={HandleFileImportVelo}
+          DelFunc={DeleteFuncCollectorsAll}
         />
 
         <div className="mb-d"></div>

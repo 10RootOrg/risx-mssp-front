@@ -4,6 +4,7 @@ import { ReactComponent as IconReadMore } from "./icons/ico-readmore.svg";
 import { ReactComponent as IcoKey } from "./icons/ico-eye.svg";
 import { ReactComponent as IcoModule } from "./icons/ico-module-nonedge-blue.svg";
 import { ReactComponent as IcoLink } from "./icons/ico-link-nonedge-blue.svg";
+import { ReactComponent as IconMinus } from "./icons/ico-minus.svg";
 
 import { PopUp_For_Read_More } from "./PopUp_Smart.js";
 
@@ -2899,6 +2900,9 @@ function PreviewBox_respo_list_type6({
   click_on_field,
   read_more_view,
   box_width,
+  removeBtn,
+  removeBtnFunc,
+  clearBtnFunc,
 }) {
   const [popUp_readMore_show, set_popUp_readMore_show] = useState(false);
 
@@ -3081,7 +3085,23 @@ function PreviewBox_respo_list_type6({
                                     item,
                                     list_array_column2?.key
                                   )}
-                                </td>
+                                </td>{" "}
+                                {removeBtn && (
+                                  <td
+                                    className="font-type-txt Color-White "
+                                    style={{
+                                      textAlign: "right",
+                                      width: 29,
+                                    }}
+                                  >
+                                    <IconMinus
+                                      onClick={() =>
+                                        removeBtnFunc(item.rawKey ?? "")
+                                      }
+                                      className="icon-type1"
+                                    />
+                                  </td>
+                                )}
                               </tr>
                             ))}
                         </tbody>
@@ -3141,13 +3161,33 @@ function PreviewBox_respo_list_type6({
         {/* <div className='PreviewBox_respo_buttom'>
             <p className="font-type-txt Color-Grey1">Real time</p>
           </div> */}
-
         <div
           className="PreviewBox_ButtomLine mt-b"
-          style={{ visibility: date === "NA" && "hidden" }}
+          style={{
+            visibility: date === "NA" && "hidden",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+          }}
         >
-          <IconLastRun />
-          <div className="font-type-very-sml-txt  Color-Grey1">{date}</div>
+          {" "}
+          <div
+            className="PreviewBox_ButtomLine mt-b"
+            style={{ visibility: date === "NA" && "hidden" }}
+          >
+            <IconLastRun />
+            <div className="font-type-very-sml-txt  Color-Grey1">{date}</div>
+          </div>
+          <div className="display-flex mt-c" style={{}}>
+            {removeBtn && (
+              <button
+                className="btn-type2   '"
+                style={{ marginLeft: "auto" }}
+                onClick={clearBtnFunc}
+              >
+                <p className="font-type-menu ">Clear ban list</p>{" "}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </>

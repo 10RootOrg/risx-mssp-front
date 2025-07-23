@@ -126,7 +126,7 @@ function ResourceGroup_Action_btns({
       {btn_import_show && (
         <button className="btn-type1" onClick={() => console.log()}>
           <label htmlFor="FileImportAssets">
-            <IconExport className="icon-type1" />
+            <IconImport className="icon-type1" />
           </label>
           <input
             onChange={(e) => {
@@ -142,7 +142,7 @@ function ResourceGroup_Action_btns({
       )}
       {btn_export_show && (
         <button className="btn-type1" onClick={() => btn_export_action()}>
-          <IconImport className="icon-type1" />
+          <IconExport className="icon-type1" />
         </button>
       )}
 

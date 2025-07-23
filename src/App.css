@@ -873,8 +873,8 @@ cursor:auto;
 
  
 .light-bulb-type2 {
-  height: 6px;
-  width: 6px;
+  height: 15px;
+  width: 15px;
   border-radius: 100%;
   opacity: 0;
   animation: fadeInOut 1s infinite alternate; /* Decreased duration to 1 second */

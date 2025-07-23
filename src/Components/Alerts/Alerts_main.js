@@ -38,6 +38,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   });
   const [PieObjectStatus, setPieObjectStatus] = useState({
     New: 0,
+    Unreviewed: 0,
     InProgress: 0,
     "False Positive": 0,
     "True Positive": 0,
@@ -48,6 +49,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
   const [ArtifactDataPie, setArtifactDataPie] = useState({});
   const [IntervalUpdate, setIntervalUpdate] = useState({});
   const [Loading, SetLoading] = useState(false);
+  const [RedDotKill, setRedDotKill] = useState(false);
 
   const [PopUp_All_Good__show, set_PopUp_All_Good__show] = useState(false);
   const [PopUp_All_Good__txt, set_PopUp_All_Good__txt] = useState({
@@ -96,6 +98,7 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
 
       const Item = {
         New: 0,
+        Unreviewed: 0,
         InProgress: 0,
         "False Positive": 0,
         "True Positive": 0,
@@ -169,6 +172,26 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
       set_show_SideBar(true);
     }
   }, []);
+
+  const UpdateAlertFileDataMany = async (arrId) => {
+    try {
+      const Info = {
+        AlertIDs: arrId,
+        User: "User",
+      };
+      console.log(Info, "ggghjkiuhbnm,klkiuyhgbnm,kloiuyhgvbnmkliu87y6trdcv");
+
+      const res = await axios.post(
+        backEndURL + "/Alerts/UpdateAlertFileDataMany",
+        {
+          Info,
+        }
+      );
+      console.log("res Of UpdateAlertFileDataMany: ", res.data);
+    } catch (error) {
+      console.log("Error in UpdateAlertFileDataMany: ", error);
+    }
+  };
 
   return (
     <>
@@ -458,22 +481,39 @@ function Alerts_main({ show_SideBar, set_show_SideBar, set_visblePage }) {
                       if (ShowSubAlert.includes(x)) {
                         setShowSubAlert(ShowSubAlert.filter((yy) => yy != x));
                       } else {
+                        if (ArtifactDataPie[x]?.NewNum.length > 0) {
+                          const sss = [...ArtifactDataPie[x].NewNum];
+                          ArtifactDataPie[x].NewNum = [];
+console.log("sss",sss);
+
+                          UpdateAlertFileDataMany(sss);
+                        }
                         setShowSubAlert([...ShowSubAlert, x]);
                       }
                     }}
                   >
+                    {ArtifactDataPie[x]?.NewNum?.length > 0 ? (
+                      <div
+                        className={`Bg-Red  light-bulb-type2 `}
+                        style={{ marginLeft: "-30px", marginRight: "14px" }}
+                      />
+                    ) : (
+                      ""
+                    )}
                     <div
                       className="font-type-txt  Color-Grey1 "
                       style={{ width: "23%", minWidth: 220 }}
                     >
                       {x}
                     </div>
+
                     <div
                       className="font-type-txt  Color-Grey1 "
                       style={{ width: "70%" }}
                     >
                       {ArtifactDataPie[x]?.Description}
                     </div>
+
                     <div
                       className="font-type-txt  Color-Grey1 "
                       style={{ width: 120, textAlign: "center" }}

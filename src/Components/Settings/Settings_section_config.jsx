@@ -11,13 +11,14 @@ import {
   PopUp_Error,
 } from "../PopUp_Smart";
 import CodeMirror from "@uiw/react-codemirror";
-import { json, } from "@codemirror/lang-json";
+import { json } from "@codemirror/lang-json";
 import { tags as t } from "@lezer/highlight";
 import { createTheme } from "@uiw/codemirror-themes";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { ReactComponent as IconReverse } from "../icons/ico-reverse.svg";
 import { ReactComponent as IconTrash } from "../icons/ico-trash.svg";
 import { ReactComponent as IconImport } from "../icons/ico-import.svg";
+import { ReactComponent as IconExport } from "../icons/ico-export.svg";
 
 function Settings_section_config({
   show_SideBar,
@@ -326,6 +327,72 @@ function Settings_section_config({
     }
   }, [backEndURL]);
 
+  const ImportConfigM = async (file) => {
+    try {
+      const red = new FileReader();
+      console.log("import config json ss", file);
+      let jj;
+      console.log(
+        "ttttttttttttttttttttttt888888888888888888888888ttttttttttttttttttttttttttttt"
+      );
+
+      red.onload = async (e) => {
+        try {
+          jj = JSON.parse(e.target.result);
+          console.log("jjjjjjjjjjjjjjjjjjjjjjjjjj", jj);
+
+          // setPreviewJsonFile(jj);
+          // Update Funcion Of Import
+          console.log("........................................");
+
+          const res = await axios.post(
+            `${backEndURL}/config/ImportConfigM`,
+            jj,
+            {}
+          );
+          console.log(
+            "----------------------------------------------------------------------"
+          );
+
+          console.log("ImportConfigM Response", res);
+
+          if ((res.data = "Imported successfully")) {
+            set_PopUp_All_Good__show(true);
+            set_PopUp_All_Good__txt({
+              HeadLine: "Success",
+              paragraph: "The Config was Imported successfully",
+              buttonTitle: "Close",
+            });
+            get_config();
+          } else {
+            set_PopUp_Error____show(true);
+            set_PopUp_Error____txt({
+              HeadLine: "Error",
+              paragraph: "Error in Importing Config",
+              buttonTitle: "OK",
+            });
+          }
+        } catch (error) {
+          console.log("import error", error);
+          set_PopUp_Error____show(true);
+          set_PopUp_Error____txt({
+            HeadLine: "Error",
+            paragraph: "Error in Importing Config",
+            buttonTitle: "OK",
+          });
+        }
+      };
+      await red.readAsText(file);
+    } catch (error) {
+      console.log("Import error", error);
+      set_PopUp_Error____show(true);
+      set_PopUp_Error____txt({
+        HeadLine: "Error IN Import ",
+        paragraph: "Error Happened Check Logs",
+        buttonTitle: "Ok",
+      });
+    }
+  };
   return (
     <>
       {PopUp_Are_You_Sure__show && (
@@ -429,6 +496,35 @@ function Settings_section_config({
                 <button
                   className="btn-type4  btn-type4_careful  mt-a"
                   style={{ padding: 0 }}
+                  // onClick={ImportConfigM}
+                >
+                  <label
+                    className="btn-type4  btn-type4_careful  mt-a"
+                    style={{ padding: 0 }}
+                    htmlFor="FileImportConfig"
+                  >
+                    <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
+                      <IconImport className="icon-type1 " />
+                    </div>
+                    <p className="font-type-menu  Color-Grey2  mr-a">
+                      Import Config
+                    </p>{" "}
+                  </label>
+
+                  <input
+                    onChange={(e) => {
+                      ImportConfigM(e.target.files[0]);
+                    }}
+                    type="file"
+                    accept="application/json"
+                    id="FileImportConfig"
+                    name="FileImportConfig"
+                    style={{ opacity: 0, height: 0, width: 0 }}
+                  />
+                </button>
+                <button
+                  className="btn-type4  btn-type4_careful  mt-a"
+                  style={{ padding: 0 }}
                   onClick={async () => {
                     console.log("export assets json");
                     try {
@@ -454,12 +550,13 @@ function Settings_section_config({
                   }}
                 >
                   <div style={{ transform: "scale(1)", marginLeft: "-5px" }}>
-                    <IconImport className="icon-type1 " />
+                    <IconExport className="icon-type1 " />
                   </div>
                   <p className="font-type-menu  Color-Grey2  mr-a">
                     Export Config
                   </p>{" "}
                 </button>
+
                 {/* <button
                    className="btn-type4  btn-type4_careful  mt-b"
                   style={{ marginTop: 10 }}
