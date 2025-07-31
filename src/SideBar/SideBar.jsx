@@ -171,7 +171,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
           "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
         buttonTitle: "Close",
       });
-      // set_PopUp_All_Good__show(true);
+      set_PopUp_All_Good__show(true);
       const fileName = object?.General?.AgentLinks[os]?.split("/")?.pop();
       const fileName2 =
         object?.General?.AgentLinks[os]?.split("/")?.pop() + Math.random();
@@ -1302,7 +1302,7 @@ const SideBar = ({ visblePage, set_visblePage }) => {
             style={{ textAlign: "center" }}
             className="font-type-menu  Color-Grey1 "
           >
-            Version : 0.9.0
+            Version : 0.9.1
           </p>
         </div>
       </div>
@@ -2617,7 +2617,7 @@ const MobileTopBar = ({ visblePage, set_visblePage }) => {
                 style={{ textAlign: "center" }}
                 className="font-type-menu  Color-Grey1 "
               >
-                Version : 0.9.0
+                Version : 0.9.1
               </p>
             </div>
           </>

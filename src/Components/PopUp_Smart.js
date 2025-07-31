@@ -71,9 +71,8 @@ export const PopUp_Request_info = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "auto", paddingBottom: " " }}
           >
             <div
@@ -150,9 +149,8 @@ export const PopUp_All_Good = (props) => {
           style={{ wordWrap: "break-word" }}
         >
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "250px", paddingBottom: " " }}
           >
             <div
@@ -243,7 +241,7 @@ export const PopUp_Mod_Tags = (props) => {
       }
       if (
         ModObj?.tags?.some((xArrTem) =>
-          xArrTem?.toLowerCase()?.includes(NewTagName.trim())
+          xArrTem?.toLowerCase()?.trim() == NewTagName.trim()
         )
       ) {
         setAlreadyExistsError("Exits");
@@ -302,9 +300,8 @@ export const PopUp_Mod_Tags = (props) => {
           style={{ wordWrap: "break-word" }}
         >
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "450px", paddingBottom: " " }}
           >
             <div
@@ -360,6 +357,14 @@ export const PopUp_Mod_Tags = (props) => {
               className="input-type1 search_filter "
               placeholder="Tag Name"
               value={NewTagName}
+              onKeyPress={(event) => {
+                if (event.key == "Enter") {
+                  console.log("Well Hello Mate yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+                  );
+                  HandleAddTag()
+                }
+              }}
+
               onChange={(e) => {
                 if (AlreadyExistsError) {
                   setAlreadyExistsError(false);
@@ -519,9 +524,8 @@ export const PopUp_Mod_Config_Edit = (props) => {
           style={{ wordWrap: "break-word" }}
         >
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "70%", paddingBottom: " " }}
           >
             <div
@@ -791,9 +795,8 @@ export const PopUp_Alert_info = (props) => {
           onClick={handleClickOutside}
         >
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{
               width: "820px",
               maxHeight: "85%",
@@ -907,9 +910,8 @@ export const PopUp_Alert_info = (props) => {
                         }}
                       >
                         <button
-                          className={`btn-menu  ${
-                            download_drop_down ? "btn_look_hover" : ""
-                          } `}
+                          className={`btn-menu  ${download_drop_down ? "btn_look_hover" : ""
+                            } `}
                           onClick={handle_download_drop_down}
                         >
                           <div className="display-flex">
@@ -935,9 +937,8 @@ export const PopUp_Alert_info = (props) => {
 
                         {/* fix */}
                         <div
-                          className={`dropdown-menu ${
-                            download_drop_down ? "open" : ""
-                          }`}
+                          className={`dropdown-menu ${download_drop_down ? "open" : ""
+                            }`}
                         >
                           {StatusTags.map((y) => {
                             if (y == Info.UserInput?.Status) return;
@@ -1272,9 +1273,8 @@ export const PopUp_Are_You_Sure = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "250px", paddingBottom: " " }}
           >
             <div
@@ -1371,9 +1371,8 @@ export const PopUp_For_Read_More = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
           >
             <div
               className="display-flex justify-content-end  "
@@ -1496,9 +1495,8 @@ export const PopUp_For_Dehashed_data = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "80%" }}
           >
             <div
@@ -1719,9 +1717,8 @@ export const PopUp_Error = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{
               width: "auto",
               //  width: "-webkit-fill-available"
@@ -1823,9 +1820,8 @@ export const PopUp_Under_Construction = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "250px", paddingBottom: " " }}
           >
             <div
@@ -1949,7 +1945,7 @@ export const PopUp_Result_Line_info = (props) => {
             </p>
             <p
               className="font-type-txt reading-height Color-Grey1 mb-a"
-              // style={firstValueStayle}
+            // style={firstValueStayle}
             >
               {typeof value === "object" && value !== null
                 ? JSON.stringify(value, null, 2)
@@ -1979,7 +1975,7 @@ export const PopUp_Result_Line_info = (props) => {
         <p
           style={{ textWrap: "auto" }}
           className="font-type-txt reading-height Color-Grey1 mb-a"
-          // style={firstValueStayle}
+        // style={firstValueStayle}
         >
           {arr.join(", ")}
         </p>
@@ -2016,9 +2012,8 @@ export const PopUp_Result_Line_info = (props) => {
           onClick={handleClickOutside}
         >
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{
               width: "auto",
               maxWidth: "80%",
@@ -2353,19 +2348,17 @@ export const PopUp_Confirm_Run_selected = (props) => {
       if (
         object["NVD"]?.trim() == "" ||
         object["NVD"]?.trim() == "APIKey" ||
-        object["LLM"]?.trim() == "" ||
-        object["LLM"]?.trim() == "APIKey"
+        object["VulnerabilityLLM"]?.trim() == "" ||
+        object["VulnerabilityLLM"]?.trim() == "APIKey"
       ) {
         set_disable_buttons(true);
-        return `No ${
-          object["NVD"]?.trim() == "" || object["NVD"]?.trim() == "APIKey"
-            ? "NVD "
+        return `No ${object["NVD"]?.trim() == "" || object["NVD"]?.trim() == "APIKey"
+          ? "NVD "
+          : ""
+          }${object["VulnerabilityLLM"]?.trim() == "" || object["VulnerabilityLLM"]?.trim() == "APIKey"
+            ? "VulnerabilityLLM "
             : ""
-        }${
-          object["LLM"]?.trim() == "" || object["LLM"]?.trim() == "APIKey"
-            ? "LLM "
-            : ""
-        }Api Key`;
+          }Api Key`;
       } else {
         return "";
       }
@@ -2384,9 +2377,8 @@ export const PopUp_Confirm_Run_selected = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{
               width: "auto",
               minWidth: allow_continue ? "300px" : "auto",
@@ -2448,18 +2440,18 @@ export const PopUp_Confirm_Run_selected = (props) => {
                             (tool?.isActive === 1 || tool?.isActive === true) &&
                             tool?.tool_id != "2000000"
                         ).length > 0 && (
-                          <div
-                            style={{
-                              height: cell_height,
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
-                            <p className="font-type-txt reading-height Color-Grey1   mr-c">
-                              Artifacts:
-                            </p>
-                          </div>
-                        )}
+                            <div
+                              style={{
+                                height: cell_height,
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              <p className="font-type-txt reading-height Color-Grey1   mr-c">
+                                Artifacts:
+                              </p>
+                            </div>
+                          )}
 
                         <table
                           className=" "
@@ -2534,18 +2526,18 @@ export const PopUp_Confirm_Run_selected = (props) => {
                             tool?.toolType === "module" &&
                             tool?.tool_id != "2000000"
                         ).length > 0 && (
-                          <div
-                            style={{
-                              height: cell_height,
-                              display: "flex",
-                              alignItems: "center",
-                            }}
-                          >
-                            <p className="font-type-txt reading-height Color-Grey1   mr-c">
-                              Modules:
-                            </p>
-                          </div>
-                        )}
+                            <div
+                              style={{
+                                height: cell_height,
+                                display: "flex",
+                                alignItems: "center",
+                              }}
+                            >
+                              <p className="font-type-txt reading-height Color-Grey1   mr-c">
+                                Modules:
+                              </p>
+                            </div>
+                          )}
 
                         <table
                           className=" "
@@ -2747,9 +2739,8 @@ export const PopUpStorageVelociraptor = (props) => {
       {popUp_show && (
         <div className={`PopUp-background`} onClick={handleClickOutside}>
           <div
-            className={`PopUp-content  ${
-              active ? "popup-enter-active" : "popup-enter"
-            }`}
+            className={`PopUp-content  ${active ? "popup-enter-active" : "popup-enter"
+              }`}
             style={{ width: "50%", paddingBottom: " " }}
           >
             <div

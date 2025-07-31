@@ -168,9 +168,34 @@ function ResourceGroup_All({
           );
           get_all_resource_types();
           getFullCategoryAndEntitiesList();
-          console.log("uuuuuuuuuuuuuu", res);
+          if (
+            res.data == "Added successfully" ||
+            res.data == "Nothing To add As It Already Exists in the Db"
+          ) {
+            set_PopUp_All_Good__txt({
+              HeadLine: "Success",
+              paragraph: `Import Ended Successfully      \n${res.data}`,
+              buttonTitle: "Close",
+            });
+            set_PopUp_All_Good__show(true);
+          } else {
+            set_PopUp_Error____show(true);
+            set_PopUp_Error____txt({
+              HeadLine: "Error IN Import ",
+              paragraph: "Error Happened Check Logs",
+              buttonTitle: "Ok",
+            });
+          }
+
+          console.log("uuuuuuuuuuuuuu", res.data);
         } catch (error) {
           console.log("import error", error);
+          set_PopUp_Error____show(true);
+          set_PopUp_Error____txt({
+            HeadLine: "Error IN Import ",
+            paragraph: "Error Happened Check Logs",
+            buttonTitle: "Ok",
+          });
         }
       };
       await red.readAsText(file);
@@ -192,6 +217,12 @@ function ResourceGroup_All({
       console.log(res, "res res res ers rew ");
 
       const file = res.data;
+      set_PopUp_All_Good__txt({
+        HeadLine: "Success",
+        paragraph: "Started Export Of Assets",
+        buttonTitle: "Close",
+      });
+      set_PopUp_All_Good__show(true);
       const dataStr =
         "data:text/json;charset=utf-8," +
         encodeURIComponent(JSON.stringify(file));
@@ -203,6 +234,7 @@ function ResourceGroup_All({
       );
       document.body.appendChild(downloadAnchorNode);
       downloadAnchorNode.click();
+
       downloadAnchorNode.remove();
     } catch (error) {
       console.log("error", error);
@@ -392,7 +424,7 @@ function ResourceGroup_All({
     }
   };
 
-    const HandleDashboardAlertsOpenEndPoints = async (id) => {
+  const HandleDashboardAlertsOpenEndPoints = async (id) => {
     try {
       console.log("start HandleDashboardAlertsOpenEndPoints");
       const res = await axios.get(
@@ -480,7 +512,8 @@ function ResourceGroup_All({
         set_PopUp_Error____show(true);
         set_PopUp_Error____txt({
           HeadLine: "Error No Data",
-          paragraph: "The Client ID(velociraptor) associated with this Entity is missing.  Therefore there is no data to show" ,
+          paragraph:
+            "The Client ID(velociraptor) associated with this Entity is missing.  Therefore there is no data to show",
           buttonTitle: "Ok",
         });
       }
@@ -558,7 +591,9 @@ function ResourceGroup_All({
           set_PopUp_Error____txt={set_PopUp_Error____txt}
           HandleDashboardAssetOpenEndPoints={HandleDashboardAssetOpenEndPoints}
           HandleDashboardAssetOpenRest={HandleDashboardAssetOpenRest}
-          HandleDashboardAlertsOpenEndPoints={HandleDashboardAlertsOpenEndPoints}
+          HandleDashboardAlertsOpenEndPoints={
+            HandleDashboardAlertsOpenEndPoints
+          }
         />
       )}
 
@@ -896,7 +931,9 @@ function ResourceGroup_All({
                   HandleDashboardAssetOpenEndPoints
                 }
                 HandleDashboardAssetOpenRest={HandleDashboardAssetOpenRest}
-                HandleDashboardAlertsOpenEndPoints={HandleDashboardAlertsOpenEndPoints}
+                HandleDashboardAlertsOpenEndPoints={
+                  HandleDashboardAlertsOpenEndPoints
+                }
               />
             </>
           )}

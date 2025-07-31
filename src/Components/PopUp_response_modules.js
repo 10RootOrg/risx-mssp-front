@@ -20,7 +20,7 @@ async function download_Json(
   DownloadProgressBar,
   setDownloadProgressBar,
   setDownloadList,
-  mbSize
+  mbSize, set_PopUp_Error__show, set_PopUp_Error__txt
 ) {
   try {
     console.log("downloadJson(file)", ResponsePath);
@@ -81,6 +81,12 @@ async function download_Json(
             }
           } catch (error) {
             console.log("Error In Download", error);
+            set_PopUp_Error__show(true)
+            set_PopUp_Error__txt({
+              HeadLine: "Error In Download",
+              paragraph: "Check For Error In Log",
+              buttonTitle: "Close",
+            })
           }
         },
       }
@@ -103,6 +109,12 @@ async function download_Json(
     console.log("File downloaded successfully");
   } catch (error) {
     console.error("Error downloading file:", error);
+    set_PopUp_Error__show(true)
+    set_PopUp_Error__txt({
+      HeadLine: "Error In Download",
+      paragraph: "Check For Error In Log",
+      buttonTitle: "Close",
+    })
   }
 }
 
@@ -111,7 +123,7 @@ const handle_download_Json_File = (
   backEndURL,
   DownloadProgressBar,
   setDownloadProgressBar,
-  setDownloadList
+  setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
 ) => {
   if (file?.fileSize === "Too big") {
     console.log("Too big  going to download from server", file);
@@ -122,19 +134,29 @@ const handle_download_Json_File = (
       DownloadProgressBar,
       setDownloadProgressBar,
       setDownloadList,
-      file.mbSize
+      file.mbSize, set_PopUp_Error__show, set_PopUp_Error__txt
     );
   } else {
     // download the preview file
-    const dataStr =
-      "data:text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(file));
-    const downloadAnchorNode = document.createElement("a");
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "data.json");
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
+    try {
+      const dataStr =
+        "data:text/json;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(file));
+      const downloadAnchorNode = document.createElement("a");
+      downloadAnchorNode.setAttribute("href", dataStr);
+      downloadAnchorNode.setAttribute("download", "data.json");
+      document.body.appendChild(downloadAnchorNode);
+      downloadAnchorNode.click();
+      downloadAnchorNode.remove();
+    } catch (error) {
+      set_PopUp_Error__show(true)
+      set_PopUp_Error__txt({
+        HeadLine: "Error In Download",
+        paragraph: "Check For Error In Log",
+        buttonTitle: "Close",
+      })
+    }
+
   }
 };
 
@@ -164,7 +186,7 @@ export const PopUp_For_velociraptor_response = (props) => {
     buttonTitle,
     IconAddressForSrc,
     json_file_info,
-    json_file_data,
+    json_file_data, set_PopUp_Error__show, set_PopUp_Error__txt
   } = props;
   const {
     all_artifacts,
@@ -205,6 +227,13 @@ export const PopUp_For_velociraptor_response = (props) => {
 
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
+    set_PopUp_All_Good__show(true);
+    set_PopUp_All_Good__txt({
+      HeadLine: "Download Start",
+      paragraph:
+        "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
+      buttonTitle: "Close",
+    });
     if (file?.fileSize === "Too big") {
       console.log("handle_click_download  - Too big ");
       handle_download_Json_File(
@@ -212,15 +241,9 @@ export const PopUp_For_velociraptor_response = (props) => {
         backEndURL,
         DownloadProgressBar,
         setDownloadProgressBar,
-        setDownloadList
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
       );
-      set_PopUp_All_Good__txt({
-        HeadLine: "Download Start",
-        paragraph:
-          "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
-        buttonTitle: "Close",
-      });
-      set_PopUp_All_Good__show(true);
+
       set_popUp_show(false);
     } else {
       handle_download_Json_File(
@@ -228,7 +251,7 @@ export const PopUp_For_velociraptor_response = (props) => {
         backEndURL,
         DownloadProgressBar,
         setDownloadProgressBar,
-        setDownloadList
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
       );
     }
   };
@@ -386,8 +409,8 @@ export const PopUp_For_velociraptor_response = (props) => {
     json_file_info?.fileSize === "Too big"
       ? "auto"
       : json_file_data?.SubModuleName === "HardeningKitty"
-      ? "90%"
-      : "80%";
+        ? "90%"
+        : "80%";
   console.log(
     json_file_info,
     "json_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_datajson_file_data"
@@ -455,7 +478,7 @@ export const PopUp_For_velociraptor_response = (props) => {
                       bar_numbers={[
                         aggregate_macro_data?.Failed_Test_Number_of_tests[0],
                         aggregate_macro_data?.Failed_Test_Number_of_tests[1] -
-                          aggregate_macro_data?.Failed_Test_Number_of_tests[0],
+                        aggregate_macro_data?.Failed_Test_Number_of_tests[0],
                       ]}
                       bar_headlines={["Failed", "Pass"]}
                       // bar_title_legend = {["Tests"]}
@@ -517,7 +540,7 @@ export const PopUp_For_velociraptor_response = (props) => {
                       resource_type_id={null}
                       BigNumber={
                         aggregate_macro_data?.["Count of Critical"] !==
-                        undefined
+                          undefined
                           ? aggregate_macro_data["Count of Critical"]
                           : "NA"
                       }
@@ -785,10 +808,10 @@ export const PopUp_For_velociraptor_response = (props) => {
                         ))}
                         {aggregate_macro_data["List of computers with High"]
                           ?.length === 0 && (
-                          <p className="font-type-txt  Color-Grey1">
-                            No High record
-                          </p>
-                        )}
+                            <p className="font-type-txt  Color-Grey1">
+                              No High record
+                            </p>
+                          )}
                       </>
                     )}
 
@@ -824,10 +847,10 @@ export const PopUp_For_velociraptor_response = (props) => {
                         ))}
                         {aggregate_macro_data["List of computers with Critical"]
                           ?.length === 0 && (
-                          <p className="font-type-txt  Color-Grey1">
-                            No Critical record
-                          </p>
-                        )}
+                            <p className="font-type-txt  Color-Grey1">
+                              No Critical record
+                            </p>
+                          )}
                       </>
                     )}
 
@@ -1122,7 +1145,7 @@ export const PopUp_For__Nuclei__response = (props) => {
     json_file_info,
     json_file_data,
     set_PopUp_All_Good__show,
-    set_PopUp_All_Good__txt,
+    set_PopUp_All_Good__txt, set_PopUp_Error__show, set_PopUp_Error__txt
   } = props;
   const {
     all_Tools,
@@ -1145,6 +1168,13 @@ export const PopUp_For__Nuclei__response = (props) => {
 
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download");
+    set_PopUp_All_Good__show(true);
+    set_PopUp_All_Good__txt({
+      HeadLine: "Download Start",
+      paragraph:
+        "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
+      buttonTitle: "Close",
+    });
     if (file?.fileSize === "Too big") {
       console.log("handle_click_download  - Too big ");
       handle_download_Json_File(
@@ -1152,18 +1182,16 @@ export const PopUp_For__Nuclei__response = (props) => {
         backEndURL,
         DownloadProgressBar,
         setDownloadProgressBar,
-        setDownloadList
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
       );
-      set_PopUp_All_Good__txt({
-        HeadLine: "Download Start",
-        paragraph:
-          "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
-        buttonTitle: "Close",
-      });
-      set_PopUp_All_Good__show(true);
+
       set_popUp_show(false);
     } else {
-      handle_download_Json_File(file, backEndURL);
+      handle_download_Json_File(file,
+        backEndURL,
+        DownloadProgressBar,
+        setDownloadProgressBar,
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt);
     }
   };
 
@@ -1565,7 +1593,7 @@ export const PopUp_For_Shodan_response = (props) => {
     buttonTitle,
     json_file_info,
     set_json_file_info,
-    json_file_data,
+    json_file_data, set_PopUp_Error__show, set_PopUp_Error__txt
   } = props;
   const {
     all_Tools,
@@ -1613,6 +1641,13 @@ export const PopUp_For_Shodan_response = (props) => {
 
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
+    set_PopUp_All_Good__show(true);
+    set_PopUp_All_Good__txt({
+      HeadLine: "Download Start",
+      paragraph:
+        "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
+      buttonTitle: "Close",
+    });
     if (file?.fileSize === "Too big") {
       console.log("handle_click_download  - Too big ");
       handle_download_Json_File(
@@ -1620,15 +1655,9 @@ export const PopUp_For_Shodan_response = (props) => {
         backEndURL,
         DownloadProgressBar,
         setDownloadProgressBar,
-        setDownloadList
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
       );
-      set_PopUp_All_Good__txt({
-        HeadLine: "Download Start",
-        paragraph:
-          "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
-        buttonTitle: "Close",
-      });
-      set_PopUp_All_Good__show(true);
+
       set_popUp_show(false);
     } else {
       handle_download_Json_File(
@@ -1636,7 +1665,7 @@ export const PopUp_For_Shodan_response = (props) => {
         backEndURL,
         DownloadProgressBar,
         setDownloadProgressBar,
-        setDownloadList
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
       );
     }
   };
@@ -1651,8 +1680,8 @@ export const PopUp_For_Shodan_response = (props) => {
       const response = json_file_info[i]?.Response;
       const matches =
         response === "" ||
-        response === undefined ||
-        response?.total === undefined
+          response === undefined ||
+          response?.total === undefined
           ? 0
           : response.total;
 
@@ -2251,7 +2280,7 @@ export const PopUp_For_LeakCheck_response = (props) => {
     buttonTitle,
     json_file_info,
     set_json_file_info,
-    json_file_data,
+    json_file_data, set_PopUp_Error__show, set_PopUp_Error__txt
   } = props;
   const {
     all_Tools,
@@ -2308,6 +2337,13 @@ export const PopUp_For_LeakCheck_response = (props) => {
 
   const handle_click_download = (file, backEndURL) => {
     console.log("handle_click_download", file);
+    set_PopUp_All_Good__show(true);
+    set_PopUp_All_Good__txt({
+      HeadLine: "Download Start",
+      paragraph:
+        "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
+      buttonTitle: "Close",
+    });
     if (file?.fileSize === "Too big") {
       console.log("handle_click_download  - Too big ");
       handle_download_Json_File(
@@ -2315,15 +2351,9 @@ export const PopUp_For_LeakCheck_response = (props) => {
         backEndURL,
         DownloadProgressBar,
         setDownloadProgressBar,
-        setDownloadList
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
       );
-      set_PopUp_All_Good__txt({
-        HeadLine: "Download Start",
-        paragraph:
-          "This download can take a few minutes. The file will appear in your download folder once the process is complete.",
-        buttonTitle: "Close",
-      });
-      set_PopUp_All_Good__show(true);
+
       set_popUp_show(false);
     } else {
       handle_download_Json_File(
@@ -2331,7 +2361,7 @@ export const PopUp_For_LeakCheck_response = (props) => {
         backEndURL,
         DownloadProgressBar,
         setDownloadProgressBar,
-        setDownloadList
+        setDownloadList, set_PopUp_Error__show, set_PopUp_Error__txt
       );
     }
   };
@@ -2533,7 +2563,7 @@ export const PopUp_For_LeakCheck_response = (props) => {
                       bar_numbers={
                         json_file_info?.map((aaaa) =>
                           aaaa?.Response?.found !== undefined &&
-                          aaaa?.Response?.found !== null
+                            aaaa?.Response?.found !== null
                             ? aaaa?.Response?.found
                             : "NA"
                         ) || [0, 0, 0, 0]
@@ -2807,10 +2837,10 @@ export const PopUp_For_LeakCheck_response = (props) => {
                                     }}
                                   >
                                     {Site?.Response?.found ||
-                                    Site?.Response?.found === 0 ||
-                                    Site?.Response?.length
+                                      Site?.Response?.found === 0 ||
+                                      Site?.Response?.length
                                       ? Site?.Response?.found ??
-                                        Site?.Response.length
+                                      Site?.Response.length
                                       : "NA"}
                                   </p>
                                 </div>

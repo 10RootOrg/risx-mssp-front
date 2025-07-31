@@ -60,6 +60,10 @@ function Settings_Menu({
       preview_name: "Offline Agent",
       value: "Velociraptor",
       is_nasted: false,
+    },    {
+      preview_name: "MCP",
+      value: "MCP",
+      is_nasted: false,
     },
     {
       preview_name: "Alerts",

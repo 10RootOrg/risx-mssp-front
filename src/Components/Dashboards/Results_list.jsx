@@ -839,26 +839,6 @@ function Results_list({
         />
       )}
 
-      {PopUp_All_Good__show && (
-        <PopUp_All_Good
-          popUp_show={PopUp_All_Good__show}
-          set_popUp_show={set_PopUp_All_Good__show}
-          HeadLine={PopUp_All_Good__txt.HeadLine}
-          paragraph={PopUp_All_Good__txt.paragraph}
-          buttonTitle={PopUp_All_Good__txt.buttonTitle}
-        />
-      )}
-
-      {PopUp_Error__show && (
-        <PopUp_Error
-          popUp_show={PopUp_Error__show}
-          set_popUp_show={set_PopUp_Error__show}
-          HeadLine={PopUp_Error__txt.HeadLine}
-          paragraph={PopUp_Error__txt.paragraph}
-          buttonTitle={PopUp_Error__txt.buttonTitle}
-        />
-      )}
-
       {PopUp_Under_Construction__show && (
         <PopUp_Under_Construction
           popUp_show={PopUp_Under_Construction__show}
@@ -880,6 +860,8 @@ function Results_list({
           json_file_data={json_file_data}
           set_PopUp_All_Good__show={set_PopUp_All_Good__show}
           set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+          set_PopUp_Error__show={set_PopUp_Error__show}
+          set_PopUp_Error__txt={set_PopUp_Error__txt}
         />
       )}
 
@@ -894,6 +876,8 @@ function Results_list({
           json_file_data={json_file_data}
           set_PopUp_All_Good__show={set_PopUp_All_Good__show}
           set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+          set_PopUp_Error__show={set_PopUp_Error__show}
+          set_PopUp_Error__txt={set_PopUp_Error__txt}
         />
       )}
 
@@ -909,6 +893,8 @@ function Results_list({
           json_file_data={json_file_data}
           set_PopUp_All_Good__show={set_PopUp_All_Good__show}
           set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+          set_PopUp_Error__show={set_PopUp_Error__show}
+          set_PopUp_Error__txt={set_PopUp_Error__txt}
         />
       )}
 
@@ -924,6 +910,8 @@ function Results_list({
           json_file_data={json_file_data}
           set_PopUp_All_Good__show={set_PopUp_All_Good__show}
           set_PopUp_All_Good__txt={set_PopUp_All_Good__txt}
+          set_PopUp_Error__show={set_PopUp_Error__show}
+          set_PopUp_Error__txt={set_PopUp_Error__txt}
         />
       )}
 
@@ -934,6 +922,25 @@ function Results_list({
           HeadLine={PopUp_Request_info__txt.HeadLine}
           paragraph={PopUp_Request_info__txt.paragraph}
           buttonTitle={PopUp_Request_info__txt.buttonTitle}
+        />
+      )}
+      {PopUp_All_Good__show && (
+        <PopUp_All_Good
+          popUp_show={PopUp_All_Good__show}
+          set_popUp_show={set_PopUp_All_Good__show}
+          HeadLine={PopUp_All_Good__txt.HeadLine}
+          paragraph={PopUp_All_Good__txt.paragraph}
+          buttonTitle={PopUp_All_Good__txt.buttonTitle}
+        />
+      )}
+
+      {PopUp_Error__show && (
+        <PopUp_Error
+          popUp_show={PopUp_Error__show}
+          set_popUp_show={set_PopUp_Error__show}
+          HeadLine={PopUp_Error__txt.HeadLine}
+          paragraph={PopUp_Error__txt.paragraph}
+          buttonTitle={PopUp_Error__txt.buttonTitle}
         />
       )}
 
